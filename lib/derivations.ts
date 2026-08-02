@@ -44,6 +44,47 @@ export function extractGameNumber(id: string): number {
 }
 
 /**
+ * Determines whether a game is a playoff / post-elimination game.
+ * Uses exact elimination limits per league/season.
+ */
+export function isPlayoffGame(game: Pick<Game, "id" | "league" | "seasonId">): boolean {
+  const num = extractGameNumber(game.id);
+  const league = game.league;
+
+  if (league === "UAAP") {
+    return num > 56;
+  }
+
+  if (league === "PVL") {
+    const maxElim = getPvlEliminationGameCount(game.seasonId);
+    return num > 0 && num > maxElim;
+  }
+
+  if (league === "PBA") {
+    const idLower = game.id.toLowerCase();
+    if (
+      idLower.includes("playoff") ||
+      idLower.includes("semis") ||
+      idLower.includes("finals") ||
+      idLower.includes("qf") ||
+      idLower.includes("sf")
+    ) {
+      return true;
+    }
+    return num > 66;
+  }
+
+  const idLower = game.id.toLowerCase();
+  return (
+    idLower.includes("playoff") ||
+    idLower.includes("semis") ||
+    idLower.includes("finals") ||
+    idLower.includes("qf") ||
+    idLower.includes("sf")
+  );
+}
+
+/**
  * Helper to sort UAAP games strictly by game ID sequence (1..56..62)
  * with a fallback to chronological startTime.
  */

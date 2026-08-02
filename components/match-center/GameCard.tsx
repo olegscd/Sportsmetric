@@ -2,6 +2,7 @@
 
 import { TeamBadge } from "@/components/ui/TeamBadge";
 import { useGameModal } from "@/lib/game-modal-context";
+import { isPlayoffGame } from "@/lib/derivations";
 import { formatRecord, formatStartTime } from "@/lib/utils";
 import type { Game, Team } from "@/types/sports";
 import Link from "next/link";
@@ -94,7 +95,14 @@ export function GameCard({ game }: { game: Game }) {
       className="w-full cursor-pointer rounded-2xl border border-border bg-surface p-4 text-left active:scale-[0.99]"
     >
       <div className="mb-3 flex items-center justify-between">
-        <LeagueBadge league={game.league} />
+        <div className="flex items-center gap-1.5">
+          <LeagueBadge league={game.league} />
+          {isPlayoffGame(game) && (
+            <span className="rounded-full bg-amber-500/15 px-2 py-0.5 text-[10px] font-bold text-amber-500 uppercase tracking-wide">
+              Playoffs
+            </span>
+          )}
+        </div>
         <StatusPill game={game} />
       </div>
       <div className="flex flex-col gap-2.5">

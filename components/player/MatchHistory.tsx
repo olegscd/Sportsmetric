@@ -1,7 +1,7 @@
 "use client";
 
 import { TeamBadge } from "@/components/ui/TeamBadge";
-import type { PlayerGameLogEntry } from "@/lib/derivations";
+import { isPlayoffGame, type PlayerGameLogEntry } from "@/lib/derivations";
 import { useGameModal } from "@/lib/game-modal-context";
 import { cn, formatStartTime } from "@/lib/utils";
 
@@ -21,6 +21,7 @@ export function MatchHistory({ entries }: { entries: PlayerGameLogEntry[] }) {
         const oppScore = isHome ? game.awayScore : game.homeScore;
         const isWin = game.status === "FINAL" && teamScore > oppScore;
         const isLoss = game.status === "FINAL" && teamScore < oppScore;
+        const playoff = isPlayoffGame(game);
 
         return (
           <button
@@ -43,12 +44,19 @@ export function MatchHistory({ entries }: { entries: PlayerGameLogEntry[] }) {
             <TeamBadge team={opponent} size="sm" />
 
             <div className="min-w-0 flex-1">
-              <p className="truncate text-sm font-semibold text-foreground">
-                {isHome ? "vs" : "@"} {opponent.shortName}
-                <span className="ml-1.5 font-normal tabular-nums text-muted">
-                  {teamScore}-{oppScore}
-                </span>
-              </p>
+              <div className="flex items-center gap-1.5 truncate">
+                <p className="truncate text-sm font-semibold text-foreground">
+                  {isHome ? "vs" : "@"} {opponent.shortName}
+                  <span className="ml-1.5 font-normal tabular-nums text-muted">
+                    {teamScore}-{oppScore}
+                  </span>
+                </p>
+                {playoff && (
+                  <span className="rounded bg-amber-500/15 px-1.5 py-0.5 text-[9px] font-bold text-amber-500 uppercase tracking-wider shrink-0">
+                    Playoffs
+                  </span>
+                )}
+              </div>
               <p className="truncate text-xs text-muted">
                 {game.status === "LIVE" ? "Live now" : formatStartTime(game.startTime)}
               </p>

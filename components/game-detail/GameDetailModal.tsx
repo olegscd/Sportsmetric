@@ -5,6 +5,7 @@ import { useSportsData } from "@/context/SportsDataContext";
 import { useGameModal } from "@/lib/game-modal-context";
 import { cn } from "@/lib/utils";
 import type { Game } from "@/types/sports";
+import { isPlayoffGame } from "@/lib/derivations";
 import { X } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -58,10 +59,15 @@ function GameDetailSheet({ game, onClose }: { game: Game; onClose: () => void })
         </div>
 
         <div className="flex shrink-0 items-start justify-between px-4 pt-2">
-          <div className="flex-1">
+          <div className="flex-1 flex items-center gap-2">
             <p className="text-[11px] font-semibold uppercase tracking-wide text-muted">
               {game.league} &middot; {game.status}
             </p>
+            {isPlayoffGame(game) && (
+              <span className="rounded-full bg-amber-500/15 px-2 py-0.5 text-[10px] font-bold text-amber-500 uppercase tracking-wide">
+                Playoffs
+              </span>
+            )}
           </div>
           <button
             type="button"
