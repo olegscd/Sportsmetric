@@ -41,10 +41,22 @@ export interface SeasonAverages {
   fgPct: number;
   threePtPct: number;
   ftPct: number;
-  /** Volleyball-specific, optional */
+  /** Volleyball-specific extended stats */
+  totalPts?: number;
+  matchesPlayed?: number;
+  attackPts?: number;
+  attackPct?: number;
+  attackAvg?: number;
+  blockPts?: number;
+  blockPct?: number;
+  blockAvg?: number;
+  servePts?: number;
+  servePct?: number;
+  serveAvg?: number;
   killsPerSet?: number;
   digsPerSet?: number;
   blocksPerSet?: number;
+  acesPerSet?: number;
 }
 
 export interface RankBadge {
@@ -144,6 +156,12 @@ export interface BoxScoreItem {
   ftA?: number;
   /** e.g. "34:12" */
   min: string;
+  /** Volleyball-specific box score statistics */
+  atkPts?: number;
+  blkPts?: number;
+  acePts?: number;
+  digs?: number;
+  receptions?: number;
 }
 
 export interface BoxScore {

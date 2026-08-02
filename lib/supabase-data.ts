@@ -1,4 +1,5 @@
 import { supabase } from "@/lib/supabase";
+import { inferLeague } from "@/lib/league-utils";
 import type { Game, GameStatus, League, Player, Season, Team } from "@/types/sports";
 
 function logSupabaseError(context: string, error: { message: string } | null): boolean {
@@ -22,7 +23,7 @@ export function seasonToRecord(season: Season) {
     label: season.label,
     year: season.id,
     is_current: season.isCurrent,
-    league: season.league ?? (season.id.startsWith("pba") ? "PBA" : season.id.startsWith("pvl") ? "PVL" : "UAAP"),
+    league: inferLeague(season.id, season.league),
   };
 }
 
@@ -78,14 +79,7 @@ export function mapSeasonRows(rows: Array<{ id: string; label: string; is_curren
   const seenLeaguesWithCurrent = new Set<League>();
 
   const mapped = rows.map((s) => {
-    let league: League = "UAAP";
-    if (s.league) {
-      league = s.league;
-    } else if (s.id.startsWith("pba")) {
-      league = "PBA";
-    } else if (s.id.startsWith("pvl")) {
-      league = "PVL";
-    }
+    const league = inferLeague(s.id, s.league);
 
     let isCurrent = Boolean(s.is_current);
 

@@ -10,6 +10,7 @@ import {
   type PlayerGameLogEntry,
   type StatLeaderEntry,
 } from "@/lib/derivations";
+import { inferLeague } from "@/lib/league-utils";
 import { mockGames, mockPlayers, mockSeasons, mockTeams } from "@/lib/mock-data";
 import { supabase } from "@/lib/supabase";
 import {
@@ -37,7 +38,7 @@ import type {
   SeasonAverages,
   Team,
 } from "@/types/sports";
-import React, { createContext, useCallback, useContext, useEffect, useState } from "react";
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 
 interface SportsDataContextType {
   seasons: Season[];
@@ -52,6 +53,7 @@ interface SportsDataContextType {
   error: string | null;
   isHydrated: boolean;
   refreshData: () => Promise<void>;
+  resetToDefaults: () => void;
   // Action methods
   saveGame: (game: Game) => Promise<void>;
   deleteGame: (id: string) => Promise<void>;
@@ -100,6 +102,9 @@ export function SportsDataProvider({ children }: { children: React.ReactNode }) 
   const [error, setError] = useState<string | null>(null);
   const [isHydrated, setIsHydrated] = useState<boolean>(false);
 
+  // Debounce ref for realtime updates
+  const realtimeDebounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
   const loadDataFromSupabase = useCallback(async () => {
     setLoading(true);
     setError(null);
@@ -142,20 +147,36 @@ export function SportsDataProvider({ children }: { children: React.ReactNode }) 
         "postgres_changes",
         { event: "*", schema: "public" },
         () => {
-          void loadDataFromSupabase();
+          // Debounce rapid successive changes to avoid N full reloads
+          if (realtimeDebounceRef.current) clearTimeout(realtimeDebounceRef.current);
+          realtimeDebounceRef.current = setTimeout(() => {
+            void loadDataFromSupabase();
+          }, 500);
         }
       )
       .subscribe();
 
     return () => {
+      if (realtimeDebounceRef.current) clearTimeout(realtimeDebounceRef.current);
       if (supabase) {
         void supabase.removeChannel(channel);
       }
     };
   }, [loadDataFromSupabase]);
 
-  // Action Handlers
-  const saveGame = async (game: Game) => {
+  // Reset to defaults
+  const resetToDefaults = useCallback(() => {
+    setSeasons(mockSeasons);
+    setTeams(mockTeams);
+    setPlayers(mockPlayers);
+    setGames(mockGames);
+    const curr = mockSeasons.find((s) => s.isCurrent)?.id ?? mockSeasons[0]?.id ?? "2025-26";
+    setCurrentSeasonId(curr);
+    void batchUpsertGamesInSupabase(mockGames);
+  }, []);
+
+  // Action Handlers — all wrapped in useCallback for stable references
+  const saveGame = useCallback(async (game: Game) => {
     setGames((prev) => {
       const idx = prev.findIndex((g) => g.id === game.id);
       if (idx >= 0) {
@@ -166,14 +187,14 @@ export function SportsDataProvider({ children }: { children: React.ReactNode }) 
       return [game, ...prev];
     });
     await upsertGameInSupabase(game);
-  };
+  }, []);
 
-  const deleteGame = async (id: string) => {
+  const deleteGame = useCallback(async (id: string) => {
     setGames((prev) => prev.filter((g) => g.id !== id));
     await deleteGameInSupabase(id);
-  };
+  }, []);
 
-  const updateGameScore = async (
+  const updateGameScore = useCallback(async (
     id: string,
     homeScore: number,
     awayScore: number,
@@ -183,52 +204,53 @@ export function SportsDataProvider({ children }: { children: React.ReactNode }) 
     playByPlay?: PlayByPlayEvent[]
   ) => {
     let updatedGame: Game | null = null;
-    setGames((prev) =>
-      prev.map((g) => {
-        if (g.id === id) {
-          updatedGame = {
-            ...g,
-            homeScore,
-            awayScore,
-            status,
-            quarterOrSet,
-            timeRemaining,
-            playByPlay: playByPlay ?? g.playByPlay,
-          };
-          return updatedGame;
-        }
-        return g;
-      })
-    );
+    setGames((prev) => {
+      const game = prev.find((g) => g.id === id);
+      if (!game) return prev;
+
+      updatedGame = {
+        ...game,
+        homeScore,
+        awayScore,
+        status,
+        quarterOrSet,
+        timeRemaining,
+        playByPlay: playByPlay ?? game.playByPlay,
+      };
+
+      return prev.map((g) => (g.id === id ? updatedGame! : g));
+    });
+
+    // updatedGame is assigned synchronously inside the updater
     if (updatedGame) {
       await upsertGameInSupabase(updatedGame);
     }
-  };
+  }, []);
 
-  const updateGameBoxScore = async (id: string, side: "home" | "away", items: BoxScoreItem[]) => {
+  const updateGameBoxScore = useCallback(async (id: string, side: "home" | "away", items: BoxScoreItem[]) => {
     let updatedGame: Game | null = null;
-    setGames((prev) =>
-      prev.map((g) => {
-        if (g.id === id) {
-          const currentBox = g.boxScore ?? { home: [], away: [] };
-          updatedGame = {
-            ...g,
-            boxScore: {
-              ...currentBox,
-              [side]: items,
-            },
-          };
-          return updatedGame;
-        }
-        return g;
-      })
-    );
+    setGames((prev) => {
+      const game = prev.find((g) => g.id === id);
+      if (!game) return prev;
+
+      const currentBox = game.boxScore ?? { home: [], away: [] };
+      updatedGame = {
+        ...game,
+        boxScore: {
+          ...currentBox,
+          [side]: items,
+        },
+      };
+
+      return prev.map((g) => (g.id === id ? updatedGame! : g));
+    });
+
     if (updatedGame) {
       await upsertGameInSupabase(updatedGame);
     }
-  };
+  }, []);
 
-  const saveTeam = async (team: Team) => {
+  const saveTeam = useCallback(async (team: Team) => {
     setTeams((prev) => {
       const idx = prev.findIndex((t) => t.id === team.id);
       if (idx >= 0) {
@@ -239,14 +261,14 @@ export function SportsDataProvider({ children }: { children: React.ReactNode }) 
       return [...prev, team];
     });
     await upsertTeamInSupabase(team);
-  };
+  }, []);
 
-  const deleteTeam = async (id: string) => {
+  const deleteTeam = useCallback(async (id: string) => {
     setTeams((prev) => prev.filter((t) => t.id !== id));
     await deleteTeamInSupabase(id);
-  };
+  }, []);
 
-  const savePlayer = async (player: Player) => {
+  const savePlayer = useCallback(async (player: Player) => {
     setPlayers((prev) => {
       const idx = prev.findIndex((p) => p.id === player.id);
       if (idx >= 0) {
@@ -257,21 +279,21 @@ export function SportsDataProvider({ children }: { children: React.ReactNode }) 
       return [...prev, player];
     });
     await upsertPlayerInSupabase(player);
-  };
+  }, []);
 
-  const deletePlayer = async (id: string) => {
+  const deletePlayer = useCallback(async (id: string) => {
     setPlayers((prev) => prev.filter((p) => p.id !== id));
     await deletePlayerInSupabase(id);
-  };
+  }, []);
 
-  const deleteAllPlayers = async () => {
+  const deleteAllPlayers = useCallback(async () => {
     setPlayers([]);
     await deleteAllPlayersInSupabase();
-  };
+  }, []);
 
-  const saveSeason = async (season: Season) => {
+  const saveSeason = useCallback(async (season: Season) => {
+    const sLeague = inferLeague(season.id, season.league);
     let nextSeasons: Season[] = [];
-    const sLeague = season.league ?? (season.id.startsWith("pba") ? "PBA" : season.id.startsWith("pvl") ? "PVL" : "UAAP");
 
     setSeasons((prev) => {
       const idx = prev.findIndex((s) => s.id === season.id);
@@ -284,7 +306,7 @@ export function SportsDataProvider({ children }: { children: React.ReactNode }) 
 
       if (season.isCurrent) {
         updatedList = updatedList.map((s) => {
-          const l = s.league ?? (s.id.startsWith("pba") ? "PBA" : s.id.startsWith("pvl") ? "PVL" : "UAAP");
+          const l = inferLeague(s.id, s.league);
           if (l === sLeague) {
             return { ...s, isCurrent: s.id === season.id };
           }
@@ -300,9 +322,9 @@ export function SportsDataProvider({ children }: { children: React.ReactNode }) 
     } else {
       await upsertSeasonInSupabase(season);
     }
-  };
+  }, []);
 
-  const deleteSeason = async (id: string) => {
+  const deleteSeason = useCallback(async (id: string) => {
     let nextSeasons: Season[] = [];
 
     setSeasons((prev) => {
@@ -310,60 +332,71 @@ export function SportsDataProvider({ children }: { children: React.ReactNode }) 
       const remaining = prev.filter((s) => s.id !== id);
 
       if (deletedSeason?.isCurrent) {
-        const dLeague = deletedSeason.league ?? (id.startsWith("pba") ? "PBA" : id.startsWith("pvl") ? "PVL" : "UAAP");
+        const dLeague = inferLeague(id, deletedSeason.league);
         const remainingInLeague = remaining.filter(
-          (s) => (s.league ?? (s.id.startsWith("pba") ? "PBA" : s.id.startsWith("pvl") ? "PVL" : "UAAP")) === dLeague
+          (s) => inferLeague(s.id, s.league) === dLeague
         );
         if (remainingInLeague.length > 0) {
-          remainingInLeague[0].isCurrent = true;
-          if (currentSeasonId === id) {
-            setCurrentSeasonId(remainingInLeague[0].id);
-          }
+          remainingInLeague[0] = { ...remainingInLeague[0], isCurrent: true };
+          // Update in the remaining array too
+          const idx = remaining.findIndex((s) => s.id === remainingInLeague[0].id);
+          if (idx >= 0) remaining[idx] = remainingInLeague[0];
         }
       }
       nextSeasons = remaining;
       return remaining;
     });
 
+    setCurrentSeasonId((prev) => {
+      if (prev === id && nextSeasons.length > 0) {
+        const replacement = nextSeasons.find((s) => s.isCurrent);
+        return replacement?.id ?? nextSeasons[0]?.id ?? prev;
+      }
+      return prev;
+    });
+
     await deleteSeasonInSupabase(id);
     if (nextSeasons.length > 0) {
       await batchUpsertSeasonsInSupabase(nextSeasons);
     }
-  };
+  }, []);
 
-  const setSeasonAsCurrent = async (targetId: string) => {
-    const targetSeason = seasons.find((s) => s.id === targetId);
-    const targetLeague = targetSeason?.league ?? (targetId.startsWith("pba") ? "PBA" : targetId.startsWith("pvl") ? "PVL" : "UAAP");
-
+  const setSeasonAsCurrent = useCallback(async (targetId: string) => {
     setCurrentSeasonId(targetId);
 
-    const updatedSeasons = seasons.map((s) => {
-      const sLeague = s.league ?? (s.id.startsWith("pba") ? "PBA" : s.id.startsWith("pvl") ? "PVL" : "UAAP");
-      if (sLeague === targetLeague) {
-        return { ...s, isCurrent: s.id === targetId };
-      }
-      return s;
+    setSeasons((prev) => {
+      const targetSeason = prev.find((s) => s.id === targetId);
+      const targetLeague = inferLeague(targetId, targetSeason?.league);
+
+      const updatedSeasons = prev.map((s) => {
+        const sLeague = inferLeague(s.id, s.league);
+        if (sLeague === targetLeague) {
+          return { ...s, isCurrent: s.id === targetId };
+        }
+        return s;
+      });
+
+      // Fire-and-forget Supabase sync
+      void batchUpsertSeasonsInSupabase(updatedSeasons);
+      return updatedSeasons;
     });
+  }, []);
 
-    setSeasons(updatedSeasons);
-    await batchUpsertSeasonsInSupabase(updatedSeasons);
-  };
-
-  const reorderSeasons = async (newSeasonsOrder: Season[]) => {
+  const reorderSeasons = useCallback(async (newSeasonsOrder: Season[]) => {
     setSeasons(newSeasonsOrder);
     await batchUpsertSeasonsInSupabase(newSeasonsOrder);
-  };
+  }, []);
 
-  const importBoxScoreBatch = async (batchGames: Game[]) => {
+  const importBoxScoreBatch = useCallback(async (batchGames: Game[]) => {
     setGames((prev) => {
       const byId = new Map(prev.map((g) => [g.id, g]));
       for (const g of batchGames) byId.set(g.id, g);
       return Array.from(byId.values());
     });
     await batchUpsertGamesInSupabase(batchGames);
-  };
+  }, []);
 
-  // Selectors
+  // Selectors — memoized with useCallback
   const getStandingsHandler = useCallback(
     (league: League, seasonId = currentSeasonId) => {
       return deriveStandings(teams, games, league, seasonId);
@@ -399,40 +432,53 @@ export function SportsDataProvider({ children }: { children: React.ReactNode }) 
     [games, teams]
   );
 
+  // Memoize the entire context value to prevent unnecessary re-renders
+  const value = useMemo<SportsDataContextType>(
+    () => ({
+      seasons,
+      teams,
+      players,
+      games,
+      currentSeasonId,
+      setCurrentSeasonId,
+      setSeasonAsCurrent,
+      reorderSeasons,
+      loading,
+      error,
+      isHydrated,
+      refreshData: loadDataFromSupabase,
+      resetToDefaults,
+      saveGame,
+      deleteGame,
+      updateGameScore,
+      updateGameBoxScore,
+      saveTeam,
+      deleteTeam,
+      savePlayer,
+      deletePlayer,
+      deleteAllPlayers,
+      saveSeason,
+      deleteSeason,
+      importBoxScoreBatch,
+      getStandings: getStandingsHandler,
+      getStatLeaders: getStatLeadersHandler,
+      getPlayerStatRank: getPlayerStatRankHandler,
+      getPlayerGameLog: getPlayerGameLogHandler,
+      getPlayerAverages: getPlayerAveragesHandler,
+    }),
+    [
+      seasons, teams, players, games, currentSeasonId, loading, error, isHydrated,
+      loadDataFromSupabase, resetToDefaults,
+      saveGame, deleteGame, updateGameScore, updateGameBoxScore,
+      saveTeam, deleteTeam, savePlayer, deletePlayer, deleteAllPlayers,
+      saveSeason, deleteSeason, setSeasonAsCurrent, reorderSeasons, importBoxScoreBatch,
+      getStandingsHandler, getStatLeadersHandler, getPlayerStatRankHandler,
+      getPlayerGameLogHandler, getPlayerAveragesHandler,
+    ]
+  );
+
   return (
-    <SportsDataContext.Provider
-      value={{
-        seasons,
-        teams,
-        players,
-        games,
-        currentSeasonId,
-        setCurrentSeasonId,
-        setSeasonAsCurrent,
-        reorderSeasons,
-        loading,
-        error,
-        isHydrated,
-        refreshData: loadDataFromSupabase,
-        saveGame,
-        deleteGame,
-        updateGameScore,
-        updateGameBoxScore,
-        saveTeam,
-        deleteTeam,
-        savePlayer,
-        deletePlayer,
-        deleteAllPlayers,
-        saveSeason,
-        deleteSeason,
-        importBoxScoreBatch,
-        getStandings: getStandingsHandler,
-        getStatLeaders: getStatLeadersHandler,
-        getPlayerStatRank: getPlayerStatRankHandler,
-        getPlayerGameLog: getPlayerGameLogHandler,
-        getPlayerAverages: getPlayerAveragesHandler,
-      }}
-    >
+    <SportsDataContext.Provider value={value}>
       {children}
     </SportsDataContext.Provider>
   );

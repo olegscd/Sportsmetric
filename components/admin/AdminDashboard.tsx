@@ -1,8 +1,9 @@
 "use client";
 
-import { resetAllDataToDefaults } from "@/lib/data";
+import { logoutAdmin } from "@/app/admin/actions";
 import { cn } from "@/lib/utils";
-import { ChevronLeft } from "lucide-react";
+import { useSportsData } from "@/context/SportsDataContext";
+import { ChevronLeft, LogOut } from "lucide-react";
 import Link from "next/link";
 import { useCallback, useRef, useState } from "react";
 import { BoxScoreParserTab } from "./BoxScoreParserTab";
@@ -26,6 +27,7 @@ export function AdminDashboard() {
   const [tab, setTab] = useState<AdminTab>("players");
   const [toast, setToast] = useState<ToastState | null>(null);
   const toastTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const { resetToDefaults } = useSportsData();
 
   const showToast = useCallback((message: string, tone: ToastState["tone"] = "success") => {
     if (toastTimeout.current) clearTimeout(toastTimeout.current);
@@ -38,8 +40,13 @@ export function AdminDashboard() {
       "Reset all Sportsmetric data to the original mock data? Every admin edit will be lost -- this can't be undone."
     );
     if (!confirmed) return;
-    resetAllDataToDefaults();
+    resetToDefaults();
     showToast("Reset to original mock data.");
+  }
+
+  async function handleLogout() {
+    await logoutAdmin();
+    window.location.reload();
   }
 
   return (
@@ -53,13 +60,23 @@ export function AdminDashboard() {
             Manage players, teams &amp; live scores
           </p>
         </div>
-        <Link
-          href="/"
-          className="flex shrink-0 items-center gap-1 rounded-full border border-border px-3 py-1.5 text-xs font-semibold text-foreground active:bg-elevated"
-        >
-          <ChevronLeft size={14} />
-          Back to App
-        </Link>
+        <div className="flex shrink-0 items-center gap-2">
+          <button
+            type="button"
+            onClick={handleLogout}
+            className="flex items-center gap-1 rounded-full border border-border px-3 py-1.5 text-xs font-semibold text-muted active:bg-elevated"
+            title="Sign out of admin"
+          >
+            <LogOut size={14} />
+          </button>
+          <Link
+            href="/"
+            className="flex shrink-0 items-center gap-1 rounded-full border border-border px-3 py-1.5 text-xs font-semibold text-foreground active:bg-elevated"
+          >
+            <ChevronLeft size={14} />
+            Back to App
+          </Link>
+        </div>
       </div>
 
       <div className="flex gap-1 border-b border-border px-3 pt-3">

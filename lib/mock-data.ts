@@ -34,6 +34,24 @@ import {
   uaapS88Games,
   uaapS88Players,
 } from "@/lib/uaap-s88-data";
+import {
+  pvl2021Games,
+  pvl2021Players,
+  pvl2021Season,
+  pvl2021Teams,
+} from "@/lib/pvl-2021-data";
+
+function deduplicateById<T extends { id: string }>(items: T[]): T[] {
+  const seen = new Set<string>();
+  const result: T[] = [];
+  for (const item of items) {
+    if (item && item.id && !seen.has(item.id)) {
+      seen.add(item.id);
+      result.push(item);
+    }
+  }
+  return result;
+}
 
 // ---------------------------------------------------------------------------
 // Seasons
@@ -42,7 +60,7 @@ import {
 /** All mock rosters/games below belong to this season. */
 const CURRENT_SEASON_ID = "2025-26";
 
-export const mockSeasons: Season[] = [
+export const mockSeasons: Season[] = deduplicateById([
   { id: CURRENT_SEASON_ID, label: "2025-26 Season (UAAP S88)", isCurrent: true, league: "UAAP" },
   { id: "2024-25", label: "2024-25 Season (UAAP S87)", isCurrent: false, league: "UAAP" },
   { id: "2023-24", label: "2023-24 Season", isCurrent: false, league: "UAAP" },
@@ -58,17 +76,19 @@ export const mockSeasons: Season[] = [
     isCurrent: false,
     league: "PBA",
   },
-];
+  pvl2021Season,
+]);
 
 // ---------------------------------------------------------------------------
 // Teams (all UAAP / PBA / PVL teams, current + previous 2 seasons)
 // ---------------------------------------------------------------------------
 
-export const mockTeams: Team[] = [
+export const mockTeams: Team[] = deduplicateById([
   ...applyUaapS88TeamRecords(applyUaapS87TeamRecords(buildAllTeams())),
   ...applyPbaGovCupTeamRecords(pbaGovCupTeams),
   ...applyPbaCommCupTeamRecords(pbaCommCupTeams),
-];
+  ...pvl2021Teams,
+]);
 
 function getTeam(id: string): Team {
   const team = mockTeams.find((t) => t.id === id);
@@ -725,12 +745,13 @@ const oldRawPlayers = [
 ];
 */
 
-export const mockPlayers: Player[] = [
+export const mockPlayers: Player[] = deduplicateById([
   ...uaapS88Players,
   ...uaapS87Players,
   ...pbaGovCupPlayers,
   ...pbaCommCupPlayers,
-];
+  ...pvl2021Players,
+]);
 
 // ---------------------------------------------------------------------------
 // Factories (deterministic - no Date.now()/Math.random() anywhere)
@@ -780,17 +801,17 @@ function pbpFactory(gameId: string) {
 // Games
 // ---------------------------------------------------------------------------
 
-export const mockGames: Game[] = [
+export const mockGames: Game[] = deduplicateById([
   ...hydrateUaapS88Games(uaapS88Games, mockTeams),
   ...hydrateUaapS87Games(uaapS87Games, mockTeams),
   ...hydratePbaGovCupGames(pbaGovCupGames, mockTeams),
   ...hydratePbaCommCupGames(pbaCommCupGames, mockTeams),
-];
+  ...pvl2021Games,
+]);
 
 function pushGame(game: Omit<Game, "seasonId">): void {
-  // UAAP games are driven by official season imports (uaapS88Games & uaapS87Games).
-  // Ignore legacy hand-coded UAAP mock games to prevent game and team record duplication.
-  if (game.league !== "UAAP") {
+  // Official season imports drive UAAP & PVL games.
+  if (game.league !== "UAAP" && game.league !== "PVL") {
     mockGames.push({ ...game, seasonId: CURRENT_SEASON_ID });
   }
 }

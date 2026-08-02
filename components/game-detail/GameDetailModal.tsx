@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 import type { Game } from "@/types/sports";
 import { X } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BoxScoreTable } from "./BoxScoreTable";
 import { MomentumBar } from "./MomentumBar";
 import { PlayByPlayFeed } from "./PlayByPlayFeed";
@@ -33,6 +33,15 @@ export function GameDetailModal() {
 function GameDetailSheet({ game, onClose }: { game: Game; onClose: () => void }) {
   const [tab, setTab] = useState<DetailTab>("overview");
   const [side, setSide] = useState<"away" | "home">("away");
+
+  // Prevent background page viewport jumping while modal is open
+  useEffect(() => {
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = originalOverflow;
+    };
+  }, []);
 
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center">
@@ -144,7 +153,7 @@ function GameDetailSheet({ game, onClose }: { game: Game; onClose: () => void })
                   {game.homeTeam.shortName}
                 </button>
               </div>
-              <BoxScoreTable items={game.boxScore[side]} />
+              <BoxScoreTable items={game.boxScore[side]} league={game.league} />
             </div>
           ) : null}
 

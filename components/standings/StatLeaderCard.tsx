@@ -1,5 +1,5 @@
 import { TeamBadge } from "@/components/ui/TeamBadge";
-import type { StatLeaderEntry } from "@/lib/data";
+import type { StatLeaderEntry } from "@/lib/derivations";
 import Link from "next/link";
 
 interface StatLeaderCardProps {

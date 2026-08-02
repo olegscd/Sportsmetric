@@ -49,13 +49,14 @@ export function BottomNav() {
   ];
 
   return (
-    <nav className="sticky bottom-0 z-30 flex shrink-0 items-stretch border-t border-border bg-surface/95 backdrop-blur">
+    <nav className="fixed bottom-0 left-0 right-0 z-30 mx-auto flex max-w-md shrink-0 items-stretch border-t border-border bg-surface/95 backdrop-blur">
       {navItems.map(({ href, label, icon: Icon, isActive, badgeCount }) => {
         const active = isActive(pathname);
         return (
           <Link
             key={href}
             href={href}
+            scroll={false}
             className="flex flex-1 flex-col items-center gap-1 py-2.5"
           >
             <span className="relative">

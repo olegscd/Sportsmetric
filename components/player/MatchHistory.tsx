@@ -1,7 +1,7 @@
 "use client";
 
 import { TeamBadge } from "@/components/ui/TeamBadge";
-import type { PlayerGameLogEntry } from "@/lib/data";
+import type { PlayerGameLogEntry } from "@/lib/derivations";
 import { useGameModal } from "@/lib/game-modal-context";
 import { cn, formatStartTime } from "@/lib/utils";
 

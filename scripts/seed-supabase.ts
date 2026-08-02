@@ -85,28 +85,46 @@ function gameToRecord(game: Game) {
 }
 
 async function main() {
-  const seasonsResult = await supabase.from("seasons").upsert(mockSeasons.map(seasonToRecord));
+  // Delete all rows first (order matters for FK constraints: games → players → teams → seasons)
+  console.log("Clearing existing data...");
+
+  const delGames = await supabase.from("games").delete().neq("id", "__impossible__");
+  if (delGames.error) console.warn("Warning clearing games:", delGames.error.message);
+
+  const delPlayers = await supabase.from("players").delete().neq("id", "__impossible__");
+  if (delPlayers.error) console.warn("Warning clearing players:", delPlayers.error.message);
+
+  const delTeams = await supabase.from("teams").delete().neq("id", "__impossible__");
+  if (delTeams.error) console.warn("Warning clearing teams:", delTeams.error.message);
+
+  const delSeasons = await supabase.from("seasons").delete().neq("id", "__impossible__");
+  if (delSeasons.error) console.warn("Warning clearing seasons:", delSeasons.error.message);
+
+  console.log("Cleared all existing rows.");
+
+  // Insert fresh data (order: seasons → teams → players → games)
+  const seasonsResult = await supabase.from("seasons").insert(mockSeasons.map(seasonToRecord));
   if (seasonsResult.error) {
     console.error("Failed seeding seasons:", seasonsResult.error.message);
     process.exit(1);
   }
   console.log(`Seeded seasons: ${mockSeasons.length} rows`);
 
-  const teamsResult = await supabase.from("teams").upsert(mockTeams.map(teamToRecord));
+  const teamsResult = await supabase.from("teams").insert(mockTeams.map(teamToRecord));
   if (teamsResult.error) {
     console.error("Failed seeding teams:", teamsResult.error.message);
     process.exit(1);
   }
   console.log(`Seeded teams: ${mockTeams.length} rows`);
 
-  const playersResult = await supabase.from("players").upsert(mockPlayers.map(playerToRecord));
+  const playersResult = await supabase.from("players").insert(mockPlayers.map(playerToRecord));
   if (playersResult.error) {
     console.error("Failed seeding players:", playersResult.error.message);
     process.exit(1);
   }
   console.log(`Seeded players: ${mockPlayers.length} rows`);
 
-  const gamesResult = await supabase.from("games").upsert(mockGames.map(gameToRecord));
+  const gamesResult = await supabase.from("games").insert(mockGames.map(gameToRecord));
   if (gamesResult.error) {
     console.error("Failed seeding games:", gamesResult.error.message);
     process.exit(1);

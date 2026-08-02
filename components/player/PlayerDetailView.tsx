@@ -2,21 +2,28 @@
 
 import { useSportsData } from "@/context/SportsDataContext";
 import { formatAvg, formatPct } from "@/lib/utils";
-import type { SeasonAverages } from "@/types/sports";
+import type { Player, SeasonAverages } from "@/types/sports";
+import type { PlayerGameLogEntry } from "@/lib/derivations";
+import { ChevronDown } from "lucide-react";
+import { useMemo, useState } from "react";
+import { PlayerVolleyballStats } from "./PlayerVolleyballStats";
 import { MatchHistory } from "./MatchHistory";
 import { PlayerCard } from "./PlayerCard";
 import { StatCardExport } from "./StatCardExport";
 
 function isVolleyballAverages(avg: SeasonAverages): boolean {
-  return avg.killsPerSet !== undefined;
+  return avg.killsPerSet !== undefined || avg.attackPts !== undefined;
 }
 
 function CareerStatGrid({ averages }: { averages: SeasonAverages }) {
   const tiles = isVolleyballAverages(averages)
     ? [
-        { label: "Kills/Set", value: formatAvg(averages.killsPerSet ?? 0) },
+        { label: "PPG", value: formatAvg(averages.ppg) },
+        { label: "Attack Pts", value: String(averages.attackPts ?? 0) },
+        { label: "Block Pts", value: String(averages.blockPts ?? 0) },
+        { label: "Serve Aces", value: String(averages.servePts ?? 0) },
         { label: "Digs/Set", value: formatAvg(averages.digsPerSet ?? 0) },
-        { label: "Blocks/Set", value: formatAvg(averages.blocksPerSet ?? 0) },
+        { label: "Atk Eff", value: formatPct(averages.attackPct ?? 0) },
       ]
     : [
         { label: "PPG", value: formatAvg(averages.ppg) },
@@ -46,6 +53,7 @@ function CareerStatGrid({ averages }: { averages: SeasonAverages }) {
 
 export function PlayerDetailView({ id }: { id: string }) {
   const { players, teams, seasons, getPlayerGameLog, getPlayerAverages } = useSportsData();
+  const [selectedSeasonOption, setSelectedSeasonOption] = useState<string>("career");
 
   const player = players.find((p) => p.id === id);
   const team = player ? teams.find((t) => t.id === player.teamId) : undefined;
@@ -59,55 +67,144 @@ export function PlayerDetailView({ id }: { id: string }) {
     );
   }
 
-  const gameLog = getPlayerGameLog(player.id);
-  const derivedAverages = getPlayerAverages(player);
+  const seasonLines = useMemo(() => {
+    return players
+      .filter((p: Player) => p.personId === player?.personId)
+      .sort((a: Player, b: Player) => a.seasonId.localeCompare(b.seasonId));
+  }, [players, player?.personId]);
 
-  const seasonLines = players
-    .filter((p) => p.personId === player.personId)
-    .sort((a, b) => a.seasonId.localeCompare(b.seasonId));
+  const gameLog = useMemo(() => {
+    if (!player) return [];
+    const lines = seasonLines.length > 0 ? seasonLines : [player];
+    const allLogs = lines.flatMap((line: Player) => getPlayerGameLog(line.id));
+    const seen = new Set<string>();
+    return allLogs.filter((entry: PlayerGameLogEntry) => {
+      if (seen.has(entry.game.id)) return false;
+      seen.add(entry.game.id);
+      return true;
+    });
+  }, [seasonLines, player, getPlayerGameLog]);
+
+  const careerAverages = useMemo(() => {
+    const lines = seasonLines.length > 0 ? seasonLines : player ? [player] : [];
+    if (lines.length === 0) {
+      return { ppg: 0, rpg: 0, apg: 0, spg: 0, bpg: 0, fgPct: 0, threePtPct: 0, ftPct: 0 };
+    }
+    if (lines.length === 1) {
+      return getPlayerAverages(lines[0]);
+    }
+
+    let totPpg = 0, totRpg = 0, totApg = 0, totSpg = 0, totBpg = 0;
+    let totFg = 0, tot3p = 0, totFt = 0;
+    const count = lines.length;
+
+    for (const line of lines) {
+      const avg = getPlayerAverages(line);
+      totPpg += avg.ppg;
+      totRpg += avg.rpg;
+      totApg += avg.apg;
+      totSpg += avg.spg;
+      totBpg += avg.bpg;
+      totFg += avg.fgPct;
+      tot3p += avg.threePtPct;
+      totFt += avg.ftPct;
+    }
+
+    return {
+      ppg: Math.round((totPpg / count) * 10) / 10,
+      rpg: Math.round((totRpg / count) * 10) / 10,
+      apg: Math.round((totApg / count) * 10) / 10,
+      spg: Math.round((totSpg / count) * 10) / 10,
+      bpg: Math.round((totBpg / count) * 10) / 10,
+      fgPct: Math.round((totFg / count) * 10) / 10,
+      threePtPct: Math.round((tot3p / count) * 10) / 10,
+      ftPct: Math.round((totFt / count) * 10) / 10,
+    };
+  }, [seasonLines, player, getPlayerAverages]);
 
   function seasonLabel(seasonId: string): string {
     return seasons.find((s) => s.id === seasonId)?.label ?? seasonId;
   }
+
+  const activeSeasonPlayer =
+    selectedSeasonOption === "career"
+      ? null
+      : seasonLines.find((p: Player) => p.id === selectedSeasonOption) ?? player;
+
+  const displayAverages = activeSeasonPlayer
+    ? getPlayerAverages(activeSeasonPlayer)
+    : careerAverages;
+
+  const isVolleyball = team.league === "PVL" || isVolleyballAverages(careerAverages);
 
   return (
     <div className="flex flex-col gap-4 px-4 py-4">
       <PlayerCard player={player} team={team} variant="full" />
       <StatCardExport player={player} team={team} />
 
-      {seasonLines.length > 0 ? (
+      {isVolleyball ? (
+        <PlayerVolleyballStats
+          player={player}
+          allPlayerSeasons={seasonLines.length > 0 ? seasonLines : [player]}
+        />
+      ) : (
         <div className="flex flex-col gap-3 rounded-2xl border border-border bg-surface p-5">
-          <div>
-            <p className="text-[11px] font-semibold uppercase tracking-wide text-muted">
-              Season & Career Performance
-            </p>
-            <p className="mt-0.5 text-xs text-muted">
-              Derived from {gameLog.length} recorded games across {seasonLines.length} season row(s)
-            </p>
-          </div>
-          <CareerStatGrid averages={derivedAverages} />
-          <ul className="flex flex-col gap-1.5 border-t border-border pt-3">
-            {seasonLines.map((line) => {
-              const lineAvg = getPlayerAverages(line);
-              return (
-                <li
-                  key={line.id}
-                  className="flex items-center justify-between gap-2 text-xs text-muted"
-                >
-                  <span className="font-medium text-foreground/80">
+          <div className="flex items-center justify-between gap-3 border-b border-border pb-3">
+            <div>
+              <p className="text-[11px] font-semibold uppercase tracking-wide text-muted">
+                Performance Overview
+              </p>
+              <p className="text-xs font-semibold text-foreground">
+                {selectedSeasonOption === "career"
+                  ? "Career / Lifetime Stats"
+                  : seasonLabel(activeSeasonPlayer?.seasonId ?? player.seasonId)}
+              </p>
+            </div>
+
+            <label className="relative shrink-0">
+              <select
+                value={selectedSeasonOption}
+                onChange={(e) => setSelectedSeasonOption(e.target.value)}
+                className="appearance-none rounded-full border border-border bg-elevated py-1.5 pl-3 pr-7 text-xs font-semibold text-foreground focus:border-primary focus:outline-none"
+              >
+                <option value="career">Career / Lifetime Stats</option>
+                {seasonLines.map((line: Player) => (
+                  <option key={line.id} value={line.id}>
                     {seasonLabel(line.seasonId)}
-                  </span>
-                  <span className="tabular-nums">
-                    {isVolleyballAverages(lineAvg)
-                      ? `${formatAvg(lineAvg.killsPerSet ?? 0)} K/S`
-                      : `${formatAvg(lineAvg.ppg)} PPG`}
-                  </span>
-                </li>
-              );
-            })}
-          </ul>
+                  </option>
+                ))}
+              </select>
+              <ChevronDown
+                size={12}
+                className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-muted"
+              />
+            </label>
+          </div>
+
+          <CareerStatGrid averages={displayAverages} />
+
+          {seasonLines.length > 0 ? (
+            <ul className="flex flex-col gap-1.5 border-t border-border pt-3">
+              {seasonLines.map((line: Player) => {
+                const lineAvg = getPlayerAverages(line);
+                return (
+                  <li
+                    key={line.id}
+                    className="flex items-center justify-between gap-2 text-xs text-muted"
+                  >
+                    <span className="font-medium text-foreground/80">
+                      {seasonLabel(line.seasonId)}
+                    </span>
+                    <span className="tabular-nums">
+                      {`${formatAvg(lineAvg.ppg)} PPG`}
+                    </span>
+                  </li>
+                );
+              })}
+            </ul>
+          ) : null}
         </div>
-      ) : null}
+      )}
 
       <div>
         <p className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-muted">

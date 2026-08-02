@@ -1,5 +1,4 @@
 import { PlayerDetailView } from "@/components/player/PlayerDetailView";
-import { getPlayerById } from "@/lib/data";
 import { mockPlayers } from "@/lib/mock-data";
 import { notFound } from "next/navigation";
 
@@ -14,7 +13,7 @@ export default async function PlayerDetailPage({
 }) {
   const { id } = await params;
 
-  if (!getPlayerById(id)) {
+  if (!mockPlayers.some((p) => p.id === id)) {
     notFound();
   }
 

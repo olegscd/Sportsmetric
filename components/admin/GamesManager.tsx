@@ -78,13 +78,36 @@ function GameQuickRow({
   const [period, setPeriod] = useState(periodInputDefault(game));
 
   function handleSave() {
+    // Parse period input: "Q4 1:42" → quarterOrSet=4, timeRemaining="1:42"
+    //                     "Set 3"   → quarterOrSet=3, timeRemaining=null
+    let parsedQuarter = game.quarterOrSet;
+    let parsedTime: string | null = game.timeRemaining;
+
+    const trimmed = period.trim();
+    if (trimmed) {
+      const qMatch = trimmed.match(/^[Qq](\d+)\s*(.*)/);
+      const setMatch = trimmed.match(/^[Ss]et\s*(\d+)/i);
+      if (qMatch) {
+        parsedQuarter = parseInt(qMatch[1], 10) || 1;
+        parsedTime = qMatch[2]?.trim() || null;
+      } else if (setMatch) {
+        parsedQuarter = parseInt(setMatch[1], 10) || 1;
+        parsedTime = null;
+      } else {
+        // Try bare number
+        const num = parseInt(trimmed, 10);
+        if (!isNaN(num)) parsedQuarter = num;
+        parsedTime = null;
+      }
+    }
+
     onUpdateScore(
       game.id,
       parseInt(homeScore, 10) || 0,
       parseInt(awayScore, 10) || 0,
       status,
-      1,
-      period
+      parsedQuarter,
+      parsedTime
     );
     onToast("Score updated successfully!");
   }

@@ -1,5 +1,4 @@
 import { TeamDetailView } from "@/components/team/TeamDetailView";
-import { getTeamById } from "@/lib/data";
 import { mockTeams } from "@/lib/mock-data";
 import { notFound } from "next/navigation";
 
@@ -14,7 +13,7 @@ export default async function TeamDetailPage({
 }) {
   const { id } = await params;
 
-  if (!getTeamById(id)) {
+  if (!mockTeams.some((t) => t.id === id)) {
     notFound();
   }
 

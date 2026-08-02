@@ -283,9 +283,21 @@ export function derivePlayerAverages(player: Player, games: Game[], teams?: Team
     fgPct: fgA > 0 ? round1((fgM / fgA) * 100) : 0,
     threePtPct: threeA > 0 ? round1((threeM / threeA) * 100) : 0,
     ftPct: ftA > 0 ? round1((ftM / ftA) * 100) : 0,
+    totalPts: player.seasonAverages.totalPts ?? pts,
+    matchesPlayed: player.seasonAverages.matchesPlayed ?? gp,
+    attackPts: player.seasonAverages.attackPts,
+    attackPct: player.seasonAverages.attackPct,
+    attackAvg: player.seasonAverages.attackAvg,
+    blockPts: player.seasonAverages.blockPts,
+    blockPct: player.seasonAverages.blockPct,
+    blockAvg: player.seasonAverages.blockAvg,
+    servePts: player.seasonAverages.servePts,
+    servePct: player.seasonAverages.servePct,
+    serveAvg: player.seasonAverages.serveAvg,
     killsPerSet: player.seasonAverages.killsPerSet,
     digsPerSet: player.seasonAverages.digsPerSet,
     blocksPerSet: player.seasonAverages.blocksPerSet,
+    acesPerSet: player.seasonAverages.acesPerSet,
   };
 }
 
@@ -349,18 +361,25 @@ export function derivePlayerStatRank(
   const team = teams.find((t) => t.id === player.teamId);
   if (!team) return undefined;
 
-  const playerAvg = derivePlayerAverages(player, games, teams);
-  const value = playerAvg[statKey];
-  if (typeof value !== "number") return undefined;
-
+  // Pre-compute averages for all league players in one pass
   const leaguePlayers = players.filter((p) => {
     const pTeam = teams.find((t) => t.id === p.teamId);
     return pTeam && pTeam.league === team.league && p.seasonId === player.seasonId;
   });
 
+  const averagesCache = new Map<string, SeasonAverages>();
+  for (const p of leaguePlayers) {
+    averagesCache.set(p.id, derivePlayerAverages(p, games, teams));
+  }
+
+  const playerAvg = averagesCache.get(playerId);
+  if (!playerAvg) return undefined;
+  const value = playerAvg[statKey];
+  if (typeof value !== "number") return undefined;
+
   const ranked = leaguePlayers
     .map((p) => {
-      const avg = derivePlayerAverages(p, games, teams);
+      const avg = averagesCache.get(p.id)!;
       return { id: p.id, value: avg[statKey] };
     })
     .filter((entry): entry is { id: string; value: number } => typeof entry.value === "number")
@@ -414,6 +433,8 @@ function collapseTeamsToLifetime(teams: Team[]): Team[] {
   }
 
   return Array.from(byKey.values()).map((rows) => {
+    // Sort descending by seasonId so rows[0] is truly the most recent
+    rows.sort((a, b) => b.seasonId.localeCompare(a.seasonId));
     const latest = rows[0];
     return {
       ...latest,
@@ -435,6 +456,8 @@ function collapsePlayersToLifetime(players: Player[]): Player[] {
   }
 
   return Array.from(byPerson.values()).map((rows) => {
+    // Sort descending by seasonId so rows[0] is truly the most recent
+    rows.sort((a, b) => b.seasonId.localeCompare(a.seasonId));
     const latest = rows[0];
     return {
       ...latest,

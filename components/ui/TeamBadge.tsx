@@ -17,12 +17,7 @@ interface TeamBadgeProps {
 }
 
 export function TeamBadge({ team, size = "md", className }: TeamBadgeProps) {
-  const [mounted, setMounted] = useState(false);
   const [imageFailed, setImageFailed] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   useEffect(() => {
     setImageFailed(false);
@@ -45,23 +40,6 @@ export function TeamBadge({ team, size = "md", className }: TeamBadgeProps) {
     }
   }
 
-  const initialsBadge = (
-    <div
-      className={cn(
-        "flex shrink-0 items-center justify-center rounded-full border-2 bg-surface font-bold tracking-tight",
-        SIZE_CLASSES[size],
-        className
-      )}
-      style={{ borderColor: team.accentColor, color: team.accentColor }}
-    >
-      {team.shortName}
-    </div>
-  );
-
-  if (!mounted) {
-    return initialsBadge;
-  }
-
   if (logoSrc && !imageFailed) {
     return (
       // eslint-disable-next-line @next/next/no-img-element
@@ -79,5 +57,16 @@ export function TeamBadge({ team, size = "md", className }: TeamBadgeProps) {
     );
   }
 
-  return initialsBadge;
+  return (
+    <div
+      className={cn(
+        "flex shrink-0 items-center justify-center rounded-full border-2 bg-surface font-bold tracking-tight",
+        SIZE_CLASSES[size],
+        className
+      )}
+      style={{ borderColor: team.accentColor, color: team.accentColor }}
+    >
+      {team.shortName}
+    </div>
+  );
 }

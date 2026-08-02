@@ -10,7 +10,6 @@ import {
   Field,
   ghostButtonClass,
   inputClass,
-  labelClass,
   primaryButtonClass,
   SectionCard,
   selectClass,

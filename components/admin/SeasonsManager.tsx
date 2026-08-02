@@ -3,6 +3,7 @@
 import type { ToastFn } from "@/components/admin/Toast";
 import { useSportsData } from "@/context/SportsDataContext";
 import { generateId } from "@/lib/data";
+import { inferLeague } from "@/lib/league-utils";
 import { cn } from "@/lib/utils";
 import type { League, Season } from "@/types/sports";
 import { ArrowDown, ArrowUp } from "lucide-react";
@@ -20,10 +21,7 @@ import {
 const LEAGUES: (League | "ALL")[] = ["UAAP", "PBA", "PVL", "ALL"];
 
 function getSeasonLeague(s: Season): League {
-  if (s.league) return s.league;
-  if (s.id.startsWith("pba")) return "PBA";
-  if (s.id.startsWith("pvl")) return "PVL";
-  return "UAAP";
+  return inferLeague(s.id, s.league);
 }
 
 export function SeasonsManager({ onToast }: { onToast: ToastFn }) {
