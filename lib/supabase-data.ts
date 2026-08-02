@@ -234,9 +234,9 @@ export async function fetchAllSupabaseData(): Promise<SupabaseDataResult | null>
 
   const [seasonsRes, teamsRes, playersRes, gamesRes] = await Promise.all([
     supabase.from("seasons").select("*").order("id", { ascending: false }),
-    supabase.from("teams").select("*"),
-    supabase.from("players").select("*"),
-    supabase.from("games").select("*").order("start_time", { ascending: false }),
+    supabase.from("teams").select("*").limit(5000),
+    supabase.from("players").select("*").limit(5000),
+    supabase.from("games").select("*").order("start_time", { ascending: false }).limit(5000),
   ]);
 
   const hasError =

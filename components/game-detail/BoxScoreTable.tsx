@@ -1,7 +1,28 @@
 "use client";
 
 import { useSportsData } from "@/context/SportsDataContext";
-import type { BoxScoreItem } from "@/types/sports";
+import type { BoxScoreItem, Player } from "@/types/sports";
+
+function formatPlayerDisplayName(itemPlayerId: string, player?: Player): string {
+  if (player) {
+    return player.jerseyNumber > 0 ? `#${player.jerseyNumber} ${player.name}` : player.name;
+  }
+  const parts = itemPlayerId.split("-");
+  const textParts = parts.filter(
+    (p) =>
+      !["pvl", "uaap", "pba", "2021", "2022", "2023", "2024", "2025", "2026", "open", "reinforced", "invitational", "g", "g1", "g2"].includes(p)
+  );
+  if (textParts.length > 1) {
+    const nameTokens = textParts.slice(1);
+    if (nameTokens.length > 0) {
+      return nameTokens.map((t) => t.charAt(0).toUpperCase() + t.slice(1)).join(" ");
+    }
+  }
+  return itemPlayerId
+    .split("-")
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(" ");
+}
 
 export function BoxScoreTable({
   items,
@@ -43,11 +64,12 @@ export function BoxScoreTable({
             {items.map((item) => {
               const player = players.find((p) => p.id === item.playerId);
               const pos = player?.position ?? "OH";
-              const atkPts = item.atkPts ?? Math.round(item.pts * 0.8);
-              const blkPts = item.blkPts ?? item.blk ?? Math.round(item.pts * 0.12);
-              const acePts = item.acePts ?? Math.max(0, item.pts - atkPts - blkPts);
-              const digs = item.digs ?? (pos === "L" ? 12 : 3);
-              const receptions = item.receptions ?? (pos === "L" ? 10 : 2);
+              const displayName = formatPlayerDisplayName(item.playerId, player);
+              const atkPts = item.atkPts ?? 0;
+              const blkPts = item.blkPts ?? item.blk ?? 0;
+              const acePts = item.acePts ?? 0;
+              const digs = item.digs ?? 0;
+              const receptions = item.receptions ?? 0;
 
               return (
                 <tr
@@ -55,7 +77,7 @@ export function BoxScoreTable({
                   className="border-t border-border/50 hover:bg-surface/60 transition-colors"
                 >
                   <td className="max-w-[150px] truncate py-2 pr-2 font-semibold text-foreground">
-                    {player ? `#${player.jerseyNumber} ${player.name}` : item.playerId}
+                    {displayName}
                   </td>
                   <td className="px-1.5 py-2 text-right tabular-nums text-muted">{pos}</td>
                   <td className="px-1.5 py-2 text-right tabular-nums font-bold text-foreground">
@@ -101,10 +123,11 @@ export function BoxScoreTable({
         <tbody>
           {items.map((item) => {
             const player = players.find((p) => p.id === item.playerId);
+            const displayName = formatPlayerDisplayName(item.playerId, player);
             return (
               <tr key={item.playerId} className="border-t border-border/50 hover:bg-surface/60 transition-colors">
                 <td className="max-w-[140px] truncate py-2 pr-2 font-semibold text-foreground">
-                  {player ? `#${player.jerseyNumber} ${player.name}` : item.playerId}
+                  {displayName}
                 </td>
                 <td className="px-1.5 py-2 text-right tabular-nums text-muted">{item.min}</td>
                 <td className="px-1.5 py-2 text-right tabular-nums font-bold text-foreground">
