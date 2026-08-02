@@ -40,6 +40,12 @@ import {
   pvl2021Season,
   pvl2021Teams,
 } from "@/lib/pvl-2021-data";
+import {
+  pvl2022OpenGames,
+  pvl2022OpenPlayers,
+  pvl2022OpenSeason,
+  pvl2022OpenTeams,
+} from "@/lib/pvl-2022-open-data";
 
 function deduplicateById<T extends { id: string }>(items: T[]): T[] {
   const seen = new Set<string>();
@@ -77,6 +83,7 @@ export const mockSeasons: Season[] = deduplicateById([
     league: "PBA",
   },
   pvl2021Season,
+  pvl2022OpenSeason,
 ]);
 
 // ---------------------------------------------------------------------------
@@ -88,6 +95,7 @@ export const mockTeams: Team[] = deduplicateById([
   ...applyPbaGovCupTeamRecords(pbaGovCupTeams),
   ...applyPbaCommCupTeamRecords(pbaCommCupTeams),
   ...pvl2021Teams,
+  ...pvl2022OpenTeams,
 ]);
 
 function getTeam(id: string): Team {
@@ -751,6 +759,7 @@ export const mockPlayers: Player[] = deduplicateById([
   ...pbaGovCupPlayers,
   ...pbaCommCupPlayers,
   ...pvl2021Players,
+  ...pvl2022OpenPlayers,
 ]);
 
 // ---------------------------------------------------------------------------
@@ -807,6 +816,7 @@ export const mockGames: Game[] = deduplicateById([
   ...hydratePbaGovCupGames(pbaGovCupGames, mockTeams),
   ...hydratePbaCommCupGames(pbaCommCupGames, mockTeams),
   ...pvl2021Games,
+  ...pvl2022OpenGames,
 ]);
 
 function pushGame(game: Omit<Game, "seasonId">): void {
