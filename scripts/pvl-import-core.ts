@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import type { BoxScoreItem, Game, League, Player, Position, SeasonAverages, Team } from "../types/sports";
+import { getPvlEliminationGameCount } from "../lib/league-utils";
 
 export const PVL_TEAM_CODE_TO_META: Record<
   string,
@@ -62,6 +63,7 @@ export type PvlImportConfig = {
   gameIdPrefix: string;
   sourceFile: string;
   outPath: string;
+  maxEliminationGames?: number;
 };
 
 function slugify(name: string): string {
@@ -138,6 +140,11 @@ export function teamMetaForCode(code: string) {
 }
 
 export function importPvlStats(rows: PvlStatsRow[], config: PvlImportConfig) {
+  const maxElim =
+    config.maxEliminationGames ??
+    getPvlEliminationGameCount(config.seasonId) ??
+    getPvlEliminationGameCount(config.label);
+
   const teamMap = new Map<string, Team>();
   const getOrCreateTeam = (code: string): Team => {
     const meta = teamMetaForCode(code);
@@ -271,7 +278,7 @@ export function importPvlStats(rows: PvlStatsRow[], config: PvlImportConfig) {
       gameBuild.awayBox.push(boxItem);
     }
 
-    const isRegularSeason = parseNum(row.game_id) <= 45;
+    const isRegularSeason = parseNum(row.game_id) <= maxElim;
 
     const playerKey = `${teamObj.id}-${personId}`;
     if (!playerAggMap.has(playerKey)) {
@@ -421,7 +428,7 @@ export function importPvlStats(rows: PvlStatsRow[], config: PvlImportConfig) {
     }
     const gPart = game.id.split("-g-")[1] || "0";
     const matchGid = parseInt(gPart, 10);
-    if (matchGid > 0 && matchGid > 45) continue;
+    if (matchGid > 0 && matchGid > maxElim) continue;
 
     const homeWon = game.homeScore > game.awayScore;
     const homeRec = records.get(game.homeTeam.id)!;

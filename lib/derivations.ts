@@ -1,4 +1,5 @@
 import type { BoxScoreItem, Game, League, Player, SeasonAverages, Team } from "@/types/sports";
+import { getPvlEliminationGameCount } from "@/lib/league-utils";
 
 export const LIFETIME_SEASON_ID = "lifetime";
 
@@ -101,6 +102,14 @@ export function getRegularSeasonGames(games: Game[], league: League, seasonId: s
       const num = extractGameNumber(g.id);
       return num > 0 ? num <= 56 : true;
     }).slice(0, 56);
+  }
+
+  if (league === "PVL") {
+    return leagueGames.filter((g) => {
+      const maxElim = getPvlEliminationGameCount(g.seasonId);
+      const num = extractGameNumber(g.id);
+      return num > 0 ? num <= maxElim : true;
+    });
   }
 
   return leagueGames;

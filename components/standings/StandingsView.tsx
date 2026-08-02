@@ -92,7 +92,11 @@ export function StandingsView() {
       <div>
         <div className="mb-2 flex items-center justify-between">
           <p className="text-[11px] font-semibold uppercase tracking-wide text-muted">
-            {league === "UAAP" ? "Elimination Round Standings (Capped at 56 Games)" : "Standings"}
+            {league === "UAAP"
+              ? "Elimination Round Standings (Capped at 56 Games)"
+              : league === "PVL"
+              ? "Elimination Round Standings (Regular Season)"
+              : "Standings"}
           </p>
         </div>
         {standings.length === 0 ? (
