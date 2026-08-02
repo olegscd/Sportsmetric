@@ -52,6 +52,12 @@ import {
   pvl2022InvitationalSeason,
   pvl2022InvitationalTeams,
 } from "@/lib/pvl-2022-invitational-data";
+import {
+  pvl2022ReinforcedGames,
+  pvl2022ReinforcedPlayers,
+  pvl2022ReinforcedSeason,
+  pvl2022ReinforcedTeams,
+} from "@/lib/pvl-2022-reinforced-data";
 
 function deduplicateById<T extends { id: string }>(items: T[]): T[] {
   const seen = new Set<string>();
@@ -91,6 +97,7 @@ export const mockSeasons: Season[] = deduplicateById([
   pvl2021Season,
   pvl2022OpenSeason,
   pvl2022InvitationalSeason,
+  pvl2022ReinforcedSeason,
 ]);
 
 // ---------------------------------------------------------------------------
@@ -104,6 +111,7 @@ export const mockTeams: Team[] = deduplicateById([
   ...pvl2021Teams,
   ...pvl2022OpenTeams,
   ...pvl2022InvitationalTeams,
+  ...pvl2022ReinforcedTeams,
 ]);
 
 function getTeam(id: string): Team {
@@ -769,6 +777,7 @@ export const mockPlayers: Player[] = deduplicateById([
   ...pvl2021Players,
   ...pvl2022OpenPlayers,
   ...pvl2022InvitationalPlayers,
+  ...pvl2022ReinforcedPlayers,
 ]);
 
 // ---------------------------------------------------------------------------
@@ -827,6 +836,7 @@ export const mockGames: Game[] = deduplicateById([
   ...pvl2021Games,
   ...pvl2022OpenGames,
   ...pvl2022InvitationalGames,
+  ...pvl2022ReinforcedGames,
 ]);
 
 function pushGame(game: Omit<Game, "seasonId">): void {
