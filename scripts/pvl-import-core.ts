@@ -16,7 +16,7 @@ export const PVL_TEAM_CODE_TO_META: Record<
   CHD: { slug: "cignal", name: "Cignal HD Spikers", shortName: "CIG", accentColor: "#E31837" },
   CMF: { slug: "chocomucho", name: "Choco Mucho Flying Titans", shortName: "CMF", accentColor: "#5C3A21" },
   CSS: { slug: "cignal", name: "Cignal HD Spikers", shortName: "CIG", accentColor: "#E31837" },
-  CTC: { slug: "chery-tiggo", name: "Chery Tiggo Crossovers", shortName: "CTC", accentColor: "#C8102E" },
+  CTC: { slug: "chery-tiggo", name: "Chery Tiggo Crossovers", shortName: "CHERY", accentColor: "#C8102E" },
   EST: { slug: "est-cola", name: "Est Cola", shortName: "EST", accentColor: "#0055A5" },
   FFF: { slug: "farm-fresh", name: "Farm Fresh Foxies", shortName: "FFF", accentColor: "#228B22" },
   FOT: { slug: "foton", name: "Foton Tornadoes", shortName: "FOTON", accentColor: "#003DA5" },
@@ -286,8 +286,12 @@ export function importPvlStats(rows: PvlStatsRow[], config: PvlImportConfig) {
       });
     }
 
+    const agg = playerAggMap.get(playerKey)!;
+    if (jerseyNum > 0 && (!agg.player.jerseyNumber || agg.player.jerseyNumber === 0)) {
+      agg.player.jerseyNumber = jerseyNum;
+    }
+
     if (isRegularSeason) {
-      const agg = playerAggMap.get(playerKey)!;
       agg.games.add(gidKey);
       agg.totalPts += pts;
     }

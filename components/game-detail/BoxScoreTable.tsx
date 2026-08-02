@@ -62,7 +62,9 @@ export function BoxScoreTable({
           </thead>
           <tbody>
             {items.map((item) => {
-              const player = players.find((p) => p.id === item.playerId);
+              const player =
+                players.find((p) => p.id === item.playerId) ||
+                players.find((p) => p.personId && item.playerId.endsWith(p.personId));
               const pos = player?.position ?? "OH";
               const displayName = formatPlayerDisplayName(item.playerId, player);
               const atkPts = item.atkPts ?? 0;
@@ -122,7 +124,9 @@ export function BoxScoreTable({
         </thead>
         <tbody>
           {items.map((item) => {
-            const player = players.find((p) => p.id === item.playerId);
+            const player =
+              players.find((p) => p.id === item.playerId) ||
+              players.find((p) => p.personId && item.playerId.endsWith(p.personId));
             const displayName = formatPlayerDisplayName(item.playerId, player);
             return (
               <tr key={item.playerId} className="border-t border-border/50 hover:bg-surface/60 transition-colors">
