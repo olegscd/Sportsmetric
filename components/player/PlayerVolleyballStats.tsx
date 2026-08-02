@@ -22,24 +22,24 @@ export function PlayerVolleyballStats({
     if (selectedOption !== "career") {
       const active = allPlayerSeasons.find((p) => p.id === selectedOption) ?? player;
       const a = active.seasonAverages;
-      const m = Math.max(1, a.matchesPlayed ?? 1);
-      const totPts = a.totalPts ?? Math.round(a.ppg * m);
-      const atk = a.attackPts ?? Math.round(totPts * 0.8);
-      const blk = a.blockPts ?? Math.round(totPts * 0.12);
-      const srv = a.servePts ?? Math.max(0, totPts - atk - blk);
+      const m = a.matchesPlayed ?? 0;
+      const totPts = a.totalPts ?? (m > 0 ? Math.round(a.ppg * m) : 0);
+      const atk = a.attackPts ?? 0;
+      const blk = a.blockPts ?? 0;
+      const srv = a.servePts ?? 0;
       return {
         totalPts: totPts,
         matches: m,
-        ppg: a.ppg,
+        ppg: a.ppg ?? 0,
         attackPts: atk,
         attackPct: a.attackPct ?? 0,
-        attackAvg: a.attackAvg ?? Math.round((atk / m) * 10) / 10,
+        attackAvg: a.attackAvg ?? (m > 0 ? Math.round((atk / m) * 10) / 10 : 0),
         blockPts: blk,
         blockPct: a.blockPct ?? 0,
-        blockAvg: a.blockAvg ?? Math.round((blk / m) * 10) / 10,
+        blockAvg: a.blockAvg ?? (m > 0 ? Math.round((blk / m) * 10) / 10 : 0),
         servePts: srv,
         servePct: a.servePct ?? 0,
-        serveAvg: a.serveAvg ?? Math.round((srv / m) * 10) / 10,
+        serveAvg: a.serveAvg ?? (m > 0 ? Math.round((srv / m) * 10) / 10 : 0),
       };
     }
 
@@ -56,11 +56,11 @@ export function PlayerVolleyballStats({
 
     for (const p of allPlayerSeasons) {
       const a = p.seasonAverages;
-      const m = Math.max(1, a.matchesPlayed ?? 1);
-      const pPts = a.totalPts ?? Math.round(a.ppg * m);
-      const pAtk = a.attackPts ?? Math.round(pPts * 0.8);
-      const pBlk = a.blockPts ?? Math.round(pPts * 0.12);
-      const pSrv = a.servePts ?? Math.max(0, pPts - pAtk - pBlk);
+      const m = a.matchesPlayed ?? 0;
+      const pPts = a.totalPts ?? (m > 0 ? Math.round(a.ppg * m) : 0);
+      const pAtk = a.attackPts ?? 0;
+      const pBlk = a.blockPts ?? 0;
+      const pSrv = a.servePts ?? 0;
 
       totPts += pPts;
       totMatches += m;
@@ -75,7 +75,7 @@ export function PlayerVolleyballStats({
     const m = Math.max(1, totMatches);
     return {
       totalPts: totPts,
-      matches: m,
+      matches: totMatches,
       ppg: Math.round((totPts / m) * 10) / 10,
       attackPts: totAtk,
       attackPct: Math.round((sumAtkPct / count) * 10) / 10,

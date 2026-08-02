@@ -236,40 +236,16 @@ export function importPvlStats(rows: PvlStatsRow[], config: PvlImportConfig) {
     const isLibero = parseBool(row.is_libero);
     const position = normalizePosition(row.position, isLibero);
 
-    let atkRatio = 0.82;
-    let blkRatio = 0.10;
-    if (position === "MB") {
-      atkRatio = 0.60;
-      blkRatio = 0.32;
-    } else if (position === "S") {
-      atkRatio = 0.35;
-      blkRatio = 0.35;
-    } else if (position === "L") {
-      atkRatio = 0.0;
-      blkRatio = 0.0;
-    }
-
-    const atkPts = position === "L" ? 0 : Math.round(pts * atkRatio);
-    const blkPts = position === "L" ? 0 : Math.round(pts * blkRatio);
-    const acePts = position === "L" ? 0 : Math.max(0, pts - atkPts - blkPts);
-    const digs = position === "L" ? Math.floor(pts * 0.5 + 8) : Math.floor(pts * 0.3 + 2);
-    const receptions = position === "L" ? Math.floor(pts * 0.4 + 10) : Math.floor(pts * 0.2 + 1);
-
     const boxItem: BoxScoreItem = {
       playerId,
       pts,
       reb: 0,
       ast: 0,
       stl: 0,
-      blk: blkPts,
+      blk: 0,
       fgM: pts,
       fgA: pts,
       min: "0:00",
-      atkPts,
-      blkPts,
-      acePts,
-      digs,
-      receptions,
     };
 
     if (gameBuild.homeCode === teamCode) {
@@ -345,51 +321,9 @@ export function importPvlStats(rows: PvlStatsRow[], config: PvlImportConfig) {
 
   const importedPlayers: Player[] = [];
   for (const agg of playerAggMap.values()) {
-    const numGames = agg.games.size || 1;
+    const numGames = agg.games.size || 0;
     const totalPts = agg.totalPts;
-    const ppg = Math.round((totalPts / numGames) * 10) / 10;
-
-    let hash = 0;
-    for (let i = 0; i < agg.player.name.length; i++) {
-      hash = (hash + agg.player.name.charCodeAt(i) * (i + 1)) % 997;
-    }
-
-    const pos = agg.player.position;
-    let attackRatio = 0.82;
-    let blockRatio = 0.10;
-    let attackPctBase = 38.5;
-    let blockPctBase = 12.0;
-    let servePctBase = 8.5;
-
-    if (pos === "MB") {
-      attackRatio = 0.60;
-      blockRatio = 0.32;
-      attackPctBase = 46.0;
-      blockPctBase = 24.0;
-      servePctBase = 6.0;
-    } else if (pos === "S") {
-      attackRatio = 0.35;
-      blockRatio = 0.35;
-      attackPctBase = 32.0;
-      blockPctBase = 15.0;
-      servePctBase = 12.0;
-    } else if (pos === "L") {
-      attackRatio = 0.0;
-      blockRatio = 0.0;
-    }
-
-    const attackPts = pos === "L" ? 0 : Math.round(totalPts * attackRatio);
-    const blockPts = pos === "L" ? 0 : Math.round(totalPts * blockRatio);
-    const servePts = pos === "L" ? 0 : Math.max(0, totalPts - attackPts - blockPts);
-
-    const attackPct = pos === "L" ? 0 : Math.round((attackPctBase + (hash % 14)) * 10) / 10;
-    const blockPct = pos === "L" ? 0 : Math.round((blockPctBase + (hash % 8)) * 10) / 10;
-    const servePct = pos === "L" ? 0 : Math.round((servePctBase + (hash % 6)) * 10) / 10;
-
-    const attackAvg = Math.round((attackPts / numGames) * 10) / 10;
-    const blockAvg = Math.round((blockPts / numGames) * 10) / 10;
-    const serveAvg = Math.round((servePts / numGames) * 10) / 10;
-    const digsPerSet = pos === "L" ? Math.round((3.8 + ((hash % 18) / 10)) * 10) / 10 : Math.round((1.2 + ((hash % 12) / 10)) * 10) / 10;
+    const ppg = numGames > 0 ? Math.round((totalPts / numGames) * 10) / 10 : 0;
 
     agg.player.seasonAverages = {
       ppg,
@@ -402,19 +336,7 @@ export function importPvlStats(rows: PvlStatsRow[], config: PvlImportConfig) {
       ftPct: 0,
       totalPts,
       matchesPlayed: numGames,
-      attackPts,
-      attackPct,
-      attackAvg,
-      blockPts,
-      blockPct,
-      blockAvg,
-      servePts,
-      servePct,
-      serveAvg,
-      killsPerSet: attackAvg,
-      blocksPerSet: blockAvg,
-      acesPerSet: serveAvg,
-      digsPerSet,
+      killsPerSet: ppg,
     };
     importedPlayers.push(agg.player);
   }
