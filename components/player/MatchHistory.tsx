@@ -22,6 +22,7 @@ export function MatchHistory({ entries }: { entries: PlayerGameLogEntry[] }) {
         const isWin = game.status === "FINAL" && teamScore > oppScore;
         const isLoss = game.status === "FINAL" && teamScore < oppScore;
         const playoff = isPlayoffGame(game);
+        const isVolleyball = game.league === "PVL" || stat.atkPts !== undefined;
 
         return (
           <button
@@ -66,9 +67,11 @@ export function MatchHistory({ entries }: { entries: PlayerGameLogEntry[] }) {
               <span className="text-sm font-bold tabular-nums text-foreground">
                 {stat.pts} <span className="text-[10px] font-medium text-muted">PTS</span>
               </span>
-              <span className="text-[10px] tabular-nums text-muted">
-                {stat.reb} REB &middot; {stat.ast} AST &middot; {stat.stl ?? 0} STL &middot; {stat.blk ?? 0} BLK
-              </span>
+              {!isVolleyball && (
+                <span className="text-[10px] tabular-nums text-muted">
+                  {stat.reb} REB &middot; {stat.ast} AST &middot; {stat.stl ?? 0} STL &middot; {stat.blk ?? 0} BLK
+                </span>
+              )}
             </div>
           </button>
         );
