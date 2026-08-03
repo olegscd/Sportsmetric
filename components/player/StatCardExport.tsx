@@ -7,23 +7,55 @@ import { Share2 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 function isVolleyballPlayer(player: Player): boolean {
-  return player.seasonAverages.killsPerSet !== undefined;
+  return (
+    player.seasonAverages.killsPerSet !== undefined ||
+    player.position === "OH" ||
+    player.position === "MB" ||
+    player.position === "S" ||
+    player.position === "L" ||
+    player.position === "OP"
+  );
 }
 
 function exportStatTiles(player: Player): { label: string; value: string }[] {
   const { seasonAverages: avg } = player;
-  return isVolleyballPlayer(player)
-    ? [
-        { label: "Kills / Set", value: formatAvg(avg.killsPerSet ?? 0) },
-        { label: "Digs / Set", value: formatAvg(avg.digsPerSet ?? 0) },
-        { label: "Blocks / Set", value: formatAvg(avg.blocksPerSet ?? 0) },
-      ]
-    : [
-        { label: "PPG", value: formatAvg(avg.ppg) },
-        { label: "RPG", value: formatAvg(avg.rpg) },
-        { label: "APG", value: formatAvg(avg.apg) },
-        { label: "3P%", value: formatPct(avg.threePtPct) },
+  const pos = (player.position || "OH").toUpperCase();
+
+  if (isVolleyballPlayer(player)) {
+    if (pos.startsWith("L")) {
+      return [
+        { label: "Digs / Set", value: formatAvg(avg.avgDig ?? avg.digsPerSet ?? 0) },
+        { label: "Dig Success", value: formatPct(avg.successDig ?? 0) },
+        { label: "Rec Success", value: formatPct(avg.successRec ?? 0) },
       ];
+    }
+    if (pos.startsWith("S")) {
+      return [
+        { label: "Sets / Set", value: formatAvg(avg.avgSet ?? 0) },
+        { label: "Setting %", value: formatPct(avg.successSet ?? 0) },
+        { label: "Digs / Set", value: formatAvg(avg.avgDig ?? 0) },
+      ];
+    }
+    if (pos.startsWith("MB")) {
+      return [
+        { label: "PTS / Set", value: formatAvg(avg.avgPerSet ?? avg.ppg ?? 0) },
+        { label: "Blocks / Set", value: formatAvg(avg.avgBlk ?? avg.blocksPerSet ?? 0) },
+        { label: "Atk Efficiency", value: formatPct(avg.efficiencyAtk ?? avg.attackPct ?? 0) },
+      ];
+    }
+    return [
+      { label: "PTS / Set", value: formatAvg(avg.avgPerSet ?? avg.ppg ?? 0) },
+      { label: "Kills / Set", value: formatAvg(avg.avgAtk ?? avg.killsPerSet ?? 0) },
+      { label: "Atk Efficiency", value: formatPct(avg.efficiencyAtk ?? avg.attackPct ?? 0) },
+    ];
+  }
+
+  return [
+    { label: "PPG", value: formatAvg(avg.ppg) },
+    { label: "RPG", value: formatAvg(avg.rpg) },
+    { label: "APG", value: formatAvg(avg.apg) },
+    { label: "3P%", value: formatPct(avg.threePtPct) },
+  ];
 }
 
 type ExportStatus = "idle" | "exporting" | "error";
