@@ -159,7 +159,12 @@ function GameDetailSheet({ game, onClose }: { game: Game; onClose: () => void })
                   {game.homeTeam.shortName}
                 </button>
               </div>
-              <BoxScoreTable items={game.boxScore[side]} league={game.league} />
+              <BoxScoreTable
+                items={game.boxScore[side]}
+                league={game.league}
+                game={game}
+                teamSide={side}
+              />
             </div>
           ) : null}
 
