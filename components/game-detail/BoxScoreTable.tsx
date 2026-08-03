@@ -75,7 +75,6 @@ export function BoxScoreTable({
     league === "PVL" || items.some((item) => item.atkPts !== undefined || item.digs !== undefined);
 
   if (isVolleyball) {
-    const totalSets = game?.quarterOrSet ?? 3;
     const sumPlayerPts = items.reduce((acc, item) => acc + (item.pts || 0), 0);
 
     // Calculate Opponent Errors & Team Total Points
@@ -84,12 +83,11 @@ export function BoxScoreTable({
 
     return (
       <div className="overflow-x-auto">
-        <table className="w-full min-w-[360px] text-left text-xs">
+        <table className="w-full min-w-[300px] text-left text-xs">
           <thead>
             <tr className="border-b border-border text-muted font-semibold uppercase tracking-wider">
               <th className="w-10 py-2.5 px-2 text-center font-bold text-foreground">#</th>
               <th className="py-2.5 px-2 font-bold text-foreground">Player</th>
-              <th className="w-14 py-2.5 px-2 text-right font-bold text-foreground">SP</th>
               <th className="w-16 py-2.5 px-2 text-right font-bold text-foreground">PTS</th>
             </tr>
           </thead>
@@ -107,7 +105,6 @@ export function BoxScoreTable({
                   : "—";
 
               const displayName = formatPvlPlayerName(player, item.playerId);
-              const playerSp = totalSets;
 
               return (
                 <tr
@@ -120,9 +117,6 @@ export function BoxScoreTable({
                   <td className="py-2 px-2 font-semibold text-foreground">
                     {displayName}
                   </td>
-                  <td className="w-14 py-2 px-2 text-right tabular-nums text-muted font-medium">
-                    {playerSp}
-                  </td>
                   <td className="w-16 py-2 px-2 text-right tabular-nums font-bold text-foreground">
                     {item.pts}
                   </td>
@@ -134,7 +128,6 @@ export function BoxScoreTable({
             <tr className="bg-surface/30 italic text-muted">
               <td className="w-10 py-2 px-2 text-center font-medium">—</td>
               <td className="py-2 px-2 font-medium">Opponent Errors</td>
-              <td className="w-14 py-2 px-2 text-right font-medium">—</td>
               <td className="w-16 py-2 px-2 text-right tabular-nums font-semibold">
                 {oppErrors}
               </td>
@@ -145,9 +138,6 @@ export function BoxScoreTable({
               <td className="w-10 py-2.5 px-2 text-center font-bold">—</td>
               <td className="py-2.5 px-2 font-bold uppercase tracking-wider">
                 TEAM TOTALS
-              </td>
-              <td className="w-14 py-2.5 px-2 text-right tabular-nums font-bold">
-                {totalSets}
               </td>
               <td className="w-16 py-2.5 px-2 text-right tabular-nums font-extrabold text-primary text-sm">
                 {teamTotalPts}
