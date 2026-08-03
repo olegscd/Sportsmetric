@@ -73,6 +73,10 @@ export function PlayerDetailView({ id }: { id: string }) {
       .sort((a: Player, b: Player) => a.seasonId.localeCompare(b.seasonId));
   }, [players, player?.personId]);
 
+  const seasonLabel = (seasonId: string): string => {
+    return seasons.find((s) => s.id === seasonId)?.label ?? seasonId;
+  };
+
   const gameLog = useMemo(() => {
     if (!player) return [];
     const lines = seasonLines.length > 0 ? seasonLines : [player];
