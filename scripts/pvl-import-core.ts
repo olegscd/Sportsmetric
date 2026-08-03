@@ -323,25 +323,154 @@ export function importPvlStats(rows: PvlStatsRow[], config: PvlImportConfig) {
 
   importedGames.sort((a, b) => new Date(a.startTime).getTime() - new Date(b.startTime).getTime());
 
+let pvlOfficialPlayerStatsData: Record<string, any> | null = null;
+
+function getOfficialRecord(slugOrPersonId: string, name?: string) {
+  if (!pvlOfficialPlayerStatsData) {
+    const jsonPath = path.resolve("scripts/generated/pvl-official-player-stats.json");
+    if (fs.existsSync(jsonPath)) {
+      pvlOfficialPlayerStatsData = JSON.parse(fs.readFileSync(jsonPath, "utf8"));
+    }
+  }
+  if (!pvlOfficialPlayerStatsData) return null;
+  const slug = slugOrPersonId.toLowerCase();
+  if (pvlOfficialPlayerStatsData[slug]) return pvlOfficialPlayerStatsData[slug];
+  if (name) {
+    const nameSlug = name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+    if (pvlOfficialPlayerStatsData[nameSlug]) return pvlOfficialPlayerStatsData[nameSlug];
+  }
+  const foundKey = Object.keys(pvlOfficialPlayerStatsData).find(
+    (k) => slug.endsWith(k) || k.endsWith(slug)
+  );
+  return foundKey ? pvlOfficialPlayerStatsData[foundKey] : null;
+}
+
   const importedPlayers: Player[] = [];
   for (const agg of playerAggMap.values()) {
     const numGames = agg.games.size || 0;
     const totalPts = agg.totalPts;
     const ppg = numGames > 0 ? Math.round((totalPts / numGames) * 10) / 10 : 0;
 
-    agg.player.seasonAverages = {
-      ppg,
-      rpg: 0,
-      apg: 0,
-      spg: 0,
-      bpg: 0,
-      fgPct: 0,
-      threePtPct: 0,
-      ftPct: 0,
-      totalPts,
-      matchesPlayed: numGames,
-      killsPerSet: ppg,
-    };
+    const officialRec = getOfficialRecord(agg.player.personId, agg.player.name);
+
+    if (officialRec) {
+      if (officialRec.position) {
+        agg.player.position = normalizePosition(officialRec.position, officialRec.position === "L");
+      }
+      if (officialRec.height) {
+        agg.player.height = officialRec.height;
+      }
+      if (officialRec.jersey && officialRec.jersey > 0) {
+        agg.player.jerseyNumber = officialRec.jersey;
+      }
+
+      const confStat =
+        officialRec.conferences?.find((c: any) => {
+          if (!c.conferenceName) return false;
+          const cName = c.conferenceName.toLowerCase();
+          const sLabel = config.label.toLowerCase();
+          const sId = config.seasonId.toLowerCase();
+          return (
+            sLabel.includes(cName) ||
+            cName.includes(sId.replace("pvl-", "")) ||
+            (sId.includes("2021") && cName.includes("2021")) ||
+            (sId.includes("2022-open") && cName.includes("2022 open")) ||
+            (sId.includes("2022-invitational") && cName.includes("2022 invitational")) ||
+            (sId.includes("2022-reinforced") && cName.includes("2022 reinforced"))
+          );
+        }) || officialRec.career;
+
+      if (confStat) {
+        agg.player.seasonAverages = {
+          ppg: confStat.avgPerSet || ppg,
+          rpg: 0,
+          apg: 0,
+          spg: 0,
+          bpg: 0,
+          fgPct: confStat.efficiencyAtk || 0,
+          threePtPct: 0,
+          ftPct: 0,
+          totalPts: confStat.totalPoints || totalPts,
+          matchesPlayed: numGames,
+          setsPlayed: confStat.setsPlayed || numGames * 3,
+          avgPerSet: confStat.avgPerSet || 0,
+          ptsAtk: confStat.ptsAtk || 0,
+          ptsBlk: confStat.ptsBlk || 0,
+          ptsAce: confStat.ptsAce || 0,
+          exeSet: confStat.exeSet || 0,
+          exeDig: confStat.exeDig || 0,
+          exeRec: confStat.exeRec || 0,
+          faultAtk: confStat.faultAtk || 0,
+          faultBlk: confStat.faultBlk || 0,
+          faultSrv: confStat.faultSrv || 0,
+          faultSet: confStat.faultSet || 0,
+          faultDig: confStat.faultDig || 0,
+          faultRec: confStat.faultRec || 0,
+          totalAtk: confStat.totalAtk || 0,
+          totalBlk: confStat.totalBlk || 0,
+          totalAce: confStat.totalAce || 0,
+          totalSet: confStat.totalSet || 0,
+          totalDig: confStat.totalDig || 0,
+          totalRec: confStat.totalRec || 0,
+          avgAtk: confStat.avgAtk || 0,
+          avgBlk: confStat.avgBlk || 0,
+          avgAce: confStat.avgAce || 0,
+          avgSet: confStat.avgSet || 0,
+          avgDig: confStat.avgDig || 0,
+          avgRec: confStat.avgRec || 0,
+          successAtk: confStat.successAtk || 0,
+          successBlk: confStat.successBlk || 0,
+          successAce: confStat.successAce || 0,
+          successSet: confStat.successSet || 0,
+          successDig: confStat.successDig || 0,
+          successRec: confStat.successRec || 0,
+          efficiencyAtk: confStat.efficiencyAtk || 0,
+          efficiencyBlk: confStat.efficiencyBlk || 0,
+          efficiencyAce: confStat.efficiencyAce || 0,
+          efficiencySet: confStat.efficiencySet || 0,
+          efficiencyDig: confStat.efficiencyDig || 0,
+          efficiencyRec: confStat.efficiencyRec || 0,
+          attackPts: confStat.ptsAtk || 0,
+          attackPct: confStat.efficiencyAtk || 0,
+          attackAvg: confStat.avgAtk || 0,
+          blockPts: confStat.ptsBlk || 0,
+          blockPct: confStat.successBlk || 0,
+          blockAvg: confStat.avgBlk || 0,
+          servePts: confStat.ptsAce || 0,
+          servePct: confStat.successAce || 0,
+          serveAvg: confStat.avgAce || 0,
+        };
+      } else {
+        agg.player.seasonAverages = {
+          ppg,
+          rpg: 0,
+          apg: 0,
+          spg: 0,
+          bpg: 0,
+          fgPct: 0,
+          threePtPct: 0,
+          ftPct: 0,
+          totalPts,
+          matchesPlayed: numGames,
+          killsPerSet: ppg,
+        };
+      }
+    } else {
+      agg.player.seasonAverages = {
+        ppg,
+        rpg: 0,
+        apg: 0,
+        spg: 0,
+        bpg: 0,
+        fgPct: 0,
+        threePtPct: 0,
+        ftPct: 0,
+        totalPts,
+        matchesPlayed: numGames,
+        killsPerSet: ppg,
+      };
+    }
+
     importedPlayers.push(agg.player);
   }
 
