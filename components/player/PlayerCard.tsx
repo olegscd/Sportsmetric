@@ -10,7 +10,14 @@ import Link from "next/link";
 import { RankBadge } from "./RankBadge";
 
 function isVolleyballPlayer(player: Player, avg: SeasonAverages): boolean {
-  return avg.killsPerSet !== undefined || player.position === "OH" || player.position === "MB" || player.position === "S" || player.position === "L" || player.position === "OP";
+  return (
+    avg.killsPerSet !== undefined ||
+    player.position === "OH" ||
+    player.position === "MB" ||
+    player.position === "S" ||
+    player.position === "L" ||
+    player.position === "OP"
+  );
 }
 
 function StatTile({
@@ -37,9 +44,9 @@ function StatTile({
   );
 }
 
-function StatGrid({ player }: { player: Player }) {
+function StatGrid({ player, averages }: { player: Player; averages?: SeasonAverages }) {
   const { getPlayerAverages, getPlayerStatRank } = useSportsData();
-  const avg = getPlayerAverages(player);
+  const avg = averages || getPlayerAverages(player);
   const pos = (player.position || "OH").toUpperCase();
 
   let tiles;
@@ -100,6 +107,7 @@ function StatGrid({ player }: { player: Player }) {
         },
       ];
     } else {
+      // OH / OP: PTS / SET, ATK EFF, KILLS / SET
       tiles = [
         {
           label: "PTS / Set",
@@ -107,25 +115,23 @@ function StatGrid({ player }: { player: Player }) {
           statKey: "avgPerSet" as const,
         },
         {
-          label: "Kills / Set",
-          value: formatAvg(avg.avgAtk ?? avg.killsPerSet ?? 0),
-          statKey: "avgAtk" as const,
-        },
-        {
           label: "Atk Eff",
           value: formatPct(avg.efficiencyAtk ?? avg.attackPct ?? 0),
           statKey: "efficiencyAtk" as const,
         },
+        {
+          label: "Kills / Set",
+          value: formatAvg(avg.avgAtk ?? avg.killsPerSet ?? 0),
+          statKey: "avgAtk" as const,
+        },
       ];
     }
   } else {
+    // Basketball
     tiles = [
       { label: "PPG", value: formatAvg(avg.ppg), statKey: "ppg" as const },
-      { label: "RPG", value: formatAvg(avg.rpg), statKey: "rpg" as const },
+      { label: "FG%", value: formatPct(avg.fgPct), statKey: "fgPct" as const },
       { label: "APG", value: formatAvg(avg.apg), statKey: "apg" as const },
-      { label: "SPG", value: formatAvg(avg.spg), statKey: "spg" as const },
-      { label: "BPG", value: formatAvg(avg.bpg), statKey: "bpg" as const },
-      { label: "3P%", value: formatPct(avg.threePtPct), statKey: "threePtPct" as const },
     ];
   }
 
@@ -148,6 +154,9 @@ interface PlayerCardProps {
   team: Team;
   variant?: "compact" | "full";
   showRankBadge?: boolean;
+  activeContextLabel?: string;
+  inactivePillTag?: string;
+  customAverages?: SeasonAverages;
 }
 
 export function PlayerCard({
@@ -155,6 +164,9 @@ export function PlayerCard({
   team,
   variant = "compact",
   showRankBadge = true,
+  activeContextLabel,
+  inactivePillTag,
+  customAverages,
 }: PlayerCardProps) {
   if (variant === "compact") {
     return (
@@ -166,7 +178,9 @@ export function PlayerCard({
         <div className="min-w-0 flex-1">
           <p className="truncate text-sm font-semibold text-foreground">{player.name}</p>
           <div className="mt-0.5 flex items-center gap-1.5 text-xs text-muted">
-            <span>#{player.jerseyNumber} &middot; {player.position}</span>
+            <span>
+              #{player.jerseyNumber} &middot; {player.position}
+            </span>
             <span>&middot;</span>
             <div className="flex items-center gap-1.5">
               <TeamBadge team={team} size="sm" className="h-4 w-4 text-[8px]" />
@@ -182,12 +196,23 @@ export function PlayerCard({
   }
 
   return (
-    <div className="flex flex-col gap-4 rounded-2xl border border-border bg-surface p-5">
+    <div className="flex flex-col gap-4 rounded-2xl border border-border bg-surface p-5 shadow-sm">
       <div className="flex items-center gap-4">
         <PlayerAvatar player={player} accentColor={team.accentColor} size="lg" className="text-lg" />
         <div className="min-w-0 flex-1">
-          <p className="truncate text-lg font-bold text-foreground">{player.name}</p>
-          <p className="text-sm text-muted">
+          <div className="flex items-center gap-2 flex-wrap">
+            <p className="truncate text-lg font-bold text-foreground">{player.name}</p>
+            {inactivePillTag ? (
+              <span className="rounded-full bg-amber-500/15 border border-amber-500/30 px-2.5 py-0.5 text-[10px] font-bold text-amber-500 shrink-0">
+                {inactivePillTag}
+              </span>
+            ) : activeContextLabel ? (
+              <span className="rounded-full bg-primary/15 border border-primary/30 px-2.5 py-0.5 text-[10px] font-bold text-primary shrink-0">
+                {activeContextLabel}
+              </span>
+            ) : null}
+          </div>
+          <p className="text-sm text-muted mt-0.5">
             #{player.jerseyNumber} &middot; {player.position} &middot; {player.height}
           </p>
           <Link href={`/teams/${team.id}`} className="mt-1.5 flex items-center gap-1.5">
@@ -206,7 +231,7 @@ export function PlayerCard({
         </div>
       ) : null}
 
-      <StatGrid player={player} />
+      <StatGrid player={player} averages={customAverages} />
     </div>
   );
 }

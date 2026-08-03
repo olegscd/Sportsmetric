@@ -122,24 +122,91 @@ export function PlayerDetailView({ id }: { id: string }) {
     };
   }, [seasonLines, player, getPlayerAverages]);
 
-  function seasonLabel(seasonId: string): string {
-    return seasons.find((s) => s.id === seasonId)?.label ?? seasonId;
-  }
+  // Find the last active season line for this player (most recent season line with recorded stats)
+  const lastActiveLine = useMemo(() => {
+    if (seasonLines.length === 0) return player;
+    const sorted = [...seasonLines].reverse();
+    return (
+      sorted.find(
+        (line) =>
+          (line.seasonAverages.matchesPlayed ?? 0) > 0 ||
+          (line.seasonAverages.totalPts ?? 0) > 0 ||
+          line.seasonAverages.ppg > 0
+      ) || sorted[0]
+    );
+  }, [seasonLines, player]);
 
-  const activeSeasonPlayer =
-    selectedSeasonOption === "career"
-      ? null
-      : seasonLines.find((p: Player) => p.id === selectedSeasonOption) ?? player;
+  // Is player inactive in current/latest season?
+  const latestLine = seasonLines.length > 0 ? seasonLines[seasonLines.length - 1] : player;
+  const isInactiveInCurrent =
+    (latestLine.seasonAverages.matchesPlayed ?? 0) === 0 &&
+    (latestLine.seasonAverages.totalPts ?? 0) === 0 &&
+    latestLine.seasonAverages.ppg === 0;
 
-  const displayAverages = activeSeasonPlayer
-    ? getPlayerAverages(activeSeasonPlayer)
-    : careerAverages;
+  const lastActiveLabel = seasonLabel(lastActiveLine.seasonId);
+  const latestLabel = seasonLabel(latestLine.seasonId);
 
+  // Active context label & custom averages for PlayerCard Hero Section
+  const { heroAverages, activeContextLabel, inactivePillTag } = useMemo(() => {
+    if (selectedSeasonOption === "career") {
+      return {
+        heroAverages: careerAverages,
+        activeContextLabel: "Career Summary",
+        inactivePillTag: undefined,
+      };
+    }
+
+    const selectedPlayer = seasonLines.find((p: Player) => p.id === selectedSeasonOption);
+    if (selectedPlayer) {
+      const selectedAvg = getPlayerAverages(selectedPlayer);
+      return {
+        heroAverages: selectedAvg,
+        activeContextLabel: seasonLabel(selectedPlayer.seasonId),
+        inactivePillTag: undefined,
+      };
+    }
+
+    // Default view: Fallback to Last Active Season if current season has 0 stats
+    if (isInactiveInCurrent && lastActiveLine) {
+      return {
+        heroAverages: getPlayerAverages(lastActiveLine),
+        activeContextLabel: undefined,
+        inactivePillTag: `Last Active: ${lastActiveLabel}`,
+      };
+    }
+
+    const defaultLine = latestLine || player;
+    return {
+      heroAverages: getPlayerAverages(defaultLine),
+      activeContextLabel: seasonLabel(defaultLine.seasonId),
+      inactivePillTag: undefined,
+    };
+  }, [
+    selectedSeasonOption,
+    careerAverages,
+    seasonLines,
+    getPlayerAverages,
+    isInactiveInCurrent,
+    lastActiveLine,
+    lastActiveLabel,
+    latestLine,
+    player,
+    seasons,
+  ]);
+
+  const displayAverages = heroAverages;
   const isVolleyball = team.league === "PVL" || isVolleyballAverages(careerAverages);
 
   return (
     <div className="flex flex-col gap-4 px-4 py-4">
-      <PlayerCard player={player} team={team} variant="full" />
+      <PlayerCard
+        player={player}
+        team={team}
+        variant="full"
+        customAverages={heroAverages}
+        activeContextLabel={activeContextLabel}
+        inactivePillTag={inactivePillTag}
+      />
       <StatCardExport player={player} team={team} />
 
       {isVolleyball ? (
