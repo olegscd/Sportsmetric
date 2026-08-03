@@ -1,22 +1,29 @@
 "use client";
 
 import { useSportsData } from "@/context/SportsDataContext";
+import { mockPlayers } from "@/lib/mock-data";
 import type { BoxScoreItem, Player } from "@/types/sports";
 
 function formatPlayerDisplayName(itemPlayerId: string, player?: Player): string {
   if (player) {
-    return player.jerseyNumber > 0 ? `#${player.jerseyNumber} ${player.name}` : player.name;
+    return player.jerseyNumber && player.jerseyNumber > 0
+      ? `#${player.jerseyNumber} ${player.name}`
+      : player.name;
   }
-  const parts = itemPlayerId.split("-");
-  const textParts = parts.filter(
-    (p) =>
-      !["pvl", "uaap", "pba", "2021", "2022", "2023", "2024", "2025", "2026", "open", "reinforced", "invitational", "g", "g1", "g2"].includes(p)
-  );
-  if (textParts.length > 1) {
-    const nameTokens = textParts.slice(1);
-    if (nameTokens.length > 0) {
-      return nameTokens.map((t) => t.charAt(0).toUpperCase() + t.slice(1)).join(" ");
-    }
+  const teamWords = new Set([
+    "chery", "tiggo", "army", "black", "mamba", "f2", "logistics", "farm", "fresh",
+    "zus", "coffee", "quezon", "city", "gerflor", "strong", "group", "sta", "lucia",
+    "creamline", "cignal", "chocomucho", "pldt", "petrogazz", "akari", "balipure",
+    "foton", "galeries", "nxled", "perlas", "capital1", "est", "cola", "japan", "vietnam", "kobe"
+  ]);
+  const noise = new Set([
+    "pvl", "uaap", "pba", "2021", "2022", "2023", "2024", "2025", "2026",
+    "open", "reinforced", "invitational", "tour", "afc", "g"
+  ]);
+  const parts = itemPlayerId.split("-").filter((p) => !noise.has(p.toLowerCase()));
+  const nameParts = parts.filter((p) => !teamWords.has(p.toLowerCase()));
+  if (nameParts.length > 0) {
+    return nameParts.map((t) => t.charAt(0).toUpperCase() + t.slice(1)).join(" ");
   }
   return itemPlayerId
     .split("-")
@@ -64,7 +71,9 @@ export function BoxScoreTable({
             {items.map((item) => {
               const player =
                 players.find((p) => p.id === item.playerId) ||
-                players.find((p) => p.personId && item.playerId.endsWith(p.personId));
+                players.find((p) => p.personId && item.playerId.endsWith(p.personId)) ||
+                mockPlayers.find((p) => p.id === item.playerId) ||
+                mockPlayers.find((p) => p.personId && item.playerId.endsWith(p.personId));
               const pos = player?.position ?? "OH";
               const displayName = formatPlayerDisplayName(item.playerId, player);
               const atkPts = item.atkPts ?? 0;
@@ -126,7 +135,9 @@ export function BoxScoreTable({
           {items.map((item) => {
             const player =
               players.find((p) => p.id === item.playerId) ||
-              players.find((p) => p.personId && item.playerId.endsWith(p.personId));
+              players.find((p) => p.personId && item.playerId.endsWith(p.personId)) ||
+              mockPlayers.find((p) => p.id === item.playerId) ||
+              mockPlayers.find((p) => p.personId && item.playerId.endsWith(p.personId));
             const displayName = formatPlayerDisplayName(item.playerId, player);
             return (
               <tr key={item.playerId} className="border-t border-border/50 hover:bg-surface/60 transition-colors">

@@ -84,6 +84,22 @@ function gameToRecord(game: Game) {
   };
 }
 
+async function batchInsert<T>(
+  table: string,
+  items: T[],
+  recordMapper: (item: T) => any,
+  chunkSize = 100
+) {
+  for (let i = 0; i < items.length; i += chunkSize) {
+    const chunk = items.slice(i, i + chunkSize).map(recordMapper);
+    const { error } = await supabase.from(table).insert(chunk);
+    if (error) {
+      console.error(`Error inserting ${table} chunk [${i}..${i + chunk.length}]:`, error.message);
+      process.exit(1);
+    }
+  }
+}
+
 async function main() {
   // Delete all rows first (order matters for FK constraints: games → players → teams → seasons)
   console.log("Clearing existing data...");
@@ -102,33 +118,17 @@ async function main() {
 
   console.log("Cleared all existing rows.");
 
-  // Insert fresh data (order: seasons → teams → players → games)
-  const seasonsResult = await supabase.from("seasons").insert(mockSeasons.map(seasonToRecord));
-  if (seasonsResult.error) {
-    console.error("Failed seeding seasons:", seasonsResult.error.message);
-    process.exit(1);
-  }
+  // Insert fresh data in chunks (order: seasons → teams → players → games)
+  await batchInsert("seasons", mockSeasons, seasonToRecord);
   console.log(`Seeded seasons: ${mockSeasons.length} rows`);
 
-  const teamsResult = await supabase.from("teams").insert(mockTeams.map(teamToRecord));
-  if (teamsResult.error) {
-    console.error("Failed seeding teams:", teamsResult.error.message);
-    process.exit(1);
-  }
+  await batchInsert("teams", mockTeams, teamToRecord);
   console.log(`Seeded teams: ${mockTeams.length} rows`);
 
-  const playersResult = await supabase.from("players").insert(mockPlayers.map(playerToRecord));
-  if (playersResult.error) {
-    console.error("Failed seeding players:", playersResult.error.message);
-    process.exit(1);
-  }
+  await batchInsert("players", mockPlayers, playerToRecord);
   console.log(`Seeded players: ${mockPlayers.length} rows`);
 
-  const gamesResult = await supabase.from("games").insert(mockGames.map(gameToRecord));
-  if (gamesResult.error) {
-    console.error("Failed seeding games:", gamesResult.error.message);
-    process.exit(1);
-  }
+  await batchInsert("games", mockGames, gameToRecord);
   console.log(`Seeded games: ${mockGames.length} rows`);
 
   console.log("Supabase seed complete.");
