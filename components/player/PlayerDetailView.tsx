@@ -228,7 +228,7 @@ export function PlayerDetailView({ id }: { id: string }) {
               <p className="text-xs font-semibold text-foreground">
                 {selectedSeasonOption === "career"
                   ? "Career / Lifetime Stats"
-                  : seasonLabel(activeSeasonPlayer?.seasonId ?? player.seasonId)}
+                  : activeContextLabel || seasonLabel(player.seasonId)}
               </p>
             </div>
 
