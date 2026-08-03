@@ -40,33 +40,94 @@ function StatTile({
 function StatGrid({ player }: { player: Player }) {
   const { getPlayerAverages, getPlayerStatRank } = useSportsData();
   const avg = getPlayerAverages(player);
+  const pos = (player.position || "OH").toUpperCase();
 
-  const tiles = isVolleyballPlayer(player, avg)
-    ? [
+  let tiles;
+
+  if (isVolleyballPlayer(player, avg)) {
+    if (pos.startsWith("L")) {
+      tiles = [
         {
-          label: "Kills/Set",
-          value: formatAvg(avg.killsPerSet ?? 0),
-          statKey: "killsPerSet" as const,
+          label: "Digs / Set",
+          value: formatAvg(avg.avgDig ?? avg.digsPerSet ?? 0),
+          statKey: "avgDig" as const,
         },
         {
-          label: "Digs/Set",
-          value: formatAvg(avg.digsPerSet ?? 0),
-          statKey: "digsPerSet" as const,
+          label: "Dig %",
+          value: formatPct(avg.successDig ?? 0),
+          statKey: "successDig" as const,
         },
         {
-          label: "Blocks/Set",
-          value: formatAvg(avg.blocksPerSet ?? 0),
-          statKey: "blocksPerSet" as const,
+          label: "Rec %",
+          value: formatPct(avg.successRec ?? 0),
+          statKey: "successRec" as const,
         },
-      ]
-    : [
-        { label: "PPG", value: formatAvg(avg.ppg), statKey: "ppg" as const },
-        { label: "RPG", value: formatAvg(avg.rpg), statKey: "rpg" as const },
-        { label: "APG", value: formatAvg(avg.apg), statKey: "apg" as const },
-        { label: "SPG", value: formatAvg(avg.spg), statKey: "spg" as const },
-        { label: "BPG", value: formatAvg(avg.bpg), statKey: "bpg" as const },
-        { label: "3P%", value: formatPct(avg.threePtPct), statKey: "threePtPct" as const },
       ];
+    } else if (pos.startsWith("S")) {
+      tiles = [
+        {
+          label: "Sets / Set",
+          value: formatAvg(avg.avgSet ?? 0),
+          statKey: "avgSet" as const,
+        },
+        {
+          label: "Setting %",
+          value: formatPct(avg.successSet ?? 0),
+          statKey: "successSet" as const,
+        },
+        {
+          label: "Digs / Set",
+          value: formatAvg(avg.avgDig ?? 0),
+          statKey: "avgDig" as const,
+        },
+      ];
+    } else if (pos.startsWith("MB")) {
+      tiles = [
+        {
+          label: "PTS / Set",
+          value: formatAvg(avg.avgPerSet ?? avg.ppg ?? 0),
+          statKey: "avgPerSet" as const,
+        },
+        {
+          label: "Blocks / Set",
+          value: formatAvg(avg.avgBlk ?? avg.blocksPerSet ?? 0),
+          statKey: "avgBlk" as const,
+        },
+        {
+          label: "Atk Eff",
+          value: formatPct(avg.efficiencyAtk ?? avg.attackPct ?? 0),
+          statKey: "efficiencyAtk" as const,
+        },
+      ];
+    } else {
+      tiles = [
+        {
+          label: "PTS / Set",
+          value: formatAvg(avg.avgPerSet ?? avg.ppg ?? 0),
+          statKey: "avgPerSet" as const,
+        },
+        {
+          label: "Kills / Set",
+          value: formatAvg(avg.avgAtk ?? avg.killsPerSet ?? 0),
+          statKey: "avgAtk" as const,
+        },
+        {
+          label: "Atk Eff",
+          value: formatPct(avg.efficiencyAtk ?? avg.attackPct ?? 0),
+          statKey: "efficiencyAtk" as const,
+        },
+      ];
+    }
+  } else {
+    tiles = [
+      { label: "PPG", value: formatAvg(avg.ppg), statKey: "ppg" as const },
+      { label: "RPG", value: formatAvg(avg.rpg), statKey: "rpg" as const },
+      { label: "APG", value: formatAvg(avg.apg), statKey: "apg" as const },
+      { label: "SPG", value: formatAvg(avg.spg), statKey: "spg" as const },
+      { label: "BPG", value: formatAvg(avg.bpg), statKey: "bpg" as const },
+      { label: "3P%", value: formatPct(avg.threePtPct), statKey: "threePtPct" as const },
+    ];
+  }
 
   return (
     <div className="grid grid-cols-3 gap-2">
