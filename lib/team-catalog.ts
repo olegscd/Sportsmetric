@@ -11,7 +11,7 @@ type TeamSeed = {
 };
 
 function teamId(seasonId: string, slug: string): string {
-  if (seasonId === "2026-27" || seasonId === "2025-26") return slug;
+  if (seasonId === "2025-26") return slug;
   return `${slug}-${seasonId}`;
 }
 
