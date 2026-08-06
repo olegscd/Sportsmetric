@@ -82,11 +82,11 @@ function deduplicateById<T extends { id: string }>(items: T[]): T[] {
 // ---------------------------------------------------------------------------
 
 /** All mock rosters/games below belong to this season. */
-const CURRENT_SEASON_ID = "2026-27";
+const CURRENT_SEASON_ID = "2025-26";
 
 export const mockSeasons: Season[] = deduplicateById([
-  { id: "2026-27", label: "2026-27 Season (UAAP S89)", isCurrent: true, league: "UAAP" },
-  { id: "2025-26", label: "2025-26 Season (UAAP S88)", isCurrent: false, league: "UAAP" },
+  { id: "2026-27", label: "2026-27 Season (UAAP S89)", isCurrent: false, league: "UAAP" },
+  { id: "2025-26", label: "2025-26 Season (UAAP S88)", isCurrent: true, league: "UAAP" },
   { id: "2024-25", label: "2024-25 Season (UAAP S87)", isCurrent: false, league: "UAAP" },
   { id: "2023-24", label: "2023-24 Season", isCurrent: false, league: "UAAP" },
   {
