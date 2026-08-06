@@ -41,6 +41,7 @@ export const uaapS87TeamRecords = deriveRegSeasonTeamRecords(uaapS87Games);
 /** Apply imported UAAP S87 regular season records onto catalog teams for 2024-25. */
 export function applyUaapS87TeamRecords(teams: Team[]): Team[] {
   return teams.map((team) => {
+    if (team.seasonId !== "2024-25") return team;
     const record = uaapS87TeamRecords[team.id];
     return record ? { ...team, record } : team;
   });

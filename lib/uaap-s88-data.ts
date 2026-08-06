@@ -40,6 +40,7 @@ export const uaapS88TeamRecords = deriveRegSeasonTeamRecords(uaapS88Games);
 
 export function applyUaapS88TeamRecords(teams: Team[]): Team[] {
   return teams.map((team) => {
+    if (team.seasonId !== "2025-26") return team;
     const record = uaapS88TeamRecords[team.id];
     return record ? { ...team, record } : team;
   });
