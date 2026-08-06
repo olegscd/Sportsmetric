@@ -255,9 +255,14 @@ export function deriveStandings(
     }
 
     const totalGames = wins + losses;
+    if (totalGames === 0 && team.record) {
+      wins = team.record.wins;
+      losses = team.record.losses;
+    }
+    const derivedTotal = wins + losses;
     item.wins = wins;
     item.losses = losses;
-    item.winPct = totalGames > 0 ? wins / totalGames : 0;
+    item.winPct = derivedTotal > 0 ? wins / derivedTotal : 0;
     item.pointsFor = pf;
     item.pointsAgainst = pa;
     item.pointDiff = pf - pa;
