@@ -43,7 +43,7 @@ export function teamToRecord(team: Team) {
 export function playerToRecord(player: Player) {
   return {
     id: player.id,
-    person_id: player.personId,
+    person_id: player.personId || player.id,
     name: player.name,
     jersey_number: player.jerseyNumber,
     position: player.position,

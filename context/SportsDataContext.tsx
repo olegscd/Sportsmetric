@@ -115,8 +115,11 @@ export function SportsDataProvider({ children }: { children: React.ReactNode }) 
         setTeams(data.teams);
         setPlayers(data.players);
         setGames(data.games);
-        const curr = data.seasons.find((s) => s.isCurrent)?.id;
-        if (curr) setCurrentSeasonId(curr);
+        setCurrentSeasonId((prev) => {
+          if (prev && data.seasons.some((s) => s.id === prev)) return prev;
+          const uaapCurr = data.seasons.find((s) => inferLeague(s.id, s.league) === "UAAP" && s.isCurrent)?.id;
+          return uaapCurr ?? data.seasons.find((s) => s.isCurrent)?.id ?? data.seasons[0]?.id ?? prev;
+        });
       } else {
         setSeasons(mockSeasons);
         setTeams(mockTeams);
@@ -317,11 +320,7 @@ export function SportsDataProvider({ children }: { children: React.ReactNode }) 
       return updatedList;
     });
 
-    if (season.isCurrent) {
-      await batchUpsertSeasonsInSupabase(nextSeasons);
-    } else {
-      await upsertSeasonInSupabase(season);
-    }
+    await batchUpsertSeasonsInSupabase(nextSeasons);
   }, []);
 
   const deleteSeason = useCallback(async (id: string) => {

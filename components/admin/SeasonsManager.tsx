@@ -46,14 +46,27 @@ export function SeasonsManager({ onToast }: { onToast: ToastFn }) {
 
   function handleCreate(event: FormEvent) {
     event.preventDefault();
-    if (!label.trim()) {
+    const trimmedLabel = label.trim();
+    if (!trimmedLabel) {
       onToast("Season label is required.", "error");
       return;
     }
 
+    let id = generateId();
+    const yearMatch = trimmedLabel.match(/\b(20\d{2}(?:-\d{2,4})?)\b/);
+    if (createLeague === "UAAP" && yearMatch) {
+      id = yearMatch[1];
+    } else if (createLeague === "PBA") {
+      const slug = trimmedLabel.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+      id = slug.startsWith("pba-") ? slug : `pba-${slug}`;
+    } else if (createLeague === "PVL") {
+      const slug = trimmedLabel.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+      id = slug.startsWith("pvl-") ? slug : `pvl-${slug}`;
+    }
+
     const season: Season = {
-      id: generateId(),
-      label: label.trim(),
+      id,
+      label: trimmedLabel,
       isCurrent: false,
       league: createLeague,
     };
