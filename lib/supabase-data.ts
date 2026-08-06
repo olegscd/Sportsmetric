@@ -23,7 +23,7 @@ export function seasonToRecord(season: Season) {
     label: season.label,
     year: season.id,
     is_current: season.isCurrent,
-    league: inferLeague(season.id, season.league),
+    // NOTE: 'league' column does not exist in the seasons table — inferred from season ID at read time
   };
 }
 
@@ -67,7 +67,7 @@ export function gameToRecord(game: Game) {
     away_score: game.awayScore,
     status: game.status,
     start_time: game.startTime,
-    venue: game.venue ?? null,
+    // NOTE: 'venue' column does not exist in the games table
     quarter_or_set: game.quarterOrSet,
     time_remaining: game.timeRemaining,
     box_score: game.boxScore,
