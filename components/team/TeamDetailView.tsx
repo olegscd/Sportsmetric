@@ -9,7 +9,7 @@ import { TeamRoster } from "./TeamRoster";
 import { TeamStatsTable } from "./TeamStatsTable";
 
 export function TeamDetailView({ id }: { id: string }) {
-  const { teams, players, currentSeasonId, getStandings } = useSportsData();
+  const { teams, players, seasons, currentSeasonId, getStandings } = useSportsData();
   const team = teams.find((t) => t.id === id);
 
   if (!team) {
@@ -21,7 +21,8 @@ export function TeamDetailView({ id }: { id: string }) {
     );
   }
 
-  const isOldSeason = team.seasonId !== currentSeasonId;
+  const teamSeason = seasons.find((s) => s.id === team.seasonId);
+  const isOldSeason = teamSeason ? !teamSeason.isCurrent : team.seasonId !== currentSeasonId;
   const teamPlayers = players.filter((p) => p.teamId === team.id);
   const standings = getStandings(team.league, team.seasonId);
   const rankIndex = standings.findIndex((s) => s.team.id === team.id);

@@ -38,7 +38,8 @@ export function FilterTabs() {
 
   const activeLeague: League = league === "ALL" ? "UAAP" : league;
 
-  const isOldSeason = seasonId !== currentSeasonId;
+  const selectedSeason = seasons.find((s) => s.id === seasonId);
+  const isOldSeason = selectedSeason ? !selectedSeason.isCurrent : seasonId !== currentSeasonId;
   const activeStatus = isOldSeason ? "FINAL" : status;
 
   const seasonGames = useMemo(() => {
@@ -68,8 +69,11 @@ export function FilterTabs() {
   function handleSeasonChange(newSeasonId: string) {
     setSeasonId(newSeasonId);
     setTeamId("ALL");
-    if (newSeasonId !== currentSeasonId) {
+    const targetSeason = seasons.find((s) => s.id === newSeasonId);
+    if (targetSeason && !targetSeason.isCurrent) {
       setStatus("FINAL");
+    } else if (status === "FINAL") {
+      setStatus("LIVE");
     }
   }
 
@@ -90,6 +94,7 @@ export function FilterTabs() {
           value={seasonId}
           onChange={handleSeasonChange}
           league={activeLeague}
+          includeLifetime={false}
         />
       </div>
 

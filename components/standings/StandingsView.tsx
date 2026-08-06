@@ -60,7 +60,8 @@ export function StandingsView() {
   const standings = getStandings(league, seasonId);
   const leaderConfigs = LEADER_CONFIGS[league];
 
-  const isOldSeason = seasonId !== currentSeasonId;
+  const selectedSeason = seasons.find((s) => s.id === seasonId);
+  const isOldSeason = selectedSeason ? !selectedSeason.isCurrent : seasonId !== currentSeasonId;
 
   // Separate UAAP playoff games if applicable
   const { playoffGames } = league === "UAAP"
@@ -70,7 +71,7 @@ export function StandingsView() {
   return (
     <div className="flex flex-col gap-4 px-4 py-4">
       <div className="flex items-center justify-end">
-        <SeasonPicker value={seasonId} onChange={setSeasonId} league={league} />
+        <SeasonPicker value={seasonId} onChange={setSeasonId} league={league} includeLifetime={false} />
       </div>
 
       <div className="flex items-center gap-1 rounded-full bg-surface p-1">

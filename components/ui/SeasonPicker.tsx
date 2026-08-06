@@ -17,10 +17,12 @@ export function SeasonPicker({
   value,
   onChange,
   league = "UAAP",
+  includeLifetime = true,
 }: {
   value: string;
   onChange: (seasonId: string) => void;
   league?: League;
+  includeLifetime?: boolean;
 }) {
   const { seasons } = useSportsData();
 
@@ -35,7 +37,7 @@ export function SeasonPicker({
         onChange={(event) => onChange(event.target.value)}
         className="appearance-none rounded-full border border-border bg-surface py-1.5 pl-3 pr-7 text-xs font-semibold text-foreground focus:border-primary focus:outline-none"
       >
-        <option value={LIFETIME_SEASON_ID}>Lifetime</option>
+        {includeLifetime && <option value={LIFETIME_SEASON_ID}>Lifetime</option>}
         {filteredSeasons.map((season) => (
           <option key={season.id} value={season.id}>
             {season.label}

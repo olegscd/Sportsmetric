@@ -35,6 +35,12 @@ import {
   uaapS88Players,
 } from "@/lib/uaap-s88-data";
 import {
+  applyUaapS89TeamRecords,
+  hydrateUaapS89Games,
+  uaapS89Games,
+  uaapS89Players,
+} from "@/lib/uaap-s89-data";
+import {
   pvl2021Games,
   pvl2021Players,
   pvl2021Season,
@@ -76,10 +82,11 @@ function deduplicateById<T extends { id: string }>(items: T[]): T[] {
 // ---------------------------------------------------------------------------
 
 /** All mock rosters/games below belong to this season. */
-const CURRENT_SEASON_ID = "2025-26";
+const CURRENT_SEASON_ID = "2026-27";
 
 export const mockSeasons: Season[] = deduplicateById([
-  { id: CURRENT_SEASON_ID, label: "2025-26 Season (UAAP S88)", isCurrent: true, league: "UAAP" },
+  { id: "2026-27", label: "2026-27 Season (UAAP S89)", isCurrent: true, league: "UAAP" },
+  { id: "2025-26", label: "2025-26 Season (UAAP S88)", isCurrent: false, league: "UAAP" },
   { id: "2024-25", label: "2024-25 Season (UAAP S87)", isCurrent: false, league: "UAAP" },
   { id: "2023-24", label: "2023-24 Season", isCurrent: false, league: "UAAP" },
   {
@@ -105,7 +112,7 @@ export const mockSeasons: Season[] = deduplicateById([
 // ---------------------------------------------------------------------------
 
 export const mockTeams: Team[] = deduplicateById([
-  ...applyUaapS88TeamRecords(applyUaapS87TeamRecords(buildAllTeams())),
+  ...applyUaapS89TeamRecords(applyUaapS88TeamRecords(applyUaapS87TeamRecords(buildAllTeams()))),
   ...applyPbaGovCupTeamRecords(pbaGovCupTeams),
   ...applyPbaCommCupTeamRecords(pbaCommCupTeams),
   ...pvl2021Teams,
@@ -770,6 +777,7 @@ const oldRawPlayers = [
 */
 
 export const mockPlayers: Player[] = deduplicateById([
+  ...uaapS89Players,
   ...uaapS88Players,
   ...uaapS87Players,
   ...pbaGovCupPlayers,
@@ -829,6 +837,7 @@ function pbpFactory(gameId: string) {
 // ---------------------------------------------------------------------------
 
 export const mockGames: Game[] = deduplicateById([
+  ...hydrateUaapS89Games(uaapS89Games, mockTeams),
   ...hydrateUaapS88Games(uaapS88Games, mockTeams),
   ...hydrateUaapS87Games(uaapS87Games, mockTeams),
   ...hydratePbaGovCupGames(pbaGovCupGames, mockTeams),

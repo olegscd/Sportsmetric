@@ -1,6 +1,6 @@
 import type { League, Team, TeamRecord } from "@/types/sports";
 
-export const TEAM_SEASON_IDS = ["2025-26", "2024-25", "2023-24"] as const;
+export const TEAM_SEASON_IDS = ["2026-27", "2025-26", "2024-25", "2023-24"] as const;
 
 type TeamSeed = {
   slug: string;
@@ -11,7 +11,7 @@ type TeamSeed = {
 };
 
 function teamId(seasonId: string, slug: string): string {
-  if (seasonId === "2025-26") return slug;
+  if (seasonId === "2026-27" || seasonId === "2025-26") return slug;
   return `${slug}-${seasonId}`;
 }
 
@@ -257,6 +257,11 @@ const PVL_2023_24: TeamSeed[] = [
 ];
 
 const LEAGUE_TEAMS_BY_SEASON: Record<string, Record<League, TeamSeed[]>> = {
+  "2026-27": {
+    UAAP: UAAP_SEEDS,
+    PBA: PBA_2025_26,
+    PVL: PVL_2025_26,
+  },
   "2025-26": {
     UAAP: UAAP_SEEDS,
     PBA: PBA_2025_26,
