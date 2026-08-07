@@ -27,22 +27,11 @@ export function AdminDashboard() {
   const [tab, setTab] = useState<AdminTab>("players");
   const [toast, setToast] = useState<ToastState | null>(null);
   const toastTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const { resetToDefaults } = useSportsData();
-
   const showToast = useCallback((message: string, tone: ToastState["tone"] = "success") => {
     if (toastTimeout.current) clearTimeout(toastTimeout.current);
     setToast({ message, tone });
     toastTimeout.current = setTimeout(() => setToast(null), 2800);
   }, []);
-
-  function handleReset() {
-    const confirmed = window.confirm(
-      "Reset all Sportsmetric data to the original mock data? Every admin edit will be lost -- this can't be undone."
-    );
-    if (!confirmed) return;
-    resetToDefaults();
-    showToast("Reset to original mock data.");
-  }
 
   async function handleLogout() {
     await logoutAdmin();
@@ -102,16 +91,6 @@ export function AdminDashboard() {
         {tab === "teams" ? <TeamsManager onToast={showToast} /> : null}
         {tab === "games" ? <GamesManager onToast={showToast} /> : null}
         {tab === "parser" ? <BoxScoreParserTab onToast={showToast} /> : null}
-      </div>
-
-      <div className="border-t border-border px-4 py-4">
-        <button
-          type="button"
-          onClick={handleReset}
-          className="w-full rounded-xl border border-live/30 bg-live/10 py-2.5 text-xs font-bold text-live active:bg-live/20"
-        >
-          Reset to Original Mock Data
-        </button>
       </div>
     </div>
   );

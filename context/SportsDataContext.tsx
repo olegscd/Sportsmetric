@@ -11,7 +11,6 @@ import {
   type StatLeaderEntry,
 } from "@/lib/derivations";
 import { inferLeague } from "@/lib/league-utils";
-import { mockGames, mockPlayers, mockSeasons, mockTeams } from "@/lib/mock-data";
 import { supabase } from "@/lib/supabase";
 import {
   batchUpsertGamesInSupabase,
@@ -156,16 +155,10 @@ export function SportsDataProvider({ children }: { children: React.ReactNode }) 
     };
   }, [loadDataFromSupabase]);
 
-  // Reset to defaults
+  // Refresh data from Supabase
   const resetToDefaults = useCallback(() => {
-    setSeasons(mockSeasons);
-    setTeams(mockTeams);
-    setPlayers(mockPlayers);
-    setGames(mockGames);
-    const curr = mockSeasons.find((s) => s.isCurrent)?.id ?? mockSeasons[0]?.id ?? "2025-26";
-    setCurrentSeasonId(curr);
-    void batchUpsertGamesInSupabase(mockGames);
-  }, []);
+    void loadDataFromSupabase();
+  }, [loadDataFromSupabase]);
 
   // Action Handlers — all wrapped in useCallback for stable references
   const saveGame = useCallback(async (game: Game) => {

@@ -1,5 +1,4 @@
 import { useSportsData } from "@/context/SportsDataContext";
-import { mockPlayers } from "@/lib/mock-data";
 import type { BoxScoreItem, Game, Player } from "@/types/sports";
 
 function formatPvlPlayerName(playerObj?: Player, rawItemPlayerId?: string): string {
@@ -95,9 +94,7 @@ export function BoxScoreTable({
             {items.map((item) => {
               const player =
                 players.find((p) => p.id === item.playerId) ||
-                players.find((p) => p.personId && item.playerId.endsWith(p.personId)) ||
-                mockPlayers.find((p) => p.id === item.playerId) ||
-                mockPlayers.find((p) => p.personId && item.playerId.endsWith(p.personId));
+                players.find((p) => p.personId && item.playerId.endsWith(p.personId));
 
               const jerseyNum =
                 player?.jerseyNumber && player.jerseyNumber > 0
@@ -170,9 +167,7 @@ export function BoxScoreTable({
           {items.map((item) => {
             const player =
               players.find((p) => p.id === item.playerId) ||
-              players.find((p) => p.personId && item.playerId.endsWith(p.personId)) ||
-              mockPlayers.find((p) => p.id === item.playerId) ||
-              mockPlayers.find((p) => p.personId && item.playerId.endsWith(p.personId));
+              players.find((p) => p.personId && item.playerId.endsWith(p.personId));
 
             const displayName = player ? `#${player.jerseyNumber} ${player.name}` : item.playerId;
 
