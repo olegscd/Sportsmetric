@@ -5,7 +5,7 @@ import { useSportsData } from "@/context/SportsDataContext";
 import { isLifetimeSeason } from "@/lib/derivations";
 import { cn } from "@/lib/utils";
 import type { GameStatus, League } from "@/types/sports";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { GameCard } from "./GameCard";
 
 const STATUS_TABS: { value: GameStatus | "ALL"; label: string }[] = [
@@ -32,11 +32,23 @@ function getSeasonLeague(sId: string, sLeague?: League): League {
 export function FilterTabs() {
   const { games, teams, seasons, currentSeasonId } = useSportsData();
   const [league, setLeague] = useState<League | "ALL">("UAAP");
-  const [seasonId, setSeasonId] = useState(() => currentSeasonId);
+  const activeLeague: League = league === "ALL" ? "UAAP" : league;
+
+  const [seasonId, setSeasonId] = useState<string>(() => {
+    const targetSeasons = seasons.filter((s) => getSeasonLeague(s.id, s.league) === "UAAP");
+    return targetSeasons.find((s) => s.isCurrent)?.id ?? targetSeasons[0]?.id ?? currentSeasonId;
+  });
+
   const [status, setStatus] = useState<GameStatus | "ALL">("LIVE");
   const [teamId, setTeamId] = useState<string>("ALL");
 
-  const activeLeague: League = league === "ALL" ? "UAAP" : league;
+  useEffect(() => {
+    const targetSeasons = seasons.filter((s) => getSeasonLeague(s.id, s.league) === activeLeague);
+    const activeCurrent = targetSeasons.find((s) => s.isCurrent)?.id ?? targetSeasons[0]?.id;
+    if (activeCurrent) {
+      setSeasonId(activeCurrent);
+    }
+  }, [activeLeague, seasons]);
 
   const selectedSeason = seasons.find((s) => s.id === seasonId);
   const isOldSeason = selectedSeason ? !selectedSeason.isCurrent : seasonId !== currentSeasonId;
@@ -80,11 +92,6 @@ export function FilterTabs() {
   function handleLeagueChange(newLeague: League | "ALL") {
     setLeague(newLeague);
     setTeamId("ALL");
-
-    const targetL = newLeague === "ALL" ? "UAAP" : newLeague;
-    const leagueSeasons = seasons.filter((s) => getSeasonLeague(s.id, s.league) === targetL);
-    const defaultSeason = leagueSeasons.find((s) => s.isCurrent)?.id ?? leagueSeasons[0]?.id ?? currentSeasonId;
-    setSeasonId(defaultSeason);
   }
 
   return (

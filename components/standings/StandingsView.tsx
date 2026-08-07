@@ -5,7 +5,7 @@ import { useSportsData } from "@/context/SportsDataContext";
 import { getUAAPGamePartition } from "@/lib/derivations";
 import { cn, formatAvg } from "@/lib/utils";
 import type { League, Player } from "@/types/sports";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FinalFourBracket } from "./FinalFourBracket";
 import { StandingsTable } from "./StandingsTable";
 import { StatLeaderCard } from "./StatLeaderCard";
@@ -48,13 +48,22 @@ function getSeasonLeague(sId: string, sLeague?: League): League {
 export function StandingsView() {
   const { currentSeasonId, seasons, games, getStandings, getStatLeaders } = useSportsData();
   const [league, setLeague] = useState<League>("UAAP");
-  const [seasonId, setSeasonId] = useState(() => currentSeasonId);
+
+  const [seasonId, setSeasonId] = useState<string>(() => {
+    const targetSeasons = seasons.filter((s) => getSeasonLeague(s.id, s.league) === "UAAP");
+    return targetSeasons.find((s) => s.isCurrent)?.id ?? targetSeasons[0]?.id ?? currentSeasonId;
+  });
+
+  useEffect(() => {
+    const targetSeasons = seasons.filter((s) => getSeasonLeague(s.id, s.league) === league);
+    const activeCurrent = targetSeasons.find((s) => s.isCurrent)?.id ?? targetSeasons[0]?.id;
+    if (activeCurrent) {
+      setSeasonId(activeCurrent);
+    }
+  }, [league, seasons]);
 
   function handleLeagueChange(newLeague: League) {
     setLeague(newLeague);
-    const leagueSeasons = seasons.filter((s) => getSeasonLeague(s.id, s.league) === newLeague);
-    const defaultSeason = leagueSeasons.find((s) => s.isCurrent)?.id ?? leagueSeasons[0]?.id ?? currentSeasonId;
-    setSeasonId(defaultSeason);
   }
 
   const standings = getStandings(league, seasonId);

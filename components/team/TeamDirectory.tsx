@@ -7,7 +7,7 @@ import type { DerivedTeamStandings } from "@/lib/derivations";
 import { cn, formatRecord } from "@/lib/utils";
 import type { League } from "@/types/sports";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const LEAGUE_CHIPS: { value: League | "ALL"; label: string }[] = [
   { value: "UAAP", label: "UAAP" },
@@ -26,16 +26,23 @@ function getSeasonLeague(sId: string, sLeague?: League): League {
 export function TeamDirectory() {
   const { currentSeasonId, seasons, getStandings } = useSportsData();
   const [league, setLeague] = useState<League | "ALL">("UAAP");
-  const [seasonId, setSeasonId] = useState(() => currentSeasonId);
-
   const activeLeague: League = league === "ALL" ? "UAAP" : league;
+
+  const [seasonId, setSeasonId] = useState<string>(() => {
+    const targetSeasons = seasons.filter((s) => getSeasonLeague(s.id, s.league) === "UAAP");
+    return targetSeasons.find((s) => s.isCurrent)?.id ?? targetSeasons[0]?.id ?? currentSeasonId;
+  });
+
+  useEffect(() => {
+    const targetSeasons = seasons.filter((s) => getSeasonLeague(s.id, s.league) === activeLeague);
+    const activeCurrent = targetSeasons.find((s) => s.isCurrent)?.id ?? targetSeasons[0]?.id;
+    if (activeCurrent) {
+      setSeasonId(activeCurrent);
+    }
+  }, [activeLeague, seasons]);
 
   function handleLeagueChange(newLeague: League | "ALL") {
     setLeague(newLeague);
-    const targetL = newLeague === "ALL" ? "UAAP" : newLeague;
-    const leagueSeasons = seasons.filter((s) => getSeasonLeague(s.id, s.league) === targetL);
-    const defaultSeason = leagueSeasons.find((s) => s.isCurrent)?.id ?? leagueSeasons[0]?.id ?? currentSeasonId;
-    setSeasonId(defaultSeason);
   }
 
   const leagues: League[] = league === "ALL" ? ["UAAP", "PBA", "PVL"] : [league];
