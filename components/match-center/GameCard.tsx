@@ -3,37 +3,48 @@
 import { TeamBadge } from "@/components/ui/TeamBadge";
 import { useGameModal } from "@/lib/game-modal-context";
 import { isPlayoffGame } from "@/lib/derivations";
-import { formatRecord, formatStartTime } from "@/lib/utils";
+import { formatGameDate, formatRecord, formatStartTime } from "@/lib/utils";
 import type { Game, Team } from "@/types/sports";
 import Link from "next/link";
 import { LeagueBadge } from "./LeagueBadge";
 
 function StatusPill({ game }: { game: Game }) {
+  const dateStr = formatGameDate(game.startTime, true);
+
   if (game.status === "LIVE") {
     const label =
       game.timeRemaining !== null
         ? `Q${game.quarterOrSet} \u2022 ${game.timeRemaining}`
         : `Set ${game.quarterOrSet}`;
     return (
-      <span className="inline-flex items-center gap-1.5 rounded-full bg-live/15 px-2 py-0.5 text-[11px] font-bold text-live">
-        <span className="h-1.5 w-1.5 animate-live-pulse rounded-full bg-live" />
-        LIVE {label}
-      </span>
+      <div className="flex items-center gap-1.5 shrink-0">
+        {dateStr && <span className="text-[11px] font-medium text-muted">{dateStr} &middot;</span>}
+        <span className="inline-flex items-center gap-1.5 rounded-full bg-live/15 px-2 py-0.5 text-[11px] font-bold text-live">
+          <span className="h-1.5 w-1.5 animate-live-pulse rounded-full bg-live" />
+          LIVE {label}
+        </span>
+      </div>
     );
   }
 
   if (game.status === "FINAL") {
     return (
-      <span className="rounded-full bg-elevated px-2 py-0.5 text-[11px] font-semibold text-muted">
-        FINAL
-      </span>
+      <div className="flex items-center gap-1.5 shrink-0">
+        {dateStr && <span className="text-[11px] font-medium text-muted">{dateStr} &middot;</span>}
+        <span className="rounded-full bg-elevated px-2 py-0.5 text-[11px] font-semibold text-muted">
+          FINAL
+        </span>
+      </div>
     );
   }
 
   return (
-    <span className="rounded-full bg-elevated px-2 py-0.5 text-[11px] font-semibold text-muted">
-      {formatStartTime(game.startTime)}
-    </span>
+    <div className="flex items-center gap-1.5 shrink-0">
+      {dateStr && <span className="text-[11px] font-medium text-muted">{dateStr} &middot;</span>}
+      <span className="rounded-full bg-elevated px-2 py-0.5 text-[11px] font-semibold text-muted">
+        {formatStartTime(game.startTime)}
+      </span>
+    </div>
   );
 }
 

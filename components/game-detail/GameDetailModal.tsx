@@ -3,7 +3,7 @@
 import { TeamBadge } from "@/components/ui/TeamBadge";
 import { useSportsData } from "@/context/SportsDataContext";
 import { useGameModal } from "@/lib/game-modal-context";
-import { cn } from "@/lib/utils";
+import { cn, formatGameDate } from "@/lib/utils";
 import type { Game } from "@/types/sports";
 import { isPlayoffGame } from "@/lib/derivations";
 import { X } from "lucide-react";
@@ -34,6 +34,7 @@ export function GameDetailModal() {
 function GameDetailSheet({ game, onClose }: { game: Game; onClose: () => void }) {
   const [tab, setTab] = useState<DetailTab>("overview");
   const [side, setSide] = useState<"away" | "home">("away");
+  const dateStr = formatGameDate(game.startTime, true);
 
   // Prevent background page viewport jumping while modal is open
   useEffect(() => {
@@ -61,7 +62,7 @@ function GameDetailSheet({ game, onClose }: { game: Game; onClose: () => void })
         <div className="flex shrink-0 items-start justify-between px-4 pt-2">
           <div className="flex-1 flex items-center gap-2">
             <p className="text-[11px] font-semibold uppercase tracking-wide text-muted">
-              {game.league} &middot; {game.status}
+              {game.league} {dateStr ? `\u2022 ${dateStr}` : ""} &middot; {game.status}
             </p>
             {isPlayoffGame(game) && (
               <span className="rounded-full bg-amber-500/15 px-2 py-0.5 text-[10px] font-bold text-amber-500 uppercase tracking-wide">

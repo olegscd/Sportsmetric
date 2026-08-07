@@ -3,7 +3,7 @@
 import { TeamBadge } from "@/components/ui/TeamBadge";
 import { isPlayoffGame, type PlayerGameLogEntry } from "@/lib/derivations";
 import { useGameModal } from "@/lib/game-modal-context";
-import { cn, formatStartTime } from "@/lib/utils";
+import { cn, formatGameDate, formatStartTime } from "@/lib/utils";
 
 export function MatchHistory({ entries }: { entries: PlayerGameLogEntry[] }) {
   const { openGame } = useGameModal();
@@ -23,6 +23,7 @@ export function MatchHistory({ entries }: { entries: PlayerGameLogEntry[] }) {
         const isLoss = game.status === "FINAL" && teamScore < oppScore;
         const playoff = isPlayoffGame(game);
         const isVolleyball = game.league === "PVL" || stat.atkPts !== undefined;
+        const dateStr = formatGameDate(game.startTime, true);
 
         return (
           <button
@@ -59,7 +60,7 @@ export function MatchHistory({ entries }: { entries: PlayerGameLogEntry[] }) {
                 )}
               </div>
               <p className="truncate text-xs text-muted">
-                {game.status === "LIVE" ? "Live now" : formatStartTime(game.startTime)}
+                {dateStr ? `${dateStr} \u2022 ` : ""}{game.status === "LIVE" ? "Live now" : formatStartTime(game.startTime)}
               </p>
             </div>
 

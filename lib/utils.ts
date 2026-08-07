@@ -49,12 +49,28 @@ export function leagueLabel(league: string): string {
 }
 
 /**
+ * Formats an ISO start time into a clean date string (e.g. "Sep 21, 2025").
+ */
+export function formatGameDate(iso: string, includeYear = true): string {
+  if (!iso) return "";
+  const date = new Date(iso);
+  if (isNaN(date.getTime())) return "";
+  return new Intl.DateTimeFormat("en-PH", {
+    month: "short",
+    day: "numeric",
+    ...(includeYear ? { year: "numeric" } : {}),
+    timeZone: "Asia/Manila",
+  }).format(date);
+}
+
+/**
  * Formats an ISO start time into a short, deterministic display string
  * (e.g. "Aug 2, 2:00 PM"). Uses explicit Intl options and a fixed locale/
  * timezone so server and client render identically.
  */
 export function formatStartTime(iso: string): string {
   const date = new Date(iso);
+  if (isNaN(date.getTime())) return "";
   return new Intl.DateTimeFormat("en-PH", {
     month: "short",
     day: "numeric",
@@ -63,3 +79,4 @@ export function formatStartTime(iso: string): string {
     timeZone: "Asia/Manila",
   }).format(date);
 }
+
