@@ -105,6 +105,9 @@ function parseGameDate(raw: string): string {
       month = m;
       day = d;
     }
+    if (year < 100) {
+      year = 2000 + year;
+    }
     const dt = new Date(Date.UTC(year, month - 1, day, 10, 0));
     return dt.toISOString();
   } catch {

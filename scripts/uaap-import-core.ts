@@ -82,9 +82,14 @@ function normalizeMinutes(raw: string): string {
 
 function parseGameDate(raw: string): string {
   const [datePart, timePart] = raw.split(" ");
-  const [month, day, year] = datePart.split("/").map(Number);
+  const parts = datePart.split("/").map(Number);
+  if (parts.length < 3) return new Date().toISOString();
+  let [month, day, year] = parts;
+  if (year < 100) {
+    year = 2000 + year;
+  }
   const [hour, minute] = (timePart ?? "12:00").split(":").map(Number);
-  const dt = new Date(Date.UTC(year, month - 1, day, hour - 8, minute));
+  const dt = new Date(Date.UTC(year, month - 1, day, (hour || 12) - 8, minute || 0));
   return dt.toISOString();
 }
 
