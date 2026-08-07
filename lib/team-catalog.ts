@@ -1,6 +1,6 @@
 import type { League, Team, TeamRecord } from "@/types/sports";
 
-export const TEAM_SEASON_IDS = ["2026-27", "2025-26", "2024-25", "2023-24"] as const;
+export const TEAM_SEASON_IDS = ["2025-26", "2024-25", "2023-24"] as const;
 
 type TeamSeed = {
   slug: string;

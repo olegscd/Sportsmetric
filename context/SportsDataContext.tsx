@@ -91,13 +91,11 @@ interface SportsDataContextType {
 const SportsDataContext = createContext<SportsDataContextType | undefined>(undefined);
 
 export function SportsDataProvider({ children }: { children: React.ReactNode }) {
-  const [seasons, setSeasons] = useState<Season[]>(mockSeasons);
-  const [teams, setTeams] = useState<Team[]>(mockTeams);
-  const [players, setPlayers] = useState<Player[]>(mockPlayers);
-  const [games, setGames] = useState<Game[]>(mockGames);
-  const [currentSeasonId, setCurrentSeasonId] = useState<string>(() => {
-    return mockSeasons.find((s) => s.isCurrent)?.id ?? mockSeasons[0]?.id ?? "2025-26";
-  });
+  const [seasons, setSeasons] = useState<Season[]>([]);
+  const [teams, setTeams] = useState<Team[]>([]);
+  const [players, setPlayers] = useState<Player[]>([]);
+  const [games, setGames] = useState<Game[]>([]);
+  const [currentSeasonId, setCurrentSeasonId] = useState<string>("2025-26");
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [isHydrated, setIsHydrated] = useState<boolean>(false);
@@ -110,7 +108,7 @@ export function SportsDataProvider({ children }: { children: React.ReactNode }) 
     setError(null);
     try {
       const data = await fetchAllSupabaseData();
-      if (data && data.seasons.length > 0) {
+      if (data) {
         setSeasons(data.seasons);
         setTeams(data.teams);
         setPlayers(data.players);
@@ -120,19 +118,10 @@ export function SportsDataProvider({ children }: { children: React.ReactNode }) 
           const uaapCurr = data.seasons.find((s) => inferLeague(s.id, s.league) === "UAAP" && s.isCurrent)?.id;
           return uaapCurr ?? data.seasons.find((s) => s.isCurrent)?.id ?? data.seasons[0]?.id ?? prev;
         });
-      } else {
-        setSeasons(mockSeasons);
-        setTeams(mockTeams);
-        setPlayers(mockPlayers);
-        setGames(mockGames);
       }
     } catch (err) {
-      console.warn("[SportsDataContext] Using mock fallbacks after load error:", err);
-      setError("Failed to load live data from Supabase. Displaying fallback data.");
-      setSeasons(mockSeasons);
-      setTeams(mockTeams);
-      setPlayers(mockPlayers);
-      setGames(mockGames);
+      console.warn("[SportsDataContext] Load error:", err);
+      setError("Failed to load data from Supabase.");
     } finally {
       setLoading(false);
     }
