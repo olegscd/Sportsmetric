@@ -27,31 +27,31 @@ export function Header() {
     NESTED_ROUTE_TITLES.find(({ prefix }) => pathname.startsWith(prefix))?.label ?? "";
 
   return (
-    <header className="sticky top-0 z-30 flex h-14 shrink-0 items-center gap-3 border-b border-border bg-bg/95 px-4 backdrop-blur">
+    <header className="sticky top-0 z-30 flex h-14 shrink-0 items-center gap-3 border-b border-[#b35843]/30 bg-[#b35843] px-4 shadow-sm backdrop-blur">
       {isNested ? (
         <button
           type="button"
           onClick={() => router.back()}
           aria-label="Go back"
-          className="-ml-2 flex h-9 w-9 items-center justify-center rounded-full text-foreground active:bg-surface"
+          className="-ml-2 flex h-9 w-9 items-center justify-center rounded-full text-white active:bg-white/20"
         >
           <ChevronLeft size={22} />
         </button>
       ) : (
         <Link href="/" className="flex items-center gap-1.5">
-          <Radio size={18} className="text-primary" />
-          <span className="text-base font-bold tracking-tight text-foreground">
+          <Radio size={18} className="text-white" />
+          <span className="text-base font-extrabold tracking-tight text-white">
             Sportsmetric
           </span>
         </Link>
       )}
 
       {isNested ? (
-        <span className="truncate text-base font-semibold text-foreground">
+        <span className="truncate text-base font-bold text-white">
           {nestedTitle}
         </span>
       ) : (
-        <span className="ml-auto text-sm font-medium text-muted">{title}</span>
+        <span className="ml-auto text-sm font-bold text-white/80">{title}</span>
       )}
     </header>
   );
