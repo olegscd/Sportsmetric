@@ -5,8 +5,7 @@
  * there is no light mode to toggle, so these tokens are the only palette.
  */
 :root {
-  /* Admin-era navy palette (was bg-[#0B0F17] + white/opacity layers). */
-  --color-bg: #0b0f17;
+  --color-bg: #ffffff;
   --color-surface: #141922;
   --color-elevated: #1c222c;
   --color-border: #2a303a;
