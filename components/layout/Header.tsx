@@ -27,13 +27,13 @@ export function Header() {
     NESTED_ROUTE_TITLES.find(({ prefix }) => pathname.startsWith(prefix))?.label ?? "";
 
   return (
-    <header className="relative z-30 flex h-14 shrink-0 items-center gap-3 border-b border-[#b35843]/30 bg-[#b35843] px-4 shadow-sm">
+    <header className="relative z-30 flex h-14 shrink-0 items-center gap-3 border-b border-stone-300/60 bg-[#F8F7F2] px-4 shadow-sm">
       {isNested ? (
         <button
           type="button"
           onClick={() => router.back()}
           aria-label="Go back"
-          className="-ml-2 flex h-9 w-9 items-center justify-center rounded-full text-white active:bg-white/20"
+          className="-ml-2 flex h-9 w-9 items-center justify-center rounded-full text-zinc-900 active:bg-stone-200/60"
         >
           <ChevronLeft size={22} />
         </button>
@@ -43,17 +43,17 @@ export function Header() {
           <img
             src="/sportsmetric-wordmark.png"
             alt="Sportsmetric"
-            className="h-6 w-auto object-contain brightness-110"
+            className="h-6 w-auto object-contain invert"
           />
         </Link>
       )}
 
       {isNested ? (
-        <span className="truncate text-base font-bold text-white">
+        <span className="truncate text-base font-bold text-zinc-900">
           {nestedTitle}
         </span>
       ) : (
-        <span className="ml-auto text-sm font-bold text-white/80">{title}</span>
+        <span className="ml-auto text-sm font-bold text-zinc-700">{title}</span>
       )}
     </header>
   );
