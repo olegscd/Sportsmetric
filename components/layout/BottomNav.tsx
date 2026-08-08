@@ -49,7 +49,7 @@ export function BottomNav() {
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-30 mx-auto flex max-w-md shrink-0 items-stretch border-t border-border bg-surface/95 backdrop-blur">
+    <nav className="fixed bottom-0 left-0 right-0 z-30 mx-auto flex max-w-md shrink-0 items-stretch border-t border-[#b35843]/30 bg-[#b35843] shadow-lg backdrop-blur">
       {navItems.map(({ href, label, icon: Icon, isActive, badgeCount }) => {
         const active = isActive(pathname);
         return (
@@ -57,20 +57,20 @@ export function BottomNav() {
             key={href}
             href={href}
             scroll={false}
-            className="flex flex-1 flex-col items-center gap-1 py-2.5"
+            className="flex flex-1 flex-col items-center gap-1 py-2.5 transition-colors"
           >
             <span className="relative">
-              <Icon size={22} className={cn(active ? "text-primary" : "text-muted")} />
+              <Icon size={22} className={cn(active ? "text-white" : "text-white/60")} />
               {badgeCount ? (
-                <span className="absolute -right-2 -top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-live px-1 text-[9px] font-bold text-white">
+                <span className="absolute -right-2 -top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-live px-1 text-[9px] font-bold text-white shadow-sm">
                   {badgeCount}
                 </span>
               ) : null}
             </span>
             <span
               className={cn(
-                "text-[11px] font-medium",
-                active ? "text-primary" : "text-muted"
+                "text-[11px]",
+                active ? "font-bold text-white" : "font-medium text-white/60"
               )}
             >
               {label}
