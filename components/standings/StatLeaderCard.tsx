@@ -10,7 +10,7 @@ interface StatLeaderCardProps {
 
 export function StatLeaderCard({ title, entries, formatValue }: StatLeaderCardProps) {
   return (
-    <div className="w-full rounded-2xl border border-stone-300/60 bg-[#F4EBD9] p-3 shadow-sm">
+    <div className="w-full rounded-2xl border border-stone-300/60 bg-[#F8F7F2] p-3 shadow-sm">
       <p className="mb-2 text-[11px] font-bold uppercase tracking-wide text-zinc-700">
         {title}
       </p>
