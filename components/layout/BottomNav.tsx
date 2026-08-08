@@ -49,7 +49,7 @@ export function BottomNav() {
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-30 mx-auto flex max-w-md shrink-0 items-stretch border-t border-[#1B263B] bg-[#0D1B2A] shadow-lg backdrop-blur">
+    <nav className="fixed bottom-0 left-0 right-0 z-30 mx-auto flex max-w-md shrink-0 items-stretch border-t border-stone-200/80 bg-white shadow-lg backdrop-blur">
       {navItems.map(({ href, label, icon: Icon, isActive, badgeCount }) => {
         const active = isActive(pathname);
         return (
@@ -60,7 +60,7 @@ export function BottomNav() {
             className="flex flex-1 flex-col items-center gap-1 py-2.5 transition-colors"
           >
             <span className="relative">
-              <Icon size={22} className={cn(active ? "text-white" : "text-white/60")} />
+              <Icon size={22} className={cn(active ? "text-[#b35843]" : "text-zinc-400")} />
               {badgeCount ? (
                 <span className="absolute -right-2 -top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-live px-1 text-[9px] font-bold text-white shadow-sm">
                   {badgeCount}
@@ -70,7 +70,7 @@ export function BottomNav() {
             <span
               className={cn(
                 "text-[11px]",
-                active ? "font-bold text-white" : "font-medium text-white/60"
+                active ? "font-bold text-[#b35843]" : "font-medium text-zinc-500"
               )}
             >
               {label}
