@@ -27,7 +27,7 @@ export function Header() {
     NESTED_ROUTE_TITLES.find(({ prefix }) => pathname.startsWith(prefix))?.label ?? "";
 
   return (
-    <header className="relative z-30 flex h-14 shrink-0 items-center gap-3 border-b border-[#b35843]/30 bg-[#b35843] px-4 shadow-sm">
+    <header className="relative z-30 flex h-14 shrink-0 items-center gap-3 border-b border-[#1B263B] bg-[#0D1B2A] px-4 shadow-sm">
       {isNested ? (
         <button
           type="button"
