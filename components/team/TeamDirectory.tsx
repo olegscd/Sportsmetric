@@ -87,7 +87,7 @@ export function TeamDirectory() {
               <Link
                 key={team.id}
                 href={`/teams/${team.id}`}
-                className="flex items-center gap-3 rounded-2xl border border-stone-300/60 bg-[#F4EBD9] p-3 shadow-sm active:scale-[0.99] transition-transform"
+                className="flex items-center gap-3 rounded-2xl border border-stone-400/50 bg-[#E8CEB0] p-3 shadow-sm active:scale-[0.99] transition-transform"
               >
                 <span className="w-4 shrink-0 text-center text-xs font-extrabold text-zinc-600">
                   {index + 1}

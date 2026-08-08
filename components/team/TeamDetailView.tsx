@@ -35,7 +35,7 @@ export function TeamDetailView({ id }: { id: string }) {
 
   return (
     <div className="flex flex-col gap-5 px-4 py-4">
-      <div className="flex items-center gap-4 rounded-2xl border border-stone-300/60 bg-[#F4EBD9] p-5 shadow-sm">
+      <div className="flex items-center gap-4 rounded-2xl border border-stone-400/50 bg-[#E8CEB0] p-5 shadow-sm">
         <TeamBadge team={team} size="lg" />
         <div className="min-w-0 flex-1">
           <p className="truncate text-lg font-extrabold text-zinc-950">{team.name}</p>
