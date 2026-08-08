@@ -39,10 +39,12 @@ export function Header() {
         </button>
       ) : (
         <Link href="/" className="flex items-center gap-1.5">
-          <Radio size={18} className="text-white" />
-          <span className="text-base font-extrabold tracking-tight text-white">
-            Sportsmetric
-          </span>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/sportsmetric-wordmark.png"
+            alt="Sportsmetric"
+            className="h-6 w-auto object-contain brightness-110"
+          />
         </Link>
       )}
 
