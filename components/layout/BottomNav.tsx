@@ -49,7 +49,7 @@ export function BottomNav() {
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-30 mx-auto flex max-w-md shrink-0 items-stretch border-t border-stone-200/80 bg-white shadow-lg backdrop-blur">
+    <nav className="fixed bottom-0 left-0 right-0 z-30 mx-auto flex max-w-md shrink-0 items-stretch border-t border-stone-300/60 bg-[#F8F7F2] shadow-lg backdrop-blur">
       {navItems.map(({ href, label, icon: Icon, isActive, badgeCount }) => {
         const active = isActive(pathname);
         return (
