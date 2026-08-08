@@ -30,7 +30,7 @@ export function MatchHistory({ entries }: { entries: PlayerGameLogEntry[] }) {
             key={game.id}
             type="button"
             onClick={() => openGame(game.id)}
-            className="flex items-center gap-3 rounded-2xl border border-stone-400/50 bg-[#E8CEB0] p-3 text-left shadow-sm active:scale-[0.99] transition-transform"
+            className="flex items-center gap-3 rounded-2xl border border-stone-300/60 bg-[#F4EBD9] p-3 text-left shadow-sm active:scale-[0.99] transition-transform"
           >
             <div
               className={cn(

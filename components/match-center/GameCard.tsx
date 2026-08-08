@@ -99,7 +99,7 @@ export function GameCard({ game }: { game: Game }) {
           openGame(game.id);
         }
       }}
-      className="w-full cursor-pointer rounded-2xl border border-stone-400/50 bg-[#E8CEB0] p-4 text-left shadow-sm active:scale-[0.99] transition-transform"
+      className="w-full cursor-pointer rounded-2xl border border-stone-300/60 bg-[#F4EBD9] p-4 text-left shadow-sm active:scale-[0.99] transition-transform"
     >
       <div className="mb-3 flex items-center justify-between">
         <div className="flex items-center gap-1.5">

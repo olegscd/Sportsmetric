@@ -19,36 +19,36 @@ export function StandingsTable({
 }: StandingsTableProps) {
   const rows = standings
     ? standings.map((s, index) => ({
-        index: index + 1,
-        team: s.team,
-        wins: s.wins,
-        losses: s.losses,
-        pct: s.winPct.toFixed(3).replace(/^0/, ""),
-        pf: s.pointsFor,
-        pa: s.pointsAgainst,
-        diff: s.pointDiff > 0 ? `+${s.pointDiff}` : `${s.pointDiff}`,
-        streak: s.streak,
-      }))
+      index: index + 1,
+      team: s.team,
+      wins: s.wins,
+      losses: s.losses,
+      pct: s.winPct.toFixed(3).replace(/^0/, ""),
+      pf: s.pointsFor,
+      pa: s.pointsAgainst,
+      diff: s.pointDiff > 0 ? `+${s.pointDiff}` : `${s.pointDiff}`,
+      streak: s.streak,
+    }))
     : (teams ?? []).map((team, index) => {
-        const total = team.record.wins + team.record.losses;
-        const pctVal = total > 0 ? team.record.wins / total : 0;
-        return {
-          index: index + 1,
-          team,
-          wins: team.record.wins,
-          losses: team.record.losses,
-          pct: pctVal.toFixed(3).replace(/^0/, ""),
-          pf: undefined,
-          pa: undefined,
-          diff: undefined,
-          streak: undefined,
-        };
-      });
+      const total = team.record.wins + team.record.losses;
+      const pctVal = total > 0 ? team.record.wins / total : 0;
+      return {
+        index: index + 1,
+        team,
+        wins: team.record.wins,
+        losses: team.record.losses,
+        pct: pctVal.toFixed(3).replace(/^0/, ""),
+        pf: undefined,
+        pa: undefined,
+        diff: undefined,
+        streak: undefined,
+      };
+    });
 
   const showDiffAndStreak = standings && !isOldSeason;
 
   return (
-    <div className="overflow-x-auto rounded-2xl border border-stone-400/50 bg-[#E8CEB0] shadow-sm">
+    <div className="overflow-x-auto rounded-2xl border border-stone-300/60 bg-[#F4EBD9] shadow-sm">
       <table className="w-full text-left text-sm">
         <thead>
           <tr className="border-b border-stone-300/80 text-[11px] font-bold text-zinc-700">

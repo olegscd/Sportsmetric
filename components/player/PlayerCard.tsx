@@ -175,7 +175,7 @@ export function PlayerCard({
     return (
       <Link
         href={`/players/${player.id}`}
-        className="flex items-center gap-3 rounded-2xl border border-stone-400/50 bg-[#E8CEB0] p-3 shadow-sm transition-transform active:scale-[0.99]"
+        className="flex items-center gap-3 rounded-2xl border border-stone-300/60 bg-[#F4EBD9] p-3 shadow-sm transition-transform active:scale-[0.99]"
       >
         <PlayerAvatar player={player} accentColor={team.accentColor} size="md" />
         <div className="min-w-0 flex-1">
@@ -206,7 +206,7 @@ export function PlayerCard({
   }
 
   return (
-    <div className="flex flex-col gap-4 rounded-2xl border border-stone-400/50 bg-[#E8CEB0] p-5 shadow-sm">
+    <div className="flex flex-col gap-4 rounded-2xl border border-stone-300/60 bg-[#F4EBD9] p-5 shadow-sm">
       <div className="flex items-center gap-4">
         <PlayerAvatar player={player} accentColor={team.accentColor} size="lg" className="text-lg" />
         <div className="min-w-0 flex-1">
