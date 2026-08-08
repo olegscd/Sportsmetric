@@ -5,7 +5,7 @@
  * there is no light mode to toggle, so these tokens are the only palette.
  */
 :root {
-  --color-bg: #ffffff;
+  --color-bg: #F8F7F2;
   --color-surface: #141922;
   --color-elevated: #1c222c;
   --color-border: #2a303a;

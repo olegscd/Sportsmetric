@@ -48,7 +48,7 @@ export function StandingsTable({
   const showDiffAndStreak = standings && !isOldSeason;
 
   return (
-    <div className="overflow-x-auto rounded-2xl border border-stone-300/60 bg-[#F8F7F2] shadow-sm">
+    <div className="overflow-x-auto rounded-2xl border border-stone-300/60 bg-[#F4EBD9] shadow-sm">
       <table className="w-full text-left text-sm">
         <thead>
           <tr className="border-b border-stone-300/80 text-[11px] font-bold text-zinc-700">
