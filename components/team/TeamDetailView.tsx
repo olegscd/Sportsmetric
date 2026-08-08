@@ -35,13 +35,13 @@ export function TeamDetailView({ id }: { id: string }) {
 
   return (
     <div className="flex flex-col gap-5 px-4 py-4">
-      <div className="flex items-center gap-4 rounded-2xl border border-border bg-surface p-5">
+      <div className="flex items-center gap-4 rounded-2xl border border-stone-300/60 bg-[#F4EBD9] p-5 shadow-sm">
         <TeamBadge team={team} size="lg" />
         <div className="min-w-0 flex-1">
-          <p className="truncate text-lg font-bold text-foreground">{team.name}</p>
+          <p className="truncate text-lg font-extrabold text-zinc-950">{team.name}</p>
           <div className="mt-1.5 flex items-center gap-1.5">
             <LeagueBadge league={team.league} />
-            <span className="text-xs text-muted">
+            <span className="text-xs font-semibold text-zinc-700">
               {formatRecord(recordToDisplay)}
               {rank ? ` \u00b7 ${formatOrdinal(rank)} in ${team.league}` : null}
             </span>

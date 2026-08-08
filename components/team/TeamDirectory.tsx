@@ -87,19 +87,19 @@ export function TeamDirectory() {
               <Link
                 key={team.id}
                 href={`/teams/${team.id}`}
-                className="flex items-center gap-3 rounded-2xl border border-border bg-surface p-3"
+                className="flex items-center gap-3 rounded-2xl border border-stone-300/60 bg-[#F4EBD9] p-3 shadow-sm active:scale-[0.99] transition-transform"
               >
-                <span className="w-4 shrink-0 text-center text-xs font-semibold text-muted">
+                <span className="w-4 shrink-0 text-center text-xs font-extrabold text-zinc-600">
                   {index + 1}
                 </span>
                 <TeamBadge team={team} size="md" />
                 <div className="min-w-0 flex-1">
-                  <p className="truncate text-sm font-semibold text-foreground">{team.name}</p>
-                  <p className="truncate text-xs text-muted">
+                  <p className="truncate text-sm font-bold text-zinc-900">{team.name}</p>
+                  <p className="truncate text-xs font-semibold text-zinc-600">
                     {team.league} &middot; {formatRecord(record)}
                   </p>
                 </div>
-                <span className="shrink-0 text-xs font-semibold tabular-nums text-muted">
+                <span className="shrink-0 text-xs font-bold tabular-nums text-zinc-800">
                   {pctStr}
                 </span>
               </Link>
