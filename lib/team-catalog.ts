@@ -44,7 +44,7 @@ const UAAP_SEEDS: TeamSeed[] = [
   { slug: "feu", name: "FEU Tamaraws", shortName: "FEU", accentColor: "#006633" },
   { slug: "nu", name: "NU Bulldogs", shortName: "NU", accentColor: "#FFD700" },
   { slug: "ue", name: "UE Red Warriors", shortName: "UE", accentColor: "#DC143C" },
-  { slug: "up", name: "UP Fighting Maroons", shortName: "UP", accentColor: "#7A1F2B" },
+  { slug: "up", name: "UP Fighting Maroons", shortName: "UP", accentColor: "#8C0902" },
   { slug: "ust", name: "UST Growling Tigers", shortName: "UST", accentColor: "#FFC72C" },
 ];
 
