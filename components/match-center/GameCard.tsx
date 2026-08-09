@@ -18,7 +18,7 @@ function StatusPill({ game }: { game: Game }) {
         : `Set ${game.quarterOrSet}`;
     return (
       <div className="flex items-center gap-1.5 shrink-0">
-        {dateStr && <span className="text-[11px] font-semibold text-zinc-700">{dateStr} &middot;</span>}
+        {dateStr && <span className="text-[11px] font-semibold text-muted">{dateStr} &middot;</span>}
         <span className="inline-flex items-center gap-1.5 rounded-full bg-live/20 px-2 py-0.5 text-[11px] font-bold text-live">
           <span className="h-1.5 w-1.5 animate-live-pulse rounded-full bg-live" />
           LIVE {label}
@@ -30,8 +30,8 @@ function StatusPill({ game }: { game: Game }) {
   if (game.status === "FINAL") {
     return (
       <div className="flex items-center gap-1.5 shrink-0">
-        {dateStr && <span className="text-[11px] font-semibold text-zinc-700">{dateStr} &middot;</span>}
-        <span className="rounded-full bg-stone-300/80 px-2 py-0.5 text-[11px] font-bold text-zinc-800">
+        {dateStr && <span className="text-[11px] font-semibold text-muted">{dateStr} &middot;</span>}
+        <span className="rounded-full bg-border px-2 py-0.5 text-[11px] font-bold text-foreground">
           FINAL
         </span>
       </div>
@@ -40,8 +40,8 @@ function StatusPill({ game }: { game: Game }) {
 
   return (
     <div className="flex items-center gap-1.5 shrink-0">
-      {dateStr && <span className="text-[11px] font-semibold text-zinc-700">{dateStr} &middot;</span>}
-      <span className="rounded-full bg-stone-300/80 px-2 py-0.5 text-[11px] font-bold text-zinc-800">
+      {dateStr && <span className="text-[11px] font-semibold text-muted">{dateStr} &middot;</span>}
+      <span className="rounded-full bg-border px-2 py-0.5 text-[11px] font-bold text-foreground">
         {formatStartTime(game.startTime)}
       </span>
     </div>
@@ -67,16 +67,16 @@ function TeamRow({
       >
         <TeamBadge team={team} size="sm" />
         <div className="flex flex-col">
-          <span className="text-sm font-bold text-zinc-900">
+          <span className="text-sm font-bold text-foreground">
             {team.shortName}
           </span>
-          <span className="text-[11px] font-medium text-zinc-600">
+          <span className="text-[11px] font-medium text-muted">
             {formatRecord(team.record)}
           </span>
         </div>
       </Link>
       {showScore ? (
-        <span className="text-lg font-black tabular-nums text-zinc-950">
+        <span className="text-lg font-black tabular-nums text-foreground">
           {score}
         </span>
       ) : null}
@@ -99,13 +99,13 @@ export function GameCard({ game }: { game: Game }) {
           openGame(game.id);
         }
       }}
-      className="w-full cursor-pointer rounded-2xl border border-stone-300/60 bg-[#F4EBD9] p-4 text-left shadow-sm active:scale-[0.99] transition-transform"
+      className="w-full cursor-pointer rounded-2xl border border-border bg-surface p-4 text-left shadow-sm hover:border-primary/50 active:scale-[0.99] transition-all"
     >
       <div className="mb-3 flex items-center justify-between">
         <div className="flex items-center gap-1.5">
           <LeagueBadge league={game.league} />
           {isPlayoffGame(game) && (
-            <span className="rounded-full bg-amber-600/20 px-2 py-0.5 text-[10px] font-extrabold text-amber-900 uppercase tracking-wide">
+            <span className="rounded-full bg-primary/20 px-2 py-0.5 text-[10px] font-extrabold text-primary uppercase tracking-wide">
               Playoffs
             </span>
           )}
@@ -117,7 +117,7 @@ export function GameCard({ game }: { game: Game }) {
         <TeamRow team={game.homeTeam} score={game.homeScore} showScore={showScore} />
       </div>
       {game.venue ? (
-        <p className="mt-3 truncate text-[11px] font-medium text-zinc-600">{game.venue}</p>
+        <p className="mt-3 truncate text-[11px] font-medium text-muted">{game.venue}</p>
       ) : null}
     </div>
   );

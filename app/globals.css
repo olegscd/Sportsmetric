@@ -5,19 +5,19 @@
  * there is no light mode to toggle, so these tokens are the only palette.
  */
 :root {
-  --color-bg: #F8F7F2;
-  --color-surface: #141922;
-  --color-elevated: #1c222c;
-  --color-border: #2a303a;
+  --color-bg: #0f172a;
+  --color-surface: #1e293b;
+  --color-elevated: #334155;
+  --color-border: #475569;
 
-  --color-foreground: #ffffff;
-  --color-muted: #8b919c;
+  --color-foreground: #f8fafc;
+  --color-muted: #94a3b8;
 
-  --color-primary: #ff6b35;
-  --color-primary-foreground: #0b0f17;
+  --color-primary: #f59e0b;
+  --color-primary-foreground: #0f172a;
 
-  --color-live: #ff3b30;
-  --color-success: #34c759;
+  --color-live: #ef4444;
+  --color-success: #10b981;
 
   --color-league-uaap: #d4145a;
   --color-league-pba: #f7941d;
