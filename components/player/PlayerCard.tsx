@@ -175,28 +175,28 @@ export function PlayerCard({
     return (
       <Link
         href={`/players/${player.id}`}
-        className="flex items-center gap-3 rounded-2xl border border-stone-300/60 bg-[#F4EBD9] p-3 shadow-sm transition-transform active:scale-[0.99]"
+        className="flex items-center gap-3 rounded-2xl border border-border bg-surface p-3 shadow-sm hover:border-primary/50 transition-all active:scale-[0.99]"
       >
         <PlayerAvatar player={player} accentColor={team.accentColor} size="md" />
         <div className="min-w-0 flex-1">
-          <p className="truncate text-sm font-bold text-zinc-900">{player.name}</p>
-          <div className="mt-0.5 flex items-center gap-1.5 text-xs text-zinc-600 font-medium">
+          <p className="truncate text-sm font-bold text-foreground">{player.name}</p>
+          <div className="mt-0.5 flex items-center gap-1.5 text-xs text-muted font-medium">
             <span>
               #{player.jerseyNumber} &middot; {player.position}
             </span>
             <span>&middot;</span>
             <div className="flex items-center gap-1.5">
               <TeamBadge team={team} size="sm" className="h-4 w-4 text-[8px]" />
-              <span className="font-semibold text-zinc-800">{team.shortName}</span>
+              <span className="font-semibold text-foreground">{team.shortName}</span>
             </div>
           </div>
         </div>
         <div className="flex shrink-0 items-center gap-3">
           <div className="text-right">
-            <p className="text-sm font-black tabular-nums text-zinc-950">
+            <p className="text-sm font-black tabular-nums text-foreground">
               {formatAvg(stats.ppg || stats.avgPerSet || 0)}
             </p>
-            <p className="text-[10px] font-bold uppercase tracking-wider text-zinc-600">
+            <p className="text-[10px] font-bold uppercase tracking-wider text-muted">
               {stats.ppg !== undefined ? "PPG" : "PTS/S"}
             </p>
           </div>
@@ -206,14 +206,14 @@ export function PlayerCard({
   }
 
   return (
-    <div className="flex flex-col gap-4 rounded-2xl border border-stone-300/60 bg-[#F4EBD9] p-5 shadow-sm">
+    <div className="flex flex-col gap-4 rounded-2xl border border-border bg-surface p-5 shadow-sm">
       <div className="flex items-center gap-4">
         <PlayerAvatar player={player} accentColor={team.accentColor} size="lg" className="text-lg" />
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2 flex-wrap">
-            <p className="truncate text-lg font-extrabold text-zinc-950">{player.name}</p>
+            <p className="truncate text-lg font-extrabold text-foreground">{player.name}</p>
             {inactivePillTag ? (
-              <span className="rounded-full bg-amber-500/15 border border-amber-500/30 px-2.5 py-0.5 text-[10px] font-bold text-amber-800 shrink-0">
+              <span className="rounded-full bg-amber-500/15 border border-amber-500/30 px-2.5 py-0.5 text-[10px] font-bold text-amber-500 shrink-0">
                 {inactivePillTag}
               </span>
             ) : activeContextLabel ? (
@@ -222,13 +222,13 @@ export function PlayerCard({
               </span>
             ) : null}
           </div>
-          <p className="text-sm font-semibold text-zinc-700 mt-0.5">
+          <p className="text-sm font-semibold text-muted mt-0.5">
             #{player.jerseyNumber} &middot; {player.position} &middot; {player.height}
           </p>
           <Link href={`/teams/${team.id}`} className="mt-1.5 flex items-center gap-1.5">
             <TeamBadge team={team} size="sm" />
             <LeagueBadge league={team.league} />
-            <span className="truncate text-xs font-semibold text-zinc-700">{team.name}</span>
+            <span className="truncate text-xs font-semibold text-muted">{team.name}</span>
           </Link>
         </div>
       </div>

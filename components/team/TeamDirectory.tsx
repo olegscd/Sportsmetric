@@ -78,7 +78,7 @@ export function TeamDirectory() {
           No teams yet for this season. Add some from the Admin Dashboard.
         </p>
       ) : (
-        <div className="flex flex-col gap-2.5">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
           {standings.map((item, index) => {
             const team = item.team;
             const record = { wins: item.wins, losses: item.losses };
@@ -87,19 +87,19 @@ export function TeamDirectory() {
               <Link
                 key={team.id}
                 href={`/teams/${team.id}`}
-                className="flex items-center gap-3 rounded-2xl border border-stone-300/60 bg-[#F4EBD9] p-3 shadow-sm active:scale-[0.99] transition-transform"
+                className="flex items-center gap-3 rounded-2xl border border-border bg-surface p-3 shadow-sm hover:border-primary/50 active:scale-[0.99] transition-all"
               >
-                <span className="w-4 shrink-0 text-center text-xs font-extrabold text-zinc-600">
+                <span className="w-4 shrink-0 text-center text-xs font-extrabold text-muted">
                   {index + 1}
                 </span>
                 <TeamBadge team={team} size="md" />
                 <div className="min-w-0 flex-1">
-                  <p className="truncate text-sm font-bold text-zinc-900">{team.name}</p>
-                  <p className="truncate text-xs font-semibold text-zinc-600">
+                  <p className="truncate text-sm font-bold text-foreground">{team.name}</p>
+                  <p className="truncate text-xs font-semibold text-muted">
                     {team.league} &middot; {formatRecord(record)}
                   </p>
                 </div>
-                <span className="shrink-0 text-xs font-bold tabular-nums text-zinc-800">
+                <span className="shrink-0 text-xs font-bold tabular-nums text-foreground">
                   {pctStr}
                 </span>
               </Link>

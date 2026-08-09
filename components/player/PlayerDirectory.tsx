@@ -84,7 +84,7 @@ export function PlayerDirectory() {
           No players yet for this season. Add some from the Admin Dashboard.
         </p>
       ) : (
-        <div className="flex flex-col gap-2.5">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
           {filteredPlayers.map((player) => {
             const team = teamsById.get(player.teamId);
             if (!team) return null;

@@ -99,44 +99,46 @@ export function StandingsView() {
         ))}
       </div>
 
-      <div>
-        <div className="mb-2 flex items-center justify-between">
-          <p className="text-[11px] font-semibold uppercase tracking-wide text-muted">
-            {league === "UAAP"
-              ? "Elimination Round Standings (Capped at 56 Games)"
-              : league === "PVL"
-              ? "Elimination Round Standings (Regular Season)"
-              : "Standings"}
-          </p>
-        </div>
-        {standings.length === 0 ? (
-          <p className="py-8 text-center text-sm text-muted">
-            No teams yet for this season.
-          </p>
-        ) : (
-          <StandingsTable standings={standings} isOldSeason={isOldSeason} />
-        )}
-      </div>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="lg:col-span-2">
+          <div className="mb-2 flex items-center justify-between">
+            <p className="text-[11px] font-semibold uppercase tracking-wide text-muted">
+              {league === "UAAP"
+                ? "Elimination Round Standings (Capped at 56 Games)"
+                : league === "PVL"
+                ? "Elimination Round Standings (Regular Season)"
+                : "Standings"}
+            </p>
+          </div>
+          {standings.length === 0 ? (
+            <p className="py-8 text-center text-sm text-muted">
+              No teams yet for this season.
+            </p>
+          ) : (
+            <StandingsTable standings={standings} isOldSeason={isOldSeason} />
+          )}
 
-      {league === "UAAP" && standings.length >= 4 && (
-        <div className="pt-2">
-          <FinalFourBracket standings={standings} playoffGames={playoffGames} />
+          {league === "UAAP" && standings.length >= 4 && (
+            <div className="pt-4">
+              <FinalFourBracket standings={standings} playoffGames={playoffGames} />
+            </div>
+          )}
         </div>
-      )}
 
-      <div>
-        <p className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-muted">
-          Stat Leaders (Regular Season)
-        </p>
-        <div className="flex flex-col gap-3">
-          {leaderConfigs.map((config) => (
-            <StatLeaderCard
-              key={config.statKey}
-              title={config.title}
-              entries={getStatLeaders(league, config.statKey, 3, seasonId)}
-              formatValue={config.formatValue}
-            />
-          ))}
+        <div className="lg:col-span-1">
+          <p className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-muted">
+            Stat Leaders (Regular Season)
+          </p>
+          <div className="flex flex-col gap-3">
+            {leaderConfigs.map((config) => (
+              <StatLeaderCard
+                key={config.statKey}
+                title={config.title}
+                entries={getStatLeaders(league, config.statKey, 3, seasonId)}
+                formatValue={config.formatValue}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </div>
