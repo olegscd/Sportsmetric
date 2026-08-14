@@ -164,15 +164,19 @@ export function BoxScoreTable({
           </tr>
         </thead>
         <tbody>
-          {items.map((item) => {
+          {items.map((item, idx) => {
+            const itemKey = item.playerId || `box-${idx}`;
             const player =
-              players.find((p) => p.id === item.playerId) ||
-              players.find((p) => p.personId && item.playerId.endsWith(p.personId));
+              (item.playerId ? players.find((p) => p.id === item.playerId) : undefined) ||
+              (item.playerId ? players.find((p) => p.personId && item.playerId?.endsWith(p.personId)) : undefined) ||
+              (item.name ? players.find((p) => p.name.toLowerCase() === item.name.toLowerCase()) : undefined);
 
-            const displayName = player ? `#${player.jerseyNumber} ${player.name}` : item.playerId;
+            const displayName = player
+              ? `#${player.jerseyNumber} ${player.name}`
+              : item.name || item.playerId || `Player #${item.jersey || idx + 1}`;
 
             return (
-              <tr key={item.playerId} className="border-t border-border/50 hover:bg-surface/60 transition-colors">
+              <tr key={itemKey} className="border-t border-border/50 hover:bg-surface/60 transition-colors">
                 <td className="max-w-[140px] truncate py-2 pr-2 font-semibold text-foreground">
                   {displayName}
                 </td>
