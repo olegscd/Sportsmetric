@@ -163,11 +163,11 @@ export function PlayerCard({
   player,
   team,
   variant = "compact",
-  showRankBadge = true,
   activeContextLabel,
   inactivePillTag,
   customAverages,
 }: PlayerCardProps) {
+
   const { getPlayerAverages } = useSportsData();
   const stats = getPlayerAverages(player);
   

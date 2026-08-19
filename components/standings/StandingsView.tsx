@@ -5,7 +5,8 @@ import { useSportsData } from "@/context/SportsDataContext";
 import { getUAAPGamePartition } from "@/lib/derivations";
 import { cn, formatAvg } from "@/lib/utils";
 import type { League, Player } from "@/types/sports";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+
 import { FinalFourBracket } from "./FinalFourBracket";
 import { StandingsTable } from "./StandingsTable";
 import { StatLeaderCard } from "./StatLeaderCard";
@@ -48,22 +49,17 @@ function getSeasonLeague(sId: string, sLeague?: League): League {
 export function StandingsView() {
   const { currentSeasonId, seasons, games, getStandings, getStatLeaders } = useSportsData();
   const [league, setLeague] = useState<League>("UAAP");
+  const [userSelectedSeasonId, setUserSelectedSeasonId] = useState<string | null>(null);
 
-  const [seasonId, setSeasonId] = useState<string>(() => {
-    const targetSeasons = seasons.filter((s) => getSeasonLeague(s.id, s.league) === "UAAP");
-    return targetSeasons.find((s) => s.isCurrent)?.id ?? targetSeasons[0]?.id ?? currentSeasonId;
-  });
-
-  useEffect(() => {
-    const targetSeasons = seasons.filter((s) => getSeasonLeague(s.id, s.league) === league);
-    const activeCurrent = targetSeasons.find((s) => s.isCurrent)?.id ?? targetSeasons[0]?.id;
-    if (activeCurrent) {
-      setSeasonId(activeCurrent);
-    }
-  }, [league, seasons]);
+  const targetSeasons = seasons.filter((s) => getSeasonLeague(s.id, s.league) === league);
+  const activeCurrent = targetSeasons.find((s) => s.isCurrent)?.id ?? targetSeasons[0]?.id ?? currentSeasonId;
+  const seasonId = userSelectedSeasonId && targetSeasons.some((s) => s.id === userSelectedSeasonId)
+    ? userSelectedSeasonId
+    : activeCurrent;
 
   function handleLeagueChange(newLeague: League) {
     setLeague(newLeague);
+    setUserSelectedSeasonId(null);
   }
 
   const standings = getStandings(league, seasonId);
@@ -80,8 +76,9 @@ export function StandingsView() {
   return (
     <div className="flex flex-col gap-4 px-4 py-4">
       <div className="flex items-center justify-end">
-        <SeasonPicker value={seasonId} onChange={setSeasonId} league={league} includeLifetime={false} />
+        <SeasonPicker value={seasonId} onChange={setUserSelectedSeasonId} league={league} includeLifetime={false} />
       </div>
+
 
       <div className="flex items-center gap-1 rounded-full bg-surface p-1">
         {LEAGUES.map((value) => (

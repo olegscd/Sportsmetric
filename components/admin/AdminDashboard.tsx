@@ -2,29 +2,31 @@
 
 import { logoutAdmin } from "@/app/admin/actions";
 import { cn } from "@/lib/utils";
-import { useSportsData } from "@/context/SportsDataContext";
+
 import { ChevronLeft, LogOut } from "lucide-react";
 import Link from "next/link";
 import { useCallback, useRef, useState } from "react";
 import { BoxScoreParserTab } from "./BoxScoreParserTab";
+import { GameImporterTab } from "./GameImporterTab";
 import { GamesManager } from "./GamesManager";
 import { PlayersManager } from "./PlayersManager";
 import { SeasonsManager } from "./SeasonsManager";
 import { TeamsManager } from "./TeamsManager";
 import { Toast, type ToastState } from "./Toast";
 
-type AdminTab = "seasons" | "players" | "teams" | "games" | "parser";
+type AdminTab = "importer" | "games" | "players" | "teams" | "seasons" | "parser";
 
 const TABS: { value: AdminTab; label: string; emoji: string }[] = [
-  { value: "seasons", label: "Seasons", emoji: "\u{1F4C6}" },
+  { value: "importer", label: "Importer", emoji: "⚡" },
+  { value: "games", label: "Games", emoji: "\u{1F3C0}" },
   { value: "players", label: "Players", emoji: "\u{1F465}" },
   { value: "teams", label: "Teams", emoji: "\u{1F6E1}\uFE0F" },
-  { value: "games", label: "Games", emoji: "\u{1F3C0}" },
-  { value: "parser", label: "Parser", emoji: "\u26A1" },
+  { value: "seasons", label: "Seasons", emoji: "\u{1F4C6}" },
+  { value: "parser", label: "Raw Parser", emoji: "\u{1F4DD}" },
 ];
 
 export function AdminDashboard() {
-  const [tab, setTab] = useState<AdminTab>("players");
+  const [tab, setTab] = useState<AdminTab>("importer");
   const [toast, setToast] = useState<ToastState | null>(null);
   const toastTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const showToast = useCallback((message: string, tone: ToastState["tone"] = "success") => {
@@ -68,14 +70,14 @@ export function AdminDashboard() {
         </div>
       </div>
 
-      <div className="flex gap-1 border-b border-border px-3 pt-3">
+      <div className="flex gap-1 border-b border-border px-3 pt-3 overflow-x-auto">
         {TABS.map((t) => (
           <button
             key={t.value}
             type="button"
             onClick={() => setTab(t.value)}
             className={cn(
-              "flex flex-1 flex-col items-center gap-1 rounded-t-xl px-2 pb-2.5 pt-1.5 text-[11px] font-semibold transition-colors",
+              "flex flex-1 min-w-[64px] flex-col items-center gap-1 rounded-t-xl px-2 pb-2.5 pt-1.5 text-[11px] font-semibold transition-colors",
               tab === t.value ? "bg-surface text-foreground" : "text-muted"
             )}
           >
@@ -86,12 +88,14 @@ export function AdminDashboard() {
       </div>
 
       <div className="flex-1 px-4 py-4">
-        {tab === "seasons" ? <SeasonsManager onToast={showToast} /> : null}
+        {tab === "importer" ? <GameImporterTab onToast={showToast} /> : null}
+        {tab === "games" ? <GamesManager onToast={showToast} /> : null}
         {tab === "players" ? <PlayersManager onToast={showToast} /> : null}
         {tab === "teams" ? <TeamsManager onToast={showToast} /> : null}
-        {tab === "games" ? <GamesManager onToast={showToast} /> : null}
+        {tab === "seasons" ? <SeasonsManager onToast={showToast} /> : null}
         {tab === "parser" ? <BoxScoreParserTab onToast={showToast} /> : null}
       </div>
     </div>
   );
 }
+

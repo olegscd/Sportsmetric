@@ -131,9 +131,8 @@ function getTeam(id: string): Team {
 // Players
 // ---------------------------------------------------------------------------
 
-const rawPlayers: Omit<Player, "seasonId" | "personId">[] = [];
-
 /*
+
 const oldRawPlayers = [
     jerseyNumber: 21,
     position: "PG",

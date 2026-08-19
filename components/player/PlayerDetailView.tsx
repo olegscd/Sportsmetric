@@ -2,10 +2,12 @@
 
 import { useSportsData } from "@/context/SportsDataContext";
 import { formatAvg, formatPct } from "@/lib/utils";
-import type { Player, SeasonAverages } from "@/types/sports";
+import type { Player, SeasonAverages, Team } from "@/types/sports";
+
 import type { PlayerGameLogEntry } from "@/lib/derivations";
 import { ChevronDown } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
+
 import { PlayerVolleyballStats } from "./PlayerVolleyballStats";
 import { MatchHistory } from "./MatchHistory";
 import { PlayerCard } from "./PlayerCard";
@@ -52,8 +54,7 @@ function CareerStatGrid({ averages }: { averages: SeasonAverages }) {
 }
 
 export function PlayerDetailView({ id }: { id: string }) {
-  const { players, teams, seasons, getPlayerGameLog, getPlayerAverages } = useSportsData();
-  const [selectedSeasonOption, setSelectedSeasonOption] = useState<string>("career");
+  const { players, teams } = useSportsData();
 
   const player = players.find((p) => p.id === id);
   const team = player ? teams.find((t) => t.id === player.teamId) : undefined;
@@ -67,18 +68,27 @@ export function PlayerDetailView({ id }: { id: string }) {
     );
   }
 
+  return <PlayerDetailContent player={player} team={team} />;
+}
+
+function PlayerDetailContent({ player, team }: { player: Player; team: Team }) {
+  const { players, seasons, getPlayerGameLog, getPlayerAverages } = useSportsData();
+  const [selectedSeasonOption, setSelectedSeasonOption] = useState<string>("career");
+
   const seasonLines = useMemo(() => {
     return players
-      .filter((p: Player) => p.personId === player?.personId)
+      .filter((p: Player) => p.personId === player.personId)
       .sort((a: Player, b: Player) => a.seasonId.localeCompare(b.seasonId));
-  }, [players, player?.personId]);
+  }, [players, player.personId]);
 
-  const seasonLabel = (seasonId: string): string => {
-    return seasons.find((s) => s.id === seasonId)?.label ?? seasonId;
-  };
+  const seasonLabel = useCallback(
+    (seasonId: string): string => {
+      return seasons.find((s) => s.id === seasonId)?.label ?? seasonId;
+    },
+    [seasons]
+  );
 
   const gameLog = useMemo(() => {
-    if (!player) return [];
     const lines = seasonLines.length > 0 ? seasonLines : [player];
     const allLogs = lines.flatMap((line: Player) => getPlayerGameLog(line.id));
     const seen = new Set<string>();
@@ -90,7 +100,7 @@ export function PlayerDetailView({ id }: { id: string }) {
   }, [seasonLines, player, getPlayerGameLog]);
 
   const careerAverages = useMemo(() => {
-    const lines = seasonLines.length > 0 ? seasonLines : player ? [player] : [];
+    const lines = seasonLines.length > 0 ? seasonLines : [player];
     if (lines.length === 0) {
       return { ppg: 0, rpg: 0, apg: 0, spg: 0, bpg: 0, fgPct: 0, threePtPct: 0, ftPct: 0 };
     }
@@ -148,7 +158,6 @@ export function PlayerDetailView({ id }: { id: string }) {
     latestLine.seasonAverages.ppg === 0;
 
   const lastActiveLabel = seasonLabel(lastActiveLine.seasonId);
-  const latestLabel = seasonLabel(latestLine.seasonId);
 
   // Active context label & custom averages for PlayerCard Hero Section
   const { heroAverages, activeContextLabel, inactivePillTag } = useMemo(() => {
@@ -190,12 +199,12 @@ export function PlayerDetailView({ id }: { id: string }) {
     careerAverages,
     seasonLines,
     getPlayerAverages,
+    seasonLabel,
     isInactiveInCurrent,
     lastActiveLine,
     lastActiveLabel,
     latestLine,
     player,
-    seasons,
   ]);
 
   const displayAverages = heroAverages;
@@ -286,3 +295,4 @@ export function PlayerDetailView({ id }: { id: string }) {
     </div>
   );
 }
+

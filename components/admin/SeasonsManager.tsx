@@ -44,7 +44,7 @@ export function SeasonsManager({ onToast }: { onToast: ToastFn }) {
     (s) => selectedLeague === "ALL" || getSeasonLeague(s) === selectedLeague
   );
 
-  function handleCreate(event: FormEvent) {
+  async function handleCreate(event: FormEvent) {
     event.preventDefault();
     const trimmedLabel = label.trim();
     if (!trimmedLabel) {
@@ -71,17 +71,25 @@ export function SeasonsManager({ onToast }: { onToast: ToastFn }) {
       league: createLeague,
     };
 
-    void saveSeason(season);
-    setLabel("");
-    onToast(`Season created successfully for ${createLeague}!`);
+    try {
+      await saveSeason(season);
+      setLabel("");
+      onToast(`Season created successfully for ${createLeague}!`);
+    } catch {
+      onToast("Failed to create season in database.", "error");
+    }
   }
 
-  function handleSetCurrent(season: Season) {
-    void setSeasonAsCurrent(season.id);
-    onToast(`${season.label} is now the current season.`);
+  async function handleSetCurrent(season: Season) {
+    try {
+      await setSeasonAsCurrent(season.id);
+      onToast(`${season.label} is now the current season.`);
+    } catch {
+      onToast("Failed to update current season in database.", "error");
+    }
   }
 
-  function handleMoveUp(index: number) {
+  async function handleMoveUp(index: number) {
     if (index <= 0) return;
     const next = [...seasons];
     const itemToMove = filteredSeasons[index];
@@ -94,12 +102,16 @@ export function SeasonsManager({ onToast }: { onToast: ToastFn }) {
       const temp = next[idxA];
       next[idxA] = next[idxB];
       next[idxB] = temp;
-      void reorderSeasons(next);
-      onToast("Season order updated.");
+      try {
+        await reorderSeasons(next);
+        onToast("Season order updated.");
+      } catch {
+        onToast("Failed to save season order to database.", "error");
+      }
     }
   }
 
-  function handleMoveDown(index: number) {
+  async function handleMoveDown(index: number) {
     if (index >= filteredSeasons.length - 1) return;
     const next = [...seasons];
     const itemToMove = filteredSeasons[index];
@@ -112,12 +124,16 @@ export function SeasonsManager({ onToast }: { onToast: ToastFn }) {
       const temp = next[idxA];
       next[idxA] = next[idxB];
       next[idxB] = temp;
-      void reorderSeasons(next);
-      onToast("Season order updated.");
+      try {
+        await reorderSeasons(next);
+        onToast("Season order updated.");
+      } catch {
+        onToast("Failed to save season order to database.", "error");
+      }
     }
   }
 
-  function handleDelete(season: Season) {
+  async function handleDelete(season: Season) {
     const teamCount = teams.filter((t) => t.seasonId === season.id).length;
     const playerCount = players.filter((p) => p.seasonId === season.id).length;
     const gameCount = games.filter((g) => g.seasonId === season.id).length;
@@ -127,9 +143,14 @@ export function SeasonsManager({ onToast }: { onToast: ToastFn }) {
       : "";
 
     if (!window.confirm(`Delete "${season.label}" (${getSeasonLeague(season)})?${warning} This can't be undone.`)) return;
-    void deleteSeason(season.id);
-    onToast("Season deleted.");
+    try {
+      await deleteSeason(season.id);
+      onToast("Season deleted.");
+    } catch {
+      onToast("Failed to delete season from database.", "error");
+    }
   }
+
 
   return (
     <div className="flex flex-col gap-5">

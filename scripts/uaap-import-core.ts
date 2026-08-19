@@ -84,10 +84,9 @@ function parseGameDate(raw: string): string {
   const [datePart, timePart] = raw.split(" ");
   const parts = datePart.split("/").map(Number);
   if (parts.length < 3) return new Date().toISOString();
-  let [month, day, year] = parts;
-  if (year < 100) {
-    year = 2000 + year;
-  }
+  const [month, day, rawYear] = parts;
+  const year = rawYear < 100 ? 2000 + rawYear : rawYear;
+
   const [hour, minute] = (timePart ?? "12:00").split(":").map(Number);
   const dt = new Date(Date.UTC(year, month - 1, day, (hour || 12) - 8, minute || 0));
   return dt.toISOString();

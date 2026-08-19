@@ -221,7 +221,7 @@ export function PlayersManager({ onToast }: { onToast: ToastFn }) {
     setQuickTeamId(teamsInNextSeason[0]?.id ?? "");
   }
 
-  function handleQuickRowAdd(event: FormEvent) {
+  async function handleQuickRowAdd(event: FormEvent) {
     event.preventDefault();
     if (!quickName.trim()) {
       onToast("Player name is required.", "error");
@@ -258,14 +258,18 @@ export function PlayersManager({ onToast }: { onToast: ToastFn }) {
       seasonId: seasonFilter,
     };
 
-    void savePlayer(player);
-    onToast(`Added ${player.name} to roster!`);
-    setQuickName("");
-    const nextJersey = (parseInt(quickJersey, 10) || 0) + 1;
-    setQuickJersey(nextJersey > 0 ? String(nextJersey) : "");
+    try {
+      await savePlayer(player);
+      onToast(`Added ${player.name} to roster!`);
+      setQuickName("");
+      const nextJersey = (parseInt(quickJersey, 10) || 0) + 1;
+      setQuickJersey(nextJersey > 0 ? String(nextJersey) : "");
+    } catch {
+      onToast(`Failed to add ${player.name} to database.`, "error");
+    }
   }
 
-  function handleBulkImport() {
+  async function handleBulkImport() {
     const parsed = parseBulkRosterText(bulkText);
     if (parsed.length === 0) {
       onToast("No valid player rows found in text.", "error");
@@ -278,41 +282,45 @@ export function PlayersManager({ onToast }: { onToast: ToastFn }) {
     }
 
     let count = 0;
-    for (const item of parsed) {
-      const id = generateId();
-      const player: Player = {
-        id,
-        personId: id,
-        name: item.name,
-        jerseyNumber: item.jerseyNumber,
-        position: item.position,
-        teamId: targetTeamId,
-        height: item.height,
-        photoUrl: null,
-        seasonAverages: {
-          ppg: 0,
-          rpg: 0,
-          apg: 0,
-          spg: 0,
-          bpg: 0,
-          fgPct: 0,
-          threePtPct: 0,
-          ftPct: 0,
-          ...(isVolleyball ? { killsPerSet: 0, digsPerSet: 0, blocksPerSet: 0 } : {}),
-        },
-        rankBadges: [],
-        seasonId: seasonFilter,
-      };
-      void savePlayer(player);
-      count++;
-    }
+    try {
+      for (const item of parsed) {
+        const id = generateId();
+        const player: Player = {
+          id,
+          personId: id,
+          name: item.name,
+          jerseyNumber: item.jerseyNumber,
+          position: item.position,
+          teamId: targetTeamId,
+          height: item.height,
+          photoUrl: null,
+          seasonAverages: {
+            ppg: 0,
+            rpg: 0,
+            apg: 0,
+            spg: 0,
+            bpg: 0,
+            fgPct: 0,
+            threePtPct: 0,
+            ftPct: 0,
+            ...(isVolleyball ? { killsPerSet: 0, digsPerSet: 0, blocksPerSet: 0 } : {}),
+          },
+          rankBadges: [],
+          seasonId: seasonFilter,
+        };
+        await savePlayer(player);
+        count++;
+      }
 
-    onToast(`Successfully imported ${count} players to roster!`);
-    setBulkText("");
-    setShowBulkPaste(false);
+      onToast(`Successfully imported ${count} players to roster!`);
+      setBulkText("");
+      setShowBulkPaste(false);
+    } catch {
+      onToast(`Bulk import partially failed after ${count} players.`, "error");
+    }
   }
 
-  function handleSubmit(event: FormEvent) {
+  async function handleSubmit(event: FormEvent) {
     event.preventDefault();
     if (!form.name.trim() || !form.teamId) {
       onToast("Player name and team are required.", "error");
@@ -356,24 +364,37 @@ export function PlayersManager({ onToast }: { onToast: ToastFn }) {
       seasonId: form.seasonId,
     };
 
-    void savePlayer(player);
-    onToast(form.id ? "Player updated successfully!" : "Player created successfully!");
-    setForm(playerToForm(player));
+    try {
+      await savePlayer(player);
+      onToast(form.id ? "Player updated successfully!" : "Player created successfully!");
+      setForm(playerToForm(player));
+    } catch {
+      onToast("Failed to save player to database.", "error");
+    }
   }
 
-  function handleDelete(id: string, name: string) {
+  async function handleDelete(id: string, name: string) {
     if (!window.confirm(`Delete ${name}? This can't be undone.`)) return;
-    void deletePlayer(id);
-    if (form.id === id) startCreate();
-    onToast("Player deleted.");
+    try {
+      await deletePlayer(id);
+      if (form.id === id) startCreate();
+      onToast("Player deleted.");
+    } catch {
+      onToast("Failed to delete player from database.", "error");
+    }
   }
 
-  function handleDeleteAll() {
+  async function handleDeleteAll() {
     if (!window.confirm("Are you sure you want to delete ALL players? This cannot be undone.")) return;
-    void deleteAllPlayers();
-    startCreate();
-    onToast("All players deleted successfully.");
+    try {
+      await deleteAllPlayers();
+      startCreate();
+      onToast("All players deleted successfully.");
+    } catch {
+      onToast("Failed to delete all players from database.", "error");
+    }
   }
+
 
   const bulkParsedPreview = parseBulkRosterText(bulkText);
 

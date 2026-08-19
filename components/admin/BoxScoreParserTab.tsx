@@ -24,7 +24,7 @@ export function BoxScoreParserTab({ onToast }: { onToast: ToastFn }) {
   const targetTeamId = game ? (side === "home" ? game.homeTeam.id : game.awayTeam.id) : "";
   const roster = players.filter((p) => p.teamId === targetTeamId);
 
-  function handleParseAndApply() {
+  async function handleParseAndApply() {
     if (!game) {
       onToast("Pick a game first.", "error");
       return;
@@ -42,17 +42,22 @@ export function BoxScoreParserTab({ onToast }: { onToast: ToastFn }) {
       return;
     }
 
-    void updateGameBoxScore(
-      game.id,
-      side,
-      parsed.matched.map((row) => row.stat)
-    );
-
     const sideLabel = side === "home" ? game.homeTeam.shortName : game.awayTeam.shortName;
-    onToast(
-      `Applied ${parsed.matched.length} player line${parsed.matched.length === 1 ? "" : "s"} to ${sideLabel}'s box score!`
-    );
+    try {
+      await updateGameBoxScore(
+        game.id,
+        side,
+        parsed.matched.map((row) => row.stat)
+      );
+
+      onToast(
+        `Applied ${parsed.matched.length} player line${parsed.matched.length === 1 ? "" : "s"} to ${sideLabel}'s box score!`
+      );
+    } catch {
+      onToast(`Failed to update box score for ${sideLabel} in database.`, "error");
+    }
   }
+
 
   return (
     <div className="flex flex-col gap-4">

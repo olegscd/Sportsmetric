@@ -5,7 +5,8 @@ import { useSportsData } from "@/context/SportsDataContext";
 import { isLifetimeSeason } from "@/lib/derivations";
 import { cn } from "@/lib/utils";
 import type { GameStatus, League } from "@/types/sports";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
+
 import { GameCard } from "./GameCard";
 
 const STATUS_TABS: { value: GameStatus | "ALL"; label: string }[] = [
@@ -32,23 +33,19 @@ function getSeasonLeague(sId: string, sLeague?: League): League {
 export function FilterTabs() {
   const { games, teams, seasons, currentSeasonId } = useSportsData();
   const [league, setLeague] = useState<League | "ALL">("UAAP");
+  const [userSelectedSeasonId, setUserSelectedSeasonId] = useState<string | null>(null);
   const activeLeague: League = league === "ALL" ? "UAAP" : league;
 
-  const [seasonId, setSeasonId] = useState<string>(() => {
-    const targetSeasons = seasons.filter((s) => getSeasonLeague(s.id, s.league) === "UAAP");
-    return targetSeasons.find((s) => s.isCurrent)?.id ?? targetSeasons[0]?.id ?? currentSeasonId;
-  });
+  const targetSeasons = seasons.filter((s) => getSeasonLeague(s.id, s.league) === activeLeague);
+  const activeCurrent = targetSeasons.find((s) => s.isCurrent)?.id ?? targetSeasons[0]?.id ?? currentSeasonId;
+  const seasonId = userSelectedSeasonId && targetSeasons.some((s) => s.id === userSelectedSeasonId)
+    ? userSelectedSeasonId
+    : activeCurrent;
 
   const [status, setStatus] = useState<GameStatus | "ALL">("LIVE");
   const [teamId, setTeamId] = useState<string>("ALL");
 
-  useEffect(() => {
-    const targetSeasons = seasons.filter((s) => getSeasonLeague(s.id, s.league) === activeLeague);
-    const activeCurrent = targetSeasons.find((s) => s.isCurrent)?.id ?? targetSeasons[0]?.id;
-    if (activeCurrent) {
-      setSeasonId(activeCurrent);
-    }
-  }, [activeLeague, seasons]);
+
 
   const selectedSeason = seasons.find((s) => s.id === seasonId);
   const isOldSeason = selectedSeason ? !selectedSeason.isCurrent : seasonId !== currentSeasonId;
@@ -79,7 +76,7 @@ export function FilterTabs() {
   );
 
   function handleSeasonChange(newSeasonId: string) {
-    setSeasonId(newSeasonId);
+    setUserSelectedSeasonId(newSeasonId);
     setTeamId("ALL");
     const targetSeason = seasons.find((s) => s.id === newSeasonId);
     if (targetSeason && !targetSeason.isCurrent) {
@@ -92,7 +89,9 @@ export function FilterTabs() {
   function handleLeagueChange(newLeague: League | "ALL") {
     setLeague(newLeague);
     setTeamId("ALL");
+    setUserSelectedSeasonId(null);
   }
+
 
   return (
     <div className="flex flex-col gap-4 px-4 py-4">

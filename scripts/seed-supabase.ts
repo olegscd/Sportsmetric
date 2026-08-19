@@ -87,9 +87,10 @@ function gameToRecord(game: Game) {
 async function batchInsert<T>(
   table: string,
   items: T[],
-  recordMapper: (item: T) => any,
+  recordMapper: (item: T) => Record<string, unknown>,
   chunkSize = 100
 ) {
+
   for (let i = 0; i < items.length; i += chunkSize) {
     const chunk = items.slice(i, i + chunkSize).map(recordMapper);
     const { error } = await supabase.from(table).insert(chunk);

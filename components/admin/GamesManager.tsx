@@ -9,11 +9,11 @@ import {
   dangerButtonClass,
   Field,
   inputClass,
-  labelClass,
   primaryButtonClass,
   SectionCard,
   selectClass,
 } from "./formPrimitives";
+
 
 const STATUSES: GameStatus[] = ["LIVE", "UPCOMING", "FINAL"];
 
@@ -58,11 +58,13 @@ function GameQuickRow({
   game,
   onToast,
   onDelete,
+  onEdit,
   onUpdateScore,
 }: {
   game: Game;
   onToast: ToastFn;
   onDelete: (id: string) => void;
+  onEdit?: (game: Game) => void;
   onUpdateScore: (
     id: string,
     homeScore: number,
@@ -72,12 +74,13 @@ function GameQuickRow({
     timeRemaining: string | null
   ) => void;
 }) {
+
   const [homeScore, setHomeScore] = useState(String(game.homeScore));
   const [awayScore, setAwayScore] = useState(String(game.awayScore));
   const [status, setStatus] = useState<GameStatus>(game.status);
   const [period, setPeriod] = useState(periodInputDefault(game));
 
-  function handleSave() {
+  async function handleSave() {
     // Parse period input: "Q4 1:42" → quarterOrSet=4, timeRemaining="1:42"
     //                     "Set 3"   → quarterOrSet=3, timeRemaining=null
     let parsedQuarter = game.quarterOrSet;
@@ -101,16 +104,21 @@ function GameQuickRow({
       }
     }
 
-    onUpdateScore(
-      game.id,
-      parseInt(homeScore, 10) || 0,
-      parseInt(awayScore, 10) || 0,
-      status,
-      parsedQuarter,
-      parsedTime
-    );
-    onToast("Score updated successfully!");
+    try {
+      await onUpdateScore(
+        game.id,
+        parseInt(homeScore, 10) || 0,
+        parseInt(awayScore, 10) || 0,
+        status,
+        parsedQuarter,
+        parsedTime
+      );
+      onToast("Score updated successfully!");
+    } catch {
+      onToast("Failed to update score in database.", "error");
+    }
   }
+
 
   return (
     <div className="flex flex-col gap-2 rounded-xl border border-border bg-surface p-3">
@@ -173,9 +181,21 @@ function GameQuickRow({
         </Field>
       </div>
 
-      <button type="button" onClick={handleSave} className={primaryButtonClass}>
-        Save Score
-      </button>
+      <div className="flex gap-2">
+        <button type="button" onClick={handleSave} className={primaryButtonClass}>
+          Save Score
+        </button>
+        {onEdit && (
+          <button
+            type="button"
+            onClick={() => onEdit(game)}
+            className="rounded-lg border border-border bg-surface px-3 py-1.5 text-xs font-semibold text-foreground hover:bg-elevated transition-colors"
+          >
+            Edit Details
+          </button>
+        )}
+      </div>
+
     </div>
   );
 }
@@ -277,7 +297,7 @@ export function GamesManager({ onToast }: { onToast: ToastFn }) {
     );
   }
 
-  function handleFullFormSubmit(event: FormEvent) {
+  async function handleFullFormSubmit(event: FormEvent) {
     event.preventDefault();
     const homeTeam = allTeams.find((t) => t.id === fullForm.homeTeamId);
     const awayTeam = allTeams.find((t) => t.id === fullForm.awayTeamId);
@@ -313,19 +333,27 @@ export function GamesManager({ onToast }: { onToast: ToastFn }) {
           seasonId: fullForm.seasonId,
         };
 
-    void saveGame(game);
-    onToast(fullForm.id ? "Game updated successfully!" : "Game created successfully!");
-    setFullForm(gameToFullForm(game));
+    try {
+      await saveGame(game);
+      onToast(fullForm.id ? "Game updated successfully!" : "Game created successfully!");
+      setFullForm(gameToFullForm(game));
+    } catch {
+      onToast("Failed to save game to database.", "error");
+    }
   }
 
-  function handleDeleteGame(id: string) {
+  async function handleDeleteGame(id: string) {
     if (!window.confirm("Delete this game? This can't be undone.")) return;
-    void deleteGame(id);
-    if (fullForm.id === id) startCreateGame();
-    onToast("Game deleted.");
+    try {
+      await deleteGame(id);
+      if (fullForm.id === id) startCreateGame();
+      onToast("Game deleted.");
+    } catch {
+      onToast("Failed to delete game from database.", "error");
+    }
   }
 
-  function handleAddPbpEvent() {
+  async function handleAddPbpEvent() {
     if (!editingGame) return;
     if (!pbp.description.trim()) {
       onToast("Add a description for the play-by-play event.", "error");
@@ -349,10 +377,15 @@ export function GamesManager({ onToast }: { onToast: ToastFn }) {
       type: pbp.type,
     };
 
-    void saveGame({ ...editingGame, playByPlay: [...editingGame.playByPlay, event] });
-    setPbp({ ...pbp, description: "" });
-    onToast("Play-by-play event added.");
+    try {
+      await saveGame({ ...editingGame, playByPlay: [...editingGame.playByPlay, event] });
+      setPbp({ ...pbp, description: "" });
+      onToast("Play-by-play event added.");
+    } catch {
+      onToast("Failed to save play-by-play event to database.", "error");
+    }
   }
+
 
   return (
     <div className="flex flex-col gap-6">
@@ -381,8 +414,10 @@ export function GamesManager({ onToast }: { onToast: ToastFn }) {
                 game={g}
                 onToast={onToast}
                 onDelete={handleDeleteGame}
+                onEdit={startEditGame}
                 onUpdateScore={updateGameScore}
               />
+
             ))}
           </div>
         )}

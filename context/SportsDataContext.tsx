@@ -23,7 +23,6 @@ import {
   fetchAllSupabaseData,
   upsertGameInSupabase,
   upsertPlayerInSupabase,
-  upsertSeasonInSupabase,
   upsertTeamInSupabase,
 } from "@/lib/supabase-data";
 import type {
@@ -37,7 +36,18 @@ import type {
   SeasonAverages,
   Team,
 } from "@/types/sports";
-import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from "react";
+
+const emptySubscribe = () => () => {};
 
 interface SportsDataContextType {
   seasons: Season[];
@@ -90,6 +100,7 @@ interface SportsDataContextType {
 const SportsDataContext = createContext<SportsDataContextType | undefined>(undefined);
 
 export function SportsDataProvider({ children }: { children: React.ReactNode }) {
+  const isHydrated = useSyncExternalStore(emptySubscribe, () => true, () => false);
   const [seasons, setSeasons] = useState<Season[]>([]);
   const [teams, setTeams] = useState<Team[]>([]);
   const [players, setPlayers] = useState<Player[]>([]);
@@ -97,7 +108,6 @@ export function SportsDataProvider({ children }: { children: React.ReactNode }) 
   const [currentSeasonId, setCurrentSeasonId] = useState<string>("2025-26");
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [isHydrated, setIsHydrated] = useState<boolean>(false);
 
   // Debounce ref for realtime updates
   const realtimeDebounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -127,10 +137,36 @@ export function SportsDataProvider({ children }: { children: React.ReactNode }) 
   }, []);
 
   useEffect(() => {
-    setIsHydrated(true);
-    void loadDataFromSupabase();
+    let isMounted = true;
 
-    if (!supabase) return;
+    fetchAllSupabaseData()
+      .then((data) => {
+        if (!isMounted) return;
+        if (data) {
+          setSeasons(data.seasons);
+          setTeams(data.teams);
+          setPlayers(data.players);
+          setGames(data.games);
+          setCurrentSeasonId((prev) => {
+            if (prev && data.seasons.some((s) => s.id === prev)) return prev;
+            const uaapCurr = data.seasons.find((s) => inferLeague(s.id, s.league) === "UAAP" && s.isCurrent)?.id;
+            return uaapCurr ?? data.seasons.find((s) => s.isCurrent)?.id ?? data.seasons[0]?.id ?? prev;
+          });
+        }
+        setLoading(false);
+      })
+      .catch((err) => {
+        if (!isMounted) return;
+        console.warn("[SportsDataContext] Initial load error:", err);
+        setError("Failed to load data from Supabase.");
+        setLoading(false);
+      });
+
+    if (!supabase) {
+      return () => {
+        isMounted = false;
+      };
+    }
 
     const channel = supabase
       .channel("sportsmetric-realtime")
@@ -148,6 +184,7 @@ export function SportsDataProvider({ children }: { children: React.ReactNode }) 
       .subscribe();
 
     return () => {
+      isMounted = false;
       if (realtimeDebounceRef.current) clearTimeout(realtimeDebounceRef.current);
       if (supabase) {
         void supabase.removeChannel(channel);
@@ -155,14 +192,17 @@ export function SportsDataProvider({ children }: { children: React.ReactNode }) 
     };
   }, [loadDataFromSupabase]);
 
+
   // Refresh data from Supabase
   const resetToDefaults = useCallback(() => {
     void loadDataFromSupabase();
   }, [loadDataFromSupabase]);
 
-  // Action Handlers — all wrapped in useCallback for stable references
+  // Action Handlers — all wrapped in useCallback with optimistic rollback
   const saveGame = useCallback(async (game: Game) => {
+    let previousState: Game[] = [];
     setGames((prev) => {
+      previousState = prev;
       const idx = prev.findIndex((g) => g.id === game.id);
       if (idx >= 0) {
         const next = [...prev];
@@ -171,12 +211,28 @@ export function SportsDataProvider({ children }: { children: React.ReactNode }) 
       }
       return [game, ...prev];
     });
-    await upsertGameInSupabase(game);
+
+    const ok = await upsertGameInSupabase(game);
+    if (!ok) {
+      setGames(previousState);
+      setError(`Failed to save game ${game.id}`);
+      throw new Error(`Failed to save game ${game.id} to database.`);
+    }
   }, []);
 
   const deleteGame = useCallback(async (id: string) => {
-    setGames((prev) => prev.filter((g) => g.id !== id));
-    await deleteGameInSupabase(id);
+    let previousState: Game[] = [];
+    setGames((prev) => {
+      previousState = prev;
+      return prev.filter((g) => g.id !== id);
+    });
+
+    const ok = await deleteGameInSupabase(id);
+    if (!ok) {
+      setGames(previousState);
+      setError(`Failed to delete game ${id}`);
+      throw new Error(`Failed to delete game ${id} from database.`);
+    }
   }, []);
 
   const updateGameScore = useCallback(async (
@@ -188,8 +244,10 @@ export function SportsDataProvider({ children }: { children: React.ReactNode }) 
     timeRemaining: string | null,
     playByPlay?: PlayByPlayEvent[]
   ) => {
+    let previousState: Game[] = [];
     let updatedGame: Game | null = null;
     setGames((prev) => {
+      previousState = prev;
       const game = prev.find((g) => g.id === id);
       if (!game) return prev;
 
@@ -206,15 +264,21 @@ export function SportsDataProvider({ children }: { children: React.ReactNode }) 
       return prev.map((g) => (g.id === id ? updatedGame! : g));
     });
 
-    // updatedGame is assigned synchronously inside the updater
     if (updatedGame) {
-      await upsertGameInSupabase(updatedGame);
+      const ok = await upsertGameInSupabase(updatedGame);
+      if (!ok) {
+        setGames(previousState);
+        setError(`Failed to update score for game ${id}`);
+        throw new Error(`Failed to update score for game ${id} in database.`);
+      }
     }
   }, []);
 
   const updateGameBoxScore = useCallback(async (id: string, side: "home" | "away", items: BoxScoreItem[]) => {
+    let previousState: Game[] = [];
     let updatedGame: Game | null = null;
     setGames((prev) => {
+      previousState = prev;
       const game = prev.find((g) => g.id === id);
       if (!game) return prev;
 
@@ -231,12 +295,19 @@ export function SportsDataProvider({ children }: { children: React.ReactNode }) 
     });
 
     if (updatedGame) {
-      await upsertGameInSupabase(updatedGame);
+      const ok = await upsertGameInSupabase(updatedGame);
+      if (!ok) {
+        setGames(previousState);
+        setError(`Failed to update box score for game ${id}`);
+        throw new Error(`Failed to update box score for game ${id} in database.`);
+      }
     }
   }, []);
 
   const saveTeam = useCallback(async (team: Team) => {
+    let previousState: Team[] = [];
     setTeams((prev) => {
+      previousState = prev;
       const idx = prev.findIndex((t) => t.id === team.id);
       if (idx >= 0) {
         const next = [...prev];
@@ -245,16 +316,34 @@ export function SportsDataProvider({ children }: { children: React.ReactNode }) 
       }
       return [...prev, team];
     });
-    await upsertTeamInSupabase(team);
+
+    const ok = await upsertTeamInSupabase(team);
+    if (!ok) {
+      setTeams(previousState);
+      setError(`Failed to save team ${team.name}`);
+      throw new Error(`Failed to save team ${team.name} to database.`);
+    }
   }, []);
 
   const deleteTeam = useCallback(async (id: string) => {
-    setTeams((prev) => prev.filter((t) => t.id !== id));
-    await deleteTeamInSupabase(id);
+    let previousState: Team[] = [];
+    setTeams((prev) => {
+      previousState = prev;
+      return prev.filter((t) => t.id !== id);
+    });
+
+    const ok = await deleteTeamInSupabase(id);
+    if (!ok) {
+      setTeams(previousState);
+      setError(`Failed to delete team ${id}`);
+      throw new Error(`Failed to delete team ${id} from database.`);
+    }
   }, []);
 
   const savePlayer = useCallback(async (player: Player) => {
+    let previousState: Player[] = [];
     setPlayers((prev) => {
+      previousState = prev;
       const idx = prev.findIndex((p) => p.id === player.id);
       if (idx >= 0) {
         const next = [...prev];
@@ -263,24 +352,52 @@ export function SportsDataProvider({ children }: { children: React.ReactNode }) 
       }
       return [...prev, player];
     });
-    await upsertPlayerInSupabase(player);
+
+    const ok = await upsertPlayerInSupabase(player);
+    if (!ok) {
+      setPlayers(previousState);
+      setError(`Failed to save player ${player.name}`);
+      throw new Error(`Failed to save player ${player.name} to database.`);
+    }
   }, []);
 
   const deletePlayer = useCallback(async (id: string) => {
-    setPlayers((prev) => prev.filter((p) => p.id !== id));
-    await deletePlayerInSupabase(id);
+    let previousState: Player[] = [];
+    setPlayers((prev) => {
+      previousState = prev;
+      return prev.filter((p) => p.id !== id);
+    });
+
+    const ok = await deletePlayerInSupabase(id);
+    if (!ok) {
+      setPlayers(previousState);
+      setError(`Failed to delete player ${id}`);
+      throw new Error(`Failed to delete player ${id} from database.`);
+    }
   }, []);
 
   const deleteAllPlayers = useCallback(async () => {
-    setPlayers([]);
-    await deleteAllPlayersInSupabase();
+    let previousState: Player[] = [];
+    setPlayers((prev) => {
+      previousState = prev;
+      return [];
+    });
+
+    const ok = await deleteAllPlayersInSupabase();
+    if (!ok) {
+      setPlayers(previousState);
+      setError("Failed to delete all players");
+      throw new Error("Failed to delete all players from database.");
+    }
   }, []);
 
   const saveSeason = useCallback(async (season: Season) => {
     const sLeague = inferLeague(season.id, season.league);
+    let previousState: Season[] = [];
     let nextSeasons: Season[] = [];
 
     setSeasons((prev) => {
+      previousState = prev;
       const idx = prev.findIndex((s) => s.id === season.id);
       let updatedList = [...prev];
       if (idx >= 0) {
@@ -302,13 +419,21 @@ export function SportsDataProvider({ children }: { children: React.ReactNode }) 
       return updatedList;
     });
 
-    await batchUpsertSeasonsInSupabase(nextSeasons);
+    const ok = await batchUpsertSeasonsInSupabase(nextSeasons);
+    if (!ok) {
+      setSeasons(previousState);
+      setError(`Failed to save season ${season.label}`);
+      throw new Error(`Failed to save season ${season.label} to database.`);
+    }
   }, []);
 
   const deleteSeason = useCallback(async (id: string) => {
+    let previousState: Season[] = [];
+    let prevSeasonId = "";
     let nextSeasons: Season[] = [];
 
     setSeasons((prev) => {
+      previousState = prev;
       const deletedSeason = prev.find((s) => s.id === id);
       const remaining = prev.filter((s) => s.id !== id);
 
@@ -329,6 +454,7 @@ export function SportsDataProvider({ children }: { children: React.ReactNode }) 
     });
 
     setCurrentSeasonId((prev) => {
+      prevSeasonId = prev;
       if (prev === id && nextSeasons.length > 0) {
         const replacement = nextSeasons.find((s) => s.isCurrent);
         return replacement?.id ?? nextSeasons[0]?.id ?? prev;
@@ -336,20 +462,35 @@ export function SportsDataProvider({ children }: { children: React.ReactNode }) 
       return prev;
     });
 
-    await deleteSeasonInSupabase(id);
+    const ok = await deleteSeasonInSupabase(id);
+    if (!ok) {
+      setSeasons(previousState);
+      setCurrentSeasonId(prevSeasonId);
+      setError(`Failed to delete season ${id}`);
+      throw new Error(`Failed to delete season ${id} from database.`);
+    }
+
     if (nextSeasons.length > 0) {
       await batchUpsertSeasonsInSupabase(nextSeasons);
     }
   }, []);
 
   const setSeasonAsCurrent = useCallback(async (targetId: string) => {
-    setCurrentSeasonId(targetId);
+    let previousState: Season[] = [];
+    let prevSeasonId = "";
+    let updatedSeasons: Season[] = [];
+
+    setCurrentSeasonId((prev) => {
+      prevSeasonId = prev;
+      return targetId;
+    });
 
     setSeasons((prev) => {
+      previousState = prev;
       const targetSeason = prev.find((s) => s.id === targetId);
       const targetLeague = inferLeague(targetId, targetSeason?.league);
 
-      const updatedSeasons = prev.map((s) => {
+      updatedSeasons = prev.map((s) => {
         const sLeague = inferLeague(s.id, s.league);
         if (sLeague === targetLeague) {
           return { ...s, isCurrent: s.id === targetId };
@@ -357,25 +498,50 @@ export function SportsDataProvider({ children }: { children: React.ReactNode }) 
         return s;
       });
 
-      // Fire-and-forget Supabase sync
-      void batchUpsertSeasonsInSupabase(updatedSeasons);
       return updatedSeasons;
     });
+
+    const ok = await batchUpsertSeasonsInSupabase(updatedSeasons);
+    if (!ok) {
+      setSeasons(previousState);
+      setCurrentSeasonId(prevSeasonId);
+      setError(`Failed to set season ${targetId} as current`);
+      throw new Error(`Failed to set season ${targetId} as current in database.`);
+    }
   }, []);
 
   const reorderSeasons = useCallback(async (newSeasonsOrder: Season[]) => {
-    setSeasons(newSeasonsOrder);
-    await batchUpsertSeasonsInSupabase(newSeasonsOrder);
+    let previousState: Season[] = [];
+    setSeasons((prev) => {
+      previousState = prev;
+      return newSeasonsOrder;
+    });
+
+    const ok = await batchUpsertSeasonsInSupabase(newSeasonsOrder);
+    if (!ok) {
+      setSeasons(previousState);
+      setError("Failed to reorder seasons");
+      throw new Error("Failed to reorder seasons in database.");
+    }
   }, []);
 
   const importBoxScoreBatch = useCallback(async (batchGames: Game[]) => {
+    let previousState: Game[] = [];
     setGames((prev) => {
+      previousState = prev;
       const byId = new Map(prev.map((g) => [g.id, g]));
       for (const g of batchGames) byId.set(g.id, g);
       return Array.from(byId.values());
     });
-    await batchUpsertGamesInSupabase(batchGames);
+
+    const ok = await batchUpsertGamesInSupabase(batchGames);
+    if (!ok) {
+      setGames(previousState);
+      setError("Failed to import box score batch");
+      throw new Error("Failed to batch import games to database.");
+    }
   }, []);
+
 
   // Selectors — memoized with useCallback
   const getStandingsHandler = useCallback(

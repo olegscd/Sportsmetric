@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import type { Player } from "@/types/sports";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const SIZE_CLASSES = {
   sm: "h-7 w-7 text-[10px]",
@@ -28,11 +28,7 @@ interface PlayerAvatarProps {
 }
 
 export function PlayerAvatar({ player, accentColor, size = "md", className }: PlayerAvatarProps) {
-  const [imageFailed, setImageFailed] = useState(false);
-
-  useEffect(() => {
-    setImageFailed(false);
-  }, [player.photoUrl]);
+  const [failedUrl, setFailedUrl] = useState<string | null>(null);
 
   const rawPhoto = player.photoUrl?.trim();
   let photoSrc: string | null = null;
@@ -51,13 +47,16 @@ export function PlayerAvatar({ player, accentColor, size = "md", className }: Pl
     }
   }
 
+  const imageFailed = Boolean(photoSrc && failedUrl === photoSrc);
+
   if (photoSrc && !imageFailed) {
     return (
       // eslint-disable-next-line @next/next/no-img-element
       <img
         src={photoSrc}
         alt={player.name}
-        onError={() => setImageFailed(true)}
+        onError={() => setFailedUrl(photoSrc)}
+
         className={cn(
           "shrink-0 rounded-full border-2 bg-surface object-cover",
           SIZE_CLASSES[size],

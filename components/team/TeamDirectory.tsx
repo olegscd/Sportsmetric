@@ -7,7 +7,8 @@ import type { DerivedTeamStandings } from "@/lib/derivations";
 import { cn, formatRecord } from "@/lib/utils";
 import type { League } from "@/types/sports";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+
 
 const LEAGUE_CHIPS: { value: League | "ALL"; label: string }[] = [
   { value: "UAAP", label: "UAAP" },
@@ -26,24 +27,20 @@ function getSeasonLeague(sId: string, sLeague?: League): League {
 export function TeamDirectory() {
   const { currentSeasonId, seasons, getStandings } = useSportsData();
   const [league, setLeague] = useState<League | "ALL">("UAAP");
+  const [userSelectedSeasonId, setUserSelectedSeasonId] = useState<string | null>(null);
   const activeLeague: League = league === "ALL" ? "UAAP" : league;
 
-  const [seasonId, setSeasonId] = useState<string>(() => {
-    const targetSeasons = seasons.filter((s) => getSeasonLeague(s.id, s.league) === "UAAP");
-    return targetSeasons.find((s) => s.isCurrent)?.id ?? targetSeasons[0]?.id ?? currentSeasonId;
-  });
-
-  useEffect(() => {
-    const targetSeasons = seasons.filter((s) => getSeasonLeague(s.id, s.league) === activeLeague);
-    const activeCurrent = targetSeasons.find((s) => s.isCurrent)?.id ?? targetSeasons[0]?.id;
-    if (activeCurrent) {
-      setSeasonId(activeCurrent);
-    }
-  }, [activeLeague, seasons]);
+  const targetSeasons = seasons.filter((s) => getSeasonLeague(s.id, s.league) === activeLeague);
+  const activeCurrent = targetSeasons.find((s) => s.isCurrent)?.id ?? targetSeasons[0]?.id ?? currentSeasonId;
+  const seasonId = userSelectedSeasonId && targetSeasons.some((s) => s.id === userSelectedSeasonId)
+    ? userSelectedSeasonId
+    : activeCurrent;
 
   function handleLeagueChange(newLeague: League | "ALL") {
     setLeague(newLeague);
+    setUserSelectedSeasonId(null);
   }
+
 
   const leagues: League[] = league === "ALL" ? ["UAAP", "PBA", "PVL"] : [league];
   const standings: DerivedTeamStandings[] = leagues.flatMap((l) => getStandings(l, seasonId));
@@ -68,9 +65,10 @@ export function TeamDirectory() {
         </div>
         <SeasonPicker
           value={seasonId}
-          onChange={setSeasonId}
+          onChange={setUserSelectedSeasonId}
           league={activeLeague}
         />
+
       </div>
 
       {standings.length === 0 ? (

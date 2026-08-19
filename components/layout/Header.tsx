@@ -1,6 +1,7 @@
 "use client";
 
-import { ChevronLeft, Radio } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
+
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 

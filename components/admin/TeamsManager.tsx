@@ -80,21 +80,16 @@ export function TeamsManager({ onToast }: { onToast: ToastFn }) {
 
   function handleLeagueChange(newLeague: League) {
     setSelectedLeague(newLeague);
-    const nextTeams = allTeams.filter(
-      (t) => t.seasonId === seasonFilter && t.league === newLeague
-    );
     setSelectedTeamId("new");
     setForm(emptyForm(newLeague, seasonFilter));
   }
 
   function handleSeasonChange(nextSeasonId: string) {
     setSeasonFilter(nextSeasonId);
-    const nextTeams = allTeams.filter(
-      (t) => t.seasonId === nextSeasonId && t.league === selectedLeague
-    );
     setSelectedTeamId("new");
     setForm(emptyForm(selectedLeague, nextSeasonId));
   }
+
 
   function handleTeamSelect(id: string) {
     setSelectedTeamId(id);
@@ -116,7 +111,7 @@ export function TeamsManager({ onToast }: { onToast: ToastFn }) {
     setForm(teamToForm(team));
   }
 
-  function handleSubmit(event: FormEvent) {
+  async function handleSubmit(event: FormEvent) {
     event.preventDefault();
     if (!form.name.trim() || !form.shortName.trim()) {
       onToast("Team name and short name are required.", "error");
@@ -138,18 +133,27 @@ export function TeamsManager({ onToast }: { onToast: ToastFn }) {
       seasonId: form.seasonId,
     };
 
-    void saveTeam(team);
-    onToast(form.id ? "Team updated successfully!" : "Team created successfully!");
-    setSelectedTeamId(id);
-    setForm(teamToForm(team));
+    try {
+      await saveTeam(team);
+      onToast(form.id ? "Team updated successfully!" : "Team created successfully!");
+      setSelectedTeamId(id);
+      setForm(teamToForm(team));
+    } catch {
+      onToast("Failed to save team to database.", "error");
+    }
   }
 
-  function handleDelete(id: string, name: string) {
+  async function handleDelete(id: string, name: string) {
     if (!window.confirm(`Delete ${name}? This can't be undone.`)) return;
-    void deleteTeam(id);
-    startCreateNew();
-    onToast("Team deleted.");
+    try {
+      await deleteTeam(id);
+      startCreateNew();
+      onToast("Team deleted.");
+    } catch {
+      onToast("Failed to delete team from database.", "error");
+    }
   }
+
 
   const isValidHex = HEX_COLOR.test(form.accentColor);
 

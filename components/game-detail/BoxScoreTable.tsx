@@ -52,14 +52,13 @@ function formatPvlPlayerName(playerObj?: Player, rawItemPlayerId?: string): stri
 export function BoxScoreTable({
   items,
   league,
-  game,
-  teamSide,
 }: {
   items: BoxScoreItem[];
   league?: string;
   game?: Game;
   teamSide?: "home" | "away";
 }) {
+
   const { players } = useSportsData();
 
   if (items.length === 0) {
@@ -168,12 +167,12 @@ export function BoxScoreTable({
             const itemKey = item.playerId || `box-${idx}`;
             const player =
               (item.playerId ? players.find((p) => p.id === item.playerId) : undefined) ||
-              (item.playerId ? players.find((p) => p.personId && item.playerId?.endsWith(p.personId)) : undefined) ||
-              (item.name ? players.find((p) => p.name.toLowerCase() === item.name.toLowerCase()) : undefined);
+              (item.playerId ? players.find((p) => p.personId && item.playerId.endsWith(p.personId)) : undefined);
 
             const displayName = player
               ? `#${player.jerseyNumber} ${player.name}`
-              : item.name || item.playerId || `Player #${item.jersey || idx + 1}`;
+              : item.playerId || `Player #${idx + 1}`;
+
 
             return (
               <tr key={itemKey} className="border-t border-border/50 hover:bg-surface/60 transition-colors">

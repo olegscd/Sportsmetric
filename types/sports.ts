@@ -208,6 +208,12 @@ export interface BoxScore {
   away: BoxScoreItem[];
 }
 
+export type TournamentStage =
+  | "ELIMINATION"
+  | "PLAY_IN"
+  | "SEMIFINALS"
+  | "FINALS";
+
 export interface Game {
   id: string;
   league: League;
@@ -222,8 +228,13 @@ export interface Game {
   /** e.g. "2026-03-24T18:00:00Z" */
   startTime: string;
   venue?: string | null;
+  /** Tournament stage / phase */
+  stage?: TournamentStage;
+  /** Quick flag indicating whether this is a playoff/post-season game */
+  isPlayoff?: boolean;
   boxScore: BoxScore;
   playByPlay: PlayByPlayEvent[];
   /** Which Season this game belongs to. */
   seasonId: string;
 }
+

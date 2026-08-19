@@ -1,14 +1,5 @@
 import type { Game, Player, Team } from "@/types/sports";
-import uaapS89Import from "@/scripts/generated/uaap-s89-import.json";
 
-type UaapSeasonImport = {
-  seasonId: string;
-  games: Game[];
-  players: Player[];
-  teamRecords: Record<string, { wins: number; losses: number }>;
-};
-
-const data = uaapS89Import as UaapSeasonImport;
 
 /** UAAP Season 89 (2026-27) upcoming/unplayed games */
 export const uaapS89Games: Game[] = [];

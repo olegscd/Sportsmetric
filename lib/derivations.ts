@@ -45,9 +45,16 @@ export function extractGameNumber(id: string): number {
 
 /**
  * Determines whether a game is a playoff / post-elimination game.
- * Uses exact elimination limits per league/season.
+ * Checks explicit game.isPlayoff / game.stage metadata first, falling back to legacy sequence heuristics.
  */
-export function isPlayoffGame(game: Pick<Game, "id" | "league" | "seasonId">): boolean {
+export function isPlayoffGame(game: Pick<Game, "id" | "league" | "seasonId"> & { stage?: string; isPlayoff?: boolean }): boolean {
+  if (game.isPlayoff !== undefined) {
+    return game.isPlayoff;
+  }
+  if (game.stage) {
+    return game.stage !== "ELIMINATION";
+  }
+
   const num = extractGameNumber(game.id);
   const league = game.league;
 
@@ -100,8 +107,8 @@ function sortUAAPGames(games: Game[]): Game[] {
 }
 
 /**
- * Splits UAAP games into Regular Season (Game IDs 1..56)
- * and Playoff / Final Four games (Game IDs 57+).
+ * Splits UAAP games into Regular Season (Game IDs 1..56 / stage ELIMINATION)
+ * and Playoff / Final Four games (Game IDs 57+ / stage SEMIFINALS, FINALS).
  */
 export function getUAAPGamePartition(
   games: Game[],
@@ -116,20 +123,14 @@ export function getUAAPGamePartition(
   );
 
   return {
-    regularSeasonGames: sortedUAAPGames.filter((g) => {
-      const num = extractGameNumber(g.id);
-      return num > 0 ? num <= 56 : true;
-    }).slice(0, 56),
-    playoffGames: sortedUAAPGames.filter((g) => {
-      const num = extractGameNumber(g.id);
-      return num > 56;
-    }),
+    regularSeasonGames: sortedUAAPGames.filter((g) => !isPlayoffGame(g)),
+    playoffGames: sortedUAAPGames.filter((g) => isPlayoffGame(g)),
   };
 }
 
 /**
  * Filter games for standings & season averages calculations.
- * For UAAP, strictly caps regular season to Game IDs 1 through 56.
+ * Excludes playoff / post-season games.
  */
 export function getRegularSeasonGames(games: Game[], league: League, seasonId: string): Game[] {
   const isLifetime = isLifetimeSeason(seasonId);
@@ -137,24 +138,9 @@ export function getRegularSeasonGames(games: Game[], league: League, seasonId: s
     (g) => g.league === league && (isLifetime || g.seasonId === seasonId)
   );
 
-  if (league === "UAAP") {
-    const sorted = sortUAAPGames(leagueGames);
-    return sorted.filter((g) => {
-      const num = extractGameNumber(g.id);
-      return num > 0 ? num <= 56 : true;
-    }).slice(0, 56);
-  }
-
-  if (league === "PVL") {
-    return leagueGames.filter((g) => {
-      const maxElim = getPvlEliminationGameCount(g.seasonId);
-      const num = extractGameNumber(g.id);
-      return num > 0 ? num <= maxElim : true;
-    });
-  }
-
-  return leagueGames;
+  return leagueGames.filter((g) => !isPlayoffGame(g));
 }
+
 
 /**
  * Dynamically derives League Standings from regular season games in context state.

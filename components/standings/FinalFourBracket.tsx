@@ -30,12 +30,10 @@ export function FinalFourBracket({ standings, playoffGames }: FinalFourBracketPr
       (g.homeTeam.id === seed1.id && g.awayTeam.id === seed4.id) ||
       (g.homeTeam.id === seed4.id && g.awayTeam.id === seed1.id)
   );
-  let seed1SfWins = 1; // Twice to beat advantage
   let seed4SfWins = 0;
   for (const g of sf1Games) {
     if (g.status === "FINAL") {
       const winnerId = g.homeScore > g.awayScore ? g.homeTeam.id : g.awayTeam.id;
-      if (winnerId === seed1.id) seed1SfWins++;
       if (winnerId === seed4.id) seed4SfWins++;
     }
   }
@@ -47,16 +45,15 @@ export function FinalFourBracket({ standings, playoffGames }: FinalFourBracketPr
       (g.homeTeam.id === seed2.id && g.awayTeam.id === seed3.id) ||
       (g.homeTeam.id === seed3.id && g.awayTeam.id === seed2.id)
   );
-  let seed2SfWins = 1; // Twice to beat advantage
   let seed3SfWins = 0;
   for (const g of sf2Games) {
     if (g.status === "FINAL") {
       const winnerId = g.homeScore > g.awayScore ? g.homeTeam.id : g.awayTeam.id;
-      if (winnerId === seed2.id) seed2SfWins++;
       if (winnerId === seed3.id) seed3SfWins++;
     }
   }
   const sf2Winner: Team = seed3SfWins >= 2 ? seed3 : seed2;
+
 
   // Finals Series (sf1Winner vs sf2Winner)
   const finalsGames = playoffGames.filter(

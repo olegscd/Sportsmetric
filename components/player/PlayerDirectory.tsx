@@ -5,7 +5,8 @@ import { useSportsData } from "@/context/SportsDataContext";
 import { isLifetimeSeason } from "@/lib/derivations";
 import { cn } from "@/lib/utils";
 import type { League } from "@/types/sports";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+
 import { PlayerCard } from "./PlayerCard";
 
 const LEAGUE_CHIPS: { value: League | "ALL"; label: string }[] = [
@@ -25,23 +26,18 @@ function getSeasonLeague(sId: string, sLeague?: League): League {
 export function PlayerDirectory() {
   const { players, teams, seasons, currentSeasonId } = useSportsData();
   const [league, setLeague] = useState<League | "ALL">("UAAP");
+  const [userSelectedSeasonId, setUserSelectedSeasonId] = useState<string | null>(null);
   const activeLeague: League = league === "ALL" ? "UAAP" : league;
 
-  const [seasonId, setSeasonId] = useState<string>(() => {
-    const targetSeasons = seasons.filter((s) => getSeasonLeague(s.id, s.league) === "UAAP");
-    return targetSeasons.find((s) => s.isCurrent)?.id ?? targetSeasons[0]?.id ?? currentSeasonId;
-  });
-
-  useEffect(() => {
-    const targetSeasons = seasons.filter((s) => getSeasonLeague(s.id, s.league) === activeLeague);
-    const activeCurrent = targetSeasons.find((s) => s.isCurrent)?.id ?? targetSeasons[0]?.id;
-    if (activeCurrent) {
-      setSeasonId(activeCurrent);
-    }
-  }, [activeLeague, seasons]);
+  const targetSeasons = seasons.filter((s) => getSeasonLeague(s.id, s.league) === activeLeague);
+  const activeCurrent = targetSeasons.find((s) => s.isCurrent)?.id ?? targetSeasons[0]?.id ?? currentSeasonId;
+  const seasonId = userSelectedSeasonId && targetSeasons.some((s) => s.id === userSelectedSeasonId)
+    ? userSelectedSeasonId
+    : activeCurrent;
 
   function handleLeagueChange(newLeague: League | "ALL") {
     setLeague(newLeague);
+    setUserSelectedSeasonId(null);
   }
 
   const teamsById = new Map(teams.map((t) => [t.id, t]));
@@ -74,10 +70,11 @@ export function PlayerDirectory() {
         </div>
         <SeasonPicker
           value={seasonId}
-          onChange={setSeasonId}
+          onChange={setUserSelectedSeasonId}
           league={activeLeague}
         />
       </div>
+
 
       {filteredPlayers.length === 0 ? (
         <p className="py-12 text-center text-sm text-muted">

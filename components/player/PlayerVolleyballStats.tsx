@@ -110,11 +110,12 @@ export function PlayerVolleyballStats({
   const isSetter = rawPos.startsWith("S");
   const isLibero = rawPos.startsWith("L");
   const isMB = rawPos.startsWith("MB");
-  const isOH = rawPos.startsWith("OH") || rawPos.startsWith("OS");
   const isOP = rawPos.startsWith("OP") || rawPos.startsWith("OPS");
 
   // Format dropdown options
   const dropdownOptions = useMemo(() => {
+
+
     if (officialRecord && officialRecord.conferences.length > 0) {
       return [
         { value: "career", label: "Career / Lifetime Stats" },

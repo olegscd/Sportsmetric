@@ -1,7 +1,8 @@
 import fs from "fs";
 import path from "path";
-import type { BoxScoreItem, Game, League, Player, Position, SeasonAverages, Team } from "../types/sports";
+import type { BoxScoreItem, Game, League, Player, Position, Team } from "../types/sports";
 import { getPvlEliminationGameCount } from "../lib/league-utils";
+
 
 export const PVL_TEAM_CODE_TO_META: Record<
   string,
@@ -326,9 +327,61 @@ export function importPvlStats(rows: PvlStatsRow[], config: PvlImportConfig) {
 
   importedGames.sort((a, b) => new Date(a.startTime).getTime() - new Date(b.startTime).getTime());
 
-let pvlOfficialPlayerStatsData: Record<string, any> | null = null;
+interface OfficialConfStat {
+  conferenceName?: string;
+  conferenceId?: number | null;
+  setsPlayed?: number;
+  totalPoints?: number;
+  avgPerSet?: number;
+  ptsAtk?: number;
+  ptsBlk?: number;
+  ptsAce?: number;
+  exeSet?: number;
+  exeDig?: number;
+  exeRec?: number;
+  faultAtk?: number;
+  faultBlk?: number;
+  faultSrv?: number;
+  faultSet?: number;
+  faultDig?: number;
+  faultRec?: number;
+  totalAtk?: number;
+  totalBlk?: number;
+  totalAce?: number;
+  totalSet?: number;
+  totalDig?: number;
+  totalRec?: number;
+  avgAtk?: number;
+  avgBlk?: number;
+  avgAce?: number;
+  avgSet?: number;
+  avgDig?: number;
+  avgRec?: number;
+  successAtk?: number;
+  successBlk?: number;
+  successAce?: number;
+  successSet?: number;
+  successDig?: number;
+  successRec?: number;
+  efficiencyAtk?: number;
+  efficiencyBlk?: number;
+  efficiencyAce?: number;
+  efficiencySet?: number;
+  efficiencyDig?: number;
+  efficiencyRec?: number;
+}
 
-function getOfficialRecord(slugOrPersonId: string, name?: string) {
+interface OfficialPlayerRecord {
+  position?: string;
+  height?: string;
+  jersey?: number;
+  career?: OfficialConfStat | null;
+  conferences?: OfficialConfStat[];
+}
+
+let pvlOfficialPlayerStatsData: Record<string, OfficialPlayerRecord> | null = null;
+
+function getOfficialRecord(slugOrPersonId: string, name?: string): OfficialPlayerRecord | null {
   if (!pvlOfficialPlayerStatsData) {
     const jsonPath = path.resolve("scripts/generated/pvl-official-player-stats.json");
     if (fs.existsSync(jsonPath)) {
@@ -368,7 +421,7 @@ function getOfficialRecord(slugOrPersonId: string, name?: string) {
       }
 
       const confStat =
-        officialRec.conferences?.find((c: any) => {
+        officialRec.conferences?.find((c: OfficialConfStat) => {
           if (!c.conferenceName) return false;
           const cName = c.conferenceName.toLowerCase();
           const sLabel = config.label.toLowerCase();
@@ -382,6 +435,7 @@ function getOfficialRecord(slugOrPersonId: string, name?: string) {
             (sId.includes("2022-reinforced") && cName.includes("2022 reinforced"))
           );
         }) || officialRec.career;
+
 
       if (confStat) {
         agg.player.seasonAverages = {
