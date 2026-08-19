@@ -1,62 +1,17 @@
 import { isAdminAuthenticated } from "@/app/admin/actions";
 import { generateId } from "@/lib/data";
+import {
+  extractGameFromUrl,
+  type ExtractedBoxRow,
+  type ExtractedGamePayload,
+} from "@/lib/game-extractor";
 import { supabase } from "@/lib/supabase";
 import { upsertGameInSupabase, upsertPlayerInSupabase } from "@/lib/supabase-data";
-
 import type { BoxScoreItem, Game, League, Player, Team, TournamentStage } from "@/types/sports";
-import { execFile } from "child_process";
 import { NextRequest, NextResponse } from "next/server";
 
-import path from "path";
-import util from "util";
-
-const execFileAsync = util.promisify(execFile);
-
-interface ExtractedBoxRow {
-  playerName: string;
-  jersey?: number | null;
-  min: string;
-  pts: number;
-  reb: number;
-  ast: number;
-  stl: number;
-  blk: number;
-  to?: number;
-  pf?: number;
-  fgM: number;
-  fgA: number;
-  threeM?: number;
-  threeA?: number;
-  ftM?: number;
-  ftA?: number;
-}
-
-interface ExtractedGamePayload {
-  league: League;
-  stage: TournamentStage;
-  isPlayoff: boolean;
-  status: "FINAL" | "LIVE" | "UPCOMING";
-  competition: string;
-  venue?: string;
-  startTime: string;
-  homeTeam: {
-    name: string;
-    shortName: string;
-    score: number;
-  };
-  awayTeam: {
-    name: string;
-    shortName: string;
-    score: number;
-  };
-  boxScore: {
-    home: ExtractedBoxRow[];
-    away: ExtractedBoxRow[];
-  };
-  note?: string;
-}
-
 function normalizeStr(str: string): string {
+
   return str.toLowerCase().replace(/[^a-z0-9]+/g, "").trim();
 }
 
@@ -195,54 +150,21 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Season ID is required." }, { status: 400 });
   }
 
-  // Path to python script
-  const scriptPath = path.resolve("extractors/extract_single_game.py");
-
-  // Determine python executable
-  const pythonCmd = process.platform === "win32" ? "python" : "python3";
-
-  let stdout = "";
-  let stderr = "";
-
+  let parsedPayload: ExtractedGamePayload;
   try {
-    const result = await execFileAsync(pythonCmd, [
-      scriptPath,
-      "--url",
-      url.trim(),
-      "--league",
-      league,
-      "--stage",
-      stage,
-      "--status",
-      status,
-    ]);
-    stdout = result.stdout;
-    stderr = result.stderr;
+    parsedPayload = await extractGameFromUrl(url.trim(), league, stage, status);
   } catch (err: unknown) {
-    const execErr = err as { stdout?: string; stderr?: string; message: string };
-    console.error("[Python Extraction Error]:", execErr);
+    const errorMsg = err instanceof Error ? err.message : String(err);
+    console.error("[Extraction Error]:", errorMsg);
     return NextResponse.json(
       {
         error: "Failed to extract game data from URL.",
-        details: execErr.stderr || execErr.stdout || execErr.message,
+        details: errorMsg,
       },
       { status: 500 }
     );
   }
 
-  let parsedPayload: ExtractedGamePayload;
-  try {
-    parsedPayload = JSON.parse(stdout);
-  } catch {
-    console.error("[JSON Parse Error on stdout]:", stdout, stderr);
-    return NextResponse.json(
-      {
-        error: "Extractor returned invalid JSON output.",
-        rawOutput: stdout,
-      },
-      { status: 500 }
-    );
-  }
 
   // Load teams and players for this season
   if (!supabase) {
