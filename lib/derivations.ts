@@ -176,19 +176,44 @@ export function deriveStandings(
     });
   }
 
-  function matchesTeam(gameTeamId: string, team: Team): boolean {
+  function matchesTeam(gameTeam: Team | string, team: Team): boolean {
+    const gameTeamId = typeof gameTeam === "string" ? gameTeam : gameTeam.id;
     if (gameTeamId === team.id) return true;
-    if (isLifetime) {
-      const match = teams.find((t) => t.id === gameTeamId);
-      return match ? match.shortName === team.shortName && match.league === team.league : false;
+
+    // Check direct shortName equality if gameTeam object is present
+    if (typeof gameTeam !== "string" && gameTeam.shortName && team.shortName) {
+      if (gameTeam.shortName.toUpperCase() === team.shortName.toUpperCase()) return true;
     }
+
+    // Check team registry for shortName & league match
+    const match = teams.find((t) => t.id === gameTeamId);
+    if (match && match.shortName && team.shortName) {
+      if (match.shortName.toUpperCase() === team.shortName.toUpperCase() && match.league === team.league) {
+        return true;
+      }
+    }
+
+    // Normalized slug matching (e.g. 'converge' <-> 'converge-pba-gov-cup-50')
+    const normA = gameTeamId.replace(/[^a-z0-9]/gi, "").toLowerCase();
+    const normB = team.id.replace(/[^a-z0-9]/gi, "").toLowerCase();
+    if (normA === normB || normA.includes(normB) || normB.includes(normA)) {
+      return true;
+    }
+
+    if (team.shortName) {
+      const normShort = team.shortName.replace(/[^a-z0-9]/gi, "").toLowerCase();
+      if (normA === normShort || normA.startsWith(normShort) || normA.endsWith(normShort)) {
+        return true;
+      }
+    }
+
     return false;
   }
 
   for (const item of standingsMap.values()) {
     const team = item.team;
     const teamGames = finalGames
-      .filter((g) => matchesTeam(g.homeTeam.id, team) || matchesTeam(g.awayTeam.id, team))
+      .filter((g) => matchesTeam(g.homeTeam, team) || matchesTeam(g.awayTeam, team))
       .sort((a, b) => new Date(a.startTime).getTime() - new Date(b.startTime).getTime());
 
     let wins = 0;
@@ -197,9 +222,10 @@ export function deriveStandings(
     let pa = 0;
 
     for (const g of teamGames) {
-      const isHome = matchesTeam(g.homeTeam.id, team);
+      const isHome = matchesTeam(g.homeTeam, team);
       const teamScore = isHome ? g.homeScore : g.awayScore;
       const oppScore = isHome ? g.awayScore : g.homeScore;
+
 
       pf += teamScore;
       pa += oppScore;
@@ -447,21 +473,19 @@ export function derivePlayerGameLog(
   return games
     .filter((g) => g.seasonId === player.seasonId)
     .flatMap((game) => {
-      const isHome = game.homeTeam.id === player.teamId;
-      const isAway = game.awayTeam.id === player.teamId;
-      if (!isHome && !isAway) return [];
+      const inHome = game.boxScore?.home?.find((item) => item.playerId === playerId);
+      const inAway = inHome ? undefined : game.boxScore?.away?.find((item) => item.playerId === playerId);
+      if (!inHome && !inAway) return [];
 
-      const stat = (isHome ? game.boxScore?.home : game.boxScore?.away)?.find(
-        (item) => item.playerId === playerId
-      );
-      if (!stat) return [];
-
+      const isHome = Boolean(inHome);
+      const stat = (inHome || inAway)!;
       const opponent = isHome ? game.awayTeam : game.homeTeam;
       const fullOpponent = teamsById.get(opponent.id) ?? opponent;
 
       return [{ game, opponent: fullOpponent, isHome, stat }];
     })
     .sort((a, b) => new Date(b.game.startTime).getTime() - new Date(a.game.startTime).getTime());
+
 }
 
 function collapseTeamsToLifetime(teams: Team[]): Team[] {
