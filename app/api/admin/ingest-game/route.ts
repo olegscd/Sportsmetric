@@ -6,9 +6,14 @@ import {
   type ExtractedGamePayload,
 } from "@/lib/game-extractor";
 import { supabase } from "@/lib/supabase";
-import { upsertGameInSupabase, upsertPlayerInSupabase } from "@/lib/supabase-data";
+import {
+  upsertGameInSupabase,
+  upsertPlayerInSupabase,
+  upsertTeamInSupabase,
+} from "@/lib/supabase-data";
 import type { BoxScoreItem, Game, League, Player, Team, TournamentStage } from "@/types/sports";
 import { NextRequest, NextResponse } from "next/server";
+
 
 function normalizeStr(str: string): string {
 
@@ -391,6 +396,33 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Failed to upsert game in database." }, { status: 500 });
   }
 
+  // Persist updated team records into database
+  if (game.status === "FINAL") {
+    const isHomeWin = game.homeScore > game.awayScore;
+    const isAwayWin = game.awayScore > game.homeScore;
+
+    const updatedHome: Team = {
+      ...homeTeamMatch,
+      record: {
+        wins: (homeTeamMatch.record?.wins ?? 0) + (isHomeWin ? 1 : 0),
+        losses: (homeTeamMatch.record?.losses ?? 0) + (isAwayWin ? 1 : 0),
+      },
+    };
+
+    const updatedAway: Team = {
+      ...awayTeamMatch,
+      record: {
+        wins: (awayTeamMatch.record?.wins ?? 0) + (isAwayWin ? 1 : 0),
+        losses: (awayTeamMatch.record?.losses ?? 0) + (isHomeWin ? 1 : 0),
+      },
+    };
+
+    await Promise.all([
+      upsertTeamInSupabase(updatedHome),
+      upsertTeamInSupabase(updatedAway),
+    ]);
+  }
+
   return NextResponse.json({
     success: true,
     game,
@@ -399,3 +431,4 @@ export async function POST(req: NextRequest) {
     matchedAwayPlayerCount: mappedAwayBox.length,
   });
 }
+
