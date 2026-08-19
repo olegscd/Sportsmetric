@@ -67,15 +67,19 @@ export function gameToRecord(game: Game) {
     away_score: game.awayScore,
     status: game.status,
     start_time: game.startTime,
-    venue: game.venue ?? null,
-    stage: game.stage ?? null,
-    is_playoff: game.isPlayoff ?? false,
     quarter_or_set: game.quarterOrSet,
     time_remaining: game.timeRemaining,
-    box_score: game.boxScore,
-    play_by_play: game.playByPlay,
+    box_score: {
+      home: game.boxScore?.home ?? [],
+      away: game.boxScore?.away ?? [],
+      venue: game.venue ?? null,
+      stage: game.stage ?? "ELIMINATION",
+      isPlayoff: game.isPlayoff ?? false,
+    },
+    play_by_play: game.playByPlay ?? [],
   };
 }
+
 
 export function mapSeasonRows(rows: Array<{ id: string; label: string; is_current: boolean; league?: League }>): Season[] {
   const seenLeaguesWithCurrent = new Set<League>();
@@ -186,7 +190,7 @@ export function mapGameRows(
     is_playoff?: boolean | null;
     quarter_or_set: number;
     time_remaining: string | null;
-    box_score: Game["boxScore"];
+    box_score: Game["boxScore"] & { venue?: string; stage?: Game["stage"]; isPlayoff?: boolean };
     play_by_play: Game["playByPlay"] | null;
   }>,
   teamsById: Map<string, Team>
@@ -214,6 +218,11 @@ export function mapGameRows(
       record: { wins: 0, losses: 0 },
     };
 
+    const boxScoreObj = g.box_score;
+    const stage = g.stage ?? boxScoreObj?.stage ?? (boxScoreObj?.isPlayoff ? "SEMIFINALS" : "ELIMINATION");
+    const isPlayoff = g.is_playoff ?? boxScoreObj?.isPlayoff ?? (stage !== "ELIMINATION");
+    const venue = g.venue ?? boxScoreObj?.venue ?? null;
+
     return {
       id: g.id,
       league: g.league,
@@ -224,12 +233,15 @@ export function mapGameRows(
       awayScore: g.away_score,
       status: g.status,
       startTime: g.start_time,
-      venue: g.venue ?? null,
-      stage: g.stage ?? (g.is_playoff ? "SEMIFINALS" : "ELIMINATION"),
-      isPlayoff: g.is_playoff ?? false,
+      venue,
+      stage,
+      isPlayoff,
       quarterOrSet: g.quarter_or_set,
       timeRemaining: g.time_remaining,
-      boxScore: g.box_score ?? { home: [], away: [] },
+      boxScore: {
+        home: boxScoreObj?.home ?? [],
+        away: boxScoreObj?.away ?? [],
+      },
       playByPlay: g.play_by_play ?? [],
     };
   });
