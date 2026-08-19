@@ -60,32 +60,88 @@ function normalizeStr(str: string): string {
   return str.toLowerCase().replace(/[^a-z0-9]+/g, "").trim();
 }
 
+const TEAM_CODE_ALIASES: Record<string, string[]> = {
+  // PBA
+  bwb: ["blackwater", "blackwaterbossing", "bossing"],
+  con: ["converge", "convergefiberxers", "fiberxers"],
+  gin: ["ginebra", "barangayginebra", "ginebrasanmiguel"],
+  mag: ["magnolia", "magnoliahotshots", "hotshots"],
+  mer: ["meralco", "meralcobolts", "bolts"],
+  mgp: ["macau", "macaugiantpandas", "giantpandas", "mbk"],
+  mbk: ["macau", "macaublackbears", "blackbears", "mgp"],
+  nlx: ["nlex", "nlexroadwarriors", "roadwarriors"],
+  phx: ["phoenix", "phoenixfuelmasters", "fuelmasters"],
+  ros: ["rainorshine", "rainorshineelastopainters", "elastopainters"],
+  smb: ["smb", "sanmiguel", "sanmiguelbeermen", "beermen"],
+  ter: ["terrafirma", "terrafirmadyip", "dyip"],
+  tgr: ["titan", "titanultragiantrisers", "giantrisers"],
+  tnt: ["tnt", "tnttropang5g", "tnttropanggiga", "tropang5g", "tropang"],
+  // UAAP
+  up: ["up", "upfightingmaroons", "fightingmaroons", "maroons"],
+  dlsu: ["dlsu", "delasalle", "greenarchers", "archers", "lasalle"],
+  ust: ["ust", "growlingtigers", "tigers"],
+  admu: ["admu", "ateneo", "blueeagles", "eagles"],
+  feu: ["feu", "tamaraws"],
+  ue: ["ue", "redwarriors", "warriors"],
+  nu: ["nu", "bulldogs"],
+  adu: ["adu", "adamson", "soaringfalcons", "falcons"],
+  // PVL
+  ccs: ["creamline", "creamlinecoolsmashers", "coolsmashers"],
+  cmf: ["chocomucho", "chocomuchoflyingtitans", "flyingtitans"],
+  pga: ["petrogazz", "petrogazzangels", "angels"],
+  ctc: ["cignal", "cignalhdspikers", "hdspikers"],
+  pldt: ["pldt", "pldthighspeedhitters", "highspeedhitters"],
+  akr: ["akari", "akarichargers", "chargers"],
+  nxg: ["nxled", "nxledchameleons", "chameleons"],
+  zus: ["zus", "zuscoffee", "thunderbelles"],
+  cap: ["capital1", "capital1solarspikers", "solarspikers"],
+  gal: ["galeries", "galeriestower", "highrisers"],
+  che: ["chery", "cherytiggo", "crossovers"],
+  ftl: ["f2", "f2logistics", "cargomovers"],
+};
+
 function findBestTeamMatch(extracted: { name: string; shortName: string }, teams: Team[]): Team | undefined {
   const shortTarget = normalizeStr(extracted.shortName);
   const nameTarget = normalizeStr(extracted.name);
 
-  // Exact shortName match
+  // 1. Exact shortName match
   const byShort = teams.find((t) => normalizeStr(t.shortName) === shortTarget);
   if (byShort) return byShort;
 
-  // Exact full name match
+  // 2. Exact full name match
   const byName = teams.find((t) => normalizeStr(t.name) === nameTarget);
   if (byName) return byName;
 
-  // Substring or prefix match
+  // 3. Known code alias match
+  const aliases = TEAM_CODE_ALIASES[shortTarget] || [];
+  for (const alias of aliases) {
+    const matched = teams.find((t) => {
+      const tNorm = normalizeStr(t.name);
+      const tShortNorm = normalizeStr(t.shortName);
+      const tIdNorm = normalizeStr(t.id);
+      return tNorm.includes(alias) || alias.includes(tNorm) || tShortNorm === alias || tIdNorm.includes(alias);
+    });
+    if (matched) return matched;
+  }
+
+  // 4. Substring or prefix match
   const bySub = teams.find((t) => {
     const tName = normalizeStr(t.name);
     const tShort = normalizeStr(t.shortName);
+    const tId = normalizeStr(t.id);
     return (
       tName.includes(nameTarget) ||
       nameTarget.includes(tName) ||
       tName.includes(shortTarget) ||
-      shortTarget.includes(tShort)
+      shortTarget.includes(tShort) ||
+      tId.includes(shortTarget) ||
+      shortTarget.includes(tId)
     );
   });
 
   return bySub;
 }
+
 
 function findBestPlayerMatch(row: ExtractedBoxRow, teamRoster: Player[]): Player | undefined {
   const rowNameNorm = normalizeStr(row.playerName);

@@ -5,9 +5,6 @@ Extracts game header, scores, venue, date, and player box scores from a single
 game URL (UAAP LiveStats, PBA LiveStats, or PVL match source).
 
 Outputs a standardized JSON payload to stdout.
-
-Usage:
-    python extractors/extract_single_game.py --url "https://uaap.livestats.ph/tournaments/uaap-season-87-men-s-basketball?game_id=4578" --league UAAP --stage ELIMINATION
 """
 
 from __future__ import annotations
@@ -17,13 +14,33 @@ import json
 import math
 import re
 import sys
+import warnings
 from datetime import datetime, timezone
 from urllib.parse import parse_qs, urlparse
 
 import requests
-from bs4 import BeautifulSoup
+import urllib3
 
-HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"}
+# Suppress SSL / InsecureRequest warnings so stderr stays clean
+warnings.filterwarnings("ignore")
+urllib3.disable_warnings()
+
+HEADERS = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+}
+
+PBA_TOURNAMENTS = [
+    "pba-50th-season-governors-cup",
+    "pba-50th-season-commissioner-s-cup",
+    "pba-50th-season-philippine-cup",
+    "pba-49th-season-philippine-cup",
+]
+
+UAAP_TOURNAMENTS = [
+    "uaap-season-87-men-s-basketball",
+    "uaap-season-88-men-s-basketball",
+    "uaap-season-86-men-s-basketball",
+]
 
 STAT_COLUMNS_UAAP = {
     "mins": 3,
@@ -86,7 +103,7 @@ def team_short_name(title_text: str) -> str:
     return cleaned.split()[0] if cleaned else cleaned
 
 
-def parse_game_details(soup: BeautifulSoup) -> dict[str, str]:
+def parse_game_details(soup) -> dict[str, str]:
     details: dict[str, str] = {}
     for element in soup.select(".game-detail"):
         text = element.get_text(" ", strip=True)
@@ -127,7 +144,6 @@ def estimate_shooting(pts: int, fg2_pct: float, fg3_pct: float, ft_pct: float) -
 def parse_iso_date(raw_date: str) -> str:
     if not raw_date:
         return datetime.now(timezone.utc).isoformat()
-    # Format e.g. "12/10/24 16:00" or "October 12, 2024" or "10/12/2024"
     try:
         parts = raw_date.split()
         if len(parts) >= 1 and "/" in parts[0]:
@@ -147,13 +163,46 @@ def parse_iso_date(raw_date: str) -> str:
     return datetime.now(timezone.utc).isoformat()
 
 
+def resolve_candidate_urls(raw_input: str, league: str) -> list[str]:
+    raw = raw_input.strip()
+
+    # 1. Direct LiveStats URLs
+    if "pba-api01.actech2.com" in raw or "uaap.livestats.ph" in raw:
+        return [raw]
+
+    # 2. PBA recap URL e.g. https://pba.ph/recap?match=553 or match=553
+    match_id = None
+    if "pba.ph" in raw:
+        parsed = urlparse(raw)
+        q = parse_qs(parsed.query)
+        match_id = q.get("match", [None])[0] or q.get("game_id", [None])[0]
+    elif raw.isdigit():
+        match_id = raw
+
+    if match_id and league == "PBA":
+        candidates = []
+        for tourney in PBA_TOURNAMENTS:
+            candidates.append(f"https://pba-api01.actech2.com/tournaments/{tourney}?game_id={match_id}")
+        return candidates
+
+    if match_id and league == "UAAP":
+        candidates = []
+        for tourney in UAAP_TOURNAMENTS:
+            candidates.append(f"https://uaap.livestats.ph/tournaments/{tourney}?game_id={match_id}")
+        return candidates
+
+    return [raw]
+
+
 def extract_livestats_game(html: str, league: str, stage: str, status: str) -> dict:
+    from bs4 import BeautifulSoup
+
     soup = BeautifulSoup(html, "html.parser")
     details = parse_game_details(soup)
     wraps = soup.select(".boxscorewrap")
 
     if not wraps:
-        raise ValueError("No box score tables found in HTML page.")
+        raise ValueError("No completed box score tables found in the provided match URL.")
 
     stat_cols = STAT_COLUMNS_PBA if league == "PBA" else STAT_COLUMNS_UAAP
 
@@ -163,14 +212,21 @@ def extract_livestats_game(html: str, league: str, stage: str, status: str) -> d
         totals_row = wrap.select_one("tr.team-totals")
         totals_cells = [td.get_text(" ", strip=True) for td in totals_row.select("td")] if totals_row else []
         score = parse_number(cell_value(totals_cells, 4)) if totals_cells else None
-        name_text = title.get_text(" ", strip=True) if title else "Unknown Team"
+        raw_name = title.get_text(" ", strip=True) if title else "Unknown Team"
+        clean_name = re.sub(r"\s*Coach:.*$", "", raw_name, flags=re.I).strip()
+        # Remove leading short code if repeated (e.g. 'CON CONVERGE FIBERXERS' -> 'Converge FiberXers')
+        short_n = team_short_name(raw_name)
+        display_name = clean_name
+        if clean_name.startswith(short_n + " "):
+            display_name = clean_name[len(short_n) :].strip()
 
         teams_meta.append({
-            "name": name_text,
-            "shortName": team_short_name(name_text),
+            "name": display_name or clean_name,
+            "shortName": short_n,
             "score": score or 0,
             "wrap": wrap,
         })
+
 
     if len(teams_meta) < 2:
         raise ValueError("Expected at least two teams in LiveStats page.")
@@ -264,28 +320,28 @@ def extract_livestats_game(html: str, league: str, stage: str, status: str) -> d
 
 def main():
     parser = argparse.ArgumentParser(description="Extract single game data for SportsMetric.")
-    parser.add_argument("--url", required=True, help="Match URL or HTML file path")
+    parser.add_argument("--url", required=True, help="Match URL or match ID")
     parser.add_argument("--league", choices=["UAAP", "PBA", "PVL"], default=None, help="League identifier")
     parser.add_argument("--stage", choices=["ELIMINATION", "PLAY_IN", "SEMIFINALS", "FINALS"], default="ELIMINATION")
     parser.add_argument("--status", choices=["FINAL", "LIVE", "UPCOMING"], default="FINAL")
 
     args = parser.parse_args()
-    url = args.url.strip()
+    raw_input = args.url.strip()
 
     # Auto-infer league from URL if not specified
     league = args.league
     if not league:
-        if "uaap.livestats" in url:
+        if "uaap.livestats" in raw_input:
             league = "UAAP"
-        elif "pba-api01" in url or "pba.ph" in url:
+        elif "pba" in raw_input:
             league = "PBA"
-        elif "pvl.ph" in url:
+        elif "pvl" in raw_input:
             league = "PVL"
         else:
             league = "UAAP"
 
     if league == "PVL":
-        # PVL single game PDF/match sheet parser hook
+        # PVL single game hook
         result = {
             "league": "PVL",
             "stage": args.stage,
@@ -302,17 +358,33 @@ def main():
         print(json.dumps(result, indent=2))
         return
 
-    # Fetch HTML for LiveStats
-    if url.startswith("http://") or url.startswith("https://"):
-        resp = requests.get(url, headers=HEADERS, timeout=30, verify=False)
-        resp.raise_for_status()
-        html = resp.text
-    else:
-        with open(url, "r", encoding="utf-8") as f:
-            html = f.read()
+    candidates = resolve_candidate_urls(raw_input, league)
+    last_err = None
 
-    result = extract_livestats_game(html, league, args.stage, args.status)
-    print(json.dumps(result, indent=2))
+    for target_url in candidates:
+        try:
+            if target_url.startswith("http://") or target_url.startswith("https://"):
+                resp = requests.get(target_url, headers=HEADERS, timeout=25, verify=False)
+                if resp.status_code != 200:
+                    continue
+                html = resp.text
+            else:
+                with open(target_url, "r", encoding="utf-8") as f:
+                    html = f.read()
+
+            result = extract_livestats_game(html, league, args.stage, args.status)
+            print(json.dumps(result, indent=2))
+            return
+        except Exception as e:
+            last_err = e
+            continue
+
+    if last_err:
+        print(f"Error: {last_err}", file=sys.stderr)
+        sys.exit(1)
+    else:
+        print("Error: Could not extract box score tables from the provided link.", file=sys.stderr)
+        sys.exit(1)
 
 
 if __name__ == "__main__":
