@@ -981,25 +981,8 @@ pushGame({
   status: "UPCOMING",
   quarterOrSet: 0,
   timeRemaining: null,
-  startTime: "2026-08-02T14:00:00+08:00",
+  startTime: "2026-07-30T14:00:00+08:00",
   venue: "Filoil EcoOil Centre",
-  playByPlay: [],
-  boxScore: { home: [], away: [] },
-});
-
-// g05 - PBA - UPCOMING - Magnolia vs Ginebra
-pushGame({
-  id: "g05",
-  league: "PBA",
-  homeTeam: getTeam("magnolia"),
-  awayTeam: getTeam("ginebra"),
-  homeScore: 0,
-  awayScore: 0,
-  status: "UPCOMING",
-  quarterOrSet: 0,
-  timeRemaining: null,
-  startTime: "2026-08-03T19:00:00+08:00",
-  venue: "Ynares Center Antipolo",
   playByPlay: [],
   boxScore: { home: [], away: [] },
 });
@@ -1015,7 +998,7 @@ pushGame({
   status: "UPCOMING",
   quarterOrSet: 0,
   timeRemaining: null,
-  startTime: "2026-08-04T16:00:00+08:00",
+  startTime: "2026-07-31T16:00:00+08:00",
   venue: "FilOil EcoOil Centre",
   playByPlay: [],
   boxScore: { home: [], away: [] },
@@ -1032,11 +1015,12 @@ pushGame({
   status: "UPCOMING",
   quarterOrSet: 0,
   timeRemaining: null,
-  startTime: "2026-08-05T14:00:00+08:00",
+  startTime: "2026-07-31T18:30:00+08:00",
   venue: "Mall of Asia Arena",
   playByPlay: [],
   boxScore: { home: [], away: [] },
 });
+
 
 // g08 - UAAP - FINAL - DLSU vs UST
 {
