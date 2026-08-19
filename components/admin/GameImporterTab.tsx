@@ -5,11 +5,22 @@ import { useSportsData } from "@/context/SportsDataContext";
 import type { ExtractedBoxRow, ExtractedGamePayload } from "@/lib/game-extractor";
 import { cn } from "@/lib/utils";
 import type { Game, League, TournamentStage } from "@/types/sports";
+import {
+  AlertCircle,
+  Calendar,
+  CheckCircle2,
+  ChevronDown,
+  ChevronUp,
+  Layers,
+  ListPlus,
+  Loader2,
+  MapPin,
+  Sparkles,
+  Trash2,
+} from "lucide-react";
 
-import { CheckCircle2, Globe, Loader2, Sparkles } from "lucide-react";
-
-import { useState } from "react";
-import { Field, inputClass, primaryButtonClass, SectionCard, selectClass } from "./formPrimitives";
+import { useMemo, useState } from "react";
+import { Field, primaryButtonClass, SectionCard, selectClass } from "./formPrimitives";
 
 const LEAGUES: League[] = ["UAAP", "PBA", "PVL"];
 
@@ -26,31 +37,42 @@ const STATUSES: { value: "FINAL" | "LIVE" | "UPCOMING"; label: string }[] = [
   { value: "UPCOMING", label: "UPCOMING (Scheduled Match)" },
 ];
 
-const URL_EXAMPLES: Record<League, string> = {
-  UAAP: "https://uaap.livestats.ph/tournaments/uaap-season-87-men-s-basketball?game_id=4578",
-  PBA: "https://pba-api01.actech2.com/tournaments/pba-50th-season-commissioner-s-cup?game_id=1234",
-  PVL: "https://pvl.ph/players (Match Sheet / PDF Link)",
-};
+interface BatchItem {
+  id: string;
+  rawUrl: string;
+  status: "idle" | "extracting" | "ready" | "ingesting" | "saved" | "error";
+  error?: string;
+  game?: Game;
+  parsedPayload?: ExtractedGamePayload;
+  expanded?: boolean;
+}
 
 export function GameImporterTab({ onToast }: { onToast: ToastFn }) {
   const { seasons, refreshData } = useSportsData();
-  const [league, setLeague] = useState<League>("UAAP");
+  const [league, setLeague] = useState<League>("PBA");
   const [stage, setStage] = useState<TournamentStage>("ELIMINATION");
   const [status, setStatus] = useState<"FINAL" | "LIVE" | "UPCOMING">("FINAL");
-  const [url, setUrl] = useState("");
+  const [urlInput, setUrlInput] = useState("");
 
   const leagueSeasons = seasons.filter(
     (s) => s.league === league || (league === "UAAP" && !s.id.startsWith("pba") && !s.id.startsWith("pvl"))
   );
 
   const [seasonId, setSeasonId] = useState<string>(() => {
-    return leagueSeasons.find((s) => s.isCurrent)?.id ?? leagueSeasons[0]?.id ?? "2024-25";
+    return leagueSeasons.find((s) => s.isCurrent)?.id ?? leagueSeasons[0]?.id ?? "pba-gov-cup-50";
   });
 
-  const [loading, setLoading] = useState(false);
-  const [ingesting, setIngesting] = useState(false);
-  const [previewGame, setPreviewGame] = useState<Game | null>(null);
-  const [parsedPayload, setParsedPayload] = useState<ExtractedGamePayload | null>(null);
+  const [batchItems, setBatchItems] = useState<BatchItem[]>([]);
+  const [isExtractingAll, setIsExtractingAll] = useState(false);
+  const [isIngestingAll, setIsIngestingAll] = useState(false);
+
+  // Parse lines from textarea into candidate URLs/IDs
+  const parsedUrls = useMemo(() => {
+    return urlInput
+      .split(/[\n,]+/)
+      .map((s) => s.trim())
+      .filter((s) => s.length > 0);
+  }, [urlInput]);
 
   function handleLeagueChange(newLeague: League) {
     setLeague(newLeague);
@@ -59,13 +81,12 @@ export function GameImporterTab({ onToast }: { onToast: ToastFn }) {
     );
     const curr = targetSeasons.find((s) => s.isCurrent)?.id ?? targetSeasons[0]?.id ?? "";
     setSeasonId(curr);
-    setPreviewGame(null);
-    setParsedPayload(null);
+    setBatchItems([]);
   }
 
-  async function handleFetchPreview() {
-    if (!url.trim()) {
-      onToast("Please enter a game URL or match link.", "error");
+  async function handleBatchExtract() {
+    if (parsedUrls.length === 0) {
+      onToast("Please enter at least one game URL or match ID.", "error");
       return;
     }
     if (!seasonId) {
@@ -73,99 +94,164 @@ export function GameImporterTab({ onToast }: { onToast: ToastFn }) {
       return;
     }
 
-    setLoading(true);
-    setPreviewGame(null);
-    setParsedPayload(null);
+    setIsExtractingAll(true);
+    const initialItems: BatchItem[] = parsedUrls.map((u, i) => ({
+      id: `${i}-${Date.now()}`,
+      rawUrl: u,
+      status: "extracting",
+    }));
+    setBatchItems(initialItems);
 
-    try {
-      const res = await fetch("/api/admin/ingest-game", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          url: url.trim(),
-          league,
-          seasonId,
-          stage,
-          status,
-          previewOnly: true,
-        }),
-      });
+    let successCount = 0;
+    let failCount = 0;
 
-      const data = await res.json();
-      if (!res.ok) {
-        throw new Error(data.error || data.details || "Extraction failed.");
+    const updatedItems = [...initialItems];
+
+    for (let i = 0; i < initialItems.length; i++) {
+      const item = initialItems[i];
+      try {
+        const res = await fetch("/api/admin/ingest-game", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            url: item.rawUrl,
+            league,
+            seasonId,
+            stage,
+            status,
+            previewOnly: true,
+          }),
+        });
+
+        const data = await res.json();
+        if (!res.ok) {
+          throw new Error(data.error || data.details || "Extraction failed.");
+        }
+
+        updatedItems[i] = {
+          ...item,
+          status: "ready",
+          game: data.game,
+          parsedPayload: data.parsedPayload,
+        };
+        successCount++;
+      } catch (err: unknown) {
+        const e = err as { message: string };
+        updatedItems[i] = {
+          ...item,
+          status: "error",
+          error: e.message || "Failed to extract match.",
+        };
+        failCount++;
       }
+      setBatchItems([...updatedItems]);
+    }
 
-      setPreviewGame(data.game);
-      setParsedPayload(data.parsedPayload || null);
-      onToast("Match data extracted successfully! Review the preview below.");
-    } catch (err: unknown) {
-      const e = err as { message: string };
-      console.error("[GameImporter] Preview Error:", e);
-      onToast(e.message || "Failed to extract game data.", "error");
-    } finally {
-      setLoading(false);
+    setIsExtractingAll(false);
+
+    if (successCount > 0) {
+      onToast(`Extracted ${successCount} match${successCount > 1 ? "es" : ""} successfully!`);
+    }
+    if (failCount > 0) {
+      onToast(`${failCount} match${failCount > 1 ? "es" : ""} could not be extracted.`, "error");
     }
   }
 
+  async function handleIngestAllReady() {
+    const readyItems = batchItems.filter((item) => item.status === "ready");
+    if (readyItems.length === 0) {
+      onToast("No matches are ready for ingestion.", "error");
+      return;
+    }
 
-  async function handleConfirmIngest() {
-    if (!url.trim() || !seasonId) return;
+    setIsIngestingAll(true);
+    let savedCount = 0;
+    let failCount = 0;
 
-    setIngesting(true);
-    try {
-      const res = await fetch("/api/admin/ingest-game", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          url: url.trim(),
-          league,
-          seasonId,
-          stage,
-          status,
-          previewOnly: false,
-        }),
-      });
+    const currentItems = [...batchItems];
 
-      const data = await res.json();
-      if (!res.ok) {
-        throw new Error(data.error || data.details || "Ingestion failed.");
+    for (let i = 0; i < currentItems.length; i++) {
+      const item = currentItems[i];
+      if (item.status !== "ready") continue;
+
+      currentItems[i] = { ...item, status: "ingesting" };
+      setBatchItems([...currentItems]);
+
+      try {
+        const res = await fetch("/api/admin/ingest-game", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            url: item.rawUrl,
+            league,
+            seasonId,
+            stage,
+            status,
+            previewOnly: false,
+          }),
+        });
+
+        const data = await res.json();
+        if (!res.ok) {
+          throw new Error(data.error || data.details || "Save failed.");
+        }
+
+        currentItems[i] = { ...item, status: "saved" };
+        savedCount++;
+      } catch (err: unknown) {
+        const e = err as { message: string };
+        currentItems[i] = {
+          ...item,
+          status: "error",
+          error: e.message || "Failed to save into database.",
+        };
+        failCount++;
       }
+      setBatchItems([...currentItems]);
+    }
 
-      await refreshData();
-      onToast(
-        `Game ingested successfully! (${data.matchedHomePlayerCount} home, ${data.matchedAwayPlayerCount} away lines saved)`
-      );
-      setPreviewGame(null);
-      setParsedPayload(null);
-      setUrl("");
+    setIsIngestingAll(false);
+    await refreshData();
 
-    } catch (err: unknown) {
-      const e = err as { message: string };
-      console.error("[GameImporter] Ingest Error:", e);
-      onToast(e.message || "Failed to save game to database.", "error");
-    } finally {
-      setIngesting(false);
+    if (savedCount > 0) {
+      onToast(`Successfully ingested ${savedCount} match${savedCount > 1 ? "es" : ""} into database!`);
+    }
+    if (failCount > 0) {
+      onToast(`${failCount} match${failCount > 1 ? "es" : ""} failed to save.`, "error");
     }
   }
+
+  function toggleExpand(id: string) {
+    setBatchItems((prev) =>
+      prev.map((item) => (item.id === id ? { ...item, expanded: !item.expanded } : item))
+    );
+  }
+
+  function removeItem(id: string) {
+    setBatchItems((prev) => prev.filter((item) => item.id !== id));
+  }
+
+  const readyCount = batchItems.filter((i) => i.status === "ready").length;
+  const savedCount = batchItems.filter((i) => i.status === "saved").length;
 
   return (
     <div className="flex flex-col gap-5">
       <SectionCard
-        title="LiveStats & PDF Match Ingestion Engine"
+        title="Multi-Game LiveStats & Match Ingestion Engine"
         action={
           <span className="flex items-center gap-1 text-[11px] font-semibold text-primary">
             <Sparkles size={13} />
-            Auto-Extractor
+            Batch Importer
           </span>
         }
       >
         <p className="text-xs text-muted">
-          Paste a LiveStats game URL or match report link. The python extractor will scrape the box score,
-          resolve team identities, match roster players, and calculate shooting splits automatically.
+          Paste one or more LiveStats links, <code className="text-primary font-mono text-[11px]">pba.ph/recap?match=...</code> URLs,
+          or raw match IDs (one per line). All matches will be scraped, verified, and saved to the database.
         </p>
 
         <div className="mt-4 flex flex-col gap-4">
+          {/* League Selector */}
           <div className="flex items-center gap-1 rounded-full bg-surface p-1">
             {LEAGUES.map((l) => (
               <button
@@ -174,7 +260,7 @@ export function GameImporterTab({ onToast }: { onToast: ToastFn }) {
                 onClick={() => handleLeagueChange(l)}
                 className={cn(
                   "flex-1 rounded-full py-1.5 text-xs font-semibold transition-colors",
-                  league === l ? "bg-primary text-primary-foreground" : "text-muted"
+                  league === l ? "bg-primary text-primary-foreground" : "text-muted hover:text-foreground"
                 )}
               >
                 {l}
@@ -182,16 +268,17 @@ export function GameImporterTab({ onToast }: { onToast: ToastFn }) {
             ))}
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            <Field label="Season">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+            <Field label="Target Season">
               <select
                 className={selectClass}
                 value={seasonId}
                 onChange={(e) => setSeasonId(e.target.value)}
+                disabled={isExtractingAll || isIngestingAll}
               >
                 {leagueSeasons.map((s) => (
                   <option key={s.id} value={s.id}>
-                    {s.label}
+                    {s.label} {s.isCurrent ? "★ Current" : ""}
                   </option>
                 ))}
               </select>
@@ -202,6 +289,7 @@ export function GameImporterTab({ onToast }: { onToast: ToastFn }) {
                 className={selectClass}
                 value={stage}
                 onChange={(e) => setStage(e.target.value as TournamentStage)}
+                disabled={isExtractingAll || isIngestingAll}
               >
                 {STAGES.map((st) => (
                   <option key={st.value} value={st.value}>
@@ -211,12 +299,12 @@ export function GameImporterTab({ onToast }: { onToast: ToastFn }) {
               </select>
             </Field>
 
-            <Field label="Game Status">
+            <Field label="Match Status">
               <select
                 className={selectClass}
                 value={status}
                 onChange={(e) => setStatus(e.target.value as "FINAL" | "LIVE" | "UPCOMING")}
-
+                disabled={isExtractingAll || isIngestingAll}
               >
                 {STATUSES.map((st) => (
                   <option key={st.value} value={st.value}>
@@ -227,141 +315,247 @@ export function GameImporterTab({ onToast }: { onToast: ToastFn }) {
             </Field>
           </div>
 
-          <Field label="Match URL / Link">
-            <div className="flex flex-col gap-1.5">
-              <div className="relative">
-                <input
-                  type="url"
-                  className={cn(inputClass, "pl-9 font-mono text-xs")}
-                  value={url}
-                  onChange={(e) => setUrl(e.target.value)}
-                  placeholder={URL_EXAMPLES[league]}
-                />
-                <Globe size={15} className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted" />
-              </div>
-              <p className="text-[10px] text-muted">
-                Supported: UAAP LiveStats (`uaap.livestats.ph`), PBA LiveStats (`actech2.com`), and PVL sources.
-              </p>
+          {/* Multi-Link Textarea */}
+          <Field
+            label={`Game URLs or Match IDs (${parsedUrls.length > 0 ? `${parsedUrls.length} link${parsedUrls.length > 1 ? "s" : ""} detected` : "Paste multiple links, 1 per line"})`}
+          >
+            <div className="relative">
+
+              <textarea
+                className="w-full rounded-xl border border-border bg-surface px-3 py-2.5 font-mono text-xs text-foreground placeholder:text-muted/50 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary min-h-[100px] leading-relaxed"
+                placeholder={
+                  league === "PBA"
+                    ? "https://pba.ph/recap?match=553\nhttps://pba.ph/recap?match=554\n555"
+                    : "https://uaap.livestats.ph/tournaments/uaap-season-87-men-s-basketball?game_id=56\n57\n58"
+                }
+                value={urlInput}
+                onChange={(e) => setUrlInput(e.target.value)}
+                disabled={isExtractingAll || isIngestingAll}
+              />
             </div>
           </Field>
 
-          <div className="flex gap-2 pt-1">
+          {/* Action Row */}
+          <div className="flex flex-wrap items-center gap-3">
             <button
               type="button"
-              disabled={loading || ingesting}
-              onClick={handleFetchPreview}
+              onClick={handleBatchExtract}
+              disabled={isExtractingAll || isIngestingAll || parsedUrls.length === 0}
               className={cn(
                 primaryButtonClass,
-                "flex items-center justify-center gap-2 py-2.5",
-                loading && "opacity-70 cursor-not-allowed"
+                "gap-2 px-5",
+                (isExtractingAll || parsedUrls.length === 0) && "opacity-60 cursor-not-allowed"
               )}
             >
-              {loading ? (
+              {isExtractingAll ? (
                 <>
                   <Loader2 size={14} className="animate-spin" />
-                  Extracting Match Data...
+                  Extracting Matches...
                 </>
               ) : (
                 <>
-                  <Sparkles size={14} />
-                  Fetch &amp; Preview Match
+                  <ListPlus size={14} />
+                  Fetch & Preview {parsedUrls.length > 0 ? `(${parsedUrls.length}) Matches` : "Matches"}
                 </>
               )}
             </button>
+
+            {readyCount > 0 && (
+              <button
+                type="button"
+                onClick={handleIngestAllReady}
+                disabled={isIngestingAll || isExtractingAll}
+                className={cn(
+                  "flex items-center gap-2 rounded-xl bg-emerald-600 px-5 py-2.5 text-xs font-bold text-white shadow-lg shadow-emerald-600/20 hover:bg-emerald-500 transition-all",
+                  isIngestingAll && "opacity-60 cursor-not-allowed"
+                )}
+              >
+                {isIngestingAll ? (
+                  <>
+                    <Loader2 size={14} className="animate-spin" />
+                    Saving {readyCount} Game{readyCount > 1 ? "s" : ""} to Database...
+                  </>
+                ) : (
+                  <>
+                    <CheckCircle2 size={14} />
+                    Confirm & Ingest All ({readyCount}) Ready Matches
+                  </>
+                )}
+              </button>
+            )}
+
+            {savedCount > 0 && (
+              <span className="flex items-center gap-1.5 text-xs font-semibold text-emerald-400">
+                <CheckCircle2 size={14} />
+                {savedCount} Game{savedCount > 1 ? "s" : ""} saved in Supabase
+              </span>
+            )}
           </div>
         </div>
       </SectionCard>
 
-      {previewGame && (
-        <div className="flex flex-col gap-4 animate-in fade-in duration-300">
-          <SectionCard
-            title="Match Preview & Validation"
-            action={
-              <button
-                type="button"
-                disabled={ingesting}
-                onClick={handleConfirmIngest}
-                className="flex items-center gap-1.5 rounded-lg bg-primary px-4 py-1.5 text-xs font-bold text-primary-foreground shadow hover:bg-primary/90 transition-all active:scale-[0.98]"
-              >
-                {ingesting ? (
-                  <>
-                    <Loader2 size={13} className="animate-spin" />
-                    Saving to DB...
-                  </>
-                ) : (
-                  <>
-                    <CheckCircle2 size={13} />
-                    Confirm &amp; Ingest Game
-                  </>
-                )}
-              </button>
-            }
-          >
-            {/* Header / Score Banner */}
-            <div className="flex flex-col gap-3 rounded-2xl border border-border bg-elevated p-4">
-              <div className="flex items-center justify-between text-xs text-muted">
-                <span className="font-semibold uppercase tracking-wide">
-                  {previewGame.stage} &bull; {previewGame.league}
-                </span>
-                <span>{new Date(previewGame.startTime).toLocaleDateString()}</span>
-              </div>
+      {/* Extracted Matches Preview List */}
+      {batchItems.length > 0 && (
+        <div className="flex flex-col gap-3">
+          <div className="flex items-center justify-between px-1">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-muted flex items-center gap-2">
+              <Layers size={14} />
+              Extracted Match Queue ({batchItems.length})
+            </h3>
+            <span className="text-[11px] text-muted">
+              {readyCount} ready • {savedCount} saved
+            </span>
+          </div>
 
-              <div className="flex items-center justify-between py-2">
-                <div className="flex items-center gap-3">
-                  <div
-                    className="h-9 w-9 rounded-full border-2 flex items-center justify-center text-xs font-bold bg-surface"
-                    style={{ borderColor: previewGame.homeTeam.accentColor }}
-                  >
-                    {previewGame.homeTeam.shortName}
+          <div className="flex flex-col gap-3">
+            {batchItems.map((item, index) => {
+              const game = item.game;
+              const payload = item.parsedPayload;
+
+              return (
+                <div
+                  key={item.id}
+                  className={cn(
+                    "rounded-2xl border bg-surface/70 backdrop-blur-sm p-4 transition-all",
+                    item.status === "saved"
+                      ? "border-emerald-500/40 bg-emerald-950/10"
+                      : item.status === "error"
+                        ? "border-rose-500/40 bg-rose-950/10"
+                        : item.status === "ready"
+                          ? "border-border hover:border-primary/40"
+                          : "border-border opacity-70"
+                  )}
+                >
+                  <div className="flex flex-wrap items-center justify-between gap-3">
+                    {/* Match Headline */}
+                    <div className="flex items-center gap-3">
+                      <span className="flex h-6 w-6 items-center justify-center rounded-full bg-muted/20 text-[11px] font-bold text-muted">
+                        #{index + 1}
+                      </span>
+
+                      {item.status === "extracting" && (
+                        <div className="flex items-center gap-2 text-xs text-muted">
+                          <Loader2 size={13} className="animate-spin text-primary" />
+                          <span>Extracting from: <code className="font-mono text-foreground">{item.rawUrl}</code></span>
+                        </div>
+                      )}
+
+                      {item.status === "error" && (
+                        <div className="flex items-center gap-2 text-xs text-rose-400">
+                          <AlertCircle size={14} />
+                          <span>
+                            <strong className="font-mono">{item.rawUrl}</strong>: {item.error}
+                          </span>
+                        </div>
+                      )}
+
+                      {(item.status === "ready" || item.status === "ingesting" || item.status === "saved") && game && (
+                        <div className="flex flex-col gap-0.5">
+                          <div className="flex items-center gap-2">
+                            <span className="text-sm font-black text-foreground">
+                              {game.homeTeam.shortName}{" "}
+                              <span className="text-muted font-normal text-xs">({game.homeScore})</span>
+                            </span>
+                            <span className="text-xs font-bold text-muted">vs</span>
+                            <span className="text-sm font-black text-foreground">
+                              {game.awayTeam.shortName}{" "}
+                              <span className="text-muted font-normal text-xs">({game.awayScore})</span>
+                            </span>
+                          </div>
+
+                          <div className="flex flex-wrap items-center gap-3 text-[11px] text-muted">
+                            <span className="flex items-center gap-1">
+                              <Calendar size={11} />
+                              {new Date(game.startTime).toLocaleDateString("en-US", {
+                                month: "short",
+                                day: "numeric",
+                                year: "numeric",
+                              })}
+                            </span>
+                            {game.venue && (
+                              <span className="flex items-center gap-1">
+                                <MapPin size={11} />
+                                {game.venue}
+                              </span>
+                            )}
+                            <span className="rounded bg-muted/15 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-muted">
+                              {game.stage}
+                            </span>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Status Badge & Controls */}
+                    <div className="flex items-center gap-2">
+                      {item.status === "ingesting" && (
+                        <span className="flex items-center gap-1 rounded-full bg-amber-500/10 px-2.5 py-1 text-[10px] font-bold text-amber-400">
+                          <Loader2 size={11} className="animate-spin" /> Saving...
+                        </span>
+                      )}
+
+                      {item.status === "saved" && (
+                        <span className="flex items-center gap-1 rounded-full bg-emerald-500/10 px-2.5 py-1 text-[10px] font-bold text-emerald-400">
+                          <CheckCircle2 size={11} /> Saved to Database
+                        </span>
+                      )}
+
+                      {item.status === "ready" && (
+                        <span className="flex items-center gap-1 rounded-full bg-primary/10 px-2.5 py-1 text-[10px] font-bold text-primary">
+                          <CheckCircle2 size={11} /> Ready to Ingest
+                        </span>
+                      )}
+
+                      {game && (
+                        <button
+                          type="button"
+                          onClick={() => toggleExpand(item.id)}
+                          className="flex items-center gap-1 rounded-lg border border-border/80 bg-surface px-2 py-1 text-[11px] font-semibold text-muted hover:text-foreground transition-colors"
+                        >
+                          {item.expanded ? (
+                            <>
+                              Hide Box Score <ChevronUp size={12} />
+                            </>
+                          ) : (
+                            <>
+                              View Box Score <ChevronDown size={12} />
+                            </>
+                          )}
+                        </button>
+                      )}
+
+                      <button
+                        type="button"
+                        onClick={() => removeItem(item.id)}
+                        disabled={item.status === "ingesting"}
+                        className="rounded-lg p-1 text-muted hover:bg-rose-500/10 hover:text-rose-400 transition-colors"
+                        title="Remove from queue"
+                      >
+                        <Trash2 size={13} />
+                      </button>
+                    </div>
                   </div>
-                  <div>
-                    <p className="text-sm font-bold text-foreground">{previewGame.homeTeam.name}</p>
-                    <p className="text-[11px] text-muted">Home</p>
-                  </div>
+
+                  {/* Expandable Box Score Preview */}
+                  {item.expanded && game && (
+                    <div className="mt-4 flex flex-col gap-3 border-t border-border/50 pt-4">
+                      <PreviewBoxTable
+                        title={`${game.homeTeam.name} (${(payload?.boxScore.home || game.boxScore.home).length} players)`}
+                        items={payload?.boxScore.home || game.boxScore.home}
+                        accentColor={game.homeTeam.accentColor}
+                      />
+
+                      <PreviewBoxTable
+                        title={`${game.awayTeam.name} (${(payload?.boxScore.away || game.boxScore.away).length} players)`}
+                        items={payload?.boxScore.away || game.boxScore.away}
+                        accentColor={game.awayTeam.accentColor}
+                      />
+                    </div>
+                  )}
                 </div>
-
-                <div className="flex items-center gap-3 text-2xl font-black tabular-nums text-foreground">
-                  <span>{previewGame.homeScore}</span>
-                  <span className="text-muted text-sm">-</span>
-                  <span>{previewGame.awayScore}</span>
-                </div>
-
-                <div className="flex items-center gap-3 text-right">
-                  <div>
-                    <p className="text-sm font-bold text-foreground">{previewGame.awayTeam.name}</p>
-                    <p className="text-[11px] text-muted">Away</p>
-                  </div>
-                  <div
-                    className="h-9 w-9 rounded-full border-2 flex items-center justify-center text-xs font-bold bg-surface"
-                    style={{ borderColor: previewGame.awayTeam.accentColor }}
-                  >
-                    {previewGame.awayTeam.shortName}
-                  </div>
-                </div>
-              </div>
-
-              {previewGame.venue && (
-                <p className="border-t border-border/60 pt-2 text-center text-[11px] text-muted">
-                  Venue: {previewGame.venue}
-                </p>
-              )}
-            </div>
-
-            {/* Box Scores */}
-            <div className="mt-4 flex flex-col gap-4">
-              <PreviewBoxTable
-                title={`${previewGame.homeTeam.shortName} Box Score (${(parsedPayload?.boxScore.home || previewGame.boxScore.home).length} players)`}
-                items={parsedPayload?.boxScore.home || previewGame.boxScore.home}
-                accentColor={previewGame.homeTeam.accentColor}
-              />
-
-              <PreviewBoxTable
-                title={`${previewGame.awayTeam.shortName} Box Score (${(parsedPayload?.boxScore.away || previewGame.boxScore.away).length} players)`}
-                items={parsedPayload?.boxScore.away || previewGame.boxScore.away}
-                accentColor={previewGame.awayTeam.accentColor}
-              />
-            </div>
-          </SectionCard>
+              );
+            })}
+          </div>
         </div>
       )}
     </div>
@@ -374,7 +568,22 @@ function PreviewBoxTable({
   accentColor,
 }: {
   title: string;
-  items: Array<ExtractedBoxRow | { playerId: string; min: string; pts: number; reb: number; ast: number; stl: number; blk: number; to?: number; pf?: number; fgM: number; fgA: number }>;
+  items: Array<
+    | ExtractedBoxRow
+    | {
+        playerId: string;
+        min: string;
+        pts: number;
+        reb: number;
+        ast: number;
+        stl: number;
+        blk: number;
+        to?: number;
+        pf?: number;
+        fgM: number;
+        fgA: number;
+      }
+  >;
   accentColor: string;
 }) {
   return (
@@ -440,4 +649,3 @@ function PreviewBoxTable({
     </div>
   );
 }
-
