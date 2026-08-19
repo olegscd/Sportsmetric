@@ -98,27 +98,72 @@ function findBestTeamMatch(extracted: { name: string; shortName: string }, teams
 }
 
 
-function findBestPlayerMatch(row: ExtractedBoxRow, teamRoster: Player[]): Player | undefined {
-  const rowNameNorm = normalizeStr(row.playerName);
-  
-  // 1. Direct name match
-  const byName = teamRoster.find((p) => normalizeStr(p.name) === rowNameNorm);
-  if (byName) return byName;
+function extractNameTokens(name: string): { initials: string[]; lastName: string; fullNorm: string } {
+  const clean = name.replace(/[.,/#!$%^&*;:{}=\-_`~()]/g, " ").trim().toLowerCase();
+  const parts = clean.split(/\s+/).filter(Boolean);
+  const lastName = parts.length > 0 ? parts[parts.length - 1] : "";
+  const initials = parts.map((p) => p[0]);
+  return {
+    initials,
+    lastName,
+    fullNorm: normalizeStr(name),
+  };
+}
 
-  // 2. Jersey number + partial name match
+function findBestPlayerMatch(row: ExtractedBoxRow, teamRoster: Player[]): Player | undefined {
+  const rowTokens = extractNameTokens(row.playerName);
+
+  // 1. Exact full normalized name match
+  const byExact = teamRoster.find((p) => normalizeStr(p.name) === rowTokens.fullNorm);
+  if (byExact) return byExact;
+
+  // 2. Jersey number match + last name similarity check
   if (row.jersey !== null && row.jersey !== undefined) {
-    const byJersey = teamRoster.find((p) => p.jerseyNumber === row.jersey);
-    if (byJersey) return byJersey;
+    const byJerseyList = teamRoster.filter((p) => p.jerseyNumber === row.jersey);
+    if (byJerseyList.length === 1) {
+      return byJerseyList[0];
+    }
+    if (byJerseyList.length > 1) {
+      // Disambiguate by last name
+      const matched = byJerseyList.find((p) => {
+        const pTokens = extractNameTokens(p.name);
+        return (
+          pTokens.lastName.includes(rowTokens.lastName) ||
+          rowTokens.lastName.includes(pTokens.lastName)
+        );
+      });
+      if (matched) return matched;
+    }
   }
 
-  // 3. Substring match (e.g. "Alarcon, H." or "Harold Alarcon")
+  // 3. Last name + First Initial match (e.g. "J. Franklin" <-> "John Franklin" or "Franklin, J.")
+  if (rowTokens.lastName && rowTokens.lastName.length > 2) {
+    const byLastName = teamRoster.find((p) => {
+      const pTokens = extractNameTokens(p.name);
+      const sameLastName =
+        pTokens.lastName === rowTokens.lastName ||
+        pTokens.fullNorm.includes(rowTokens.lastName) ||
+        rowTokens.fullNorm.includes(pTokens.lastName);
+
+      if (!sameLastName) return false;
+
+      // If both have initials, check if any initial matches
+      const hasSharedInitial = rowTokens.initials.some((init) => pTokens.initials.includes(init));
+      return hasSharedInitial || sameLastName;
+    });
+
+    if (byLastName) return byLastName;
+  }
+
+  // 4. Substring fallback
   const bySub = teamRoster.find((p) => {
     const pNorm = normalizeStr(p.name);
-    return pNorm.includes(rowNameNorm) || rowNameNorm.includes(pNorm);
+    return pNorm.includes(rowTokens.fullNorm) || rowTokens.fullNorm.includes(pNorm);
   });
 
   return bySub;
 }
+
 
 export async function POST(req: NextRequest) {
   const isAuth = await isAdminAuthenticated();
