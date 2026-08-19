@@ -2,8 +2,10 @@
 
 import type { ToastFn } from "@/components/admin/Toast";
 import { useSportsData } from "@/context/SportsDataContext";
+import type { ExtractedBoxRow, ExtractedGamePayload } from "@/lib/game-extractor";
 import { cn } from "@/lib/utils";
-import type { BoxScoreItem, Game, League, TournamentStage } from "@/types/sports";
+import type { Game, League, TournamentStage } from "@/types/sports";
+
 import { CheckCircle2, Globe, Loader2, Sparkles } from "lucide-react";
 
 import { useState } from "react";
@@ -48,8 +50,7 @@ export function GameImporterTab({ onToast }: { onToast: ToastFn }) {
   const [loading, setLoading] = useState(false);
   const [ingesting, setIngesting] = useState(false);
   const [previewGame, setPreviewGame] = useState<Game | null>(null);
-  const [, setPreviewRaw] = useState<Record<string, unknown> | null>(null);
-
+  const [parsedPayload, setParsedPayload] = useState<ExtractedGamePayload | null>(null);
 
   function handleLeagueChange(newLeague: League) {
     setLeague(newLeague);
@@ -59,7 +60,7 @@ export function GameImporterTab({ onToast }: { onToast: ToastFn }) {
     const curr = targetSeasons.find((s) => s.isCurrent)?.id ?? targetSeasons[0]?.id ?? "";
     setSeasonId(curr);
     setPreviewGame(null);
-    setPreviewRaw(null);
+    setParsedPayload(null);
   }
 
   async function handleFetchPreview() {
@@ -74,7 +75,7 @@ export function GameImporterTab({ onToast }: { onToast: ToastFn }) {
 
     setLoading(true);
     setPreviewGame(null);
-    setPreviewRaw(null);
+    setParsedPayload(null);
 
     try {
       const res = await fetch("/api/admin/ingest-game", {
@@ -96,7 +97,7 @@ export function GameImporterTab({ onToast }: { onToast: ToastFn }) {
       }
 
       setPreviewGame(data.game);
-      setPreviewRaw(data);
+      setParsedPayload(data.parsedPayload || null);
       onToast("Match data extracted successfully! Review the preview below.");
     } catch (err: unknown) {
       const e = err as { message: string };
@@ -106,6 +107,7 @@ export function GameImporterTab({ onToast }: { onToast: ToastFn }) {
       setLoading(false);
     }
   }
+
 
   async function handleConfirmIngest() {
     if (!url.trim() || !seasonId) return;
@@ -135,8 +137,9 @@ export function GameImporterTab({ onToast }: { onToast: ToastFn }) {
         `Game ingested successfully! (${data.matchedHomePlayerCount} home, ${data.matchedAwayPlayerCount} away lines saved)`
       );
       setPreviewGame(null);
-      setPreviewRaw(null);
+      setParsedPayload(null);
       setUrl("");
+
     } catch (err: unknown) {
       const e = err as { message: string };
       console.error("[GameImporter] Ingest Error:", e);
@@ -347,14 +350,14 @@ export function GameImporterTab({ onToast }: { onToast: ToastFn }) {
             {/* Box Scores */}
             <div className="mt-4 flex flex-col gap-4">
               <PreviewBoxTable
-                title={`${previewGame.homeTeam.shortName} Box Score (${previewGame.boxScore.home.length} players)`}
-                items={previewGame.boxScore.home}
+                title={`${previewGame.homeTeam.shortName} Box Score (${(parsedPayload?.boxScore.home || previewGame.boxScore.home).length} players)`}
+                items={parsedPayload?.boxScore.home || previewGame.boxScore.home}
                 accentColor={previewGame.homeTeam.accentColor}
               />
 
               <PreviewBoxTable
-                title={`${previewGame.awayTeam.shortName} Box Score (${previewGame.boxScore.away.length} players)`}
-                items={previewGame.boxScore.away}
+                title={`${previewGame.awayTeam.shortName} Box Score (${(parsedPayload?.boxScore.away || previewGame.boxScore.away).length} players)`}
+                items={parsedPayload?.boxScore.away || previewGame.boxScore.away}
                 accentColor={previewGame.awayTeam.accentColor}
               />
             </div>
@@ -371,7 +374,7 @@ function PreviewBoxTable({
   accentColor,
 }: {
   title: string;
-  items: BoxScoreItem[];
+  items: Array<ExtractedBoxRow | { playerId: string; min: string; pts: number; reb: number; ast: number; stl: number; blk: number; to?: number; pf?: number; fgM: number; fgA: number }>;
   accentColor: string;
 }) {
   return (
@@ -398,27 +401,43 @@ function PreviewBoxTable({
             </tr>
           </thead>
           <tbody>
-            {items.map((row, idx) => (
-              <tr key={idx} className="border-t border-border/40 hover:bg-elevated/50 transition-colors">
-                <td className="max-w-[130px] truncate py-1.5 font-semibold text-foreground">
-                  {row.playerId || `Player #${idx + 1}`}
-                </td>
-                <td className="px-1 py-1.5 text-right tabular-nums text-muted">{row.min}</td>
-                <td className="px-1 py-1.5 text-right tabular-nums font-bold text-foreground">{row.pts}</td>
-                <td className="px-1 py-1.5 text-right tabular-nums text-muted">{row.reb}</td>
-                <td className="px-1 py-1.5 text-right tabular-nums text-muted">{row.ast}</td>
-                <td className="px-1 py-1.5 text-right tabular-nums text-muted">{row.stl}</td>
-                <td className="px-1 py-1.5 text-right tabular-nums text-muted">{row.blk}</td>
-                <td className="px-1 py-1.5 text-right tabular-nums text-muted">{row.to ?? 0}</td>
-                <td className="px-1 py-1.5 text-right tabular-nums text-muted">{row.pf ?? 0}</td>
-                <td className="px-1 py-1.5 text-right tabular-nums text-muted">
-                  {row.fgM}-{row.fgA}
-                </td>
-              </tr>
-            ))}
+            {items.map((row, idx) => {
+              const displayName =
+                "playerName" in row && row.playerName
+                  ? row.playerName
+                  : "playerId" in row && row.playerId
+                    ? row.playerId
+                    : `Player #${idx + 1}`;
+              const jersey = "jersey" in row && row.jersey !== null && row.jersey !== undefined ? row.jersey : null;
+
+              return (
+                <tr key={idx} className="border-t border-border/40 hover:bg-elevated/50 transition-colors">
+                  <td className="max-w-[150px] truncate py-1.5 font-semibold text-foreground">
+                    <span>{displayName}</span>
+                    {jersey !== null && (
+                      <span className="ml-1.5 rounded bg-muted/20 px-1 py-0.5 text-[9px] font-mono text-muted">
+                        #{jersey}
+                      </span>
+                    )}
+                  </td>
+                  <td className="px-1 py-1.5 text-right tabular-nums text-muted">{row.min}</td>
+                  <td className="px-1 py-1.5 text-right tabular-nums font-bold text-foreground">{row.pts}</td>
+                  <td className="px-1 py-1.5 text-right tabular-nums text-muted">{row.reb}</td>
+                  <td className="px-1 py-1.5 text-right tabular-nums text-muted">{row.ast}</td>
+                  <td className="px-1 py-1.5 text-right tabular-nums text-muted">{row.stl}</td>
+                  <td className="px-1 py-1.5 text-right tabular-nums text-muted">{row.blk}</td>
+                  <td className="px-1 py-1.5 text-right tabular-nums text-muted">{row.to ?? 0}</td>
+                  <td className="px-1 py-1.5 text-right tabular-nums text-muted">{row.pf ?? 0}</td>
+                  <td className="px-1 py-1.5 text-right tabular-nums text-muted">
+                    {row.fgM}-{row.fgA}
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
     </div>
   );
 }
+
