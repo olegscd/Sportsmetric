@@ -336,6 +336,8 @@ export async function POST(req: NextRequest) {
 
       result.push({
         playerId: matchedPlayer ? matchedPlayer.id : generateId(),
+        jersey: row.jersey ?? (matchedPlayer?.jerseyNumber && matchedPlayer.jerseyNumber > 0 ? matchedPlayer.jerseyNumber : undefined),
+        playerName: matchedPlayer?.name ?? row.playerName,
         pts: row.pts,
         reb: row.reb,
         ast: row.ast,
@@ -350,7 +352,9 @@ export async function POST(req: NextRequest) {
         ftM: row.ftM ?? 0,
         ftA: row.ftA ?? 0,
         min: row.min,
+        is_libero: "is_libero" in row ? Boolean(row.is_libero) : undefined,
       });
+
     }
 
     return result;

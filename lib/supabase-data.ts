@@ -248,32 +248,59 @@ export function mapGameRows(
 }
 
 
+async function fetchPaginatedTable<T = any>(
+  table: string,
+  orderColumn?: string,
+  ascending = false
+): Promise<T[]> {
+  if (!supabase) return [];
+  const all: T[] = [];
+  const pageSize = 1000;
+  let from = 0;
+
+  while (true) {
+    let query = supabase.from(table).select("*");
+    if (orderColumn) {
+      query = query.order(orderColumn, { ascending });
+    }
+    const { data, error } = await query.range(from, from + pageSize - 1);
+    if (error) {
+      logSupabaseError(`fetchPaginatedTable ${table}`, error);
+      break;
+    }
+    if (!data || data.length === 0) break;
+    all.push(...(data as T[]));
+    if (data.length < pageSize) break;
+    from += pageSize;
+  }
+
+  return all;
+}
+
 export async function fetchAllSupabaseData(): Promise<SupabaseDataResult | null> {
   if (!supabase) return null;
 
-  const [seasonsRes, teamsRes, playersRes, gamesRes] = await Promise.all([
-    supabase.from("seasons").select("*").order("id", { ascending: false }),
-    supabase.from("teams").select("*").limit(5000),
-    supabase.from("players").select("*").limit(5000),
-    supabase.from("games").select("*").order("start_time", { ascending: false }).limit(5000),
-  ]);
+  try {
+    const [seasonsRows, teamsRows, playersRows, gamesRows] = await Promise.all([
+      fetchPaginatedTable("seasons", "id", false),
+      fetchPaginatedTable("teams"),
+      fetchPaginatedTable("players"),
+      fetchPaginatedTable("games", "start_time", false),
+    ]);
 
-  const hasError =
-    logSupabaseError("seasons fetch", seasonsRes.error) ||
-    logSupabaseError("teams fetch", teamsRes.error) ||
-    logSupabaseError("players fetch", playersRes.error) ||
-    logSupabaseError("games fetch", gamesRes.error);
+    const seasons = mapSeasonRows(seasonsRows);
+    const teams = mapTeamRows(teamsRows);
+    const teamsById = new Map(teams.map((t) => [t.id, t]));
+    const players = mapPlayerRows(playersRows);
+    const games = mapGameRows(gamesRows, teamsById);
 
-  if (hasError) return null;
-
-  const seasons = mapSeasonRows(seasonsRes.data ?? []);
-  const teams = mapTeamRows(teamsRes.data ?? []);
-  const teamsById = new Map(teams.map((t) => [t.id, t]));
-  const players = mapPlayerRows(playersRes.data ?? []);
-  const games = mapGameRows(gamesRes.data ?? [], teamsById);
-
-  return { seasons, teams, players, games };
+    return { seasons, teams, players, games };
+  } catch (err) {
+    console.error("[fetchAllSupabaseData Error]:", err);
+    return null;
+  }
 }
+
 
 export async function upsertGameInSupabase(game: Game): Promise<boolean> {
   if (!supabase) return false;

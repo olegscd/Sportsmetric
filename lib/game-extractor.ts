@@ -253,24 +253,44 @@ export async function parseNativePvlPdf(
     const tourneyLine = lines.find((l: string) => l.includes("PVL")) || "PVL Conference";
     const tournament = tourneyLine.replace(/^[^\w]+/, "").trim();
 
-    // 2. Date
-    const dateMatch = rawText.match(/(\d{1,2}\/\d{1,2}\/\d{4})/);
+    // 2. Date (Bounded MM/DD/YYYY matching 2020-2035)
+    const dateMatch =
+      rawText.match(/\b(0?[1-9]|1[0-2])\/(0?[1-9]|[12]\d|3[01])\/(20[2-3]\d)\b/) ||
+      rawText.match(/\b(20[2-3]\d)[-/](0?[1-9]|1[0-2])[-/](0?[1-9]|[12]\d|3[01])\b/);
     let startTime = new Date().toISOString();
     if (dateMatch) {
-      const [m, d, y] = dateMatch[1].split("/").map(Number);
-      startTime = new Date(Date.UTC(y, m - 1, d, 16, 0)).toISOString();
+      if (dateMatch[0].includes("/")) {
+        const [m, d, y] = dateMatch[0].split("/").map(Number);
+        startTime = new Date(Date.UTC(y, m - 1, d, 16, 0)).toISOString();
+      } else {
+        const [y, m, d] = dateMatch[0].split("-").map(Number);
+        startTime = new Date(Date.UTC(y, m - 1, d, 16, 0)).toISOString();
+      }
     }
+
 
     // 3. Venue
     let venue = "PhilSports Arena";
+    const hallLine = lines.find(
+      (l: string) =>
+        l.includes("GYMNASIUM") ||
+        l.includes("COLISEUM") ||
+        l.includes("ARENA") ||
+        l.includes("COMPLEX") ||
+        l.includes("CENTER") ||
+        l.includes("HALL")
+    );
     const cityIdx = lines.findIndex((l: string) => l.startsWith("City:"));
+    let city = "";
     if (cityIdx !== -1 && lines.length > cityIdx + 3) {
-      const city = lines[cityIdx + 2] || "";
-      const hall = lines[cityIdx + 3] || "";
-      if (city || hall) {
-        venue = [hall, city].filter(Boolean).join(", ");
-      }
+      city = lines[cityIdx + 3] || "";
     }
+    if (hallLine && city && !hallLine.includes(city)) {
+      venue = `${hallLine}, ${city}`;
+    } else if (hallLine) {
+      venue = hallLine;
+    }
+
 
     // 4. Team codes
     const teamCodesFound: string[] = [];

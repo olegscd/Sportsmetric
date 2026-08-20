@@ -381,11 +381,9 @@ def extract_pvl_pdf_game(pdf_input: str, stage: str, status: str) -> dict:
         tournament = lines[1] if len(lines) > 1 else "PVL Conference"
         competition = lines[2] if len(lines) > 2 else tournament
 
-        game_date = ""
-        match_line = lines[3] if len(lines) > 3 else ""
-        match_info = re.search(r"Match:\s*(\d+).*?Date:\s*([\d/]+)", match_line)
-        if match_info:
-            game_date = match_info.group(2)
+        date_match = re.search(r"\b(0?[1-9]|1[0-2])/(0?[1-9]|[12]\d|3[01])/(20[2-3]\d)\b", text)
+        game_date = date_match.group(0) if date_match else ""
+
 
         city = ""
         hall = ""

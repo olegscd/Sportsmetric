@@ -98,9 +98,18 @@ export function BoxScoreTable({
               const jerseyNum =
                 player?.jerseyNumber && player.jerseyNumber > 0
                   ? String(player.jerseyNumber)
-                  : "—";
+                  : item.jersey && item.jersey > 0
+                    ? String(item.jersey)
+                    : "—";
 
-              const displayName = formatPvlPlayerName(player, item.playerId);
+              const displayName =
+                player?.name
+                  ? formatPvlPlayerName(player, item.playerId)
+                  : item.playerName
+                    ? item.playerName
+                    : formatPvlPlayerName(undefined, item.playerId);
+
+              const isLibero = player?.position === "L" || Boolean(item.is_libero);
 
               return (
                 <tr
@@ -110,8 +119,13 @@ export function BoxScoreTable({
                   <td className="w-10 py-2 px-2 text-center tabular-nums text-muted font-medium">
                     {jerseyNum}
                   </td>
-                  <td className="py-2 px-2 font-semibold text-foreground">
-                    {displayName}
+                  <td className="py-2 px-2 font-semibold text-foreground flex items-center gap-1.5">
+                    <span>{displayName}</span>
+                    {isLibero && (
+                      <span className="rounded bg-amber-500/20 px-1 py-0.5 text-[9px] font-bold text-amber-400">
+                        L
+                      </span>
+                    )}
                   </td>
                   <td className="w-16 py-2 px-2 text-right tabular-nums font-bold text-foreground">
                     {item.pts}
@@ -119,6 +133,7 @@ export function BoxScoreTable({
                 </tr>
               );
             })}
+
 
             {/* Summary Row 1: Opponent Errors */}
             <tr className="bg-surface/30 italic text-muted">

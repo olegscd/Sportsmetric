@@ -178,6 +178,8 @@ export interface PlayByPlayEvent {
 
 export interface BoxScoreItem {
   playerId: string;
+  jersey?: number;
+  playerName?: string;
   pts: number;
   reb: number;
   ast: number;
@@ -201,7 +203,9 @@ export interface BoxScoreItem {
   acePts?: number;
   digs?: number;
   receptions?: number;
+  is_libero?: boolean;
 }
+
 
 export interface BoxScore {
   home: BoxScoreItem[];
