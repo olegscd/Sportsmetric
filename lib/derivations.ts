@@ -76,51 +76,28 @@ export function extractGameNumber(id: string): number {
 
 /**
  * Determines whether a game is a playoff / post-elimination game.
- * Checks explicit game.isPlayoff / game.stage metadata first, falling back to legacy sequence heuristics.
+ * Uses explicit game.isPlayoff / game.stage metadata stored directly in the database.
  */
 export function isPlayoffGame(game: Pick<Game, "id" | "league" | "seasonId"> & { stage?: string; isPlayoff?: boolean }): boolean {
-  if (game.isPlayoff !== undefined) {
+  if (game.isPlayoff !== undefined && game.isPlayoff !== null) {
     return game.isPlayoff;
   }
   if (game.stage) {
     return game.stage !== "ELIMINATION";
   }
 
-  const num = extractGameNumber(game.id);
-  const league = game.league;
-
-  if (league === "UAAP") {
-    return num > 56;
-  }
-
-  if (league === "PVL") {
-    const maxElim = getPvlEliminationGameCount(game.seasonId);
-    return num > 0 && num > maxElim;
-  }
-
-  if (league === "PBA") {
-    const idLower = game.id.toLowerCase();
-    if (
-      idLower.includes("playoff") ||
-      idLower.includes("semis") ||
-      idLower.includes("finals") ||
-      idLower.includes("qf") ||
-      idLower.includes("sf")
-    ) {
-      return true;
-    }
-    return num > 66;
-  }
-
   const idLower = game.id.toLowerCase();
   return (
     idLower.includes("playoff") ||
     idLower.includes("semis") ||
+    idLower.includes("semi") ||
     idLower.includes("finals") ||
+    idLower.includes("final") ||
     idLower.includes("qf") ||
     idLower.includes("sf")
   );
 }
+
 
 /**
  * Helper to sort UAAP games strictly by game ID sequence (1..56..62)
@@ -213,33 +190,35 @@ export function deriveStandings(
 
     // Check direct shortName equality if gameTeam object is present
     if (typeof gameTeam !== "string" && gameTeam.shortName && team.shortName) {
-      if (gameTeam.shortName.toUpperCase() === team.shortName.toUpperCase()) return true;
+      if (
+        gameTeam.shortName.toUpperCase() === team.shortName.toUpperCase() &&
+        (gameTeam.league === team.league || (!gameTeam.league && !team.league))
+      ) {
+        return true;
+      }
     }
 
     // Check team registry for shortName & league match
     const match = teams.find((t) => t.id === gameTeamId);
     if (match && match.shortName && team.shortName) {
-      if (match.shortName.toUpperCase() === team.shortName.toUpperCase() && match.league === team.league) {
+      if (
+        match.shortName.toUpperCase() === team.shortName.toUpperCase() &&
+        match.league === team.league
+      ) {
         return true;
       }
     }
 
-    // Normalized slug matching (e.g. 'converge' <-> 'converge-pba-gov-cup-50')
-    const normA = gameTeamId.replace(/[^a-z0-9]/gi, "").toLowerCase();
-    const normB = team.id.replace(/[^a-z0-9]/gi, "").toLowerCase();
-    if (normA === normB || normA.includes(normB) || normB.includes(normA)) {
-      return true;
-    }
-
-    if (team.shortName) {
-      const normShort = team.shortName.replace(/[^a-z0-9]/gi, "").toLowerCase();
-      if (normA === normShort || normA.startsWith(normShort) || normA.endsWith(normShort)) {
+    // Normalized slug matching for lifetime or multi-season IDs (e.g. 'converge' <-> 'converge-pba-gov-cup-50')
+    if (isLifetime) {
+      if (gameTeamId.startsWith(team.id + "-") || team.id.startsWith(gameTeamId + "-")) {
         return true;
       }
     }
 
     return false;
   }
+
 
   for (const item of standingsMap.values()) {
     const team = item.team;
