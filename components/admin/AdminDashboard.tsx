@@ -6,7 +6,6 @@ import { cn } from "@/lib/utils";
 import { ChevronLeft, LogOut } from "lucide-react";
 import Link from "next/link";
 import { useCallback, useRef, useState } from "react";
-import { BoxScoreParserTab } from "./BoxScoreParserTab";
 import { GameImporterTab } from "./GameImporterTab";
 import { GamesManager } from "./GamesManager";
 import { PlayersManager } from "./PlayersManager";
@@ -14,7 +13,7 @@ import { SeasonsManager } from "./SeasonsManager";
 import { TeamsManager } from "./TeamsManager";
 import { Toast, type ToastState } from "./Toast";
 
-type AdminTab = "importer" | "games" | "players" | "teams" | "seasons" | "parser";
+type AdminTab = "importer" | "games" | "players" | "teams" | "seasons";
 
 const TABS: { value: AdminTab; label: string; emoji: string }[] = [
   { value: "importer", label: "Importer", emoji: "⚡" },
@@ -22,8 +21,8 @@ const TABS: { value: AdminTab; label: string; emoji: string }[] = [
   { value: "players", label: "Players", emoji: "\u{1F465}" },
   { value: "teams", label: "Teams", emoji: "\u{1F6E1}\uFE0F" },
   { value: "seasons", label: "Seasons", emoji: "\u{1F4C6}" },
-  { value: "parser", label: "Raw Parser", emoji: "\u{1F4DD}" },
 ];
+
 
 export function AdminDashboard() {
   const [tab, setTab] = useState<AdminTab>("importer");
@@ -93,9 +92,9 @@ export function AdminDashboard() {
         {tab === "players" ? <PlayersManager onToast={showToast} /> : null}
         {tab === "teams" ? <TeamsManager onToast={showToast} /> : null}
         {tab === "seasons" ? <SeasonsManager onToast={showToast} /> : null}
-        {tab === "parser" ? <BoxScoreParserTab onToast={showToast} /> : null}
       </div>
     </div>
   );
 }
+
 
