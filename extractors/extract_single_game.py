@@ -2,7 +2,7 @@
 """Unified single-game extractor for SportsMetric.
 
 Extracts game header, scores, venue, date, and player box scores from a single
-game URL (UAAP LiveStats, PBA LiveStats, or PVL match source).
+game URL (UAAP LiveStats, PBA LiveStats, or PVL PDF match report).
 
 Outputs a standardized JSON payload to stdout.
 """
@@ -12,11 +12,14 @@ from __future__ import annotations
 import argparse
 import json
 import math
+import os
 import re
 import sys
+import tempfile
 import warnings
 from datetime import datetime, timezone
-from urllib.parse import parse_qs, urlparse
+from pathlib import Path
+from urllib.parse import parse_qs, unquote, urlparse
 
 import requests
 import urllib3
@@ -41,6 +44,21 @@ UAAP_TOURNAMENTS = [
     "uaap-season-88-men-s-basketball",
     "uaap-season-86-men-s-basketball",
 ]
+
+PVL_TEAM_NAMES = {
+    "CCS": "Creamline Cool Smashers",
+    "CMF": "Choco Mucho Flying Titans",
+    "PGA": "Petro Gazz Angels",
+    "CTC": "Cignal HD Spikers",
+    "PLDT": "PLDT High Speed Hitters",
+    "AKR": "Akari Chargers",
+    "NXG": "Nxled Chameleons",
+    "ZUS": "Zus Coffee Thunderbelles",
+    "CAP": "Capital1 Solar Spikers",
+    "GAL": "Galeries Tower Highrisers",
+    "CHE": "Chery Tiggo Crossovers",
+    "FTL": "F2 Logistics Cargo Movers",
+}
 
 STAT_COLUMNS_UAAP = {
     "mins": 3,
@@ -78,6 +96,11 @@ STAT_COLUMNS_PBA = {
 
 SKIP_PLAYER_NAMES = {"starters", "bench", "team totals", "team / coach", "dnp", "did not play"}
 
+PVL_PLAYER_LINE = re.compile(
+    r"^(\d+)\s+(?:L\s+)?(.+?)(?:\s+(?:L|[\u0028\u0029\u003d\uf028\uf03d]+\s*)+)?(?:\s+(\d+))?\s*$"
+)
+PVL_TEAM_CODE = re.compile(r"\b([A-Z]{2,4})\b")
+
 
 def parse_number(value: str | None) -> float | int | None:
     if value is None:
@@ -103,6 +126,18 @@ def team_short_name(title_text: str) -> str:
     return cleaned.split()[0] if cleaned else cleaned
 
 
+def format_pvl_player_name(raw: str) -> str:
+    cleaned = re.sub(r"\s+", "", raw)
+    match = re.match(r"^([A-Z]+(?:-[A-Z]+)*)([A-Z][a-z].*)$", cleaned)
+    if not match:
+        return raw.strip()
+
+    last_name = " ".join(part.title() for part in match.group(1).split("-"))
+    first_parts = re.findall(r"[A-Z][a-z]*", match.group(2))
+    first_name = " ".join(first_parts)
+    return f"{first_name} {last_name}".strip()
+
+
 def parse_game_details(soup) -> dict[str, str]:
     details: dict[str, str] = {}
     for element in soup.select(".game-detail"):
@@ -117,7 +152,6 @@ def parse_game_details(soup) -> dict[str, str]:
 
 
 def estimate_shooting(pts: int, fg2_pct: float, fg3_pct: float, ft_pct: float) -> dict[str, int]:
-    """Estimates FGM, FGA, 3PM, 3PA, FTM, FTA from points and percentages if exact counts are absent."""
     ft_m = max(0, round(pts * 0.15))
     remaining = max(0, pts - ft_m)
     three_share = 0.35 if fg3_pct > 0 else 0.10
@@ -146,10 +180,15 @@ def parse_iso_date(raw_date: str) -> str:
         return datetime.now(timezone.utc).isoformat()
     try:
         parts = raw_date.split()
-        if len(parts) >= 1 and "/" in parts[0]:
-            d_parts = [int(p) for p in parts[0].split("/")]
+        if len(parts) >= 1 and ("/" in parts[0] or "-" in parts[0]):
+            sep = "/" if "/" in parts[0] else "-"
+            d_parts = [int(p) for p in parts[0].split(sep)]
             if len(d_parts) == 3:
-                month, day, year = d_parts
+                # Detect format: month/day/year or year/month/day
+                if d_parts[0] > 1000:
+                    year, month, day = d_parts
+                else:
+                    month, day, year = d_parts
                 if year < 100:
                     year = 2000 + year
                 hour, minute = 16, 0
@@ -166,11 +205,11 @@ def parse_iso_date(raw_date: str) -> str:
 def resolve_candidate_urls(raw_input: str, league: str) -> list[str]:
     raw = raw_input.strip()
 
-    # 1. Direct LiveStats URLs
-    if "pba-api01.actech2.com" in raw or "uaap.livestats.ph" in raw:
+    # Direct LiveStats or PDF URLs
+    if "pba-api01.actech2.com" in raw or "uaap.livestats.ph" in raw or raw.lower().endswith(".pdf") or "dashboard.pvl.ph" in raw:
         return [raw]
 
-    # 2. PBA recap URL e.g. https://pba.ph/recap?match=553 or match=553
+    # PBA recap URL
     match_id = None
     if "pba.ph" in raw:
         parsed = urlparse(raw)
@@ -214,7 +253,6 @@ def extract_livestats_game(html: str, league: str, stage: str, status: str) -> d
         score = parse_number(cell_value(totals_cells, 4)) if totals_cells else None
         raw_name = title.get_text(" ", strip=True) if title else "Unknown Team"
         clean_name = re.sub(r"\s*Coach:.*$", "", raw_name, flags=re.I).strip()
-        # Remove leading short code if repeated (e.g. 'CON CONVERGE FIBERXERS' -> 'Converge FiberXers')
         short_n = team_short_name(raw_name)
         display_name = clean_name
         if clean_name.startswith(short_n + " "):
@@ -226,7 +264,6 @@ def extract_livestats_game(html: str, league: str, stage: str, status: str) -> d
             "score": score or 0,
             "wrap": wrap,
         })
-
 
     if len(teams_meta) < 2:
         raise ValueError("Expected at least two teams in LiveStats page.")
@@ -318,9 +355,172 @@ def extract_livestats_game(html: str, league: str, stage: str, status: str) -> d
     }
 
 
+def extract_pvl_pdf_game(pdf_input: str, stage: str, status: str) -> dict:
+    import pdfplumber
+
+    # Download if remote URL
+    temp_file = None
+    if pdf_input.startswith("http://") or pdf_input.startswith("https://"):
+        resp = requests.get(pdf_input, headers=HEADERS, timeout=60, verify=False)
+        resp.raise_for_status()
+        temp_file = tempfile.NamedTemporaryFile(suffix=".pdf", delete=False)
+        temp_file.write(resp.content)
+        temp_file.close()
+        pdf_path = Path(temp_file.name)
+    else:
+        pdf_path = Path(pdf_input)
+
+    try:
+        with pdfplumber.open(pdf_path) as pdf:
+            page = pdf.pages[0]
+            text = page.extract_text() or ""
+            tables = page.extract_tables() or []
+
+        lines = [line.strip() for line in text.split("\n") if line.strip()]
+
+        tournament = lines[1] if len(lines) > 1 else "PVL Conference"
+        competition = lines[2] if len(lines) > 2 else tournament
+
+        game_date = ""
+        match_line = lines[3] if len(lines) > 3 else ""
+        match_info = re.search(r"Match:\s*(\d+).*?Date:\s*([\d/]+)", match_line)
+        if match_info:
+            game_date = match_info.group(2)
+
+        city = ""
+        hall = ""
+        for line in lines[4:7]:
+            if line.lower().startswith("city:"):
+                city = line.split(":", 1)[1].strip()
+            elif line.lower().startswith("hall:"):
+                hall = line.split(":", 1)[1].strip()
+
+        city_name = re.sub(r"\b[A-Z]{2,4}\b.*", "", city).strip()
+        hall_name = re.sub(r"\b[A-Z]{2,4}\b.*", "", hall).strip()
+        venue_parts = [p for p in (hall_name, city_name) if p]
+        venue = ", ".join(venue_parts) if venue_parts else "PhilSports Arena"
+
+        # Determine teams and scores
+        teams_meta: list[dict] = []
+        if tables:
+            for row in tables[0][1:3]:
+                if not row or not row[0]:
+                    continue
+                code = str(row[0]).strip()
+                score = parse_number(str(row[1]).strip() if len(row) > 1 and row[1] else None) or 0
+                teams_meta.append({"code": code, "score": int(score)})
+
+        if len(teams_meta) < 2 and len(lines) > 5:
+            teams_meta = []
+            for line in (lines[4], lines[5]):
+                if not line.lower().startswith(("city:", "hall:")):
+                    continue
+                _, rest = line.split(":", 1)
+                rest = rest.strip()
+                code_match = PVL_TEAM_CODE.search(rest)
+                if not code_match:
+                    continue
+                code = code_match.group(1)
+                after_code = rest[code_match.end() :].strip()
+                sets_match = re.match(r"(\d+)", after_code)
+                teams_meta.append({"code": code, "score": int(sets_match.group(1)) if sets_match else 0})
+
+        if len(teams_meta) < 2:
+            raise ValueError("Could not determine both teams from PVL match sheet.")
+
+        home_meta = teams_meta[0]
+        away_meta = teams_meta[1]
+
+        def parse_roster_cell(cell: str | None) -> list[dict]:
+            if not cell:
+                return []
+            players = []
+            for line in cell.split("\n"):
+                stripped = line.strip()
+                if not stripped or stripped.startswith("Coach:") or stripped.startswith("Assistant:"):
+                    continue
+
+                is_libero = bool(re.match(r"^\d+\s+L\s+", stripped))
+                match = PVL_PLAYER_LINE.match(stripped)
+                if not match:
+                    continue
+
+                raw_name = match.group(2).strip()
+                if not raw_name or raw_name.isdigit():
+                    continue
+
+                jersey_num = parse_number(match.group(1))
+                pts_val = parse_number(match.group(3)) or 0
+                formatted_name = format_pvl_player_name(raw_name)
+
+                players.append({
+                    "playerName": formatted_name,
+                    "jersey": int(jersey_num) if jersey_num is not None else None,
+                    "min": "Sets",
+                    "pts": int(pts_val),
+                    "reb": 0,
+                    "ast": 0,
+                    "stl": 0,
+                    "blk": 0,
+                    "to": 0,
+                    "pf": 0,
+                    "fgM": int(pts_val),
+                    "fgA": int(pts_val),
+                    "is_libero": is_libero,
+                    "position": "L" if is_libero else "OH",
+                })
+            return players
+
+        roster_tables = tables[1:3] if len(tables) >= 3 else []
+        home_players = []
+        away_players = []
+
+        if len(roster_tables) >= 2:
+            cell_home = roster_tables[0][1][0] if len(roster_tables[0]) > 1 and roster_tables[0][1] else None
+            home_players = parse_roster_cell(str(cell_home) if cell_home else None)
+
+            cell_away = roster_tables[1][1][0] if len(roster_tables[1]) > 1 and roster_tables[1][1] else None
+            away_players = parse_roster_cell(str(cell_away) if cell_away else None)
+
+        is_playoff = stage in {"SEMIFINALS", "FINALS", "PLAY_IN"}
+
+        home_name = PVL_TEAM_NAMES.get(home_meta["code"], f"{home_meta['code']} Team")
+        away_name = PVL_TEAM_NAMES.get(away_meta["code"], f"{away_meta['code']} Team")
+
+        return {
+            "league": "PVL",
+            "stage": stage,
+            "isPlayoff": is_playoff,
+            "status": status,
+            "competition": tournament or competition,
+            "venue": venue,
+            "startTime": parse_iso_date(game_date),
+            "homeTeam": {
+                "name": home_name,
+                "shortName": home_meta["code"],
+                "score": home_meta["score"],
+            },
+            "awayTeam": {
+                "name": away_name,
+                "shortName": away_meta["code"],
+                "score": away_meta["score"],
+            },
+            "boxScore": {
+                "home": home_players,
+                "away": away_players,
+            },
+        }
+    finally:
+        if temp_file and os.path.exists(temp_file.name):
+            try:
+                os.remove(temp_file.name)
+            except Exception:
+                pass
+
+
 def main():
     parser = argparse.ArgumentParser(description="Extract single game data for SportsMetric.")
-    parser.add_argument("--url", required=True, help="Match URL or match ID")
+    parser.add_argument("--url", required=True, help="Match URL, PDF link, or match ID")
     parser.add_argument("--league", choices=["UAAP", "PBA", "PVL"], default=None, help="League identifier")
     parser.add_argument("--stage", choices=["ELIMINATION", "PLAY_IN", "SEMIFINALS", "FINALS"], default="ELIMINATION")
     parser.add_argument("--status", choices=["FINAL", "LIVE", "UPCOMING"], default="FINAL")
@@ -335,28 +535,19 @@ def main():
             league = "UAAP"
         elif "pba" in raw_input:
             league = "PBA"
-        elif "pvl" in raw_input:
+        elif "pvl" in raw_input or raw_input.lower().endswith(".pdf"):
             league = "PVL"
         else:
             league = "UAAP"
 
-    if league == "PVL":
-        # PVL single game hook
-        result = {
-            "league": "PVL",
-            "stage": args.stage,
-            "isPlayoff": args.stage in {"SEMIFINALS", "FINALS", "PLAY_IN"},
-            "status": args.status,
-            "competition": "PVL Conference",
-            "venue": "PhilSports Arena",
-            "startTime": datetime.now(timezone.utc).isoformat(),
-            "homeTeam": {"name": "Home Team", "shortName": "HOM", "score": 0},
-            "awayTeam": {"name": "Away Team", "shortName": "AWY", "score": 0},
-            "boxScore": {"home": [], "away": []},
-            "note": "PVL single-match sheet extractor hook ready for PDF parsing integration.",
-        }
-        print(json.dumps(result, indent=2))
-        return
+    if league == "PVL" or raw_input.lower().endswith(".pdf") or "dashboard.pvl.ph" in raw_input:
+        try:
+            result = extract_pvl_pdf_game(raw_input, args.stage, args.status)
+            print(json.dumps(result, indent=2))
+            return
+        except Exception as e:
+            print(f"Error extracting PVL match PDF: {e}", file=sys.stderr)
+            sys.exit(1)
 
     candidates = resolve_candidate_urls(raw_input, league)
     last_err = None

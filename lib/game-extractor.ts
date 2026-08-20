@@ -192,13 +192,50 @@ function resolveCandidateUrls(rawInput: string, league: League): string[] {
   return [raw];
 }
 
+async function extractPvlWithPython(
+  rawInput: string,
+  stage: TournamentStage,
+  status: "FINAL" | "LIVE" | "UPCOMING"
+): Promise<ExtractedGamePayload | null> {
+  try {
+    const { execFile } = await import("child_process");
+    const path = await import("path");
+    const scriptPath = path.resolve("extractors", "extract_single_game.py");
+
+    return await new Promise((resolve) => {
+      execFile(
+        "python",
+        [scriptPath, "--url", rawInput, "--league", "PVL", "--stage", stage, "--status", status],
+        { timeout: 35000 },
+        (error, stdout) => {
+          if (!error && stdout) {
+            try {
+              const data = JSON.parse(stdout.trim());
+              return resolve(data as ExtractedGamePayload);
+            } catch {
+              // fall through
+            }
+          }
+          resolve(null);
+        }
+      );
+    });
+  } catch {
+    return null;
+  }
+}
+
 export async function extractGameFromUrl(
   rawInput: string,
   league: League = "UAAP",
   stage: TournamentStage = "ELIMINATION",
   status: "FINAL" | "LIVE" | "UPCOMING" = "FINAL"
 ): Promise<ExtractedGamePayload> {
-  if (league === "PVL") {
+  if (league === "PVL" || rawInput.toLowerCase().endsWith(".pdf") || rawInput.includes("dashboard.pvl.ph")) {
+    const pvlData = await extractPvlWithPython(rawInput, stage, status);
+    if (pvlData) {
+      return pvlData;
+    }
     return {
       league: "PVL",
       stage,
@@ -213,6 +250,7 @@ export async function extractGameFromUrl(
       note: "PVL match adapter ready for match sheets.",
     };
   }
+
 
   const candidates = resolveCandidateUrls(rawInput, league);
   let html = "";
