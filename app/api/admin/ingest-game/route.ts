@@ -46,19 +46,26 @@ const TEAM_CODE_ALIASES: Record<string, string[]> = {
   nu: ["nu", "bulldogs"],
   adu: ["adu", "adamson", "soaringfalcons", "falcons"],
   // PVL
-  ccs: ["creamline", "creamlinecoolsmashers", "coolsmashers"],
+  ccs: ["creamline", "creamlinecoolsmashers", "coolsmashers", "cream"],
+  cream: ["creamline", "creamlinecoolsmashers", "coolsmashers", "ccs"],
   cmf: ["chocomucho", "chocomuchoflyingtitans", "flyingtitans"],
   pga: ["petrogazz", "petrogazzangels", "angels"],
   ctc: ["cignal", "cignalhdspikers", "hdspikers"],
   pldt: ["pldt", "pldthighspeedhitters", "highspeedhitters"],
-  akr: ["akari", "akarichargers", "chargers"],
-  nxg: ["nxled", "nxledchameleons", "chameleons"],
+  akr: ["akari", "akarichargers", "powerchargers", "akari"],
+  akari: ["akari", "akarichargers", "powerchargers", "akr"],
+  nxg: ["nxled", "nxledchameleons", "chameleons", "nxl"],
+  nxl: ["nxled", "nxledchameleons", "chameleons", "nxg"],
   zus: ["zus", "zuscoffee", "thunderbelles"],
-  cap: ["capital1", "capital1solarspikers", "solarspikers"],
-  gal: ["galeries", "galeriestower", "highrisers"],
+  cap: ["capital1", "capital1solarspikers", "solarspikers", "cap1"],
+  cap1: ["capital1", "capital1solarspikers", "solarspikers", "cap"],
+  gal: ["galeries", "galeriestower", "highrisers", "gth"],
+  gth: ["galeries", "galeriestower", "highrisers", "gal"],
   che: ["chery", "cherytiggo", "crossovers"],
   ftl: ["f2", "f2logistics", "cargomovers"],
+  fff: ["farmfresh", "farmfreshfoxies", "foxies"],
 };
+
 
 function findBestTeamMatch(extracted: { name: string; shortName: string }, teams: Team[]): Team | undefined {
   const shortTarget = normalizeStr(extracted.shortName);
