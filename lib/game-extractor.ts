@@ -271,25 +271,46 @@ export async function parseNativePvlPdf(
 
     // 3. Venue
     let venue = "PhilSports Arena";
-    const hallLine = lines.find(
-      (l: string) =>
-        l.includes("GYMNASIUM") ||
-        l.includes("COLISEUM") ||
-        l.includes("ARENA") ||
-        l.includes("COMPLEX") ||
-        l.includes("CENTER") ||
-        l.includes("HALL")
-    );
-    const cityIdx = lines.findIndex((l: string) => l.startsWith("City:"));
+    const hallIdx = lines.findIndex((l: string) => l === "Hall:" || l.startsWith("Hall:"));
+    let hall = "";
     let city = "";
-    if (cityIdx !== -1 && lines.length > cityIdx + 3) {
-      city = lines[cityIdx + 3] || "";
+
+    if (hallIdx !== -1) {
+      // In VIS PDFs, values appear 2 lines and 3 lines after Hall:
+      // Line [hallIdx + 2]: "LANAO DEL NORTE" (City)
+      // Line [hallIdx + 3]: "MCC GYMNASIUM" (Hall)
+      if (lines[hallIdx + 3] && !lines[hallIdx + 3].startsWith("Match") && !lines[hallIdx + 3].startsWith("VIS")) {
+        hall = lines[hallIdx + 3];
+      }
+      if (lines[hallIdx + 2] && !/\d{2,}/.test(lines[hallIdx + 2])) {
+        city = lines[hallIdx + 2];
+      }
     }
-    if (hallLine && city && !hallLine.includes(city)) {
-      venue = `${hallLine}, ${city}`;
-    } else if (hallLine) {
-      venue = hallLine;
+
+    if (!hall) {
+      const detectedHall = lines.find(
+        (l: string) =>
+          (l.includes("GYMNASIUM") ||
+            l.includes("COLISEUM") ||
+            l.includes("ARENA") ||
+            l.includes("COMPLEX") ||
+            l.includes("CENTER") ||
+            l.includes("HALL")) &&
+          !l.includes("•") &&
+          !l.includes("Match") &&
+          !l.includes("VIS")
+      );
+      if (detectedHall) hall = detectedHall;
     }
+
+    if (hall && city && !hall.toLowerCase().includes(city.toLowerCase())) {
+      venue = `${hall}, ${city}`;
+    } else if (hall) {
+      venue = hall;
+    } else if (city) {
+      venue = city;
+    }
+
 
 
     // 4. Team codes
