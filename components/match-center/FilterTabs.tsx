@@ -2,10 +2,11 @@
 
 import { SeasonPicker } from "@/components/ui/SeasonPicker";
 import { useSportsData } from "@/context/SportsDataContext";
-import { isLifetimeSeason } from "@/lib/derivations";
+import { getEffectiveGameStatus, isLifetimeSeason } from "@/lib/derivations";
 import { cn } from "@/lib/utils";
 import type { GameStatus, League } from "@/types/sports";
 import { useMemo, useState } from "react";
+
 
 import { GameCard } from "./GameCard";
 
@@ -66,14 +67,17 @@ export function FilterTabs() {
 
   const filteredGames = useMemo(
     () =>
-      seasonGames.filter(
-        (game) =>
-          (activeStatus === "ALL" || game.status === activeStatus) &&
+      seasonGames.filter((game) => {
+        const effectiveStatus = getEffectiveGameStatus(game);
+        return (
+          (activeStatus === "ALL" || effectiveStatus === activeStatus) &&
           (league === "ALL" || game.league === league) &&
           (teamId === "ALL" || game.homeTeam.id === teamId || game.awayTeam.id === teamId)
-      ),
+        );
+      }),
     [seasonGames, activeStatus, league, teamId]
   );
+
 
   function handleSeasonChange(newSeasonId: string) {
     setUserSelectedSeasonId(newSeasonId);

@@ -2,7 +2,7 @@
 
 import { TeamBadge } from "@/components/ui/TeamBadge";
 import { useGameModal } from "@/lib/game-modal-context";
-import { isPlayoffGame } from "@/lib/derivations";
+import { getEffectiveGameStatus, isPlayoffGame } from "@/lib/derivations";
 import { formatGameDate, formatRecord, formatStartTime } from "@/lib/utils";
 import type { Game, Team } from "@/types/sports";
 import Link from "next/link";
@@ -10,8 +10,9 @@ import { LeagueBadge } from "./LeagueBadge";
 
 function StatusPill({ game }: { game: Game }) {
   const dateStr = formatGameDate(game.startTime, true);
+  const effectiveStatus = getEffectiveGameStatus(game);
 
-  if (game.status === "LIVE") {
+  if (effectiveStatus === "LIVE") {
     const label =
       game.timeRemaining !== null
         ? `Q${game.quarterOrSet} \u2022 ${game.timeRemaining}`
@@ -27,7 +28,7 @@ function StatusPill({ game }: { game: Game }) {
     );
   }
 
-  if (game.status === "FINAL") {
+  if (effectiveStatus === "FINAL") {
     return (
       <div className="flex items-center gap-1.5 shrink-0">
         {dateStr && <span className="text-[11px] font-semibold text-muted">{dateStr} &middot;</span>}
@@ -86,7 +87,9 @@ function TeamRow({
 
 export function GameCard({ game }: { game: Game }) {
   const { openGame } = useGameModal();
-  const showScore = game.status !== "UPCOMING";
+  const effectiveStatus = getEffectiveGameStatus(game);
+  const showScore = effectiveStatus !== "UPCOMING";
+
 
   return (
     <div

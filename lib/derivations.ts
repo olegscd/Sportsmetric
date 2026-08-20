@@ -7,6 +7,31 @@ export function isLifetimeSeason(seasonId: string): boolean {
   return seasonId === LIFETIME_SEASON_ID;
 }
 
+/**
+ * Automatically determines if a game is LIVE, UPCOMING, or FINAL.
+ * If a game was scheduled as UPCOMING and its start_time has arrived (within active match window),
+ * it dynamically updates to LIVE in real-time.
+ */
+export function getEffectiveGameStatus(
+  game: Pick<Game, "status" | "startTime">,
+  currentTime = Date.now()
+): "LIVE" | "UPCOMING" | "FINAL" {
+  if (game.status === "FINAL") return "FINAL";
+  if (game.status === "LIVE") return "LIVE";
+
+  const startMs = new Date(game.startTime).getTime();
+  if (Number.isFinite(startMs) && currentTime >= startMs) {
+    const elapsedHours = (currentTime - startMs) / (1000 * 60 * 60);
+    // Active match window (up to 4.5 hours after tip-off)
+    if (elapsedHours >= 0 && elapsedHours < 4.5) {
+      return "LIVE";
+    }
+  }
+
+  return "UPCOMING";
+}
+
+
 export interface DerivedTeamStandings {
   team: Team;
   wins: number;

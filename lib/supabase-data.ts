@@ -1,6 +1,8 @@
 import { supabase } from "@/lib/supabase";
 import { inferLeague } from "@/lib/league-utils";
+import { getEffectiveGameStatus } from "@/lib/derivations";
 import type { Game, GameStatus, League, Player, Season, Team } from "@/types/sports";
+
 
 function logSupabaseError(context: string, error: { message: string } | null): boolean {
   if (error) {
@@ -222,6 +224,10 @@ export function mapGameRows(
     const stage = g.stage ?? boxScoreObj?.stage ?? (boxScoreObj?.isPlayoff ? "SEMIFINALS" : "ELIMINATION");
     const isPlayoff = g.is_playoff ?? boxScoreObj?.isPlayoff ?? (stage !== "ELIMINATION");
     const venue = g.venue ?? boxScoreObj?.venue ?? null;
+    const effectiveStatus = getEffectiveGameStatus({
+      status: g.status,
+      startTime: g.start_time,
+    });
 
     return {
       id: g.id,
@@ -231,9 +237,10 @@ export function mapGameRows(
       awayTeam,
       homeScore: g.home_score,
       awayScore: g.away_score,
-      status: g.status,
+      status: effectiveStatus,
       startTime: g.start_time,
       venue,
+
       stage,
       isPlayoff,
       quarterOrSet: g.quarter_or_set,

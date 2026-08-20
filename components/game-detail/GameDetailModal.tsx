@@ -4,9 +4,9 @@ import { TeamBadge } from "@/components/ui/TeamBadge";
 import { useSportsData } from "@/context/SportsDataContext";
 import { useGameModal } from "@/lib/game-modal-context";
 import { cn, formatGameDate } from "@/lib/utils";
-import type { Game } from "@/types/sports";
-import { isPlayoffGame } from "@/lib/derivations";
+import { getEffectiveGameStatus } from "@/lib/derivations";
 import { X } from "lucide-react";
+
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { BoxScoreTable } from "./BoxScoreTable";
@@ -24,66 +24,70 @@ const TABS: { value: DetailTab; label: string }[] = [
 export function GameDetailModal() {
   const { activeGameId, closeGame } = useGameModal();
   const { games } = useSportsData();
-  const game = activeGameId ? games.find((g) => g.id === activeGameId) : undefined;
+  const [tab, setTab] = useState<DetailTab>("overview");
+  const [side, setSide] = useState<"away" | "home">("away");
+
+  const game = games.find((g) => g.id === activeGameId);
+
+
+  useEffect(() => {
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        closeGame();
+      }
+    }
+
+    if (activeGameId) {
+      document.addEventListener("keydown", handleKeyDown);
+    }
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [activeGameId, closeGame]);
 
   if (!game) return null;
 
-  return <GameDetailSheet key={game.id} game={game} onClose={closeGame} />;
-}
-
-function GameDetailSheet({ game, onClose }: { game: Game; onClose: () => void }) {
-  const [tab, setTab] = useState<DetailTab>("overview");
-  const [side, setSide] = useState<"away" | "home">("away");
-  const dateStr = formatGameDate(game.startTime, true);
-
-  // Prevent background page viewport jumping while modal is open
-  useEffect(() => {
-    const originalOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = originalOverflow;
-    };
-  }, []);
+  const dateStr = formatGameDate(game.startTime, false);
+  const effectiveStatus = getEffectiveGameStatus(game);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center">
-      <button
-        type="button"
-        aria-label="Close game details"
-        onClick={onClose}
-        className="absolute inset-0 bg-black/70"
-      />
-
-      <div className="relative flex max-h-[85vh] w-full max-w-md flex-col overflow-hidden rounded-t-3xl border-t border-border bg-elevated">
-        <div className="flex shrink-0 items-center justify-center pt-2.5">
-          <div className="h-1 w-10 rounded-full bg-border" />
-        </div>
-
-        <div className="flex shrink-0 items-start justify-between px-4 pt-2">
-          <div className="flex-1 flex items-center gap-2">
-            <p className="text-[11px] font-semibold uppercase tracking-wide text-muted">
-              {game.league} {dateStr ? `\u2022 ${dateStr}` : ""} &middot; {game.status}
-            </p>
-            {isPlayoffGame(game) && (
-              <span className="rounded-full bg-amber-500/15 px-2 py-0.5 text-[10px] font-bold text-amber-500 uppercase tracking-wide">
-                Playoffs
+    <div
+      role="dialog"
+      aria-modal="true"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+      onClick={closeGame}
+    >
+      <div
+        className="relative flex flex-col w-full max-w-lg max-h-[90vh] rounded-3xl border border-border bg-bg shadow-2xl overflow-hidden"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Header */}
+        <div className="flex items-center justify-between px-6 pt-5 pb-3 border-b border-border">
+          <div className="flex flex-col">
+            <span className="text-xs font-bold uppercase tracking-wider text-muted">
+              {game.league} {dateStr ? `\u2022 ${dateStr}` : ""} &middot; {effectiveStatus}
+            </span>
+            {game.venue && (
+              <span className="text-[11px] text-muted truncate max-w-[280px]">
+                {game.venue}
               </span>
             )}
           </div>
           <button
             type="button"
-            onClick={onClose}
-            aria-label="Close"
-            className="-mr-1 -mt-1 flex h-8 w-8 items-center justify-center rounded-full text-muted active:bg-surface"
+            onClick={closeGame}
+            className="rounded-full p-1.5 text-muted hover:bg-surface hover:text-foreground transition-colors"
           >
-            <X size={20} />
+            <X size={18} />
           </button>
         </div>
 
-        <div className="flex shrink-0 items-center justify-between gap-3 px-4 py-3">
+        {/* Scoreboard */}
+        <div className="flex items-center justify-between px-6 py-4 bg-surface/40">
           <Link
             href={`/teams/${game.awayTeam.id}`}
-            onClick={onClose}
+            onClick={closeGame}
             className="flex flex-1 flex-col items-center gap-2"
           >
             <TeamBadge team={game.awayTeam} size="lg" />
@@ -96,18 +100,19 @@ function GameDetailSheet({ game, onClose }: { game: Game; onClose: () => void })
               {game.awayScore} - {game.homeScore}
             </span>
             <span className="text-[11px] text-muted">
-              {game.status === "LIVE"
+              {effectiveStatus === "LIVE"
                 ? game.timeRemaining
                   ? `Q${game.quarterOrSet} \u2022 ${game.timeRemaining}`
                   : `Set ${game.quarterOrSet}`
-                : game.status === "FINAL"
+                : effectiveStatus === "FINAL"
                   ? "Final"
                   : "Upcoming"}
             </span>
           </div>
+
           <Link
             href={`/teams/${game.homeTeam.id}`}
-            onClick={onClose}
+            onClick={closeGame}
             className="flex flex-1 flex-col items-center gap-2"
           >
             <TeamBadge team={game.homeTeam} size="lg" />
