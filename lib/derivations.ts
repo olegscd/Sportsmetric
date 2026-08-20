@@ -13,11 +13,16 @@ export function isLifetimeSeason(seasonId: string): boolean {
  * it dynamically updates to LIVE in real-time.
  */
 export function getEffectiveGameStatus(
-  game: Pick<Game, "status" | "startTime">,
+  game: Pick<Game, "status" | "startTime"> & { league?: League },
   currentTime = Date.now()
 ): "LIVE" | "UPCOMING" | "FINAL" {
   if (game.status === "FINAL") return "FINAL";
   if (game.status === "LIVE") return "LIVE";
+
+  // For PVL, matches do NOT auto-transition to LIVE based on time (official stats come via PDF post-match)
+  if (game.league === "PVL") {
+    return "UPCOMING";
+  }
 
   const startMs = new Date(game.startTime).getTime();
   if (Number.isFinite(startMs) && currentTime >= startMs) {
@@ -30,6 +35,7 @@ export function getEffectiveGameStatus(
 
   return "UPCOMING";
 }
+
 
 
 export interface DerivedTeamStandings {

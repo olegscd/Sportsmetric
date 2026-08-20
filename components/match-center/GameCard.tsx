@@ -13,10 +13,13 @@ function StatusPill({ game }: { game: Game }) {
   const effectiveStatus = getEffectiveGameStatus(game);
 
   if (effectiveStatus === "LIVE") {
-    const label =
-      game.timeRemaining !== null
+    const isVolleyball = game.league === "PVL";
+    const label = isVolleyball
+      ? `Set ${game.quarterOrSet}`
+      : game.timeRemaining
         ? `Q${game.quarterOrSet} \u2022 ${game.timeRemaining}`
-        : `Set ${game.quarterOrSet}`;
+        : `Q${game.quarterOrSet}`;
+
     return (
       <div className="flex items-center gap-1.5 shrink-0">
         {dateStr && <span className="text-[11px] font-semibold text-muted">{dateStr} &middot;</span>}
@@ -27,6 +30,7 @@ function StatusPill({ game }: { game: Game }) {
       </div>
     );
   }
+
 
   if (effectiveStatus === "FINAL") {
     return (

@@ -174,7 +174,20 @@ export function FilterTabs() {
         </select>
       </div>
 
-      {filteredGames.length === 0 ? (
+      {/* PVL Live Coming Soon Banner */}
+      {(league === "PVL" || activeLeague === "PVL") && activeStatus === "LIVE" ? (
+        <div className="flex flex-col items-center justify-center rounded-3xl border border-border/80 bg-surface/70 backdrop-blur-sm p-8 text-center shadow-lg my-2">
+          <div className="mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-primary border border-primary/20">
+            <span className="text-3xl">🏐</span>
+          </div>
+          <h3 className="text-base font-bold text-foreground">
+            PVL Live Scoring Coming Soon
+          </h3>
+          <p className="mt-2 max-w-md text-xs leading-relaxed text-muted">
+            Official Premier Volleyball League match sheets and verified 14-player box scores are published upon match conclusion. Check the <strong className="text-foreground">Upcoming</strong> tab for scheduled fixtures or <strong className="text-foreground">Final</strong> for match reports.
+          </p>
+        </div>
+      ) : filteredGames.length === 0 ? (
         <p className="py-12 text-center text-sm text-muted">
           No games match these filters.
         </p>
@@ -188,3 +201,4 @@ export function FilterTabs() {
     </div>
   );
 }
+
