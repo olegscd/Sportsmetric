@@ -1,7 +1,9 @@
 import type { League, TournamentStage } from "@/types/sports";
 import * as cheerio from "cheerio";
+import { extractText } from "unpdf";
 
 type CheerioSelection = ReturnType<cheerio.CheerioAPI>;
+
 
 
 
@@ -236,24 +238,23 @@ function formatPvlPlayerName(raw: string): string {
 }
 
 export async function parseNativePvlPdf(
-  buffer: Buffer,
+  buffer: Uint8Array,
   stage: TournamentStage = "ELIMINATION",
   status: "FINAL" | "LIVE" | "UPCOMING" = "FINAL"
 ): Promise<ExtractedGamePayload | null> {
   try {
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const { PDFParse } = require("pdf-parse");
-    const parser = new PDFParse({ data: buffer });
-    const data = await parser.getText();
-    const text: string = data.text;
-    const lines = text.split("\n").map((l: string) => l.trim()).filter(Boolean);
+    const { text } = await extractText(buffer);
+    const rawText = Array.isArray(text) ? text.join("\n") : String(text || "");
+    if (!rawText.trim()) return null;
+
+    const lines = rawText.split("\n").map((l: string) => l.trim()).filter(Boolean);
 
     // 1. Tournament
     const tourneyLine = lines.find((l: string) => l.includes("PVL")) || "PVL Conference";
     const tournament = tourneyLine.replace(/^[^\w]+/, "").trim();
 
     // 2. Date
-    const dateMatch = text.match(/(\d{1,2}\/\d{1,2}\/\d{4})/);
+    const dateMatch = rawText.match(/(\d{1,2}\/\d{1,2}\/\d{4})/);
     let startTime = new Date().toISOString();
     if (dateMatch) {
       const [m, d, y] = dateMatch[1].split("/").map(Number);
@@ -274,7 +275,7 @@ export async function parseNativePvlPdf(
     // 4. Team codes
     const teamCodesFound: string[] = [];
     for (const code of Object.keys(KNOWN_PVL_TEAMS)) {
-      if (text.includes(`${code} •`) || text.includes(`${code}\n`)) {
+      if (rawText.includes(`${code} •`) || rawText.includes(`${code}\n`)) {
         if (!teamCodesFound.includes(code)) {
           teamCodesFound.push(code);
         }
@@ -287,7 +288,7 @@ export async function parseNativePvlPdf(
     let scoreA = 3;
     let scoreB = 0;
 
-    const setsMatch = text.match(new RegExp(`${codeA}[\\s\\S]*?${codeB}\\s*(\\d+)[\\s\\S]*?(\\d+)`));
+    const setsMatch = rawText.match(new RegExp(`${codeA}[\\s\\S]*?${codeB}\\s*(\\d+)[\\s\\S]*?(\\d+)`));
     if (setsMatch) {
       scoreB = parseInt(setsMatch[1], 10);
       scoreA = parseInt(setsMatch[2], 10);
@@ -295,10 +296,10 @@ export async function parseNativePvlPdf(
 
     function extractRoster(code: string): ExtractedBoxRow[] {
       const startPattern = `${code} •`;
-      const startIdx = text.indexOf(startPattern);
+      const startIdx = rawText.indexOf(startPattern);
       if (startIdx === -1) return [];
 
-      const sub = text.slice(startIdx);
+      const sub = rawText.slice(startIdx);
       const endIdx = sub.indexOf("Coach:");
       const chunk = endIdx !== -1 ? sub.slice(0, endIdx) : sub;
 
@@ -393,13 +394,16 @@ export async function extractGameFromUrl(
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
         },
       });
-      if (res.ok) {
-        const buffer = Buffer.from(await res.arrayBuffer());
-        const nativePayload = await parseNativePvlPdf(buffer, stage, status);
-        if (nativePayload) return nativePayload;
+      if (!res.ok) {
+        throw new Error(`Failed to download PVL match PDF: HTTP ${res.status}`);
       }
+      const buffer = new Uint8Array(await res.arrayBuffer());
+      const nativePayload = await parseNativePvlPdf(buffer, stage, status);
+      if (nativePayload) return nativePayload;
+      throw new Error("Could not parse match tables from PVL PDF sheet.");
     }
   }
+
 
 
 
