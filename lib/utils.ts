@@ -80,3 +80,21 @@ export function formatStartTime(iso: string): string {
   }).format(date);
 }
 
+/**
+ * Formats an ISO start time into a full day header (e.g. "Friday, Aug 21, 2026").
+ */
+export function formatFullDayHeader(iso: string): string {
+  if (!iso) return "";
+  const date = new Date(iso);
+  if (isNaN(date.getTime())) return "";
+  return new Intl.DateTimeFormat("en-PH", {
+    weekday: "long",
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "Asia/Manila",
+  }).format(date);
+}
+
+
+

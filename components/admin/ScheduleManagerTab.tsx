@@ -4,8 +4,9 @@ import type { ToastFn } from "@/components/admin/Toast";
 import { TeamBadge } from "@/components/ui/TeamBadge";
 import { useSportsData } from "@/context/SportsDataContext";
 import { generateId } from "@/lib/data";
-import { cn, formatGameDate, formatStartTime } from "@/lib/utils";
+import { cn, formatFullDayHeader, formatGameDate, formatStartTime } from "@/lib/utils";
 import type { Game, League, TournamentStage } from "@/types/sports";
+
 import {
   Calendar,
   CheckCircle2,
@@ -110,7 +111,29 @@ export function ScheduleManagerTab({ onToast }: { onToast: ToastFn }) {
     [games, selectedSeasonId]
   );
 
+  // Group upcoming matches by date
+  const upcomingGrouped = useMemo(() => {
+    const groups: { dateKey: string; dateLabel: string; games: Game[] }[] = [];
+    const groupMap = new Map<string, { dateKey: string; dateLabel: string; games: Game[] }>();
+
+    for (const game of upcomingGames) {
+      const dateKey = formatGameDate(game.startTime, true);
+      const dateLabel = formatFullDayHeader(game.startTime) || dateKey;
+
+      let group = groupMap.get(dateKey);
+      if (!group) {
+        group = { dateKey, dateLabel, games: [] };
+        groupMap.set(dateKey, group);
+        groups.push(group);
+      }
+      group.games.push(game);
+    }
+
+    return groups;
+  }, [upcomingGames]);
+
   const liveGames = useMemo(
+
     () =>
       games
         .filter((g) => g.seasonId === selectedSeasonId && g.status === "LIVE")
@@ -531,75 +554,95 @@ export function ScheduleManagerTab({ onToast }: { onToast: ToastFn }) {
       {/* Scheduled Upcoming Games List */}
       <SectionCard title={`Scheduled Upcoming Matches (${upcomingGames.length})`}>
         {upcomingGames.length === 0 ? (
-
           <div className="rounded-xl border border-dashed border-border p-8 text-center text-xs text-muted">
             No upcoming matches currently scheduled for this season. Use the Schedule Builder above to add upcoming fixtures.
           </div>
         ) : (
-          <div className="flex flex-col gap-3">
-            {upcomingGames.map((game) => (
-              <div
-                key={game.id}
-                className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-border bg-surface/60 p-4 transition-all hover:border-border/90"
-              >
-                {/* Matchup & Badges */}
-                <div className="flex items-center gap-3">
+          <div className="flex flex-col gap-5">
+            {upcomingGrouped.map((group) => (
+              <div key={group.dateKey} className="flex flex-col gap-2.5">
+                {/* Date Header Badge */}
+                <div className="flex items-center justify-between px-1">
                   <div className="flex items-center gap-2">
-                    <TeamBadge team={game.homeTeam} size="sm" />
-                    <span className="text-xs font-bold text-foreground">{game.homeTeam.shortName}</span>
-                    <span className="text-[11px] font-medium text-muted">vs</span>
-                    <TeamBadge team={game.awayTeam} size="sm" />
-                    <span className="text-xs font-bold text-foreground">{game.awayTeam.shortName}</span>
+                    <span className="flex h-2 w-2 rounded-full bg-primary" />
+                    <h4 className="text-xs font-bold uppercase tracking-wider text-foreground">
+                      {group.dateLabel}
+                    </h4>
                   </div>
-
-                  {game.stage && game.stage !== "ELIMINATION" && (
-                    <span className="rounded-md bg-primary/20 px-1.5 py-0.5 text-[9px] font-bold text-primary uppercase">
-                      {game.stage}
-                    </span>
-                  )}
-                </div>
-
-                {/* Date, Time & Venue */}
-                <div className="flex flex-wrap items-center gap-3 text-xs text-muted">
-                  <span className="flex items-center gap-1">
-                    <Calendar size={12} className="text-muted" />
-                    <strong className="text-foreground">{formatGameDate(game.startTime, false)}</strong>
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <Clock size={12} className="text-muted" />
-                    <span>{formatStartTime(game.startTime)}</span>
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <MapPin size={12} className="text-muted" />
-                    <span className="max-w-[160px] truncate">{game.venue || "TBD"}</span>
+                  <span className="rounded-full bg-surface px-2.5 py-0.5 text-[10px] font-bold text-muted border border-border/50">
+                    {group.games.length} {group.games.length === 1 ? "Match" : "Matches"}
                   </span>
                 </div>
 
-                {/* Quick Action Buttons */}
-                <div className="flex items-center gap-2">
-                  <button
-                    type="button"
-                    onClick={() => handleGoLive(game)}
-                    className="flex items-center gap-1 rounded-xl border border-rose-500/30 bg-rose-500/10 px-2.5 py-1 text-xs font-semibold text-rose-400 hover:bg-rose-500/20 transition-colors"
-                    title="Start match now as LIVE"
-                  >
-                    <Radio size={12} />
-                    <span>Start Match 🔴</span>
-                  </button>
+                {/* Bunched Matches for this Date */}
+                <div className="flex flex-col gap-2.5">
+                  {group.games.map((game) => (
+                    <div
+                      key={game.id}
+                      className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-border bg-surface/60 p-4 transition-all hover:border-border/90"
+                    >
+                      {/* Matchup & Badges */}
+                      <div className="flex items-center gap-3">
+                        <div className="flex items-center gap-2">
+                          <TeamBadge team={game.homeTeam} size="sm" />
+                          <span className="text-xs font-bold text-foreground">{game.homeTeam.shortName}</span>
+                          <span className="text-[11px] font-medium text-muted">vs</span>
+                          <TeamBadge team={game.awayTeam} size="sm" />
+                          <span className="text-xs font-bold text-foreground">{game.awayTeam.shortName}</span>
+                        </div>
 
-                  <button
-                    type="button"
-                    onClick={() => handleDeleteGame(game)}
-                    className="rounded-lg p-1.5 text-muted hover:bg-rose-500/10 hover:text-rose-400 transition-colors"
-                    title="Delete fixture from schedule"
-                  >
-                    <Trash2 size={14} />
-                  </button>
+                        {game.stage && game.stage !== "ELIMINATION" && (
+                          <span className="rounded-md bg-primary/20 px-1.5 py-0.5 text-[9px] font-bold text-primary uppercase">
+                            {game.stage}
+                          </span>
+                        )}
+                      </div>
+
+                      {/* Date, Time & Venue */}
+                      <div className="flex flex-wrap items-center gap-3 text-xs text-muted">
+                        <span className="flex items-center gap-1">
+                          <Calendar size={12} className="text-muted" />
+                          <strong className="text-foreground">{formatGameDate(game.startTime, false)}</strong>
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <Clock size={12} className="text-muted" />
+                          <span>{formatStartTime(game.startTime)}</span>
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <MapPin size={12} className="text-muted" />
+                          <span className="max-w-[160px] truncate">{game.venue || "TBD"}</span>
+                        </span>
+                      </div>
+
+                      {/* Quick Action Buttons */}
+                      <div className="flex items-center gap-2">
+                        <button
+                          type="button"
+                          onClick={() => handleGoLive(game)}
+                          className="flex items-center gap-1 rounded-xl border border-rose-500/30 bg-rose-500/10 px-2.5 py-1 text-xs font-semibold text-rose-400 hover:bg-rose-500/20 transition-colors"
+                          title="Start match now as LIVE"
+                        >
+                          <Radio size={12} />
+                          <span>Start Match 🔴</span>
+                        </button>
+
+                        <button
+                          type="button"
+                          onClick={() => handleDeleteGame(game)}
+                          className="rounded-lg p-1.5 text-muted hover:bg-rose-500/10 hover:text-rose-400 transition-colors"
+                          title="Delete fixture from schedule"
+                        >
+                          <Trash2 size={14} />
+                        </button>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
             ))}
           </div>
         )}
+
       </SectionCard>
     </div>
   );

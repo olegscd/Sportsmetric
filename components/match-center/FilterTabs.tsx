@@ -3,9 +3,11 @@
 import { SeasonPicker } from "@/components/ui/SeasonPicker";
 import { useSportsData } from "@/context/SportsDataContext";
 import { getEffectiveGameStatus, isLifetimeSeason } from "@/lib/derivations";
-import { cn } from "@/lib/utils";
-import type { Game, GameStatus, League } from "@/types/sports";
+import { cn, formatFullDayHeader, formatGameDate } from "@/lib/utils";
+import type { Game, League } from "@/types/sports";
 import { useMemo, useState } from "react";
+
+
 
 
 
@@ -105,7 +107,35 @@ export function FilterTabs() {
     [seasonGames, activeStatus, league, teamId]
   );
 
+  // Group and sort upcoming games chronologically by date
+  const upcomingGrouped = useMemo(() => {
+    if (activeStatus !== "UPCOMING") return null;
+
+    const sorted = [...filteredGames].sort(
+      (a, b) => new Date(a.startTime).getTime() - new Date(b.startTime).getTime()
+    );
+
+    const groups: { dateKey: string; dateLabel: string; games: Game[] }[] = [];
+    const groupMap = new Map<string, { dateKey: string; dateLabel: string; games: Game[] }>();
+
+    for (const game of sorted) {
+      const dateKey = formatGameDate(game.startTime, true);
+      const dateLabel = formatFullDayHeader(game.startTime) || dateKey;
+
+      let group = groupMap.get(dateKey);
+      if (!group) {
+        group = { dateKey, dateLabel, games: [] };
+        groupMap.set(dateKey, group);
+        groups.push(group);
+      }
+      group.games.push(game);
+    }
+
+    return groups;
+  }, [filteredGames, activeStatus]);
+
   function handleSeasonChange(newSeasonId: string) {
+
     setUserSelectedSeasonId(newSeasonId);
     setTeamId("ALL");
     const targetSeason = seasons.find((s) => s.id === newSeasonId);
@@ -225,6 +255,32 @@ export function FilterTabs() {
         <p className="py-12 text-center text-sm text-muted">
           No games match these filters.
         </p>
+      ) : activeStatus === "UPCOMING" && upcomingGrouped ? (
+        <div className="flex flex-col gap-6">
+          {upcomingGrouped.map((group) => (
+            <div key={group.dateKey} className="flex flex-col gap-2.5">
+              {/* Date Header Badge */}
+              <div className="flex items-center justify-between px-1">
+                <div className="flex items-center gap-2">
+                  <span className="flex h-2 w-2 rounded-full bg-primary" />
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-foreground">
+                    {group.dateLabel}
+                  </h3>
+                </div>
+                <span className="rounded-full bg-surface px-2.5 py-0.5 text-[10px] font-bold text-muted border border-border/50">
+                  {group.games.length} {group.games.length === 1 ? "Match" : "Matches"}
+                </span>
+              </div>
+
+              {/* Bunched Same-Day Match Cards */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                {group.games.map((game) => (
+                  <GameCard key={game.id} game={game} />
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
           {filteredGames.map((game) => (
@@ -235,4 +291,5 @@ export function FilterTabs() {
     </div>
   );
 }
+
 
