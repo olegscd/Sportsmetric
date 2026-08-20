@@ -195,6 +195,11 @@ function resolveCandidateUrls(rawInput: string, league: League): string[] {
 }
 
 const KNOWN_PVL_TEAMS: Record<string, string> = {
+  HSH: "PLDT High Speed Hitters",
+  PLDT: "PLDT High Speed Hitters",
+  AKA: "Akari Power Chargers",
+  AKR: "Akari Power Chargers",
+  AKARI: "Akari Power Chargers",
   FFF: "Farm Fresh Foxies",
   NXL: "Nxled Chameleons",
   NXG: "Nxled Chameleons",
@@ -202,10 +207,9 @@ const KNOWN_PVL_TEAMS: Record<string, string> = {
   CREAM: "Creamline Cool Smashers",
   CMF: "Choco Mucho Flying Titans",
   PGA: "Petro Gazz Angels",
+  PET: "Petro Gazz Angels",
   CTC: "Cignal HD Spikers",
-  PLDT: "PLDT High Speed Hitters",
-  AKR: "Akari Power Chargers",
-  AKARI: "Akari Power Chargers",
+  CIG: "Cignal HD Spikers",
   ZUS: "Zus Coffee Thunderbelles",
   CAP: "Capital1 Solar Spikers",
   CAP1: "Capital1 Solar Spikers",
@@ -216,8 +220,9 @@ const KNOWN_PVL_TEAMS: Record<string, string> = {
 };
 
 function formatPvlPlayerName(raw: string): string {
-  const parts = raw.trim().split(/\s+/);
-  if (parts.length <= 1) return raw.trim();
+  const cleaned = raw.replace(/([a-z])L\b/g, "$1").trim();
+  const parts = cleaned.split(/\s+/);
+  if (parts.length <= 1) return cleaned;
 
   const lastParts: string[] = [];
   const firstParts: string[] = [];
@@ -240,7 +245,8 @@ function formatPvlPlayerName(raw: string): string {
 export async function parseNativePvlPdf(
   buffer: Uint8Array,
   stage: TournamentStage = "ELIMINATION",
-  status: "FINAL" | "LIVE" | "UPCOMING" = "FINAL"
+  status: "FINAL" | "LIVE" | "UPCOMING" = "FINAL",
+  rawUrl?: string
 ): Promise<ExtractedGamePayload | null> {
   try {
     const { text } = await extractText(buffer);
@@ -268,7 +274,6 @@ export async function parseNativePvlPdf(
       }
     }
 
-
     // 3. Venue
     let venue = "PhilSports Arena";
     const hallIdx = lines.findIndex((l: string) => l === "Hall:" || l.startsWith("Hall:"));
@@ -276,9 +281,6 @@ export async function parseNativePvlPdf(
     let city = "";
 
     if (hallIdx !== -1) {
-      // In VIS PDFs, values appear 2 lines and 3 lines after Hall:
-      // Line [hallIdx + 2]: "LANAO DEL NORTE" (City)
-      // Line [hallIdx + 3]: "MCC GYMNASIUM" (Hall)
       if (lines[hallIdx + 3] && !lines[hallIdx + 3].startsWith("Match") && !lines[hallIdx + 3].startsWith("VIS")) {
         hall = lines[hallIdx + 3];
       }
@@ -311,28 +313,61 @@ export async function parseNativePvlPdf(
       venue = city;
     }
 
-
-
-    // 4. Team codes
-    const teamCodesFound: string[] = [];
-    for (const code of Object.keys(KNOWN_PVL_TEAMS)) {
-      if (rawText.includes(`${code} •`) || rawText.includes(`${code}\n`)) {
-        if (!teamCodesFound.includes(code)) {
-          teamCodesFound.push(code);
+    // 4. Team codes & Names
+    const teamCodesFound: { code: string; name: string }[] = [];
+    const headerMatches = Array.from(rawText.matchAll(/([A-Z]{2,6})\s*•\s*([A-Z\s\-]+?)(?:\s*1\s+2|\n|$)/g));
+    for (const m of headerMatches) {
+      const code = m[1].trim();
+      const rawName = m[2].trim();
+      if (code !== "VOLLEYBALL" && code !== "EYBALL" && rawName.length > 2) {
+        if (!teamCodesFound.some((t) => t.code === code)) {
+          teamCodesFound.push({
+            code,
+            name: KNOWN_PVL_TEAMS[code] || rawName,
+          });
         }
       }
     }
 
-    const codeA = teamCodesFound[0] || "FFF";
-    const codeB = teamCodesFound[1] || "NXL";
+    // Fallback from URL if needed
+    if (teamCodesFound.length < 2 && rawUrl) {
+      const urlMatch = rawUrl.match(/-([A-Z]{2,6})-([A-Z]{2,6})-(?:P\d|pdf)/i);
+      if (urlMatch) {
+        const code1 = urlMatch[1].toUpperCase();
+        const code2 = urlMatch[2].toUpperCase();
+        if (!teamCodesFound.some((t) => t.code === code1)) {
+          teamCodesFound.push({ code: code1, name: KNOWN_PVL_TEAMS[code1] || `${code1} Team` });
+        }
+        if (!teamCodesFound.some((t) => t.code === code2)) {
+          teamCodesFound.push({ code: code2, name: KNOWN_PVL_TEAMS[code2] || `${code2} Team` });
+        }
+      }
+    }
 
+    let codeA = teamCodesFound[0]?.code || "HSH";
+    let nameA = teamCodesFound[0]?.name || "Home Team";
+    let codeB = teamCodesFound[1]?.code || "AKA";
+    let nameB = teamCodesFound[1]?.name || "Away Team";
     let scoreA = 3;
     let scoreB = 0;
 
-    const setsMatch = rawText.match(new RegExp(`${codeA}[\\s\\S]*?${codeB}\\s*(\\d+)[\\s\\S]*?(\\d+)`));
-    if (setsMatch) {
-      scoreB = parseInt(setsMatch[1], 10);
-      scoreA = parseInt(setsMatch[2], 10);
+    if (teamCodesFound.length >= 2) {
+      const c1 = teamCodesFound[0].code;
+      const c2 = teamCodesFound[1].code;
+      const setsBlockMatch = rawText.match(new RegExp(`(${c1}|${c2})\\s*\\n\\s*(${c1}|${c2})\\s*(\\d+)\\s*\\n\\s*(\\d+)`));
+      if (setsBlockMatch) {
+        const tA = setsBlockMatch[1];
+        const tB = setsBlockMatch[2];
+        const sB = parseInt(setsBlockMatch[3], 10);
+        const sA = parseInt(setsBlockMatch[4], 10);
+
+        codeA = tA;
+        nameA = KNOWN_PVL_TEAMS[tA] || teamCodesFound.find((t) => t.code === tA)?.name || `${tA} Team`;
+        codeB = tB;
+        nameB = KNOWN_PVL_TEAMS[tB] || teamCodesFound.find((t) => t.code === tB)?.name || `${tB} Team`;
+        scoreA = sA;
+        scoreB = sB;
+      }
     }
 
     function extractRoster(code: string): ExtractedBoxRow[] {
@@ -401,12 +436,12 @@ export async function parseNativePvlPdf(
       venue,
       startTime,
       homeTeam: {
-        name: KNOWN_PVL_TEAMS[codeA] || `${codeA} Team`,
+        name: nameA,
         shortName: codeA,
         score: scoreA,
       },
       awayTeam: {
-        name: KNOWN_PVL_TEAMS[codeB] || `${codeB} Team`,
+        name: nameB,
         shortName: codeB,
         score: scoreB,
       },
@@ -439,11 +474,12 @@ export async function extractGameFromUrl(
         throw new Error(`Failed to download PVL match PDF: HTTP ${res.status}`);
       }
       const buffer = new Uint8Array(await res.arrayBuffer());
-      const nativePayload = await parseNativePvlPdf(buffer, stage, status);
+      const nativePayload = await parseNativePvlPdf(buffer, stage, status, rawInput);
       if (nativePayload) return nativePayload;
       throw new Error("Could not parse match tables from PVL PDF sheet.");
     }
   }
+
 
 
 

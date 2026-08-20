@@ -248,7 +248,59 @@ export function mapGameRows(
 }
 
 
-async function fetchPaginatedTable<T = Record<string, unknown>>(
+type SeasonDbRow = {
+  id: string;
+  label: string;
+  is_current: boolean;
+  league?: League;
+};
+
+type TeamDbRow = {
+  id: string;
+  name: string;
+  short_name: string;
+  logo: string | null;
+  league: League;
+  accent_color: string;
+  season_id: string;
+  record: Team["record"];
+
+};
+
+type PlayerDbRow = {
+  id: string;
+  person_id: string;
+  name: string;
+  jersey_number: number;
+  position: Player["position"];
+  team_id: string;
+  height: string;
+  photo_url: string | null;
+  season_id: string;
+  season_averages: Player["seasonAverages"];
+  rank_badges: Player["rankBadges"] | null;
+};
+
+type GameDbRow = {
+  id: string;
+  league: League;
+  season_id: string;
+  home_team_id: string;
+  away_team_id: string;
+  home_score: number;
+  away_score: number;
+  status: GameStatus;
+  start_time: string;
+  venue?: string | null;
+  stage?: Game["stage"] | null;
+  is_playoff?: boolean | null;
+  quarter_or_set: number;
+  time_remaining: string | null;
+  box_score: Game["boxScore"] & { venue?: string; stage?: Game["stage"]; isPlayoff?: boolean };
+  play_by_play: Game["playByPlay"] | null;
+};
+
+async function fetchPaginatedTable<T>(
   table: string,
   orderColumn?: string,
   ascending = false
@@ -270,7 +322,7 @@ async function fetchPaginatedTable<T = Record<string, unknown>>(
       break;
     }
     if (!data || data.length === 0) break;
-    all.push(...(data as T[]));
+    all.push(...(data as unknown as T[]));
     if (data.length < pageSize) break;
     from += pageSize;
   }
@@ -283,10 +335,10 @@ export async function fetchAllSupabaseData(): Promise<SupabaseDataResult | null>
 
   try {
     const [seasonsRows, teamsRows, playersRows, gamesRows] = await Promise.all([
-      fetchPaginatedTable("seasons", "id", false),
-      fetchPaginatedTable("teams"),
-      fetchPaginatedTable("players"),
-      fetchPaginatedTable("games", "start_time", false),
+      fetchPaginatedTable<SeasonDbRow>("seasons", "id", false),
+      fetchPaginatedTable<TeamDbRow>("teams"),
+      fetchPaginatedTable<PlayerDbRow>("players"),
+      fetchPaginatedTable<GameDbRow>("games", "start_time", false),
     ]);
 
     const seasons = mapSeasonRows(seasonsRows);
