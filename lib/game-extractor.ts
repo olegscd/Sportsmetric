@@ -192,35 +192,189 @@ function resolveCandidateUrls(rawInput: string, league: League): string[] {
   return [raw];
 }
 
-async function extractPvlWithPython(
-  rawInput: string,
-  stage: TournamentStage,
-  status: "FINAL" | "LIVE" | "UPCOMING"
+const KNOWN_PVL_TEAMS: Record<string, string> = {
+  FFF: "Farm Fresh Foxies",
+  NXL: "Nxled Chameleons",
+  NXG: "Nxled Chameleons",
+  CCS: "Creamline Cool Smashers",
+  CREAM: "Creamline Cool Smashers",
+  CMF: "Choco Mucho Flying Titans",
+  PGA: "Petro Gazz Angels",
+  CTC: "Cignal HD Spikers",
+  PLDT: "PLDT High Speed Hitters",
+  AKR: "Akari Power Chargers",
+  AKARI: "Akari Power Chargers",
+  ZUS: "Zus Coffee Thunderbelles",
+  CAP: "Capital1 Solar Spikers",
+  CAP1: "Capital1 Solar Spikers",
+  GAL: "Galeries Tower Highrisers",
+  GTH: "Galeries Tower Highrisers",
+  CHE: "Chery Tiggo Crossovers",
+  FTL: "F2 Logistics Cargo Movers",
+};
+
+function formatPvlPlayerName(raw: string): string {
+  const parts = raw.trim().split(/\s+/);
+  if (parts.length <= 1) return raw.trim();
+
+  const lastParts: string[] = [];
+  const firstParts: string[] = [];
+
+  for (const part of parts) {
+    if (part === "L" || part === "Captain" || part === "C") continue;
+    if (part === part.toUpperCase() && part.length > 1) {
+      lastParts.push(part.charAt(0) + part.slice(1).toLowerCase());
+    } else {
+      firstParts.push(part);
+    }
+  }
+
+  const first = firstParts.join(" ");
+  const last = lastParts.join(" ");
+  if (first && last) return `${first} ${last}`;
+  return parts.join(" ");
+}
+
+export async function parseNativePvlPdf(
+  buffer: Buffer,
+  stage: TournamentStage = "ELIMINATION",
+  status: "FINAL" | "LIVE" | "UPCOMING" = "FINAL"
 ): Promise<ExtractedGamePayload | null> {
   try {
-    const { execFile } = await import("child_process");
-    const path = await import("path");
-    const scriptPath = path.resolve("extractors", "extract_single_game.py");
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const { PDFParse } = require("pdf-parse");
+    const parser = new PDFParse({ data: buffer });
+    const data = await parser.getText();
+    const text: string = data.text;
+    const lines = text.split("\n").map((l: string) => l.trim()).filter(Boolean);
 
-    return await new Promise((resolve) => {
-      execFile(
-        "python",
-        [scriptPath, "--url", rawInput, "--league", "PVL", "--stage", stage, "--status", status],
-        { timeout: 35000 },
-        (error, stdout) => {
-          if (!error && stdout) {
-            try {
-              const data = JSON.parse(stdout.trim());
-              return resolve(data as ExtractedGamePayload);
-            } catch {
-              // fall through
-            }
-          }
-          resolve(null);
+    // 1. Tournament
+    const tourneyLine = lines.find((l: string) => l.includes("PVL")) || "PVL Conference";
+    const tournament = tourneyLine.replace(/^[^\w]+/, "").trim();
+
+    // 2. Date
+    const dateMatch = text.match(/(\d{1,2}\/\d{1,2}\/\d{4})/);
+    let startTime = new Date().toISOString();
+    if (dateMatch) {
+      const [m, d, y] = dateMatch[1].split("/").map(Number);
+      startTime = new Date(Date.UTC(y, m - 1, d, 16, 0)).toISOString();
+    }
+
+    // 3. Venue
+    let venue = "PhilSports Arena";
+    const cityIdx = lines.findIndex((l: string) => l.startsWith("City:"));
+    if (cityIdx !== -1 && lines.length > cityIdx + 3) {
+      const city = lines[cityIdx + 2] || "";
+      const hall = lines[cityIdx + 3] || "";
+      if (city || hall) {
+        venue = [hall, city].filter(Boolean).join(", ");
+      }
+    }
+
+    // 4. Team codes
+    const teamCodesFound: string[] = [];
+    for (const code of Object.keys(KNOWN_PVL_TEAMS)) {
+      if (text.includes(`${code} •`) || text.includes(`${code}\n`)) {
+        if (!teamCodesFound.includes(code)) {
+          teamCodesFound.push(code);
         }
-      );
-    });
-  } catch {
+      }
+    }
+
+    const codeA = teamCodesFound[0] || "FFF";
+    const codeB = teamCodesFound[1] || "NXL";
+
+    let scoreA = 3;
+    let scoreB = 0;
+
+    const setsMatch = text.match(new RegExp(`${codeA}[\\s\\S]*?${codeB}\\s*(\\d+)[\\s\\S]*?(\\d+)`));
+    if (setsMatch) {
+      scoreB = parseInt(setsMatch[1], 10);
+      scoreA = parseInt(setsMatch[2], 10);
+    }
+
+    function extractRoster(code: string): ExtractedBoxRow[] {
+      const startPattern = `${code} •`;
+      const startIdx = text.indexOf(startPattern);
+      if (startIdx === -1) return [];
+
+      const sub = text.slice(startIdx);
+      const endIdx = sub.indexOf("Coach:");
+      const chunk = endIdx !== -1 ? sub.slice(0, endIdx) : sub;
+
+      const chunkLines = chunk.split("\n").map((l: string) => l.trim()).filter(Boolean);
+      const players: ExtractedBoxRow[] = [];
+
+      const pointNumbers: number[] = [];
+      for (const cl of chunkLines) {
+        if (/^\d{1,2}$/.test(cl)) {
+          pointNumbers.push(parseInt(cl, 10));
+        }
+      }
+
+      let pCount = 0;
+      for (const cl of chunkLines) {
+        if (cl.includes("•") || cl.startsWith("Coach") || cl.startsWith("Assistant") || cl.startsWith("Referees")) {
+          continue;
+        }
+        const pMatch = cl.match(/^(\d{1,2})\s+([A-Za-z\s\-]+?)(?:\t|\s+)(L)?$/i) || cl.match(/^(\d{1,2})\s+([A-Za-z\s\-]+)$/);
+        if (pMatch) {
+          const jersey = parseInt(pMatch[1], 10);
+          const rawName = pMatch[2].trim();
+          const isLibero = Boolean(pMatch[3] || cl.includes("\tL") || cl.endsWith(" L"));
+
+          if (rawName && !rawName.toLowerCase().startsWith("coach") && !rawName.toLowerCase().startsWith("assistant")) {
+            const pts = !isLibero && pCount < pointNumbers.length ? pointNumbers[pCount] : 0;
+            players.push({
+              playerName: formatPvlPlayerName(rawName),
+              jersey,
+              min: "Sets",
+              pts,
+              reb: 0,
+              ast: 0,
+              stl: 0,
+              blk: 0,
+              to: 0,
+              pf: 0,
+              fgM: pts,
+              fgA: pts,
+            });
+            if (!isLibero) pCount++;
+          }
+        }
+      }
+
+      return players;
+    }
+
+    const homePlayers = extractRoster(codeA);
+    const awayPlayers = extractRoster(codeB);
+
+    return {
+      league: "PVL",
+      stage,
+      isPlayoff: stage !== "ELIMINATION",
+      status,
+      competition: tournament,
+      venue,
+      startTime,
+      homeTeam: {
+        name: KNOWN_PVL_TEAMS[codeA] || `${codeA} Team`,
+        shortName: codeA,
+        score: scoreA,
+      },
+      awayTeam: {
+        name: KNOWN_PVL_TEAMS[codeB] || `${codeB} Team`,
+        shortName: codeB,
+        score: scoreB,
+      },
+      boxScore: {
+        home: homePlayers,
+        away: awayPlayers,
+      },
+    };
+  } catch (err) {
+    console.error("[PVL PDF Native Parse Error]:", err);
     return null;
   }
 }
@@ -232,24 +386,21 @@ export async function extractGameFromUrl(
   status: "FINAL" | "LIVE" | "UPCOMING" = "FINAL"
 ): Promise<ExtractedGamePayload> {
   if (league === "PVL" || rawInput.toLowerCase().endsWith(".pdf") || rawInput.includes("dashboard.pvl.ph")) {
-    const pvlData = await extractPvlWithPython(rawInput, stage, status);
-    if (pvlData) {
-      return pvlData;
+    if (rawInput.startsWith("http://") || rawInput.startsWith("https://")) {
+      const res = await fetch(rawInput, {
+        headers: {
+          "User-Agent":
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        },
+      });
+      if (res.ok) {
+        const buffer = Buffer.from(await res.arrayBuffer());
+        const nativePayload = await parseNativePvlPdf(buffer, stage, status);
+        if (nativePayload) return nativePayload;
+      }
     }
-    return {
-      league: "PVL",
-      stage,
-      isPlayoff: stage !== "ELIMINATION",
-      status,
-      competition: "PVL Conference",
-      venue: "PhilSports Arena",
-      startTime: new Date().toISOString(),
-      homeTeam: { name: "Home Team", shortName: "HOM", score: 0 },
-      awayTeam: { name: "Away Team", shortName: "AWY", score: 0 },
-      boxScore: { home: [], away: [] },
-      note: "PVL match adapter ready for match sheets.",
-    };
   }
+
 
 
   const candidates = resolveCandidateUrls(rawInput, league);
