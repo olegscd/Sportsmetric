@@ -4,17 +4,19 @@ import { SeasonPicker } from "@/components/ui/SeasonPicker";
 import { useSportsData } from "@/context/SportsDataContext";
 import { getEffectiveGameStatus, isLifetimeSeason } from "@/lib/derivations";
 import { cn } from "@/lib/utils";
-import type { GameStatus, League } from "@/types/sports";
+import type { Game, GameStatus, League } from "@/types/sports";
 import { useMemo, useState } from "react";
+
 
 
 import { GameCard } from "./GameCard";
 
-const STATUS_TABS: { value: GameStatus | "ALL"; label: string }[] = [
+type GameStatusTab = "LIVE" | "UPCOMING" | "FINAL";
+
+const STATUS_TABS: { value: GameStatusTab; label: string }[] = [
   { value: "LIVE", label: "Live" },
   { value: "UPCOMING", label: "Upcoming" },
   { value: "FINAL", label: "Final" },
-  { value: "ALL", label: "All" },
 ];
 
 const LEAGUE_CHIPS: { value: League | "ALL"; label: string }[] = [
@@ -31,6 +33,29 @@ function getSeasonLeague(sId: string, sLeague?: League): League {
   return "UAAP";
 }
 
+function getSmartStatusTab(
+  gamesList: Game[],
+  targetSeasonId: string,
+  targetLeague: League | "ALL",
+  isOld: boolean
+): GameStatusTab {
+  if (isOld) return "FINAL";
+
+  const relevant = gamesList.filter(
+    (g) =>
+      g.seasonId === targetSeasonId &&
+      (targetLeague === "ALL" || g.league === targetLeague)
+  );
+
+  const hasLive = relevant.some((g) => getEffectiveGameStatus(g) === "LIVE");
+  if (hasLive) return "LIVE";
+
+  const hasUpcoming = relevant.some((g) => getEffectiveGameStatus(g) === "UPCOMING");
+  if (hasUpcoming) return "UPCOMING";
+
+  return "FINAL";
+}
+
 export function FilterTabs() {
   const { games, teams, seasons, currentSeasonId } = useSportsData();
   const [league, setLeague] = useState<League | "ALL">("UAAP");
@@ -43,13 +68,15 @@ export function FilterTabs() {
     ? userSelectedSeasonId
     : activeCurrent;
 
-  const [status, setStatus] = useState<GameStatus | "ALL">("LIVE");
-  const [teamId, setTeamId] = useState<string>("ALL");
-
-
-
   const selectedSeason = seasons.find((s) => s.id === seasonId);
   const isOldSeason = selectedSeason ? !selectedSeason.isCurrent : seasonId !== currentSeasonId;
+
+  // Initial smart default status based on active league & season games
+  const [status, setStatus] = useState<GameStatusTab>(() =>
+    getSmartStatusTab(games, activeCurrent, "UAAP", false)
+  );
+  const [teamId, setTeamId] = useState<string>("ALL");
+
   const activeStatus = isOldSeason ? "FINAL" : status;
 
   const seasonGames = useMemo(() => {
@@ -70,7 +97,7 @@ export function FilterTabs() {
       seasonGames.filter((game) => {
         const effectiveStatus = getEffectiveGameStatus(game);
         return (
-          (activeStatus === "ALL" || effectiveStatus === activeStatus) &&
+          effectiveStatus === activeStatus &&
           (league === "ALL" || game.league === league) &&
           (teamId === "ALL" || game.homeTeam.id === teamId || game.awayTeam.id === teamId)
         );
@@ -78,23 +105,30 @@ export function FilterTabs() {
     [seasonGames, activeStatus, league, teamId]
   );
 
-
   function handleSeasonChange(newSeasonId: string) {
     setUserSelectedSeasonId(newSeasonId);
     setTeamId("ALL");
     const targetSeason = seasons.find((s) => s.id === newSeasonId);
-    if (targetSeason && !targetSeason.isCurrent) {
-      setStatus("FINAL");
-    } else if (status === "FINAL") {
-      setStatus("LIVE");
-    }
+    const isOld = targetSeason ? !targetSeason.isCurrent : false;
+    const nextStatus = getSmartStatusTab(games, newSeasonId, league, isOld);
+    setStatus(nextStatus);
   }
 
   function handleLeagueChange(newLeague: League | "ALL") {
     setLeague(newLeague);
     setTeamId("ALL");
     setUserSelectedSeasonId(null);
+
+    const effLeague: League = newLeague === "ALL" ? "UAAP" : newLeague;
+    const effSeasons = seasons.filter((s) => getSeasonLeague(s.id, s.league) === effLeague);
+    const targetCurrent = effSeasons.find((s) => s.isCurrent)?.id ?? effSeasons[0]?.id ?? currentSeasonId;
+    const targetSeason = seasons.find((s) => s.id === targetCurrent);
+    const isOld = targetSeason ? !targetSeason.isCurrent : false;
+
+    const nextStatus = getSmartStatusTab(games, targetCurrent, newLeague, isOld);
+    setStatus(nextStatus);
   }
+
 
 
   return (
