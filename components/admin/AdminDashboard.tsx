@@ -9,19 +9,22 @@ import { useCallback, useRef, useState } from "react";
 import { GameImporterTab } from "./GameImporterTab";
 import { GamesManager } from "./GamesManager";
 import { PlayersManager } from "./PlayersManager";
+import { ScheduleManagerTab } from "./ScheduleManagerTab";
 import { SeasonsManager } from "./SeasonsManager";
 import { TeamsManager } from "./TeamsManager";
 import { Toast, type ToastState } from "./Toast";
 
-type AdminTab = "importer" | "games" | "players" | "teams" | "seasons";
+type AdminTab = "importer" | "schedule" | "games" | "players" | "teams" | "seasons";
 
 const TABS: { value: AdminTab; label: string; emoji: string }[] = [
   { value: "importer", label: "Importer", emoji: "⚡" },
+  { value: "schedule", label: "Schedule", emoji: "📅" },
   { value: "games", label: "Games", emoji: "\u{1F3C0}" },
   { value: "players", label: "Players", emoji: "\u{1F465}" },
   { value: "teams", label: "Teams", emoji: "\u{1F6E1}\uFE0F" },
   { value: "seasons", label: "Seasons", emoji: "\u{1F4C6}" },
 ];
+
 
 
 export function AdminDashboard() {
@@ -88,11 +91,13 @@ export function AdminDashboard() {
 
       <div className="flex-1 px-4 py-4">
         {tab === "importer" ? <GameImporterTab onToast={showToast} /> : null}
+        {tab === "schedule" ? <ScheduleManagerTab onToast={showToast} /> : null}
         {tab === "games" ? <GamesManager onToast={showToast} /> : null}
         {tab === "players" ? <PlayersManager onToast={showToast} /> : null}
         {tab === "teams" ? <TeamsManager onToast={showToast} /> : null}
         {tab === "seasons" ? <SeasonsManager onToast={showToast} /> : null}
       </div>
+
     </div>
   );
 }
