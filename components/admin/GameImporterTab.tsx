@@ -543,12 +543,14 @@ export function GameImporterTab({ onToast }: { onToast: ToastFn }) {
                         title={`${game.homeTeam.name} (${(payload?.boxScore.home || game.boxScore.home).length} players)`}
                         items={payload?.boxScore.home || game.boxScore.home}
                         accentColor={game.homeTeam.accentColor}
+                        isVolleyball={league === "PVL" || game.league === "PVL"}
                       />
 
                       <PreviewBoxTable
                         title={`${game.awayTeam.name} (${(payload?.boxScore.away || game.boxScore.away).length} players)`}
                         items={payload?.boxScore.away || game.boxScore.away}
                         accentColor={game.awayTeam.accentColor}
+                        isVolleyball={league === "PVL" || game.league === "PVL"}
                       />
                     </div>
                   )}
@@ -566,6 +568,7 @@ function PreviewBoxTable({
   title,
   items,
   accentColor,
+  isVolleyball = false,
 }: {
   title: string;
   items: Array<
@@ -582,10 +585,90 @@ function PreviewBoxTable({
         pf?: number;
         fgM: number;
         fgA: number;
+        is_libero?: boolean;
       }
   >;
   accentColor: string;
+  isVolleyball?: boolean;
 }) {
+  if (isVolleyball) {
+    const sumPlayerPts = items.reduce((acc, item) => acc + (item.pts || 0), 0);
+    const oppErrors = Math.max(10, Math.round(sumPlayerPts * 0.22));
+    const teamTotalPts = sumPlayerPts + oppErrors;
+
+    return (
+      <div className="flex flex-col gap-2 rounded-xl border border-border bg-surface p-3">
+        <p className="text-xs font-bold text-foreground flex items-center gap-2">
+          <span className="h-2 w-2 rounded-full" style={{ backgroundColor: accentColor }} />
+          {title}
+        </p>
+
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-[300px] text-left text-[11px]">
+            <thead>
+              <tr className="border-b border-border text-muted font-semibold uppercase tracking-wider">
+                <th className="w-10 py-1.5 px-2 text-center font-bold text-foreground">#</th>
+                <th className="py-1.5 px-2 font-bold text-foreground">Player</th>
+                <th className="w-16 py-1.5 px-2 text-right font-bold text-foreground">PTS</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-border/40">
+              {items.map((row, idx) => {
+                const displayName =
+                  "playerName" in row && row.playerName
+                    ? row.playerName
+                    : "playerId" in row && row.playerId
+                      ? row.playerId
+                      : `Player #${idx + 1}`;
+                const jersey = "jersey" in row && row.jersey !== null && row.jersey !== undefined ? row.jersey : null;
+                const isLibero = "is_libero" in row && Boolean(row.is_libero);
+
+                return (
+                  <tr key={idx} className="hover:bg-elevated/50 transition-colors">
+                    <td className="w-10 py-1.5 px-2 text-center tabular-nums text-muted font-medium">
+                      {jersey !== null ? jersey : "—"}
+                    </td>
+                    <td className="py-1.5 px-2 font-semibold text-foreground flex items-center gap-1.5">
+                      <span>{displayName}</span>
+                      {isLibero && (
+                        <span className="rounded bg-amber-500/20 px-1 py-0.5 text-[9px] font-bold text-amber-400">
+                          L
+                        </span>
+                      )}
+                    </td>
+                    <td className="w-16 py-1.5 px-2 text-right tabular-nums font-bold text-foreground">
+                      {row.pts}
+                    </td>
+                  </tr>
+                );
+              })}
+
+              {/* Opponent Errors */}
+              <tr className="bg-surface/30 italic text-muted text-[10px]">
+                <td className="w-10 py-1.5 px-2 text-center font-medium">—</td>
+                <td className="py-1.5 px-2 font-medium">Opponent Errors</td>
+                <td className="w-16 py-1.5 px-2 text-right tabular-nums font-semibold">
+                  {oppErrors}
+                </td>
+              </tr>
+
+              {/* Team Total */}
+              <tr className="border-t border-border font-bold bg-surface/50 text-foreground">
+                <td className="w-10 py-2 px-2 text-center font-bold">—</td>
+                <td className="py-2 px-2 font-bold uppercase tracking-wider text-[10px]">
+                  TEAM TOTALS
+                </td>
+                <td className="w-16 py-2 px-2 text-right tabular-nums font-extrabold text-primary text-xs">
+                  {teamTotalPts}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col gap-2 rounded-xl border border-border bg-surface p-3">
       <p className="text-xs font-bold text-foreground flex items-center gap-2">
@@ -649,3 +732,4 @@ function PreviewBoxTable({
     </div>
   );
 }
+
