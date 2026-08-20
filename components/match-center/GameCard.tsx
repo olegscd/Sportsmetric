@@ -1,11 +1,13 @@
 "use client";
 
 import { TeamBadge } from "@/components/ui/TeamBadge";
+import { useSportsData } from "@/context/SportsDataContext";
 import { useGameModal } from "@/lib/game-modal-context";
 import { getEffectiveGameStatus, isPlayoffGame } from "@/lib/derivations";
 import { formatGameDate, formatRecord, formatStartTime } from "@/lib/utils";
 import type { Game, Team } from "@/types/sports";
 import Link from "next/link";
+import { useMemo } from "react";
 import { LeagueBadge } from "./LeagueBadge";
 
 function StatusPill({ game }: { game: Game }) {
@@ -31,7 +33,6 @@ function StatusPill({ game }: { game: Game }) {
     );
   }
 
-
   if (effectiveStatus === "FINAL") {
     return (
       <div className="flex items-center gap-1.5 shrink-0">
@@ -55,13 +56,16 @@ function StatusPill({ game }: { game: Game }) {
 
 function TeamRow({
   team,
+  record,
   score,
   showScore,
 }: {
   team: Team;
+  record?: { wins: number; losses: number };
   score: number;
   showScore: boolean;
 }) {
+  const displayRecord = record ?? team.record;
   return (
     <div className="flex items-center justify-between">
       <Link
@@ -76,7 +80,7 @@ function TeamRow({
             {team.shortName}
           </span>
           <span className="text-[11px] font-medium text-muted">
-            {formatRecord(team.record)}
+            {formatRecord(displayRecord)}
           </span>
         </div>
       </Link>
@@ -91,9 +95,27 @@ function TeamRow({
 
 export function GameCard({ game }: { game: Game }) {
   const { openGame } = useGameModal();
+  const { getStandings } = useSportsData();
   const effectiveStatus = getEffectiveGameStatus(game);
   const showScore = effectiveStatus !== "UPCOMING";
 
+  const standings = useMemo(() => {
+    return getStandings(game.league, game.seasonId);
+  }, [getStandings, game.league, game.seasonId]);
+
+  const homeStandings = standings.find(
+    (s) =>
+      s.team.id === game.homeTeam.id ||
+      (s.team.shortName && s.team.shortName.toUpperCase() === game.homeTeam.shortName?.toUpperCase())
+  );
+  const awayStandings = standings.find(
+    (s) =>
+      s.team.id === game.awayTeam.id ||
+      (s.team.shortName && s.team.shortName.toUpperCase() === game.awayTeam.shortName?.toUpperCase())
+  );
+
+  const homeRecord = homeStandings ? { wins: homeStandings.wins, losses: homeStandings.losses } : game.homeTeam.record;
+  const awayRecord = awayStandings ? { wins: awayStandings.wins, losses: awayStandings.losses } : game.awayTeam.record;
 
   return (
     <div
@@ -108,24 +130,40 @@ export function GameCard({ game }: { game: Game }) {
       }}
       className="w-full cursor-pointer rounded-2xl border border-border bg-surface p-4 text-left shadow-sm hover:border-primary/50 active:scale-[0.99] transition-all"
     >
-      <div className="mb-3 flex items-center justify-between">
+      <div className="flex items-center justify-between gap-2 border-b border-border/40 pb-2.5">
         <div className="flex items-center gap-1.5">
           <LeagueBadge league={game.league} />
-          {isPlayoffGame(game) && (
-            <span className="rounded-full bg-primary/20 px-2 py-0.5 text-[10px] font-extrabold text-primary uppercase tracking-wide">
-              Playoffs
+          {isPlayoffGame(game) ? (
+            <span className="rounded-full bg-amber-500/15 px-2 py-0.5 text-[10px] font-bold text-amber-500 uppercase tracking-wide">
+              {game.stage && game.stage !== "ELIMINATION" ? game.stage : "Playoffs"}
             </span>
-          )}
+          ) : null}
         </div>
         <StatusPill game={game} />
       </div>
-      <div className="flex flex-col gap-2.5">
-        <TeamRow team={game.awayTeam} score={game.awayScore} showScore={showScore} />
-        <TeamRow team={game.homeTeam} score={game.homeScore} showScore={showScore} />
+
+      <div className="flex flex-col gap-3 py-3">
+        <TeamRow
+          team={game.awayTeam}
+          record={awayRecord}
+          score={game.awayScore}
+          showScore={showScore}
+        />
+        <TeamRow
+          team={game.homeTeam}
+          record={homeRecord}
+          score={game.homeScore}
+          showScore={showScore}
+        />
       </div>
-      {game.venue ? (
-        <p className="mt-3 truncate text-[11px] font-medium text-muted">{game.venue}</p>
-      ) : null}
+
+      {game.venue && (
+        <div className="border-t border-border/30 pt-2">
+          <span className="text-[11px] font-medium text-muted line-clamp-1">
+            {game.venue}
+          </span>
+        </div>
+      )}
     </div>
   );
 }
