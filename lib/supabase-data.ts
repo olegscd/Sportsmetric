@@ -248,11 +248,12 @@ export function mapGameRows(
 }
 
 
-async function fetchPaginatedTable<T = any>(
+async function fetchPaginatedTable<T = Record<string, unknown>>(
   table: string,
   orderColumn?: string,
   ascending = false
 ): Promise<T[]> {
+
   if (!supabase) return [];
   const all: T[] = [];
   const pageSize = 1000;
