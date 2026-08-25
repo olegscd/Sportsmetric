@@ -217,6 +217,11 @@ const KNOWN_PVL_TEAMS: Record<string, string> = {
   GTH: "Galeries Tower Highrisers",
   CHE: "Chery Tiggo Crossovers",
   FTL: "F2 Logistics Cargo Movers",
+  EST: "EST Cola",
+  ESTCOLA: "EST Cola",
+  HVF: "Ho Chi Minh City",
+  HCMC: "Ho Chi Minh City",
+  HCM: "Ho Chi Minh City",
 };
 
 function formatPvlPlayerName(raw: string): string {

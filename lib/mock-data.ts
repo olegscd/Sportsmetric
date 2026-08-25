@@ -101,6 +101,18 @@ export const mockSeasons: Season[] = deduplicateById([
     isCurrent: false,
     league: "PBA",
   },
+  {
+    id: "pvl-2026-on-tour",
+    label: "PVL 2026 PVL On Tour",
+    isCurrent: true,
+    league: "PVL",
+  },
+  {
+    id: "pvl-2026-invitational",
+    label: "PVL 2026 Invitational Conference",
+    isCurrent: false,
+    league: "PVL",
+  },
   pvl2021Season,
   pvl2022OpenSeason,
   pvl2022InvitationalSeason,

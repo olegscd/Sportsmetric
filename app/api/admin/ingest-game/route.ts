@@ -75,6 +75,12 @@ const TEAM_CODE_ALIASES: Record<string, string[]> = {
   che: ["chery", "cherytiggo", "crossovers"],
   ftl: ["f2", "f2logistics", "cargomovers"],
   fff: ["farmfresh", "farmfreshfoxies", "foxies"],
+  est: ["est", "estcola"],
+  estcola: ["est", "estcola"],
+  hvf: ["hvf", "hochiminh", "hochiminhcity", "hcmc", "hcm"],
+  hcmc: ["hvf", "hochiminh", "hochiminhcity", "hcmc", "hcm"],
+  hochiminh: ["hvf", "hochiminh", "hochiminhcity", "hcmc", "hcm"],
+  hochiminhcity: ["hvf", "hochiminh", "hochiminhcity", "hcmc", "hcm"],
 };
 
 

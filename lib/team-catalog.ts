@@ -189,6 +189,8 @@ const PVL_2025_26: TeamSeed[] = [
     shortName: "ZUS",
     accentColor: "#6F4E37",
   },
+  { slug: "est-cola", name: "EST Cola", shortName: "EST", accentColor: "#E61C24" },
+  { slug: "hvf", name: "Ho Chi Minh City", shortName: "HVF", accentColor: "#DA251D" },
 ];
 
 const PVL_2024_25: TeamSeed[] = [
