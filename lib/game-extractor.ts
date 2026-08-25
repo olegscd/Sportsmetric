@@ -512,7 +512,7 @@ export async function extractGameFromUrl(
   if (!html) {
     throw new Error(
       lastError?.message ||
-        `Could not fetch valid LiveStats match data. Please verify the URL or Match ID (${rawInput}).`
+      `Could not fetch valid LiveStats match data. Please verify the URL or Match ID (${rawInput}).`
     );
   }
 
@@ -542,11 +542,14 @@ export async function extractGameFromUrl(
     const wrapEl = $(wrap);
     const titleEl = wrapEl.prevAll(".box-score_title").first();
     const rawTitle = titleEl.text().trim();
-    const cleanTitle = rawTitle.replace(/\s*Coach:.*$/i, "").trim();
-    const shortName = cleanTitle.split(/\s+/)[0] || cleanTitle;
+    const cleanTitle = rawTitle.replace(/\s*Coach:[\s\S]*$/i, "").replace(/\s+/g, " ").trim();
+    let shortName = cleanTitle.split(/\s+/)[0] || cleanTitle;
 
     let displayName = cleanTitle;
-    if (cleanTitle.startsWith(shortName + " ")) {
+    if (cleanTitle.toUpperCase().startsWith("LA SALLE ")) {
+      shortName = "LA SALLE";
+      displayName = cleanTitle.slice("LA SALLE ".length).trim() || cleanTitle;
+    } else if (cleanTitle.startsWith(shortName + " ")) {
       displayName = cleanTitle.slice(shortName.length).trim();
     }
 

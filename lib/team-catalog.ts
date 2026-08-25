@@ -1,6 +1,6 @@
 import type { League, Team, TeamRecord } from "@/types/sports";
 
-export const TEAM_SEASON_IDS = ["2025-26", "2024-25", "2023-24"] as const;
+export const TEAM_SEASON_IDS = ["2026-27", "2025-26", "2024-25", "2023-24"] as const;
 
 type TeamSeed = {
   slug: string;
@@ -46,6 +46,18 @@ const UAAP_SEEDS: TeamSeed[] = [
   { slug: "ue", name: "UE Red Warriors", shortName: "UE", accentColor: "#DC143C" },
   { slug: "up", name: "UP Fighting Maroons", shortName: "UP", accentColor: "#7A1F2B" },
   { slug: "ust", name: "UST Growling Tigers", shortName: "UST", accentColor: "#FFC72C" },
+];
+
+/** UAAP Junior High School (U16) basketball — 8 member schools. */
+export const UAAP_U16_SEEDS: TeamSeed[] = [
+  { slug: "adamson", name: "Adamson Baby Falcons", shortName: "ADU", accentColor: "#0033A0" },
+  { slug: "ateneo", name: "Ateneo Blue Eaglets", shortName: "ADMU", accentColor: "#0038A8" },
+  { slug: "dlsu", name: "DLSZ Junior Archers", shortName: "DLSU", accentColor: "#00693E" },
+  { slug: "feu", name: "FEU-D Baby Tamaraws", shortName: "FEU", accentColor: "#006633" },
+  { slug: "nu", name: "NUNS Bullpups", shortName: "NU", accentColor: "#FFD700" },
+  { slug: "ue", name: "UE Junior Warriors", shortName: "UE", accentColor: "#DC143C" },
+  { slug: "up", name: "UPIS Junior Fighting Maroons", shortName: "UP", accentColor: "#7A1F2B" },
+  { slug: "ust", name: "UST Tiger Cubs", shortName: "UST", accentColor: "#FFC72C" },
 ];
 
 /** PBA core franchises (stable across recent seasons). */
@@ -258,7 +270,7 @@ const PVL_2023_24: TeamSeed[] = [
 
 const LEAGUE_TEAMS_BY_SEASON: Record<string, Record<League, TeamSeed[]>> = {
   "2026-27": {
-    UAAP: UAAP_SEEDS,
+    UAAP: UAAP_U16_SEEDS,
     PBA: PBA_2025_26,
     PVL: PVL_2025_26,
   },
