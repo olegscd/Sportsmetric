@@ -115,7 +115,7 @@ export function StandingsView() {
             <StandingsTable standings={standings} isOldSeason={isOldSeason} />
           )}
 
-          {league === "UAAP" && standings.length >= 4 && (
+          {league === "UAAP" && standings.length >= 4 && playoffGames.length > 0 && (
             <div className="pt-4">
               <FinalFourBracket standings={standings} playoffGames={playoffGames} />
             </div>

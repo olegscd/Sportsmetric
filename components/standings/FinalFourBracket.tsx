@@ -13,7 +13,7 @@ interface FinalFourBracketProps {
 }
 
 export function FinalFourBracket({ standings, playoffGames }: FinalFourBracketProps) {
-  if (standings.length < 4) {
+  if (standings.length < 4 || playoffGames.length === 0) {
     return null;
   }
 
