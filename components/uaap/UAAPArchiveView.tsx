@@ -92,6 +92,16 @@ function FootballIcon({ className }: { className?: string }) {
   );
 }
 
+function TennisIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <circle cx="12" cy="12" r="10" />
+      <path d="M4.93 4.93a10 10 0 0 1 14.14 0" />
+      <path d="M4.93 19.07a10 10 0 0 0 14.14 0" />
+    </svg>
+  );
+}
+
 interface SportMeta {
   name: string;
   slug: string;
@@ -116,7 +126,7 @@ const SPORTS_META: SportMeta[] = [
     icon: VolleyballIcon,
     color: "text-sky-400",
     bgGlow: "group-hover:border-sky-500/60 group-hover:bg-sky-500/5",
-    divisions: ["Men's", "Women's", "Girls"],
+    divisions: ["Men's", "Women's", "Girls", "Boys"],
   },
   {
     name: "Badminton",
@@ -132,7 +142,7 @@ const SPORTS_META: SportMeta[] = [
     icon: TableTennisIcon,
     color: "text-orange-400",
     bgGlow: "group-hover:border-orange-500/60 group-hover:bg-orange-500/5",
-    divisions: ["Men's", "Women's"],
+    divisions: ["Men's", "Women's", "Juniors"],
   },
   {
     name: "Tae Kwon Do",
@@ -140,7 +150,7 @@ const SPORTS_META: SportMeta[] = [
     icon: MartialArtsIcon,
     color: "text-red-400",
     bgGlow: "group-hover:border-red-500/60 group-hover:bg-red-500/5",
-    divisions: ["Men's", "Women's"],
+    divisions: ["Men's", "Women's", "Juniors"],
   },
   {
     name: "Judo",
@@ -172,7 +182,7 @@ const SPORTS_META: SportMeta[] = [
     icon: FootballIcon,
     color: "text-teal-400",
     bgGlow: "group-hover:border-teal-500/60 group-hover:bg-teal-500/5",
-    divisions: ["Men's"],
+    divisions: ["Men's", "Women's"],
   },
   {
     name: "Fencing",
@@ -188,7 +198,15 @@ const SPORTS_META: SportMeta[] = [
     icon: Crown,
     color: "text-amber-300",
     bgGlow: "group-hover:border-amber-400/60 group-hover:bg-amber-400/5",
-    divisions: ["Juniors"],
+    divisions: ["Juniors", "Women's"],
+  },
+  {
+    name: "Lawn Tennis",
+    slug: "lawn-tennis",
+    icon: TennisIcon,
+    color: "text-lime-400",
+    bgGlow: "group-hover:border-lime-500/60 group-hover:bg-lime-500/5",
+    divisions: ["Men's", "Women's"],
   },
 ];
 
