@@ -47,3 +47,9 @@ node_modules/
 /blob-report/
 /playwright/.cache/
 /playwright/.auth/
+
+# Raw physical archive camera dumps
+data/**/raw_photos/
+data/sample_pages/
+__pycache__/
+*.pyc

@@ -2,7 +2,7 @@
 
 import { useSportsData } from "@/context/SportsDataContext";
 import { cn } from "@/lib/utils";
-import { Radio, Shield, Trophy, Users } from "lucide-react";
+import { Award, Radio, Shield, Trophy, Users } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { ComponentType } from "react";
@@ -33,6 +33,12 @@ export function BottomNav() {
       label: "Standings",
       icon: Trophy,
       isActive: (path) => path.startsWith("/standings"),
+    },
+    {
+      href: "/uaap",
+      label: "UAAP",
+      icon: Award,
+      isActive: (path) => path.startsWith("/uaap"),
     },
     {
       href: "/teams",
