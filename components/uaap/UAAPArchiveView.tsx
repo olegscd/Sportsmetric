@@ -7,7 +7,6 @@ import {
   ChevronRight,
   Crown,
   Layers,
-  Search,
   Swords,
   Trophy,
   Volleyball as VolleyballIcon,
@@ -254,7 +253,6 @@ export function UAAPArchiveView() {
   const seasonParam = searchParams.get("season");
   const divisionParam = searchParams.get("division");
 
-  const [searchQuery, setSearchQuery] = useState("");
   const [stageFilter, setStageFilter] = useState<string>("All");
 
   const data = standingsData as StandingRecord[];
@@ -347,14 +345,9 @@ export function UAAPArchiveView() {
       const matchSeason = item.season.toLowerCase() === currentSeason.toLowerCase();
       const matchDivision = item.division.toLowerCase() === currentDivision.toLowerCase();
       const matchStage = stageFilter === "All" || item.stage.startsWith(stageFilter);
-      const matchQuery =
-        !searchQuery ||
-        item.team.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        (item.details && item.details.toLowerCase().includes(searchQuery.toLowerCase()));
-
-      return matchSport && matchSeason && matchDivision && matchStage && matchQuery;
+      return matchSport && matchSeason && matchDivision && matchStage;
     });
-  }, [data, currentSportMeta, currentSeason, currentDivision, stageFilter, searchQuery]);
+  }, [data, currentSportMeta, currentSeason, currentDivision, stageFilter]);
 
   // Check available stages for the selected sport, season & division
   const availableStages = useMemo(() => {
@@ -625,50 +618,33 @@ export function UAAPArchiveView() {
             </div>
           </div>
 
-          {/* Sub-bar: Stage Toggle & Search */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-surface border border-border rounded-2xl p-3">
-            {/* Stage filter if multiple stages exist */}
-            <div className="flex items-center gap-1.5 flex-wrap">
-              {availableStages.length > 1 ? (
-                <>
-                  <span className="text-xs font-semibold text-muted mr-1.5">Stage:</span>
-                  {["All", ...availableStages].map((stg) => {
-                    const active = stageFilter === stg;
-                    return (
-                      <button
-                        key={stg}
-                        onClick={() => setStageFilter(stg)}
-                        className={cn(
-                          "px-2.5 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer",
-                          active
-                            ? "bg-primary text-primary-foreground font-semibold"
-                            : "text-muted hover:bg-elevated hover:text-foreground"
-                        )}
-                      >
-                        {stg}
-                      </button>
-                    );
-                  })}
-                </>
-              ) : (
-                <span className="text-xs font-medium text-muted">
-                  Official {formatSeasonLabel(currentSeason).seasonNumber} {currentDivision} Standings
-                </span>
-              )}
+          {/* Sub-bar: Stage Toggle */}
+          {availableStages.length > 1 ? (
+            <div className="flex items-center gap-1.5 p-1 bg-surface border border-border rounded-xl self-start flex-wrap">
+              <span className="text-xs font-semibold text-muted px-2">Stage:</span>
+              {["All", ...availableStages].map((stg) => {
+                const active = stageFilter === stg;
+                return (
+                  <button
+                    key={stg}
+                    onClick={() => setStageFilter(stg)}
+                    className={cn(
+                      "px-2.5 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer",
+                      active
+                        ? "bg-primary text-primary-foreground font-semibold"
+                        : "text-muted hover:bg-elevated hover:text-foreground"
+                    )}
+                  >
+                    {stg}
+                  </button>
+                );
+              })}
             </div>
-
-            {/* Search within current division */}
-            <div className="relative min-w-[200px] sm:w-64">
-              <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted" />
-              <input
-                type="text"
-                placeholder="Filter by school..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-elevated/50 border border-border rounded-xl pl-9 pr-3 py-1.5 text-xs text-foreground placeholder:text-muted focus:outline-none focus:border-primary transition-all"
-              />
+          ) : (
+            <div className="text-xs font-medium text-muted">
+              Official {formatSeasonLabel(currentSeason).seasonNumber} {currentDivision} Standings
             </div>
-          </div>
+          )}
 
           {/* Standings Table Card */}
           <div className="bg-surface border border-border rounded-2xl overflow-hidden shadow-sm">
