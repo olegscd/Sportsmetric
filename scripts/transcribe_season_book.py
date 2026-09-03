@@ -77,7 +77,7 @@ def transcribe_page(client, image_path: Path, model_name: str) -> str:
     mime_type = "image/png" if ext == ".png" else "image/jpeg"
 
     # Retry with exponential backoff for rate limits or transient issues
-    max_retries = 3
+    max_retries = 5
     for attempt in range(max_retries):
         try:
             response = client.models.generate_content(
@@ -101,13 +101,13 @@ def transcribe_page(client, image_path: Path, model_name: str) -> str:
             return text.strip()
         except Exception as e:
             if "429" in str(e) or "ResourceExhausted" in str(e):
-                wait_sec = (attempt + 1) * 5
+                wait_sec = (attempt + 1) * 12
                 print(f"[Rate limit] waiting {wait_sec}s...")
                 time.sleep(wait_sec)
             else:
                 if attempt == max_retries - 1:
                     raise e
-                time.sleep(2)
+                time.sleep(3)
     raise RuntimeError("Failed after retries")
 
 
@@ -184,8 +184,8 @@ def run_transcription(season_name: str, model_name: str, force: bool = False):
             target_md.write_text(markdown_content, encoding="utf-8")
             print("DONE!")
             completed += 1
-            # Brief pacing delay to avoid aggressive rate limits
-            time.sleep(1.0)
+            # Pacing delay to strictly stay under the 15 RPM Gemini free tier limit
+            time.sleep(4.5)
         except Exception as e:
             print(f"FAILED! Error: {e}")
 
