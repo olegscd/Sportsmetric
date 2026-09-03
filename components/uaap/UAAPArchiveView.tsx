@@ -3,10 +3,7 @@
 import { cn } from "@/lib/utils";
 import {
   ArrowLeft,
-  BookOpen,
-  Download,
   Search,
-  Trophy,
   Volleyball as VolleyballIcon,
   Swords,
   Crown,
@@ -282,47 +279,7 @@ export function UAAPArchiveView() {
   }, [data, currentSportMeta, currentDivision]);
 
   return (
-    <div className="space-y-8 max-w-7xl mx-auto p-4 md:p-6 pb-20">
-      {/* Header Banner */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-border pb-5">
-        <div>
-          <div className="flex items-center gap-2">
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/20">
-              <Trophy size={13} />
-              Historical Archive
-            </span>
-            <span className="text-xs text-muted font-medium">Season 66 (2003–2004)</span>
-          </div>
-          <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-foreground mt-1.5 flex items-center gap-2.5">
-            UAAP Sports Archive
-          </h1>
-          <p className="text-sm text-muted mt-1">
-            Official team standings, win-loss records, and digital book preservation.
-          </p>
-        </div>
-
-        {/* Action Buttons */}
-        <div className="flex items-center gap-2.5">
-          <a
-            href="/data/seasons/2003-2004/UAAP_2003_2004_Annual_Report.html"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold bg-elevated hover:bg-elevated/80 border border-border text-foreground transition-all"
-          >
-            <BookOpen size={14} className="text-amber-400" />
-            <span>Digital Book Reader</span>
-          </a>
-          <a
-            href="/data/seasons/2003-2004/UAAP_2003_2004_Annual_Report.pdf"
-            download
-            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold bg-primary hover:bg-primary/90 text-primary-foreground transition-all shadow-sm"
-          >
-            <Download size={14} />
-            <span>Download PDF</span>
-          </a>
-        </div>
-      </div>
-
+    <div className="space-y-6 max-w-7xl mx-auto p-4 md:p-6 pb-20">
       {/* VIEW 1: OFF THE RIP — SQUARE BOXES GRID OF SPORTS */}
       {!currentSportMeta ? (
         <div className="space-y-4 animate-in fade-in duration-200">
