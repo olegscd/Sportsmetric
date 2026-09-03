@@ -3,14 +3,36 @@
 import { cn } from "@/lib/utils";
 import {
   ArrowLeft,
-  Search,
-  Volleyball as VolleyballIcon,
-  Swords,
+  Calendar,
+  ChevronRight,
   Crown,
+  Layers,
+  Search,
+  Swords,
+  Trophy,
+  Volleyball as VolleyballIcon,
 } from "lucide-react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import standingsData from "@/data/uaap_standings.json";
+
+export function formatSeasonLabel(season: string): { label: string; seasonNumber: string; year: string } {
+  const parts = season.split("-");
+  const startYear = parseInt(parts[0], 10);
+  if (!isNaN(startYear)) {
+    const seasonNum = startYear - 1937;
+    return {
+      seasonNumber: `Season ${seasonNum}`,
+      year: season,
+      label: `Season ${seasonNum} (${season})`,
+    };
+  }
+  return {
+    seasonNumber: season,
+    year: season,
+    label: season,
+  };
+}
 
 export interface StandingRecord {
   season: string;
@@ -227,8 +249,9 @@ export function UAAPArchiveView() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  // Selected sport & division from query params or null for "off the rip" box view
+  // Selected sport, season & division from query params
   const sportParam = searchParams.get("sport");
+  const seasonParam = searchParams.get("season");
   const divisionParam = searchParams.get("division");
 
   const [searchQuery, setSearchQuery] = useState("");
@@ -243,33 +266,85 @@ export function UAAPArchiveView() {
     );
   }, [sportParam]);
 
-  // Selected division within the sport (default to first available division)
+  // All seasons available for this sport from data
+  const availableSeasons = useMemo(() => {
+    if (!currentSportMeta) return [];
+    const matching = data.filter(
+      (item) => item.sport.toLowerCase() === currentSportMeta.name.toLowerCase()
+    );
+    const seasons = Array.from(new Set(matching.map((item) => item.season)));
+    return seasons.sort().reverse();
+  }, [data, currentSportMeta]);
+
+  // Current active season if selected
+  const currentSeason = useMemo(() => {
+    if (!seasonParam) return null;
+    return availableSeasons.find((s) => s.toLowerCase() === seasonParam.toLowerCase()) || null;
+  }, [seasonParam, availableSeasons]);
+
+  // Divisions available for the current sport AND selected season
+  const availableDivisionsForSeason = useMemo(() => {
+    if (!currentSportMeta) return [];
+    if (!currentSeason) return currentSportMeta.divisions;
+    const matching = data.filter(
+      (item) =>
+        item.sport.toLowerCase() === currentSportMeta.name.toLowerCase() &&
+        item.season.toLowerCase() === currentSeason.toLowerCase()
+    );
+    const divs = Array.from(new Set(matching.map((item) => item.division)));
+    return divs.length > 0 ? divs : currentSportMeta.divisions;
+  }, [data, currentSportMeta, currentSeason]);
+
+  // Selected division within the sport & season
   const currentDivision = useMemo(() => {
-    if (!currentSportMeta) return null;
-    if (divisionParam && currentSportMeta.divisions.map((d) => d.toLowerCase()).includes(divisionParam.toLowerCase())) {
-      return currentSportMeta.divisions.find((d) => d.toLowerCase() === divisionParam.toLowerCase()) || currentSportMeta.divisions[0];
+    if (!currentSportMeta || !currentSeason) return null;
+    if (divisionParam && availableDivisionsForSeason.map((d) => d.toLowerCase()).includes(divisionParam.toLowerCase())) {
+      return availableDivisionsForSeason.find((d) => d.toLowerCase() === divisionParam.toLowerCase()) || availableDivisionsForSeason[0];
     }
-    return currentSportMeta.divisions[0];
-  }, [currentSportMeta, divisionParam]);
+    return availableDivisionsForSeason[0];
+  }, [currentSportMeta, currentSeason, divisionParam, availableDivisionsForSeason]);
 
   const handleSelectSport = (sport: SportMeta) => {
-    router.push(`/uaap?sport=${encodeURIComponent(sport.name)}&division=${encodeURIComponent(sport.divisions[0])}`);
+    // Navigate to sport — showing available seasons first
+    router.push(`/uaap?sport=${encodeURIComponent(sport.name)}`);
+  };
+
+  const handleSelectSeason = (season: string) => {
+    if (!currentSportMeta) return;
+    const matching = data.filter(
+      (item) =>
+        item.sport.toLowerCase() === currentSportMeta.name.toLowerCase() &&
+        item.season.toLowerCase() === season.toLowerCase()
+    );
+    const divs = Array.from(new Set(matching.map((item) => item.division)));
+    const firstDiv = divs[0] || currentSportMeta.divisions[0] || "Men's";
+    router.push(
+      `/uaap?sport=${encodeURIComponent(currentSportMeta.name)}&season=${encodeURIComponent(season)}&division=${encodeURIComponent(firstDiv)}`
+    );
   };
 
   const handleSelectDivision = (div: string) => {
+    if (!currentSportMeta || !currentSeason) return;
+    router.push(
+      `/uaap?sport=${encodeURIComponent(currentSportMeta.name)}&season=${encodeURIComponent(currentSeason)}&division=${encodeURIComponent(div)}`
+    );
+  };
+
+  const handleBackToSeasons = () => {
     if (!currentSportMeta) return;
-    router.push(`/uaap?sport=${encodeURIComponent(currentSportMeta.name)}&division=${encodeURIComponent(div)}`);
+    router.push(`/uaap?sport=${encodeURIComponent(currentSportMeta.name)}`);
   };
 
   const handleBackToSports = () => {
     router.push("/uaap");
   };
 
-  // Filtered standings for the selected sport & division
+  // Filtered standings for the selected sport, season & division
   const sportStandings = useMemo(() => {
-    if (!currentSportMeta || !currentDivision) return [];
+    if (!currentSportMeta || !currentSeason || !currentDivision) return [];
     return data.filter((item) => {
       const matchSport = item.sport.toLowerCase() === currentSportMeta.name.toLowerCase();
+      const matchSeason = item.season.toLowerCase() === currentSeason.toLowerCase();
       const matchDivision = item.division.toLowerCase() === currentDivision.toLowerCase();
       const matchStage = stageFilter === "All" || item.stage.startsWith(stageFilter);
       const matchQuery =
@@ -277,24 +352,25 @@ export function UAAPArchiveView() {
         item.team.toLowerCase().includes(searchQuery.toLowerCase()) ||
         (item.details && item.details.toLowerCase().includes(searchQuery.toLowerCase()));
 
-      return matchSport && matchDivision && matchStage && matchQuery;
+      return matchSport && matchSeason && matchDivision && matchStage && matchQuery;
     });
-  }, [data, currentSportMeta, currentDivision, stageFilter, searchQuery]);
+  }, [data, currentSportMeta, currentSeason, currentDivision, stageFilter, searchQuery]);
 
-  // Check if both Final Standings and Elimination Round exist for current sport & division
+  // Check available stages for the selected sport, season & division
   const availableStages = useMemo(() => {
-    if (!currentSportMeta || !currentDivision) return [];
+    if (!currentSportMeta || !currentSeason || !currentDivision) return [];
     const stages = new Set(
       data
         .filter(
           (item) =>
             item.sport.toLowerCase() === currentSportMeta.name.toLowerCase() &&
+            item.season.toLowerCase() === currentSeason.toLowerCase() &&
             item.division.toLowerCase() === currentDivision.toLowerCase()
         )
         .map((item) => item.stage)
     );
     return Array.from(stages);
-  }, [data, currentSportMeta, currentDivision]);
+  }, [data, currentSportMeta, currentSeason, currentDivision]);
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto p-4 md:p-6 pb-20">
@@ -345,15 +421,15 @@ export function UAAPArchiveView() {
             })}
           </div>
         </div>
-      ) : (
-        /* VIEW 2: SPORT OPENED — DIVISION SELECTOR & STANDINGS */
+      ) : !currentSeason ? (
+        /* VIEW 2: SPORT CLICKED — SEASONS AVAILABLE SELECTOR */
         <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-200">
           {/* Back Navigation & Sport Title */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="flex items-center justify-between gap-4 border-b border-border/60 pb-4">
             <div className="flex items-center gap-3">
               <button
                 onClick={handleBackToSports}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-surface border border-border text-muted hover:text-foreground hover:bg-elevated transition-colors"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-surface border border-border text-muted hover:text-foreground hover:bg-elevated transition-colors cursor-pointer"
               >
                 <ArrowLeft size={14} />
                 <span>All Sports</span>
@@ -371,35 +447,188 @@ export function UAAPArchiveView() {
               </div>
             </div>
 
-            {/* Division Selector Pills */}
-            <div className="flex items-center gap-1.5 p-1 bg-surface border border-border rounded-xl self-start sm:self-auto">
-              <span className="text-[11px] font-bold text-muted px-2 uppercase tracking-wider hidden sm:inline">
-                Division:
-              </span>
-              {currentSportMeta.divisions.map((div) => {
-                const active = currentDivision?.toLowerCase() === div.toLowerCase();
+            <span className="text-xs font-semibold text-muted bg-surface border border-border px-3 py-1 rounded-xl">
+              {availableSeasons.length} {availableSeasons.length === 1 ? "Season Available" : "Seasons Available"}
+            </span>
+          </div>
+
+          <div>
+            <h3 className="text-base font-bold text-foreground">Available Seasons</h3>
+            <p className="text-xs text-muted mt-0.5">
+              Select a season to view official tournament standings, match records, and division results.
+            </p>
+          </div>
+
+          {availableSeasons.length === 0 ? (
+            <div className="bg-surface border border-border rounded-2xl p-12 text-center">
+              <Calendar className="w-10 h-10 text-muted mx-auto mb-3 opacity-40" />
+              <h4 className="text-sm font-bold text-foreground">No Archived Seasons Available</h4>
+              <p className="text-xs text-muted mt-1 max-w-sm mx-auto">
+                Historical records for {currentSportMeta.name} have not been digitized yet.
+              </p>
+              <button
+                onClick={handleBackToSports}
+                className="mt-4 inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-elevated hover:bg-elevated/80 border border-border text-foreground transition-all cursor-pointer"
+              >
+                <ArrowLeft size={14} />
+                <span>Back to All Sports</span>
+              </button>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {availableSeasons.map((season) => {
+                const info = formatSeasonLabel(season);
+                const matching = data.filter(
+                  (item) =>
+                    item.sport.toLowerCase() === currentSportMeta.name.toLowerCase() &&
+                    item.season.toLowerCase() === season.toLowerCase()
+                );
+                const divs = Array.from(new Set(matching.map((item) => item.division)));
+                const recordsCount = matching.length;
+                const champRecord = matching.find(
+                  (r) => r.rank === 1 && (r.stage.toLowerCase().includes("final") || (r.details && r.details.toLowerCase().includes("champion")))
+                );
+
                 return (
                   <button
-                    key={div}
-                    onClick={() => handleSelectDivision(div)}
+                    key={season}
+                    onClick={() => handleSelectSeason(season)}
                     className={cn(
-                      "px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all",
-                      active
-                        ? "bg-amber-500 text-slate-950 font-bold shadow-sm"
-                        : "text-muted hover:text-foreground hover:bg-elevated"
+                      "flex flex-col justify-between p-5 rounded-2xl bg-surface border border-border transition-all duration-200 text-left group cursor-pointer shadow-sm",
+                      "hover:border-amber-500/60 hover:bg-elevated/40 hover:scale-[1.02] hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-amber-500/50"
                     )}
                   >
-                    {div}
+                    <div className="flex items-start justify-between w-full">
+                      <div>
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                          <Trophy size={12} />
+                          {info.seasonNumber}
+                        </span>
+                        <h4 className="text-xl font-bold text-foreground mt-2 group-hover:text-amber-400 transition-colors">
+                          {info.year}
+                        </h4>
+                      </div>
+                      <span className="p-2 rounded-xl bg-elevated group-hover:bg-amber-500 group-hover:text-slate-950 text-muted transition-all">
+                        <ChevronRight size={16} />
+                      </span>
+                    </div>
+
+                    {champRecord && (
+                      <div className="mt-3 inline-flex items-center gap-1.5 text-xs font-medium text-muted">
+                        <Trophy size={13} className="text-amber-400 shrink-0" />
+                        <span className="truncate">
+                          Champion: <strong className="text-foreground">{champRecord.team}</strong> ({champRecord.division})
+                        </span>
+                      </div>
+                    )}
+
+                    <div className="mt-4 pt-3.5 border-t border-border/60 flex items-center justify-between text-xs text-muted w-full">
+                      <span className="flex items-center gap-1.5 truncate">
+                        <Layers size={13} className="text-amber-400 shrink-0" />
+                        <span>{divs.length} {divs.length > 1 ? "Divisions" : "Division"}</span>
+                      </span>
+                      <span className="font-semibold text-foreground/80 shrink-0">
+                        {recordsCount} records
+                      </span>
+                    </div>
                   </button>
                 );
               })}
+            </div>
+          )}
+        </div>
+      ) : (
+        /* VIEW 3: SPORT & SEASON OPENED — SELECTORS & STANDINGS */
+        <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-200">
+          {/* Back Navigation & Sport Title */}
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <button
+                onClick={handleBackToSeasons}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-surface border border-border text-muted hover:text-foreground hover:bg-elevated transition-colors cursor-pointer"
+                title="Back to seasons"
+              >
+                <ArrowLeft size={14} />
+                <span>Seasons</span>
+              </button>
+
+              <button
+                onClick={handleBackToSports}
+                className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-medium text-muted hover:text-foreground hover:bg-elevated transition-colors cursor-pointer"
+                title="Back to all sports"
+              >
+                All Sports
+              </button>
+
+              <div className="flex items-center gap-2.5">
+                <div className={cn("p-2 rounded-xl bg-elevated/70", currentSportMeta.color)}>
+                  <currentSportMeta.icon className="w-5 h-5" />
+                </div>
+                <div>
+                  <h2 className="text-xl font-bold text-foreground flex items-center gap-2">
+                    {currentSportMeta.name}
+                  </h2>
+                </div>
+              </div>
+            </div>
+
+            {/* Combined Selectors: Season & Division */}
+            <div className="flex flex-wrap items-center gap-2">
+              {/* Season Selector Pills */}
+              <div className="flex items-center gap-1.5 p-1 bg-surface border border-border rounded-xl">
+                <span className="text-[11px] font-bold text-muted px-2 uppercase tracking-wider hidden sm:inline">
+                  Season:
+                </span>
+                {availableSeasons.map((s) => {
+                  const info = formatSeasonLabel(s);
+                  const active = currentSeason.toLowerCase() === s.toLowerCase();
+                  return (
+                    <button
+                      key={s}
+                      onClick={() => handleSelectSeason(s)}
+                      className={cn(
+                        "px-3 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer",
+                        active
+                          ? "bg-amber-500 text-slate-950 font-bold shadow-sm"
+                          : "text-muted hover:text-foreground hover:bg-elevated"
+                      )}
+                    >
+                      {info.seasonNumber} ({info.year})
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Division Selector Pills */}
+              <div className="flex items-center gap-1.5 p-1 bg-surface border border-border rounded-xl">
+                <span className="text-[11px] font-bold text-muted px-2 uppercase tracking-wider hidden sm:inline">
+                  Division:
+                </span>
+                {availableDivisionsForSeason.map((div) => {
+                  const active = currentDivision?.toLowerCase() === div.toLowerCase();
+                  return (
+                    <button
+                      key={div}
+                      onClick={() => handleSelectDivision(div)}
+                      className={cn(
+                        "px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer",
+                        active
+                          ? "bg-primary text-primary-foreground font-bold shadow-sm"
+                          : "text-muted hover:text-foreground hover:bg-elevated"
+                      )}
+                    >
+                      {div}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           </div>
 
           {/* Sub-bar: Stage Toggle & Search */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-surface border border-border rounded-2xl p-3">
             {/* Stage filter if multiple stages exist */}
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-1.5 flex-wrap">
               {availableStages.length > 1 ? (
                 <>
                   <span className="text-xs font-semibold text-muted mr-1.5">Stage:</span>
@@ -410,7 +639,7 @@ export function UAAPArchiveView() {
                         key={stg}
                         onClick={() => setStageFilter(stg)}
                         className={cn(
-                          "px-2.5 py-1 rounded-lg text-xs font-medium transition-all",
+                          "px-2.5 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer",
                           active
                             ? "bg-primary text-primary-foreground font-semibold"
                             : "text-muted hover:bg-elevated hover:text-foreground"
@@ -423,7 +652,7 @@ export function UAAPArchiveView() {
                 </>
               ) : (
                 <span className="text-xs font-medium text-muted">
-                  Official {currentDivision} Standings
+                  Official {formatSeasonLabel(currentSeason).seasonNumber} {currentDivision} Standings
                 </span>
               )}
             </div>
