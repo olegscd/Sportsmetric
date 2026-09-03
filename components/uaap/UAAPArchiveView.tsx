@@ -214,7 +214,7 @@ export function UAAPArchiveView() {
   const divisionParam = searchParams.get("division");
 
   const [searchQuery, setSearchQuery] = useState("");
-  const [stageFilter, setStageFilter] = useState<"All" | "Final Standings" | "Elimination Round">("All");
+  const [stageFilter, setStageFilter] = useState<string>("All");
 
   const data = standingsData as StandingRecord[];
 
@@ -253,7 +253,7 @@ export function UAAPArchiveView() {
     return data.filter((item) => {
       const matchSport = item.sport.toLowerCase() === currentSportMeta.name.toLowerCase();
       const matchDivision = item.division.toLowerCase() === currentDivision.toLowerCase();
-      const matchStage = stageFilter === "All" || item.stage === stageFilter;
+      const matchStage = stageFilter === "All" || item.stage.startsWith(stageFilter);
       const matchQuery =
         !searchQuery ||
         item.team.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -385,7 +385,7 @@ export function UAAPArchiveView() {
               {availableStages.length > 1 ? (
                 <>
                   <span className="text-xs font-semibold text-muted mr-1.5">Stage:</span>
-                  {(["All", "Final Standings", "Elimination Round"] as const).map((stg) => {
+                  {["All", ...availableStages].map((stg) => {
                     const active = stageFilter === stg;
                     return (
                       <button
