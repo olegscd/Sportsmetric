@@ -196,7 +196,7 @@ def run_transcription(season_name: str, model_name: str, force: bool = False):
 def main():
     parser = argparse.ArgumentParser(description="Transcribe an entire UAAP annual report book season into digital Markdown.")
     parser.add_argument("--season", default="2003-2004", help="Season name/folder (default: 2003-2004)")
-    parser.add_argument("--model", default="gemini-3.6-flash", help="Model name (default: gemini-3.6-flash)")
+    parser.add_argument("--model", default="gemini-3.5-flash", help="Model name (default: gemini-3.5-flash)")
     parser.add_argument("--force", action="store_true", help="Re-transcribe pages even if .md already exists")
     args = parser.parse_args()
 
