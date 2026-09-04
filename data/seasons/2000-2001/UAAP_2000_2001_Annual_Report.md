@@ -6481,3 +6481,4207 @@ RESULTS
 
 ---
 
+<!-- START PAGE 136 (IMG_1203.md) -->
+*(Page 136 — Source: `IMG_1203`)*
+
+# 2000-2001 UAAP TENNIS TOURNAMENT
+
+## RESULTS
+
+### CHAMPIONSHIP ROUND
+
+#### SUNDAY, FEBRUARY 4, 2001
+
+| GAME I | | | | | | | |
+| :--- | :--- | :---: | :---: | :--- | :---: | :---: | :---: |
+| 1st Singles | Gerard Abacan | **ADMU** | defeated | Art Thomas Calingasan | UST | 7-5; 3-6; 7-5 | **ADMU** 2 |
+| Doubles | Lennard Lucas / Gabriel Edward Remigio | **UST** | defeated | Randy De Guzman / Stanley Ong | ADMU | 6-3; 6-4 | UST 1 |
+| 2nd Singles | Neil Co | **ADMU** | defeated | Karl Thomas Santamari | UST | 7-6; 6-2 | |
+
+#### SUNDAY, FEBRUARY 11, 2001
+
+| GAME 2 | | | | | | | |
+| :--- | :--- | :---: | :---: | :--- | :---: | :---: | :---: |
+| 1st Singles | Neil Co | **ADMU** | defeated | Karl Thomas Santamari | UST | 3-6; 6-1; 6-4 | **ADMU** 2 |
+| Doubles | Lennard Lucas / Gabriel Edward Remigio | **UST** | defeated | Gerard Abacan / Stanley Ong | ADMU | 2-6; 6-2; 6-2 | UST 1 |
+| 2nd Singles | Randy De Guzman | **ADMU** | defeated | Art Thomas Calingasan | UST | 6-0; 7-6 | |
+
+---
+
+<!-- START PAGE 137 (IMG_1204.md) -->
+*(Page 137 — Source: `IMG_1204`)*
+
+# UAAP SOFTBALL TOURNAMENT
+
+## Standings (After Two Rounds)
+
+| Team | Wins | Losses | Draw |
+| :--- | :---: | :---: | :---: |
+| Adamson University | - | 2 | 1 |
+| University of Sto Tomas | - | 1 | 3 |
+| University of the Philippines | - | 3 | 1 |
+| University of the East | - | 3 | 1 |
+| De La Salle University | - | 8 | - |
+| Ateneo de Manila University | - | 10 | - |
+
+## Individual Awards
+
+| Award | Winner | School |
+| :--- | :--- | :---: |
+| **Most Valuable Player** | Erlinda Pascual | UE |
+| **Rookie of the Year** | Ma. Theresa Lagman | UST |
+| **Best Pitcher** | Mercy Bandillo | UE |
+| **Batting Champion** | Erlinda Pascual | UE |
+| **Best Slugger** | Erlinda Pascual | UE |
+| **Most Runs Batted-in** | Erlinda Pascual | UE |
+| **Most Stolen Bases** | [Unreadable/Cut-off] | UP |
+| **Most Homerun** | Erlinda Pascual | UE |
+
+**Host** – National University
+
+**Venue** – UST Field
+
+---
+
+<!-- START PAGE 138 (IMG_1205.md) -->
+*(Page 138 — Source: `IMG_1205`)*
+
+FINAL RESULTS OF THE 2000-2001 UAAP SOFTBALL TOURNAMENT
+
+HOST: NATIONAL UNIVERSITY
+
+**CHAMPION** : Adamson University  
+**SECOND PLACE** : University of Santo Tomas  
+**THIRD PLACE** : University of the Philippines  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;University of the East  
+**FOURTH PLACE** : Dela Salle University  
+**FIFTH Place** : Ateneo de Manila University  
+
+### STANDING OF TEAMS AFTER TWO ROUNDS
+
+| | WIN | LOSS | DRAW |
+| :--- | :---: | :---: | :---: |
+| **Adamson University** | 7 | 2 | 1 |
+| **University of Sto Tomas** | 6 | 1 | 3 |
+| **University of the Philippines** | 6 | 3 | 1 |
+| **University of the East** | 6 | 3 | 1 |
+| **De la Salle University** | 2 | 8 | - |
+| **Ateneo de Manila University** | 0 | 10 | - |
+
+<br>
+
+**Most Valuable Player** : Erlinda Pascual &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; UE  
+**Rookie of the Year** : Ma. Theresa Lagman &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; UST  
+**Best Pitcher** : Mercy Bandillo &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; UE  
+**Batting Champion** : Erlinda Pascual &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; UE  
+**Best Slugger** : Erlinda Pascual &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; UE  
+**Most Runs Batted-In** : Erlinda Pascual &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; UE  
+**Most Stolen Bases** : Mary Glenn Enrique &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; UP  
+**Most Homerun** : Erlinda Pascual &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; UE
+
+---
+
+<!-- START PAGE 139 (IMG_1206.md) -->
+*(Page 139 — Source: `IMG_1206`)*
+
+## 2000-2001 UAAP SOFTBALL TOURNAMENT
+**VENUE: UST FIELD**
+
+### FIRST ROUND
+
+**Saturday – November 25, 2000**
+* Adamson defeated Ateneo 16 – 0 (5 innings)
+* UP defeated DLSU 14 – 0 (5 innings)
+* UST defeated UE 7 – 2 (5 innings)
+
+**Thursday – November 30, 2000**
+* UE defeated UP 3 – 2
+* UST defeated Ateneo 25 – 3 (5 innings)
+* Adamson defeated DLSU 14 – 4 (6 innings)
+
+**Tuesday – December 05, 2000**
+* DLSU defeated Ateneo 16 – 8
+* UST defeated UP 3 – 0
+* UE defeated Adamson 4 – 2
+
+**Wednesday – January 10, 2001**
+* UST draw Adamson 4 – 4
+* UE defeated DLSU 13 – 0 (5 innings)
+* UP defeated Ateneo 15 – 3 (5 innings)
+
+**Saturday – January 13, 2001**
+* UE defeated Ateneo 19 – 0 (5 innings)
+* UST defeated DLSU 20 – 0 (5 innings)
+* UP defeated Adamson 8 – 7
+
+---
+
+### SECOND ROUND
+
+**Tuesday – January 16, 2001**
+* UST defeated Ateneo 16 – 0 (5 innings)
+* UE defeated DLSU 16 – 0 (5 innings)
+* Adamson defeated UP 6 – 5
+
+**Wednesday – January 24, 2001**
+* Adamson defeated UST 5 – 2
+* UP defeated DLSU 10 – 0 (5 innings)
+* UE defeated Ateneo 16 – 0 (5 innings)
+
+**Saturday – January 27, 2001**
+* DLSU defeated Ateneo 14 – 9
+* Adamson defeated UE 5 – 4
+* UST draw UP 2 – 2
+
+**Tuesday – January 30, 2001**
+* UP defeated UE 4 – 1
+* Adamson defeated Ateneo 13 – 2 (5 innings)
+* UST defeated DLSU 22 – 3 (5 innings)
+
+---
+
+<!-- START PAGE 140 (IMG_1207.md) -->
+*(Page 140 — Source: `IMG_1207`)*
+
+Saturday – February 3, 2001
+UP defeated ATENEO
+ADAMSON defeated DLSU 14 – 0 5 innings
+UST draw UE 22 – 2 5 innings
+0 – 0
+
+### **CHAMPIONSHIP ROUND**
+
+<u>Sunday – February 11, 2001 – Rosario Sports Complex</u>
+UST defeated ADAMSON 6 – 0
+
+<u>Wednesday – February 14, 2001 – Rosario Sports Complex</u>
+ADAMSON defeated UST 3 – 1
+
+<u>Sunday – February 18, 2001 – Rosario Sports Complex</u>
+ADAMSON defeated UST 4 – 1
+
+---
+
+<!-- START PAGE 141 (IMG_1208.md) -->
+*(Page 141 — Source: `IMG_1208`)*
+
+# UAAP TABLE TENNIS TOURNAMENT
+
+| School | 1st Round | WON | LOSS | 2nd Round | WON | LOSS | Total Wins | Total Losses | Rank |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **DLSU** | 13 | 20 | 7 | 13 | 20 | 7 | 40 | 14 | **1st** |
+| **UST** | 12 | 18 | 11 | 12 | 18 | 11 | 36 | 22 | **2nd** |
+| **UE** | 11 | 17 | 13 | 11 | 17 | 13 | 34 | 26 | **3rd** |
+| **UP** | 12 | 16 | 15 | 12 | 16 | 15 | 32 | 30 | **4th** |
+| **AdU** | 12 | 12 | 19 | 10 | 12 | 19 | 24 | 38 | **5th** |
+| **FEU** | 9 | 9 | 16 | 9 | 9 | 16 | 18 | 32 | **6th** |
+| **ADMU** | 8 | 8 | 18 | 8 | 8 | 18 | 16 | 36 | **7th** |
+| **NU** | 7 | 0 | 18 | 7 | 4 | 21 | 4 | 39 | **8th** |
+
+**Host** - University of Santo Tomas
+
+**MVP** - PHILIP JOHN SILOS (DLSU)  
+**Venue** - UST Gym
+
+---
+
+<!-- START PAGE 142 (IMG_1210.md) -->
+*(Page 142 — Source: `IMG_1210`)*
+
+### 63^rd^ UAAP TABLE TENNIS CHAMPIONSHIP
+#### HOST - University of Santo Tomas
+#### September 16, 17, 23, 24, 2000
+
+---
+
+### **FINAL RESULTS**
+
+#### **MEN'S DIVISION**
+
+| | 1^st^ Round | WON | LOSS | 2^nd^ Round | WON | LOSS | 1^st^ & 2^nd^ Round | WON | LOSS | FINAL STANDING |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **DLSU** | 13 | **20** | **7** | 13 | **20** | **8** | 26 | **40** | **15** | **1^st^** |
+| **UST** | 12 | **18** | **11** | 12 | **18** | **7** | 24 | **36** | **18** | **2^nd^** |
+| **UE** | 11 | **16** | **11** | 13 | **19** | **10** | 24 | **35** | **21** | **3^rd^** |
+| **UP** | 12 | **18** | **8** | 12 | **18** | **6** | 24 | **36** | **14** | **4^th^** |
+| **AdU** | 12 | **12** | **11** | 10 | **13** | **13** | 22 | **29** | **24** | **5^th^** |
+| **FEU** | 9 | **9** | **16** | 9 | **8** | **15** | 18 | **20** | **31** | **6^th^** |
+| **ADMU** | 8 | **8** | **18** | 8 | **3** | **18** | 16 | **7** | **36** | **7^th^** |
+| **NU** | 7 | **0** | **18** | 7 | **4** | **21** | 14 | **4** | **39** | **8^th^** |
+
+#### **MVP - PHILIP JOHN SILOS (DLSU)**
+
+---
+
+<!-- START PAGE 143 (IMG_1211.md) -->
+*(Page 143 — Source: `IMG_1211`)*
+
+# 63^rd UAAP TABLE TENNIS CHAMPIONSHIP
+### HOST - University of Santo, Tomas
+### September 16, 17, 23, 24, 2000
+
+## FINAL RESULTS
+
+### WOMEN'S DIVISION
+
+| SCHOOL | 1^st Round | WON | LOSS | 2^nd Round | WON | LOSS | 1^st & 2^nd Round | WON | LOSS | FINAL STANDING |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **UP** | 14 | 21 | 3 | 14 | 21 | 2 | 28 | 42 | 5 | **1^st** |
+| **UST** | 13 | 19 | 6 | 13 | 18 | 7 | 26 | 37 | 13 | **2^nd** |
+| **UE** | 12 | 17 | 8 | 12 | 18 | 8 | 24 | 35 | 16 | **3^rd** |
+| **AdU** | 11 | 16 | 10 | 11 | 15 | 10 | 22 | 31 | 20 | **4^th** |
+| **FEU** | 10 | 10 | 13 | 10 | 11 | 15 | 20 | 21 | 28 | **5^th** |
+| **DLSU** | 9 | 9 | 15 | 9 | 9 | 16 | 18 | 18 | 31 | **6^th** |
+| **ADMU** | 8 | 3 | 18 | 8 | 5 | 21 | 16 | 8 | 36 | **7^th** |
+| **NU** | 7 | 0 | 21 | 11 | 0 | 21 | 14 | 14 | 0 | **8^th** |
+
+**MVP** - Karen Jaleco (UP)
+
+---
+
+<!-- START PAGE 144 (IMG_1212.md) -->
+*(Page 144 — Source: `IMG_1212`)*
+
+## 63rd UAAP TABLE TENNIS CHAMPIONSHIP
+### HOST - University of Santo Tomas
+#### September 16, 17, 23, 24, 2000
+
+### FINAL RESULTS
+
+#### WOMEN'S DIVISION
+
+| | 1st Round | WON | LOSS | 2nd Round | WON | LOSS | 1st & 2nd Round | WON | LOSS | FINAL STANDING |
+|---|---|---|---|---|---|---|---|---|---|---|
+| **UP** | 14 | 21 | 3 | 14 | 21 | 2 | 28 | 42 | 5 | 1st |
+| **UST** | 13 | 19 | 6 | 13 | 18 | 7 | 26 | 37 | 13 | 2nd |
+| **UE** | 12 | 17 | 8 | 12 | 18 | 8 | 24 | 35 | 16 | 3rd |
+| **AdU** | 11 | 16 | 10 | 11 | 15 | 10 | 22 | 31 | 20 | 4th |
+| **FEU** | 10 | 10 | 13 | 10 | 11 | 15 | 20 | 21 | 28 | 5th |
+| **DLSU** | 9 | 9 | 15 | 9 | 9 | 16 | 18 | 18 | 31 | 6th |
+| **ADMU** | 8 | 3 | 18 | 8 | 5 | 21 | 16 | 8 | 36 | 7th |
+| **NU** | 7 | 0 | 21 | 11 | 0 | 21 | 14 | 14 | 0 | 8th |
+
+**MVP - Karen Jaleco (UP)**
+
+---
+
+<!-- START PAGE 145 (IMG_1213.md) -->
+*(Page 145 — Source: `IMG_1213`)*
+
+# UAAP TAEKWONDO TOURNAMENT
+
+**Host** - ~~Ateneo de Manila University~~ UP
+
+**Venue** - ~~Ateneo Gym~~ UP Gym
+
+---
+
+<!-- START PAGE 146 (IMG_1214.md) -->
+*(Page 146 — Source: `IMG_1214`)*
+
+# 63rd UAAP TAEKWONDO CHAMPIONSHIP
+**Venue:** Blue Eagle Gym, Ateneo de Manila  
+**Date:** December 6 & 9, 2000  
+**Host:** Ateneo de Manila University  
+
+---
+
+## MEN'S DIVISION
+
+* **Champion:** **De la Salle University**
+* **2nd Place:** **University of Santo Tomas**
+* **3rd Place:** **University of the Philippines**
+* **4th Place:** **University of the East**
+* **5th Place:** **Far Eastern University**
+* **6th Place:** **Ateneo de Manila University**
+
+* **MVP:** **Jason Jalbuena (DLSU)**
+
+---
+
+## WOMEN'S DIVISION
+
+* **Champion:** **University of Santo Tomas**
+* **2nd Place:** **University of the Philippines**
+* **3rd Place:** **Far Eastern University**
+* **4th Place:** **Ateneo de Manila University**
+* **5th Place:** **University of the East**
+* **6th Place:** **De la Salle University**
+
+* **MVP:** **Daleen Cordero (UST)**
+
+---
+
+<!-- START PAGE 147 (IMG_1215.md) -->
+*(Page 147 — Source: `IMG_1215`)*
+
+JUNIOR'S DIVISION
+
+*   **Champion** : Ateneo de Manila University
+*   **2<sup>nd</sup> Place** : University of the Philippines
+*   **3<sup>rd</sup> Place** : University of Santo Tomas
+*   **4<sup>th</sup> Place** : De la Salle Zobel
+*   **5<sup>th</sup> Place** : University of the East
+*   **MVP** : Gregory Paul Yan (ADMU)
+
+### TEAM TALLY
+
+#### MEN
+
+| | ADMU | DLSU | FEU | UE | UP | UST | WIN | LOSE | RANK |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| ADMU | ^ | 1-6 | 3-4 | 3-4 | 3-4 | 3-4 | | IIIII | 6<sup>TH</sup> |
+| DLSU | 6-1 | ^ | 4-3 | 5-2 | 3-4 | 5-2 | IIII | I | 1<sup>ST</sup> |
+| FEU | 4-3 | 3-4 | ^ | 3-4 | 4-2 | 3-4 | II | III | 5<sup>TH</sup> |
+| UE | 4-3 | 2-5 | 4-3 | ^ | 2-4 | 2-5 | II | III | 4<sup>TH</sup> |
+| UP | 4-3 | 4-3 | 2-4 | 4-2 | ^ | 3-4 | III | II | 3<sup>RD</sup> |
+| UST | 4-3 | 2-5 | 4-3 | 5-2 | 4-3 | ^ | IIII | II | 2<sup>ND</sup> |
+
+#### WOMEN
+
+| | ADMU | DLSU | FEU | UE | UP | UST | WIN | LOSE | RANK |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| ADMU | ^ | 6-1 | 2-5 | 4-3 | 2-5 | 3-4 | II | III | 4<sup>TH</sup> |
+| DLSU | 1-6 | ^ | 1-6 | 0-7 | 0-7 | 1-6 | | IIIII | 6<sup>TH</sup> |
+| FEU | 5-2 | 6-1 | ^ | 4-2 | 3-4 | 1-6 | III | II | 3<sup>RD</sup> |
+| UE | 3-4 | 7-0 | 2-4 | ^ | 3-4 | 1-6 | I | IIII | 5<sup>TH</sup> |
+| UP | 5-2 | 7-0 | 4-3 | 4-3 | ^ | 0-7 | IIII | I | 2<sup>ND</sup> |
+| UST | 4-3 | 6-1 | 6-1 | 5-1 | 7-0 | ^ | IIIII | | 1<sup>ST</sup> |
+
+#### JUNIORS
+
+| | ADMU | DLSZ | UE | UP | UST | WIN | LOSE | RANK |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| ADMU | ^ | 7-0 | 7-0 | 5-2 | 6-1 | IIII | | 1<sup>ST</sup> |
+| DLSZ | 0-7 | ^ | 5-2 | 1-6 | 3-4 | I | III | 4<sup>TH</sup> |
+| UE | 0-7 | 2-5 | ^ | 0-6 | 1-6 | | IIII | 5<sup>TH</sup> |
+| UP | 2-5 | 6-1 | 6-0 | ^ | 4-3 | III | I | 2<sup>ND</sup> |
+| UST | 1-6 | 4-3 | 6-1 | 3-4 | ^ | II | II | 3<sup>RD</sup> |
+
+---
+
+<!-- START PAGE 148 (IMG_1216.md) -->
+*(Page 148 — Source: `IMG_1216`)*
+
+INDIVIDUAL EVENTS
+
+## MEN'S DIVISION
+
+### Fin weight
+| | Athlete | School |
+| :---: | :--- | :---: |
+| 1st | Andrei Ablaza | DLSU |
+| 2nd | Karym Laidan | ADMU |
+| 3rd | Derrick Jake Lazaro | UE |
+
+### Fly weight
+| | Athlete | School |
+| :---: | :--- | :---: |
+| 1st | Luis Lainier de Leon | UST |
+| 2nd | Jean Pierre Sabido | UP |
+| 3rd | Rayboy Ibanez | UE |
+
+### Bantam weight
+| | Athlete | School |
+| :---: | :--- | :---: |
+| 1st | Richard Sanchez | UP |
+| 2nd | Jose Alberto Villaviza | UE |
+| 3rd | Clifford Malary | FEU |
+
+### Feather weight
+| | Athlete | School |
+| :---: | :--- | :---: |
+| 1st | Ismael Bermudez | FEU |
+| 2nd | Jerry Robert Canlas | DLSU |
+| 3rd | Jorge Diaz | UP |
+
+### Light weight
+| | Athlete | School |
+| :---: | :--- | :---: |
+| 1st | Arnold Valenzuela | UST |
+| 2nd | Eric Olonan | DLSU |
+| 3rd | Igor Ducay | FEU |
+
+### Welter weight
+| | Athlete | School |
+| :---: | :--- | :---: |
+| 1st | Fernando Agbon | FEU |
+| 2nd | Joseph Fernandez | UP |
+| 3rd | Jason Jalbuena | DLSU |
+
+### Middle/Heavy
+| | Athlete | School |
+| :---: | :--- | :---: |
+| 1st | Michael Alejandrino | DLSU |
+| 2nd | Christian Algarne | UE |
+| 3rd | Mark Marquez | UST |
+
+---
+
+<!-- START PAGE 149 (IMG_1217.md) -->
+*(Page 149 — Source: `IMG_1217`)*
+
+# WOMEN’S DIVISION
+
+### Fin weight
+| | Name | School |
+| :---: | :--- | :---: |
+| 1st | Rose Ann Valencia | UE |
+| 2nd | Abigail Villajoaquin | UP |
+| 3rd | Lanie Minquillan | FEU |
+
+### Fly weight
+| | Name | School |
+| :---: | :--- | :---: |
+| 1st | Daleen Cordero | UST |
+| 2nd | Daisy Rivera | FEU |
+| 3rd | Francine Cabillon | ADMU |
+
+### Bantam weight
+| | Name | School |
+| :---: | :--- | :---: |
+| 1st | Lorraine Catalan | UP |
+| 2nd | Rosa Leah Falguera | FEU |
+| 3rd | Diorlyn Papelera | UST |
+
+### Feather weight
+| | Name | School |
+| :---: | :--- | :---: |
+| 1st | Grace Brioso | UST |
+| 2nd | Cecille Adriatico | UP |
+| 3rd | Janice Payoyo | ADMU |
+
+### Light weight
+| | Name | School |
+| :---: | :--- | :---: |
+| 1st | Kalindi Tamayo | UST |
+| 2nd | Leslie Ramires | UE |
+| 3rd | Grace Chan | UP |
+
+### Welter weight
+| | Name | School |
+| :---: | :--- | :---: |
+| 1st | Bernadette Razon | UST |
+| 2nd | Imee Esternon | FEU |
+| 3rd | Claire Montemayor | UP |
+
+### Middle/Heavy
+| | Name | School |
+| :---: | :--- | :---: |
+| 1st | Margarita Bonifacio | ADMU |
+| 2nd | Josephine Strachan | UST |
+| 3rd | Mary Ann Briones | FEU |
+
+---
+
+<!-- START PAGE 150 (IMG_1218.md) -->
+*(Page 150 — Source: `IMG_1218`)*
+
+## JUNIOR'S DIVISION
+
+### Fin weight
+| Place | Name | School |
+| :---: | :--- | :---: |
+| 1st | Paolo Pio Temponko | ADMU |
+| 2nd | Anton Miguel Suarez | DLSZ |
+| 3rd | Jan Carlo Jimenez | UST |
+
+### Fly weight
+| Place | Name | School |
+| :---: | :--- | :---: |
+| 1st | Alexander Samson | ADMU |
+| 2nd | Jose Masahiro Canzon | UP |
+| 3rd | Raymond Silva | DLSZ |
+
+### Bantam weight
+| Place | Name | School |
+| :---: | :--- | :---: |
+| 1st | Gregory Pual Yan | ADMU |
+| 2nd | Paul Alfonso Castro | UP |
+| 3rd | Jason Strachan | UST |
+
+### Feather weight
+| Place | Name | School |
+| :---: | :--- | :---: |
+| 1st | Jan Michael dela Torre | ADMU |
+| 2nd | Raymond Acain | UST |
+| 3rd | Oliver Taragoza | UP |
+
+### Light weight
+| Place | Name | School |
+| :---: | :--- | :---: |
+| 1st | Carlo Talens | UP |
+| 2nd | Cielito Noel Ramirez | ADMU |
+| 3rd | John Paul Medina | UST |
+
+### Welter weight
+| Place | Name | School |
+| :---: | :--- | :---: |
+| 1st | Alex Lazaro | UST |
+| 2nd | Lorenzo Villar | ADMU |
+| 3rd | Vincent Hipol | DLSZ |
+
+### Middle/Heavy
+| Place | Name | School |
+| :---: | :--- | :---: |
+| 1st | Jericho Antonio | ADMU |
+| 2nd | Dennis Brillante | UP |
+| 3rd | Federico Hipol | DLSZ |
+
+---
+
+<!-- START PAGE 151 (IMG_1219.md) -->
+*(Page 151 — Source: `IMG_1219`)*
+
+RESULTS OF THE 2000-2001 UAAP VOLLEYBALL TOURNAMENT
+HOST: University of the Philippines
+MEN'S DIVISION
+
+# UAAP VOLLEYBALL TOURNAMENT
+
+## TEAM STANDINGS AFTER TWO ROUNDS
+
+| TEAM | WIN | LOSS |
+| :--- | :---: | :---: |
+| University of Santo Tomas | 12 | 2 |
+| Far Eastern University | 10 | 4 |
+| National University | 10 | 4 |
+| De La Salle University | 9 | 5 |
+| Adamson University | 9 | 5 |
+| University of the Philippines | 8 | 6 |
+| University of the East | 5 | 9 |
+| Ateneo De Manila University | 2 | 12 |
+
+### CHAMPIONSHIP
+
+| TEAM | WIN | LOSS |
+| :--- | :---: | :---: |
+| University of Santo Tomas | 2 | 0 |
+| Far Eastern University | 0 | 2 |
+
+| | | |
+| :--- | :--- | :--- |
+| **Most Valuable Player:** | **Clarence T. Esteban** | **UST** |
+| **Rookie of the Year:** | **Jodel Winston M. Escano** | **UST** |
+| **Champion Coach:** | **Emiliano C. Lontoc** | **UST** |
+| **Best Spiker:** | **Rico c. De Guzman** | **UST** |
+| **Best Blocker:** | **Clarence T. Esteban** | **UST** |
+| **Best Server:** | **Don P. Esmele** | **FEU** |
+| **Best Libero:** | **Rommel C. Abella** | **UST** |
+| **Best Setter:** | **Christopher C. Quilao** | **UST** |
+
+**Host – University of the Philippines**
+
+**Venue – UP Gym**
+
+---
+
+<!-- START PAGE 152 (IMG_1220.md) -->
+*(Page 152 — Source: `IMG_1220`)*
+
+FINAL RESULTS OF THE 2000-2001 UAAP VOLLEYBALL TOURNAMENT
+HOST: University of the Philippines
+MEN'S DIVISION
+
+CHAMPION : **University of Santo Tomas**
+RUNNER-UP : **Far Eastern University**
+THIRD PLACE : National University
+FOURTH PLACE : De La Salle University
+FIFTH PLACE : Adamson University
+SIXTH PLACE : University of the Philippines
+SEVENTH PLACE : University of the East
+EIGHTH PLACE : Ateneo de Manila University
+
+### TEAM STANDING AFTER TWO ROUNDS
+
+| University of Santo Tomas | WIN | LOSS |
+| :--- | :---: | :---: |
+| Far Eastern University | 12 | 2 |
+| National University | 10 | 4 |
+| De La Salle University | 10 | 4 |
+| Adamson University | 9 | 5 |
+| University of the Philippines | 8 | 6 |
+| University of the East | 5 | 9 |
+| Ateneo De Manila University | 2 | 12 |
+| | 0 | 14 |
+
+### CHAMPIONSHIP ROUND
+
+| University of Santo Tomas | 2 | 0 |
+| :--- | :---: | :---: |
+| Far Eastern University | 0 | 2 |
+
+| | | |
+| :--- | :--- | :---: |
+| **Most Valuable Player:** | Clarence T. Esteban | UST |
+| **Rookie of the Year** : | Jodel Winston M. Escano | UST |
+| **Champion Coach** : | Emiliano C. Lontoc | UST |
+| **Best Spiker** : | Rico c. De Guzman | UST |
+| **Best Blocker** : | Clarence T. Esteban | UST |
+| **Best Server** : | Don P. Esmele | FEU |
+| **Best Libero** : | Rommel C. Abella | UST |
+| **Best Setter** : | Anthony Irvin S. Guiao | UST |
+
+---
+
+<!-- START PAGE 153 (IMG_1221.md) -->
+*(Page 153 — Source: `IMG_1221`)*
+
+UNIVERSITY ATHLETIC ASSOCIATION OF THE PHILIPPINES
+SY 2000-2001
+MEN'S VOLLEYBALL TOURNAMENT
+
+FIRST ROUND RESULTS
+
+**SUNDAY, JULY 23, 2000**
+* UP defeated ADMU 25-21; 25-15; 25-17
+* UST defeated DLSU 25-20; 25-22; 27-25
+* NU defeated UE 25-18; 25-11; 25-19
+* FEU defeated AdU 25-14; 18-25; 25-19; 25-17
+
+**SUNDAY, JULY 30, 2000**
+* FEU defeated UE 25-8; 25-18; 25-14
+* NU defeated AdU 25-22; 12-25; 25-21; 25-23
+* UST defeated UP 25-19; 25-19; 25-20
+* DLSU defeated ADMU 25-14; 25-20; 25-16
+
+**WEDNESDAY, AUGUST 2, 2000**
+* UP defeated NU 25-16; 25-14; 23-25; 25-27 15-11
+* UE defeated ADMU 25-9; 25-22; 25-18
+* FEU defeated DLSU 22-25; 25-21; 25-23; 25-17
+* UST defeated AdU 19-25; 25-22; 23-25; 25-13 15-10
+
+**SUNDAY, AUGUST 6, 2000**
+* DLSU defeated UE 25-12; 25-20; 25-22
+* FEU defeated UP 25-21; 25-15; 31-29
+* NU defeated UST 25-18; 22-25; 25-22; 26-24
+* AdU defeated ADMU 25-18; 25-15; 25-16
+
+**THURSDAY, AUGUST 10, 2000**
+* FEU defeated NU 25-12; 23-25; 25-19; 25-22
+* UST defeated ADMU 25-16; 25-11; 25-14
+* DLSU defeated UP 25-14; 25-14; 18-25; 25-17
+* AdU defeated UE 25-12; 25-20; 25-14
+
+**SUNDAY, AUGUST 13, 2000**
+* UST defeated UE 25-20; 25-18; 25-21
+* NU defeated DLSU 25-22; 25-15; 18-25; 25-22
+* AdU defeated UP 25-22; 25-19; 25-21
+* FEU defeated ADMU 25-14; 25-14; 25-13
+
+**WEDNESDAY, AUGUST 16, 2000**
+* AdU defeated DLSU 25-20; 25-14; 25-18
+* UST defeated FEU 25-18; 20-25; 25-16; 25-17
+* UP defeated UE 25-18; 25-20; 33-31
+* NU defeated ADMU 25-12; 25-18; 25-21
+
+### TEAM STANDING
+
+| | W | L |
+| :--- | :---: | :---: |
+| University of Santo Tomas | 6 | 1 |
+| Far Eastern University | 6 | 1 |
+| National University | 5 | 2 |
+| Adamson University | 4 | 3 |
+| De La Salle University | 3 | 4 |
+| University of the Philippines | 3 | 4 |
+| University of the East | 1 | 6 |
+| Manila University | 0 | 7 |
+
+---
+
+<!-- START PAGE 154 (IMG_1222.md) -->
+*(Page 154 — Source: `IMG_1222`)*
+
+UNIVERSITY ATHLETIC ASSOCIATION OF THE PHILIPPINES
+SY 2000-2001
+MEN'S VOLLEYBALL TOURNAMENT
+
+SECOND ROUND RESULTS
+
+#### WEDNESDAY, AUGUST 30, 2000
+* **DLSU** defeated UE — 25-19; 25-17; 25-16
+* **NU** defeated FEU — 27-25; 25-27; 25-19; 25-21
+* **UST** defeated AdU — 25-20; 25-21; 13-25; 25-18
+* **UP** defeated ADMU — 25-15; 25-11; 25-15
+
+#### SUNDAY, SEPTEMBER 3, 2000
+* **UST** defeated DLSU — 25-14; 25-16; 25-21
+* **AdU** defeated UE — 25-17; 25-17; 25-19
+* **FEU** defeated UP — 25-17; 28-25; 30-28
+* **NU** defeated ADMU — 25-18; 25-17; 29-27
+
+#### TUESDAY, SEPTEMBER 5, 2000
+* **DLSU** won by default ADMU — 25-0; 25-0; 25-0
+* **UST** defeated NU — 25-21; 25-21; 25-17
+* **UP** defeated UE — 27-25; 25-22; 28-26
+* **AdU** defeated FEU — 24-26; 25-23; 25-19; 25-20
+
+#### FRIDAY, SEPTEMBER 8, 2000
+* **DLSU** defeated NU — 25-17; 30-28; 25-15
+* **FEU** defeated UE — 25-15; 25-22; 21-25; 25-17
+* **AdU** defeated ADMU — 25-14; 25-11; 25-19
+* **UST** defeated UP — 25-17; 25-16; 25-16
+
+#### SUNDAY, SEPTEMBER 10, 2000
+* **FEU** defeated ADMU — 25-12; 25-18; 25-16
+* **UST** defeated UE — 25-11; 25-18; 25-15
+* **DLSU** defeated AdU — 21-25; 25-22; 25-20; 23-25 15-11
+* **NU** defeated UP — 23-25; 25-19; 25-21; 25-20
+
+#### THURSDAY, SEPTEMBER 21, 2000
+* **NU** defeated UE — 25-18; 25-23; 25-23
+* **DLSU** defeated FEU — 25-23; 25-21; 22-25; 25-19
+* **AdU** defeated UP — 30-28; 25-20; 25-18
+* **UST** defeated ADMU — 25-8; 25-10; 25-19
+
+#### SUNDAY, SEPTEMBER 24, 2000
+* **UE** defeated ADMU — 25-14; 23-25; 33-31; 25-17
+* **NU** defeated AdU — 25-14; 10-25; 25-23; 25-23
+* **DLSU** defeated UP — 25-20 25-13; 25-11
+* **FEU** defeated UST — 25-21; 25-18; 26-24
+
+---
+
+### TEAM STANDING
+
+| | W | L |
+| :--- | :---: | :---: |
+| University of Santo Tomas | 12 | 2 |
+| Far Eastern University | 10 | 4 |
+| National University | 10 | 4 |
+| De La Salle University | 9 | 5 |
+| Adamson University | 8 | 6 |
+| University of the Philippines | 5 | 9 |
+| University of the East | 2 | 12 |
+| Ateneo de Manila University | 0 | 14 |
+
+---
+
+<!-- START PAGE 155 (IMG_1223.md) -->
+*(Page 155 — Source: `IMG_1223`)*
+
+UNIVERSITY ATHLETIC ASSOCIATION OF THE PHILIPPINES
+SY 2000-2001
+MEN'S VOLLEYBALL TOURNAMENT
+
+RESULTS
+
+PLAY-OFF
+
+**MONDAY, SEPTEMBER 25, 2000**
+FEU defeated NU | 25-18; 25-23; 25-19
+
+SEMI-FINAL
+
+**WEDNESDAY, SEPTEMBER 27, 2000**
+GAME 1
+UST defeated DLSU | 25-15; 25-22; 25-20
+FEU defeated NU | 25-20; 25-13; 22-25; 25-18
+
+CHAMPIONSHIP ROUND
+
+GAME 1
+UST defeated FEU | 25-21; 25-18; 25-17
+
+GAME 2
+UST defeated FEU | 25-18; 23-25; 25-19; 28-25
+
+---
+
+FINAL TEAM STANDING
+
+| Place | University |
+| :--- | :--- |
+| **CHAMPION** | **University of Santo Tomas** |
+| **RUNNER-UP** | **Far Eastern University** |
+| **THIRD PLACE** | **National University** |
+| **FOURTH PLACE** | **De La Salle University** |
+| **FIFTH PLACE** | **Adamson University** |
+| **SIXTH PLACE** | **University of the Philippines** |
+| **SEVENTH PLACE** | **University of the East** |
+| **EIGHT PLACE** | **Ateneo de Manila University** |
+
+---
+
+<!-- START PAGE 156 (IMG_1224.md) -->
+*(Page 156 — Source: `IMG_1224`)*
+
+P-5 VOLLEYBALL • Players ranking by skills
+2000-2001 UAAP Volleyball Tournament for MEN
+
+Best scorers
+
+| Rk | No | Name | Team | Nb. Mat. | Nb. Set | Attack | Block | Serve | Total |
+|---|---|---|---|---|---|---|---|---|---|
+| 1 | 4 | PENETRANTE Edcer | FEU | 3 | 11 | 47 | 6 | 0 | 53 |
+| 1 | 1 | ESTEBAN Clarence | UST | 3 | 10 | 32 | 13 | 2 | 47 |
+| 3 | 9 | REYES Emilio Jr. | UST | 3 | 10 | 36 | 5 | 1 | 42 |
+| 4 | 2 | DE GUZMAN Rico | UST | 3 | 11 | 35 | 3 | 0 | 38 |
+| 4 | 1 | ESMELE Don | FEU | 3 | 10 | 26 | 9 | 2 | 37 |
+| 6 | 3 | PABELLANO Adrian | UST | 3 | 11 | 29 | 5 | 1 | 35 |
+| 7 | 14 | BONTIGAO Jobert | FEU | 3 | 10 | 27 | 2 | 0 | 29 |
+| 7 | 7 | DAMIAN Franz Eddie | UST | 3 | 11 | 23 | 3 | 1 | 27 |
+| 9 | 5 | TALAG Rolando | FEU | 3 | 11 | 13 | 3 | 0 | 16 |
+| 10 | 10 | MANALON Ferdinand | FEU | 3 | 11 | 9 | 4 | 0 | 13 |
+| 11 | 2 | GUEVARRA Joeffrey Butch | FEU | 3 | 11 | 9 | 0 | 0 | 9 |
+| 12 | 6 | GEMENTIZA Byron | FEU | 3 | 10 | 2 | 2 | 2 | 6 |
+| 13 | 8 | GUIAO Anthony Irvin | UST | 3 | 11 | 3 | 0 | 2 | 4 |
+| 14 | 7 | DIWA Serafin Jr. | FEU | 3 | 11 | 2 | 1 | 0 | 3 |
+| 14 | 12 | RODA Ryan Joseph | FEU | 3 | 11 | 2 | 1 | 0 | 3 |
+| 16 | 4 | ESCANO Jodel Winston | UST | 3 | 11 | 0 | 0 | 0 | 0 |
+| 16 | 5 | FERNANDEZ Christian | UST | 3 | 10 | 0 | 0 | 0 | 0 |
+| 16 | 6 | CAMITAN Warren Jay | UST | 3 | 10 | 0 | 0 | 0 | 0 |
+| 16 | 11 | ABELLA Rommel | UST | 3 | 10 | 0 | 0 | 0 | 0 |
+| 16 | 12 | PONCE Rogelio Jr. | UST | 3 | 10 | 0 | 0 | 0 | 0 |
+| 16 | 15 | RUELOS Nimrod | UST | 3 | 10 | 0 | 0 | 0 | 0 |
+| 16 | 3 | SILADIO Roel | FEU | 3 | 10 | 0 | 0 | 0 | 0 |
+| 16 | 8 | BALDOMERO Reynaldo Jr. | FEU | 3 | 11 | 0 | 0 | 0 | 0 |
+| 16 | 11 | ORCULLO Eddieson | FEU | 3 | 11 | 0 | 0 | 0 | 0 |
+| **Total tournament** | | | | **4** | **14** | **295** | **56** | **11** | **362** |
+
+---
+
+<!-- START PAGE 157 (IMG_1225.md) -->
+*(Page 157 — Source: `IMG_1225`)*
+
+# 2000-2001 UAAP Volleyball Tournament for MEN
+
+## Players ranking by skills
+
+### Diggers
+
+| No | Name | Team | Nb Mat | Nb Set | Excellent | Faults | Cont. | Total Atts | Avg. by set |
+|---|---|---|---|---|---|---|---|---|---|
+| 11 | ABELLA Rommel | UST | 3 | 10 | 16 | 7 | 15 | 38 | 1.60 |
+| 1 | ESTEBAN Clarence | UST | 3 | 10 | 15 | 4 | 22 | 41 | 1.50 |
+| 9 | REYES Emilio Jr. | UST | 3 | 11 | 14 | 10 | 10 | 34 | 1.40 |
+| 3 | SILADIO Roel | FEU | 3 | 10 | 13 | 9 | 16 | 35 | 1.18 |
+| 3 | PABELLANO Adrian | UST | 3 | 10 | 11 | 6 | 11 | 31 | 1.10 |
+| 2 | DE GUZMAN Rico | FEU | 3 | 11 | 6 | 2 | 7 | 15 | 0.60 |
+| 4 | PENETRANTE Edcer | UST | 3 | 10 | 5 | 11 | 12 | 29 | 0.55 |
+| 8 | GUIAO Anthony Irvin | FEU | 3 | 11 | 5 | 12 | 11 | 28 | 0.50 |
+| 5 | TALAG Rolando | UST | 3 | 10 | 5 | 2 | 10 | 17 | 0.45 |
+| 6 | GEMENTIZA Byron | FEU | 3 | 11 | 5 | 3 | 8 | 16 | 0.45 |
+| Total Tournament | | | 4 | 14 | 116 | 108 | 185 | 409 | 11.60 |
+
+---
+
+### Setters
+
+| No | Name | Team | Nb Mat | Nb Set | Excellent | Faults | Cont. | Total Atts | Avg. by set |
+|---|---|---|---|---|---|---|---|---|---|
+| 8 | GUIAO Anthony Irvin | UST | 3 | 10 | 139 | 8 | 135 | 282 | 13.90 |
+| 6 | GEMENTIZA Byron | FEU | 3 | 11 | 91 | 4 | 126 | 221 | 8.27 |
+| 8 | BALDOMERO Reynaldo Jr. | FEU | 3 | 11 | 20 | 1 | 31 | 52 | 1.82 |
+| 9 | REYES Emilio Jr. | FEU | 3 | 10 | 5 | - | 13 | 18 | 0.50 |
+| 11 | ORCULLO Eddieson | UST | 3 | 11 | 5 | - | 12 | 17 | 0.45 |
+| 1 | ESTEBAN Clarence | FEU | 3 | 10 | 3 | - | 5 | 8 | 0.30 |
+| 3 | PABELLANO Adrian | UST | 3 | 10 | 3 | 1 | 3 | 7 | 0.30 |
+| 4 | PENETRANTE Edcer | UST | 3 | 10 | 3 | 2 | 6 | 11 | 0.27 |
+| 3 | SILADIO Roel | FEU | 3 | 11 | 2 | - | 5 | 7 | 0.18 |
+| 14 | BONTIGAO Jobert | FEU | 3 | 11 | 2 | - | 6 | 8 | 0.18 |
+| Total Tournament | | | 4 | 14 | 277 | 17 | 367 | 661 | 27.70 |
+
+---
+
+### Receivers
+
+Limit: 25.00%
+
+| No | Name | Team | Nb Mat | Nb Set | Excellent | Faults | Cont. | Total Atts | Eff. % |
+|---|---|---|---|---|---|---|---|---|---|
+| 1 | ESTEBAN Clarence | UST | 3 | 10 | 50 | - | 17 | 67 | 74.63 |
+| 11 | ABELLA Rommel | UST | 3 | 10 | 54 | - | 33 | 87 | 62.07 |
+| 3 | SILADIO Roel | FEU | 3 | 11 | 77 | 4 | 40 | 121 | 60.33 |
+| 14 | BONTIGAO Jobert | FEU | 3 | 11 | 23 | 1 | 23 | 47 | |
+| 3 | PABELLANO Adrian | UST | 3 | 10 | 10 | 3 | 7 | 20 | |
+| 9 | REYES Emilio Jr. | UST | 3 | 10 | 10 | - | 9 | 19 | |
+| 4 | PENETRANTE Edcer | FEU | 3 | 11 | 7 | - | 11 | 18 | |
+| 10 | MANALON Ferdinand | FEU | 3 | 11 | 2 | - | 12 | 14 | |
+| 5 | TALAG Rolando | FEU | 3 | 11 | 1 | - | 6 | 7 | |
+| 12 | RODA Ryan Joseph | FEU | 3 | 11 | 2 | - | 5 | 7 | |
+| Total Tournament | | | 4 | 14 | 244 | 9 | 172 | 425 | 55.29 |
+
+---
+
+<!-- START PAGE 158 (IMG_1226.md) -->
+*(Page 158 — Source: `IMG_1226`)*
+
+# 2000-2001 UAAP Volleyball Tournament for MEN
+
+## Players ranking by skills
+
+### Attackers
+
+Limit: 15.00%
+
+| Rk | No | Name | Team | Nb Mat | Nb Set | Successes | Faults | Cont. | Total Atts | Succ. % |
+|---|---|---|---|---|---|---|---|---|---|---|
+| 1 | 2 | DE GUZMAN Rico | UST | 3 | 10 | 35 | 7 | 17 | 59 | 59.32 |
+| 2 | 9 | REYES Emilio Jr. | UST | 3 | 10 | 36 | 10 | 22 | 68 | 52.94 |
+| 3 | 3 | PABELLANO Adrian | UST | 3 | 10 | 29 | 10 | 15 | 57 | 50.88 |
+| 4 | 7 | DAMIAN Franz Eddie | UST | 3 | 11 | 23 | 13 | 24 | 50 | 46.00 |
+| 5 | 14 | BONTIGAO Jobert | FEU | 3 | 11 | 27 | 6 | 21 | 59 | 45.76 |
+| 6 | 4 | PENETRANTE Edcer | UST | 3 | 10 | 47 | 8 | 57 | 120 | 39.17 |
+| 7 | 1 | ESTEBAN Clarence | FEU | 3 | 11 | 32 | 16 | 20 | 84 | 38.10 |
+| - | 1 | ESMELE Don | FEU | 3 | 11 | 26 | 20 | 32 | 79 | - |
+| - | 5 | TALAG Rolando | FEU | 3 | 11 | 13 | 8 | 19 | 40 | - |
+| - | 10 | MANALON Ferdinand | FEU | 4 | 14 | 9 | 6 | 18 | 33 | - |
+| **Total Tournament** | | | | | | **295** | **109** | **281** | **685** | **43.07** |
+
+---
+
+### Blockers
+
+| Rk | No | Name | Team | Nb Mat | Nb Set | Successes | Faults | Cont. | Total Atts | Avg. by set |
+|---|---|---|---|---|---|---|---|---|---|---|
+| 1 | 1 | ESTEBAN Clarence | UST | 3 | 10 | 13 | 12 | 23 | 48 | 1.30 |
+| 2 | 1 | ESMELE Don | FEU | 3 | 11 | 9 | 14 | 19 | 42 | 0.82 |
+| 3 | 4 | PENETRANTE Edcer | FEU | 3 | 11 | 6 | 13 | 9 | 28 | 0.55 |
+| 4 | 3 | PABELLANO Adrian | UST | 3 | 10 | 5 | 10 | 19 | 34 | 0.50 |
+| 5 | 9 | REYES Emilio Jr. | UST | 3 | 10 | 4 | 7 | 11 | 23 | 0.50 |
+| 6 | 10 | MANALON Ferdinand | FEU | 3 | 11 | 3 | 9 | 11 | 24 | 0.36 |
+| 7 | 2 | DE GUZMAN Rico | UST | 3 | 10 | 3 | 8 | 16 | 27 | 0.30 |
+| 8 | 7 | DAMIAN Franz Eddie | UST | 3 | 10 | 3 | 9 | 9 | 21 | 0.30 |
+| 9 | 5 | TALAG Rolando | FEU | 3 | 10 | 3 | 12 | 15 | 30 | 0.27 |
+| 10 | 14 | BONTIGAO Jobert | FEU | 3 | 11 | 2 | 1 | 6 | 9 | 0.18 |
+| **Total Tournament** | | | | | | **56** | **107** | **171** | **334** | **5.60** |
+
+---
+
+### Servers
+
+| Rk | No | Name | Team | Nb Mat | Nb Set | Successes | Faults | Cont. | Total Atts | Avg. by set |
+|---|---|---|---|---|---|---|---|---|---|---|
+| 1 | 1 | ESTEBAN Clarence | UST | 3 | 10 | 2 | - | 35 | 37 | 0.20 |
+| 2 | 8 | GUIAO Anthony Irvin | UST | 3 | 10 | 2 | - | 48 | 50 | 0.20 |
+| 3 | 1 | ESMELE Don | FEU | 3 | 11 | 2 | 3 | 30 | 35 | 0.18 |
+| 4 | 6 | GEMENTIZA Byron | FEU | 3 | 11 | 2 | 4 | 32 | 38 | 0.18 |
+| 5 | 3 | PABELLANO Adrian | UST | 3 | 10 | 1 | 1 | 44 | 46 | 0.10 |
+| 6 | 9 | REYES Emilio Jr. | UST | 3 | 10 | 1 | 1 | 33 | 35 | 0.10 |
+| 7 | 7 | DAMIAN Franz Eddie | UST | 3 | 10 | 1 | 4 | 27 | 32 | 0.10 |
+| - | 3 | SILADIO Roel | FEU | 3 | 11 | - | - | - | - | - |
+| - | 4 | ESCANO Jodel Winston | UST | 3 | 10 | - | - | - | - | - |
+| - | 5 | FERNANDEZ Christian | UST | 3 | 10 | - | - | - | - | - |
+| **Total Tournament** | | | | | | **11** | **29** | **451** | **491** | **1.10** |
+
+---
+
+<!-- START PAGE 159 (IMG_1227.md) -->
+*(Page 159 — Source: `IMG_1227`)*
+
+FINAL RESULTS OF THE 2000-2001 UAAP VOLLEYBALL TOURNAMENT  
+**HOST:** University of the Philippines  
+
+**WOMEN'S DIVISION**
+
+| | | |
+| :--- | :--- | :--- |
+| **CHAMPION** | : | **Far Eastern University** |
+| **RUNNER-UP** | : | **De La Salle University** |
+| **THIRD PLACE** | : | **Adamson University** |
+| **FOURTH PLACE** | : | **University of Santo Tomas** |
+| **FIFTH PLACE** | : | **University of the East** |
+| **SIXTH PLACE** | : | **University of the Philippines** |
+| **SEVENTH PLACE** | : | **National University** |
+| **EIGHTH PLACE** | : | **Ateneo de Manila University** |
+
+---
+
+### TEAM STANDING AFTER TWO ROUNDS
+
+| | WIN | LOSS |
+| :--- | :---: | :---: |
+| **Far Eastern University** | 12 | 2 |
+| **De La Salle University** | 11 | 3 |
+| **Adamson University** | 10 | 4 |
+| **University of Santo Tomas** | 10 | 4 |
+| **University of the East** | 6 | 8 |
+| **University of the Philippines** | 5 | 9 |
+| **National University** | 2 | 12 |
+| **Ateneo De Manila University** | 0 | 14 |
+
+---
+
+### CHAMPIONSHIP ROUND
+
+| | WIN | LOSS |
+| :--- | :---: | :---: |
+| **Far Eastern University** | 2 | 0 |
+| **De La Salle University** | 0 | 2 |
+
+---
+
+| | | |
+| :--- | :--- | :--- |
+| **Most Valuable Player:** | Ailyn C. Ege | FEU |
+| **Rookie of the Year** : | Beverly G. Benin | FEU |
+| **Champion Coach** : | Emma Reynoso | FEU |
+| **Best Spiker** : | Ivy Elayne C. Remulla | DLSU |
+| **Best Blocker** : | Ailyn C. Ege | FEU |
+| **Best Server** : | Hollie E. Reyes | DLSU |
+| **Best Libero** : | Rochelle T. Chuacuco | DLSU |
+| **Best Setter** : | Ma. Theresa M. Iratay | FEU |
+
+---
+
+<!-- START PAGE 160 (IMG_1229.md) -->
+*(Page 160 — Source: `IMG_1229`)*
+
+UNIVESITY ATHLETIC ASSOCIATION OF THE PHILIPPINES
+SY 2000-2001
+WOMEN'S VOLLEYBALL TOURNAMENT
+
+FIRST ROUND RESULTS
+
+**SUNDAY, JULY 23, 2000**
+UP defeated NU 25-16; 25-21 25-19
+UE defeated ADMU 25-7; 25-19 25-17
+DLSU defeated AdU 27-29; 25 -9; 25-13 24-26 15-11
+FEU defeated UST 25-23; 25-20 25-21
+
+**SUNDAY, JULY 30, 2000**
+UST defeated UE 25-16; 21-25 15-13 25-19
+FEU defeated ADMU 25-9; 25-14 25-21
+DLSU defeated UP 26-24; 25-22 25-16
+AdU defeated NU 25-8; 25-14 25-20
+
+**WEDNESDAY, AUGUST 2, 2000**
+UP defeated ADMU 25-14; 25-12 25-23
+UE defeated NU 25-19; 17-25 25-15 25-20
+UST defeated AdU 25-18; 25-22 15-25 15-25 15-12
+FEU defeated DLSU 25-23; 24-26 15-25 15-2C 15-8
+
+**SUNDAY, AUGUST 6, 2000**
+DLSU defeated UE 25-18; 25-18 25-17
+UST defeated NU 25-11; 25-10 25-14
+FEU defeated UP 25-11; 25-19 25-23
+AdU defeated ADMU 25-9; 25-18 25-4
+
+**THURSDAY, AUGUST 10, 2000**
+UST defeated ADMU 25-11; 25-15 25-12
+DLSU defeated NU 25-13; 25-16 23-25 25-21
+FEU defeated UE 25-19; 25-9; 23-25 25-17
+AdU defeated UP 25-15; 25-23 25-23
+
+**SUNDAY, AUGUST 13, 2000**
+AdU defeated UE 14-25; 25-23 25-22 25-15
+UST defeated UP 25-16; 25-10 25-11
+DLSU defeated ADMU 25-15; 25-18 25-16
+FEU defeated NU 25-17; 25-18 25-13
+
+**WEDNESDAY, AUGUST 16, 2000**
+UE defeated UP 15-25; 27-25 16-25 25-23 15-11
+NU defeated ADMU 25-21; 25-21 25-13
+DLSU defeated UST 25-17; 19-25 23-25 25-16 15-9
+FEU defeated AdU 25-19; 25-20 25-21
+
+TEAM STANDING
+
+| | W | L |
+| :--- | :---: | :---: |
+| **Far Eastern University** | 7 | 0 |
+| **De La Salle University** | 6 | 1 |
+| **University of Santo Tomas** | 5 | 2 |
+| **Adamson University** | 4 | 3 |
+| **University of the East** | 3 | 4 |
+| **University of the Philippines** | 2 | 5 |
+| **National University** | 1 | 6 |
+| **Ateneo de Manila University** | 0 | 7 |
+
+---
+
+<!-- START PAGE 161 (IMG_1230.md) -->
+*(Page 161 — Source: `IMG_1230`)*
+
+UNIVESITY ATHLETIC ASSOCIATION OF THE PHILIPPINES
+SY 2000-2001
+WOMEN'S VOLLEYBALL TOURNAMENT
+
+SECOND ROUND RESULTS
+
+**WEDNESDAY, AUGUST 30, 2000**
+AdU defeated DLSU 25-22; 19-25 25-23 27-25
+UP defeated ADMU 25-18; 25-15 25-10
+UE defeated NU 25-20; 25-22 25-19
+UST defeated FEU 25-23; 22-25 25-22 19-25 15-13
+
+**SUNDAY, SEPTEMBER 3, 2000**
+UE defeated FEU 15-25; 25-19 25-21 25-16
+DLSU defeated UP 21-25; 28-26 29-27 25-13
+UST defeated NU 27-25; 25-16 25-12
+AdU defeated ADMU 25-9; 25-14 25-21
+
+**TUESDAY, SEPTEMBER 5, 2000**
+DLSU defeated UST 17-25; 25-22 25-22 25-21
+UP defeated NU 25-15; 18-25 25-22 25-10
+UE defeated ADMU 25-12; 25-15 25-20
+FEU defeated AdU 25-22; 25-21 23-25 25-24
+
+**FRIDAY, SEPTEMBER 8, 2000**
+UST defeated ADMU 25-10; 25-17 25-17
+DLSU defeated NU 25-15; 25-17 25-5
+FEU defeated UP 21-25; 27-25 23-25 25-17 15-9
+AdU defeated UE 25-13; 17-25 25-14 25-17
+
+**SUNDAY, SEPTEMBER 10, 2000**
+AdU defeated UP 25-16; 28-26 23-25 26-24
+UST defeated UE 25-18; 25-19 25-21
+DLSU defeated ADMU 25-12; 25-12 25-22 25-10
+FEU defeated NU 20-25; 25-18 25-13 25-8
+
+**THURSDAY, SEPTPEMBER 21, 2000**
+FEU defeated ADMU 25-4; 25-9; 25-9
+AdU defeated NU 25-9; 25-9; 25-10
+UST defeated UP 25-12; 25-23 25-22 26-24
+DLSU defeated UE 25-22; 25-16 25-14
+
+**SUNDAY, SEPTEMBER 24, 2000**
+UP defeated UE 25-22; 25-17 15-25 25-20
+FEU defeated DLSU 22-25; 25-20 25-20 25-17
+AdU defeated UST 25-18; 25-23 26-24
+NU defeated ADMU 25-20; 25-18 20-25 25-16
+
+### TEAM STANDING
+
+| | W | L |
+| :--- | :---: | :---: |
+| **Far Eastern University** | 12 | 2 |
+| **De La Salle University** | 11 | 3 |
+| **University of Santo Tomas** | 10 | 4 |
+| **Adamson University** | 10 | 4 |
+| **University of the East** | 6 | 8 |
+| **University of the Philippines** | 5 | 9 |
+| **National University** | 2 | 12 |
+| **Ateneo de Manila University** | 0 | 14 |
+
+---
+
+<!-- START PAGE 162 (IMG_1231.md) -->
+*(Page 162 — Source: `IMG_1231`)*
+
+UNIVESITY ATHLETIC ASSOCIATION OF THE PHILIPPINES
+SY 2000-2001
+WOMEN'S VOLLEYBALL TOURNAMENT
+
+PLAY-OFF
+
+**MONDAY, SEPTEMBER 25, 2000**
+AdU defeated UST 16-25; 25-19 25-20 28-26
+
+SEMI-FINAL
+
+**WEDNESDAY, SEPTEMBER 27, 2000**
+**GAME 1**
+AdU defeated DLSU 25-19; 17-25 22-25 25-16 16-14
+FEU defeated UST 20-25; 15-18 22-25 26-24 15-12
+
+**GAME 2**
+DLSU defeated AdU 25-19; 25-27 25-19 25-21
+
+**SUNDAY, OCTOBER 1, 2000**
+**GAME 2**
+
+CHAMPIONSHIP ROUND
+
+**GAME 1**
+FEU defeated DLSU 21-25; 19-25 25-19 25-19 15-11
+
+**GAME 2**
+FEU defeated DLSU 25-21; 18-25 25-18 25-15
+
+FINAL TEAM STANDING
+
+| | |
+| :--- | :--- |
+| **CHAMPION** | **Far Eastern University** |
+| **RUNNER-UP** | **De La Salle University** |
+| **THIRD PLACE** | **Adamson University** |
+| **FOURTH PLACE** | **University of Santo Tomas** |
+| **FIFTH PLACE** | **University of the East** |
+| **SIXTH PLACE** | **University of the Philippines** |
+| **SEVENTH PLACE** | **National University** |
+| **EIGHT PLACE** | **Ateneo de Manila University** |
+
+---
+
+<!-- START PAGE 163 (IMG_1232.md) -->
+*(Page 163 — Source: `IMG_1232`)*
+
+# P-5 VOLLEYBALL • Players ranking by skills
+## 2000-2001 UAAP Volleyball Tournament for WOMEN
+
+### Best scorers
+
+| RK | No | Name | Team | Nb. Mat. | Nb. Set | Attack | Block | Serve | Total |
+|---|---|---|---|---|---|---|---|---|---|
+| 1 | 6 | EGE Ailyn | FEU | 3 | 14 | 44 | 13 | 4 | 61 |
+| 2 | 3 | BUNAG Joanne | FEU | 3 | 14 | 48 | 3 | 3 | 54 |
+| 3 | 10 | MAGALLANES Sheryl | DLS | 3 | 13 | 32 | 9 | 4 | 45 |
+| 4 | 7 | REMULLA Ivy Elayne | DLS | 3 | 13 | 40 | 3 | 1 | 44 |
+| 5 | 12 | DE VERA Nelani | FEU | 3 | 14 | 32 | 2 | 3 | 37 |
+| 6 | 14 | SANTIAGO Meriam | DLS | 3 | 13 | 23 | 5 | 2 | 30 |
+| 7 | 8 | CHUA Demelee | DLS | 3 | 13 | 20 | 3 | 1 | 24 |
+| 7 | 6 | PENETRANTE Maureen | DLS | 3 | 13 | 18 | 4 | 2 | 24 |
+| 9 | 9 | MARTINEZ Maricor | FEU | 3 | 14 | 23 | 0 | 1 | 24 |
+| 10 | 7 | DE LEON Miriam | FEU | 3 | 14 | 12 | 1 | 3 | 16 |
+| 11 | 11 | REYES Hollie | DLS | 3 | 13 | 10 | 2 | 8 | 14 |
+| 12 | 12 | YANCE Vanessa Lynne | DLS | 3 | 13 | 4 | 1 | 1 | 12 |
+| 13 | 8 | IRATAY Ma. Theresa | FEU | 3 | 14 | 4 | 1 | 4 | 9 |
+| 14 | 5 | CHAVES Cecile | FEU | 3 | 14 | 3 | 1 | 0 | 3 |
+| 15 | 14 | BENIN Beverly | FEU | 3 | 14 | 0 | 1 | 1 | 2 |
+| 16 | 2 | CHUACUCO Rochelle | DLS | 3 | 13 | 1 | 0 | 0 | 1 |
+| 16 | 4 | CASTILLO Erika | DLS | 3 | 13 | 1 | 0 | 0 | 1 |
+| 16 | 4 | PALOMARES Carren | FEU | 3 | 14 | 1 | 0 | 0 | 1 |
+| 19 | 1 | REMULLA Nicole Anne | DLS | 3 | 14 | 0 | 0 | 0 | 0 |
+| 19 | 5 | VILLANUEVA Ann Katherine | DLS | 3 | 13 | 0 | 0 | 0 | 0 |
+| 19 | 9 | YU Stephanie Anne | DLS | 3 | 13 | 0 | 0 | 0 | 0 |
+| 19 | 2 | KARPA Jennifer | FEU | 3 | 13 | 0 | 0 | 0 | 0 |
+| 19 | 10 | PAULE Norilyn | FEU | 3 | 14 | 0 | 0 | 0 | 0 |
+| 19 | 11 | FRANCISCO Antonette | FEU | 3 | 14 | 0 | 0 | 0 | 0 |
+| **Total tournament** | | | | **4** | **18** | **316** | **48** | **38** | **402** |
+
+---
+
+<!-- START PAGE 164 (IMG_1233.md) -->
+*(Page 164 — Source: `IMG_1233`)*
+
+# P-5 VOLLEYBALL • Players ranking by skills
+## 2000-2001 UAAP Volleyball Tournament for WOMEN
+
+---
+
+## Attackers
+
+| Rk | No | Name | Team | Nb Mat | Nb Set | Successes | Faults | Cont. | Total Atts | Succ. % |
+|---|---|---|---|---|---|---|---|---|---|---|
+| 1 | 7 | REMULLA Ivy Elayne | DLS | 3 | 13 | 40 | 14 | 43 | 97 | 41.24 |
+| 2 | 12 | DE VERA Nelani | FEU | 3 | 14 | 32 | 18 | 40 | 83 | 38.55 |
+| 3 | 3 | BUNAG Joanne | DLS | 3 | 14 | 48 | 11 | 63 | 129 | 37.21 |
+| 4 | 10 | MAGALLANES Sheryl | FEU | 3 | 13 | 44 | 20 | 56 | 100 | 32.00 |
+| 5 | 6 | EGE Ailyn | DLS | 3 | 14 | 20 | 11 | 82 | 146 | 30.14 |
+| 6 | 8 | CHUA Demelee | DLS | 3 | 13 | 18 | 12 | 57 | 88 | 22.73 |
+| 7 | 6 | PENETRANTE Maureen | FEU | 3 | 13 | 23 | 6 | 50 | 79 | 20.93 |
+| | 9 | MARTINEZ Maricor | DLS | 3 | 14 | 23 | 9 | 42 | 74 | 0.00 |
+| | 14 | SANTIAGO Meriam | DLS | 3 | 13 | 12 | 8 | 36 | 56 | 0.85 |
+| | 7 | DE LEON Mirriam | FEU | 4 | 18 | 316 | 136 | 596 | 1,048 | 30.15 |
+| **Total Tournament** | | | | **4** | **18** | **316** | **136** | **596** | **1,048** | **30.15** |
+
+---
+
+## Blockers
+
+| Rk | No | Name | Team | Nb Mat | Nb Set | Successes | Faults | Cont. | Total Atts | Avg. by set |
+|---|---|---|---|---|---|---|---|---|---|---|
+| 1 | 6 | EGE Ailyn | FEU | 3 | 14 | 13 | 16 | 50 | 79 | 0.93 |
+| 2 | 10 | MAGALLANES Sheryl | DLS | 3 | 13 | 9 | 7 | 10 | 26 | 0.69 |
+| 3 | 14 | SANTIAGO Meriam | DLS | 3 | 13 | 5 | 4 | 21 | 30 | 0.38 |
+| 4 | 6 | PENETRANTE Maureen | DLS | 3 | 13 | 4 | 7 | 1 | 12 | 0.31 |
+| 5 | 7 | REMULLA Ivy Elayne | DLS | 3 | 13 | 3 | 9 | 29 | 41 | 0.23 |
+| 6 | 8 | CHUA Demelee | DLS | 3 | 13 | 3 | 16 | 34 | 53 | 0.23 |
+| 7 | 3 | BUNAG Joanne | DLS | 3 | 14 | 3 | 9 | 27 | 39 | 0.21 |
+| 8 | 11 | REYES Hollie | FEU | 3 | 13 | 2 | 1 | 8 | 11 | 0.15 |
+| 9 | 12 | DE VERA Nelani | DLS | 3 | 13 | 2 | 3 | 8 | 13 | 0.14 |
+| 10 | 12 | YANCE Vanessa Lynne | FEU | 3 | 14 | 1 | 1 | 2 | 4 | 0.08 |
+| **Total Tournament** | | | | **4** | **18** | **48** | **95** | **247** | **390** | **3.69** |
+
+---
+
+## Servers
+
+| Rk | No | Name | Team | Nb Mat | Nb Set | Successes | Faults | Cont. | Total Atts | Avg. by set |
+|---|---|---|---|---|---|---|---|---|---|---|
+| 1 | 11 | REYES Hollie | DLS | 3 | 13 | 8 | 5 | 48 | 61 | 0.62 |
+| 2 | 10 | MAGALLANES Sheryl | DLS | 3 | 13 | 4 | 2 | 33 | 39 | 0.31 |
+| 3 | 8 | IRATAY Ma. Theresa | FEU | 3 | 14 | 4 | 3 | 45 | 52 | 0.29 |
+| 4 | 6 | EGE Ailyn | FEU | 3 | 14 | 4 | 4 | 50 | 58 | 0.29 |
+| 5 | 7 | DE LEON Mirriam | FEU | 3 | 14 | 3 | - | 49 | 52 | 0.21 |
+| 6 | 12 | DE VERA Nelani | FEU | 3 | 14 | 3 | 2 | 33 | 38 | 0.21 |
+| 7 | 3 | BUNAG Joanne | FEU | 3 | 14 | 3 | 3 | 48 | 54 | 0.21 |
+| 8 | 14 | SANTIAGO Meriam | DLS | 3 | 13 | 2 | 4 | 40 | 46 | 0.15 |
+| 9 | 6 | PENETRANTE Maureen | DLS | 3 | 13 | 2 | 4 | 30 | 36 | 0.15 |
+| 10 | 12 | YANCE Vanessa Lynne | DLS | 3 | 13 | 1 | - | 19 | 20 | 0.08 |
+| **Total Tournament** | | | | **4** | **18** | **38** | **37** | **509** | **584** | **2.92** |
+
+---
+
+<!-- START PAGE 165 (IMG_1234.md) -->
+*(Page 165 — Source: `IMG_1234`)*
+
+P-5 VOLLEYBALL • Players ranking by skills
+2000-2001 UAAP Volleyball Tournament for WOMEN
+
+## Diggers
+
+| No | Name | Team | Nb Mat | Nb Set | Excellent | Faults | Cont. | Total Atts | Avg. by set |
+| :---: | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| 1 | MAGALLANES Sheryl | DLS | 3 | 13 | 23 | 15 | 34 | 72 | 1.77 |
+| 2 | REMULLA Ivy Elayne | DLS | 3 | 13 | 21 | 10 | 26 | 57 | 1.62 |
+| 3 | CHUACUCO Rochelle | DLS | 3 | 14 | 18 | 13 | 47 | 72 | 1.29 |
+| 4 | EGE Ailyn | FEU | 3 | 14 | 18 | 10 | 25 | 55 | 1.21 |
+| 5 | BUNAG Joanne | DLS | 3 | 14 | 17 | 7 | 53 | 53 | 1.38 |
+| 6 | PALOMARES Carren | FEU | 3 | 14 | 16 | 13 | 25 | 72 | 1.29 |
+| 7 | DE LEON Mirriam | FEU | 3 | 13 | 15 | 13 | 15 | 55 | 1.21 |
+| 8 | CHUA Demelee | FEU | 3 | 14 | 13 | 10 | 30 | 44 | 1.14 |
+| 9 | MARTINEZ Maricor | DLS | 3 | 13 | 12 | 5 | 30 | 55 | 1.07 |
+| 11 | REYES Hollie | DLS | 4 | 18 | 11 | 9 | 36 | 54 | 1.00 |
+| | **Total Tournament** | | | | **190** | **131** | **404** | **725** | **14.62** |
+
+---
+
+## Setters
+
+| No | Name | Team | Nb Mat | Nb Set | Excellent | Faults | Cont. | Total Atts | Avg. by set |
+| :---: | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| 1 | IRATAY Ma. Theresa | FEU | 3 | 14 | 142 | 5 | 249 | 396 | 10.14 |
+| 2 | REYES Hollie | DLS | 3 | 13 | 117 | 2 | 248 | 367 | 9.00 |
+| 3 | CHUA Demelee | DLS | 3 | 13 | 10 | 1 | 35 | 46 | 0.77 |
+| 4 | CASTILLO Erika | DLS | 3 | 14 | 6 | 2 | 17 | 25 | 0.46 |
+| 5 | EGE Ailyn | FEU | 3 | 14 | 5 | 2 | 20 | 27 | 0.36 |
+| 9 | MARTINEZ Maricor | FEU | 3 | 14 | 3 | 3 | 15 | 21 | 0.21 |
+| 5 | CHAVES Cecile | DLS | 3 | 13 | 2 | 1 | 8 | 11 | 0.14 |
+| 14 | SANTIAGO Meriam | DLS | 3 | 13 | 1 | 4 | 12 | 17 | 0.08 |
+| 6 | PENETRANTE Maureen | DLS | 3 | 13 | 1 | 2 | 5 | 8 | 0.08 |
+| 12 | YANCE Vanessa Lynne | DLS | 4 | 18 | 1 | 4 | 5 | 10 | 0.08 |
+| | **Total Tournament** | | | | **290** | **38** | **694** | **1,022** | **22.31** |
+
+---
+
+## Receivers
+
+Limit: 25.00%
+
+| No | Name | Team | Nb Mat | Nb Set | Excellent | Faults | Cont. | Total Atts | Eff. % |
+| :---: | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| 6 | EGE Ailyn | FEU | 3 | 14 | 28 | 3 | 36 | 67 | 37.31 |
+| 2 | CHUACUCO Rochelle | DLS | 3 | 13 | 18 | 7 | 40 | 65 | |
+| 7 | REMULLA Ivy Elayne | DLS | 3 | 13 | 21 | 4 | 27 | 52 | |
+| 4 | PALOMARES Carren | FEU | 3 | 14 | 16 | 5 | 31 | 52 | |
+| 10 | MAGALLANES Sheryl | DLS | 3 | 13 | 19 | 4 | 26 | 49 | |
+| 3 | BUNAG Joanne | FEU | 3 | 14 | 23 | 1 | 18 | 42 | |
+| 7 | DE LEON Mirriam | FEU | 3 | 14 | 12 | 4 | 20 | 36 | |
+| 8 | CHUA Demelee | DLS | 3 | 13 | 8 | 1 | 26 | 35 | |
+| 14 | SANTIAGO Meriam | DLS | 3 | 13 | 8 | 1 | 25 | 34 | |
+| 12 | YANCE Vanessa Lynne | DLS | 3 | 13 | 8 | 3 | 23 | 34 | |
+| | **Total Tournament** | | 4 | 18 | **176** | **40** | **313** | **529** | **25.7** |
+
+---
+
+<!-- START PAGE 166 (IMG_1235.md) -->
+*(Page 166 — Source: `IMG_1235`)*
+
+# RESULTS OF THE 2000 – 2001 HIGH SCHOOL VOLLEYBALL TOURNAMENT
+## BOYS DIVISION
+### VENUE : UE GYM 6
+
+# UAAP VOLLEYBALL TOURNAMENT
+## (Boys & Girls)
+
+**CHAMPION** : University of the East
+
+**RUNNER-UP** : University of Santo Tomas
+
+**THIRD PLACE** : De La Salle - Zobel
+
+**FOURTH PLACE** : University of the Philippines
+
+**FIFTH PLACE** : National University
+
+**SIXTH PLACE** : 
+
+---
+
+### STANDING AFTER TWO ROUNDS
+
+| University | WIN | LOSS |
+| :--- | :---: | :---: |
+| University of the East | 10 | 0 |
+| Ateneo De Manila University | 7 | 3 |
+| University of Santo Tomas | 6 | 4 |
+| De La Salle – Zobel | 3 | 7 |
+| University of the Philippines | 3 | 7 |
+| National University | 1 | 9 |
+
+---
+
+### Host – University of the East
+
+**Most Valuable Player** : Jerico Magno (UE)
+
+### Venue – UE Gym
+
+---
+
+<!-- START PAGE 167 (IMG_1236.md) -->
+*(Page 167 — Source: `IMG_1236`)*
+
+FINAL RESULTS OF THE 2000 – 2001 HIGH SCHOOL VOLLEYBALL TOURNAMENT  
+**BOYS DIVISION**  
+
+**VENUE : UE GYM 5**  
+**HOST : UNIVERSITY OF THE EAST**  
+
+* **CHAMPION** : **University of the East**
+* **RUNNER-UP** : **Ateneo De Manila University**
+* **THIRD PLACE** : **University of Santo Tomas**
+* **FOURTH PLACE** : **De La Salle – Zobel**
+* **FIFTH PLACE** : **University of the Philippines**
+* **SIXTH PLACE** : **National University**
+
+---
+
+### WIN-LOSS RECORD AFTER TWO ROUNDS
+
+| UNIVERSITY | WIN | LOSS |
+| :--- | :---: | :---: |
+| **University of the East** | 10 | 0 |
+| **Ateneo De Manila University** | 7 | 3 |
+| **University of Santo Tomas** | 6 | 4 |
+| **De La Salle – Zobel** | 3 | 7 |
+| **University of the Philippines** | 3 | 7 |
+| **National University** | 1 | 9 |
+
+---
+
+**Most Valuable Player** : **Jerico Magno (UE)**
+
+---
+
+<!-- START PAGE 168 (IMG_1237.md) -->
+*(Page 168 — Source: `IMG_1237`)*
+
+2000 – 2001 UAAP HIGH SCHOOL VOLLEYBALL TOURNAMENT
+
+FIRST ROUND  
+BOYS DIVISION
+
+### SATURDAY, DECEMBER 02, 2000
+
+| Team | | Team | SCORE |
+| :--- | :---: | :--- | :--- |
+| **NU** | defeated | **DLSZ** | 25-0;25-0 |
+| **UST** | defeated | **UP** | 25-18;25-19 |
+| **UE** | defeated | **ADMU** | 25-18;22-25;25-20 |
+
+### SUNDAY, DECEMBER 03, 2000
+
+| Team | | Team | SCORE |
+| :--- | :---: | :--- | :--- |
+| **ADMU** | defeated | **NU** | 25-14;25-9 |
+| **UP** | defeated | **DLSZ** | 25-18;19-25;25-23 |
+| **UE** | defeated | **UST** | 25-13;17-25;25-17 |
+
+### SATURDAY, DECEMBER 09, 2000
+
+| Team | | Team | SCORE |
+| :--- | :---: | :--- | :--- |
+| **UE** | defeated | **UP** | 25-17;25-16 |
+| **UST** | defeated | **NU** | 25-5;25-8 |
+| **ADMU** | defeated | **DLSZ** | 25-13;25-18 |
+
+### SUNDAY, DECEMBER 10, 2000
+
+| Team | | Team | SCORE |
+| :--- | :---: | :--- | :--- |
+| **UE** | defeated | **DLSZ** | 25-12;25-23 |
+| **UST** | defeated | **ADMU** | 25-23;18-25;25-22 |
+| **UP** | defeated | **NU** | 25-10;25-14 |
+
+### SATURDAY, DECEMBER 16, 2000
+
+| Team | | Team | SCORE |
+| :--- | :---: | :--- | :--- |
+| **ADMU** | defeated | **UP** | 25-16;25-17 |
+| **UE** | defeated | **NU** | 25-10;25-8 |
+| **UST** | defeated | **DLSZ** | 25-15;25-14 |
+
+SECOND ROUND
+
+### SATURDAY, JANUARY 13, 2001
+
+| Team | | Team | SCORE |
+| :--- | :---: | :--- | :--- |
+| **UE** | defeated | **DLSZ** | 25-14;25-21 |
+| **UST** | defeated | **NU** | 25-12;25-17 |
+| **ADMU** | defeated | **UP** | 25-19;25-16 |
+
+### SUNDAY, JANUARY 14, 2001
+
+| Team | | Team | SCORE |
+| :--- | :---: | :--- | :--- |
+| **ADMU** | defeated | **UST** | 25-21;16-25;25-17 |
+| **DLSZ** | defeated | **UP** | 25-19;25-9 |
+| **UE** | defeated | **NU** | 25-8;25-7 |
+
+---
+
+<!-- START PAGE 169 (IMG_1238.md) -->
+*(Page 169 — Source: `IMG_1238`)*
+
+RESULTS OF THE 2000 - 2001 HIGH SCHOOL VOLLEYBALL TOURNAMENT
+
+**VENUE:** UE Gyms
+**HOST:** UNIVERSITY OF THE EAST
+
+**CHAMPION**
+University of the East
+
+**RUNNER-UP**
+University of Santo Tomas
+
+**THIRD PLACE**
+University of the Philippines
+
+---
+
+### SATURDAY, JANUARY 27, 2001
+
+* **UE** defeated **UP** 25-7; 25-19
+* **ADMU** defeated **NU** 25-10; 25-3
+* **DLSZ** defeated **UST** 25-18; 25-10
+
+### SUNDAY, JANUARY 28, 2001
+
+* **DLSZ** defeated **NU** 25-11; 25-14
+* **UST** defeated **UP** 25-0; 25-0
+* **UE** defeated **ADMU** 25-19; 29-27
+
+### SATURDAY, FEBRUARY 03, 2001
+
+* **ADMU** defeated **DLSZ** 25-22; 25-17
+* **UP** defeated **NU** 25-21; 25-13
+* **UE** defeated **UST** 25-15; 25-14
+
+---
+
+### WIN-LOSS RECORD AFTER TWO ROUNDS
+
+| | WIN | LOSS |
+| :--- | :---: | :---: |
+| **University of the East** | 4 | 0 |
+| **University of Santo Tomas** | 2 | 2 |
+| **University of the Philippines** | 0 | 4 |
+
+---
+
+**Most Valuable Player:** Cherrie Mae Verzosa (UE)
+
+---
+
+<!-- START PAGE 170 (IMG_1239.md) -->
+*(Page 170 — Source: `IMG_1239`)*
+
+# RESULTS OF THE 2000 – 2001 HIGH SCHOOL VOLLEYBALL TOURNAMENT
+## GIRLS DIVISION
+
+**VENUE :** UE GYM 5  
+**HOST :** UNIVERSITY OF THE EAST
+
+* **CHAMPION :** **University of the East**
+* **RUNNER-UP :** **University of Santo Tomas**
+* **THIRD PLACE :** **University of the Philippines**
+
+### WIN-LOSS RECORD AFTER TWO ROUNDS
+
+| | WIN | LOSS |
+| :--- | :---: | :---: |
+| **University of the East** | **4** | **0** |
+| **University of Santo Tomas** | **2** | **2** |
+| **University of the Philippines** | **0** | **4** |
+
+* **Most Valuable Player :** **Cherrie Mae Verzosa (UE)**
+
+---
+
+<!-- START PAGE 171 (IMG_1240.md) -->
+*(Page 171 — Source: `IMG_1240`)*
+
+# 2000 – 2001 UAAP HIGH SCHOOL VOLLEYBALL TOURNAMENT
+
+## FIRST ROUND
+### GIRLS DIVISION
+
+| DATE | MATCH | SCORE |
+| :--- | :--- | :---: |
+| **SATURDAY, DECEMBER 02, 2000** | **UST** defeated **UP** | 25-6;25-10 |
+| **SATURDAY, DECEMBER 09, 2000** | **UE** defeated **UP** | 25-4;25-11 |
+| **SATURDAY, DECEMBER 16, 2000** | **UE** defeated **UST** | 25-12;25-20 |
+
+<br>
+
+## SECOND ROUND
+
+| DATE | MATCH | SCORE |
+| :--- | :--- | :---: |
+| **SATURDAY, JANUARY 13, 2001** | **UST** defeated **UP** | 25-7;25-12 |
+| **SATURDAY, JANUARY 27, 2001** | **UE** defeated **UP** | 25-11;25-4 |
+| **SATURDAY, FEBRUARY 03, 2001** | **UE** defeated **UST** | 25-20;25-22 |
+
+---
+
+<!-- START PAGE 172 (IMG_1241.md) -->
+*(Page 172 — Source: `IMG_1241`)*
+
+# UAAP BASKETBALL STATISTICS
+
+## General Summaries: Elimination's 1st & 2nd Round
+### Varsity and Juniors
+
+| W | L | PF | PA | REB O | REB D | ASSIST | ST/INT | BLOCK SHOTS | ERRORS | FOULS W/O FT |
+|---|---|---|---|---|---|---|---|---|---|---|
+| 12 | 2 | 996 | 908 | 192 | 318 | 244 | 155 | 30 | 273 | 155 |
+| 11 | 3 | 980 | 899 | 239 | 412 | 232 | 100 | 59 | 247 | 155 |
+| 9 | 5 | | | 226 | | 218 | 115 | 54 | | 149 |
+| 8 | 6 | | | | | 219 | 115 | 52 | | 156 |
+| 8 | 6 | | | | | 215 | 110 | 44 | | 143 |
+| 4 | 10 | | | | | 211 | 136 | 39 | | 146 |
+| 4 | 10 | | | | | | 135 | 41 | | 134 |
+| 0 | 14 | | | | | | 114 | 31 | | 120 |
+
+| W | L | GP | ASSIST | ST/INT | BLOCK SHOTS |
+|---|---|---|---|---|---|
+| 11 | 3 | 12 | | 206 | 45 |
+| 10 | 12 | 12 | | 185 | 31 |
+| 7 | 7 | 12 | | 171 | 29 |
+| 0 | 6 | 12 | | 185 | 54 |
+| 5 | 2 | 12 | | 166 | 61 |
+| 2 | 10 | 12 | | 110 | 18 |
+| 1 | 11 | 12 | | 157 | 27 |
+
+---
+
+<!-- START PAGE 173 (IMG_1242.md) -->
+*(Page 173 — Source: `IMG_1242`)*
+
+# UAAP BASKETBALL 2000
+## (General Summaries Elimination’s 1st & 2nd Round)
+### Varsity and Juniors
+
+---
+
+### LEGEND:
+* **GP** — GAMES PLAYED
+* **W** — WINS
+* **L** — LOSSES
+* **PF** — POINTS FOR
+* **PA** — POINTS AGAINTS
+* **REB** — REBOUNDS
+  * **O** — OFFENSIVE
+  * **D** — DEFENSIVE
+* **A** — ASSIST
+* **ST/INT** — STEALS/INTERCEPTION
+* **BS** — BLOCKS SHOTS
+* **E/TO** — ERRORS/TURNOVERS
+* **FW/F** — FOULS/FRE THROW
+* **FW/OF** — FOULS WITH FRE THROW *
+
+*ARRANGED ACCORDING TO ORDER OF HIGHER QUOTIENT
+
+---
+
+### VARSITY DIVISION
+
+| TEAMS | GP | W | L | PF | PA | REB D | REB O | ASSIST | ST/INT | BLOCK SHOTS | ERRORS/TO | FOULS W/FT | FOULS W/O FT |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **DLSU** | 14 | 12 | 2 | 996 | 908 | 192 | 318 | 244 | 155 | 30 | 233 | 183 | 155 |
+| **ADMU** | 14 | 11 | 3 | 980 | 899 | 239 | 412 | 232 | 100 | 59 | 249 | 175 | 149 |
+| **FEU** | 14 | 9 | 5 | 943 | 884 | 228 | 419 | 415 | 54 | 282 | 168 | 155 |
+| **UE** | 14 | 8 | 6 | 879 | 865 | 230 | 368 | 219 | 115 | 52 | 216 | 157 | 143 |
+| **UST** | 14 | 8 | 6 | 864 | 854 | 193 | 368 | 215 | 110 | 44 | 250 | 170 | 146 |
+| **NU** | 14 | 4 | 10 | 838 | 857 | 185 | 349 | 211 | 136 | 39 | 238 | 166 | 134 |
+| **UP** | 14 | 4 | 10 | 921 | 964 | 221 | 350 | 222 | 135 | 41 | 253 | 177 | 117 |
+| **ADU** | 14 | 0 | 14 | 765 | 957 | 199 | 342 | 185 | 114 | 31 | 351 | 171 | 120 |
+
+---
+
+### JUNIORS DIVISION
+
+| TEAMS | GP | W | L | PF | PA | REB D | REB O | ASSIST | ST/INT | BLOCK SHOTS | ERRORS/TO | FOULS W/FT | FOULS W/O FT |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **UST** | 12 | 11 | 1 | 868 | 717 | 224 | 314 | 237 | 206 | 49 | 280 | 150 | 112 |
+| **ADMU** | 12 | 10 | 2 | 891 | 703 | 237 | 352 | 222 | 185 | 31 | 327 | 175 | 118 |
+| **DLS-Z** | 12 | 7 | 5 | 806 | 743 | 164 | 320 | 222 | 171 | 29 | 266 | 169 | 99 |
+| **ADU** | 12 | 6 | 6 | 692 | 716 | 186 | 281 | 175 | 185 | 54 | 312 | 155 | 104 |
+| **UE** | 12 | 5 | 7 | 777 | 841 | 168 | 295 | 212 | 166 | 61 | 312 | 158 | 110 |
+| **UP** | 12 | 2 | 10 | 712 | 816 | 130 | 251 | 170 | 110 | 18 | 307 | 123 | 100 |
+| **NU** | 12 | 1 | 11 | 726 | 936 | 171 | 277 | 165 | 157 | 27 | 368 | 27 | 130 |
+
+---
+
+<!-- START PAGE 174 (IMG_1243.md) -->
+*(Page 174 — Source: `IMG_1243`)*
+
+# MOST ERRORS/TURN-OVER
+
+| PLAYER | TEAM | TOTAL ERRORS | GAMES PLAYED | AVE/GAME |
+| :--- | :--- | :---: | :---: | :---: |
+| LEE | AdU | 51 | 12 | |
+| MALANA | AdU | 57 | 14 | 4.25 |
+| CRUZ | FEU | 50 | 13 | 4.07 |
+| AVENIDO | FEU | 51 | 14 | 3.85 |
+| BORNANCIN | UE | 50 | 14 | 3.64 |
+| BACANI | FEU | 49 | 14 | 3.57 |
+| MANABAT | NU | 49 | 14 | 3.5 |
+| NAPA | NU | 46 | 14 | 3.5 |
+| ARTADI | UE | 39 | 14 | 3.29 |
+| LAYUG | AdU | 39 | 14 | 2.79 |
+| MEMBRERE | ADMU | 37 | 14 | 2.79 |
+| ALVAREZ | ADMU | 36 | 14 | 2.64 |
+| MAMACLAY | AdU | 35 | 14 | 2.57 |
+| FERRER | AdU | 35 | 14 | 2.5 |
+| CASTRO | FEU | 32 | 14 | 2.5 |
+| TUBID | UE | 32 | 14 | 2.29 |
+| VILLANUEVA | ADMU | 29 | 14 | 2.29 |
+| NEO | NU | 31 | 14 | 2.23 |
+| BAGUION | NU | 31 | 14 | 2.21 |
+| STA. MARIA | DLSU | 29 | 14 | 2.21 |
+| | | | 14 | 2.07 |
+
+---
+
+<!-- START PAGE 175 (IMG_1244.md) -->
+*(Page 175 — Source: `IMG_1244`)*
+
+### MOST ASSISTS
+
+| PLAYER | TEAM | TOTAL ASSISTS | GAMES PLAYED | AVE/GAME |
+| :--- | :---: | :---: | :---: | :---: |
+| MANABAT | NU | 72 | 14 | 5.14 |
+| C. CRUZ | DLSU | 66 | 13 | 5.076 |
+| CORTEZ | AdU | 64 | 14 | 4.57 |
+| RAMIREZ | DLSU | 56 | 14 | 4 |
+| JOSE | UST | 54 | 14 | 3.86 |
+| BAGUIO | UP | 52 | 14 | 3.71 |
+| JOMALESA | UE | 49 | 14 | 3.5 |
+| ARTADI | NU | 49 | 14 | 3.5 |
+| BAGUION | UP | 43 | 14 | 3.07 |
+| FERRER | ADMU | 41 | 14 | 2.93 |
+| CRUZ | FEU | 39 | 14 | 2.79 |
+| AVENIDO | DLSU | 38 | 14 | 2.71 |
+| CUAN | ADMU | 37 | 14 | 2.64 |
+| SISON | UE | 34 | 14 | 2.43 |
+| RONQUILLO | UST | 32 | 14 | 2.29 |
+
+---
+
+### MOST STEALS/INT.
+
+| PLAYER | TEAM | TOTAL ST./INT. | GAMES PLAYED | AVE/GAME |
+| :--- | :---: | :---: | :---: | :---: |
+| JOSE | DLSU | 43 | 14 | 3.07 |
+| JOMALESA | UP | 35 | 14 | 2.5 |
+| CORTEZ | DLSU | 32 | 14 | 2.29 |
+| RAMIREZ | AdU | 32 | 14 | 2.29 |
+| CRUZ | FEU | 28 | 13 | 2.15 |
+| MANBAT | NU | 28 | 14 | 2 |
+| MANUBAG | UE | 24 | 14 | 1.71 |
+| ALVAREZ | ADMU | 24 | 14 | 1.71 |
+
+---
+
+### MOST SHOT BLOCKS
+
+| PLAYER | TEAM | TOTAL BLOCKS | GAMES PLAYED | AVE/GAME |
+| :--- | :---: | :---: | :---: | :---: |
+| CASTRO | FEU | 24 | 14 | 1.71 |
+| VILLANUEVA | ADMU | 22 | 13 | 1.69 |
+| LAYUG | AdU | 22 | 14 | 1.57 |
+| ESTRADA | UE | 20 | 13 | 1.54 |
+| SANTOS | UP | 17 | 14 | 1.21 |
+
+---
+
+<!-- START PAGE 176 (IMG_1245.md) -->
+*(Page 176 — Source: `IMG_1245`)*
+
+STATISTICAL BASIS FOR INDIVIDUAL AWARDS
+
+### SENIOR'S DIVISION
+
+#### HIGHEST SCORE
+
+| PLAYER | TEAM | TOTAL POINTS | GAMES PLAYED | AVE/GAME |
+| :--- | :---: | :---: | :---: | :---: |
+| BACANI | FEU | 214 | 14 | |
+| BRAVO | ADMU | 214 | 14 | 15.29 |
+| VILLANUEVA | FEU | 179 | 13 | 15.29 |
+| C. CRUZ | NU | 177 | 13 | 13.77 |
+| NAPA | UE | 190 | 14 | 13.62 |
+| MANUBAG | UP | 170 | 14 | 13.5 |
+| BORNANCIN | ADMU | 163 | 14 | 12.14 |
+| ALVAREZ | UST | 158 | 14 | 11.64 |
+| BAGUIO | FEU | 155 | 14 | 11.29 |
+| AVENIDO | ADMU | 147 | 14 | 11.07 |
+| SISON | UP | 140 | 14 | 10.5 |
+| FERRER | DLSU | 139 | 14 | 10 |
+| STA. MARIA | UE | 127 | 14 | 9.93 |
+| YAP | ADMU | 135 | 13 | 9.77 |
+| ORETA | UST | 132 | 14 | 9.64 |
+| | | | 14 | 9.43 |
+
+#### MOST REBOUNDS
+
+| PLAYER | TEAM | TOTAL REBOUNDS | GAMES PLAYED | AVE/GAME |
+| :--- | :---: | :---: | :---: | :---: |
+| ALVAREZ | ADMU | 165 | 14 | 11.79 |
+| VILLANUEVA | ADMU | 130 | 13 | 10 |
+| BORNANCIN | UP | 122 | 14 | 8.71 |
+| CASTRO | FEU | 119 | 14 | 8.5 |
+| TUBID | UE | 111 | 14 | 7.93 |
+| ALI | UE | 86 | 11 | 7.82 |
+| GRIJALDO | NU | 84 | 12 | 7 |
+| AVENIDO | FEU | 97 | 14 | 6.93 |
+| MALANA | AdU | 97 | 14 | 6.93 |
+| C. CRUZ | FEU | 87 | 13 | 6.69 |
+| WILSON | DLSU | 84 | 13 | 6.46 |
+| ESPIRITU | UST | 90 | 14 | 6.43 |
+| STA. MARIA | DLSU | 83 | 13 | 6.38 |
+| ORTIGUERRA | UST | 89 | 14 | 6.36 |
+| NAPA | NBU | 88 | 14 | 6.29 |
+
+---
+
+<!-- START PAGE 177 (IMG_1246.md) -->
+*(Page 177 — Source: `IMG_1246`)*
+
+# STATISTICAL BASIS FOR INDIVIDUAL AWARDS
+## SENIORS DIVISION
+
+| PLAYER | TEAM | GP | + | RP | + | AP | - | EP | + | PFP | SP | MP | PAV |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| VILLANUEVA | ADMU | 179 | + | 260 | + | 96 | - | 58 | + | 64 | 413 | 350 | 23.6 |
+| ALVAREZ | DLSU | 122 | + | 330 | + | 208 | - | 58 | + | 74 | 454 | 350 | 21.985 |
+| CORTEZ | NU | 102 | + | 88 | + | 112 | - | 72 | + | 64 | 318 | 413 | 21.056 |
+| GRUALD | DLSU | 126 | + | 168 | + | 194 | - | 34 | + | 74 | 433 | 295 | 19.86 |
+| JOSE | FEU | 177 | + | 120 | + | 192 | - | 48 | + | 42 | 318 | 413 | 17.968 |
+| CRUZ, C. | UST | 155 | + | 174 | - | 154 | - | 100 | + | 56 | 288 | 290 | 17.246 |
+| BAGUIO | FEU | 123 | + | 158 | + | 126 | - | 70 | + | 61 | 336 | 381 | 17 |
+| CASTRO | UP | 54 | + | 238 | + | 170 | - | 64 | + | 73 | 382 | 400 | 16.9 |
+| JOMALESA | UE | 170 | + | 148 | - | 104 | - | 50 | + | 85 | 324 | 318 | 16.66 |
+| MANUBAG | FEU | 147 | + | 148 | + | 108 | - | 56 | + | 57 | 338 | 389 | 15.73 |
+| AVENIDO | UP | 163 | + | 194 | + | 120 | - | 102 | + | 46 | 306 | 394 | 15.63 |
+| BORNANCIN | UST | 95 | + | 244 | + | 104 | - | 52 | + | 61 | 308 | 470 | 15.57 |
+| ESPIRITU | FEU | 214 | + | 180 | + | 44 | - | 98 | + | 58 | 227 | 295 | 15.39 |
+| BACANI | NU | 104 | + | 176 | + | 202 | - | 24 | + | 47 | 338 | 450 | 15.02 |
+| DECASTRO | NU | 88 | + | 148 | + | 96 | - | 98 | + | 41 | 325 | 300 | 15 |
+| MANABAT | UE | 118 | + | 120 | - | 70 | - | 64 | + | 74 | 271 | 364 | 14.89 |
+| TUBID | UST | 132 | + | 224 | + | 74 | - | 44 | + | 21 | 300 | 409 | 14.67 |
+| ORETA | UP | 214 | + | 100 | + | 52 | - | 92 | + | 46 | 237 | 326 | 14.54 |
+| BRAVO | NU | 190 | + | 134 | + | 116 | - | 40 | + | 55 | 321 | 381 | 14.38 |
+| NAPA | DLSU | 93 | + | 176 | + | 44 | - | 60 | + | 61 | 212 | 303 | 13.99 |
+| WILSON | UP | 139 | + | 168 | + | 96 | - | 34 | + | 52 | 243 | 350 | 13.88 |
+| FERRER | UE | 49 | + | 100 | - | 78 | - | 56 | + | 35 | 196 | 290 | 13.52 |
+| ALI | ADMU | 140 | + | 172 | + | 44 | - | 32 | + | 23 | 243 | 365 | 13.35 |
+| SISON | ADMU | 99 | + | 86 | + | 96 | - | 54 | + | 36 | 213 | 321 | 13.27 |
+| MEMBRERE | ADMU | 135 | + | 106 | + | 40 | - | 46 | + | 58 | 195 | 295 | 13.22 |
+| YAP | UE | 71 | + | 128 | + | 56 | - | 38 | + | 56 | 231 | 366 | 12.62 |
+| ESTRADA | UST | 102 | + | 166 | + | 104 | - | 58 | + | 56 | 183 | 299 | 12.24 |
+| LATORENO | DLSU | 127 | + | 148 | + | 32 | - | 56 | + | 51 | 235 | 389 | 12.08 |
+| STA. MARIA | DLSU | 111 | + | 166 | + | 68 | - | 70 | + | 52 | 184 | 305 | 12.06 |
+| CUAN | AdU | 129 | + | 76 | + | 114 | - | 114 | + | 79 | 169 | 283 | 11.94 |
+| MAMACLAY | AdU | 129 | + | 130 | + | 74 | - | 50 | + | 79 | 198 | 340 | 11.65 |
+| MALANA | ADMU | 102 | + | 194 | + | 178 | - | 120 | + | 56 | 174 | 301 | 11.56 |
+| GONZALES | AdU | 80 | + | 104 | + | 62 | - | 62 | + | 47 | 233 | 405 | 11.506 |
+| RAMIREZ | UST | 92 | + | 126 | + | - | - | - | + | 77 | 193 | 356 | 10.84 |
+| ORTIGUERA | | | | | | | | | | | | | |
+
+---
+
+## LEGEND & POINT EQUIVALENT:
+
+1. **GOAL POINTS (GP)**
+   * A. FIELD GOAL: 2 OR 3 POINTS
+   * B. FREE THROWS: 1 POINT
+
+2. **REBOUND POINTS**
+   * A. OFFENSIVE REBOUND: 2 POINTS
+   * B. DEFENSIVE REBOUND: 2 POINTS
+   * C. JUMPBALL/LOOSEBALL (RECOVERY): 2 POINTS
+
+3. **ASSIST POINT (AP)**
+   * A. ASSIST POINTS: 2 POINTS
+   * B. STEALS/INTERCEPTION: 2 POINTS
+   * C. BLOCKSHOT: 2 POINTS
+
+4. **ERROR/TURN-OVER POINT (EP)**
+   * A. PASSING/RECEIVING ERROR: 2 POINTS
+   * B. VIOLATION: 2 POINTS
+
+5. **PERSONAL FOUL POINTS (PFP)**
+   * A. FOUL W/O FREE THROW AWARD: 1 POINT
+   * B. FOUL W/ FREE THROW AWARD: 2 POINTS
+   * C. UNSPORTMANLIKE FOUL: 5 POINTS
+
+6. **STATISTICAL POINTS**
+   * SP = (GP+RP+AP) - (EP+PFP)
+
+7. **PLAYERS ALL AROUND VALUE (PAV)**
+   * PAV = STATISTICAL POINTS OVER MINUTES PLAYED/20
+
+8. **MVP = PAV + PLAYING ATTITUDE**
+
+> **NOTE:** ONLY PLAYERS WITH AVERAGE PLAYING TIME OF 20 MINUTES PER GAME ARE INCLUDED
+
+---
+
+<!-- START PAGE 178 (IMG_1247.md) -->
+*(Page 178 — Source: `IMG_1247`)*
+
+UNIVERSITY AT **LETIC ASSOCIATION OF THE PHILIPPINES**  
+63rd SEASON
+
+**Team:** ADMU  
+**Wins:** 10  
+**Losses:** 2  
+**Points Against:** 703
+
+### BASKETBALL STATISTICS
+
+| No. | PLAYER | Field | Free Throw | Total Score | Rebounds | Recoveries | A | ST | INT | B | Errors | Fouls W/ W/O | GP | MP | Remarks |
+| :---: | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| | | 3-pt % | 2-pt % | % | Score | O | D | veries | | | | | | | | |
+| 4 | MORADA | 0 / 10 0 | 18 / 29 62 | 19 / 39 38 | 38 / 50 76 | 55 | 11 | 5 | | 1 | 4 | 1 | 4 | 7 | 5 | 8 | 83 | |
+| 5 | CRUZ2 | 0 / 4 0 | 3 / 14 21 | 3 / 18 16 | 4 / 75 5 | 9 | 3 | 6 | | 14 | 2 | | 10 | 4 | 3 | 6 | 56 | |
+| 6 | BAUTISTA | 3 / 12 25 | 25 / 17 39 | 28 / 44 44 | 3 / 13 23 | 46 | 17 | 17 | 3 | 20 | 19 | 2 | 12 | 5 | 15 | 10 | 139 | |
+| 7 | ESCALONA | 2 / 3 67 | 29 / 54 54 | 31 / 57 54 | 22 / 48 46 | 86 | 7 | 17 | | 41 | 22 | 1 | 32 | 14 | 19 | 12 | 220 | |
+| 8 | A. CRUZ | 1 / 8 13 | 14 / 28 50 | 15 / 36 42 | 5 / 10 50 | 36 | 6 | 19 | | 9 | 7 | | 15 | 6 | 2 | 9 | 85 | |
+| 10 | BULAON | 1 / 3 33 | 4 / 17 24 | 5 / 20 25 | 9 / 56 16 | 5 | 3 | 3 | | 8 | 3 | | 6 | 3 | 5 | 6 | 57 | |
+| 11 | FRE2 | 2 / 9 22 | 29 / 79 37 | 31 / 88 35 | 18 / 34 53 | 82 | 34 | 48 | 1 | 10 | 14 | 8 | 30 | 17 | 10 | 12 | 231 | |
+| 12 | GONZALEZ | 0 / 3 0 | 13 / 32 41 | 13 / 35 37 | 7 / 11 64 | 26 | 5 | 17 | | 27 | 26 | 1 | 37 | 15 | 9 | 12 | 279 | |
+| 13 | C. GONZALEZ | 3 / 8 38 | 19 / 42 7 | 22 / 50 44 | 12 / 58 23 | 23 | 9 | 14 | | 1 | 4 | 1 | 11 | 5 | 3 | 7 | 62 | |
+| 14 | TOLOSA | 0 / 3 0 | 10 / 42 23 | 10 / 45 22 | 41 / 61 67 | 125 | 41 | 54 | 4 | 15 | 21 | 3 | 46 | 20 | 10 | 12 | 308 | |
+| 15 | PASION | 3 / 26 12 | 12 / 17 70 | 15 / 43 34 | 14 / 31 45 | 57 | 7 | 24 | | 30 | 24 | 1 | 37 | 15 | 9 | 12 | 239 | |
+| 16 | NAZARENO | 1 / 10 10 | 10 / 23 43 | 11 / 33 33 | 22 / 35 63 | 71 | 21 | 29 | 1 | 29 | 20 | 2 | 41 | 18 | 12 | 11 | 228 | |
+| 17 | UICHICO | / | 5 / 13 38 | 5 / 13 38 | 1 / 6 17 | 11 | 12 | 13 | | 2 | 2 | | 3 | 6 | 1 | 6 | 50 | |
+| 18 | ALDOVER | 1 / 1 100 | 48 / 88 55 | 49 / 89 55 | 20 / 38 53 | 119 | 51 | 63 | 2 | 12 | 11 | 9 | 30 | 27 | 11 | 12 | 268 | |
+| 19 | PALATTAO | 0 / 2 0 | 10 / 29 34 | 10 / 31 32 | 9 / 16 56 | 29 | 8 | 12 | | 5 | 6 | | 13 | 13 | 4 | 8 | 95 | |
+| | | **45/177** | **25/628** | **70/805** | **196/366** | **54** | **891** | **237** | **34** | **11** | **222** | **185** | **31** | **327** | **175** | **118** | **12** | **2400** | |
+
+**LEGEND:**  
+FG - Field Goals  
+FT - Free throws  
+% - Percentage  
+O - Offensive  
+D - Defensive  
+ST - Steals  
+INT - Interceptions  
+X - Other recoveries, jump balls, loose balls, etc.  
+BS - Blocked shots  
+A - Assists  
+LB - Lost balls  
+V - Violations  
+W - With two free throws  
+W/O - Without any free throws  
+MP - Minutes played  
+
+Prepared by:
+
+---
+
+<!-- START PAGE 179 (IMG_1248.md) -->
+*(Page 179 — Source: `IMG_1248`)*
+
+UNIVERSITY ATHLETIC ASSOCIATION OF THE PHILIPPINES
+BASKETBALL STATISTICS — 63rd SEASON
+
+Team: **DLS-2** | Wins: **7** | Losses: **5** | Points Against: **743**
+
+### BASKETBALL STATISTICS
+
+| No. | PLAYER | 3-pt | % | Field Goals | % | 2-pt | % | Free Throw | % | Total Score | Rebounds | Reco-veries | A | ST/INT | B | Errors | Fouls | GP | MP | Remarks |
+| :-- | :-- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| | | | | | | | | | | | O | D | | | | | | W | W/O | | | |
+| 4 | LAO | 0/3 | 0 | 1/5 | 20 | 0/2 | 0 | 2 | | 2 | | | 7 | 5 | | | 3 | 4 | 6 | 42 | |
+| 5 | AUSTRIA | 12/59 | 20 | 39/93 | 42 | 56/81 | 69 | 170 | 12 | 39 | 2 | 40 | 38 | 4 | 46 | 14 | 15 | 12 | 312 | |
+| 6 | MALLARI | 7/18 | 39 | 6/15 | 40 | 6/8 | 75 | 39 | 9 | 9 | | 15 | 12 | | 17 | 12 | 4 | 11 | 139 | |
+| 7 | CARLOS | | | 6/14 | 43 | 3/7 | 43 | 15 | 5 | 11 | | 2 | 6 | 1 | 8 | 13 | 2 | 8 | 71 | |
+| 8 | MARQUEZ | 4/27 | 15 | 19/55 | 35 | 10/24 | 42 | 60 | 11 | 27 | | 28 | 8 | 1 | 23 | 23 | 13 | 12 | 290 | |
+| 9 | SULIT | 1/4 | 25 | 2/12 | 17 | 1/4 | 25 | 8 | 6 | 5 | | 6 | 2 | | 9 | 6 | 5 | 9 | 86 | |
+| 10 | NAVARRA | 5/18 | 28 | 16/39 | 41 | 13/19 | 68 | 60 | 15 | 17 | 3 | 26 | 27 | | 25 | 12 | 18 | 11 | 228 | |
+| 11 | UR RA | 0/1 | 0 | 99/91 | 51 | 45/73 | 62 | 243 | 35 | 98 | 5 | 18 | 24 | 18 | 41 | 21 | 10 | 12 | 385 | |
+| 12 | PANGILINAN | 1/8 | 13 | 34/82 | 41 | 23/31 | 74 | 94 | 30 | 55 | | 40 | 23 | 2 | 32 | 23 | 10 | 12 | 335 | |
+| 14 | CERVANTES | 4/16 | 25 | 39/62 | 48 | 13/18 | 72 | 85 | 26 | 26 | 1 | 32 | 22 | 2 | 28 | 20 | 4 | 12 | 331 | |
+| 15 | RAMILO | 0/1 | 0 | 9/32 | 28 | 3/4 | 75 | 21 | 9 | 16 | | 8 | 3 | 1 | 18 | 18 | 11 | 12 | 138 | |
+| 16 | AGANA | | | 3/9 | 33 | 3/4 | 75 | 9 | 2 | 4 | | | | | 5 | 4 | 3 | 7 | 43 | |
+| | | | | | | | | | | | | | | | | | | | | |
+| | | | | | | | | | | | | | | | | | | | | |
+| | | | | | | | | | | | | | | | | | | | | |
+| | | | | | | | | | | | | | | | | | | | | |
+| | | | | | | | | | | | | | | | | | | | | |
+| | | | | | | | | | | | | | | | | | | | | |
+| | | | | | | | | | | | | | | | | | | | | |
+| **TOTAL** | | **34/155** | **22** | **206/43** | **43** | **170/275** | **64** | **806** | **164** | **309** | **11** | **222** | **171** | **29** | **266** | **169** | **99** | **12** | **2400** | |
+
+---
+
+**LEGEND:**
+- FG - Field goals
+- FT - Free throws
+- % - Percentage
+- O - Offensive
+- D - Defensive
+- ST - Steals
+- INT - Interceptions
+- X - Other recoveries (jump balls, loose balls, etc.)
+- BS - Blocked shots
+- LB - Lost balls
+- V - Violations
+- W - With two free throws
+- W/O - Without any free throws
+- MP - Minutes played
+
+Prepared by: _____________________
+
+---
+
+<!-- START PAGE 180 (IMG_1249.md) -->
+*(Page 180 — Source: `IMG_1249`)*
+
+# University Athletic Association of the Philippines
+## 63rd Season
+### Basketball Statistics
+
+**Team:** NU  
+**Wins:** 1  
+**Losses:** 11  
+**Points Against:** 936  
+
+| No. | Player | Field Goals | | 2-Pt | | Free Throw | | Total Score | Rebounds | | Recoveries | A | ST/INT | B | Errors | Fouls | GP | MP | Remarks |
+| :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
+| | | 3-pt | % | 2-pt | % | Throw | % | | O | D | | | | | | W/W/O | | | |
+| 4 | DEQUILLA | 2/6 | 33 | 36/89 | 38 | 17/43 | 40 | 95 | 20 | 22 | | 26 | 38 | 2 | 56 | 5/10/12 | 12 | 221 | |
+| 5 | CARTANO | 1/11 | 9 | 24/63 | 38 | 2 | 7 | 29 | 53 | 21 | 25 | | 17 | 10 | 2 | 35 | 7/6/10 | 12 | 217 | |
+| G | APAGA | 0/1 | 0 | 0/4 | 0 | 3 | 4 | 75 | 3 | 4 | 6 | 1 | 4 | 1 | 13 | 2/4/7 | 6 | 67 | |
+| 7 | GALANG | 6/17 | 35 | 4 | 6 | 0/7 | 0 | 16 | 6 | 26 | 1 | 8 | 5 | 4 | 17 | 16/2/9 | 12 | 220 | |
+| 8 | TIPO | 4/11 | 36 | 8 | 11 | 13 | 16 | 51 | 13 | 16 | | 9 | 4 | 1 | 18 | 11/6/10 | 10 | 103 | |
+| 9 | ANTONIO | 29/46 | 43 | 11 | 24 | 40 | 51 | 13 | 16 | | 1 | 6 | | 2 | 6 | 1 | 5 | 28 | |
+| 10 | BAYTAN | 0/1 | 0 | 2/8 | 25 | 4 | 4 | 6 | 1 | 5 | 10 | 9 | 4 | 15 | 23/22/12 | 12 | 243 | |
+| 11 | JUAN | 0/2 | 0 | 13/39 | 33 | 18/36 | 50 | 44 | 15 | 48 | | 9 | 16 | 5 | 37 | 17/9/12 | 12 | 316 | |
+| 13 | CALINGASIN | 2/9 | 29 | 32/90 | 32 | 30/56 | 54 | 88 | 32 | 43 | 2 | 15 | 10 | 5 | 25 | 20/8/12 | 12 | 350 | |
+| 15 | MALCONTENTO | 1/3 | 33 | 44/122 | 36 | 73/98 | 74 | 164 | 15 | 39 | 4 | 40 | 37 | | 81 | 19/22/12 | 12 | 300 | |
+| 16 | MICU | 6/20 | 30 | 68/154 | 44 | 29/53 | 53 | 83 | 38 | 24 | 4 | 23 | 27 | 1 | 56 | 6/22/10 | 10 | 295 | |
+| 17 | DECENA | 1 | 3 | 33 | 7 | 10 | 70 | 9 | 1 | 5 | | 3 | | | 9 | 3/1/9 | 6 | 65 | |
+| | | | | | | | | | | | | | | | | | | | |
+| | | | | | | | | | | | | | | | | | | | |
+| | | | | | | | | | | | | | | | | | | | |
+| | | | | | | | | | | | | | | | | | | | |
+| **TOTALES** | | **10/44** | **23** | **247/652** | **38** | **202/348** | **58** | **726** | **171** | **205** | **12** | **165** | **157** | **27** | **368** | **130/112/12** | **12** | **2425** | |
+
+---
+
+### LEGEND:
+* **FG** - Field goals
+* **FT** - Free throws
+* **%** - Percentage
+* **O** - Offensive
+* **D** - Defensive
+* **ST** - Steals
+* **INT** - Interceptions
+* **X** - Other recoveries, jump balls, loose balls, etc.
+* **BS** - Blocked shots
+* **A** - Assists
+* **LB** - Lost balls
+* **V** - Violations
+* **W** - With two free throws
+* **W/O** - Without any free throws
+* **MP** - Minutes played
+
+Prepared by: _______________________
+
+---
+
+<!-- START PAGE 181 (IMG_1250.md) -->
+*(Page 181 — Source: `IMG_1250`)*
+
+Team: **UE**
+
+Wins: **5**
+
+Losses: **7**
+
+Points Against: **841**
+
+### BASKETBALL STATISTICS
+**63rd SEASON**
+
+| No. | PLAYER | Field Goals 3-pt | % | Field Goals 2-pt | % | Free Throw | % | Total Score | Rebounds O | Rebounds D | Recoveries | A | ST / INT | B | Errors | Fouls W/ | Fouls W/O | GP | MP | Remarks |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| 4 | TOLENTINO | 1 / 4 | 25 | 37 / 65 | 57 | 12 / 32 | 38 | 129 | 17 | 26 | | 35 | 32 | | 56 | 14 | 15 | 12 | 316 | |
+| 5 | MANLALANGIT | 1 / 8 | 13 | 15 / 55 | 27 | 22 / 54 | 40 | 74 | 7 | 13 | | 11 | 9 | 1 | 19 | 12 | 4 | 12 | 168 | |
+| 6 | ORTEGA | 4 / 23 | 17 | 51 / 118 | 43 | 20 / 29 | 69 | 134 | 32 | 56 | 2 | 21 | 24 | 40 | 36 | 23 | 12 | 12 | 336 | |
+| 7 | MORELOS | | | 0 / 1 | 0 | 0 | | 0 | 1 | | | 2 | | | 3 | 2 | 1 | 3 | 10 | |
+| 8 | PEÑAFLOR | 2 / 12 | 17 | 7 / 12 | 58 | 3 / 8 | 38 | 23 | 4 | 12 | | 18 | 16 | | 20 | 11 | 6 | 12 | 136 | |
+| 9 | LASIN | 0 / 3 | 0 | 3 / 7 | 43 | 1 / 2 | 50 | 7 | 1 | 4 | 1 | 1 | 1 | | 1 | 1 | 4 | 5 | 29 | |
+| 10 | SILVA | 0 / 3 | 0 | 43 / 96 | 45 | 37 / 83 | 45 | 123 | 31 | 51 | . | 29 | 15 | 3 | 45 | 29 | 20 | 12 | 372 | |
+| 11 | VILLAREAL | | | 0 / 2 | 0 | 0 | | 0 | 4 | 3 | | | 1 | 1 | 2 | 4 | 4 | 4 | 23 | |
+| 12 | DELGADO | 2 / 3 | 67 | 30 / 56 | 54 | 19 / 34 | 56 | 85 | 20 | 23 | 4 | 57 | 27 | | 49 | 13 | 17 | 12 | 324 | |
+| 13 | MARCOS | 0 / 7 | 0 | 23 / 59 | 39 | 13 / 23 | 57 | 59 | 9 | 9 | | 5 | 9 | 1 | 20 | 7 | 7 | 12 | 175 | |
+| 18 | FAMPULME | 0 / 1 | 0 | 20 / 44 | 45 | 8 / 13 | 62 | 48 | 9 | 27 | 1 | 14 | 12 | 5 | 18 | 17 | 17 | 12 | 210 | |
+| 19 | TOLIBAS | 9 / 33 | 27 | 88 / 47 | 47 | 19 / 45 | 42 | 128 | 33 | 61 | 2 | 21 | 18 | 10 | 43 | 25 | 7 | 11 | 301 | |
+| | | | | | | | | | | | | | | | | | | | | |
+| | | 19 / 97 | 20 | 299 / 633 | 47 | 140 / 283 | 49 | 777 | 168 | 285 | 10 | 212 | 166 | 61 | 312 | 158 | 110 | 12 | 2400 | |
+
+LEGEND:  
+FG - Field goals  
+FT - Free throws  
+% - Percentage  
+O - Offensive  
+D - Defensive  
+ST - Steals  
+INT - Interceptions  
+X - Other recoveries jump balls, loose balls, etc.  
+BS - Blocked shots  
+A - Assists  
+LB - Lost balls  
+V - Violations  
+W - With two free throws  
+W/O - Without any free throws  
+MP - Minutes played  
+
+Prepared by: ____________________
+
+---
+
+<!-- START PAGE 182 (IMG_1251.md) -->
+*(Page 182 — Source: `IMG_1251`)*
+
+# BASKETBALL STATISTICS
+
+**Team:** UP  
+**Wins:** 2  
+**Losses:** 10  
+**Points Against:** 810
+
+| No. | PLAYER | Field | | | | Free Throw | | Total Score | Rebounds | | Recoveries | A | ST | INT | B | Errors | Fouls | | GP | MP | Remarks |
+| :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| | | 3-pt | % | 2-pt | % | % | O | D | W/ W/O | | | | | | W | W/O | | | |
+| 4 | MIRANDA | 0 / 1 | 0 | 1 / 2 | 50 | 7 / 14 | 50 | 9 | 5 | 4 | | 18 | 3 | | | 16 | 6 | 5 | 7 | 102 | |
+| 5 | CABANGIS | 2 / 10 | 20 | 0 / 5 | 0 | 2 / 3 | 67 | 8 | | | | 6 | 1 | | | 1 | 6 | 5 | 7 | 36 | |
+| 6 | CRUZ | 7 / 26 | 27 | 54 / 114 | 47 | 32 / 54 | 59 | 161 | 18 | 34 | 7 | 46 | 32 | 2 | 65 | 14 | 21 | 11 | 349 | |
+| 7 | RAPIZ | 0 / 2 | 0 | 1 / 2 | 50 | / | | 1 | | 1 | | | | | | 1 | 3 | 8 | |
+| 8 | JIMENEZ | 7 / 20 | 35 | 6 / 18 | 33 | 2 / 5 | 40 | 35 | 3 | 16 | | 15 | 10 | | | 24 | 6 | 7 | 6 | 1170 | |
+| 9 | ALTUNA | 2 / 9 | 22 | 19 / 39 | 49 | 17 / 31 | 55 | 61 | 24 | 27 | 1 | 9 | 16 | 1 | 34 | 15 | 11 | 11 | 315 | |
+| 10 | DALISAY | | | 8 / 15 | 53 | 2 / 4 | 50 | 18 | 12 | 8 | . | | 2 | | | 11 | 14 | 3 | 12 | 103 | |
+| 11 | SENTURIAS | | | 12 / 24 | 50 | 1 / 3 | 33 | 25 | 19 | 24 | | 3 | 3 | | 10 | 19 | 13 | 8 | 10 | 205 | |
+| 12 | ORDILLAS | 0 / 10 | 0 | 6 / 26 | 23 | 3 / 12 | 25 | 15 | 12 | 22 | 1 | 32 | 14 | 1 | 43 | 16 | 15 | 11 | 275 | |
+| 14 | CALLANTA | 21 / 71 | | 8 / 28 | 29 | 8 / 12 | 67 | 87 | 8 | 29 | 1 | 20 | 10 | 1 | 24 | 16 | 9 | 12 | 389 | |
+| 15 | EPRES | 11 / 36 | | 82 / 168 | 49 | 95 / 137 | 69 | 292 | 28 | 72 | 3 | 25 | 20 | 3 | 65 | 21 | 21 | 12 | 464 | |
+| 16 | CANCIO | 0 / 1 | 0 | | | | | 0 | | 1 | | | | | 1 | | | 3 | 3 | |
+
+| | | | | | | | | | | | | | | | | | | | | | | | |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| 50 / 184 | 27 | 196 / 441 | 44 | 170 / 277 | 61 | 712 | 130 | 238 | 13 | 170 | 110 | 18 | 307 | 123 | 100 | 12 | 2425 |
+
+**LEGEND:**  
+FG - Field goals  
+FT - Free throws  
+% - Percentage  
+O - Offensive  
+D - Defensive  
+
+ST - Steals  
+INT - Interceptions  
+X - Other recoveries (jump balls, loose balls, etc.)  
+BS - Blocked shots  
+A - Assists  
+
+LB - Lost balls  
+V - Violations  
+W - With two free throws  
+W/O - Without any free throws  
+MP - Minutes played
+
+Prepared by: ______________________
+
+---
+
+<!-- START PAGE 183 (IMG_1252.md) -->
+*(Page 183 — Source: `IMG_1252`)*
+
+# UST
+## BASKETBALL STATISTICS
+
+**Team:** UST  
+**Wins:** 9  
+**Losses:** 7  
+
+| No. | PLAYER | Field Goals 3-pt M/A % | Field Goals 2-pt M/A % | Free Throw M/A % | Total Score | Rebounds O / D | Reco-veries | A | ST/INT | B | Errors | Fouls W/ W/O | GP | MP | Remarks |
+| :---: | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| 4 | SANCHEZ | / | 2 / 8 25 | / | 4 | / 1 | / | 1 | 4 | / | 2 | 5 3 | 3 | 31 | |
+| 5 | BAG-O | 2 / 8 25 | 8 / 31 26 | 12 / 17 70 | 29 | 6 / 14 | / | 21 | 10 | / | 7 | 12 9 | 3 | 1774 | |
+| 6 | PAGALANAN | / | / | / | 0 | / | / | / | / | / | 2 | / / | 1 | 2 | |
+| 7 | ILAGAN | 8 / 33 24 | 24 / 66 36 | 30 / 47 64 | 90 | 16 / 24 | 4 | 23 | 22 | 3 | 31 | 18 16 | 12 | 321 | |
+| 8 | ESPIRITU | 4 / 12 33 | 33 / 49 67 | 26 / 58 44 | 125 | 37 / 43 | 1 | 20 | 22 | 24 | 37 | 15 15 | 11 | 312 | |
+| 9 | REYES | / | 21 / 43 49 | 23 / 61 37 | 56 | 15 / 11 | 1 | 23 | 6 | 1 | 24 | 18 9 | 12 | 157 | |
+| 10 | TENGSON | / | 25 / 47 53 | 9 / 22 41 | 59 | 25 / 24 | 1 | 9 | 9 | 5 | 18 | 9 9 | 12 | 166 | |
+| 11 | DEL REMEDIOS | 2 / 14 14 | 1 / 2 50 | 4 / 4 100 | 12 | 2 / 3 | / | 6 | 5 | / | 7 | 5 4 | 8 | 55 | |
+| 12 | CORTEZ | 2 / 13 15 | 15 / 218 7 | 55 / 238 23 | 269 | 40 / 57 | 4 | 59 | 70 | 1 | 44 | 16 17 | 12 | 367 | |
+| 14 | PACIA | / | 3 / 6 50 | 2 / 4 50 | 8 | 5 / 9 | / | 5 | 2 | 1 | 4 | 7 1 | 6 | 42 | |
+| 15 | AQUINO | / | 43 / 98 44 | 32 / 71 45 | 118 | 43 / 65 | 3 | 16 | 25 | 13 | 32 | 25 8 | 12 | 335 | |
+| 16 | GEROMINO | / | 9 / 34 26 | 3 / 6 50 | 21 | 14 / 9 | 1 | 7 | 5 | / | 7 | 5 4 | 10 | 72 | |
+| 17 | ARTUZ | 1 / 7 14 | 4 / 10 40 | 3 / 9 33 | 14 | 6 / 7 | / | 4 | 3 | 1 | 10 | 6 3 | 7 | 71 | |
+| 18 | CUAN | / | 25 / 51 49 | 9 / 30 30 | 59 | 15 / 30 | 1 | 47 | 23 | / | 37 | 7 17 | 12 | 274 | |
+| 19 | BUSA | 0 / 1 0 | 2 / 4 50 | 1 / 0 - | 4 | / | / | / | / | / | 3 | / / | 2 | 12 | |
+| 20 | BERNARDO | / | / | / | 0 | / | / | / | / | / | 1 | / / | 2 | 9 | |
+
+---
+
+**Summary Totals:**
+- **FT:** 19/88 (22%)
+- **INT:** 22/713 (47)
+- **Other recoveries:** 135/276 (49)
+- **Total Score:** 868
+- **Rebounds O/D:** 224 / 298
+- **Recoveries:** 16
+- **A:** 237
+- **ST/INT:** 206
+- **B:** 49
+- **Errors:** 280
+- **Fouls W/ W/O:** 150 / 112
+- **GP:** 12
+- **MP:** 2400
+
+---
+
+**Legend:**
+- **FI** - Free throws
+- **%** - Percentage
+- **O** - Offensive
+- **D** - Defensive
+- **INT** - Interceptions
+- **X** - Other recoveries (jump balls, loose balls, etc.)
+- **BS** - Blocked shots
+- **A** - Assists
+- **V** - Violations
+- **W** - With two free throws
+- **W/O** - Without any free throws
+- **MP** - Minutes played
+
+---
+
+<!-- START PAGE 184 (IMG_1253.md) -->
+*(Page 184 — Source: `IMG_1253`)*
+
+## Team: **ADU**
+
+| Wins | 0 | Losses | 14 | Points Against | 957 |
+| :--- | - | :--- | - | :--- | - |
+
+| No. | Player | 3-pt | % | 2-pt | % | Free Throw | % | Total Score | Rebounds O | Rebounds D | Recoveries | A | ST | INT | B | Errors | Fouls W | Fouls W/O | GP | MP | Remarks |
+| :---: | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| 4 | CINCO | 1 / 3 | 33 | 1 / 3 | 33 | 2 / 2 | 100 | 44 | 4 | 4 | | 2 | | | | 5 | 1 | 2 | 6 | 28 | |
+| 5 | LEE | 5 / 28 | 18 | 20 / 52 | 38 | 39 / 50 | 78 | 94 | 25 | 26 | 3 | 26 | 19 | 1 | 51 | 14 | 16 | 12 | 356 | |
+| G | EUSEBIO | 0 / 2 | 0 | 1 / 10 | 10 | 7 / 14 | 50 | 9 | 15 | 19 | | 13 | 10 | 1 | 14 | 3 | 10 | 9 | 151 | |
+| 7 | TOMINES | 0 / 1 | 0 | 0 / 2 | 0 | / | | 0 | 1 | 1 | | 1 | | | | | | | 2 | 9 | |
+| 9 | FERRER | 3 / 16 | 19 | 11 / 27 | 41 | 13 / 18 | 72 | 44 | 9 | 16 | | 15 | 8 | 1 | 24 | 11 | 2 | 9 | 149 | |
+| 10 | MAMACLAY | / | | 54 / 111 | 49 | 21 / 39 | 54 | 129 | 36 | 29 | | 7 | 8 | 1 | 35 | 22 | 8 | 14 | 283 | |
+| 11 | MANGLILABNAN | / | | 11 / 36 | 31 | 7 / 22 | 32 | 29 | 12 | 28 | | 6 | 2 | | 13 | 9 | 4 | 11 | 140 | |
+| 12 | DOMINGO | 6 / 23 | 26 | 11 / 36 | 31 | 14 / 22 | 64 | 54 | 11 | 24 | 2 | 9 | 6 | 2 | 24 | 10 | 15 | 12 | 244 | |
+| 13 | LAYUG | 0 / 1 | 0 | 15 / 39 | 38 | 20 / 36 | 54 | 48 | 23 | 45 | 2 | 10 | 6 | 22 | 39 | 25 | 19 | 14 | 348 | |
+| 14 | RAMIREZ | 12 / 62 | 19 | 11 / 50 | 22 | 22 / 42 | 52 | 80 | 20 | 38 | 5 | 56 | 32 | 1 | 51 | 20 | 9 | 14 | 405 | |
+| 15 | FLORES | / | | 1 / 7 | 14 | / | | 2 | | 1 | | | | | | | | | 2 | 8 | |
+| 16 | MALANA | 0 / 4 | 0 | 4 / 9 | 44 | 62 / 31 | 53 | 58 | 129 | 24 | 70 | 3 | 24 | 9 | 1 | 57 | 30 | 19 | 14 | 340 | |
+| 17 | LIM | 1 / 5 | 20 | 3 / 11 | 27 | 1 / 3 | 33 | 10 | 2 | 4 | | 2 | | | 8 | 5 | 8 | 8 | 76 | |
+| 18 | YONG | 10 / 35 | 29 | 13 / 35 | 37 | 14 / 19 | 74 | 70 | 9 | 14 | 1 | 12 | 8 | | 22 | 13 | 8 | 13 | 224 | |
+| 19 | ROLDAN | / | | 3 / 11 | 27 | 1 / 4 | 25 | 7 | 7 | 8 | | 2 | 6 | 1 | 8 | 8 | 8 | 8 | 54 | |
+| | | **37 / 177** | **21** | **228 / 572** | **40** | **198 / 342** | **58** | **765** | **199** | **320** | **10** | **185** | **114** | **31** | **351** | **171** | **120** | **14** | **2825** | |
+
+---
+
+**LEGEND:**
+- FG - Field goals
+- FT - Free throws
+- % - Percentage
+- O - Offensive
+- D - Defensive
+- ST - Steals
+- INT - Interceptions
+- X - Other recoveries jump balls, loose balls, etc.
+- BS - Blocked shots
+- A - Assists
+- LB - Lost balls
+- V - Violations
+- W - With two free throws
+- W/O - Without any free throws
+- GP - Minutes played
+
+**Prepared by:** ___________________________
+
+---
+
+<!-- START PAGE 185 (IMG_1254.md) -->
+*(Page 185 — Source: `IMG_1254`)*
+
+## 63rd SEASON
+### BASKETBALL STATISTICS
+
+**Team:** ADMU  
+**Wins:** 11  
+**Losses:** 3  
+**Points Against:** 899
+
+| No. | Player | 3-pt | % | 2-pt | % | Free Throw | % | Total Score | Rebounds | Reco-veries | A | ST/INT | B | Errors | Fouls W/ W/O | GP | MP | Remarks |
+| :---: | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| | | | | | | | | | O | D | | | | | W | W/O | | | |
+| 5 | QUIMPO | 1 / 3 | 33 | 33 / 44 | 74 | 6 / 17 | 35 | 78 | 12 | 10 | | 15 | 5 | | 15 | 9 | 8 | 13 | 93 |
+| 7 | TAN-CHI | 2 / 9 | 22 | 8 / 22 | 36 | 6 / 12 | 50 | 28 | 12 | 18 | | 22 | 3 | | 16 | 12 | 6 | 7 | 172 |
+| 8 | CHUA | 4 / 5 | 80 | 2 / 2 | 100 | 10 / 10 | 100 | 18 | 1 | 1 | | | 1 | | 2 | | | 1 | 4 |
+| 10 | ALVAREZ | 1 / 2 | 50 | 51 / 120 | 43 | 53 / 109 | 49 | 158 | 62 | 96 | 7 | 25 | 24 | 7 | 36 | 24 | 20 | 14 | 413 |
+| 12 | FONACIER | 7 / 19 | 37 | 57 / 120 | 50 | 12 / 20 | 60 | 53 | 10 | 21 | | 9 | 7 | 8 | 16 | 19 | 5 | 13 | 150 |
+| 13 | ANTONIO | 1 / 2 | 50 | 7 / 17 | 41 | 1 / 3 | 33 | 18 | 7 | 7 | | 8 | 1 | | 11 | 7 | 2 | 9 | 70 |
+| 14 | VILLANUEVA | | | 65/140 | 46 | 49 / 74 | 66 | 179 | 56 | 70 | 4 | 16 | 10 | 22 | 29 | 22 | 20 | 13 | 350 |
+| 15 | GONZALES | 2 / 18 | 11 | 30 / 96 | 31 | 35 / 46 | 78 | 102 | 26 | 25 | 1 | 24 | 11 | 2 | 25 | 13 | 30 | 14 | 301 |
+| 16 | MEMBRERE | 13/50 | 26 | 18 / 53 | 34 | 24 / 40 | 60 | 99 | 12 | 41 | | 25 | 10 | 3 | 16 | 14 | 8 | 14 | 321 |
+| 17 | CRUZ | 4 / 22 | 18 | 24 / 48 | 50 | 25 / 36 | 69 | 85 | 14 | 26 | | 39 | 13 | 2 | 37 | 26 | 24 | 14 | 300 |
+| 18 | SISON | 29/88 | 33 | 20 / 60 | 33 | 13 / 22 | 59 | 140 | 9 | 33 | 1 | 34 | 12 | 2 | 28 | 6 | 11 | 14 | 365 |
+| 19 | BENITEZ | 1 / 3 | 33 | | | 4 / 75 | 6 | 6 | 1 | 2 | | 3 | | | 3 | 3 | | 3 | 20 |
+| 21 | BUGIA | | | 31/84 | 37 | 22 / 33 | 67 | 84 | 27 | 49 | | 11 | 4 | 13 | 15 | 20 | 9 | 14 | 266 |
+| | | | | | | | | | | | | | | | | | | |
+| | | | | | | | | | | | | | | | | | | |
+| | | | 61 / 216 | 28 | 272/669 | 41 | 253 / 412 | 61 | 980 | 239 | 399 | 13 | 232 | 100 | 59 | 249 | 175 | 149 | 14 | 2825 |
+
+---
+
+**LEGEND:**  
+FG - Field Goals  
+FT - Free Throws  
+% - Percentage  
+O - Offensive  
+D - Defensive  
+
+ST - Steals  
+INT - Interceptions  
+X - Other recoveries (jump balls, loose balls, etc.)  
+BS - Blocked Shots  
+A - Assists  
+
+LB - Lost balls  
+V - Violations  
+W - With two free throws  
+W/O - Without any free throws  
+MP - Minutes played  
+
+Prepared by: \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+
+---
+
+<!-- START PAGE 186 (IMG_1255.md) -->
+*(Page 186 — Source: `IMG_1255`)*
+
+Team: **DLSU**
+Wins: **12**
+Losses: **2**
+Points Against: **908**
+
+| No. | PLAYER | 3-pt | % | 2-pt | % | Free Throw | % | Total Score | Rebounds | | Recoveries | A | ST/INT | B | Errors | Fouls | GP | MP | Remarks |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| | | | | | | | | | O | D | | | | | | W/W/O | | | |
+| 4 | RITUALAO | 17/56 | 30 | 19/63 | 30 | 11/23 | 48 | 74 | 4 | 13 | 1 | 10 | 9 | 1 | 15 | 6/11 | 8 | 185 | |
+| 5 | WILSON | 3/34 | 8 | 46/84 | 54 | 25/44 | 57 | 93 | 39 | 45 | | 12 | 12 | 2 | 20 | 24/13 | 13 | 303 | |
+| 6 | MAGSUMBOL | 0/1 | 0 | 2/2 | 100 | 12/20 | 60 | 52 | 11 | 13 | | 15 | 7 | 1 | 9 | 14/8 | 13 | 160 | |
+| 7 | SAN DIEGO | 0/1 | 0 | 14/30 | 47 | 7/11 | 64 | 35 | 12 | 19 | | 3 | 1 | 2 | 9 | 15/7 | 14 | 129 | |
+| 8 | GOZUM | 10/22 | 45 | 22/52 | 42 | 10/12 | 83 | 102 | 12 | 29 | | 15 | 12 | | 17 | 13/10 | 14 | 251 | |
+| 9 | CASTRO | | | 0/1 | 0 | 0/2 | 0 | 0 | 1 | 1 | | | | | 3 | 1 | 1 | 4 | |
+| 10 | CASINO | 8/15 | 53 | 33/61 | 54 | 32/41 | 78 | 122 | 10 | 34 | | 64 | 32 | 8 | 29 | 13/16 | 14 | 295 | |
+| 11 | CORTEZ | 7/23 | 30 | 13/29 | 45 | 8/14 | 57 | 55 | 6 | | | 9 | 7 | | 19 | 11/9 | 9 | 133 | |
+| 12 | MANALO | | | 49/99 | 49 | 29/56 | 52 | 127 | 36 | 47 | | | | 10 | 29 | 19/18 | 13 | 389 | |
+| 16 | STA MARIA | 0/1 | 0 | 12/35 | 34 | 12/21 | 57 | 36 | 26 | 23 | 6 | 10 | 8 | 5 | 20 | 27/19 | 14 | 243 | |
+| 17 | RAMOS | 0/2 | 0 | 39/84 | 46 | 33/48 | 69 | 111 | 11 | 21 | 6 | 8 | 5 | | 28 | 16/19 | 14 | 305 | |
+| 18 | CUAN | | | 8/23 | 35 | 5/8 | 63 | 21 | 17 | 6 | | 7 | 4 | | 5 | 5/4 | 10 | 97 | |
+| 19 | VAINIO | | | | | | | 0 | | | | | | | | | 1 | 1 | |
+| 20 | ROMERO | 7/26 | 27 | 36/73 | 49 | 33/39 | 85 | 126 | 13 | 42 | 5 | 54 | 43 | | 24 | 18/20 | 14 | 374 | |
+| 21 | JOSE | 55/197 | 28 | 280/640 | 47 | 229/347 | 66 | 996 | 192 | 300 | 18 | 244 | 155 | 30 | 233 | 183/155 | 14 | 2875 | |
+
+LEGEND:
+- FG - Field goals
+- FT - Free throws
+- % - Percentage
+- O - Offensive
+- D - Defensive
+- ST - Steals
+- INT - Interceptions
+- X - Other recoveries jump balls, loose balls, etc.,
+- BS - Blocked shots
+- A - Assists
+- LB - Lost balls
+- V - Violations
+- W - With two free throws
+- W/O - Without any free throws
+- MP - Minutes played
+
+Prepared by: _______________________
+
+---
+
+<!-- START PAGE 187 (IMG_1256.md) -->
+*(Page 187 — Source: `IMG_1256`)*
+
+# FEU BASKETBALL STATISTICS
+
+**Team:** FEU  
+**Wins:** 9  
+**Losses:** 5  
+**Points Against:** 884  
+
+| No. | PLAYER | Field | Field | 3-pt | 3-pt | 2-pt | 2-pt | Throw | Throw | Total Score | Rebounds | Rebounds | Rebounds | Recoveries | A | ST | INT | B | Errors | Fouls W/O | Fouls W | GP | MP | Remarks |
+| :-- | :-- | :-- | :-- | :-- | :-- | :-- | :-- | :-- | :-- | :-- | :-- | :-- | :-- | :-- | :-- | :-- | :-- | :-- | :-- | :-- | :-- | :-- | :-- | :-- |
+| | | P | % | 3-pt | % | 2-pt | % | Throw | % | | O | D | Reco-veries | | | | | | | W/O | W | | | |
+| 4 | CONLI | 3 | 9 | 33 | 1 | 5 | 20 | 8 | 12 | 67 | 19 | 1 | 5 | 1 | 13 | 5 | | | 6 | 3 | 2 | 7 | 75 | |
+| 5 | RAZON | | | | | 1 | 1 | 100 | 2 | 2 | 100 | 4 | | | | | 1 | | | 1 | | | | 1 | 3 | |
+| G | CHAVEZ | | | | | 5 | 8 | 63 | 1 | 2 | 50 | 11 | | 3 | 12 | | 2 | 3 | | 7 | 10 | 5 | 10 | 83 | |
+| 7 | ROLDAN | 29 | 76 | 27 | 45 | 132 | 34 | 57 | 73 | 78 | 177 | 22 | 61 | 4 | 66 | 28 | 2 | 50 | 16 | 29 | 13 | 14 | 335 | |
+| 8 | CRUZ | 7 | 25 | 28 | 8 | 24 | 33 | 7 | 9 | 78 | 44 | 8 | 14 | 1 | 6 | 5 | | 2 | 9 | 10 | 7 | 13 | 143 | |
+| 9 | CATLI | 0 | 2 | 0 | 1 | 100 | | | | | 2 | | | 3 | | | 1 | | | | | 2 | 4 | 19 | |
+| 10 | SANSON | 1 | 7 | 14 | 23 | 45 | 16 | 28 | 57 | 65 | 28 | 10 | | | 11 | 11 | 4 | 23 | 10 | 10 | 14 | 235 | |
+| 11 | SINCO | 18 | 81 | 22 | 63 | 146 | 43 | 34 | 53 | 64 | 214 | 25 | 60 | 3 | 26 | 21 | 5 | 49 | 19 | 20 | 14 | 450 | |
+| 12 | BACANI | | | | | 45 | 84 | 54 | 33 | 57 | 58 | 123 | 46 | 71 | 2 | 27 | 12 | | 24 | 32 | 33 | 19 | 14 | 400 | |
+| 14 | CASTRO | | | | | 2 | 3 | 67 | 1 | 2 | 50 | 5 | | 1 | | 1 | 1 | | 3 | 2 | 2 | 1 | 13 | |
+| 15 | APDUHAN | | | | | 1 | 5 | 20 | 0 | 2 | 0 | 2 | | | 1 | 3 | | | | 1 | 1 | 5 | 22 | |
+| 16 | TOLENTINO | 1 | 3 | 33 | 4 | 25 | 1 | 4 | 25 | 6 | 2 | 4 | | | 1 | | | | 3 | 4 | | 5 | 24 | |
+| 17 | ZABLAN | 5 | 30 | 17 | 44 | 91 | 48 | 44 | 65 | 68 | 147 | 33 | 59 | 5 | 38 | 15 | 1 | 51 | 13 | 13 | 14 | 394 | |
+| 18 | AVENIDO | | | | | 6 | 13 | 46 | 4 | 6 | 67 | 16 | 4 | 14 | | 4 | 3 | 1 | 6 | 6 | 3 | 6 | 70 | |
+| 19 | DE GUZMAN | 0 | 2 | 0 | 14 | 34 | 41 | 11 | 20 | 55 | 39 | 20 | 40 | | 6 | 4 | 5 | 18 | 16 | 13 | 14 | 191 | |
+| 20 | JONES | 45 | 196 | 23 | 288 | 678 | 42 | 232 | 358 | 65 | 943 | 228 | 401 | 18 | 218 | 115 | 54 | 282 | 168 | 155 | 14 | 2900 | |
+
+---
+
+### LEGEND / FOOTNOTES:
+
+* **FT** - Free throws
+* **%** - Percentage
+* **O** - Offensive
+* **D** - Defensive
+* **INT** - Interceptions
+* **X** - Other recoveries jump balls, loose balls, etc.
+* **BS** - Blocked shots
+* **A** - Assists
+* **V** - Violations
+* **W** - With two free throws
+* **W/O** - Without any free throws
+* **MP** - Minutes played
+
+---
+
+<!-- START PAGE 188 (IMG_1257.md) -->
+*(Page 188 — Source: `IMG_1257`)*
+
+# BASKETBALL STATISTICS
+
+**Team:** NU  
+**Wins:** 4  
+**Losses:** 10  
+**Points Against:** 964
+
+| No. | Player | Field Goals 3-pt M-A | Field Goals % | Field Goals 2-pt M-A | Field Goals % | Free Throws M-A | Free Throws % | Total Score | Rebounds O | Rebounds D | Recoveries | A | ST | INT | B | Errors | Fouls W | Fouls W/O | GP | MP | Remarks |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| 4 | MANABAT | 6/34 | 18 | 23/50 | 46 | 24/34 | 71 | 88 | 22 | 37 | 1 | 72 | 28 | 1 | 49 | 13 | 15 | 14 | 364 | |
+| 5 | NAPA | 20/105 | 19 | 40/96 | 42 | 50/83 | 60 | 190 | 29 | 54 | 5 | 25 | 21 | 5 | 46 | 20 | 15 | 14 | 450 | |
+| G | SANTICO | / | | 1/7 | 14 | 0/1 | 0 | 2 | 2 | 2 | | | | | 2 | 3 | 1 | 4 | 15 | |
+| 7 | BAGUION | 2/17 | 12 | 16/31 | 52 | 12/18 | 67 | 50 | 11 | 16 | | 43 | 20 | | 31 | 14 | 10 | 14 | 245 | |
+| 8 | TOLENTINO | / | | 10/16 | 63 | 5/9 | 56 | 25 | 9 | 5 | | 5 | 7 | 1 | 8 | 6 | 3 | 11 | 56 | |
+| 9 | URBANO | 3/6 | 50 | 0/4 | 0 | 5/8 | 63 | 14 | 2 | 1 | | 4 | 3 | | 5 | 5 | 4 | 6 | 54 | |
+| 10 | DE CASTRO | / | | 41/102 | 40 | 22/35 | 63 | 104 | 19 | 54 | 1 | 7 | 6 | 9 | 12 | 15 | 17 | 14 | 300 | |
+| 11 | MEJORADA | / | | 1/2 | 50 | 1/1 | 100 | 3 | | | | | | | | 1 | 4 | 1 | 1 | 4 | |
+| 12 | GRIJALDO | / | | 37/81 | 46 | 25/42 | 67 | 102 | 41 | 40 | 3 | 13 | 17 | 13 | 17 | 13 | 8 | 12 | 290 | |
+| 14 | MENDOZA | 0/2 | 0 | 10/23 | 43 | 3/10 | 30 | 23 | 13 | 12 | | 3 | 6 | 1 | 4 | 7 | 3 | 11 | 84 | |
+| 15 | NEO | 2/10 | 20 | 30/89 | 34 | 19/33 | 58 | 85 | 37 | 45 | | 17 | 6 | 3 | 31 | 22 | 10 | 14 | 257 | |
+| 16 | MAPANAC | 8/25 | 32 | 14/26 | 54 | 7/11 | 64 | 59 | 10 | 11 | 2 | 5 | 2 | 2 | 5 | 8 | 5 | 10 | 167 | |
+| 17 | OGILVIE | / | | / | | / | | 0 | | | | | | | | 1 | | 2 | G | |
+| 19 | CAYABYAB | 8/15 | 44 | 24/59 | 41 | 15/25 | 60 | 87 | 12 | 20 | | 14 | 10 | 2 | 23 | 23 | 20 | 14 | 322 | |
+| 20 | NECESITO | 5/22 | 23 | 29/58 | 50 | 16/31 | 52 | 89 | 14 | 40 | | 11 | 9 | 2 | 15 | 24 | 5 | 14 | 233 | |
+| TOTAL | | 54/239 | 23 | 276/644 | 43 | 207/344 | 61 | 921 | 221 | 338 | 12 | 222 | 135 | 41 | 253 | 177 | 117 | 114 | 2850 | |
+
+**LEGEND:**  
+FG - Field goals  
+FT - Free throws  
+% - Percentage  
+O - Offensive  
+D - Defensive  
+ST - Steals  
+INT - Interceptions  
+V - Violations  
+X - Other recoveries jump balls, loose balls, etc.  
+BS - Blocked shots  
+A - Assists  
+LB - Lost balls  
+W - With two free throws  
+W.O - Without any free throws  
+MP - Minutes played  
+
+**Prepared by:** ___________________________
+
+---
+
+<!-- START PAGE 189 (IMG_1258.md) -->
+*(Page 189 — Source: `IMG_1258`)*
+
+# BASKETBALL STATISTICS
+
+**Team:** UE  
+**Wins:** 8  
+**Losses:** 6  
+**Points Against:** 8605  
+
+| PLAYER | 3-pt | % | 2-pt | % | Throw | % | Total Score | Rebounds O | Rebounds D | Recoveries | A | ST/INT | B | Errors | Fouls W/W/O | GP | MP | Remarks |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| MANLIBAG | 16 | 38 | 42 | 49 | 24 | 32 | 170 | 29 | 40 | 5 | 26 | 24 | 2 | 28 | 16/14/14 | 14 | 389 | |
+| RONQUILLO | 16 | 38 | 36 | 42 | 45 | 44 | 71 | 7 | 18 | 2 | 32 | 15 | | 15 | 12/12/14 | 14 | 245 | |
+| ALMINARIO | 16 | 45 | 36 | 7 | 16 | 9 | 54 | 24 | 26 | 1 | 14 | 6 | 5 | 12 | 16/9/14 | 14 | 251 | |
+| BOOKER | 11 | 33 | 33 | 26/45 | 43 | 8 | 88 | 16 | 15 | | 9 | 7 | 1 | 6 | 18/6/9 | 132 | | |
+| TUBID | 7 | 54 | 13 | 39 | 58 | 3 | 118 | 34 | 77 | 1 | 23 | 13 | 12 | 32 | 26/22/14 | 14 | 409 | |
+| ESTRADA | 2 | 17 | 12 | 19/55 | 41 | 19 | 71 | 33 | 49 | 1 | 17 | 11 | 20 | 23 | 18/20/13 | 13 | 366 | |
+| HUBALDE | 0 | 10 | 0 | 10/34 | 35 | 27 | 28 | 7 | 12 | | 20 | 4 | 1 | 13 | 13/12 | 13 | 137 | |
+| MASBANG | | | 0 | 2 | 29 | 8 | 2 | 1 | 2 | | | | | 1 | 3 | 17 | |
+| ALI | | | 21 | 52 | 40 | 7 | 49 | 31 | 55 | | 10 | 6 | 6 | 17 | 12/11/11 | 11 | 290 | |
+| ARTADI | | | 28 | 82 | 34 | 10 | 79 | 11 | 22 | 2 | 49 | 23 | | 39 | 11/18/14 | 14 | 244 | |
+| RETAGA | 1 | 4 | 25 | 93 | 3 | 5 | 8 | 2 | 2 | | 5 | | | 2 | 1/1/5 | 5 | 16 | |
+| YAP | | | 0 | 3 | 0 | 6 | 2 | 2 | | 13 | 5 | 4 | 27 | 21/16/14 | 14 | 295 | |
+| TAN | 11 | 42 | 26 | 43/105 | 41 | 16 | 35 | 30 | 33 | 1 | 3 | 5 | 4 | 2 | 6/1/7 | 7 | 56 | |
+| TABAS | | | 2 | 5 | 40 | 2 | 6 | 5 | 4 | | 1 | | 1 | | 6/1 | 7 | 3 | |
+| | | | | | | | 0 | | | | | | | | | | | |
+
+| | 64/243 | 26 | 267/607 | 41 | 153/250 | 61 | 879 | 230 | 355 | 13 | 219 | 115 | 52 | 216 | 157/143/14 | 14 | 2850 | |
+
+---
+
+### LEGEND:
+* **FG** - Field goals
+* **FT** - Free throws
+* **%** - Percentage
+* **O** - Offensive
+* **D** - Defensive
+* **ST** - Steals
+* **INT** - Interceptions
+* **X** - Other recoveries jump balls, loose balls, etc.
+* **BS** - Blocked shots
+* **A** - Assists
+* **LB** - Lost balls
+* **V** - Violations
+* **W** - With two free throws
+* **W/O** - Without any free throw's
+* **MP** - Minutes played
+
+**Prepared by:**
+
+---
+
+<!-- START PAGE 190 (IMG_1259.md) -->
+*(Page 190 — Source: `IMG_1259`)*
+
+## 63rd SEASON
+### BASKETBALL STATISTICS
+
+**Team:** UP &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **Wins:** 4 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **Losses:** 10 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **Points Against:** 857
+
+| No. | PLAYER | Field | Free Throw | Total Score | Rebounds | Recoveries | A | ST/INT | B | Errors | Fouls W/W/O | GP | MP | Remarks |
+| :---: | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| | | 3-pt % | 2-pt % | % | % | | O | D | | | | | | | |
+| 4 | ALMEDA | 1/5 20 | 19/43 44 | 17/24 71 | 58 | 18 | 16 | 3 | 15 | 6 | 3 | 15 | 8 | 10 | 13 | 2/2 |
+| 6 | IBANES | 0/1 0 | 3/5 60 | 2/2 100 | 8 | 4 | 1 | | 5 | 5 | | 2 | 4 | 2 | 6 | 46 |
+| 7 | QUEBRAL | / | 5/9 56 | 2/50 40 | 11 | 4 | 1 | | 4 | 2 | | | 6 | | 9 | 10 | 100 |
+| 8 | NUNAG | 7/26 27 | 16/47 34 | 25/41 61 | 78 | 10 | 22 | | 21 | 13 | 3 | 25 | 15 | 5 | 13 | 245 |
+| 9 | JOMALESA | 4/19 21 | 11/38 29 | 20/33 61 | 54 | 34 | 38 | 2 | 49 | 35 | 1 | 25 | 17 | 23 | 14 | 318 |
+| 10 | ARNAIZ | 0/10 7 | 23/30 8 | 14/57 22 | 12 | 11 | 1 | 4 | 3 | 6 | 12 | 12 | 13 | 175 |
+| 11 | GUIDABEN | 0/1 0 | 0/1 0 | 2/0 | 0 | | | | | | 2 | 3 | 11 | | |
+| 12 | CERVANTES | / | 3/5 60 | / | 6 | 1 | 7 | | 1 | 1 | | 2 | 3 | 26 | |
+| 13 | CELO | / | 6/19 32 | 8/20 40 | 20 | 18 | 16 | | 3 | 3 | | 10 | 14 | 14 | 11 | 135 |
+| 14 | FERRER | 17/55 31 | 28/79 35 | 32/44 73 | 139 | 14 | 36 | | 41 | 17 | 6 | 30 | 16 | 20 | 14 | 350 |
+| 16 | MARCOS | 0/5 0 | 4/13 31 | 5/8 63 | 13 | 6 | 2 | | 1 | 1 | | 4 | 4 | 2 | 11 | 60 |
+| 17 | BRAVO | 27/79 34 | 50/127 39 | 33/49 67 | 214 | 17 | 46 | 4 | 18 | 19 | | 41 | 15 | 16 | 14 | 381 |
+| 18 | SANTOS | / | 23/56 41 | 6/15 40 | 52 | 24 | 44 | | 19 | 10 | 17 | 22 | 31 | 12 | 14 | 346 |
+| 19 | BORNANCIN | 4/18 22 | 22/55 44 | 41/61 67 | 163 | 23 | 93 | 6 | 30 | 21 | 9 | 50 | 26 | 9 | 14 | 470 |
+| | | **60/202** | **29/589** | **239/39 198** | **02** | **838** | **185** | **333** | **10** | **211** | **136** | **39** | **238** | **106** | **134** | **14** | **2875** |
+
+---
+
+**LEGEND:**
+* FG - Field goals
+* FT - Free throws
+* % - Percentage
+* O - Offensive
+* D - Defensive
+
+* ST - Steals
+* INT - Interceptions
+* X - Other recoveries jump balls, loose balls, etc.
+* BS - Blocked shots
+* A - Assists
+
+* LB - Lost balls
+* V - Violations
+* W - With two free throws
+* W/O - Without any free throws
+* MP - Minutes played
+
+**Prepared by:**  
+*(Signature)*
+
+---
+
+<!-- START PAGE 191 (IMG_1260.md) -->
+*(Page 191 — Source: `IMG_1260`)*
+
+# TEAM: UST
+
+**Wins:** 8  
+**Losses:** 6  
+**Points Against:** 854
+
+## BASKETBALL STATISTICS
+
+| No. | PLAYER | Field | | 2-pt | | Free Throw | | Total Score | Rebounds | | Recoveries | A | ST/INT | B | Errors | Fouls | | GP | MP | Remarks |
+| :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| | | 3-pt | % | % | % | | O | D | | | | | | W/ | W/O | | | |
+| 4 | MANCHING | 4/14 | 29 | 1/1 | 10 | 3/4 | 75 | 17 | 2 | 5 | 1 | 16 | 9 | | 9 | 5 | 4 | 6 | 14 | 111 |
+| 5 | AGLERON | 5/26 | 19 | 8/16 | 50 | 7/9 | 78 | 38 | 6 | 11 | 4 | 28 | 8 | 2 | 20 | 6 | 18 | 14 | 257 |
+| 6 | DEL ROSARIO | / | | / | | / | | 2 | | | | | | | | 3 | | 3 | 3 | |
+| 7 | ORTIGUERRA | 3/9 | 33 | 9/16 | 56 | 10/27 | 59 | 92 | 28 | 60 | 1 | 12 | 12 | 7 | 31 | 28 | 21 | 14 | 356 |
+| 8 | BAGUIO | 5/18 | 28 | 46/92 | 50 | 48/69 | 70 | 155 | 34 | 41 | 4 | 52 | 19 | 6 | 35 | 27 | 19 | 14 | 381 |
+| 9 | LAO | / | | 9/22 | 41 | 16/22 | 73 | 34 | 13 | 35 | 1 | 10 | 3 | 5 | 9 | 14 | 8 | 14 | 194 |
+| 10 | HUBALDE | 13/73 | 18 | 14/28 | 50 | 8/12 | 67 | 75 | 8 | 13 | | 12 | 11 | 1 | 15 | 8 | 6 | 12 | 216 |
+| 11 | MANANSALA | 0/4 | 0 | 2/2 | 100 | 1/2 | 50 | 5 | | | | 3 | 2 | | 7 | 1 | | 5 | 33 | |
+| 12 | ESPIRITU | / | | 39/73 | 53 | 17/35 | 49 | 95 | 30 | 60 | | 12 | 7 | 11 | 26 | 18 | 20 | 14 | 295 |
+| 13 | CO | / | | / | | / | | 0 | 2 | 2 | | 1 | | | 1 | | 1 | 4 | |
+| 14 | GELIG | 2/17 | 12 | 25/60 | 42 | 14/26 | 54 | 70 | 18 | 25 | 1 | 26 | 10 | | 29 | 17 | 20 | 14 | 256 |
+| 15 | TUADLES | 4/12 | 33 | 0/3 | 0 | 2/4 | 50 | 14 | 1 | 1 | | 3 | 3 | | 4 | 2 | 5 | 5 | 37 | |
+| 16 | LATORENO | / | | 45/100 | 45 | 12/18 | 67 | 102 | 25 | 48 | 1 | 4 | 7 | 9 | 19 | 20 | 17 | 14 | 299 |
+| 17 | ORETA | 22/67 | 33 | 22/57 | 39 | 22/29 | 76 | 132 | 19 | 30 | 1 | 22 | 11 | 2 | 22 | 8 | 5 | 14 | 326 |
+| 18 | Luanzon | / | | 1/1 | 0 | 0/2 | 0 | 0 | | 1 | | | 1 | | 2 | 1 | 2 | 4 | |
+| 19 | VILLAMIN | 0/4 | 0 | 15/24 | 63 | 3/8 | 38 | 33 | 7 | 21 | | 14 | 7 | 1 | 20 | 8 | 7 | 10 | 128 |
+| 21 | | 55/235 | 23 | 205/585 | 45 | 109/247 | 44 | 864 | 193 | 354 | 14 | 215 | 110 | 44 | 250 | 170 | 146 | 14 | 2900 |
+
+---
+
+### Legend
+* **%** - Percentage
+* **O** - Offensive
+* **D** - Defensive
+* **X** - Other recoveries: jump balls, loose balls, etc.
+* **BS** - Blocked shots
+* **A** - Assists
+* **V** - Violations
+* **W** - With two free throws
+* **W/O** - Without any free throws
+* **GP** - Games played
+* **MP** - Minutes played
+
+---
+
+<!-- START PAGE 192 (IMG_1261.md) -->
+*(Page 192 — Source: `IMG_1261`)*
+
+# UAAP BASKETBALL 2000
+### (General Summaries Elimination’s 1st & 2nd Round)
+#### Varsity and Juniors
+
+### VARSITY DIVISION
+
+| TEAMS | GP | W | L | PF | PA | REB O | REB D | ASSIST | ST/INT | BLOCK SHOTS | ERRORS /TO | FOULS W/FT | FOULS W/O FT |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **DLSU** | 14 | 12 | 2 | 996 | 908 | 192 | 318 | 244 | 155 | 30 | 233 | 183 | 155 |
+| **ADMU** | 14 | 11 | 3 | 980 | 899 | 239 | 412 | 232 | 100 | 59 | 249 | 175 | 149 |
+| **FEU** | 14 | 9 | 5 | 943 | 884 | 228 | 419 | 218 | 115 | 54 | 282 | 168 | 155 |
+| **UE** | 14 | 8 | 6 | 879 | 865 | 230 | 368 | 219 | 115 | 52 | 216 | 157 | 143 |
+| **UST** | 14 | 8 | 6 | 864 | 854 | 193 | 368 | 215 | 110 | 44 | 250 | 170 | 146 |
+| **NU** | 14 | 4 | 10 | 838 | 857 | 185 | 349 | 211 | 136 | 39 | 238 | 166 | 134 |
+| **UP** | 14 | 4 | 10 | 921 | 964 | 221 | 350 | 222 | 135 | 41 | 253 | 177 | 117 |
+| **AdU** | 14 | 0 | 14 | 765 | 957 | 199 | 342 | 185 | 114 | 31 | 351 | 171 | 120 |
+
+---
+
+### JUNIORS DIVISION
+
+| TEAMS | GP | W | L | PF | PA | REB O | REB D | ASSIST | ST/INT | BLOCK SHOTS | ERRORS /TO | FOULS W/FT | FOULS W/O FT |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **UST** | 12 | 11 | 1 | 868 | 717 | 224 | 314 | 237 | 206 | 49 | 280 | 150 | 112 |
+| **ADMU** | 12 | 10 | 2 | 891 | 703 | 237 | 352 | 222 | 185 | 31 | 327 | 175 | 118 |
+| **DLS-Z** | 12 | 7 | 5 | 806 | 743 | 164 | 320 | 222 | 171 | 29 | 266 | 169 | 99 |
+| **AdU** | 12 | 6 | 6 | 692 | 716 | 186 | 281 | 175 | 185 | 54 | 312 | 155 | 104 |
+| **UE** | 12 | 5 | 7 | 777 | 841 | 168 | 295 | 212 | 166 | 61 | 312 | 158 | 110 |
+| **UP** | 12 | 2 | 10 | 712 | 816 | 130 | 251 | 170 | 110 | 18 | 307 | 123 | 100 |
+| **NU** | 12 | 1 | 11 | 726 | 936 | 171 | 277 | 165 | 157 | 27 | 368 | 130 | 112 |
+
+---
+
+### LEGEND:
+
+* **GP** — GAMES PLAYED
+* **W** — WINS
+* **L** — LOSSES
+* **PF** — POINTS FOR
+* **PA** — POINTS AGAINST
+* **REB** — REBOUNDS
+* **O** — OFFENSIVE
+* **D** — DEFENSIVE
+* **A** — ASSIST
+* **ST/INT** — STEALS/INTERCEPTION
+* **BS** — BLOCKS SHOTS
+* **E/TO** — ERRORS/TURNOVERS
+* **FW/F** — FOULS/FRE THROW
+* **FW/OF** — FOULS WITH FRE THROW
+* **\*** — ARRANGED ACCORDING TO ORDER OF HIGHER QUOTIENT
+
+---
+
+<!-- START PAGE 193 (IMG_1262.md) -->
+*(Page 193 — Source: `IMG_1262`)*
+
+MOST ERROR/TURN-OVERS
+
+| PLAYER | TEAM | TOTAL ERROR | GAMES PLAYED | AVE/GAME |
+| :--- | :--- | :---: | :---: | :---: |
+| MALCONTENTO | NU | 81 | 12 | 6.75 |
+| CRUZ | UE | 65 | 11 | 5.91 |
+| MICU | NU | 56 | 10 | 5.6 |
+| EPRES | UOP | 65 | 12 | 5.42 |
+| R.A. GONZALES | AdU | 60 | 12 | 5 |
+| DEQUILLA | NU | 56 | 12 | 4.67 |
+| TOTELNTINO | UE | 56 | 12 | 4.67 |
+| DELGADO | UE | 49 | 12 | 4.08 |
+| ORDILLAS | UP | 43 | 11 | 3.91 |
+| TOLIBAS | UE | 43 | 11 | 3.91 |
+| TOLOSA | ADMU | 46 | 12 | 3.83 |
+| AUSTRIA | DLS-Z | 46 | 12 | 3.83 |
+| SILVA | UE | 45 | 12 | 3.75 |
+| NASARENO | ADMU | 41 | 11 | 3.73 |
+| CORTEZ | UST | 44 | 12 | 3.67 |
+| CARTANO | NU | 35 | 10 | 3.5 |
+| ABRINICA | ADU | 38 | 11 | 3.45 |
+| URRA | DLS-Z | 41 | 12 | 3.42 |
+| ESPIRITU | USTY | 37 | 11 | 3.36 |
+| MIGUEL | ADU | 35 | 11 | 3.18 |
+| GONZALES | ADMU | 37 | 12 | 3.08 |
+| PASION | ADMU | 37 | 12 | 3.08 |
+| CUAN | UST | 37 | 12 | 3.08 |
+| JUAN | NU | 37 | 12 | 3.08 |
+| ORTEGA | UE | 36 | 12 | 3 |
+
+---
+
+<!-- START PAGE 194 (IMG_1263.md) -->
+*(Page 194 — Source: `IMG_1263`)*
+
+STATISTICAL BASIS FOR INDIVIDUAL AWARDS
+JUNIORS DIVISION
+
+| PLAYER | TEAM | GP | RP | AP | EP |
+| :--- | :--- | :---: | :---: | :---: | :---: |
+| CORTEZ | UST | 269 | 202 | 260 | 88 |
+| URRA | DLS-Z | 243 | 276 | 120 | 82 |
+| ALDOVER | ADMU | 119 | 232 | 64 | 60 |
+| ORTEGA | UE | 134 | 180 | 170 | 72 |
+| AUSTRIA | DLS-Z | 170 | 106 | 164 | 92 |
+| ESPIRITU | UST | 118 | 222 | 108 | 64 |
+| AQUINO | UST | 125 | 162 | 132 | 74 |
+| RA GONZALES | ADU | 174 | 116 | 228 | 120 |
+| MICU | NU | 183 | 132 | 104 | 112 |
+| TOLIBAS | UE | 128 | 192 | 98 | 86 |
+| EPRES | UP | 292 | 206 | 96 | 130 |
+| TOLOSA | ADMU | 125 | 198 | 78 | 92 |
+| PANGILINAN | DLS-Z | 96 | 170 | 130 | 64 |
+| MIGUEL | ADU | 96 | 160 | 78 | 70 |
+| CRUZ | UP | 161 | 180 | 160 | 130 |
+| AMADOR | ADU | 90 | 116 | 122 | 66 |
+| MALCONTENTO | NU | 164 | 154 | 154 | 162 |
+| CUAN | UST | 59 | 116 | 140 | 74 |
+| NAZARENO | ADMU | 71 | 92 | 102 | 82 |
+| DELGADO | UE | 85 | 102 | 102 | 98 |
+| NAVARRA | DLS-Z | 60 | 94 | 168 | 50 |
+| TOLENTINO | UE | 129 | 86 | 106 | 112 |
+| | | | | 134 | |
+
+LEGEND & POINT EQUIVALENT:
+1. GOAL POINTS (GP)
+   A. FIELD GOAL — 2 OR 3 POINTS
+   B. FREE THROWS — 1 POINT
+2. REBOUND POINTS (RP)
+   A. OFFENSIVE REBOUND — 2 POINTS
+   B. DEFENSIVE REBOUND — 2 POINTS
+   C. JUMPBALL/LOOSEBALL (RECOVERY) — 2 POINTS
+3. ASSIST POINTS (AP)
+   A. ASSIST POINT — 2 POINTS
+   B. STEAL/INTERCEPTION — 2 POINTS
+   C. BLOCK SHOT — 2 POINTS
+4. ERROR/TURN-OVER POINT (EP)
+   A. PASSING/RECEIVING ERROR
+   B. VIOLATION
+5. PERSONAL FOUL POINTS (PFP)
+   A. FOUL W/O FREE THROW AWARD
+   B. FOUL W/ FREE THROW AWARD
+   C. UNSPORTSMANLIKE FOUL
+6. STATISTICAL POINTS (SP)
+   SP = (GP+RP+AP) - (EP+PFP)
+7. PLAYERS ALL AROUND VALUE (PAV)
+   PAV = STATISTICAL POINTS OVER MAN
+
+---
+
+<!-- START PAGE 195 (IMG_1264.md) -->
+*(Page 195 — Source: `IMG_1264`)*
+
+# JUNIOR'S DIVISION
+
+## HIGHEST SCORE
+
+| PLAYER | TEAM | TOTAL POINTS | GAMES PLAYED | AVE/GAME |
+| :--- | :---: | :---: | :---: | :---: |
+| EPRES | UP | 292 | 12 | 24.33 |
+| CORTEZ | UST | 269 | 12 | 22.42 |
+| URRA | DLS-Z | 243 | 12 | 20.25 |
+| MICU | NU | 183 | 10 | 18.3 |
+| CRUZ | UP | 161 | 11 | 14.64 |
+| GONZALES, RA | AdU | 174 | 12 | 14.5 |
+| AUSTRIA | DLS-Z | 170 | 12 | 14.17 |
+| MALCONTENTO | NU | 164 | 12 | 13.67 |
+| TOLENTINO | UE | 129 | 11 | 10.75 |
+| ESPIRITU | UST | 125 | 12 | 11.36 |
+| ORTEGA | UE | 134 | 12 | 11.17 |
+| TOLIBAS | UE | 128 | 12 | 10.67 |
+| GONZALES | ADMU | 126 | 12 | 10.5 |
+| TOLOSA | ADMU | 125 | 12 | 10.42 |
+| SILVA | UE | 123 | 12 | 10.25 |
+| ALDOVER | ADMU | 119 | 12 | 9.92 |
+| AQUINO | UST | 118 | 12 | 9.83 |
+
+---
+
+## MOST REBOUNDS
+
+| PLAYER | TEAM | TOTAL REBOUNDS | GAMES PLAYED | AVE/GAME |
+| :--- | :---: | :---: | :---: | :---: |
+| URRA | DLS-Z | 138 | 12 | 11.5 |
+| ALDOVER | ADMU | 116 | 12 | 9.67 |
+| AQUINO | UST | 111 | 12 | 9.25 |
+| TOLIBAS | UE | 96 | 11 | 8.73 |
+| EPRES | UP | 103 | 12 | 8.58 |
+| CORTEZ | UST | 101 | 12 | 8.42 |
+| TOLOSA | ADMU | 99 | 12 | 8.25 |
+| ORTEGA | UE | 90 | 12 | 7.5 |
+| ESPIRITU | UST | 81 | 11 | 7.36 |
+| MIGUEL | AdU | 80 | 11 | 7.27 |
+| PANGILINAN | DLS-Z | 85 | 12 | 7.08 |
+| FREZ | ADMU | 83 | 12 | 6.92 |
+| SILVA | UE | 82 | 12 | 6.83 |
+| MICU | NU | 66 | 10 | 6.6 |
+| AMADOR | AdU | 77 | 12 | 6.42 |
+| CALINGASIN | NU | 77 | 12 | 6.42 |
+| PAILE | AdU | 72 | 12 | 6 |
+| CRUZ | UP | 59 | 11 | 5.36 |
+| CUAN | NU | 63 | 12 | 5.25 |
+| DIOLAZO | AdU | 61 | 12 | 5.08 |
+
+---
+
+<!-- START PAGE 196 (IMG_1265.md) -->
+*(Page 196 — Source: `IMG_1265`)*
+
+# MOST ASSIST
+
+| PLAYER | TEAM | TOTAL REBOUNDS | GAMES PLAYED | AVE/GAME |
+| :--- | :--- | :---: | :---: | :---: |
+| GONZALEZ | AdU | 61 | 12 | |
+| CORTEZ | UST | 59 | 12 | 5.08 |
+| DELGADO | UE | 57 | 12 | 4.92 |
+| CRUZ | UP | 46 | 12 | 4.75 |
+| CUAN | UST | 47 | 11 | 4.18 |
+| ESCALONA | ADMU | 41 | 12 | 3.92 |
+| AUSTRIA | DLS-Z | 40 | 12 | 3.42 |
+| PANGILINAN | DLS-Z | 40 | 12 | 3.33 |
+| MALCONTENTO | NU | 35 | 12 | 3.33 |
+| TOLENTINO | UE | 32 | 12 | 3.33 |
+| ORDILLAS | UP | 32 | 11 | 2.92 |
+| CERVANTES | DLS-Z | 29 | 11 | 2.91 |
+| NASARENO | ADMU | 30 | 11 | 2.67 |
+| PASION | ADMU | 23 | 12 | 2.64 |
+| MICU | NU | | 10 | 2.5 |
+| | | | | 2.3 |
+
+---
+
+# MOST BLOCKS
+
+| PLAYER | TEAM | TOTAL BLOCKS | GAMES PLAYED | AVE/GAME |
+| :--- | :--- | :---: | :---: | :---: |
+| ORTEGA | UE | 40 | 12 | |
+| ESPIRITU | UST | 24 | 11 | 3.33 |
+| URRA | DLS-Z | 18 | 12 | 2.18 |
+| AMADOR | AdU | 14 | 12 | 1.5 |
+| DIOLASO | AdU | 14 | 12 | 1.17 |
+| AQUINO | UST | 13 | 12 | 1.17 |
+| SENTURIAS | UP | 10 | 10 | 1.08 |
+| | | | | 1 |
+
+---
+
+# MOST STEALS
+
+| PLAYER | TEAM | TOTAL STEALS | GAMES PLAYED | AVE/GAME |
+| :--- | :--- | :---: | :---: | :---: |
+| CORTEZ | UST | 70 | 12 | 5.83 |
+| R.A. GONZALES | AdU | 49 | 12 | 4.08 |
+| AUSTRIA | DLS-Z | 38 | 12 | 3.17 |
+| DEQUILLA | NU | 38 | 12 | 3.17 |
+| CRUZ | UP | 32 | 11 | 2.91 |
+| MICU | NU | 27 | 10 | 2.7 |
+| MALCONTENTO | NU | 37 | 12 | 2.67 |
+| TOLENTINO | UE | 32 | 12 | 2.67 |
+| MIGUEL | AdU | 27 | 11 | 2.45 |
+| NAVARRA | DLS-Z | 27 | 11 | 2.45 |
+| DELGADO | UE | 27 | 12 | 2.25 |
+| GONZALES | ADMU | 26 | 12 | 2.17 |
+| AQUINO | UST | 25 | 12 | 2.08 |
+| ORTEGA | UE | 24 | 12 | 2 |
+| AMADOR | AdU | 24 | 12 | 2 |
+| URRA | DLS-Z | 24 | 12 | 2 |
+| PASION | ADMU | 24 | 12 | 2 |
+
+---
+
+<!-- START PAGE 197 (IMG_1266.md) -->
+*(Page 197 — Source: `IMG_1266`)*
+
+STATISTICAL BASIS FOR INDIVIDUAL AWARDS
+JUNIORS DIVISION
+
+| PLAYER | TEAM | GP | + | RP | + | AP | - | EP | + | PFP | SP | MP | PAV |
+| :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| CORTEZ | UST | 269 | + | 202 | + | 260 | - | 88 | + | 49 | 594 | 367 | 32.37 |
+| URRA | DLS-Z | 243 | + | 276 | + | 120 | - | 82 | + | 52 | 505 | 385 | 26.02 |
+| ALDOVER | ADMU | 119 | + | 232 | + | 64 | - | 60 | + | 65 | 290 | 268 | 21.064 |
+| ORTEGA | UE | 134 | + | 180 | + | 70 | - | 72 | + | 58 | 354 | 336 | 21.07 |
+| AQUINO | DLS-Z | 170 | + | 106 | + | 164 | - | 92 | + | 45 | 326 | 335 | 19.46 |
+| AUSTRIA | UST | 125 | + | 222 | + | 108 | - | 64 | + | 45 | 305 | 312 | 19.23 |
+| ESPIRITU | UST | 118 | + | 162 | + | 132 | - | 74 | + | 58 | 353 | 379 | 18.63 |
+| RA GONZALES | ADU | 174 | + | 116 | + | 228 | - | 120 | + | 45 | 300 | 295 | 18.37 |
+| MICU | NU | 183 | + | 132 | + | 104 | - | 112 | + | 57 | 275 | 301 | 18.27 |
+| TOLIBAS | UE | 128 | + | 192 | + | 98 | - | 86 | + | 63 | 401 | 464 | 17.28 |
+| EPRES | UP | 292 | + | 206 | + | 78 | - | 130 | + | 50 | 259 | 308 | 16.82 |
+| TOLOSA | ADMU | 125 | + | 198 | + | 130 | - | 92 | + | 56 | 274 | 335 | 16.75 |
+| PANGILINAN | DLS-Z | 94 | + | 170 | + | 78 | - | 64 | + | 32 | 232 | 349 | 15.52 |
+| MIGUEL | ADU | 96 | + | 160 | + | 160 | - | 70 | + | 49 | 260 | 299 | 14.9 |
+| CRUZ | UP | 161 | + | 118 | + | 78 | - | 130 | + | 32 | 245 | 339 | 14.45 |
+| AMADOR | ADU | 90 | + | 154 | + | 122 | - | 66 | + | 55 | 212 | 300 | 14.13 |
+| MALCONTENTO | NU | 164 | + | 116 | + | 160 | - | 162 | + | 60 | 186 | 274 | 13.58 |
+| CUAN | UST | 59 | + | 92 | + | 122 | - | 74 | + | 31 | 146 | 228 | 12.72 |
+| NAZARENO | ADMU | 71 | + | 102 | + | 102 | - | 82 | + | 48 | 144 | 206 | 12.71 |
+| DELGADO | UST | 85 | + | 94 | + | 140 | - | 98 | + | 43 | 206 | 324 | 12.63 |
+| NAVARRA | DLS-Z | 60 | + | 70 | + | 106 | - | 50 | + | 43 | 144 | 228 | 12.63 |
+| TOLENTINO | UE | 129 | + | 86 | + | 134 | - | 112 | + | 43 | 194 | 316 | 12.28 |
+
+<br>
+
+LEGEND & POINT EQUIVALENT:
+1. **GOAL POINTS (GP)**
+   A. FIELD GOAL - 2 OR 3 POINTS
+   B. FREE THROWS - 1 POINT
+2. **REBOUND POINTS**
+   A. OFFENSIVE REBOUND - 2 POINTS
+   B. DEFENSIVE REBOUND - 2 POINTS
+   C. JUMPBALL/LOOSEBALL (RECOVERY) - 2 POINTS
+3. **ASSIST POINTS (AP)**
+   A. ASSIST POINT - 2 POINTS
+   B. STEAL/INTERCEPTION - 2 POINTS
+   C. BLOCK SHOT - 2 POINTS
+4. **ERROR/TURN-OVER POINT (EP)**
+   A. PASSING/RECEIVING ERROR - 2 POINTS
+   B. VIOLATION - 2 POINTS
+5. **PERSONAL FOUL POINTS (PFP)**
+   A. FOUL W/O FREE THROW AWARD - 1 POINT
+   B. FOUL W/ FREE THROW AWARD - 2 POINTS
+   C. UNSPORTSMANLIKE FOUL - 5 POINTS
+6. **STATISTICAL POINTS (SP)**
+   SP = (GP+RP+AP) - (EP+PFP)
+7. **PLAYERS ALL AROUND VALUE (PAV)**
+   PAV = STATISTICAL POINTS OVER MINUTES PLAYED / 20
+8. **MVP = PAV + PLAYING ATTITUDE**
+
+NOTE: ONLY PLAYERS WITH AVERAGE PLAYING TIME OF 20 MINUTES PER GAME ARE INCLUDED
+
+---
+
+<!-- START PAGE 198 (IMG_1267.md) -->
+*(Page 198 — Source: `IMG_1267`)*
+
+# JUNIOR'S DIVISION
+
+## HIGHEST SCORE
+
+| PLAYER | TEAM | TOTAL POINTS | GAMES PLAYED | AVE/GAME |
+| :--- | :--- | :---: | :---: | :---: |
+| EPRES | UP | 292 | 12 | 24.33 |
+| CORTEZ | UST | 269 | 12 | 22.42 |
+| URRA | DLS-Z | 243 | 12 | 20.25 |
+| MICU | NU | 183 | 10 | 18.3 |
+| CRUZ | UP | 161 | 11 | 14.64 |
+| GONZALES, RA | AdU | 174 | 12 | 14.5 |
+| AUSTRIA | DLS-Z | 170 | 12 | 14.17 |
+| MALCONTENTO | NU | 164 | 12 | 13.67 |
+| TOLENTINO | UE | 129 | 12 | 10.75 |
+| ESPIRITU | UST | 125 | 11 | 11.36 |
+| ORTEGA | UE | 134 | 12 | 11.17 |
+| TOLIBAS | UE | 128 | 12 | 10.67 |
+| GONZALES | ADMU | 126 | 12 | 10.5 |
+| TOLOSA | ADMU | 125 | 12 | 10.42 |
+| SILVA | UE | 123 | 12 | 10.25 |
+| ALDOVER | ADMU | 119 | 12 | 9.92 |
+| AQUINO | UST | 118 | 12 | 9.83 |
+
+## MOST REBOUNDS
+
+| PLAYER | TEAM | TOTAL REBOUNDS | GAMES PLAYED | AVE/GAME |
+| :--- | :--- | :---: | :---: | :---: |
+| URRA | DLS-Z | 138 | 12 | 11.5 |
+| ALDOVER | ADMU | 116 | 12 | 9.67 |
+| AQUINO | UST | 111 | 12 | 9.25 |
+| TOLIBAS | UE | 96 | 11 | 8.73 |
+| EPRES | UP | 103 | 12 | 8.58 |
+| CORTEZ | UST | 101 | 12 | 8.42 |
+| TOLOSA | ADMU | 99 | 12 | 8.25 |
+| ORTEGA | UE | 90 | 12 | 7.5 |
+| ESPIRITU | UST | 81 | 11 | 7.36 |
+| MIGUEL | ADU | 80 | 11 | 7.27 |
+| PANGILINAN | DLS-Z | 85 | 12 | 7.08 |
+| FREZ | ADMU | 83 | 12 | 6.92 |
+| SILVA | UE | 82 | 12 | 6.83 |
+| MICU | NU | 66 | 10 | 6.6 |
+| AMADOR | AdU | 77 | 12 | 6.42 |
+| CALINGASIN | NU | 77 | 12 | 6.42 |
+| PAILE | AdU | 72 | 12 | 6 |
+| CRUZ | UP | 59 | 11 | 5.36 |
+| CUAN | NU | 63 | 12 | 5.25 |
+| DIOLAZO | AdU | 61 | 12 | 5.08 |
+
+---
+
+<!-- START PAGE 199 (IMG_1268.md) -->
+*(Page 199 — Source: `IMG_1268`)*
+
+### MOST ASSIST
+
+| PLAYER | TEAM | TOTAL REBOUNDS | GAMES PLAYED | AVE/GAME |
+| :--- | :--- | :---: | :---: | :---: |
+| GONZALEZ | AdU | 61 | 12 | 5.08 |
+| CORTEZ | UST | 59 | 12 | 4.92 |
+| DELGADO | UE | 57 | 12 | 4.75 |
+| CRUZ | UP | 46 | 11 | 4.18 |
+| CUAN | UST | 47 | 12 | 3.92 |
+| ESCALONA | ADMU | 41 | 12 | 3.42 |
+| AUSTRIA | DLS-Z | 40 | 12 | 3.33 |
+| PANGILINAN | DLS-Z | 40 | 12 | 3.33 |
+| MALCONTENTO | NU | 40 | 12 | 3.33 |
+| TOLENTINO | UE | 35 | 12 | 2.92 |
+| ORDILLAS | UP | 32 | 11 | 2.91 |
+| CERVANTES | DLS-Z | 32 | 12 | 2.67 |
+| NASARENO | ADMU | 29 | 11 | 2.64 |
+| PASION | ADMU | 30 | 12 | 2.5 |
+| MICU | NU | 23 | 10 | 2.3 |
+
+---
+
+### MOST BLOCKS
+
+| PLAYER | TEAM | TOTAL BLOCKS | GAMES PLAYED | AVE/GAME |
+| :--- | :--- | :---: | :---: | :---: |
+| ORTEGA | UE | 40 | 12 | 3.33 |
+| ESPIRITU | UST | 24 | 11 | 2.18 |
+| URRA | DLS-Z | 18 | 12 | 1.5 |
+| AMADOR | AdU | 14 | 12 | 1.17 |
+| DIOLASO | AdU | 14 | 12 | 1.17 |
+| AQUINO | UST | 13 | 12 | 1.08 |
+| SENTURIAS | UP | 10 | 10 | 1 |
+
+---
+
+### MOST STEALS
+
+| PLAYER | TEAM | TOTAL STEALS | GAMES PLAYED | AVE/GAME |
+| :--- | :--- | :---: | :---: | :---: |
+| CORTEZ | UST | 70 | 12 | 5.83 |
+| R.A. GONZALES | AdU | 49 | 12 | 4.08 |
+| AUSTRIA | DLS-Z | 38 | 12 | 3.17 |
+| DEQUILLA | NU | 38 | 12 | 3.17 |
+| CRUZ | UP | 32 | 11 | 2.91 |
+| MICU | NU | 27 | 10 | 2.7 |
+| MALCONTENTO | NU | 37 | 12 | 2.67 |
+| TOLENTINO | UE | 32 | 12 | 2.67 |
+| MIGUEL | AdU | 27 | 11 | 2.45 |
+| NAVARRA | DLS-Z | 27 | 11 | 2.45 |
+| DELGADO | UE | 27 | 12 | 2.25 |
+| GONZALES | ADMU | 26 | 12 | 2.17 |
+| AQUINO | UST | 25 | 12 | 2.08 |
+| ORTEGA | UE | 24 | 12 | 2 |
+| AMADOR | AdU | 24 | 12 | 2 |
+| URRA | DLS-Z | 24 | 12 | 2 |
+| PASION | ADMU | 24 | 12 | 2 |
+
+---
+
+<!-- START PAGE 200 (IMG_1269.md) -->
+*(Page 200 — Source: `IMG_1269`)*
+
+MOST ERROR/TURN-OVERS
+
+| PLAYER | TEAM | TOTAL ERROR | GAMES PLAYED | AVE/GAME |
+| :--- | :---: | :---: | :---: | :---: |
+| MALCONTENTO | NU | 81 | 12 | 6.75 |
+| CRUZ | UE | 65 | 11 | 5.91 |
+| MICU | NU | 56 | 10 | 5.6 |
+| EPRES | UOP | 65 | 12 | 5.42 |
+| R.A. GONZALES | AdU | 60 | 12 | 5 |
+| DEQUILLA | NU | 56 | 12 | 4.67 |
+| TOTELNTINO | UE | 56 | 12 | 4.67 |
+| DELGADO | UE | 49 | 12 | 4.08 |
+| ORDILLAS | UP | 43 | 11 | 3.91 |
+| TOLIBAS | UE | 43 | 11 | 3.91 |
+| TOLOSA | ADMU | 46 | 12 | 3.83 |
+| AUSTRIA | DLS-Z | 46 | 12 | 3.83 |
+| SILVA | UE | 45 | 12 | 3.75 |
+| NASARENO | ADMU | 41 | 11 | 3.73 |
+| CORTEZ | UST | 44 | 12 | 3.67 |
+| CARTANO | NU | 35 | 10 | 3.5 |
+| ABRINICA | ADU | 38 | 11 | 3.45 |
+| URRA | DLS-Z | 41 | 12 | 3.42 |
+| ESPIRITU | USTY | 37 | 11 | 3.36 |
+| MIGUEL | ADU | 35 | 11 | 3.18 |
+| GONZALES | ADMU | 37 | 12 | 3.08 |
+| PASION | ADMU | 37 | 12 | 3.08 |
+| CUAN | UST | 37 | 12 | 3.08 |
+| JUAN | NU | 37 | 12 | 3.08 |
+| ORTEGA | UE | 36 | 12 | 3 |
+
+---
+
+<!-- START PAGE 201 (IMG_1270.md) -->
+*(Page 201 — Source: `IMG_1270`)*
+
+# UNIVERSITY ATHLETIC ASSOCIATION OF THE PHILIPPINES
+## 63rd SEASON
+### BASKETBALL STATISTICS
+
+**Team:** `AdU`  
+**Wins:** `6`  
+**Losses:** `6`  
+**Points Against:** `716`  
+
+| No. | PLAYER | Field | Free Throw | Total Score | Rebounds | Recoveries | A | ST/INT | B | Errors | Fouls | GP | MP | Remarks |
+|:---:|:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| | | 3-pt | % | 2-pt | % | % | | O | D | | | | | | W/ | W/O | | |
+| 4 | MIGUEL | 3/26 | 12 | 38/101 | 38 | 11/27 | 41 | 96 | 20 | 60 | | 8 | 27 | 4 | 35 | 14 | 4 | 11 | 299 | |
+| 5 | RECIO | / | / | 3/5 | 60 | 2/2 | 100 | 8 | | 2 | | 4 | 1 | | 3 | 1 | 1 | 2 | 21 | |
+| 6 | HERNANDEZ | 0/1 | 0 | 1/2 | 50 | 0/2 | 0 | 2 | | 1 | | | | | 3 | 1 | 1 | 2 | 4 | |
+| 7 | KHO | / | / | 4/6 | 67 | / | | 8 | 6 | 8 | | 1 | 2 | 3 | 4 | 4 | 1 | 8 | 71 | |
+| 8 | LINDAYA | 1/4 | 25 | 3/7 | 43 | 5/10 | 50 | 14 | 1 | 5 | | 3 | 2 | 1 | 14 | 7 | 2 | 7 | 50 | |
+| 9 | KHO | 4/10 | 40 | 18/45 | 40 | 7/13 | 54 | 55 | 13 | 10 | | 11 | 13 | | 30 | 18 | 12 | 11 | 202 | |
+| 10 | AMADOR | 12/52 | 23 | 22/50 | 44 | 10/16 | 63 | 90 | 27 | 49 | 1 | 23 | 24 | 14 | 33 | 17 | 21 | 12 | 339 | |
+| 11 | GONZALES, R.A. | 5/20 | 25 | 72/148 | 49 | 15/29 | 52 | 174 | 27 | 25 | 6 | 61 | 49 | 4 | 60 | 13 | 19 | 12 | 379 | |
+| 12 | GONZALES | 8/27 | 30 | 20/40 | 50 | 2/12 | 17 | 66 | 10 | 19 | 1 | 23 | 14 | 5 | 24 | 12 | 11 | 10 | 193 | |
+| 13 | VILLARUEL | 0/1 | 0 | 1/5 | 20 | 2/50 | 3 | 2 | 1 | | | 1 | 2 | | 2 | 3 | 1 | 3 | 16 | |
+| 14 | PAILE | 0/1 | 0 | 23/63 | 37 | 18/37 | 49 | 64 | 27 | 43 | 2 | 6 | 18 | 8 | 30 | 15 | 5 | 12 | 232 | |
+| 15 | DIOLAZO | / | / | 23/53 | 43 | 15/24 | 63 | 61 | 27 | 33 | 1 | 2 | 13 | 14 | 28 | 29 | 12 | 12 | 284 | |
+| 16 | BAUTISTA | / | / | 4/7 | 57 | 0/2 | 0 | 8 | 4 | 8 | | 1 | | 1 | 2 | 6 | | 3 | 34 | |
+| 17 | YAP | 0/2 | 0 | 5/14 | 36 | 0/4 | 0 | 10 | 1 | 5 | . | 14 | 6 | | 8 | 5 | 4 | 7 | 63 | |
+| 18 | ABRENICA | 1/2 | 50 | 11/28 | 39 | 5/8 | 63 | 30 | 18 | 10 | 1 | 16 | 12 | | 38 | 7 | 11 | 11 | 200 | |
+| 19 | ASERON | / | / | 1/4 | 25 | 2/50 | 3 | 3 | | 3 | | 1 | 2 | | | 3 | | 1 | 13 | |
+| | | **34/156** | **22** | **249/578** | **43** | **92/190** | **48** | **692** | **186** | **279** | **12** | **175** | **185** | **54** | **312** | **155** | **104** | **12** | **2400** | |
+
+**Legend:**
+* FT - Free throws
+* % - Percentage
+* O - Offensive
+* D - Defensive
+* INT - Interceptions
+* X - Other recoveries jump balls, loose balls, etc.
+* BS - Blocked shots
+* A - Assists
+* V - Violations
+* W - With two free throws
+* W/O - Without any free throws
+* MP - Minutes played
+
+---
+
+<!-- START PAGE 202 (IMG_1271.md) -->
+*(Page 202 — Source: `IMG_1271`)*
+
+# Team: ADMU | Wins: 10 | Losses: 2 | Points Against: 70
+
+## BASKETBALL STATISTICS
+
+| No. | PLAYER | Field 3-pt | Field % | Field 2-pt | Field % | Free Throw | Free % | Total Score | Rebounds O | Rebounds D | Recoveries | A | ST/INT | B | Errors | Fouls W/ | Fouls W/O | GP | MP |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| 4 | MORADA | 0/10 | 0 | 18/29 | 62 | 19/38 | 50 | 55 | 11 | 5 | | 1 | 4 | 1 | 4 | 7 | 5 | 8 | 83 |
+| 5 | CRUZ | 0/4 | 0 | 3/14 | 21 | 3/4 | 75 | 9 | 3 | 6 | | 14 | 2 | | 10 | 4 | 3 | 6 | 56 |
+| 6 | BAUTISTA | 3/12 | 25 | 17/39 | 44 | 3/13 | 23 | 46 | 17 | 17 | 3 | 20 | 19 | 2 | 12 | 5 | 15 | 10 | 134 |
+| 7 | ESCALONA | 2/3 | 67 | 29/54 | 54 | 22/48 | 46 | 86 | 7 | 17 | | 41 | 22 | 1 | 32 | 14 | 19 | 12 | 22 |
+| 8 | A. CRUZ | 1/8 | 13 | 14/28 | 50 | 5/10 | 50 | 36 | 6 | 19 | | 9 | 7 | | 15 | 6 | 2 | 9 | 85 |
+| 10 | BULAON | 1/3 | 33 | 4/17 | 24 | 5/9 | 56 | 16 | 5 | 3 | | 8 | 3 | | 6 | 3 | 5 | 6 | 57 |
+| 11 | FREZ | 2/9 | 22 | 29/79 | 37 | 18/34 | 53 | 82 | 34 | 48 | 1 | 10 | 14 | 8 | 30 | 17 | 10 | 12 | 231 |
+| 12 | GONZALEZ | 31/88 | 35 | 13/32 | 41 | 7/11 | 64 | 126 | 5 | 17 | 3 | 27 | 26 | 1 | 37 | 15 | 9 | 12 | 279 |
+| 13 | C. GONZALEZ | / | | 8/19 | 42 | 7/12 | 58 | 23 | 9 | 14 | | 1 | 4 | 1 | 11 | 5 | 3 | 7 | 62 |
+| 14 | TOLOSA | 0/1 | 0 | 42/97 | 43 | 41/61 | 67 | 125 | 41 | 54 | 4 | 15 | 21 | 3 | 46 | 20 | 10 | 12 | 308 |
+| 15 | PASION | 3/26 | 12 | 17/39 | 44 | 14/31 | 45 | 57 | 7 | 24 | | 30 | 24 | 1 | 37 | 15 | 9 | 12 | 239 |
+| 16 | NAZARENO | 1/10 | 10 | 23/51 | 45 | 22/35 | 63 | 71 | 21 | 29 | 1 | 29 | 20 | 2 | 41 | 18 | 12 | 11 | 228 |
+| 17 | UICHICO | / | | 5/13 | 38 | 1/6 | 17 | 11 | 12 | 13 | | 2 | 2 | 2 | 3 | 6 | 1 | 6 | 50 |
+| 18 | ALDOVER | 1/1 | 100 | 48/88 | 55 | 20/38 | 53 | 119 | 51 | 63 | 2 | 12 | 11 | 9 | 30 | 27 | 11 | 12 | 268 |
+| 19 | PALATTAO | 0/2 | 0 | 10/29 | 34 | 9/16 | 56 | 29 | 8 | 12 | | 5 | 6 | | 13 | 13 | 4 | 8 | 95 |
+| | | **45/177** | **25** | **280/628** | **45** | **196/366** | **54** | **891** | **237** | **341** | **11** | **222** | **185** | **31** | **327** | **175** | **118** | **12** | **2400** |
+
+**LEGEND:**
+* FG - Field goals
+* FT - Free throws
+* % - Percentage
+* O - Offensive
+* D - Defensive
+* ST - Steals
+* INT - Interceptions
+* X - Other recoveries jump balls, loose balls, etc.
+* BS - Blocked shots
+* A - Assists
+* LB - Lost balls
+* V - Violations
+* W - With two free throws
+* W/O - Without any free throws
+* MP - Minutes played
+
+---
+
+<!-- START PAGE 203 (IMG_1272.md) -->
+*(Page 203 — Source: `IMG_1272`)*
+
+UNIVERSITY ATHLETIC ASSOCIATION OF THE PHILIPPINES
+63rd SEASON
+
+Team: `DLS-2`
+Wins: `7`
+Losses: `5`
+Points Against: `74`
+
+BASKETBALL STATISTICS
+
+| No. | PLAYER | Field 3-pt | % | Field 2-pt | % | Free Throw | % | Total Score | Rebounds O | Rebounds D | Recoveries | A | ST/INT | B | Errors | Fouls W/ | Fouls W/O | GP | MP |
+| :---: | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| 4 | LAO | 0/3 | 0 | 1/5 | 20 | 0/2 | 0 | 2 | | 2 | | 7 | 5 | | 14 | 3 | 4 | 6 | 42 |
+| 5 | AUSTRIA | 12/59 | 20 | 39/93 | 42 | 56/81 | 69 | 170 | 12 | 39 | 2 | 40 | 38 | 4 | 46 | 14 | 15 | 12 | 312 |
+| 6 | MALLARI | 7/18 | 39 | 6/15 | 40 | 6/8 | 75 | 39 | 9 | 9 | | 15 | 12 | | 17 | 12 | 4 | 11 | 139 |
+| 7 | CARLOS | / | | 6/14 | 43 | 3/7 | 43 | 15 | 9 | 11 | | 2 | 6 | 1 | 8 | 13 | 2 | 8 | 71 |
+| 8 | MARQUEZ | 4/27 | 15 | 19/55 | 35 | 10/24 | 42 | 60 | 11 | 27 | | 28 | 8 | 1 | 23 | 23 | 13 | 12 | 290 |
+| 9 | SULIT | 1/4 | 25 | 2/12 | 17 | 1/4 | 25 | 8 | 6 | 5 | | 6 | 2 | | 9 | 6 | 5 | 9 | 86 |
+| 10 | NAVARRA | 5/18 | 28 | 16/39 | 41 | 13/19 | 68 | 60 | 15 | 17 | 3 | 26 | 27 | | 25 | 12 | 18 | 11 | 228 |
+| 11 | URRA | 0/1 | 0 | 99/194 | 51 | 45/73 | 62 | 243 | 35 | 98 | 5 | 18 | 24 | 18 | 41 | 21 | 10 | 12 | 385 |
+| 12 | PANGILINAN | 1/8 | 13 | 34/82 | 41 | 23/31 | 74 | 94 | 30 | 55 | | 40 | 23 | 2 | 32 | 23 | 10 | 12 | 335 |
+| 14 | CERVANTES | 4/16 | 25 | 30/62 | 48 | 13/18 | 72 | 85 | 26 | 26 | 1 | 32 | 22 | 2 | 28 | 20 | 4 | 12 | 331 |
+| 15 | RAMILO | 0/1 | 0 | 9/32 | 28 | 3/4 | 75 | 21 | 9 | 16 | | 8 | 3 | 1 | 18 | 18 | 11 | 12 | 138 |
+| 16 | AGANA | / | | 3/9 | 33 | 3/4 | 75 | 9 | 2 | 4 | | | 1 | | 5 | 4 | 3 | 7 | 43 |
+| | | | | | | | | | | | | | | | | | | | |
+| | | | | | | | | | | | | | | | | | | | |
+| | | | 34/155 | 22 | 264/612 | 43 | 170/275 | 64 | 806 | 164 | 309 | 11 | 222 | 171 | 29 | 266 | 169 | 99 | 12 | 2400 |
+
+LEGEND:
+FG - Field goals
+FT - Free throws
+% - Percentage
+O - Offensive
+D - Defensive
+
+ST - Steals
+INT - Interceptions
+X - Other recoveries jump balls, loose balls, etc.
+BS - Blocked shots
+A - Assists
+
+LB - Lost balls
+V - Violations
+W - With two free throws
+W/O - Without any free throws
+
+Prepared by:
+
+---
+
+<!-- START PAGE 204 (IMG_1273.md) -->
+*(Page 204 — Source: `IMG_1273`)*
+
+Team: **NU**
+
+Wins: **1**
+Losses: **11**
+Points Against: **936**
+
+### BASKETBALL STATISTICS
+**63RD SEASON**
+
+| No. | PLAYER | Field | Field % | 2-pt | 2-pt % | Free Throw | Free Throw % | Total Score | Rebounds O | Rebounds D | Recoveries | A | ST/INT | B | Errors | Fouls W/ | Fouls W/O | GP | MP | Remarks |
+| :---: | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| 4 | DEQUILLA | $\frac{2}{6}$ | 33 | $\frac{36}{95}$ | 38 | $\frac{17}{43}$ | 40 | 95 | 20 | 22 | | 26 | 38 | 2 | 56 | 5 | 10 | 12 | 221 | |
+| 5 | CARTANO | $\frac{1}{11}$ | 9 | $\frac{24}{63}$ | 38 | $\frac{2}{7}$ | 29 | 53 | 21 | 25 | | 17 | 10 | 2 | 35 | 7 | 6 | 10 | 217 | |
+| 6 | APAGA | $\frac{0}{1}$ | 0 | $\frac{0}{4}$ | 0 | $\frac{3}{4}$ | 75 | 3 | 4 | 6 | 1 | 4 | 1 | 1 | 13 | 2 | 4 | 7 | 67 | |
+| 7 | GALANG | | | $\frac{6}{17}$ | 35 | $\frac{4}{6}$ | 67 | 16 | 6 | 26 | 1 | 8 | 5 | 4 | 17 | 16 | 2 | 9 | 220 | |
+| 8 | TIPO | | | $\frac{4}{11}$ | 36 | $\frac{8}{11}$ | 73 | 16 | 5 | 5 | | 9 | 4 | 1 | 18 | 11 | 6 | 10 | 103 | |
+| 9 | ANTONIO | $\frac{0}{1}$ | 0 | $\frac{20}{46}$ | 43 | $\frac{11}{24}$ | 46 | 51 | 13 | 16 | | 10 | 9 | 4 | 15 | 23 | 22 | 12 | 243 | |
+| 10 | BAYTAN | $\frac{0}{2}$ | 0 | $\frac{2}{8}$ | 25 | | | 4 | 1 | 6 | | 1 | | 2 | 6 | 1 | | 5 | 28 | |
+| 11 | JUAN | $\frac{0}{2}$ | 0 | $\frac{13}{39}$ | 33 | $\frac{18}{36}$ | 50 | 44 | 15 | 48 | | 9 | 16 | 5 | 37 | 17 | 9 | 12 | 316 | |
+| 13 | CALINGASIN | | | $\frac{29}{90}$ | 32 | $\frac{30}{56}$ | 54 | 88 | 32 | 43 | 2 | 15 | 10 | 5 | 25 | 20 | 8 | 12 | 350 | |
+| 15 | MALCONTENTO | $\frac{1}{3}$ | 33 | $\frac{44}{122}$ | 36 | $\frac{73}{98}$ | 74 | 164 | 15 | 39 | 4 | 40 | 37 | | 81 | 19 | 22 | 12 | 300 | |
+| 16 | MICU | $\frac{6}{20}$ | 30 | $\frac{68}{154}$ | 44 | $\frac{29}{53}$ | 55 | 183 | 38 | 24 | 4 | 23 | 27 | 1 | 56 | 6 | 22 | 10 | 295 | |
+| 17 | DECENA | | | $\frac{1}{3}$ | 33 | $\frac{7}{10}$ | 70 | 9 | 1 | 5 | | 3 | | | 9 | 3 | 1 | 9 | 65 | |
+| | | | | | | | | | | | | | | | | | | | | |
+| | | | | | | | | | | | | | | | | | | | | |
+| | | | | | | | | | | | | | | | | | | | | |
+| | | | | | | | | | | | | | | | | | | | | |
+| | | | | | | | | | | | | | | | | | | | | |
+| **TOTAL** | | $\frac{10}{44}$ | 23 | $\frac{247}{652}$ | 38 | $\frac{202}{348}$ | 58 | **726** | **171** | **265** | **12** | **105** | **157** | **27** | **308** | **130** | **112** | **12** | **2425** | |
+
+**LEGEND:**
+- FG - Field goals
+- FT - Free throws
+- % - Percentage
+- O - Offensive
+- D - Defensive
+- ST - Steals
+- INT - Interceptions
+- X - Other recoveries jump balls, loose balls, etc.
+- BS - Blocked shots
+- A - Assists
+- LB - Lost balls
+- V - Violations
+- W - With two free throws
+- W/O - Without any free throws
+- MP - Minutes played
+
+Prepared by: _______________________
+
+---
+
+<!-- START PAGE 205 (IMG_1274.md) -->
+*(Page 205 — Source: `IMG_1274`)*
+
+UNIVERSITY ATHLETIC ASSOCIATION OF THE PHILIPPINES
+63rd SEASON
+
+Team: **UE**
+Wins: **5**
+Losses: **7**
+Points Against: **841**
+
+BASKETBALL STATISTICS
+
+| No. | PLAYER | Field | Free Throw | Total Score | Rebounds | Recoveries | A | ST/ INT | B | Errors | Fouls | GP | MP | Remarks |
+| :---: | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| | | 3-pt | % | 2-pt | % | Throw | % | | O | D | | | | | W/ | W/O | | | |
+| 4 | TOLENTINO | $\frac{1}{4}$ | 25 | $\frac{57}{122}$ | 47 | $\frac{12}{32}$ | 38 | 129 | 17 | 26 | | 35 | 32 | | 56 | 14 | 15 | 12 | 316 | |
+| 5 | MANLALANGIT | $\frac{1}{8}$ | 13 | $\frac{15}{28}$ | 54 | $\frac{8}{14}$ | 57 | 41 | 7 | 13 | | 11 | 9 | 1 | 19 | 12 | 4 | 12 | 168 | |
+| 6 | ORTEGA | $\frac{4}{23}$ | 17 | $\frac{51}{118}$ | 43 | $\frac{20}{29}$ | 69 | 134 | 32 | 56 | 2 | 21 | 24 | 40 | 36 | 23 | 12 | 12 | 336 | |
+| 7 | MORELOS | | | $\frac{0}{1}$ | 0 | | | 0 | | 1 | | | 2 | | 3 | 2 | 1 | 3 | 10 | |
+| 8 | PEÑAFLOR | $\frac{2}{12}$ | 17 | $\frac{7}{12}$ | 58 | $\frac{3}{8}$ | 38 | 23 | 4 | 12 | | 18 | 16 | | 20 | 11 | 6 | 12 | 136 | |
+| 9 | LASIN | $\frac{0}{3}$ | 0 | $\frac{3}{7}$ | 43 | $\frac{1}{2}$ | 50 | 7 | 1 | 4 | 1 | 1 | 1 | | 1 | 1 | 4 | 5 | 29 | |
+| 10 | SILVA | $\frac{0}{3}$ | 0 | $\frac{43}{96}$ | 45 | $\frac{37}{83}$ | 45 | 123 | 31 | 51 | . | 29 | 15 | 3 | 45 | 29 | 20 | 12 | 372 | |
+| 11 | VILLAREAL | | | $\frac{0}{2}$ | 0 | | | 0 | 4 | 3 | | | 1 | 1 | 2 | 4 | | 4 | 23 | |
+| 12 | DELGADO | $\frac{2}{3}$ | 67 | $\frac{30}{56}$ | 54 | $\frac{19}{34}$ | 56 | 85 | 20 | 23 | 4 | 57 | 27 | | 49 | 13 | 17 | 12 | 324 | |
+| 13 | MARCOS | $\frac{0}{7}$ | 0 | $\frac{23}{59}$ | 39 | $\frac{13}{23}$ | 57 | 59 | 9 | 9 | | 5 | 9 | 1 | 20 | 7 | 7 | 12 | 175 | |
+| 18 | FAMPULME | $\frac{0}{10}$ | 0 | $\frac{20}{44}$ | 45 | $\frac{8}{13}$ | 62 | 48 | 9 | 27 | 1 | 14 | 12 | 5 | 18 | 17 | 17 | 12 | 210 | |
+| 19 | TOLIBAS | $\frac{9}{33}$ | 27 | $\frac{41}{88}$ | 47 | $\frac{19}{45}$ | 42 | 128 | 33 | 61 | 2 | 21 | 18 | 10 | 43 | 25 | 7 | 11 | 301 | |
+| | | | | | | | | | | | | | | | | | | | | |
+| | | | | | | | | | | | | | | | | | | | | |
+| | | | | | | | | | | | | | | | | | | | | |
+| | | | | | | | | | | | | | | | | | | | | |
+| | | | | | | | | | | | | | | | | | | | | |
+| | | $\frac{19}{97}$ | 20 | $\frac{299}{633}$ | 46 | $\frac{140}{283}$ | 49 | 777 | 168 | 285 | 10 | 212 | 166 | 61 | 312 | 158 | 110 | 12 | 2400 | |
+
+LEGEND:
+FG - Field goals
+FT - Free throws
+% - Percentage
+O - Offensive
+D - Defensive . .
+
+ST - Steals
+INT - Interceptions
+X - Other recoveries jump balls, loose balls, etc.,
+BS - Blocked shots
+A - Assists
+
+LB - Lost balls
+V - Violations
+W - With two free throws
+W/O - Without any free throws
+MP - Minutes played
+
+Prepared by: _______________________
+
+---
+
+<!-- START PAGE 206 (IMG_1275.md) -->
+*(Page 206 — Source: `IMG_1275`)*
+
+# BASKETBALL STATISTICS
+
+**Team:** UP  
+**Wins:** 2  
+**Losses:** 10  
+**Points Against:** 816  
+**63rd Season**
+
+| No. | PLAYER | Field | Field % | 2-pt | 2-pt % | Free Throw | Free Throw % | Total Score | Rebounds O | Rebounds D | Recoveries | A | ST / INT | B | Errors | Fouls W/ W/O | GP | MP | Remarks |
+| :---: | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| 4 | MIRANDA | 0/1 | 0 | 1/2 | 50 | 7/14 | 50 | 9 | 5 | 4 | | 18 | 3 | | 16 | 6 / 5 | 7 | 102 | |
+| 5 | CABANGIS | 2/10 | 20 | 0/5 | 0 | 2/3 | 67 | 8 | | 1 | | | | | 6 | 1 / 1 | 7 | 36 | |
+| 6 | CRUZ | 7/26 | 27 | 54/114 | 47 | 32/54 | 59 | 161 | 18 | 34 | 7 | 46 | 32 | 2 | 65 | 14 / 21 | 11 | 349 | |
+| 7 | RAPIZ | | | 0/2 | 0 | 1/2 | 50 | 1 | | 1 | | 1 | | | | 1 / | 3 | 8 | |
+| 8 | JIMENEZ | 7/20 | 35 | 6/18 | 33 | 2/5 | 40 | 35 | 3 | 16 | | 15 | 10 | | 24 | 6 / 7 | 6 | 176 | |
+| 9 | ALTUNA | 2/9 | 22 | 19/39 | 49 | 17/31 | 55 | 61 | 24 | 27 | 1 | 9 | 16 | 1 | 34 | 15 / 11 | 11 | 315 | |
+| 10 | DALISAY | | | 8/15 | 53 | 2/4 | 50 | 18 | 12 | 8 | | | 2 | | 11 | 14 / 3 | 12 | 103 | |
+| 11 | SENTURIAS | | | 12/24 | 50 | 1/3 | 33 | 25 | 19 | 24 | | 3 | 3 | 10 | 19 | 13 / 8 | 10 | 205 | |
+| 12 | ORDILLAS | 0/10 | 0 | 6/26 | 23 | 3/12 | 25 | 15 | 12 | 22 | 1 | 32 | 14 | 1 | 43 | 16 / 15 | 11 | 275 | |
+| 14 | CALLANTA | 21/71 | | 8/28 | 29 | 8/12 | 67 | 87 | 8 | 29 | 1 | 20 | 10 | 1 | 24 | 16 / 9 | 12 | 389 | |
+| 15 | EPRES | 11/36 | | 82/168 | 49 | 95/137 | 69 | 292 | 28 | 72 | 3 | 25 | 20 | 3 | 65 | 21 / 21 | 12 | 464 | |
+| 16 | CANCIO | 0/1 | 0 | | | | | 0 | | 1 | | | | | | 3 | 3 | 3 | |
+| | | | | | | | | | | | | | | | | | | | |
+| | | | | | | | | | | | | | | | | | | | |
+| | | | | | | | | | | | | | | | | | | | |
+| | | | | | | | | | | | | | | | | | | | |
+| | | | | | | | | | | | | | | | | | | | |
+| | | | | | | | | | | | | | | | | | | | |
+| | | | | | | | | | | | | | | | | | | | |
+| **TOTAL** | | **50/184** | **27** | **196/441** | **44** | **170/277** | **61** | **712** | **130** | **238** | **13** | **170** | **110** | **18** | **307** | **123/100** | **12** | **2425** | |
+
+**LEGEND:**  
+FG - Field goals  
+FT - Free throws  
+% - Percentage  
+O - Offensive  
+D - Defensive  
+ST - Steals  
+INT - Interceptions  
+X - Other recoveries jump balls, loose balls, etc.  
+BS - Blocked shots  
+A - Assists  
+LB - Lost balls  
+V - Violations  
+W - With two free throws  
+W/O - Without any free throws  
+MP - Minutes played  
+
+**Prepared by:**
+
+---
+
+<!-- START PAGE 207 (IMG_1276.md) -->
+*(Page 207 — Source: `IMG_1276`)*
+
+UNIVERSITY ATHLETIC ASSOCIATION OF THE PHILIPPINES
+63rd Season
+
+Team: **UST**
+Wins: 11
+Losses: 7
+Points Against: 717
+
+### BASKETBALL STATISTICS
+
+| No. | PLAYER | Field | | | | Free Throw | | Total Score | Rebounds | | Recoveries | A | ST | INT | B | Errors | Fouls | | GP | MP | Remarks |
+| --- | --- | --- | -- | --- | -- | --- | -- | --- | O | D | | | | | | | W | W/O | | | |
+| | | 3-pt | % | 2-pt | % | Throw | % | | | | | | | | | | | | | | |
+| 4 | SANCHEZ | | | 2/8 | 25 | . | . | 4 | | 1 | | 1 | 4 | | | 5 | 3 | | 3 | 31 | |
+| 5 | BAG-O | 2/8 | 25 | 8/31 | 26 | 7 | 12 | 29 | 6 | 14 | | 21 | 10 | | | 21 | 12 | 9 | 11 | 1774 | |
+| 6 | PAGALANAN | | | | | | | 0 | | | | | | | | | | | | | |
+| 7 | ILAGAN | 8/33 | 24 | 26/66 | 39 | 14/30 | 47 | 90 | 16 | 24 | 4 | 23 | 22 | 3 | 31 | 18 | 16 | 12 | 12 | 321 | |
+| 8 | ESPIRITU | 4/12 | 33 | 49/94 | 52 | 15/26 | 58 | 125 | 37 | 43 | 1 | 20 | 22 | 24 | 37 | 15 | 15 | 11 | 12 | 312 | |
+| 9 | REYES | | | 21/43 | 49 | 14/23 | 61 | 56 | 15 | 11 | 1 | 23 | 6 | 1 | 24 | 18 | 9 | 12 | 12 | 157 | |
+| 10 | TENGSON | | | 25/47 | 53 | 9/22 | 41 | 59 | 25 | 24 | 1 | 9 | 9 | 5 | 18 | 9 | 9 | 12 | 12 | 166 | |
+| 11 | DEL REMEDIOS | 2/14 | 14 | 1/2 | 50 | 4/4 | 100 | 12 | 2 | 3 | | | 6 | | 7 | 5 | 4 | 8 | 12 | 55 | |
+| 12 | CORTEZ | 2/13 | 15 | 120/218 | 55 | 23/38 | 61 | 269 | 40 | 57 | 4 | 59 | 70 | 1 | 44 | 16 | 17 | 12 | 12 | 367 | |
+| 14 | PACIA | | | 3/6 | 50 | 2/4 | 50 | 8 | 5 | 9 | | 2 | 1 | | 4 | 7 | 1 | 6 | 6 | 42 | |
+| 15 | AQUINO | | | 43/98 | 44 | 32/71 | 45 | 118 | 43 | 65 | 3 | 16 | 25 | 13 | 32 | 25 | 8 | 12 | 12 | 335 | |
+| 16 | GEROMINO | | | 9/34 | 26 | 3/6 | 50 | 21 | 14 | 9 | 1 | 7 | 5 | | 7 | 5 | 4 | 10 | 10 | 72 | |
+| 17 | ARTUZ | 1/7 | 14 | 4/10 | 40 | 3/9 | 33 | 14 | 6 | 7 | | 4 | 3 | 1 | 10 | 6 | 3 | 7 | 7 | 71 | |
+| 18 | CUAN | | | 25/51 | 49 | 9/30 | 30 | 59 | 15 | 30 | 1 | 47 | 23 | | 37 | 7 | 17 | 12 | 12 | 274 | |
+| 19 | BUSA | 0/1 | 0 | 2/4 | 50 | 0/1 | 0 | 4 | 1 | | | | | | | 3 | 2 | | 2 | 12 | |
+| 20 | BERNARDO | | | 0/1 | 0 | | | 0 | | | | | | | | 1 | 1 | | 2 | 9 | |
+
+| FT - Free throws | INT - Interceptions | V - Violations |
+| :--- | :--- | :--- |
+| % - Percentage | X - Other recoveries jump balls, loose balls, etc. | W - With two free throws |
+| O - Offensive | BS - Blocked shots | W/O - Without any free throws |
+| D - Defensive | A - Assists | MP - Minutes played |
+
+---
+
+<!-- START PAGE 208 (IMG_1277.md) -->
+*(Page 208 — Source: `IMG_1277`)*
+
+# UAAP WOMENS 2000
+## GENERAL SUMMARIES
+### ELIMINATIONS 1^ST & 2^ND ROUND
+
+| TEAMS | GP | W | L | PF | PA | O & D | TA | TS/INT | TBS | TE | TFW/ | TFW |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| AdU | 12 | 11 | 1 | 756 | 606 | 506 | 230 | 188 | 32 | 297 | 130 | 100 |
+| FEU | 12 | 9 | 3 | 648 | 568 | 402 | 204 | 182 | 17 | 235 | 139 | 105 |
+| DLSU | 12 | 8 | 4 | 779 | 637 | 474 | 209 | 200 | 25 | 264 | 135 | 104 |
+| UST | 12 | 7 | 5 | 597 | 547 | 541 | 159 | 144 | 25 | 283 | 124 | 120 |
+| UP | 12 | 4 | 8 | 623 | 651 | 547 | 157 | 113 | 11 | 287 | 109 | 120 |
+| UE | 12 | 3 | 9 | 541 | 741 | 516 | 110 | 108 | 32 | 356 | 133 | 88 |
+| ADMU | 12 | 0 | 12 | 538 | 726 | 429 | 141 | 112 | 8 | 297 | 109 | 88 |
+
+---
+
+### LEGEND:
+
+| | | | |
+| :--- | :--- | :--- | :--- |
+| **GP** | GAMES PLAYED | **A** | ASSIST |
+| **W** | WINS | **ST/INT** | STEALS/INTERCEPTION |
+| **L** | LOSSES | **BS** | BLOCK SHOTS |
+| **PF** | POINTS FOR | **E/TO** | ERRORS/TURNOVERS |
+| **PA** | POINTS AGAINST | **FW/F** | FOULS WITH FREE THROW |
+| **REB** | REBOUNDS | **FW/OF** | FOULS WITHOUT FREE THROW |
+| **O** | OFFENSIVE | **\* ** | ARRANGED ACCORDING TO ORDER OF HIGHER QUOTIENT |
+| **D** | DEFENSIVE | | |
+| **TRR** | TOTAL REBOUNDS/RECOVERIES | | |
+
+---
+
+<!-- START PAGE 209 (IMG_1278.md) -->
+*(Page 209 — Source: `IMG_1278`)*
+
+# UAAP WOMENS BASKETBALL 2000
+## GAMES RESULTS
+
+### 1^ST^ ROUND
+
+* AdU d DLSU: 63-58
+* FEU d UP: 44-36
+* UST d ADMU: 55-31
+* AdU d ADMU: 68-33
+* DLSU d UST: 65-58
+* UP d UE: 58-45
+* UST d UP: 52-35
+* AdU d UE: 85-52
+* FEU d ADMU: 70-50
+* FEU d UST: 48-35
+* UP d ADMU: 64-53
+* DLSU d UE: 83-28
+* DLSU d ADMU: 76-47
+* AdU d UST: 50-48
+* FEU d UE: 59-36
+* DLSU d FEU: 56-55
+* AdU d UP: 60-55
+* UE d ADMU: 52-48
+* DLSU d UP: 79-62
+* AdU d FEU: 68-50
+* UST d UE: 55-34
+
+**END OF 1^ST^ ROUND**
+
+---
+
+### 2^ND^ ROUND
+
+* UST d UP: 44-39
+* FEU d UE: 47-25
+* DLSU d ADMU: 67-45
+* UP d DLSU: 54-49
+* FEU d UST: 41-40
+* AdU d UE: 47-38
+* AdU d UE: 67-49
+* UP d ADMU: 52-30
+* FEU d DLSU: 54-54 *(Note: as printed)*
+* UST d UE: 52-40
+* AdU d UP: 67-51
+* FEU d ADMU: 61-51
+* FEU d UP: 67-62
+* AdU d UST: 60-49
+* DLSU d UE: 72-53
+* UE d ADMU: 66-60
+* UST d DLSU: 55-52
+* AdU d FEU: 58-52
+* UST d ADMU: 54-52
+* UE d UP: 61-55
+* DLSU d AdU: 71-63
+
+**END OF 2^ND^ ROUND**
+
+---
+
+### FINAL FOUR
+
+___________________  
+___________________  
+___________________  
+___________________
+
+---
+
+<!-- START PAGE 210 (IMG_1279.md) -->
+*(Page 210 — Source: `IMG_1279`)*
+
+# STATISTICAL BASIS FOR MVP, MYTHICAL & OTHER INDIVIDUAL AWARDS
+
+| PLAYER | TEAM | (GP | + | RP | + | AP) | - | (EP | + | PFP) | = | SP | MP | = | PAV |
+| :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| NARCIZA | ADU | ( 149 | + | 300 | + | 152 ) | - | ( 112 | + | 65 ) | = | 424 | 356 | = | 23.82 |
+| TORRES | ADU | ( 139 | + | 148 | + | 286 ) | - | ( 146 | + | 24 ) | = | 403 | 408 | = | 19.75 |
+| USON | UST | ( 117 | + | 204 | + | 42 ) | - | ( 40 | + | 24 ) | = | 289 | 294 | = | 19.66 |
+| ORTIZ | UE | ( 209 | + | 264 | + | 104 ) | - | ( 138 | + | 34 ) | = | 374 | 406 | = | 18.42 |
+| SANTOS | DLSU | ( 93 | + | 170 | + | 64 ) | - | ( 48 | + | 65 ) | = | 246 | 268 | = | 18.36 |
+| PALENZUELA | UST | ( 116 | + | 192 | + | 110 ) | - | ( 90 | + | 33 ) | = | 277 | 310 | = | 17.87 |
+| DOWLING | UP | ( 122 | + | 230 | + | 138 ) | - | ( 92 | + | 51 ) | = | 354 | 410 | = | 17.27 |
+| DAYSON | ADU | ( 116 | + | 176 | + | 180 ) | - | ( 88 | + | 44 ) | = | 320 | 376 | = | 17.02 |
+| MENDOZA | UP | ( 115 | + | 226 | + | 98 ) | - | ( 88 | + | 64 ) | = | 297 | 371 | = | 16.01 |
+| FERNANDEZ | ADU | ( 152 | + | 138 | + | 90 ) | - | ( 52 | + | 54 ) | = | 296 | 388 | = | 15.26 |
+| E. DY | ADMU | ( 128 | + | 146 | + | 162 ) | - | ( 120 | + | 25 ) | = | 291 | 384 | = | 15.16 |
+| OCAMPO | DLSU | ( 170 | + | 98 | + | 130 ) | - | ( 84 | + | 32 ) | = | 283 | 378 | = | 14.97 |
+| PASADILLA | FEU | ( 54 | + | 146 | + | 132 ) | - | ( 56 | + | 31 ) | = | 242 | 345 | = | 14.03 |
+| SEVERINO | DLSU | ( 74 | + | 112 | + | 100 ) | - | ( 54 | + | 59 ) | = | 173 | 250 | = | 13.84 |
+| MANALO (12) | DLSU | ( 78 | + | 72 | + | 212 ) | - | ( 80 | + | 26 ) | = | 256 | 375 | = | 13.65 |
+| TANCHI | ADMU | ( 129 | + | 218 | + | 104 ) | - | ( 112 | + | 62 ) | = | 277 | 408 | = | 13.58 |
+| DE LA CRUZ | UST | ( 105 | + | 190 | + | 140 ) | - | ( 104 | + | 57 ) | = | 238 | 353 | = | 13.48 |
+| M. CARREON | ADMU | ( 152 | + | 88 | + | 144 ) | - | ( 96 | + | 52 ) | = | 236 | 366 | = | 12.9 |
+| MONJE | FEU | ( 123 | + | 134 | + | 140 ) | - | ( 90 | + | 62 ) | = | 245 | 396 | = | 12.37 |
+| J. CARREON | FEU | ( 122 | + | 68 | + | 108 ) | - | ( 60 | + | 45 ) | = | 193 | 338 | = | 11.42 |
+
+---
+
+## LEGEND & POINT EQUIVALENT:
+
+### 1. GOAL POINTS (GP)
+A. FIELD GOAL  
+B. FREE THROWS  
+
+### 2. REBOUND POINTS
+A. OFFENSIVE REBOUND  
+B. DEFENSIVE REBOUND  
+C. JUMP BALL/LOOSE BALL (RECOVERY)  
+
+### 3. ASSIST POINTS (AP)
+A. ASSIST POINTS  
+B. STEAL/INTERCEPTION  
+C. BLOCK SHOT  
+
+---
+
+2 OR 3 POINTS  
+1 POINT  
+
+2 POINTS  
+2 POINTS  
+2 POINTS  
+
+2 POINTS  
+2 POINTS  
+2 POINTS  
+
+### 4. ERROR/TURN-OVER POINT (EP)
+A. PASSING/RECEIVING ERROR  
+B. VIOLATION  
+
+### 5. PERSONAL FOUL POINTS (PFP)
+A. FOUL W/O FREE THROW AWARD  
+B. FOUL W/ FREE THROW AWARD  
+C. UNSPORTSMANLIKE FOUL  
+
+### 6. STATISTICAL POINTS (SP)
+$$\text{SP} = (\text{GP} + \text{RP} + \text{AP}) - (\text{EP} + \text{PFP})$$
+
+### 7. PLAYERS AROUND VALUE (PAV)
+$$\text{PAV} = \text{STATISTICAL POINTS OVER MINUTES PLAYED} / 20$$
+
+2 POINTS  
+2 POINTS  
+
+1 POINT  
+2 POINTS  
+5 POINTS  
+
+---
+
+### 8. MVP = PAV + PLAYING ATTITUDE
+
+**NOTE:** ONLY PLAYERS WITH AVERAGE PLAYING TIME OF 20 MINUTES PER GAME ARE INCLUDED.
+
+---
+
+<!-- START PAGE 211 (IMG_1280.md) -->
+*(Page 211 — Source: `IMG_1280`)*
+
+2000 UAAP WOMEN'S BASKETBALL TOP PERFORMERS
+
+### TOP SCORERS
+
+| PLAYER | TEAM | TOTAL SCORE | GAMES PLAYED | AVERAGE/GAME |
+| :--- | :--- | :---: | :---: | :---: |
+| ORTIZ | UE | 209 | 12 | 17.42 |
+| OCAMPO | DLSU | 170 | 12 | 14.17 |
+| M. CARREON | FEU | 152 | 12 | 12.67 |
+| FERNANDEZ | AdU | 152 | 12 | 12.67 |
+| NARCIZA | AdU | 149 | 12 | 12.42 |
+| TORRES | AdU | 139 | 12 | 11.58 |
+| J. CARREON | FEU | 122 | 11 | 11.09 |
+| TANCHI | ADMU | 129 | 12 | 10.75 |
+| E. DY | ADMU | 128 | 11 | 10.67 |
+| USON | UST | 117 | 12 | 10.64 |
+| MONJE | FEU | 123 | 11 | 10.25 |
+| DOWLING | UP | 122 | 12 | 10.17 |
+
+---
+
+### TOP REBOUNDERS
+
+| PLAYER | TEAM | TOTAL SCORE | GAMES PLAYED | AVERAGE/GAME |
+| :--- | :--- | :---: | :---: | :---: |
+| NARCIZA | AdU | 150 | 12 | 12.5 |
+| ORTIZ | UE | 132 | 12 | 11 |
+| DOWLING | UP | 115 | 12 | 9.58 |
+| MENDOZA | UP | 113 | 12 | 9.42 |
+| USON | UST | 102 | 11 | 9.27 |
+| TANCHI | ADMU | 109 | 12 | 9.08 |
+| GABERON | UE | 99 | 12 | 8.25 |
+| PALENZUELA | UST | 96 | 12 | 8 |
+| DE LA CRUZ | UST | 95 | 12 | 7.92 |
+| FERNANDO | UP | 89 | 12 | 7.42 |
+| DAYSON | AdU | 88 | 12 | 7.33 |
+| SANTOS | DLSU | 85 | 12 | 7.08 |
+
+---
+
+<!-- START PAGE 212 (IMG_1281.md) -->
+*(Page 212 — Source: `IMG_1281`)*
+
+### MOST ASSISTS
+
+| PLAYER | TEAM | TOTAL SCORE | GAMES PLAYED | AVERAGE/GAME |
+| :--- | :--- | :---: | :---: | :---: |
+| TORRES | AdU | 88 | 12 | 7.33 |
+| MANALO (12) | DLSU | 65 | 12 | 5.42 |
+| MONJE | FEU | 44 | 12 | 3.67 |
+| CAHILIG | UST | 20 | 5 | 4 |
+| E. DY | ADMU | 54 | 12 | 4.5 |
+| DOWLING | UP | 48 | 12 | 4 |
+| M. CARREON | FEU | 38 | 12 | 3.17 |
+| DAYSON | AdU | 44 | 12 | 3.67 |
+| ESGUERRA | UST | 42 | 12 | 3.5 |
+| NARCIZA | AdU | 39 | 12 | 3.25 |
+| PASADILLA | FEU | 18 | 6 | 3 |
+
+---
+
+### MOST STEALS / INTERCEPTION
+
+| PLAYER | TEAM | TOTAL SCORE | GAMES PLAYED | AVERAGE/GAME |
+| :--- | :--- | :---: | :---: | :---: |
+| TORRES | AdU | 49 | 12 | 4.08 |
+| MANALO (12) | DLSU | 41 | 12 | 3.42 |
+| DAYSON | AdU | 41 | 12 | 3.42 |
+| OCAMPO | DLSU | 39 | 12 | 3.25 |
+| M. CARREON | FEU | 34 | 12 | 2.91 |
+| PASADILLA | FEU | 32 | 11 | 2.83 |
+
+---
+
+### MOST BLOCK SHOTS
+
+| PLAYER | TOTAL SCORE |
+| :--- | :--- |
+| ORTIZ (UE) | 14 BLOCKS |
+| SAN DIEGO (DLSU) | 11 BLOCKS |
+| NARCIZA (AdU) | 10 BLOCKS |
+
+---
+
+<!-- START PAGE 213 (IMG_1282.md) -->
+*(Page 213 — Source: `IMG_1282`)*
+
+# SEASON’S TEAM & INDIVIDUAL GAME HIGHS/RECORDS
+
+## SCORES
+
+| TEAM | INDIVIDUAL |
+| :--- | :--- |
+| HIGHEST SCORE: 85 by AdU vs UE<br>July 30, 2000 | 34 by ORTIZ in UE vs UP Sept. 18, 2000 |
+| LOWEST SCORE: 25 by UE vs FEU Aug. 27 | |
+| HIGHEST WINNING MARGIN: 55 (83-28) by<br>DLSU vs UE Aug. 6, 2000 | |
+
+---
+
+## REBOUNDS
+
+| TEAM | INDIVIDUAL |
+| :--- | :--- |
+| 60 by UE vs ADMU Aug. 13, 2000 | 20 by ORTIZ in UE vs ADMU Aug. 13, 2000 |
+
+---
+
+## ASSISTS
+
+| TEAM | INDIVIDUAL |
+| :--- | :--- |
+| 30 by AdU vs UE July 30, 2000 | 14 by TORRES in AdU vs UE July 30, 2000 |
+
+---
+
+## STEALS/INT
+
+| TEAM | INDIVIDUAL |
+| :--- | :--- |
+| 37 by DLSU vs UE Aug. 6, 2000 | 8 by OCAMPO in DLSU vs UE Aug. 6, 2000<br>8 by TORRES in AdU vs UST Aug. 10, 2000 |
+
+---
+
+## BLOCKS
+
+| TEAM | INDIVIDUAL |
+| :--- | :--- |
+| 7 by UE vs DLSU Aug. 6, 2000<br>7 UE vs DLSU Sept. 10, 2000 | 5 by TORRES AdU vs UP Aug. 13, 2000<br>5 by ORTIZ UE vs DLSU Sept. 10, 2000 |
+
+---
+
+## ERRORS/TURN-OVERS
+
+| TEAM | INDIVIDUAL |
+| :--- | :--- |
+| 51 by UE vs DLSU Aug 6, 2000 | 11 by CRUZ in UE vs DLSU Aug. 6, 2000<br>11 by PASCUAL UE vs FEU Aug. 10, 2000 |
+
+---
+
+<!-- START PAGE 214 (IMG_1283.md) -->
+*(Page 214 — Source: `IMG_1283`)*
+
+Team: **Adv** | Wins: **11** | Losses: **1** | Points Against: **600**
+
+### BASKETBALL STATISTICS
+
+| PLAYER | Field | 3-pt | % | Field | 2-pt | % | Free | Throw | % | Total Score | Rebounds | | Recoveries | A | ST | INT | B | Errors | Fouls | | GP | MP | Remarks |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | O | D | | | | | | | W/ | W/O | | | |
+| MATRIZ | 3 | 17 | 18 | 14 | 37 | 38 | 8 | 20 | 40 | 45 | 10 | 3 | 1 | 9 | 11 | | | 13 | 6 | 6 | 12 | 68 | |
+| NARCIZA | 0 | 2 | 0 | 13 | 32 | 48 | 23 | 35 | 66 | 149 | 65 | 82 | 3 | 39 | 27 | 10 | 56 | 25 | 15 | 12 | 356 | |
+| MARTINEZ | | | | 6 | 10 | 60 | 2 | 50 | 13 | 3 | 4 | | 5 | 4 | | | 9 | 3 | 3 | 8 | 55 | |
+| MANALANSAN | | | | | | | | | | 0 | | | 1 | | | | | | | | | 2 | |
+| AGUDO | | | | 24 | 74 | 32 | 8 | 15 | 53 | 56 | 21 | 32 | | 9 | 18 | 3 | 23 | 14 | 10 | 12 | 324 | |
+| VERANA | | | | 5 | 15 | 33 | 4 | 9 | 44 | 14 | 3 | 7 | | 4 | 6 | | 8 | 10 | 9 | 10 | 95 | |
+| DUMAYAG | 0 | 3 | 0 | 1 | 5 | 20 | | | | 2 | 1 | 1 | | 2 | 2 | | 2 | 1 | | 3 | 21 | |
+| FERNANDEZ | 18 | 57 | 32 | 29 | 46 | 16 | 22 | 72 | 152 | 22 | 23 | 4 | 25 | 20 | | 26 | 10 | 12 | 12 | 389 | |
+| CARANGSANG | 1 | 1 | 100 | 22 | 41 | 54 | 3 | 4 | 75 | 50 | 12 | 14 | | 4 | 5 | 1 | 16 | 12 | 3 | 10 | 126 | |
+| APOSTOL | | | | 0 | 1 | 0 | | | | 0 | | | | 2 | 1 | | 4 | 1 | 1 | 1 | 8 | |
+| ARCE | 1 | 6 | 20 | 1 | 9 | 11 | | | | 5 | 3 | 5 | | 1 | 1 | | 4 | 7 | 4 | 5 | 39 | |
+| DAYSON | 1 | 4 | 25 | 35 | 70 | 50 | 3 | 8 | 38 | 116 | 30 | 56 | 2 | 4 | 41 | 5 | 44 | 23 | 16 | 12 | 376 | |
+| GADIAN | | | | 4 | 13 | 31 | 0 | 2 | 0 | 8 | 9 | 9 | | 2 | 1 | 3 | 12 | 10 | 5 | 10 | 67 | |
+| TORRES | 11 | 33 | 33 | 45 | 87 | 52 | 16 | 24 | 67 | 139 | 21 | 49 | 4 | 85 | 49 | 9 | 73 | 7 | 10 | 12 | 408 | |
+| YANEZ | 0 | 2 | 0 | 3 | 6 | 36 | 1 | 1 | 100 | 7 | 3 | 3 | | 1 | 1 | | 7 | 1 | 3 | 7 | 31 | |
+| TOTALS | 35 | 124 | 28 | 163 | 360 | 45 | 83 | 142 | 58 | 756 | 203 | 289 | 14 | 230 | 188 | 32 | 297 | 130 | 100 | 12 | 2400 | |
+
+**ST** - Steals  
+**INT** - Interceptions  
+**X** - Other recoveries jump balls, loose balls, etc.  
+**BS** - Blocked shots  
+**A** - Assists  
+**LB** - Lost balls  
+**V** - Violations  
+**W** - With two free throws  
+**W/O** - Without any free throws  
+**MP** - Minutes played  
+
+Prepared by:  
+________________________
+
+---
+
+<!-- START PAGE 215 (IMG_1284.md) -->
+*(Page 215 — Source: `IMG_1284`)*
+
+# 63rd SEASON
+## BASKETBALL STATISTICS
+
+**Team:** ADMU  
+**Wins:** 0 | **Losses:** 12  
+**Points Against:** 726
+
+| No. | PLAYER | Field | Field | Field | Free | Free | Total Score | Rebounds | Rebounds | Rebounds | Recoveries | A | ST | INT | B | Errors | Fouls W/ | Fouls W/O | GP | MP | Remarks |
+| :---: | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| | | 3-pt | % | 2-pt | % | Throw | % | | O | D | | | | | | | | | | | |
+| 4 | CALADO | 0 / 7 | 0 | 18 / 52 | 35 | 2 / 4 | 50 | 38 | 10 | 22 | - | 17 | 8 | - | - | 32 | 14 | 14 | 11 | 223 | |
+| 5 | TANCHI | 4 / 27 | 15 | 49 / 137 | 36 | 19 / 37 | 51 | 129 | 40 | 68 | 1 | 25 | 25 | - | 2 | 56 | 24 | 14 | 12 | 402 | |
+| 6 | LENTETAS | / | - | 6 / 16 | 38 | 7 / 10 | 70 | 19 | 10 | 10 | 1 | 1 | 2 | - | 2 | 9 | 5 | 8 | 10 | 144 | |
+| 7 | MAISARIETA | / | - | 1 / 1 | 100 | / | - | 2 | 4 | 7 | - | - | - | - | - | 6 | 5 | 1 | 6 | 73 | |
+| 8 | MORGA | / | - | 4 / 25 | 16 | 1 / 4 | 25 | 3 | 2 | 2 | - | - | - | - | - | 4 | - | - | 6 | 54 | |
+| 9 | ESTEVEZ | 1 / 4 | 25 | 17 / 53 | 32 | 3 / 10 | 30 | 40 | 19 | 45 | 1 | 10 | 6 | - | 2 | 23 | 14 | 10 | 12 | 247 | |
+| 10 | CABRERA | 0 / 4 | 0 | 6 / 19 | 32 | 6 / 8 | 75 | 18 | 6 | 12 | - | 3 | 4 | - | - | 8 | 6 | 2 | 12 | 136 | |
+| 11 | SY | / | - | 1 / 3 | 33 | / | - | 2 | 2 | - | - | - | - | - | 1 | 6 | 2 | 2 | 6 | 40 | |
+| 14 | LOPEZ | 3 / 11 | 27 | 7 / 24 | 29 | 4 / 12 | 33 | 27 | 11 | 18 | - | 10 | 5 | - | - | 26 | 7 | 4 | 12 | 164 | |
+| 15 | ANG | 0 / 1 | 0 | 2 / 4 | 50 | 2 / 4 | 50 | 6 | 2 | 1 | - | 2 | - | - | - | 5 | 1 | 1 | 8 | 36 | |
+| 16 | E. DY | 1 / 9 | 11 | 22 / 77 | 36 | 39 / 72 | 54 | 128 | 19 | 53 | 1 | 54 | 27 | - | 1 | 60 | 8 | 9 | 12 | 364 | |
+| 17 | LAROSA | 2 / 6 | 33 | 25 / 89 | 28 | 29 / 38 | 76 | 85 | 11 | 26 | 2 | 17 | 18 | - | 1 | 24 | 14 | 9 | 12 | 317 | |
+| 18 | REYES | 3 / 18 | 17 | 11 / 23 | 48 | 10 / 26 | 38 | 41 | 9 | 12 | - | 3 | 11 | - | - | 34 | 9 | 15 | 12 | 174 | |
+| | | | | | | | | | | | | | | | | | | | | | |
+| **TOTALS** | | **24/111** | **22** | **141/509** | **28** | **34/225** | **52** | **538** | **149** | **276** | **6** | **141** | **112** | **-** | **8** | **297** | **109** | **88** | **12** | **2400** | |
+
+### LEGEND:
+* FG - Field goals
+* FT - Free throws
+* % - Percentage
+* O - Offensive
+* D - Defensive
+* ST - Steals
+* INT - Interceptions
+* X - Other recoveries jump balls, loose balls, etc.
+* BS - Blocked shots
+* A - Assists
+* LB - Lost balls
+* V - Violations
+* W - With two free throws
+* W/O - Without any free throws
+* MP - Minutes played
+
+**Prepared by:** [Signature]
+
+---
+
+<!-- START PAGE 216 (IMG_1285.md) -->
+*(Page 216 — Source: `IMG_1285`)*
+
+# TEAM: DLSU
+
+**BASKETBALL STATISTICS**
+
+| No. | PLAYER | Wins | 3-pt | % | 2-pt | % | Free Throw | % | Total Score | Rebounds | Reco-veries | A | ST/INT | B | Errors | Fouls | GP | MP | Remarks |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| | | | | | | | | | | O | D | | | | | W | W/O | | | |
+| 4 | SEVERINO | | | | 29/38 | 75 | 18/34 | 53 | 74 | 28 | 27 | 1 | 24 | 23 | 3 | 27 | 23 | 13 | 10 | 250 | |
+| 5 | MANALO | | | | 9/25 | 36 | 11/19 | 58 | 29 | 6 | 8 | 1 | 15 | 15 | 1 | 16 | 9 | 8 | 12 | 185 | |
+| 6 | RILLO | | | | 0/4 | 0 | | | 0 | 2 | 2 | | 1 | 1 | 1 | 1 | 5 | 2 | 2 | 11 | |
+| 7 | TAN | | | | | | | | 0 | | 2 | | | | | | | | | 8 | |
+| 8 | VELARAC | | 2/7 | 29 | 40/83 | 47 | 22/42 | 52 | 108 | 33 | 42 | 2 | 21 | 18 | 4 | 40 | 19 | 13 | 12 | 341 | |
+| 9 | SAN DIEGO | | | | 37/86 | 43 | 16/43 | 42 | 92 | 33 | 49 | | 8 | 13 | 11 | 32 | 25 | 14 | 12 | 281 | |
+| 10 | MANOSCA | | | | 18/36 | 50 | 3/6 | 50 | 39 | 8 | 16 | | 12 | 9 | | 13 | 9 | 2 | 11 | 116 | |
+| 11 | LIGON | | 0/5 | 0 | 18/34 | 16 | 32 | 52 | 52 | 13 | 9 | | 12 | 12 | | 14 | 9 | 9 | 10 | 129 | |
+| 12 | MANALAD | | 7/22 | 32 | 43/99 | 43 | 22/49 | 45 | 78 | 11 | 21 | 4 | 65 | 41 | | 40 | 9 | 8 | 11 | 375 | |
+| 13 | OCAMPO | | 16/59 | 29 | 44/102 | 49 | 22/40 | 55 | 170 | 16 | 30 | 3 | 26 | 39 | | 42 | 9 | 13 | 12 | 378 | |
+| 16 | GALAN | | 1/2 | 50 | 17/46 | 37 | 1/3 | 33 | 38 | 6 | 16 | | 7 | 17 | | 14 | 6 | 9 | 8 | 128 | |
+| 17 | SANTOS | | | | 37/76 | 49 | 19/42 | 45 | 93 | 24 | 56 | 1 | 16 | 11 | 5 | 24 | 10 | 13 | 12 | 268 | |
+| 18 | MONTALBAN | | | | 3/4 | 75 | | | 6 | | | | 2 | 1 | | 1 | 1 | 1 | 2 | 15 | |
+| | | | | | | | | | | | | | | | | | | | | | |
+| | | | | | | | | | | | | | | | | | | | | | |
+| | | | | | | | | | | | | | | | | | | | | | |
+| | | **TOTALS** | **26/91** | **29** | **275/635** | **43** | **151/296** | **51** | **779** | **184** | **278** | **12** | **209** | **200** | **21** | **264** | **135** | **104** | **12** | **2400** | |
+
+---
+
+### LEGEND:
+* FG - Field goals
+* FT - Free throws
+* % - Percentage
+* O - Offensive
+* D - Defensive
+* ST - Steals
+* INT - Interceptions
+* X - Other recoveries jump balls, loose balls, etc.
+* BS - Blocked shots
+* A - Assists
+* LB - Lost balls
+* V - Violations
+* W - With two free throws
+* W/O - Without any free throws
+* MP - Minutes played
+
+**Prepared by:** _______________________
+
+---
+
+<!-- START PAGE 217 (IMG_1286.md) -->
+*(Page 217 — Source: `IMG_1286`)*
+
+Team: **FEU**
+
+Wins: **9**  
+Losses: **3**  
+Points Against: **568**
+
+### BASKETBALL STATISTICS
+
+| No. | PLAYER | Field | 3-pt | % | 2-pt | % | Free Throw | % | Total Score | Rebounds | Reco-veries | A | ST / INT | B | Errors | Fouls | GP | MP | Remarks |
+|:---:|:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| | | | | | | | | | | O | D | | | | | W/ | W/O | | | |
+| 4 | PEREZ | 0 / 1 | 0 | 27 / 76 | 36 | 13 / 26 | 50 | 67 | 14 | 47 | 3 | 25 | 27 | 2 | 31 | 15 | 24 | 12 | 271 | |
+| 5 | RAYMUNDO | 0 / 3 | 0 | 3 / 15 | 20 | 0 / 2 | 0 | 6 | 6 | 3 | | 1 | | | 5 | 4 | 1 | 4 | 29 | |
+| 6 | DE GUZMAN | 0 / 1 | 0 | 0 / 1 | 0 | | | 0 | | | | | | | | 2 | | 2 | 6 | |
+| 7 | DE JESUS | 0 / 1 | 0 | 0 / 26 | 0 | 2 / 2 | 100 | 2 | 54 | 23 | 49 | 1 | 29 | 32 | 5 | 28 | 11 | 12 | 11 | 345 | |
+| 8 | PARADILLA | 0 / 1 | 0 | 0 / 3 | 0 | 2 / 10 | 20 | 6 | 1 | 1 | | 1 | 3 | | 8 | 4 | 2 | 5 | 38 | |
+| 9 | ALCANCIADO | 0 / 1 | 0 | 3 / 13 | 23 | 0 / 1 | 0 | 0 | 14 | 12 | 2 | 30 | 24 | | 30 | 14 | 17 | 11 | 336 | |
+| 11 | J. CARREON | 2 / 7 | 28 | 28 / 61 | 46 | 13 / 18 | 72 | 122 | 14 | 44 | 2 | 44 | 26 | | 45 | 27 | 10 | 12 | 396 | |
+| 12 | MONTE | 7 / 28 | 25 | 25 / 51 | 49 | 20 / 31 | 64 | 123 | 21 | 44 | 2 | 3 | 4 | 2 | 11 | 13 | 7 | 8 | 119 | |
+| 14 | FAUSTINO | 6 / 21 | 29 | 3 / 7 | 43 | 15 | 16 | 28 | | 38 | 34 | | 42 | 18 | 16 | 12 | 366 | |
+| 15 | M. CARREON | 5 / 17 | 29 | 55 / 115 | 48 | 27 / 43 | 63 | 152 | 16 | 29 | | 36 | 34 | | 40 | 10 | 3 | 10 | 12 | 181 | |
+| 16 | DELIGOS | 4 / 18 | 22 | 12 / 38 | 32 | 7 / 10 | 70 | 43 | 12 | 15 | 1 | 9 | 10 | | 10 | 3 | 10 | 12 | 294 | |
+| 17 | LIBORNIO | | | 24 / 50 | 48 | 9 / 22 | 41 | 57 | 26 | 20 | 1 | 23 | 20 | 8 | 16 | 24 | 6 | 12 | 3 | |
+| 18 | ZAYAS | | | 0 / 1 | 0 | | 0 | | 2 | | | 1 | 2 | | 1 | 1 | 2 | 5 | |
+| 19 | MADRISANO | | | 1 / 1 | 0 | | 2 | 1 | | 2 | | | | | 3 | 2 | 1 | 6 | |
+
+| TOTALS | 37 / 141 | 26 | 221 / 566 | 39 | 95 / 172 | 55 | 648 | 149 | 241 | 12 | 204 | 182 | 17 | 235 | 139 | 105 | 12 | 2400 | |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+
+**LEGEND:**  
+FG - Field goals  
+FT - Free throws  
+% - Percentage  
+O - Defensive *(Note: as printed)*  
+D - Defensive  
+ST - Steals  
+INT - Interceptions  
+X - Other recoveries jump balls, loose balls, etc.  
+BS - Blocked shots  
+A - Assists  
+LB - Lost balls  
+V - Violations  
+W - With two free throws  
+W/O - Without any free throws  
+MP - Minutes played  
+
+**Prepared by:**  
+___________________________
+
+---
+
+<!-- START PAGE 218 (IMG_1287.md) -->
+*(Page 218 — Source: `IMG_1287`)*
+
+**Team:** UE
+**Wins:** 3
+**Losses:** 9
+**Points Against:** 741
+
+| No. | PLAYER | Field Goal 3-pt M-A | Field Goal 3-pt % | Field Goal 2-pt M-A | Field Goal 2-pt % | Free Throw M-A | Free Throw % | Score | Rebounds O | Rebounds D | Rebounds Recoveries | Assists A | Steals ST | Interceptions INT | Blocked Shots B | Errors | Fouls W/ 2-free-throws | Fouls W/O 2-free-throws | Games Played GP | Minutes Played MP | Remarks |
+| :-- | :-- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| 4 | MABAZZA | 0/1 | 0 | 1/2 | 50 | 0/2 | 0 | 2 | 1 | 0 | 1 | 0 | 0 | 0 | 0 | 2 | 0 | 2 | 1 | 1 | - |
+| 5 | HOBAYAN | 1/7 | 14 | 2/18 | 11 | 13/42 | 31 | 69 | 34 | 46 | 1 | 9 | 13 | 6 | 21 | 21 | 14 | 12 | 293 | 12 | 168 |
+| 6 | ORTIZ | 16/45 | 36 | 56/149 | 38 | 49/77 | 64 | 209 | 52 | 76 | 4 | 20 | 18 | 14 | 69 | 25 | 15 | 12 | 406 | 12 | 146 |
+| 7 | PASCUAL | 4/23 | 17 | 30/103 | 29 | 24/40 | 60 | 96 | 21 | 37 | 6 | 21 | 16 | 3 | 62 | 19 | 14 | 12 | 367 | 12 | 14 |
+| 8 | ZAPATA | 1/5 | 20 | 6/27 | 22 | 2/7 | 29 | 10 | 8 | 6 | | 15 | 9 | | 43 | 12 | 7 | 10 | 209 | | 15 |
+| 9 | CRUZ | 2/19 | 11 | 1/6 | 16 | 2/7 | 29 | 10 | 8 | 6 | | 9 | 15 | | 44 | 8 | 7 | 11 | 155 | | 12 |
+| 11 | ANANAS | | | 26/31 | 84 | 12/27 | 44 | 28 | 22 | 14 | | 5 | 7 | 1 | 12 | 11 | 3 | 11 | 146 | | 96 |
+| 12 | CONSTANTINO | 1/2 | 50 | 15/30 | 50 | 10/50 | 20 | 8 | 2 | 7 | | 5 | 4 | | 17 | 3 | 1 | 11 | 11 | | - |
+| 13 | LABERON | | | 24/79 | 30 | 16/64 | 28 | 66 | 39 | 52 | 1 | 9 | 5 | 4 | 36 | 11 | 13 | 12 | 366 | 12 | 67 |
+| 14 | BAUTISTA | | | 4/9 | 44 | 1/4 | 25 | 9 | 3 | 12 | | 1 | 2 | | 4 | 5 | 6 | 6 | 67 | | 3 |
+| 15 | NOGUE | | | 1/9 | 11 | 4/8 | 50 | 6 | 5 | 13 | | 2 | 6 | 4 | 9 | 11 | 1 | 7 | 99 | | 38 |
+| 17 | CULBON | | | 0/2 | 0 | | | 0 | 1 | | | | | | | | | | | 1 | - |
+
+| TOTALS | 25/102 | 25 | 160/531 | 30 | 146/331 | 44 | 544 | 205 | 299 | 12 | 110 | 104 | 32 | 256 | 133 | 89 | 12 | 2400 |
+
+**LEGEND:**
+- FG - Field goals
+- FT - Free throws
+- % - Percentage
+- O - Offensive
+- D - Defensive
+- ST - Steals
+- INT - Interceptions
+- X - Other recoveries jump balls, loose balls, etc.
+- BS - Blocked shots
+- A - Assists
+- LB - Lost balls
+- V - Violations
+- W - With two free throws
+- W/O - Without any free throws
+- MP - Minutes played
+
+**Prepared by:** _______________________
+
+---
+
+<!-- START PAGE 219 (IMG_1288.md) -->
+*(Page 219 — Source: `IMG_1288`)*
+
+# BASKETBALL STATISTICS
+
+**Team:** UP
+
+| No. | Player | Wins | Losses | Field Goals 3-pt | % | Field Goals 2-pt | % | Free Throw | % | Total Score | Rebounds O | Rebounds D | Recoveries | A | ST/INT | B | Errors | Fouls W/ | Fouls W/O | GP | MP | Remarks |
+|:---:|:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| 4 | AGUILA | | | 3/28 | 11 | 9/27 | 33 | 11/17 | 65 | 38 | 10 | 32 | 2 | 17 | 12 | | 30 | 7 | 9 | 12 | 178 | |
+| 5 | MARCELO | | | 3/51 | 22 | 7/43 | 16 | 6/10 | 60 | 12 | 3 | 6 | 1 | 4 | 3 | | 9 | 3 | 1 | 10 | 48 | |
+| 6 | ABADILLA | | | 1/4 | 25 | 18/54 | 33 | 12/19 | 63 | 51 | 6 | 8 | 2 | 8 | 12 | 1 | 27 | 14 | 7 | 12 | 164 | |
+| 7 | MUCALDITO | | | 9/31 | 29 | 18/36 | 42 | 14/20 | 70 | 71 | 14 | 19 | 1 | 13 | 15 | | 24 | 16 | 18 | 12 | 249 | |
+| 8 | QUITO | | | 0/1 | 0 | 3/9 | 33 | | | 6 | 8 | 6 | | 2 | 1 | | 5 | 3 | 4 | 9 | 42 | |
+| 9 | CORDEIRO | | | | | 4/40 | 40 | 1/4 | 25 | 9 | 1 | 4 | | 3 | 3 | | 9 | 7 | 5 | 12 | 52 | |
+| 10 | DAVID | | | | | 17/35 | 49 | 24/50 | 46 | 58 | 14 | 23 | | 6 | 3 | | 8 | 5 | 5 | 12 | 164 | |
+| 11 | CONNIE | | | | | 1/3 | 33 | 0/2 | 0 | 2 | 3 | 5 | | 2 | | | 5 | 1 | 2 | 3 | 19 | |
+| 12 | AGUINALDO | | | | | 4/13 | 31 | 5/17 | 29 | 13 | 6 | 10 | | | 2 | | 6 | 4 | 6 | 9 | 67 | |
+| 14 | AUNAS | | | | | 38/95 | 40 | 16/34 | 47 | 92 | 34 | 53 | 2 | 5 | 9 | 1 | 26 | 8 | 11 | 12 | 326 | |
+| 15 | FERNANDO | | | | | 40/109 | 37 | 35/62 | 51 | 115 | 27 | 65 | 1 | 26 | 19 | 4 | 44 | 17 | 20 | 12 | 371 | |
+| 16 | MENDOZA | | | | | 2/4 | 50 | 45/99 | 45 | 26/57 | 51 | 122 | 46 | 64 | 5 | 48 | 16 | 5 | 46 | 13 | 14 | 12 | 440 | |
+| 17 | DOWLING | | | | | | | | | | | | | | | | | | | | | |
+
+| TOTALS | 26/119 | 22 | 202/576 | 39 | 141/274 | 51 | 623 | 200 | 325 | 12 | 157 | 113 | 11 | 287 | 109 | 120 | 12 | 2400 |
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+
+**LEGEND:**
+- FG - Field goals
+- FT - Free throws
+- % - Percentage
+- O - Offensive
+- D - Defensive
+- ST - Steals
+- INT - Interceptions
+- X - Other recoveries jump balls, loose balls, etc.
+- BS - Blocked shots
+- A - Assists
+- LB - Lost balls
+- V - Violations
+- W - With two free throws
+- W/O - Without any free throws
+- MP - Minutes played
+
+**Prepared by:**
+
+---
+
+<!-- START PAGE 220 (IMG_1289.md) -->
+*(Page 220 — Source: `IMG_1289`)*
+
+## Team: **UST** | Wins: **7** | Losses: **5** | Points Against: **547**
+
+### BASKETBALL STATISTICS
+
+| No. | PLAYER | Field Goals | | | | Free Throws | | Total Score | Rebounds | | | Recoveries | A | ST | INT | B | Errors | Fouls | | GP | MP | Remarks |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| | | 3-pt | % | 2-pt | % | Throw | % | | O | D | | | | | | | | W | W/O | | | |
+| 4 | CAHILIC | 5/26 | 19 | 14/36 | 39 | 12/27 | 44 | 55 | 7 | 18 | | | 23 | 17 | | 1 | 39 | 13 | 12 | 12 | 197 | |
+| 5 | ESGUERRA | 3/34 | 9 | 10/43 | 23 | 17/29 | 59 | 46 | 10 | 22 | | 1 | 42 | 29 | 2 | 50 | 14 | 24 | 12 | 355 | |
+| 7 | GALAN | 0/1 | 0 | 1/3 | 33 | / | | 2 | | 1 | | | | | | | | | | 1 | 7 | |
+| 8 | LUMEN | 0/4 | 0 | 1/12 | 8 | 2/4 | 50 | 2 | 4 | 11 | 6 | | 1 | 1 | | 2 | 3 | | | 3 | 22 | |
+| 9 | ANG | 4/18 | 22 | 8/42 | 19 | 19/53 | 36 | 117 | 47 | 54 | 1 | 1 | 8 | 12 | 1 | 9 | 6 | 4 | 9 | 92 | |
+| 10 | UYON | / | | 49/118 | 42 | 24/4 | 20 | 20 | 8 | 7 | 2 | | 6 | 2 | | 20 | 9 | 16 | 11 | 294 | |
+| 11 | JASQUEZ | 1/13 | 7 | 3/34 | 24 | 1/4 | 25 | 20 | 8 | 9 | 2 | | 12 | 8 | 1 | 14 | 11 | 4 | 11 | N/4 | |
+| 12 | MCGUIRE | / | | 32/56 | 57 | 13/26 | 50 | 77 | 43 | 40 | | | 10 | 9 | 1 | 21 | 8 | 4 | 12 | 335 | |
+| 14 | VILLENA | / | | 11/26 | 42 | 7/10 | 70 | 29 | 26 | 14 | 1 | 4 | 1 | | 3 | 10 | 12 | 5 | 10 | 131 | |
+| 15 | DELA CRUZ | 8/43 | 19 | 31/91 | 34 | 19/34 | 50 | 105 | 29 | 64 | 2 | 32 | 30 | 8 | 52 | 20 | 17 | 12 | 353 | |
+| 16 | GABRIEL | 1/2 | 50 | 0/2 | 0 | / | | 3 | | 2 | | 2 | 3 | | | 3 | 1 | 5 | 15 | 21 | |
+| 17 | ONG | 0/1 | 0 | 1/3 | 33 | / | | | 2 | 2 | | | 2 | 3 | | | 2 | 3 | | 3 | 23 | |
+| 18 | MAC-ISA | 1/4 | 25 | 3/13 | 23 | / | | 9 | 10 | 7 | 1 | 4 | 3 | 1 | | Q | 7 | 3 | 10 | 72 | |
+| 19 | PALENZUELA | 9/17 | 53 | 33/94 | 35 | 23/46 | 50 | 116 | 39 | 52 | 15 | 21 | 27 | 7 | 45 | 16 | 19 | 12 | 310 | |
+| 20 | ROBLES | 1/2 | 50 | 3/12 | 25 | 2 | 50 | 10 | 1 | 5 | | | | | | 6 | 2 | 1 | 5 | 34 | |
+| TOTALS | | 29/147 | 20 | 147/436 | 36 | 116/244 | 48 | 597 | 234 | 294 | 13 | 159 | 144 | 25 | 283 | 124 | 120 | 12 | 2400 | |
+
+---
+
+### LEGEND:
+
+* FG - Field goals
+* FT - Free throws
+* % - Percentage
+* O - Offensive
+* D - Defensive
+* ST - Steals
+* INT - Interceptions
+* X - Other recoveries jump balls, loose balls, etc.
+* BS - Blocked shots
+* A - Assists
+* LB - Lost balls
+* V - Violations
+* W - With two free throws
+* W/O - Without any free throws
+* MP - Minutes played
+
+Prepared by: _______________________
+
+---
+
