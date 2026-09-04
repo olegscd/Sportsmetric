@@ -108,6 +108,18 @@ def extract_season(season: str, sports: list[str] | None = None):
         else:
             print("    Awards: none found")
 
+        total_players = bb_data.get("player_stats", {}).get("total_players", 0)
+        if total_players > 0:
+            print(f"    Player Box Scores: {total_players} players extracted")
+
+        lb_divs = bb_data.get("leaderboards", {}).get("divisions", {})
+        if any(lb_divs.values()):
+            lb_summary = []
+            for div, cats in lb_divs.items():
+                if cats:
+                    lb_summary.append(f"{div} ({len(cats)} categories)")
+            print(f"    Leaderboards: {'; '.join(lb_summary)}")
+
     print(f"\n{'=' * 60}")
     print(f" DONE: Season {season}")
     print(f"{'=' * 60}\n")
@@ -178,7 +190,7 @@ def main():
     bb_dir = STRUCTURED_DIR / "basketball"
     if bb_dir.exists():
         print(f"\n  Basketball Extraction:")
-        for dtype in ["standings", "games", "awards"]:
+        for dtype in ["standings", "games", "awards", "player_stats", "leaderboards"]:
             dpath = bb_dir / dtype
             if dpath.exists():
                 files = sorted(dpath.glob("*.json"))
@@ -191,7 +203,12 @@ def main():
                         total_items += sum(len(v) for v in content.get("divisions", {}).values())
                     elif dtype == "awards":
                         total_items += len(content.get("divisions", {}))
-                print(f"    {dtype.title()}: {len(files)} seasons ({total_items} total records)")
+                    elif dtype == "player_stats":
+                        total_items += content.get("total_players", 0)
+                    elif dtype == "leaderboards":
+                        total_items += sum(len(cats) for cats in content.get("divisions", {}).values())
+                clean_dtype = dtype.replace("_", " ").title()
+                print(f"    {clean_dtype}: {len(files)} seasons ({total_items} total records)")
 
     print(f"\n  Output directory: {STRUCTURED_DIR.resolve()}")
     print()

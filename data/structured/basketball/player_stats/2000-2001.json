@@ -1,0 +1,8711 @@
+{
+  "season": "2000-2001",
+  "sport": "basketball",
+  "total_players": 272,
+  "players": [
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "NU",
+      "player": "DEQUILLA",
+      "jersey": 4,
+      "games_played": 12,
+      "minutes": 221,
+      "points": 95,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 36,
+        "att": 89
+      },
+      "free_throws": {
+        "made": 17,
+        "att": 43
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 26,
+      "steals": 38,
+      "blocks": 2,
+      "turnovers": 56,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "NU",
+      "player": "CARTANO",
+      "jersey": 5,
+      "games_played": 7610,
+      "minutes": 12,
+      "points": 29,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 24,
+        "att": 63
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 17,
+      "blocks": 10,
+      "turnovers": 2,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "NU",
+      "player": "APAGA",
+      "jersey": 0,
+      "games_played": 6,
+      "minutes": 67,
+      "points": 75,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 4
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 1,
+      "steals": 4,
+      "blocks": 1,
+      "turnovers": 13,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "NU",
+      "player": "GALANG",
+      "jersey": 7,
+      "games_played": 12,
+      "minutes": 220,
+      "points": 16,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 7
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 8,
+      "steals": 5,
+      "blocks": 4,
+      "turnovers": 17,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "NU",
+      "player": "TIPO",
+      "jersey": 8,
+      "games_played": 10,
+      "minutes": 103,
+      "points": 51,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 9,
+      "steals": 4,
+      "blocks": 1,
+      "turnovers": 18,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "NU",
+      "player": "ANTONIO",
+      "jersey": 9,
+      "games_played": 5,
+      "minutes": 28,
+      "points": 13,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 6,
+      "steals": 0,
+      "blocks": 2,
+      "turnovers": 6,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "NU",
+      "player": "BAYTAN",
+      "jersey": 10,
+      "games_played": 243,
+      "minutes": 0,
+      "points": 6,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 2,
+        "att": 8
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 9,
+      "steals": 4,
+      "blocks": 15,
+      "turnovers": 232212,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "NU",
+      "player": "JUAN",
+      "jersey": 11,
+      "games_played": 12,
+      "minutes": 316,
+      "points": 44,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 13,
+        "att": 39
+      },
+      "free_throws": {
+        "made": 18,
+        "att": 36
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 9,
+      "steals": 16,
+      "blocks": 5,
+      "turnovers": 37,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "NU",
+      "player": "CALINGASIN",
+      "jersey": 13,
+      "games_played": 12,
+      "minutes": 350,
+      "points": 88,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 32,
+        "att": 90
+      },
+      "free_throws": {
+        "made": 30,
+        "att": 56
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 15,
+      "steals": 10,
+      "blocks": 5,
+      "turnovers": 25,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "NU",
+      "player": "MALCONTENTO",
+      "jersey": 15,
+      "games_played": 12,
+      "minutes": 300,
+      "points": 164,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 44,
+        "att": 122
+      },
+      "free_throws": {
+        "made": 73,
+        "att": 98
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 40,
+      "steals": 37,
+      "blocks": 0,
+      "turnovers": 81,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "NU",
+      "player": "MICU",
+      "jersey": 16,
+      "games_played": 10,
+      "minutes": 295,
+      "points": 83,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 68,
+        "att": 154
+      },
+      "free_throws": {
+        "made": 29,
+        "att": 53
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 23,
+      "steals": 27,
+      "blocks": 1,
+      "turnovers": 56,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "NU",
+      "player": "DECENA",
+      "jersey": 17,
+      "games_played": 6,
+      "minutes": 65,
+      "points": 9,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 3,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 9,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UE",
+      "player": "TOLENTINO",
+      "jersey": 4,
+      "games_played": 12,
+      "minutes": 316,
+      "points": 129,
+      "three_points": {
+        "made": 1,
+        "att": 4
+      },
+      "two_points": {
+        "made": 37,
+        "att": 65
+      },
+      "free_throws": {
+        "made": 12,
+        "att": 32
+      },
+      "rebounds": {
+        "off": 17,
+        "def": 26,
+        "total": 43
+      },
+      "assists": 35,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 56,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UE",
+      "player": "MANLALANGIT",
+      "jersey": 5,
+      "games_played": 12,
+      "minutes": 168,
+      "points": 74,
+      "three_points": {
+        "made": 1,
+        "att": 8
+      },
+      "two_points": {
+        "made": 15,
+        "att": 55
+      },
+      "free_throws": {
+        "made": 22,
+        "att": 54
+      },
+      "rebounds": {
+        "off": 7,
+        "def": 13,
+        "total": 20
+      },
+      "assists": 11,
+      "steals": 0,
+      "blocks": 1,
+      "turnovers": 19,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UE",
+      "player": "ORTEGA",
+      "jersey": 6,
+      "games_played": 12,
+      "minutes": 336,
+      "points": 134,
+      "three_points": {
+        "made": 4,
+        "att": 23
+      },
+      "two_points": {
+        "made": 51,
+        "att": 118
+      },
+      "free_throws": {
+        "made": 20,
+        "att": 29
+      },
+      "rebounds": {
+        "off": 32,
+        "def": 56,
+        "total": 88
+      },
+      "assists": 21,
+      "steals": 0,
+      "blocks": 40,
+      "turnovers": 36,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UE",
+      "player": "MORELOS",
+      "jersey": 7,
+      "games_played": 3,
+      "minutes": 10,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 1
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 1,
+        "def": 0,
+        "total": 1
+      },
+      "assists": 2,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 3,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UE",
+      "player": "PEÑAFLOR",
+      "jersey": 8,
+      "games_played": 12,
+      "minutes": 136,
+      "points": 23,
+      "three_points": {
+        "made": 2,
+        "att": 12
+      },
+      "two_points": {
+        "made": 7,
+        "att": 12
+      },
+      "free_throws": {
+        "made": 3,
+        "att": 8
+      },
+      "rebounds": {
+        "off": 4,
+        "def": 12,
+        "total": 16
+      },
+      "assists": 18,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 20,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UE",
+      "player": "LASIN",
+      "jersey": 9,
+      "games_played": 5,
+      "minutes": 29,
+      "points": 7,
+      "three_points": {
+        "made": 0,
+        "att": 3
+      },
+      "two_points": {
+        "made": 3,
+        "att": 7
+      },
+      "free_throws": {
+        "made": 1,
+        "att": 2
+      },
+      "rebounds": {
+        "off": 1,
+        "def": 4,
+        "total": 5
+      },
+      "assists": 1,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 1,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UE",
+      "player": "SILVA",
+      "jersey": 10,
+      "games_played": 12,
+      "minutes": 372,
+      "points": 123,
+      "three_points": {
+        "made": 0,
+        "att": 3
+      },
+      "two_points": {
+        "made": 43,
+        "att": 96
+      },
+      "free_throws": {
+        "made": 37,
+        "att": 83
+      },
+      "rebounds": {
+        "off": 31,
+        "def": 51,
+        "total": 82
+      },
+      "assists": 29,
+      "steals": 0,
+      "blocks": 3,
+      "turnovers": 45,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UE",
+      "player": "VILLAREAL",
+      "jersey": 11,
+      "games_played": 4,
+      "minutes": 23,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 2
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 4,
+        "def": 3,
+        "total": 7
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 1,
+      "turnovers": 2,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UE",
+      "player": "DELGADO",
+      "jersey": 12,
+      "games_played": 12,
+      "minutes": 324,
+      "points": 85,
+      "three_points": {
+        "made": 2,
+        "att": 3
+      },
+      "two_points": {
+        "made": 30,
+        "att": 56
+      },
+      "free_throws": {
+        "made": 19,
+        "att": 34
+      },
+      "rebounds": {
+        "off": 20,
+        "def": 23,
+        "total": 43
+      },
+      "assists": 57,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 49,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UE",
+      "player": "MARCOS",
+      "jersey": 13,
+      "games_played": 12,
+      "minutes": 175,
+      "points": 59,
+      "three_points": {
+        "made": 0,
+        "att": 7
+      },
+      "two_points": {
+        "made": 23,
+        "att": 59
+      },
+      "free_throws": {
+        "made": 13,
+        "att": 23
+      },
+      "rebounds": {
+        "off": 9,
+        "def": 9,
+        "total": 18
+      },
+      "assists": 5,
+      "steals": 0,
+      "blocks": 1,
+      "turnovers": 20,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UE",
+      "player": "FAMPULME",
+      "jersey": 18,
+      "games_played": 12,
+      "minutes": 210,
+      "points": 48,
+      "three_points": {
+        "made": 0,
+        "att": 1
+      },
+      "two_points": {
+        "made": 20,
+        "att": 44
+      },
+      "free_throws": {
+        "made": 8,
+        "att": 13
+      },
+      "rebounds": {
+        "off": 9,
+        "def": 27,
+        "total": 36
+      },
+      "assists": 14,
+      "steals": 0,
+      "blocks": 5,
+      "turnovers": 18,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UE",
+      "player": "TOLIBAS",
+      "jersey": 19,
+      "games_played": 11,
+      "minutes": 301,
+      "points": 128,
+      "three_points": {
+        "made": 9,
+        "att": 33
+      },
+      "two_points": {
+        "made": 88,
+        "att": 47
+      },
+      "free_throws": {
+        "made": 19,
+        "att": 45
+      },
+      "rebounds": {
+        "off": 33,
+        "def": 61,
+        "total": 94
+      },
+      "assists": 21,
+      "steals": 0,
+      "blocks": 10,
+      "turnovers": 43,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UP",
+      "player": "MIRANDA",
+      "jersey": 4,
+      "games_played": 7,
+      "minutes": 102,
+      "points": 9,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 7,
+        "att": 14
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 18,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 16,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UP",
+      "player": "CABANGIS",
+      "jersey": 5,
+      "games_played": 7,
+      "minutes": 36,
+      "points": 8,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 2,
+        "att": 3
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 6,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 1,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UP",
+      "player": "CRUZ",
+      "jersey": 6,
+      "games_played": 349,
+      "minutes": 0,
+      "points": 161,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 32,
+        "att": 54
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 46,
+      "steals": 0,
+      "blocks": 65,
+      "turnovers": 14,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UP",
+      "player": "JIMENEZ",
+      "jersey": 8,
+      "games_played": 6,
+      "minutes": 1170,
+      "points": 35,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 2,
+        "att": 5
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 15,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 24,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UP",
+      "player": "ALTUNA",
+      "jersey": 9,
+      "games_played": 315,
+      "minutes": 0,
+      "points": 61,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 17,
+        "att": 31
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 9,
+      "steals": 0,
+      "blocks": 34,
+      "turnovers": 15,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UP",
+      "player": "DALISAY",
+      "jersey": 10,
+      "games_played": 12,
+      "minutes": 103,
+      "points": 18,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 2,
+        "att": 4
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 11,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UP",
+      "player": "SENTURIAS",
+      "jersey": 11,
+      "games_played": 10,
+      "minutes": 205,
+      "points": 25,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 1,
+        "att": 3
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 3,
+      "steals": 0,
+      "blocks": 10,
+      "turnovers": 19,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UP",
+      "player": "ORDILLAS",
+      "jersey": 12,
+      "games_played": 275,
+      "minutes": 0,
+      "points": 15,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 3,
+        "att": 12
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 32,
+      "steals": 0,
+      "blocks": 43,
+      "turnovers": 16,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UP",
+      "player": "CALLANTA",
+      "jersey": 14,
+      "games_played": 389,
+      "minutes": 0,
+      "points": 87,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 8,
+        "att": 12
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 20,
+      "steals": 0,
+      "blocks": 24,
+      "turnovers": 16,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UP",
+      "player": "EPRES",
+      "jersey": 15,
+      "games_played": 464,
+      "minutes": 0,
+      "points": 292,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 95,
+        "att": 137
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 25,
+      "steals": 0,
+      "blocks": 65,
+      "turnovers": 21,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UP",
+      "player": "CANCIO",
+      "jersey": 16,
+      "games_played": 3,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 1,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UST",
+      "player": "SANCHEZ",
+      "jersey": 4,
+      "games_played": 3,
+      "minutes": 31,
+      "points": 4,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 1,
+        "def": 0,
+        "total": 1
+      },
+      "assists": 1,
+      "steals": 4,
+      "blocks": 0,
+      "turnovers": 2,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UST",
+      "player": "BAG-O",
+      "jersey": 5,
+      "games_played": 3,
+      "minutes": 1774,
+      "points": 29,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 614,
+        "def": 0,
+        "total": 614
+      },
+      "assists": 21,
+      "steals": 10,
+      "blocks": 0,
+      "turnovers": 7,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UST",
+      "player": "PAGALANAN",
+      "jersey": 6,
+      "games_played": 1,
+      "minutes": 2,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 2,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UST",
+      "player": "ILAGAN",
+      "jersey": 7,
+      "games_played": 12,
+      "minutes": 321,
+      "points": 90,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 1624,
+        "def": 0,
+        "total": 1624
+      },
+      "assists": 23,
+      "steals": 22,
+      "blocks": 3,
+      "turnovers": 31,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UST",
+      "player": "ESPIRITU",
+      "jersey": 8,
+      "games_played": 11,
+      "minutes": 312,
+      "points": 125,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 3743,
+        "def": 0,
+        "total": 3743
+      },
+      "assists": 20,
+      "steals": 22,
+      "blocks": 24,
+      "turnovers": 37,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UST",
+      "player": "REYES",
+      "jersey": 9,
+      "games_played": 12,
+      "minutes": 157,
+      "points": 56,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 1511,
+        "def": 0,
+        "total": 1511
+      },
+      "assists": 23,
+      "steals": 6,
+      "blocks": 1,
+      "turnovers": 24,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UST",
+      "player": "TENGSON",
+      "jersey": 10,
+      "games_played": 12,
+      "minutes": 166,
+      "points": 59,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 2524,
+        "def": 0,
+        "total": 2524
+      },
+      "assists": 9,
+      "steals": 9,
+      "blocks": 5,
+      "turnovers": 18,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UST",
+      "player": "DEL REMEDIOS",
+      "jersey": 11,
+      "games_played": 8,
+      "minutes": 55,
+      "points": 12,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 23,
+        "def": 0,
+        "total": 23
+      },
+      "assists": 6,
+      "steals": 5,
+      "blocks": 0,
+      "turnovers": 7,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UST",
+      "player": "CORTEZ",
+      "jersey": 12,
+      "games_played": 12,
+      "minutes": 367,
+      "points": 269,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 4057,
+        "def": 0,
+        "total": 4057
+      },
+      "assists": 59,
+      "steals": 70,
+      "blocks": 1,
+      "turnovers": 44,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UST",
+      "player": "PACIA",
+      "jersey": 14,
+      "games_played": 6,
+      "minutes": 42,
+      "points": 8,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 59,
+        "def": 0,
+        "total": 59
+      },
+      "assists": 5,
+      "steals": 2,
+      "blocks": 1,
+      "turnovers": 4,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UST",
+      "player": "AQUINO",
+      "jersey": 15,
+      "games_played": 12,
+      "minutes": 335,
+      "points": 118,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 4365,
+        "def": 0,
+        "total": 4365
+      },
+      "assists": 16,
+      "steals": 25,
+      "blocks": 13,
+      "turnovers": 32,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UST",
+      "player": "GEROMINO",
+      "jersey": 16,
+      "games_played": 10,
+      "minutes": 72,
+      "points": 21,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 149,
+        "def": 0,
+        "total": 149
+      },
+      "assists": 7,
+      "steals": 5,
+      "blocks": 0,
+      "turnovers": 7,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UST",
+      "player": "ARTUZ",
+      "jersey": 17,
+      "games_played": 7,
+      "minutes": 71,
+      "points": 14,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 67,
+        "def": 0,
+        "total": 67
+      },
+      "assists": 4,
+      "steals": 3,
+      "blocks": 1,
+      "turnovers": 10,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UST",
+      "player": "CUAN",
+      "jersey": 18,
+      "games_played": 12,
+      "minutes": 274,
+      "points": 59,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 1530,
+        "def": 0,
+        "total": 1530
+      },
+      "assists": 47,
+      "steals": 23,
+      "blocks": 0,
+      "turnovers": 37,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UST",
+      "player": "BUSA",
+      "jersey": 19,
+      "games_played": 2,
+      "minutes": 12,
+      "points": 4,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 3,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UST",
+      "player": "BERNARDO",
+      "jersey": 20,
+      "games_played": 2,
+      "minutes": 9,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 1,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "ADU",
+      "player": "CINCO",
+      "jersey": 4,
+      "games_played": 6,
+      "minutes": 28,
+      "points": 44,
+      "three_points": {
+        "made": 1,
+        "att": 3
+      },
+      "two_points": {
+        "made": 1,
+        "att": 3
+      },
+      "free_throws": {
+        "made": 2,
+        "att": 2
+      },
+      "rebounds": {
+        "off": 4,
+        "def": 4,
+        "total": 8
+      },
+      "assists": 2,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 5,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "ADU",
+      "player": "LEE",
+      "jersey": 5,
+      "games_played": 356,
+      "minutes": 0,
+      "points": 94,
+      "three_points": {
+        "made": 5,
+        "att": 28
+      },
+      "two_points": {
+        "made": 20,
+        "att": 52
+      },
+      "free_throws": {
+        "made": 39,
+        "att": 50
+      },
+      "rebounds": {
+        "off": 25,
+        "def": 26,
+        "total": 51
+      },
+      "assists": 26,
+      "steals": 0,
+      "blocks": 51,
+      "turnovers": 14,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "ADU",
+      "player": "EUSEBIO",
+      "jersey": 0,
+      "games_played": 151,
+      "minutes": 0,
+      "points": 9,
+      "three_points": {
+        "made": 0,
+        "att": 2
+      },
+      "two_points": {
+        "made": 1,
+        "att": 10
+      },
+      "free_throws": {
+        "made": 7,
+        "att": 14
+      },
+      "rebounds": {
+        "off": 15,
+        "def": 19,
+        "total": 34
+      },
+      "assists": 13,
+      "steals": 0,
+      "blocks": 14,
+      "turnovers": 3,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "ADU",
+      "player": "TOMINES",
+      "jersey": 7,
+      "games_played": 2,
+      "minutes": 9,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 1
+      },
+      "two_points": {
+        "made": 0,
+        "att": 2
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 1,
+        "def": 1,
+        "total": 2
+      },
+      "assists": 1,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "ADU",
+      "player": "FERRER",
+      "jersey": 9,
+      "games_played": 149,
+      "minutes": 0,
+      "points": 44,
+      "three_points": {
+        "made": 3,
+        "att": 16
+      },
+      "two_points": {
+        "made": 11,
+        "att": 27
+      },
+      "free_throws": {
+        "made": 13,
+        "att": 18
+      },
+      "rebounds": {
+        "off": 9,
+        "def": 16,
+        "total": 25
+      },
+      "assists": 15,
+      "steals": 0,
+      "blocks": 24,
+      "turnovers": 11,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "ADU",
+      "player": "MAMACLAY",
+      "jersey": 10,
+      "games_played": 283,
+      "minutes": 0,
+      "points": 129,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 54,
+        "att": 111
+      },
+      "free_throws": {
+        "made": 21,
+        "att": 39
+      },
+      "rebounds": {
+        "off": 36,
+        "def": 29,
+        "total": 65
+      },
+      "assists": 7,
+      "steals": 0,
+      "blocks": 35,
+      "turnovers": 22,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "ADU",
+      "player": "MANGLILABNAN",
+      "jersey": 11,
+      "games_played": 140,
+      "minutes": 0,
+      "points": 29,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 11,
+        "att": 36
+      },
+      "free_throws": {
+        "made": 7,
+        "att": 22
+      },
+      "rebounds": {
+        "off": 12,
+        "def": 28,
+        "total": 40
+      },
+      "assists": 6,
+      "steals": 0,
+      "blocks": 13,
+      "turnovers": 9,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "ADU",
+      "player": "DOMINGO",
+      "jersey": 12,
+      "games_played": 244,
+      "minutes": 0,
+      "points": 54,
+      "three_points": {
+        "made": 6,
+        "att": 23
+      },
+      "two_points": {
+        "made": 11,
+        "att": 36
+      },
+      "free_throws": {
+        "made": 14,
+        "att": 22
+      },
+      "rebounds": {
+        "off": 11,
+        "def": 24,
+        "total": 35
+      },
+      "assists": 9,
+      "steals": 0,
+      "blocks": 24,
+      "turnovers": 10,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "ADU",
+      "player": "LAYUG",
+      "jersey": 13,
+      "games_played": 348,
+      "minutes": 0,
+      "points": 48,
+      "three_points": {
+        "made": 0,
+        "att": 1
+      },
+      "two_points": {
+        "made": 15,
+        "att": 39
+      },
+      "free_throws": {
+        "made": 20,
+        "att": 36
+      },
+      "rebounds": {
+        "off": 23,
+        "def": 45,
+        "total": 68
+      },
+      "assists": 10,
+      "steals": 0,
+      "blocks": 39,
+      "turnovers": 25,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "ADU",
+      "player": "RAMIREZ",
+      "jersey": 14,
+      "games_played": 405,
+      "minutes": 0,
+      "points": 80,
+      "three_points": {
+        "made": 12,
+        "att": 62
+      },
+      "two_points": {
+        "made": 11,
+        "att": 50
+      },
+      "free_throws": {
+        "made": 22,
+        "att": 42
+      },
+      "rebounds": {
+        "off": 20,
+        "def": 38,
+        "total": 58
+      },
+      "assists": 56,
+      "steals": 0,
+      "blocks": 51,
+      "turnovers": 20,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "ADU",
+      "player": "FLORES",
+      "jersey": 15,
+      "games_played": 2,
+      "minutes": 8,
+      "points": 2,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 1,
+        "att": 7
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 1,
+        "total": 1
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "ADU",
+      "player": "MALANA",
+      "jersey": 16,
+      "games_played": 14,
+      "minutes": 340,
+      "points": 58,
+      "three_points": {
+        "made": 0,
+        "att": 4
+      },
+      "two_points": {
+        "made": 4,
+        "att": 9
+      },
+      "free_throws": {
+        "made": 62,
+        "att": 31
+      },
+      "rebounds": {
+        "off": 129,
+        "def": 24,
+        "total": 153
+      },
+      "assists": 3,
+      "steals": 0,
+      "blocks": 1,
+      "turnovers": 57,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "ADU",
+      "player": "LIM",
+      "jersey": 17,
+      "games_played": 76,
+      "minutes": 0,
+      "points": 10,
+      "three_points": {
+        "made": 1,
+        "att": 5
+      },
+      "two_points": {
+        "made": 3,
+        "att": 11
+      },
+      "free_throws": {
+        "made": 1,
+        "att": 3
+      },
+      "rebounds": {
+        "off": 2,
+        "def": 4,
+        "total": 6
+      },
+      "assists": 2,
+      "steals": 0,
+      "blocks": 8,
+      "turnovers": 5,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "ADU",
+      "player": "YONG",
+      "jersey": 18,
+      "games_played": 224,
+      "minutes": 0,
+      "points": 70,
+      "three_points": {
+        "made": 10,
+        "att": 35
+      },
+      "two_points": {
+        "made": 13,
+        "att": 35
+      },
+      "free_throws": {
+        "made": 14,
+        "att": 19
+      },
+      "rebounds": {
+        "off": 9,
+        "def": 14,
+        "total": 23
+      },
+      "assists": 12,
+      "steals": 0,
+      "blocks": 22,
+      "turnovers": 13,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "ADU",
+      "player": "ROLDAN",
+      "jersey": 19,
+      "games_played": 54,
+      "minutes": 0,
+      "points": 7,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 3,
+        "att": 11
+      },
+      "free_throws": {
+        "made": 1,
+        "att": 4
+      },
+      "rebounds": {
+        "off": 7,
+        "def": 8,
+        "total": 15
+      },
+      "assists": 2,
+      "steals": 0,
+      "blocks": 8,
+      "turnovers": 8,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "ADMU",
+      "player": "QUIMPO",
+      "jersey": 5,
+      "games_played": 9,
+      "minutes": 8,
+      "points": 78,
+      "three_points": {
+        "made": 1,
+        "att": 3
+      },
+      "two_points": {
+        "made": 33,
+        "att": 44
+      },
+      "free_throws": {
+        "made": 6,
+        "att": 17
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 15,
+      "blocks": 5,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "ADMU",
+      "player": "TAN-CHI",
+      "jersey": 7,
+      "games_played": 12,
+      "minutes": 6,
+      "points": 28,
+      "three_points": {
+        "made": 2,
+        "att": 9
+      },
+      "two_points": {
+        "made": 8,
+        "att": 22
+      },
+      "free_throws": {
+        "made": 6,
+        "att": 12
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 22,
+      "blocks": 3,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "ADMU",
+      "player": "CHUA",
+      "jersey": 8,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 18,
+      "three_points": {
+        "made": 4,
+        "att": 5
+      },
+      "two_points": {
+        "made": 2,
+        "att": 2
+      },
+      "free_throws": {
+        "made": 10,
+        "att": 10
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 1,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "ADMU",
+      "player": "ALVAREZ",
+      "jersey": 10,
+      "games_played": 24,
+      "minutes": 20,
+      "points": 158,
+      "three_points": {
+        "made": 1,
+        "att": 2
+      },
+      "two_points": {
+        "made": 51,
+        "att": 120
+      },
+      "free_throws": {
+        "made": 53,
+        "att": 109
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 7,
+      "steals": 25,
+      "blocks": 24,
+      "turnovers": 7,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "ADMU",
+      "player": "FONACIER",
+      "jersey": 12,
+      "games_played": 19,
+      "minutes": 5,
+      "points": 53,
+      "three_points": {
+        "made": 7,
+        "att": 19
+      },
+      "two_points": {
+        "made": 57,
+        "att": 120
+      },
+      "free_throws": {
+        "made": 12,
+        "att": 20
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 9,
+      "blocks": 7,
+      "turnovers": 8,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "ADMU",
+      "player": "ANTONIO",
+      "jersey": 13,
+      "games_played": 7,
+      "minutes": 2,
+      "points": 18,
+      "three_points": {
+        "made": 1,
+        "att": 2
+      },
+      "two_points": {
+        "made": 7,
+        "att": 17
+      },
+      "free_throws": {
+        "made": 1,
+        "att": 3
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 8,
+      "blocks": 1,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "ADMU",
+      "player": "VILLANUEVA",
+      "jersey": 14,
+      "games_played": 22,
+      "minutes": 20,
+      "points": 179,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 65,
+        "att": 140
+      },
+      "free_throws": {
+        "made": 49,
+        "att": 74
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 4,
+      "steals": 16,
+      "blocks": 10,
+      "turnovers": 22,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "ADMU",
+      "player": "GONZALES",
+      "jersey": 15,
+      "games_played": 13,
+      "minutes": 30,
+      "points": 102,
+      "three_points": {
+        "made": 2,
+        "att": 18
+      },
+      "two_points": {
+        "made": 30,
+        "att": 96
+      },
+      "free_throws": {
+        "made": 35,
+        "att": 46
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 1,
+      "steals": 24,
+      "blocks": 11,
+      "turnovers": 2,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "ADMU",
+      "player": "MEMBRERE",
+      "jersey": 16,
+      "games_played": 14,
+      "minutes": 8,
+      "points": 99,
+      "three_points": {
+        "made": 13,
+        "att": 50
+      },
+      "two_points": {
+        "made": 18,
+        "att": 53
+      },
+      "free_throws": {
+        "made": 24,
+        "att": 40
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 25,
+      "blocks": 10,
+      "turnovers": 3,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "ADMU",
+      "player": "CRUZ",
+      "jersey": 17,
+      "games_played": 26,
+      "minutes": 24,
+      "points": 85,
+      "three_points": {
+        "made": 4,
+        "att": 22
+      },
+      "two_points": {
+        "made": 24,
+        "att": 48
+      },
+      "free_throws": {
+        "made": 25,
+        "att": 36
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 39,
+      "blocks": 13,
+      "turnovers": 2,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "ADMU",
+      "player": "SISON",
+      "jersey": 18,
+      "games_played": 6,
+      "minutes": 11,
+      "points": 140,
+      "three_points": {
+        "made": 29,
+        "att": 88
+      },
+      "two_points": {
+        "made": 20,
+        "att": 60
+      },
+      "free_throws": {
+        "made": 13,
+        "att": 22
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 1,
+      "steals": 34,
+      "blocks": 12,
+      "turnovers": 2,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "ADMU",
+      "player": "BENITEZ",
+      "jersey": 19,
+      "games_played": 3,
+      "minutes": 0,
+      "points": 6,
+      "three_points": {
+        "made": 1,
+        "att": 3
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 4,
+        "att": 75
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 3,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "ADMU",
+      "player": "BUGIA",
+      "jersey": 21,
+      "games_played": 20,
+      "minutes": 9,
+      "points": 84,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 31,
+        "att": 84
+      },
+      "free_throws": {
+        "made": 22,
+        "att": 33
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 11,
+      "blocks": 4,
+      "turnovers": 13,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "DLSU",
+      "player": "RITUALAO",
+      "jersey": 4,
+      "games_played": 8,
+      "minutes": 185,
+      "points": 74,
+      "three_points": {
+        "made": 17,
+        "att": 56
+      },
+      "two_points": {
+        "made": 19,
+        "att": 63
+      },
+      "free_throws": {
+        "made": 11,
+        "att": 23
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 10,
+      "steals": 9,
+      "blocks": 1,
+      "turnovers": 15,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "DLSU",
+      "player": "WILSON",
+      "jersey": 5,
+      "games_played": 13,
+      "minutes": 303,
+      "points": 93,
+      "three_points": {
+        "made": 3,
+        "att": 34
+      },
+      "two_points": {
+        "made": 46,
+        "att": 84
+      },
+      "free_throws": {
+        "made": 25,
+        "att": 44
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 12,
+      "steals": 12,
+      "blocks": 2,
+      "turnovers": 20,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "DLSU",
+      "player": "MAGSUMBOL",
+      "jersey": 6,
+      "games_played": 13,
+      "minutes": 160,
+      "points": 52,
+      "three_points": {
+        "made": 0,
+        "att": 1
+      },
+      "two_points": {
+        "made": 2,
+        "att": 2
+      },
+      "free_throws": {
+        "made": 12,
+        "att": 20
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 15,
+      "steals": 7,
+      "blocks": 1,
+      "turnovers": 9,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "DLSU",
+      "player": "SAN DIEGO",
+      "jersey": 7,
+      "games_played": 14,
+      "minutes": 129,
+      "points": 35,
+      "three_points": {
+        "made": 0,
+        "att": 1
+      },
+      "two_points": {
+        "made": 14,
+        "att": 30
+      },
+      "free_throws": {
+        "made": 7,
+        "att": 11
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 3,
+      "steals": 1,
+      "blocks": 2,
+      "turnovers": 9,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "DLSU",
+      "player": "GOZUM",
+      "jersey": 8,
+      "games_played": 14,
+      "minutes": 251,
+      "points": 102,
+      "three_points": {
+        "made": 10,
+        "att": 22
+      },
+      "two_points": {
+        "made": 22,
+        "att": 52
+      },
+      "free_throws": {
+        "made": 10,
+        "att": 12
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 15,
+      "steals": 12,
+      "blocks": 0,
+      "turnovers": 17,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "DLSU",
+      "player": "CASTRO",
+      "jersey": 9,
+      "games_played": 1,
+      "minutes": 4,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 1
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 2
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 3,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "DLSU",
+      "player": "CASINO",
+      "jersey": 10,
+      "games_played": 14,
+      "minutes": 295,
+      "points": 122,
+      "three_points": {
+        "made": 8,
+        "att": 15
+      },
+      "two_points": {
+        "made": 33,
+        "att": 61
+      },
+      "free_throws": {
+        "made": 32,
+        "att": 41
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 64,
+      "steals": 32,
+      "blocks": 8,
+      "turnovers": 29,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "DLSU",
+      "player": "CORTEZ",
+      "jersey": 11,
+      "games_played": 9,
+      "minutes": 133,
+      "points": 55,
+      "three_points": {
+        "made": 7,
+        "att": 23
+      },
+      "two_points": {
+        "made": 13,
+        "att": 29
+      },
+      "free_throws": {
+        "made": 8,
+        "att": 14
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 9,
+      "steals": 7,
+      "blocks": 0,
+      "turnovers": 19,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "DLSU",
+      "player": "MANALO",
+      "jersey": 12,
+      "games_played": 13,
+      "minutes": 389,
+      "points": 127,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 49,
+        "att": 99
+      },
+      "free_throws": {
+        "made": 29,
+        "att": 56
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 10,
+      "turnovers": 29,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "DLSU",
+      "player": "STA MARIA",
+      "jersey": 16,
+      "games_played": 14,
+      "minutes": 243,
+      "points": 36,
+      "three_points": {
+        "made": 0,
+        "att": 1
+      },
+      "two_points": {
+        "made": 12,
+        "att": 35
+      },
+      "free_throws": {
+        "made": 12,
+        "att": 21
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 10,
+      "steals": 8,
+      "blocks": 5,
+      "turnovers": 20,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "DLSU",
+      "player": "RAMOS",
+      "jersey": 17,
+      "games_played": 14,
+      "minutes": 305,
+      "points": 111,
+      "three_points": {
+        "made": 0,
+        "att": 2
+      },
+      "two_points": {
+        "made": 39,
+        "att": 84
+      },
+      "free_throws": {
+        "made": 33,
+        "att": 48
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 8,
+      "steals": 5,
+      "blocks": 0,
+      "turnovers": 28,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "DLSU",
+      "player": "CUAN",
+      "jersey": 18,
+      "games_played": 10,
+      "minutes": 97,
+      "points": 21,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 8,
+        "att": 23
+      },
+      "free_throws": {
+        "made": 5,
+        "att": 8
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 7,
+      "steals": 4,
+      "blocks": 0,
+      "turnovers": 5,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "DLSU",
+      "player": "VAINIO",
+      "jersey": 19,
+      "games_played": 1,
+      "minutes": 1,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "DLSU",
+      "player": "ROMERO",
+      "jersey": 20,
+      "games_played": 14,
+      "minutes": 374,
+      "points": 126,
+      "three_points": {
+        "made": 7,
+        "att": 26
+      },
+      "two_points": {
+        "made": 36,
+        "att": 73
+      },
+      "free_throws": {
+        "made": 33,
+        "att": 39
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 54,
+      "steals": 43,
+      "blocks": 0,
+      "turnovers": 24,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "DLSU",
+      "player": "JOSE",
+      "jersey": 21,
+      "games_played": 14,
+      "minutes": 2875,
+      "points": 996,
+      "three_points": {
+        "made": 55,
+        "att": 197
+      },
+      "two_points": {
+        "made": 280,
+        "att": 640
+      },
+      "free_throws": {
+        "made": 229,
+        "att": 347
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 244,
+      "steals": 155,
+      "blocks": 30,
+      "turnovers": 233,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "FEU",
+      "player": "CONLI",
+      "jersey": 4,
+      "games_played": 7,
+      "minutes": 75,
+      "points": 67,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 13,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 6,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "FEU",
+      "player": "CHAVEZ",
+      "jersey": 0,
+      "games_played": 5,
+      "minutes": 10,
+      "points": 2,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 12,
+      "steals": 0,
+      "blocks": 3,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "FEU",
+      "player": "ROLDAN",
+      "jersey": 7,
+      "games_played": 14,
+      "minutes": 335,
+      "points": 78,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 66,
+      "steals": 0,
+      "blocks": 50,
+      "turnovers": 16,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "FEU",
+      "player": "CRUZ",
+      "jersey": 8,
+      "games_played": 13,
+      "minutes": 143,
+      "points": 78,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 6,
+      "steals": 0,
+      "blocks": 2,
+      "turnovers": 9,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "FEU",
+      "player": "CATLI",
+      "jersey": 9,
+      "games_played": 2,
+      "minutes": 4,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "FEU",
+      "player": "SANSON",
+      "jersey": 10,
+      "games_played": 235,
+      "minutes": 0,
+      "points": 65,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 11,
+      "steals": 0,
+      "blocks": 23,
+      "turnovers": 10,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "FEU",
+      "player": "SINCO",
+      "jersey": 11,
+      "games_played": 450,
+      "minutes": 0,
+      "points": 64,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 26,
+      "steals": 0,
+      "blocks": 49,
+      "turnovers": 19,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "FEU",
+      "player": "BACANI",
+      "jersey": 12,
+      "games_played": 19,
+      "minutes": 14,
+      "points": 57,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 2,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 24,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "FEU",
+      "player": "CASTRO",
+      "jersey": 14,
+      "games_played": 1,
+      "minutes": 13,
+      "points": 2,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 3,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "FEU",
+      "player": "APDUHAN",
+      "jersey": 15,
+      "games_played": 5,
+      "minutes": 22,
+      "points": 2,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 1,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "FEU",
+      "player": "TOLENTINO",
+      "jersey": 16,
+      "games_played": 5,
+      "minutes": 24,
+      "points": 6,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 1,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 3,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "FEU",
+      "player": "ZABLAN",
+      "jersey": 17,
+      "games_played": 394,
+      "minutes": 0,
+      "points": 68,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 38,
+      "steals": 0,
+      "blocks": 51,
+      "turnovers": 13,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "FEU",
+      "player": "AVENIDO",
+      "jersey": 18,
+      "games_played": 6,
+      "minutes": 70,
+      "points": 6,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 1,
+      "turnovers": 6,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "FEU",
+      "player": "DE GUZMAN",
+      "jersey": 19,
+      "games_played": 191,
+      "minutes": 0,
+      "points": 55,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 6,
+      "steals": 0,
+      "blocks": 18,
+      "turnovers": 16,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "FEU",
+      "player": "JONES",
+      "jersey": 20,
+      "games_played": 2900,
+      "minutes": 0,
+      "points": 65,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 218,
+      "steals": 0,
+      "blocks": 282,
+      "turnovers": 168,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "NU",
+      "player": "MANABAT",
+      "jersey": 4,
+      "games_played": 364,
+      "minutes": 0,
+      "points": 88,
+      "three_points": {
+        "made": 6,
+        "att": 34
+      },
+      "two_points": {
+        "made": 23,
+        "att": 50
+      },
+      "free_throws": {
+        "made": 24,
+        "att": 34
+      },
+      "rebounds": {
+        "off": 22,
+        "def": 37,
+        "total": 59
+      },
+      "assists": 72,
+      "steals": 0,
+      "blocks": 49,
+      "turnovers": 13,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "NU",
+      "player": "NAPA",
+      "jersey": 5,
+      "games_played": 450,
+      "minutes": 0,
+      "points": 190,
+      "three_points": {
+        "made": 20,
+        "att": 105
+      },
+      "two_points": {
+        "made": 40,
+        "att": 96
+      },
+      "free_throws": {
+        "made": 50,
+        "att": 83
+      },
+      "rebounds": {
+        "off": 29,
+        "def": 54,
+        "total": 83
+      },
+      "assists": 25,
+      "steals": 0,
+      "blocks": 46,
+      "turnovers": 20,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "NU",
+      "player": "SANTICO",
+      "jersey": 0,
+      "games_played": 15,
+      "minutes": 0,
+      "points": 2,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 1,
+        "att": 7
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 1
+      },
+      "rebounds": {
+        "off": 2,
+        "def": 2,
+        "total": 4
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 2,
+      "turnovers": 3,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "NU",
+      "player": "BAGUION",
+      "jersey": 7,
+      "games_played": 245,
+      "minutes": 0,
+      "points": 50,
+      "three_points": {
+        "made": 2,
+        "att": 17
+      },
+      "two_points": {
+        "made": 16,
+        "att": 31
+      },
+      "free_throws": {
+        "made": 12,
+        "att": 18
+      },
+      "rebounds": {
+        "off": 11,
+        "def": 16,
+        "total": 27
+      },
+      "assists": 43,
+      "steals": 0,
+      "blocks": 31,
+      "turnovers": 14,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "NU",
+      "player": "TOLENTINO",
+      "jersey": 8,
+      "games_played": 56,
+      "minutes": 0,
+      "points": 25,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 10,
+        "att": 16
+      },
+      "free_throws": {
+        "made": 5,
+        "att": 9
+      },
+      "rebounds": {
+        "off": 9,
+        "def": 5,
+        "total": 14
+      },
+      "assists": 5,
+      "steals": 0,
+      "blocks": 8,
+      "turnovers": 6,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "NU",
+      "player": "URBANO",
+      "jersey": 9,
+      "games_played": 54,
+      "minutes": 0,
+      "points": 14,
+      "three_points": {
+        "made": 3,
+        "att": 6
+      },
+      "two_points": {
+        "made": 0,
+        "att": 4
+      },
+      "free_throws": {
+        "made": 5,
+        "att": 8
+      },
+      "rebounds": {
+        "off": 2,
+        "def": 1,
+        "total": 3
+      },
+      "assists": 4,
+      "steals": 0,
+      "blocks": 5,
+      "turnovers": 5,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "NU",
+      "player": "DE CASTRO",
+      "jersey": 10,
+      "games_played": 300,
+      "minutes": 0,
+      "points": 104,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 41,
+        "att": 102
+      },
+      "free_throws": {
+        "made": 22,
+        "att": 35
+      },
+      "rebounds": {
+        "off": 19,
+        "def": 54,
+        "total": 73
+      },
+      "assists": 7,
+      "steals": 0,
+      "blocks": 12,
+      "turnovers": 15,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "NU",
+      "player": "MEJORADA",
+      "jersey": 11,
+      "games_played": 1,
+      "minutes": 4,
+      "points": 3,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 1,
+        "att": 2
+      },
+      "free_throws": {
+        "made": 1,
+        "att": 1
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 1,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "NU",
+      "player": "GRIJALDO",
+      "jersey": 12,
+      "games_played": 290,
+      "minutes": 0,
+      "points": 102,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 37,
+        "att": 81
+      },
+      "free_throws": {
+        "made": 25,
+        "att": 42
+      },
+      "rebounds": {
+        "off": 41,
+        "def": 40,
+        "total": 81
+      },
+      "assists": 13,
+      "steals": 0,
+      "blocks": 17,
+      "turnovers": 13,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "NU",
+      "player": "MENDOZA",
+      "jersey": 14,
+      "games_played": 84,
+      "minutes": 0,
+      "points": 23,
+      "three_points": {
+        "made": 0,
+        "att": 2
+      },
+      "two_points": {
+        "made": 10,
+        "att": 23
+      },
+      "free_throws": {
+        "made": 3,
+        "att": 10
+      },
+      "rebounds": {
+        "off": 13,
+        "def": 12,
+        "total": 25
+      },
+      "assists": 3,
+      "steals": 0,
+      "blocks": 4,
+      "turnovers": 7,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "NU",
+      "player": "NEO",
+      "jersey": 15,
+      "games_played": 257,
+      "minutes": 0,
+      "points": 85,
+      "three_points": {
+        "made": 2,
+        "att": 10
+      },
+      "two_points": {
+        "made": 30,
+        "att": 89
+      },
+      "free_throws": {
+        "made": 19,
+        "att": 33
+      },
+      "rebounds": {
+        "off": 37,
+        "def": 45,
+        "total": 82
+      },
+      "assists": 17,
+      "steals": 0,
+      "blocks": 31,
+      "turnovers": 22,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "NU",
+      "player": "MAPANAC",
+      "jersey": 16,
+      "games_played": 167,
+      "minutes": 0,
+      "points": 59,
+      "three_points": {
+        "made": 8,
+        "att": 25
+      },
+      "two_points": {
+        "made": 14,
+        "att": 26
+      },
+      "free_throws": {
+        "made": 7,
+        "att": 11
+      },
+      "rebounds": {
+        "off": 10,
+        "def": 11,
+        "total": 21
+      },
+      "assists": 5,
+      "steals": 0,
+      "blocks": 5,
+      "turnovers": 8,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "NU",
+      "player": "OGILVIE",
+      "jersey": 17,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 1,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "NU",
+      "player": "CAYABYAB",
+      "jersey": 19,
+      "games_played": 322,
+      "minutes": 0,
+      "points": 87,
+      "three_points": {
+        "made": 8,
+        "att": 15
+      },
+      "two_points": {
+        "made": 24,
+        "att": 59
+      },
+      "free_throws": {
+        "made": 15,
+        "att": 25
+      },
+      "rebounds": {
+        "off": 12,
+        "def": 20,
+        "total": 32
+      },
+      "assists": 14,
+      "steals": 0,
+      "blocks": 23,
+      "turnovers": 23,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "NU",
+      "player": "NECESITO",
+      "jersey": 20,
+      "games_played": 233,
+      "minutes": 0,
+      "points": 89,
+      "three_points": {
+        "made": 5,
+        "att": 22
+      },
+      "two_points": {
+        "made": 29,
+        "att": 58
+      },
+      "free_throws": {
+        "made": 16,
+        "att": 31
+      },
+      "rebounds": {
+        "off": 14,
+        "def": 40,
+        "total": 54
+      },
+      "assists": 11,
+      "steals": 0,
+      "blocks": 15,
+      "turnovers": 24,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UE",
+      "player": "MANLIBAG",
+      "jersey": 0,
+      "games_played": 14,
+      "minutes": 389,
+      "points": 170,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 29,
+        "def": 40,
+        "total": 69
+      },
+      "assists": 26,
+      "steals": 24,
+      "blocks": 2,
+      "turnovers": 28,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UE",
+      "player": "RONQUILLO",
+      "jersey": 0,
+      "games_played": 14,
+      "minutes": 245,
+      "points": 71,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 7,
+        "def": 18,
+        "total": 25
+      },
+      "assists": 32,
+      "steals": 15,
+      "blocks": 0,
+      "turnovers": 15,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UE",
+      "player": "ALMINARIO",
+      "jersey": 0,
+      "games_played": 14,
+      "minutes": 251,
+      "points": 54,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 24,
+        "def": 26,
+        "total": 50
+      },
+      "assists": 14,
+      "steals": 6,
+      "blocks": 5,
+      "turnovers": 12,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UE",
+      "player": "BOOKER",
+      "jersey": 0,
+      "games_played": 132,
+      "minutes": 0,
+      "points": 88,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 16,
+        "def": 15,
+        "total": 31
+      },
+      "assists": 9,
+      "steals": 7,
+      "blocks": 1,
+      "turnovers": 6,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UE",
+      "player": "TUBID",
+      "jersey": 0,
+      "games_played": 14,
+      "minutes": 409,
+      "points": 118,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 34,
+        "def": 77,
+        "total": 111
+      },
+      "assists": 23,
+      "steals": 13,
+      "blocks": 12,
+      "turnovers": 32,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UE",
+      "player": "ESTRADA",
+      "jersey": 0,
+      "games_played": 13,
+      "minutes": 366,
+      "points": 71,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 33,
+        "def": 49,
+        "total": 82
+      },
+      "assists": 17,
+      "steals": 11,
+      "blocks": 20,
+      "turnovers": 23,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UE",
+      "player": "HUBALDE",
+      "jersey": 0,
+      "games_played": 13,
+      "minutes": 137,
+      "points": 28,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 7,
+        "def": 12,
+        "total": 19
+      },
+      "assists": 20,
+      "steals": 4,
+      "blocks": 1,
+      "turnovers": 13,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UE",
+      "player": "MASBANG",
+      "jersey": 0,
+      "games_played": 17,
+      "minutes": 0,
+      "points": 2,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 1,
+        "def": 2,
+        "total": 3
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 1,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UE",
+      "player": "ALI",
+      "jersey": 0,
+      "games_played": 11,
+      "minutes": 290,
+      "points": 49,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 31,
+        "def": 55,
+        "total": 86
+      },
+      "assists": 10,
+      "steals": 6,
+      "blocks": 6,
+      "turnovers": 17,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UE",
+      "player": "ARTADI",
+      "jersey": 0,
+      "games_played": 14,
+      "minutes": 244,
+      "points": 79,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 11,
+        "def": 22,
+        "total": 33
+      },
+      "assists": 49,
+      "steals": 23,
+      "blocks": 0,
+      "turnovers": 39,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UE",
+      "player": "RETAGA",
+      "jersey": 0,
+      "games_played": 5,
+      "minutes": 16,
+      "points": 8,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 2,
+        "def": 2,
+        "total": 4
+      },
+      "assists": 5,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 2,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UE",
+      "player": "YAP",
+      "jersey": 0,
+      "games_played": 295,
+      "minutes": 0,
+      "points": 2,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 2,
+        "def": 0,
+        "total": 2
+      },
+      "assists": 5,
+      "steals": 4,
+      "blocks": 27,
+      "turnovers": 211614,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UE",
+      "player": "TAN",
+      "jersey": 0,
+      "games_played": 7,
+      "minutes": 56,
+      "points": 35,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 30,
+        "def": 33,
+        "total": 63
+      },
+      "assists": 3,
+      "steals": 5,
+      "blocks": 4,
+      "turnovers": 2,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UE",
+      "player": "TABAS",
+      "jersey": 0,
+      "games_played": 7,
+      "minutes": 3,
+      "points": 6,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 5,
+        "def": 4,
+        "total": 9
+      },
+      "assists": 1,
+      "steals": 0,
+      "blocks": 1,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UST",
+      "player": "MANCHING",
+      "jersey": 4,
+      "games_played": 6,
+      "minutes": 14,
+      "points": 17,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 1,
+        "att": 1
+      },
+      "free_throws": {
+        "made": 3,
+        "att": 4
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 16,
+      "steals": 9,
+      "blocks": 0,
+      "turnovers": 9,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UST",
+      "player": "AGLERON",
+      "jersey": 5,
+      "games_played": 14,
+      "minutes": 257,
+      "points": 38,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 8,
+        "att": 16
+      },
+      "free_throws": {
+        "made": 7,
+        "att": 9
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 28,
+      "steals": 8,
+      "blocks": 2,
+      "turnovers": 20,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UST",
+      "player": "DEL ROSARIO",
+      "jersey": 6,
+      "games_played": 3,
+      "minutes": 3,
+      "points": 2,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UST",
+      "player": "ORTIGUERRA",
+      "jersey": 7,
+      "games_played": 14,
+      "minutes": 356,
+      "points": 92,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 9,
+        "att": 16
+      },
+      "free_throws": {
+        "made": 10,
+        "att": 27
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 12,
+      "steals": 12,
+      "blocks": 7,
+      "turnovers": 31,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UST",
+      "player": "BAGUIO",
+      "jersey": 8,
+      "games_played": 14,
+      "minutes": 381,
+      "points": 155,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 46,
+        "att": 92
+      },
+      "free_throws": {
+        "made": 48,
+        "att": 69
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 52,
+      "steals": 19,
+      "blocks": 6,
+      "turnovers": 35,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UST",
+      "player": "LAO",
+      "jersey": 9,
+      "games_played": 14,
+      "minutes": 194,
+      "points": 34,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 9,
+        "att": 22
+      },
+      "free_throws": {
+        "made": 16,
+        "att": 22
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 10,
+      "steals": 3,
+      "blocks": 5,
+      "turnovers": 9,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UST",
+      "player": "HUBALDE",
+      "jersey": 10,
+      "games_played": 12,
+      "minutes": 216,
+      "points": 75,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 14,
+        "att": 28
+      },
+      "free_throws": {
+        "made": 8,
+        "att": 12
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 12,
+      "steals": 11,
+      "blocks": 1,
+      "turnovers": 15,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UST",
+      "player": "MANANSALA",
+      "jersey": 11,
+      "games_played": 5,
+      "minutes": 33,
+      "points": 5,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 2,
+        "att": 2
+      },
+      "free_throws": {
+        "made": 1,
+        "att": 2
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 3,
+      "steals": 2,
+      "blocks": 0,
+      "turnovers": 7,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UST",
+      "player": "ESPIRITU",
+      "jersey": 12,
+      "games_played": 14,
+      "minutes": 295,
+      "points": 95,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 39,
+        "att": 73
+      },
+      "free_throws": {
+        "made": 17,
+        "att": 35
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 12,
+      "steals": 7,
+      "blocks": 11,
+      "turnovers": 26,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UST",
+      "player": "CO",
+      "jersey": 13,
+      "games_played": 4,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 1,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 1,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UST",
+      "player": "GELIG",
+      "jersey": 14,
+      "games_played": 14,
+      "minutes": 256,
+      "points": 70,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 25,
+        "att": 60
+      },
+      "free_throws": {
+        "made": 14,
+        "att": 26
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 26,
+      "steals": 10,
+      "blocks": 0,
+      "turnovers": 29,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UST",
+      "player": "TUADLES",
+      "jersey": 15,
+      "games_played": 5,
+      "minutes": 37,
+      "points": 14,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 3
+      },
+      "free_throws": {
+        "made": 2,
+        "att": 4
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 3,
+      "steals": 3,
+      "blocks": 0,
+      "turnovers": 4,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UST",
+      "player": "LATORENO",
+      "jersey": 16,
+      "games_played": 14,
+      "minutes": 299,
+      "points": 102,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 45,
+        "att": 100
+      },
+      "free_throws": {
+        "made": 12,
+        "att": 18
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 4,
+      "steals": 7,
+      "blocks": 9,
+      "turnovers": 19,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UST",
+      "player": "ORETA",
+      "jersey": 17,
+      "games_played": 14,
+      "minutes": 326,
+      "points": 132,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 22,
+        "att": 57
+      },
+      "free_throws": {
+        "made": 22,
+        "att": 29
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 22,
+      "steals": 11,
+      "blocks": 2,
+      "turnovers": 22,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UST",
+      "player": "Luanzon",
+      "jersey": 18,
+      "games_played": 4,
+      "minutes": 0,
+      "points": 2,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 1,
+        "att": 1
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 2
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 1,
+      "blocks": 0,
+      "turnovers": 2,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UST",
+      "player": "VILLAMIN",
+      "jersey": 19,
+      "games_played": 10,
+      "minutes": 128,
+      "points": 33,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 15,
+        "att": 24
+      },
+      "free_throws": {
+        "made": 3,
+        "att": 8
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 14,
+      "steals": 7,
+      "blocks": 1,
+      "turnovers": 20,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "ADMU",
+      "player": "MORADA",
+      "jersey": 4,
+      "games_played": 8,
+      "minutes": 83,
+      "points": 55,
+      "three_points": {
+        "made": 0,
+        "att": 10
+      },
+      "two_points": {
+        "made": 18,
+        "att": 29
+      },
+      "free_throws": {
+        "made": 19,
+        "att": 38
+      },
+      "rebounds": {
+        "off": 11,
+        "def": 5,
+        "total": 16
+      },
+      "assists": 1,
+      "steals": 4,
+      "blocks": 1,
+      "turnovers": 4,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "ADMU",
+      "player": "CRUZ",
+      "jersey": 5,
+      "games_played": 6,
+      "minutes": 56,
+      "points": 9,
+      "three_points": {
+        "made": 0,
+        "att": 4
+      },
+      "two_points": {
+        "made": 3,
+        "att": 14
+      },
+      "free_throws": {
+        "made": 3,
+        "att": 4
+      },
+      "rebounds": {
+        "off": 3,
+        "def": 6,
+        "total": 9
+      },
+      "assists": 14,
+      "steals": 2,
+      "blocks": 0,
+      "turnovers": 10,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "ADMU",
+      "player": "BAUTISTA",
+      "jersey": 6,
+      "games_played": 10,
+      "minutes": 134,
+      "points": 46,
+      "three_points": {
+        "made": 3,
+        "att": 12
+      },
+      "two_points": {
+        "made": 17,
+        "att": 39
+      },
+      "free_throws": {
+        "made": 3,
+        "att": 13
+      },
+      "rebounds": {
+        "off": 17,
+        "def": 17,
+        "total": 34
+      },
+      "assists": 20,
+      "steals": 19,
+      "blocks": 2,
+      "turnovers": 12,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "ADMU",
+      "player": "ESCALONA",
+      "jersey": 7,
+      "games_played": 12,
+      "minutes": 22,
+      "points": 86,
+      "three_points": {
+        "made": 2,
+        "att": 3
+      },
+      "two_points": {
+        "made": 29,
+        "att": 54
+      },
+      "free_throws": {
+        "made": 22,
+        "att": 48
+      },
+      "rebounds": {
+        "off": 7,
+        "def": 17,
+        "total": 24
+      },
+      "assists": 41,
+      "steals": 22,
+      "blocks": 1,
+      "turnovers": 32,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "ADMU",
+      "player": "A. CRUZ",
+      "jersey": 8,
+      "games_played": 9,
+      "minutes": 85,
+      "points": 36,
+      "three_points": {
+        "made": 1,
+        "att": 8
+      },
+      "two_points": {
+        "made": 14,
+        "att": 28
+      },
+      "free_throws": {
+        "made": 5,
+        "att": 10
+      },
+      "rebounds": {
+        "off": 6,
+        "def": 19,
+        "total": 25
+      },
+      "assists": 9,
+      "steals": 7,
+      "blocks": 0,
+      "turnovers": 15,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "ADMU",
+      "player": "BULAON",
+      "jersey": 10,
+      "games_played": 6,
+      "minutes": 57,
+      "points": 16,
+      "three_points": {
+        "made": 1,
+        "att": 3
+      },
+      "two_points": {
+        "made": 4,
+        "att": 17
+      },
+      "free_throws": {
+        "made": 5,
+        "att": 9
+      },
+      "rebounds": {
+        "off": 5,
+        "def": 3,
+        "total": 8
+      },
+      "assists": 8,
+      "steals": 3,
+      "blocks": 0,
+      "turnovers": 6,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "ADMU",
+      "player": "FREZ",
+      "jersey": 11,
+      "games_played": 12,
+      "minutes": 231,
+      "points": 82,
+      "three_points": {
+        "made": 2,
+        "att": 9
+      },
+      "two_points": {
+        "made": 29,
+        "att": 79
+      },
+      "free_throws": {
+        "made": 18,
+        "att": 34
+      },
+      "rebounds": {
+        "off": 34,
+        "def": 48,
+        "total": 82
+      },
+      "assists": 10,
+      "steals": 14,
+      "blocks": 8,
+      "turnovers": 30,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "ADMU",
+      "player": "GONZALEZ",
+      "jersey": 12,
+      "games_played": 12,
+      "minutes": 279,
+      "points": 126,
+      "three_points": {
+        "made": 31,
+        "att": 88
+      },
+      "two_points": {
+        "made": 13,
+        "att": 32
+      },
+      "free_throws": {
+        "made": 7,
+        "att": 11
+      },
+      "rebounds": {
+        "off": 5,
+        "def": 17,
+        "total": 22
+      },
+      "assists": 27,
+      "steals": 26,
+      "blocks": 1,
+      "turnovers": 37,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "ADMU",
+      "player": "C. GONZALEZ",
+      "jersey": 13,
+      "games_played": 7,
+      "minutes": 62,
+      "points": 23,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 8,
+        "att": 19
+      },
+      "free_throws": {
+        "made": 7,
+        "att": 12
+      },
+      "rebounds": {
+        "off": 9,
+        "def": 14,
+        "total": 23
+      },
+      "assists": 1,
+      "steals": 4,
+      "blocks": 1,
+      "turnovers": 11,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "ADMU",
+      "player": "TOLOSA",
+      "jersey": 14,
+      "games_played": 12,
+      "minutes": 308,
+      "points": 125,
+      "three_points": {
+        "made": 0,
+        "att": 1
+      },
+      "two_points": {
+        "made": 42,
+        "att": 97
+      },
+      "free_throws": {
+        "made": 41,
+        "att": 61
+      },
+      "rebounds": {
+        "off": 41,
+        "def": 54,
+        "total": 95
+      },
+      "assists": 15,
+      "steals": 21,
+      "blocks": 3,
+      "turnovers": 46,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "ADMU",
+      "player": "PASION",
+      "jersey": 15,
+      "games_played": 12,
+      "minutes": 239,
+      "points": 57,
+      "three_points": {
+        "made": 3,
+        "att": 26
+      },
+      "two_points": {
+        "made": 17,
+        "att": 39
+      },
+      "free_throws": {
+        "made": 14,
+        "att": 31
+      },
+      "rebounds": {
+        "off": 7,
+        "def": 24,
+        "total": 31
+      },
+      "assists": 30,
+      "steals": 24,
+      "blocks": 1,
+      "turnovers": 37,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "ADMU",
+      "player": "NAZARENO",
+      "jersey": 16,
+      "games_played": 11,
+      "minutes": 228,
+      "points": 71,
+      "three_points": {
+        "made": 1,
+        "att": 10
+      },
+      "two_points": {
+        "made": 23,
+        "att": 51
+      },
+      "free_throws": {
+        "made": 22,
+        "att": 35
+      },
+      "rebounds": {
+        "off": 21,
+        "def": 29,
+        "total": 50
+      },
+      "assists": 29,
+      "steals": 20,
+      "blocks": 2,
+      "turnovers": 41,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "ADMU",
+      "player": "UICHICO",
+      "jersey": 17,
+      "games_played": 6,
+      "minutes": 50,
+      "points": 11,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 5,
+        "att": 13
+      },
+      "free_throws": {
+        "made": 1,
+        "att": 6
+      },
+      "rebounds": {
+        "off": 12,
+        "def": 13,
+        "total": 25
+      },
+      "assists": 2,
+      "steals": 2,
+      "blocks": 2,
+      "turnovers": 3,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "ADMU",
+      "player": "ALDOVER",
+      "jersey": 18,
+      "games_played": 12,
+      "minutes": 268,
+      "points": 119,
+      "three_points": {
+        "made": 1,
+        "att": 1
+      },
+      "two_points": {
+        "made": 48,
+        "att": 88
+      },
+      "free_throws": {
+        "made": 20,
+        "att": 38
+      },
+      "rebounds": {
+        "off": 51,
+        "def": 63,
+        "total": 114
+      },
+      "assists": 12,
+      "steals": 11,
+      "blocks": 9,
+      "turnovers": 30,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "ADMU",
+      "player": "PALATTAO",
+      "jersey": 19,
+      "games_played": 8,
+      "minutes": 95,
+      "points": 29,
+      "three_points": {
+        "made": 0,
+        "att": 2
+      },
+      "two_points": {
+        "made": 10,
+        "att": 29
+      },
+      "free_throws": {
+        "made": 9,
+        "att": 16
+      },
+      "rebounds": {
+        "off": 8,
+        "def": 12,
+        "total": 20
+      },
+      "assists": 5,
+      "steals": 6,
+      "blocks": 0,
+      "turnovers": 13,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "NU",
+      "player": "DEQUILLA",
+      "jersey": 4,
+      "games_played": 12,
+      "minutes": 221,
+      "points": 95,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 20,
+        "def": 22,
+        "total": 42
+      },
+      "assists": 26,
+      "steals": 38,
+      "blocks": 2,
+      "turnovers": 56,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "NU",
+      "player": "CARTANO",
+      "jersey": 5,
+      "games_played": 10,
+      "minutes": 217,
+      "points": 53,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 21,
+        "def": 25,
+        "total": 46
+      },
+      "assists": 17,
+      "steals": 10,
+      "blocks": 2,
+      "turnovers": 35,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "NU",
+      "player": "APAGA",
+      "jersey": 6,
+      "games_played": 7,
+      "minutes": 67,
+      "points": 3,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 4,
+        "def": 6,
+        "total": 10
+      },
+      "assists": 4,
+      "steals": 1,
+      "blocks": 1,
+      "turnovers": 13,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "NU",
+      "player": "GALANG",
+      "jersey": 7,
+      "games_played": 9,
+      "minutes": 220,
+      "points": 16,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 6,
+        "def": 26,
+        "total": 32
+      },
+      "assists": 8,
+      "steals": 5,
+      "blocks": 4,
+      "turnovers": 17,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "NU",
+      "player": "TIPO",
+      "jersey": 8,
+      "games_played": 10,
+      "minutes": 103,
+      "points": 16,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 5,
+        "def": 5,
+        "total": 10
+      },
+      "assists": 9,
+      "steals": 4,
+      "blocks": 1,
+      "turnovers": 18,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "NU",
+      "player": "ANTONIO",
+      "jersey": 9,
+      "games_played": 12,
+      "minutes": 243,
+      "points": 51,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 13,
+        "def": 16,
+        "total": 29
+      },
+      "assists": 10,
+      "steals": 9,
+      "blocks": 4,
+      "turnovers": 15,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "NU",
+      "player": "BAYTAN",
+      "jersey": 10,
+      "games_played": 5,
+      "minutes": 28,
+      "points": 4,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 1,
+        "def": 6,
+        "total": 7
+      },
+      "assists": 1,
+      "steals": 0,
+      "blocks": 2,
+      "turnovers": 6,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "NU",
+      "player": "JUAN",
+      "jersey": 11,
+      "games_played": 12,
+      "minutes": 316,
+      "points": 44,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 15,
+        "def": 48,
+        "total": 63
+      },
+      "assists": 9,
+      "steals": 16,
+      "blocks": 5,
+      "turnovers": 37,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "NU",
+      "player": "CALINGASIN",
+      "jersey": 13,
+      "games_played": 12,
+      "minutes": 350,
+      "points": 88,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 32,
+        "def": 43,
+        "total": 75
+      },
+      "assists": 15,
+      "steals": 10,
+      "blocks": 5,
+      "turnovers": 25,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "NU",
+      "player": "MALCONTENTO",
+      "jersey": 15,
+      "games_played": 12,
+      "minutes": 300,
+      "points": 164,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 15,
+        "def": 39,
+        "total": 54
+      },
+      "assists": 40,
+      "steals": 37,
+      "blocks": 0,
+      "turnovers": 81,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "NU",
+      "player": "MICU",
+      "jersey": 16,
+      "games_played": 10,
+      "minutes": 295,
+      "points": 183,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 38,
+        "def": 24,
+        "total": 62
+      },
+      "assists": 23,
+      "steals": 27,
+      "blocks": 1,
+      "turnovers": 56,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "NU",
+      "player": "DECENA",
+      "jersey": 17,
+      "games_played": 9,
+      "minutes": 65,
+      "points": 9,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 1,
+        "def": 5,
+        "total": 6
+      },
+      "assists": 3,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 9,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UP",
+      "player": "MIRANDA",
+      "jersey": 4,
+      "games_played": 7,
+      "minutes": 102,
+      "points": 9,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 1,
+        "att": 2
+      },
+      "free_throws": {
+        "made": 7,
+        "att": 14
+      },
+      "rebounds": {
+        "off": 5,
+        "def": 4,
+        "total": 9
+      },
+      "assists": 18,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 16,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UP",
+      "player": "CABANGIS",
+      "jersey": 5,
+      "games_played": 7,
+      "minutes": 36,
+      "points": 8,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 5
+      },
+      "free_throws": {
+        "made": 2,
+        "att": 3
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 1,
+        "total": 1
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 6,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UP",
+      "player": "CRUZ",
+      "jersey": 6,
+      "games_played": 11,
+      "minutes": 349,
+      "points": 161,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 54,
+        "att": 114
+      },
+      "free_throws": {
+        "made": 32,
+        "att": 54
+      },
+      "rebounds": {
+        "off": 18,
+        "def": 34,
+        "total": 52
+      },
+      "assists": 46,
+      "steals": 0,
+      "blocks": 2,
+      "turnovers": 65,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UP",
+      "player": "RAPIZ",
+      "jersey": 7,
+      "games_played": 3,
+      "minutes": 8,
+      "points": 1,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 2
+      },
+      "free_throws": {
+        "made": 1,
+        "att": 2
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 1,
+        "total": 1
+      },
+      "assists": 1,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UP",
+      "player": "JIMENEZ",
+      "jersey": 8,
+      "games_played": 6,
+      "minutes": 176,
+      "points": 35,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 6,
+        "att": 18
+      },
+      "free_throws": {
+        "made": 2,
+        "att": 5
+      },
+      "rebounds": {
+        "off": 3,
+        "def": 16,
+        "total": 19
+      },
+      "assists": 15,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 24,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UP",
+      "player": "ALTUNA",
+      "jersey": 9,
+      "games_played": 11,
+      "minutes": 315,
+      "points": 61,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 19,
+        "att": 39
+      },
+      "free_throws": {
+        "made": 17,
+        "att": 31
+      },
+      "rebounds": {
+        "off": 24,
+        "def": 27,
+        "total": 51
+      },
+      "assists": 9,
+      "steals": 0,
+      "blocks": 1,
+      "turnovers": 34,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UP",
+      "player": "DALISAY",
+      "jersey": 10,
+      "games_played": 12,
+      "minutes": 103,
+      "points": 18,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 8,
+        "att": 15
+      },
+      "free_throws": {
+        "made": 2,
+        "att": 4
+      },
+      "rebounds": {
+        "off": 12,
+        "def": 8,
+        "total": 20
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 11,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UP",
+      "player": "SENTURIAS",
+      "jersey": 11,
+      "games_played": 10,
+      "minutes": 205,
+      "points": 25,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 12,
+        "att": 24
+      },
+      "free_throws": {
+        "made": 1,
+        "att": 3
+      },
+      "rebounds": {
+        "off": 19,
+        "def": 24,
+        "total": 43
+      },
+      "assists": 3,
+      "steals": 0,
+      "blocks": 10,
+      "turnovers": 19,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UP",
+      "player": "ORDILLAS",
+      "jersey": 12,
+      "games_played": 11,
+      "minutes": 275,
+      "points": 15,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 6,
+        "att": 26
+      },
+      "free_throws": {
+        "made": 3,
+        "att": 12
+      },
+      "rebounds": {
+        "off": 12,
+        "def": 22,
+        "total": 34
+      },
+      "assists": 32,
+      "steals": 0,
+      "blocks": 1,
+      "turnovers": 43,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UP",
+      "player": "CALLANTA",
+      "jersey": 14,
+      "games_played": 12,
+      "minutes": 389,
+      "points": 87,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 8,
+        "att": 28
+      },
+      "free_throws": {
+        "made": 8,
+        "att": 12
+      },
+      "rebounds": {
+        "off": 8,
+        "def": 29,
+        "total": 37
+      },
+      "assists": 20,
+      "steals": 0,
+      "blocks": 1,
+      "turnovers": 24,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UP",
+      "player": "EPRES",
+      "jersey": 15,
+      "games_played": 12,
+      "minutes": 464,
+      "points": 292,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 82,
+        "att": 168
+      },
+      "free_throws": {
+        "made": 95,
+        "att": 137
+      },
+      "rebounds": {
+        "off": 28,
+        "def": 72,
+        "total": 100
+      },
+      "assists": 25,
+      "steals": 0,
+      "blocks": 3,
+      "turnovers": 65,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UP",
+      "player": "CANCIO",
+      "jersey": 16,
+      "games_played": 3,
+      "minutes": 3,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 1,
+        "total": 1
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UST",
+      "player": "SANCHEZ",
+      "jersey": 4,
+      "games_played": 3,
+      "minutes": 31,
+      "points": 4,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 1,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 5,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UST",
+      "player": "BAG-O",
+      "jersey": 5,
+      "games_played": 11,
+      "minutes": 1774,
+      "points": 29,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 21,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 21,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UST",
+      "player": "PAGALANAN",
+      "jersey": 6,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UST",
+      "player": "ILAGAN",
+      "jersey": 7,
+      "games_played": 12,
+      "minutes": 321,
+      "points": 90,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 14,
+        "att": 30
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 23,
+      "steals": 0,
+      "blocks": 31,
+      "turnovers": 18,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UST",
+      "player": "ESPIRITU",
+      "jersey": 8,
+      "games_played": 12,
+      "minutes": 312,
+      "points": 125,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 15,
+        "att": 26
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 20,
+      "steals": 0,
+      "blocks": 37,
+      "turnovers": 15,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UST",
+      "player": "REYES",
+      "jersey": 9,
+      "games_played": 12,
+      "minutes": 157,
+      "points": 56,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 14,
+        "att": 23
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 23,
+      "steals": 0,
+      "blocks": 24,
+      "turnovers": 18,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UST",
+      "player": "TENGSON",
+      "jersey": 10,
+      "games_played": 12,
+      "minutes": 166,
+      "points": 59,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 9,
+        "att": 22
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 9,
+      "steals": 0,
+      "blocks": 18,
+      "turnovers": 9,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UST",
+      "player": "DEL REMEDIOS",
+      "jersey": 11,
+      "games_played": 12,
+      "minutes": 55,
+      "points": 12,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 4,
+        "att": 4
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 7,
+      "turnovers": 5,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UST",
+      "player": "CORTEZ",
+      "jersey": 12,
+      "games_played": 12,
+      "minutes": 367,
+      "points": 269,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 23,
+        "att": 38
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 59,
+      "steals": 0,
+      "blocks": 44,
+      "turnovers": 16,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UST",
+      "player": "PACIA",
+      "jersey": 14,
+      "games_played": 6,
+      "minutes": 42,
+      "points": 8,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 2,
+        "att": 4
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 2,
+      "steals": 0,
+      "blocks": 4,
+      "turnovers": 7,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UST",
+      "player": "AQUINO",
+      "jersey": 15,
+      "games_played": 12,
+      "minutes": 335,
+      "points": 118,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 32,
+        "att": 71
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 16,
+      "steals": 0,
+      "blocks": 32,
+      "turnovers": 25,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UST",
+      "player": "GEROMINO",
+      "jersey": 16,
+      "games_played": 10,
+      "minutes": 72,
+      "points": 21,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 3,
+        "att": 6
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 7,
+      "steals": 0,
+      "blocks": 7,
+      "turnovers": 5,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UST",
+      "player": "ARTUZ",
+      "jersey": 17,
+      "games_played": 7,
+      "minutes": 71,
+      "points": 14,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 3,
+        "att": 9
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 4,
+      "steals": 0,
+      "blocks": 10,
+      "turnovers": 6,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UST",
+      "player": "CUAN",
+      "jersey": 18,
+      "games_played": 12,
+      "minutes": 274,
+      "points": 59,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 9,
+        "att": 30
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 47,
+      "steals": 0,
+      "blocks": 37,
+      "turnovers": 7,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UST",
+      "player": "BUSA",
+      "jersey": 19,
+      "games_played": 2,
+      "minutes": 12,
+      "points": 4,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 1
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 3,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UST",
+      "player": "BERNARDO",
+      "jersey": 20,
+      "games_played": 2,
+      "minutes": 9,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 1,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "ADMU",
+      "player": "CALADO",
+      "jersey": 4,
+      "games_played": 11,
+      "minutes": 223,
+      "points": 50,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 17,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 32,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "ADMU",
+      "player": "TANCHI",
+      "jersey": 5,
+      "games_played": 12,
+      "minutes": 402,
+      "points": 51,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 25,
+      "steals": 0,
+      "blocks": 2,
+      "turnovers": 56,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "ADMU",
+      "player": "LENTETAS",
+      "jersey": 6,
+      "games_played": 10,
+      "minutes": 144,
+      "points": 70,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 1,
+      "steals": 0,
+      "blocks": 2,
+      "turnovers": 9,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "ADMU",
+      "player": "MAISARIETA",
+      "jersey": 7,
+      "games_played": 6,
+      "minutes": 73,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 6,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "ADMU",
+      "player": "MORGA",
+      "jersey": 8,
+      "games_played": 6,
+      "minutes": 54,
+      "points": 25,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 4,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "ADMU",
+      "player": "ESTEVEZ",
+      "jersey": 9,
+      "games_played": 12,
+      "minutes": 247,
+      "points": 30,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 10,
+      "steals": 0,
+      "blocks": 2,
+      "turnovers": 23,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "ADMU",
+      "player": "CABRERA",
+      "jersey": 10,
+      "games_played": 12,
+      "minutes": 136,
+      "points": 75,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 3,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 8,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "ADMU",
+      "player": "SY",
+      "jersey": 11,
+      "games_played": 6,
+      "minutes": 40,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 1,
+      "turnovers": 6,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "ADMU",
+      "player": "LOPEZ",
+      "jersey": 14,
+      "games_played": 12,
+      "minutes": 164,
+      "points": 33,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 10,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 26,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "ADMU",
+      "player": "ANG",
+      "jersey": 15,
+      "games_played": 8,
+      "minutes": 36,
+      "points": 50,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 2,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 5,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "ADMU",
+      "player": "E. DY",
+      "jersey": 16,
+      "games_played": 12,
+      "minutes": 364,
+      "points": 54,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 54,
+      "steals": 0,
+      "blocks": 1,
+      "turnovers": 60,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "ADMU",
+      "player": "LAROSA",
+      "jersey": 17,
+      "games_played": 12,
+      "minutes": 317,
+      "points": 76,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 17,
+      "steals": 0,
+      "blocks": 1,
+      "turnovers": 24,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "ADMU",
+      "player": "REYES",
+      "jersey": 18,
+      "games_played": 12,
+      "minutes": 174,
+      "points": 38,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 3,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 34,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "FEU",
+      "player": "PEREZ",
+      "jersey": 4,
+      "games_played": 24,
+      "minutes": 12,
+      "points": 14,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 25,
+      "steals": 0,
+      "blocks": 2,
+      "turnovers": 31,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "FEU",
+      "player": "RAYMUNDO",
+      "jersey": 5,
+      "games_played": 1,
+      "minutes": 4,
+      "points": 6,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 1,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 5,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "FEU",
+      "player": "DE GUZMAN",
+      "jersey": 6,
+      "games_played": 0,
+      "minutes": 2,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "FEU",
+      "player": "PARADILLA",
+      "jersey": 8,
+      "games_played": 2,
+      "minutes": 5,
+      "points": 1,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 1,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 8,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "FEU",
+      "player": "ALCANCIADO",
+      "jersey": 9,
+      "games_played": 17,
+      "minutes": 11,
+      "points": 14,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 30,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 30,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "FEU",
+      "player": "J. CARREON",
+      "jersey": 11,
+      "games_played": 10,
+      "minutes": 12,
+      "points": 14,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 44,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 45,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "FEU",
+      "player": "MONTE",
+      "jersey": 12,
+      "games_played": 7,
+      "minutes": 8,
+      "points": 21,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 3,
+      "steals": 0,
+      "blocks": 2,
+      "turnovers": 11,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "FEU",
+      "player": "FAUSTINO",
+      "jersey": 14,
+      "games_played": 366,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 18,
+      "turnovers": 16,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "FEU",
+      "player": "DELIGOS",
+      "jersey": 16,
+      "games_played": 10,
+      "minutes": 12,
+      "points": 12,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 9,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 10,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "FEU",
+      "player": "LIBORNIO",
+      "jersey": 17,
+      "games_played": 6,
+      "minutes": 12,
+      "points": 26,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 23,
+      "steals": 0,
+      "blocks": 8,
+      "turnovers": 16,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "FEU",
+      "player": "ZAYAS",
+      "jersey": 18,
+      "games_played": 2,
+      "minutes": 5,
+      "points": 2,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 1,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 1,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "FEU",
+      "player": "MADRISANO",
+      "jersey": 19,
+      "games_played": 1,
+      "minutes": 6,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 3,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "FEU",
+      "player": "37 / 141",
+      "jersey": 0,
+      "games_played": 12,
+      "minutes": 2400,
+      "points": 241,
+      "three_points": {
+        "made": 221,
+        "att": 566
+      },
+      "two_points": {
+        "made": 95,
+        "att": 172
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 182,
+      "steals": 0,
+      "blocks": 235,
+      "turnovers": 139,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UE",
+      "player": "MABAZZA",
+      "jersey": 4,
+      "games_played": 0,
+      "minutes": 1,
+      "points": 2,
+      "three_points": {
+        "made": 0,
+        "att": 1
+      },
+      "two_points": {
+        "made": 1,
+        "att": 2
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 2
+      },
+      "rebounds": {
+        "off": 1,
+        "def": 0,
+        "total": 1
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 2,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UE",
+      "player": "HOBAYAN",
+      "jersey": 5,
+      "games_played": 0,
+      "minutes": 12,
+      "points": 20,
+      "three_points": {
+        "made": 1,
+        "att": 7
+      },
+      "two_points": {
+        "made": 2,
+        "att": 18
+      },
+      "free_throws": {
+        "made": 13,
+        "att": 42
+      },
+      "rebounds": {
+        "off": 34,
+        "def": 46,
+        "total": 80
+      },
+      "assists": 9,
+      "steals": 0,
+      "blocks": 21,
+      "turnovers": 21,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UE",
+      "player": "ORTIZ",
+      "jersey": 6,
+      "games_played": 0,
+      "minutes": 12,
+      "points": 209,
+      "three_points": {
+        "made": 16,
+        "att": 45
+      },
+      "two_points": {
+        "made": 56,
+        "att": 149
+      },
+      "free_throws": {
+        "made": 49,
+        "att": 77
+      },
+      "rebounds": {
+        "off": 52,
+        "def": 76,
+        "total": 128
+      },
+      "assists": 20,
+      "steals": 0,
+      "blocks": 69,
+      "turnovers": 25,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UE",
+      "player": "PASCUAL",
+      "jersey": 7,
+      "games_played": 0,
+      "minutes": 12,
+      "points": 96,
+      "three_points": {
+        "made": 4,
+        "att": 23
+      },
+      "two_points": {
+        "made": 30,
+        "att": 103
+      },
+      "free_throws": {
+        "made": 24,
+        "att": 40
+      },
+      "rebounds": {
+        "off": 21,
+        "def": 37,
+        "total": 58
+      },
+      "assists": 21,
+      "steals": 0,
+      "blocks": 62,
+      "turnovers": 19,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UE",
+      "player": "ZAPATA",
+      "jersey": 8,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 17,
+      "three_points": {
+        "made": 1,
+        "att": 5
+      },
+      "two_points": {
+        "made": 6,
+        "att": 27
+      },
+      "free_throws": {
+        "made": 2,
+        "att": 7
+      },
+      "rebounds": {
+        "off": 8,
+        "def": 6,
+        "total": 14
+      },
+      "assists": 15,
+      "steals": 0,
+      "blocks": 43,
+      "turnovers": 12,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UE",
+      "player": "CRUZ",
+      "jersey": 9,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 10,
+      "three_points": {
+        "made": 2,
+        "att": 19
+      },
+      "two_points": {
+        "made": 1,
+        "att": 6
+      },
+      "free_throws": {
+        "made": 2,
+        "att": 7
+      },
+      "rebounds": {
+        "off": 8,
+        "def": 6,
+        "total": 14
+      },
+      "assists": 9,
+      "steals": 0,
+      "blocks": 44,
+      "turnovers": 8,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UE",
+      "player": "ANANAS",
+      "jersey": 11,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 64,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 26,
+        "att": 31
+      },
+      "free_throws": {
+        "made": 12,
+        "att": 27
+      },
+      "rebounds": {
+        "off": 22,
+        "def": 14,
+        "total": 36
+      },
+      "assists": 5,
+      "steals": 0,
+      "blocks": 12,
+      "turnovers": 11,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UE",
+      "player": "CONSTANTINO",
+      "jersey": 12,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 43,
+      "three_points": {
+        "made": 1,
+        "att": 2
+      },
+      "two_points": {
+        "made": 15,
+        "att": 30
+      },
+      "free_throws": {
+        "made": 10,
+        "att": 50
+      },
+      "rebounds": {
+        "off": 2,
+        "def": 7,
+        "total": 9
+      },
+      "assists": 5,
+      "steals": 0,
+      "blocks": 17,
+      "turnovers": 3,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UE",
+      "player": "LABERON",
+      "jersey": 13,
+      "games_played": 0,
+      "minutes": 12,
+      "points": 64,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 24,
+        "att": 79
+      },
+      "free_throws": {
+        "made": 16,
+        "att": 64
+      },
+      "rebounds": {
+        "off": 39,
+        "def": 52,
+        "total": 91
+      },
+      "assists": 9,
+      "steals": 0,
+      "blocks": 36,
+      "turnovers": 11,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UE",
+      "player": "BAUTISTA",
+      "jersey": 14,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 9,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 4,
+        "att": 9
+      },
+      "free_throws": {
+        "made": 1,
+        "att": 4
+      },
+      "rebounds": {
+        "off": 3,
+        "def": 12,
+        "total": 15
+      },
+      "assists": 1,
+      "steals": 0,
+      "blocks": 4,
+      "turnovers": 5,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UE",
+      "player": "NOGUE",
+      "jersey": 15,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 6,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 1,
+        "att": 9
+      },
+      "free_throws": {
+        "made": 4,
+        "att": 8
+      },
+      "rebounds": {
+        "off": 5,
+        "def": 13,
+        "total": 18
+      },
+      "assists": 2,
+      "steals": 0,
+      "blocks": 9,
+      "turnovers": 11,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UE",
+      "player": "CULBON",
+      "jersey": 17,
+      "games_played": 0,
+      "minutes": 1,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 2
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 1,
+        "def": 0,
+        "total": 1
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UP",
+      "player": "AGUILA",
+      "jersey": 4,
+      "games_played": 12,
+      "minutes": 178,
+      "points": 38,
+      "three_points": {
+        "made": 3,
+        "att": 28
+      },
+      "two_points": {
+        "made": 9,
+        "att": 27
+      },
+      "free_throws": {
+        "made": 11,
+        "att": 17
+      },
+      "rebounds": {
+        "off": 10,
+        "def": 32,
+        "total": 42
+      },
+      "assists": 17,
+      "steals": 12,
+      "blocks": 0,
+      "turnovers": 30,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UP",
+      "player": "MARCELO",
+      "jersey": 5,
+      "games_played": 10,
+      "minutes": 48,
+      "points": 12,
+      "three_points": {
+        "made": 3,
+        "att": 51
+      },
+      "two_points": {
+        "made": 7,
+        "att": 43
+      },
+      "free_throws": {
+        "made": 6,
+        "att": 10
+      },
+      "rebounds": {
+        "off": 3,
+        "def": 6,
+        "total": 9
+      },
+      "assists": 4,
+      "steals": 3,
+      "blocks": 0,
+      "turnovers": 9,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UP",
+      "player": "ABADILLA",
+      "jersey": 6,
+      "games_played": 12,
+      "minutes": 164,
+      "points": 51,
+      "three_points": {
+        "made": 1,
+        "att": 4
+      },
+      "two_points": {
+        "made": 18,
+        "att": 54
+      },
+      "free_throws": {
+        "made": 12,
+        "att": 19
+      },
+      "rebounds": {
+        "off": 6,
+        "def": 8,
+        "total": 14
+      },
+      "assists": 8,
+      "steals": 12,
+      "blocks": 1,
+      "turnovers": 27,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UP",
+      "player": "MUCALDITO",
+      "jersey": 7,
+      "games_played": 12,
+      "minutes": 249,
+      "points": 71,
+      "three_points": {
+        "made": 9,
+        "att": 31
+      },
+      "two_points": {
+        "made": 18,
+        "att": 36
+      },
+      "free_throws": {
+        "made": 14,
+        "att": 20
+      },
+      "rebounds": {
+        "off": 14,
+        "def": 19,
+        "total": 33
+      },
+      "assists": 13,
+      "steals": 15,
+      "blocks": 0,
+      "turnovers": 24,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UP",
+      "player": "QUITO",
+      "jersey": 8,
+      "games_played": 9,
+      "minutes": 42,
+      "points": 6,
+      "three_points": {
+        "made": 0,
+        "att": 1
+      },
+      "two_points": {
+        "made": 3,
+        "att": 9
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 8,
+        "def": 6,
+        "total": 14
+      },
+      "assists": 2,
+      "steals": 1,
+      "blocks": 0,
+      "turnovers": 5,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UP",
+      "player": "CORDEIRO",
+      "jersey": 9,
+      "games_played": 12,
+      "minutes": 52,
+      "points": 9,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 4,
+        "att": 40
+      },
+      "free_throws": {
+        "made": 1,
+        "att": 4
+      },
+      "rebounds": {
+        "off": 1,
+        "def": 4,
+        "total": 5
+      },
+      "assists": 3,
+      "steals": 3,
+      "blocks": 0,
+      "turnovers": 9,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UP",
+      "player": "DAVID",
+      "jersey": 10,
+      "games_played": 12,
+      "minutes": 164,
+      "points": 58,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 17,
+        "att": 35
+      },
+      "free_throws": {
+        "made": 24,
+        "att": 50
+      },
+      "rebounds": {
+        "off": 14,
+        "def": 23,
+        "total": 37
+      },
+      "assists": 6,
+      "steals": 3,
+      "blocks": 0,
+      "turnovers": 8,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UP",
+      "player": "CONNIE",
+      "jersey": 11,
+      "games_played": 3,
+      "minutes": 19,
+      "points": 2,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 1,
+        "att": 3
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 2
+      },
+      "rebounds": {
+        "off": 3,
+        "def": 5,
+        "total": 8
+      },
+      "assists": 2,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 5,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UP",
+      "player": "AGUINALDO",
+      "jersey": 12,
+      "games_played": 9,
+      "minutes": 67,
+      "points": 13,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 4,
+        "att": 13
+      },
+      "free_throws": {
+        "made": 5,
+        "att": 17
+      },
+      "rebounds": {
+        "off": 6,
+        "def": 10,
+        "total": 16
+      },
+      "assists": 0,
+      "steals": 2,
+      "blocks": 0,
+      "turnovers": 6,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UP",
+      "player": "AUNAS",
+      "jersey": 14,
+      "games_played": 12,
+      "minutes": 326,
+      "points": 92,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 38,
+        "att": 95
+      },
+      "free_throws": {
+        "made": 16,
+        "att": 34
+      },
+      "rebounds": {
+        "off": 34,
+        "def": 53,
+        "total": 87
+      },
+      "assists": 5,
+      "steals": 9,
+      "blocks": 1,
+      "turnovers": 26,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UP",
+      "player": "FERNANDO",
+      "jersey": 15,
+      "games_played": 12,
+      "minutes": 371,
+      "points": 115,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 40,
+        "att": 109
+      },
+      "free_throws": {
+        "made": 35,
+        "att": 62
+      },
+      "rebounds": {
+        "off": 27,
+        "def": 65,
+        "total": 92
+      },
+      "assists": 26,
+      "steals": 19,
+      "blocks": 4,
+      "turnovers": 44,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UP",
+      "player": "DOWLING",
+      "jersey": 17,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UST",
+      "player": "CAHILIC",
+      "jersey": 4,
+      "games_played": 12,
+      "minutes": 197,
+      "points": 55,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 12,
+        "att": 27
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 23,
+      "steals": 0,
+      "blocks": 1,
+      "turnovers": 39,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UST",
+      "player": "ESGUERRA",
+      "jersey": 5,
+      "games_played": 355,
+      "minutes": 0,
+      "points": 46,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 17,
+        "att": 29
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 42,
+      "steals": 0,
+      "blocks": 50,
+      "turnovers": 14,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UST",
+      "player": "GALAN",
+      "jersey": 7,
+      "games_played": 1,
+      "minutes": 7,
+      "points": 2,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UST",
+      "player": "LUMEN",
+      "jersey": 8,
+      "games_played": 3,
+      "minutes": 22,
+      "points": 2,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 2,
+        "att": 4
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 1,
+      "steals": 0,
+      "blocks": 2,
+      "turnovers": 3,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UST",
+      "player": "ANG",
+      "jersey": 9,
+      "games_played": 92,
+      "minutes": 0,
+      "points": 117,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 19,
+        "att": 53
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 8,
+      "steals": 0,
+      "blocks": 9,
+      "turnovers": 6,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UST",
+      "player": "UYON",
+      "jersey": 10,
+      "games_played": 294,
+      "minutes": 0,
+      "points": 20,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 24,
+        "att": 4
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 6,
+      "steals": 0,
+      "blocks": 20,
+      "turnovers": 9,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UST",
+      "player": "JASQUEZ",
+      "jersey": 11,
+      "games_played": 4,
+      "minutes": 0,
+      "points": 20,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 1,
+        "att": 4
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 12,
+      "steals": 0,
+      "blocks": 14,
+      "turnovers": 11,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UST",
+      "player": "MCGUIRE",
+      "jersey": 12,
+      "games_played": 335,
+      "minutes": 0,
+      "points": 77,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 13,
+        "att": 26
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 10,
+      "steals": 0,
+      "blocks": 21,
+      "turnovers": 8,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UST",
+      "player": "VILLENA",
+      "jersey": 14,
+      "games_played": 131,
+      "minutes": 0,
+      "points": 29,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 7,
+        "att": 10
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 1,
+      "steals": 0,
+      "blocks": 10,
+      "turnovers": 12,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UST",
+      "player": "GABRIEL",
+      "jersey": 16,
+      "games_played": 21,
+      "minutes": 0,
+      "points": 3,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 3,
+      "steals": 0,
+      "blocks": 3,
+      "turnovers": 1,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UST",
+      "player": "ONG",
+      "jersey": 17,
+      "games_played": 3,
+      "minutes": 23,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 2,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 2,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UST",
+      "player": "MAC-ISA",
+      "jersey": 18,
+      "games_played": 72,
+      "minutes": 0,
+      "points": 9,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 3,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 7,
+      "fouls": 0
+    },
+    {
+      "season": "2000-2001",
+      "division": "men",
+      "school": "UST",
+      "player": "ROBLES",
+      "jersey": 20,
+      "games_played": 34,
+      "minutes": 0,
+      "points": 10,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 6,
+      "turnovers": 2,
+      "fouls": 0
+    }
+  ]
+}

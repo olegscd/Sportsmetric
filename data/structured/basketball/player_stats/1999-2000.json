@@ -1,0 +1,3047 @@
+{
+  "season": "1999-2000",
+  "sport": "basketball",
+  "total_players": 95,
+  "players": [
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "ADMU",
+      "player": "PALINES",
+      "jersey": 4,
+      "games_played": 15,
+      "minutes": 330,
+      "points": 113,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 25
+      },
+      "rebounds": {
+        "off": 17,
+        "def": 19,
+        "total": 36
+      },
+      "assists": 45,
+      "steals": 13,
+      "blocks": 0,
+      "turnovers": 26,
+      "fouls": 25
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "ADMU",
+      "player": "ESPIRITU",
+      "jersey": 5,
+      "games_played": 12,
+      "minutes": 125,
+      "points": 40,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 27
+      },
+      "rebounds": {
+        "off": 8,
+        "def": 15,
+        "total": 23
+      },
+      "assists": 22,
+      "steals": 12,
+      "blocks": 2,
+      "turnovers": 21,
+      "fouls": 19
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "ADMU",
+      "player": "BAUTISTA",
+      "jersey": 6,
+      "games_played": 7,
+      "minutes": 64,
+      "points": 28,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 6
+      },
+      "rebounds": {
+        "off": 7,
+        "def": 6,
+        "total": 13
+      },
+      "assists": 9,
+      "steals": 7,
+      "blocks": 0,
+      "turnovers": 8,
+      "fouls": 9
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "ADMU",
+      "player": "DE LEON, P -",
+      "jersey": 7,
+      "games_played": 14,
+      "minutes": 323,
+      "points": 150,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 45
+      },
+      "rebounds": {
+        "off": 11,
+        "def": 23,
+        "total": 34
+      },
+      "assists": 53,
+      "steals": 42,
+      "blocks": 5,
+      "turnovers": 40,
+      "fouls": 31
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "ADMU",
+      "player": "ANSAY",
+      "jersey": 8,
+      "games_played": 15,
+      "minutes": 203,
+      "points": 152,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 26
+      },
+      "rebounds": {
+        "off": 17,
+        "def": 11,
+        "total": 28
+      },
+      "assists": 15,
+      "steals": 13,
+      "blocks": 1,
+      "turnovers": 15,
+      "fouls": 12
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "ADMU",
+      "player": "BAUA",
+      "jersey": 10,
+      "games_played": 14,
+      "minutes": 229,
+      "points": 71,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 26
+      },
+      "rebounds": {
+        "off": 13,
+        "def": 19,
+        "total": 32
+      },
+      "assists": 29,
+      "steals": 18,
+      "blocks": 1,
+      "turnovers": 25,
+      "fouls": 29
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "ADMU",
+      "player": "NAZARENO",
+      "jersey": 11,
+      "games_played": 9,
+      "minutes": 58,
+      "points": 28,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 9
+      },
+      "rebounds": {
+        "off": 3,
+        "def": 4,
+        "total": 7
+      },
+      "assists": 7,
+      "steals": 9,
+      "blocks": 0,
+      "turnovers": 9,
+      "fouls": 14
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "ADMU",
+      "player": "GONZALES",
+      "jersey": 12,
+      "games_played": 8,
+      "minutes": 76,
+      "points": 35,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 2
+      },
+      "rebounds": {
+        "off": 2,
+        "def": 1,
+        "total": 3
+      },
+      "assists": 10,
+      "steals": 4,
+      "blocks": 0,
+      "turnovers": 9,
+      "fouls": 3
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "ADMU",
+      "player": "FONACIER",
+      "jersey": 14,
+      "games_played": 14,
+      "minutes": 417,
+      "points": 215,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 49
+      },
+      "rebounds": {
+        "off": 52,
+        "def": 93,
+        "total": 145
+      },
+      "assists": 90,
+      "steals": 22,
+      "blocks": 22,
+      "turnovers": 61,
+      "fouls": 29
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "ADMU",
+      "player": "DE LEON, M",
+      "jersey": 15,
+      "games_played": 14,
+      "minutes": 188,
+      "points": 64,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 21
+      },
+      "rebounds": {
+        "off": 25,
+        "def": 30,
+        "total": 55
+      },
+      "assists": 23,
+      "steals": 9,
+      "blocks": 2,
+      "turnovers": 20,
+      "fouls": 23
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "ADMU",
+      "player": "PELAYO",
+      "jersey": 16,
+      "games_played": 13,
+      "minutes": 143,
+      "points": 35,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 16
+      },
+      "rebounds": {
+        "off": 9,
+        "def": 24,
+        "total": 33
+      },
+      "assists": 5,
+      "steals": 5,
+      "blocks": 3,
+      "turnovers": 12,
+      "fouls": 28
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "ADMU",
+      "player": "ELMIDO",
+      "jersey": 17,
+      "games_played": 15,
+      "minutes": 376,
+      "points": 228,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 96
+      },
+      "rebounds": {
+        "off": 63,
+        "def": 60,
+        "total": 123
+      },
+      "assists": 10,
+      "steals": 4,
+      "blocks": 18,
+      "turnovers": 42,
+      "fouls": 40
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "ADMU",
+      "player": "TOLOSA",
+      "jersey": 18,
+      "games_played": 14,
+      "minutes": 201,
+      "points": 56,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 30
+      },
+      "rebounds": {
+        "off": 24,
+        "def": 31,
+        "total": 55
+      },
+      "assists": 5,
+      "steals": 5,
+      "blocks": 2,
+      "turnovers": 33,
+      "fouls": 36
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "ADMU",
+      "player": "GUIDABEN",
+      "jersey": 19,
+      "games_played": 15,
+      "minutes": 267,
+      "points": 76,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 31
+      },
+      "rebounds": {
+        "off": 20,
+        "def": 34,
+        "total": 54
+      },
+      "assists": 12,
+      "steals": 7,
+      "blocks": 15,
+      "turnovers": 24,
+      "fouls": 44
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "ADU",
+      "player": "MIGUEL",
+      "jersey": 4,
+      "games_played": 16,
+      "minutes": 350,
+      "points": 112,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 19,
+        "att": 43
+      },
+      "rebounds": {
+        "off": 30,
+        "def": 53,
+        "total": 83
+      },
+      "assists": 12,
+      "steals": 3,
+      "blocks": 1,
+      "turnovers": 31,
+      "fouls": 31
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "ADU",
+      "player": "ORBETA",
+      "jersey": 5,
+      "games_played": 15,
+      "minutes": 179,
+      "points": 61,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 12,
+        "att": 18
+      },
+      "rebounds": {
+        "off": 15,
+        "def": 10,
+        "total": 25
+      },
+      "assists": 15,
+      "steals": 7,
+      "blocks": 2,
+      "turnovers": 18,
+      "fouls": 14
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "ADU",
+      "player": "CAPATI",
+      "jersey": 6,
+      "games_played": 16,
+      "minutes": 498,
+      "points": 156,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 23,
+        "att": 40
+      },
+      "rebounds": {
+        "off": 58,
+        "def": 60,
+        "total": 118
+      },
+      "assists": 32,
+      "steals": 10,
+      "blocks": 6,
+      "turnovers": 47,
+      "fouls": 39
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "ADU",
+      "player": "DE JESUS",
+      "jersey": 7,
+      "games_played": 16,
+      "minutes": 441,
+      "points": 121,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 24,
+        "att": 46
+      },
+      "rebounds": {
+        "off": 50,
+        "def": 61,
+        "total": 111
+      },
+      "assists": 6,
+      "steals": 6,
+      "blocks": 25,
+      "turnovers": 37,
+      "fouls": 55
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "ADU",
+      "player": "VIZCARA",
+      "jersey": 8,
+      "games_played": 16,
+      "minutes": 500,
+      "points": 204,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 30,
+        "att": 57
+      },
+      "rebounds": {
+        "off": 43,
+        "def": 55,
+        "total": 98
+      },
+      "assists": 42,
+      "steals": 28,
+      "blocks": 22,
+      "turnovers": 61,
+      "fouls": 51
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "ADU",
+      "player": "KHO",
+      "jersey": 9,
+      "games_played": 1,
+      "minutes": 1,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 1,
+        "def": 0,
+        "total": 1
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "ADU",
+      "player": "GONZAGA",
+      "jersey": 10,
+      "games_played": 16,
+      "minutes": 411,
+      "points": 196,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 41,
+        "att": 59
+      },
+      "rebounds": {
+        "off": 14,
+        "def": 25,
+        "total": 39
+      },
+      "assists": 60,
+      "steals": 40,
+      "blocks": 0,
+      "turnovers": 66,
+      "fouls": 51
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "ADU",
+      "player": "GONZALES",
+      "jersey": 11,
+      "games_played": 9,
+      "minutes": 136,
+      "points": 39,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 5,
+        "att": 9
+      },
+      "rebounds": {
+        "off": 15,
+        "def": 11,
+        "total": 26
+      },
+      "assists": 18,
+      "steals": 15,
+      "blocks": 2,
+      "turnovers": 17,
+      "fouls": 22
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "ADU",
+      "player": "SAN DIEGO",
+      "jersey": 12,
+      "games_played": 15,
+      "minutes": 142,
+      "points": 47,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 7,
+        "att": 12
+      },
+      "rebounds": {
+        "off": 13,
+        "def": 16,
+        "total": 29
+      },
+      "assists": 8,
+      "steals": 2,
+      "blocks": 0,
+      "turnovers": 24,
+      "fouls": 23
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "ADU",
+      "player": "DELGADO",
+      "jersey": 14,
+      "games_played": 1,
+      "minutes": 13,
+      "points": 7,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 1,
+        "def": 3,
+        "total": 4
+      },
+      "assists": 2,
+      "steals": 0,
+      "blocks": 1,
+      "turnovers": 1,
+      "fouls": 3
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "ADU",
+      "player": "UKOL",
+      "jersey": 15,
+      "games_played": 16,
+      "minutes": 370,
+      "points": 91,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 26,
+        "att": 37
+      },
+      "rebounds": {
+        "off": 7,
+        "def": 33,
+        "total": 40
+      },
+      "assists": 48,
+      "steals": 28,
+      "blocks": 0,
+      "turnovers": 55,
+      "fouls": 64
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "ADU",
+      "player": "AMADOR",
+      "jersey": 16,
+      "games_played": 4,
+      "minutes": 28,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 1,
+        "def": 2,
+        "total": 3
+      },
+      "assists": 1,
+      "steals": 0,
+      "blocks": 1,
+      "turnovers": 1,
+      "fouls": 6
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "ADU",
+      "player": "ABENICA",
+      "jersey": 17,
+      "games_played": 1,
+      "minutes": 5,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 1,
+        "total": 1
+      },
+      "assists": 2,
+      "steals": 1,
+      "blocks": 0,
+      "turnovers": 8,
+      "fouls": 0
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "ADU",
+      "player": "VITUG",
+      "jersey": 18,
+      "games_played": 16,
+      "minutes": 176,
+      "points": 31,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 5,
+        "att": 9
+      },
+      "rebounds": {
+        "off": 14,
+        "def": 30,
+        "total": 44
+      },
+      "assists": 2,
+      "steals": 1,
+      "blocks": 12,
+      "turnovers": 13,
+      "fouls": 29
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "UST",
+      "player": "SANCHEZ",
+      "jersey": 4,
+      "games_played": 3,
+      "minutes": 16,
+      "points": 7,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 2
+      },
+      "rebounds": {
+        "off": 1,
+        "def": 2,
+        "total": 3
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 1,
+      "turnovers": 3,
+      "fouls": 3
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "UST",
+      "player": "BAG-O",
+      "jersey": 5,
+      "games_played": 12,
+      "minutes": 115,
+      "points": 27,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 26
+      },
+      "rebounds": {
+        "off": 3,
+        "def": 4,
+        "total": 7
+      },
+      "assists": 9,
+      "steals": 3,
+      "blocks": 0,
+      "turnovers": 19,
+      "fouls": 19
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "UST",
+      "player": "PASALANAN",
+      "jersey": 6,
+      "games_played": 9,
+      "minutes": 33,
+      "points": 4,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 2
+      },
+      "rebounds": {
+        "off": 2,
+        "def": 0,
+        "total": 2
+      },
+      "assists": 4,
+      "steals": 1,
+      "blocks": 0,
+      "turnovers": 6,
+      "fouls": 4
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "UST",
+      "player": "ILAGAN",
+      "jersey": 7,
+      "games_played": 13,
+      "minutes": 340,
+      "points": 77,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 11
+      },
+      "rebounds": {
+        "off": 10,
+        "def": 27,
+        "total": 37
+      },
+      "assists": 20,
+      "steals": 9,
+      "blocks": 3,
+      "turnovers": 38,
+      "fouls": 32
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "UST",
+      "player": "FERNANDO",
+      "jersey": 8,
+      "games_played": 13,
+      "minutes": 286,
+      "points": 72,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 64
+      },
+      "rebounds": {
+        "off": 29,
+        "def": 44,
+        "total": 73
+      },
+      "assists": 15,
+      "steals": 9,
+      "blocks": 2,
+      "turnovers": 33,
+      "fouls": 51
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "UST",
+      "player": "CARAIG",
+      "jersey": 9,
+      "games_played": 11,
+      "minutes": 111,
+      "points": 47,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 21
+      },
+      "rebounds": {
+        "off": 6,
+        "def": 2,
+        "total": 8
+      },
+      "assists": 6,
+      "steals": 5,
+      "blocks": 1,
+      "turnovers": 15,
+      "fouls": 9
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "UST",
+      "player": "DE GUZMAN",
+      "jersey": 10,
+      "games_played": 13,
+      "minutes": 434,
+      "points": 181,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 130
+      },
+      "rebounds": {
+        "off": 41,
+        "def": 81,
+        "total": 122
+      },
+      "assists": 28,
+      "steals": 21,
+      "blocks": 8,
+      "turnovers": 45,
+      "fouls": 45
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "UST",
+      "player": "DEL REMEDIOS",
+      "jersey": 11,
+      "games_played": 6,
+      "minutes": 72,
+      "points": 25,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 11
+      },
+      "rebounds": {
+        "off": 5,
+        "def": 1,
+        "total": 6
+      },
+      "assists": 1,
+      "steals": 4,
+      "blocks": 1,
+      "turnovers": 6,
+      "fouls": 8
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "UST",
+      "player": "CORTEZ",
+      "jersey": 12,
+      "games_played": 13,
+      "minutes": 368,
+      "points": 227,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 59
+      },
+      "rebounds": {
+        "off": 42,
+        "def": 24,
+        "total": 66
+      },
+      "assists": 37,
+      "steals": 31,
+      "blocks": 4,
+      "turnovers": 54,
+      "fouls": 33
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "UST",
+      "player": "TE",
+      "jersey": 13,
+      "games_played": 12,
+      "minutes": 387,
+      "points": 138,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 48
+      },
+      "rebounds": {
+        "off": 11,
+        "def": 35,
+        "total": 46
+      },
+      "assists": 64,
+      "steals": 28,
+      "blocks": 0,
+      "turnovers": 48,
+      "fouls": 32
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "UST",
+      "player": "DEL MUNDO",
+      "jersey": 14,
+      "games_played": 6,
+      "minutes": 17,
+      "points": 2,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 3,
+        "def": 1,
+        "total": 4
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 3,
+      "fouls": 3
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "UST",
+      "player": "TOLENTINO",
+      "jersey": 15,
+      "games_played": 13,
+      "minutes": 326,
+      "points": 21,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 16
+      },
+      "rebounds": {
+        "off": 19,
+        "def": 37,
+        "total": 56
+      },
+      "assists": 13,
+      "steals": 6,
+      "blocks": 4,
+      "turnovers": 27,
+      "fouls": 33
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "UST",
+      "player": "GERONIMO",
+      "jersey": 16,
+      "games_played": 11,
+      "minutes": 136,
+      "points": 30,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 11
+      },
+      "rebounds": {
+        "off": 15,
+        "def": 18,
+        "total": 33
+      },
+      "assists": 12,
+      "steals": 4,
+      "blocks": 0,
+      "turnovers": 23,
+      "fouls": 10
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "UST",
+      "player": "LOBO",
+      "jersey": 18,
+      "games_played": 1,
+      "minutes": 4,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 1,
+      "fouls": 1
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "UST",
+      "player": "BUSA",
+      "jersey": 19,
+      "games_played": 2,
+      "minutes": 5,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 1,
+      "fouls": 2
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "DLSU",
+      "player": "MAGO",
+      "jersey": 4,
+      "games_played": 10,
+      "minutes": 168,
+      "points": 23,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 10
+      },
+      "rebounds": {
+        "off": 5,
+        "def": 7,
+        "total": 12
+      },
+      "assists": 8,
+      "steals": 5,
+      "blocks": 1,
+      "turnovers": 14,
+      "fouls": 18
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "DLSU",
+      "player": "AUSTRIA",
+      "jersey": 5,
+      "games_played": 12,
+      "minutes": 245,
+      "points": 59,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 18
+      },
+      "rebounds": {
+        "off": 7,
+        "def": 15,
+        "total": 22
+      },
+      "assists": 21,
+      "steals": 15,
+      "blocks": 3,
+      "turnovers": 38,
+      "fouls": 17
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "DLSU",
+      "player": "BELEN",
+      "jersey": 6,
+      "games_played": 6,
+      "minutes": 108,
+      "points": 32,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 11
+      },
+      "rebounds": {
+        "off": 4,
+        "def": 5,
+        "total": 9
+      },
+      "assists": 13,
+      "steals": 11,
+      "blocks": 0,
+      "turnovers": 22,
+      "fouls": 14
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "DLSU",
+      "player": "LOPEZ",
+      "jersey": 8,
+      "games_played": 10,
+      "minutes": 112,
+      "points": 16,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 10
+      },
+      "rebounds": {
+        "off": 6,
+        "def": 6,
+        "total": 12
+      },
+      "assists": 5,
+      "steals": 1,
+      "blocks": 0,
+      "turnovers": 10,
+      "fouls": 12
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "DLSU",
+      "player": "GONZALES",
+      "jersey": 9,
+      "games_played": 10,
+      "minutes": 121,
+      "points": 40,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 28
+      },
+      "rebounds": {
+        "off": 12,
+        "def": 18,
+        "total": 30
+      },
+      "assists": 13,
+      "steals": 1,
+      "blocks": 0,
+      "turnovers": 18,
+      "fouls": 22
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "DLSU",
+      "player": "TRILLO",
+      "jersey": 10,
+      "games_played": 12,
+      "minutes": 308,
+      "points": 77,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 46
+      },
+      "rebounds": {
+        "off": 7,
+        "def": 21,
+        "total": 28
+      },
+      "assists": 55,
+      "steals": 24,
+      "blocks": 2,
+      "turnovers": 56,
+      "fouls": 39
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "DLSU",
+      "player": "URRA",
+      "jersey": 11,
+      "games_played": 9,
+      "minutes": 251,
+      "points": 105,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 45
+      },
+      "rebounds": {
+        "off": 36,
+        "def": 40,
+        "total": 76
+      },
+      "assists": 8,
+      "steals": 11,
+      "blocks": 5,
+      "turnovers": 26,
+      "fouls": 23
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "DLSU",
+      "player": "ONGKINGCO",
+      "jersey": 12,
+      "games_played": 11,
+      "minutes": 156,
+      "points": 24,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 25
+      },
+      "rebounds": {
+        "off": 13,
+        "def": 21,
+        "total": 34
+      },
+      "assists": 0,
+      "steals": 1,
+      "blocks": 4,
+      "turnovers": 15,
+      "fouls": 18
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "DLSU",
+      "player": "PARDO",
+      "jersey": 13,
+      "games_played": 10,
+      "minutes": 229,
+      "points": 122,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 57
+      },
+      "rebounds": {
+        "off": 24,
+        "def": 46,
+        "total": 70
+      },
+      "assists": 2,
+      "steals": 2,
+      "blocks": 4,
+      "turnovers": 33,
+      "fouls": 28
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "DLSU",
+      "player": "ORTIGAS",
+      "jersey": 14,
+      "games_played": 12,
+      "minutes": 218,
+      "points": 57,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 18
+      },
+      "rebounds": {
+        "off": 29,
+        "def": 27,
+        "total": 56
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 3,
+      "turnovers": 14,
+      "fouls": 17
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "DLSU",
+      "player": "BANAL",
+      "jersey": 15,
+      "games_played": 6,
+      "minutes": 62,
+      "points": 12,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 10
+      },
+      "rebounds": {
+        "off": 3,
+        "def": 10,
+        "total": 13
+      },
+      "assists": 1,
+      "steals": 0,
+      "blocks": 1,
+      "turnovers": 5,
+      "fouls": 16
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "DLSU",
+      "player": "MALLARI",
+      "jersey": 16,
+      "games_played": 3,
+      "minutes": 20,
+      "points": 6,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 2
+      },
+      "rebounds": {
+        "off": 2,
+        "def": 2,
+        "total": 4
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 3,
+      "fouls": 2
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "DLSU",
+      "player": "CHOI",
+      "jersey": 17,
+      "games_played": 12,
+      "minutes": 224,
+      "points": 51,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 16
+      },
+      "rebounds": {
+        "off": 9,
+        "def": 20,
+        "total": 29
+      },
+      "assists": 17,
+      "steals": 7,
+      "blocks": 3,
+      "turnovers": 29,
+      "fouls": 35
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "DLSU",
+      "player": "BAUTISTA",
+      "jersey": 18,
+      "games_played": 12,
+      "minutes": 261,
+      "points": 64,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 22
+      },
+      "rebounds": {
+        "off": 8,
+        "def": 8,
+        "total": 16
+      },
+      "assists": 28,
+      "steals": 8,
+      "blocks": 2,
+      "turnovers": 33,
+      "fouls": 25
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "DLSU",
+      "player": "RAMILO",
+      "jersey": 19,
+      "games_played": 2,
+      "minutes": 17,
+      "points": 5,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 4
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 4,
+        "total": 4
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 2,
+      "turnovers": 2,
+      "fouls": 4
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "UP",
+      "player": "LACAMBRA",
+      "jersey": 4,
+      "games_played": 12,
+      "minutes": 178,
+      "points": 6,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 8
+      },
+      "rebounds": {
+        "off": 9,
+        "def": 10,
+        "total": 19
+      },
+      "assists": 8,
+      "steals": 5,
+      "blocks": 1,
+      "turnovers": 11,
+      "fouls": 29
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "UP",
+      "player": "TOBIAS",
+      "jersey": 5,
+      "games_played": 12,
+      "minutes": 372,
+      "points": 115,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 38
+      },
+      "rebounds": {
+        "off": 17,
+        "def": 24,
+        "total": 41
+      },
+      "assists": 46,
+      "steals": 24,
+      "blocks": 2,
+      "turnovers": 62,
+      "fouls": 34
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "UP",
+      "player": "ARZADON",
+      "jersey": 6,
+      "games_played": 2,
+      "minutes": 9,
+      "points": 1,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 2
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "UP",
+      "player": "PASCASIO",
+      "jersey": 7,
+      "games_played": 1,
+      "minutes": 2,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "UP",
+      "player": "JIMENEZ",
+      "jersey": 8,
+      "games_played": 12,
+      "minutes": 67,
+      "points": 5,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 6
+      },
+      "rebounds": {
+        "off": 2,
+        "def": 1,
+        "total": 3
+      },
+      "assists": 5,
+      "steals": 3,
+      "blocks": 0,
+      "turnovers": 11,
+      "fouls": 16
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "UP",
+      "player": "BERGONIA",
+      "jersey": 9,
+      "games_played": 12,
+      "minutes": 310,
+      "points": 53,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 26
+      },
+      "rebounds": {
+        "off": 19,
+        "def": 19,
+        "total": 38
+      },
+      "assists": 28,
+      "steals": 16,
+      "blocks": 0,
+      "turnovers": 44,
+      "fouls": 39
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "UP",
+      "player": "ALMAZAR",
+      "jersey": 10,
+      "games_played": 12,
+      "minutes": 175,
+      "points": 23,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 6
+      },
+      "rebounds": {
+        "off": 9,
+        "def": 16,
+        "total": 25
+      },
+      "assists": 8,
+      "steals": 5,
+      "blocks": 1,
+      "turnovers": 14,
+      "fouls": 18
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "UP",
+      "player": "SANTAIGO",
+      "jersey": 12,
+      "games_played": 11,
+      "minutes": 73,
+      "points": 7,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 2
+      },
+      "rebounds": {
+        "off": 1,
+        "def": 0,
+        "total": 1
+      },
+      "assists": 3,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 7,
+      "fouls": 11
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "UP",
+      "player": "JAMON",
+      "jersey": 13,
+      "games_played": 11,
+      "minutes": 190,
+      "points": 38,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 15
+      },
+      "rebounds": {
+        "off": 9,
+        "def": 15,
+        "total": 24
+      },
+      "assists": 1,
+      "steals": 1,
+      "blocks": 4,
+      "turnovers": 18,
+      "fouls": 40
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "UP",
+      "player": "CALLANTA",
+      "jersey": 14,
+      "games_played": 10,
+      "minutes": 101,
+      "points": 17,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 6,
+        "total": 6
+      },
+      "assists": 3,
+      "steals": 0,
+      "blocks": 1,
+      "turnovers": 2,
+      "fouls": 7
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "UP",
+      "player": "EPRES",
+      "jersey": 15,
+      "games_played": 11,
+      "minutes": 291,
+      "points": 95,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 29
+      },
+      "rebounds": {
+        "off": 12,
+        "def": 47,
+        "total": 59
+      },
+      "assists": 5,
+      "steals": 5,
+      "blocks": 5,
+      "turnovers": 26,
+      "fouls": 17
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "UP",
+      "player": "ACEBU",
+      "jersey": 16,
+      "games_played": 12,
+      "minutes": 298,
+      "points": 147,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 69
+      },
+      "rebounds": {
+        "off": 10,
+        "def": 24,
+        "total": 34
+      },
+      "assists": 15,
+      "steals": 8,
+      "blocks": 3,
+      "turnovers": 45,
+      "fouls": 22
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "UP",
+      "player": "ALBANO",
+      "jersey": 18,
+      "games_played": 12,
+      "minutes": 334,
+      "points": 71,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 41
+      },
+      "rebounds": {
+        "off": 35,
+        "def": 38,
+        "total": 73
+      },
+      "assists": 24,
+      "steals": 19,
+      "blocks": 20,
+      "turnovers": 44,
+      "fouls": 37
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "NU",
+      "player": "CO",
+      "jersey": 4,
+      "games_played": 12,
+      "minutes": 321,
+      "points": 57,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 21,
+        "att": 53
+      },
+      "rebounds": {
+        "off": 14,
+        "def": 14,
+        "total": 28
+      },
+      "assists": 16,
+      "steals": 8,
+      "blocks": 0,
+      "turnovers": 48,
+      "fouls": 28
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "NU",
+      "player": "ORIGENES",
+      "jersey": 5,
+      "games_played": 11,
+      "minutes": 329,
+      "points": 49,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 17,
+        "att": 32
+      },
+      "rebounds": {
+        "off": 21,
+        "def": 27,
+        "total": 48
+      },
+      "assists": 11,
+      "steals": 4,
+      "blocks": 2,
+      "turnovers": 33,
+      "fouls": 35
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "NU",
+      "player": "VENZON",
+      "jersey": 6,
+      "games_played": 3,
+      "minutes": 19,
+      "points": 6,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 2,
+        "att": 4
+      },
+      "rebounds": {
+        "off": 4,
+        "def": 1,
+        "total": 5
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 1,
+      "fouls": 0
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "NU",
+      "player": "JOSON",
+      "jersey": 7,
+      "games_played": 12,
+      "minutes": 407,
+      "points": 220,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 72,
+        "att": 132
+      },
+      "rebounds": {
+        "off": 52,
+        "def": 68,
+        "total": 120
+      },
+      "assists": 15,
+      "steals": 13,
+      "blocks": 18,
+      "turnovers": 56,
+      "fouls": 38
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "NU",
+      "player": "DE CASTRO",
+      "jersey": 8,
+      "games_played": 12,
+      "minutes": 104,
+      "points": 7,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 3,
+        "att": 7
+      },
+      "rebounds": {
+        "off": 4,
+        "def": 3,
+        "total": 7
+      },
+      "assists": 11,
+      "steals": 3,
+      "blocks": 0,
+      "turnovers": 42,
+      "fouls": 18
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "NU",
+      "player": "OCAMPO, N",
+      "jersey": 9,
+      "games_played": 12,
+      "minutes": 391,
+      "points": 149,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 33,
+        "att": 58
+      },
+      "rebounds": {
+        "off": 24,
+        "def": 23,
+        "total": 47
+      },
+      "assists": 22,
+      "steals": 15,
+      "blocks": 5,
+      "turnovers": 30,
+      "fouls": 22
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "NU",
+      "player": "BAYTAN",
+      "jersey": 10,
+      "games_played": 2,
+      "minutes": 10,
+      "points": 1,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 1,
+        "att": 2
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 1,
+        "total": 1
+      },
+      "assists": 0,
+      "steals": 1,
+      "blocks": 0,
+      "turnovers": 3,
+      "fouls": 0
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "NU",
+      "player": "DECENA",
+      "jersey": 11,
+      "games_played": 3,
+      "minutes": 28,
+      "points": 1,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 1,
+        "att": 4
+      },
+      "rebounds": {
+        "off": 3,
+        "def": 5,
+        "total": 8
+      },
+      "assists": 2,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 6,
+      "fouls": 1
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "NU",
+      "player": "OCAMPO, R",
+      "jersey": 12,
+      "games_played": 7,
+      "minutes": 133,
+      "points": 36,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 9,
+        "att": 19
+      },
+      "rebounds": {
+        "off": 10,
+        "def": 8,
+        "total": 18
+      },
+      "assists": 10,
+      "steals": 9,
+      "blocks": 0,
+      "turnovers": 22,
+      "fouls": 28
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "NU",
+      "player": "BECARES",
+      "jersey": 14,
+      "games_played": 2,
+      "minutes": 2,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 1
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "NU",
+      "player": "MALCONTENTO",
+      "jersey": 15,
+      "games_played": 11,
+      "minutes": 352,
+      "points": 135,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 45,
+        "att": 78
+      },
+      "rebounds": {
+        "off": 12,
+        "def": 31,
+        "total": 43
+      },
+      "assists": 44,
+      "steals": 33,
+      "blocks": 4,
+      "turnovers": 76,
+      "fouls": 34
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "NU",
+      "player": "VILLASENOR",
+      "jersey": 16,
+      "games_played": 12,
+      "minutes": 225,
+      "points": 36,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 14,
+        "att": 27
+      },
+      "rebounds": {
+        "off": 12,
+        "def": 8,
+        "total": 20
+      },
+      "assists": 3,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 25,
+      "fouls": 27
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "NU",
+      "player": "JUAN",
+      "jersey": 17,
+      "games_played": 10,
+      "minutes": 79,
+      "points": 3,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 1,
+        "att": 2
+      },
+      "rebounds": {
+        "off": 4,
+        "def": 9,
+        "total": 13
+      },
+      "assists": 1,
+      "steals": 0,
+      "blocks": 2,
+      "turnovers": 8,
+      "fouls": 9
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "UE",
+      "player": "MARCOS",
+      "jersey": 4,
+      "games_played": 9,
+      "minutes": 36,
+      "points": 4,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 4
+      },
+      "rebounds": {
+        "off": 3,
+        "def": 1,
+        "total": 4
+      },
+      "assists": 2,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 7,
+      "fouls": 3
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "UE",
+      "player": "MANLALANGIT",
+      "jersey": 5,
+      "games_played": 12,
+      "minutes": 217,
+      "points": 42,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 23
+      },
+      "rebounds": {
+        "off": 4,
+        "def": 12,
+        "total": 16
+      },
+      "assists": 9,
+      "steals": 5,
+      "blocks": 3,
+      "turnovers": 36,
+      "fouls": 36
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "UE",
+      "player": "MAGBITANG",
+      "jersey": 7,
+      "games_played": 10,
+      "minutes": 252,
+      "points": 67,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 34
+      },
+      "rebounds": {
+        "off": 29,
+        "def": 20,
+        "total": 49
+      },
+      "assists": 4,
+      "steals": 3,
+      "blocks": 4,
+      "turnovers": 22,
+      "fouls": 40
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "UE",
+      "player": "PENAFLOR",
+      "jersey": 8,
+      "games_played": 11,
+      "minutes": 241,
+      "points": 40,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 13
+      },
+      "rebounds": {
+        "off": 11,
+        "def": 15,
+        "total": 26
+      },
+      "assists": 33,
+      "steals": 17,
+      "blocks": 1,
+      "turnovers": 53,
+      "fouls": 39
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "UE",
+      "player": "TOLIBAS",
+      "jersey": 9,
+      "games_played": 11,
+      "minutes": 355,
+      "points": 126,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 51
+      },
+      "rebounds": {
+        "off": 30,
+        "def": 40,
+        "total": 70
+      },
+      "assists": 27,
+      "steals": 13,
+      "blocks": 8,
+      "turnovers": 60,
+      "fouls": 35
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "UE",
+      "player": "BAUTISTA",
+      "jersey": 10,
+      "games_played": 12,
+      "minutes": 358,
+      "points": 104,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 40
+      },
+      "rebounds": {
+        "off": 25,
+        "def": 27,
+        "total": 52
+      },
+      "assists": 24,
+      "steals": 10,
+      "blocks": 2,
+      "turnovers": 50,
+      "fouls": 30
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "UE",
+      "player": "DE LEON",
+      "jersey": 11,
+      "games_played": 6,
+      "minutes": 36,
+      "points": 3,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 2
+      },
+      "rebounds": {
+        "off": 2,
+        "def": 3,
+        "total": 5
+      },
+      "assists": 3,
+      "steals": 0,
+      "blocks": 1,
+      "turnovers": 7,
+      "fouls": 2
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "UE",
+      "player": "DELGADO",
+      "jersey": 12,
+      "games_played": 12,
+      "minutes": 224,
+      "points": 31,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 24
+      },
+      "rebounds": {
+        "off": 5,
+        "def": 9,
+        "total": 14
+      },
+      "assists": 19,
+      "steals": 4,
+      "blocks": 2,
+      "turnovers": 40,
+      "fouls": 15
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "UE",
+      "player": "PERALTA",
+      "jersey": 14,
+      "games_played": 8,
+      "minutes": 64,
+      "points": 19,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 11
+      },
+      "rebounds": {
+        "off": 2,
+        "def": 5,
+        "total": 7
+      },
+      "assists": 3,
+      "steals": 3,
+      "blocks": 1,
+      "turnovers": 9,
+      "fouls": 7
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "UE",
+      "player": "CARANDANG",
+      "jersey": 15,
+      "games_played": 12,
+      "minutes": 214,
+      "points": 43,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 8
+      },
+      "rebounds": {
+        "off": 13,
+        "def": 19,
+        "total": 32
+      },
+      "assists": 5,
+      "steals": 1,
+      "blocks": 0,
+      "turnovers": 22,
+      "fouls": 23
+    },
+    {
+      "season": "1999-2000",
+      "division": "juniors",
+      "school": "UE",
+      "player": "DEBARBO",
+      "jersey": 20,
+      "games_played": 11,
+      "minutes": 362,
+      "points": 130,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 65
+      },
+      "rebounds": {
+        "off": 50,
+        "def": 57,
+        "total": 107
+      },
+      "assists": 17,
+      "steals": 6,
+      "blocks": 26,
+      "turnovers": 33,
+      "fouls": 38
+    }
+  ]
+}

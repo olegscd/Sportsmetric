@@ -1,0 +1,5319 @@
+{
+  "season": "2003-2004",
+  "sport": "basketball",
+  "total_players": 166,
+  "players": [
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "ADMU",
+      "player": "Gonzales, Wesley",
+      "jersey": 4,
+      "games_played": 0,
+      "minutes": 343,
+      "points": 144,
+      "three_points": {
+        "made": 20,
+        "att": 60
+      },
+      "two_points": {
+        "made": 42,
+        "att": 111
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 24,
+        "def": 56,
+        "total": 80
+      },
+      "assists": 20,
+      "steals": 4,
+      "blocks": 9,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "ADMU",
+      "player": "Ave",
+      "jersey": 3,
+      "games_played": 0,
+      "minutes": 245,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 17,
+        "def": 40,
+        "total": 57
+      },
+      "assists": 14,
+      "steals": 3,
+      "blocks": 6,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "ADMU",
+      "player": "Fonacier, Larry",
+      "jersey": 4,
+      "games_played": 0,
+      "minutes": 382,
+      "points": 120,
+      "three_points": {
+        "made": 18,
+        "att": 45
+      },
+      "two_points": {
+        "made": 33,
+        "att": 79
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 29,
+        "def": 54,
+        "total": 83
+      },
+      "assists": 37,
+      "steals": 10,
+      "blocks": 6,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "ADMU",
+      "player": "Ave",
+      "jersey": 3,
+      "games_played": 0,
+      "minutes": 294,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 22,
+        "def": 42,
+        "total": 64
+      },
+      "assists": 28,
+      "steals": 8,
+      "blocks": 5,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "ADMU",
+      "player": "Tenorio, LA",
+      "jersey": 6,
+      "games_played": 0,
+      "minutes": 397,
+      "points": 139,
+      "three_points": {
+        "made": 27,
+        "att": 74
+      },
+      "two_points": {
+        "made": 29,
+        "att": 64
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 5,
+        "def": 57,
+        "total": 62
+      },
+      "assists": 55,
+      "steals": 14,
+      "blocks": 2,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "ADMU",
+      "player": "Ave",
+      "jersey": 4,
+      "games_played": 0,
+      "minutes": 284,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 4,
+        "def": 41,
+        "total": 45
+      },
+      "assists": 39,
+      "steals": 10,
+      "blocks": 1,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "ADMU",
+      "player": "Alvarez, Rich",
+      "jersey": 9,
+      "games_played": 0,
+      "minutes": 417,
+      "points": 84,
+      "three_points": {
+        "made": 6,
+        "att": 25
+      },
+      "two_points": {
+        "made": 33,
+        "att": 90
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 32,
+        "def": 91,
+        "total": 123
+      },
+      "assists": 43,
+      "steals": 10,
+      "blocks": 13,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "ADMU",
+      "player": "Ave",
+      "jersey": 6,
+      "games_played": 0,
+      "minutes": 298,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 23,
+        "def": 65,
+        "total": 88
+      },
+      "assists": 31,
+      "steals": 7,
+      "blocks": 9,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "ADMU",
+      "player": "Bugia, Ramon",
+      "jersey": 4,
+      "games_played": 0,
+      "minutes": 360,
+      "points": 82,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 41,
+        "att": 103
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 35,
+        "def": 28,
+        "total": 63
+      },
+      "assists": 18,
+      "steals": 5,
+      "blocks": 21,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "ADMU",
+      "player": "Ave",
+      "jersey": 3,
+      "games_played": 0,
+      "minutes": 257,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 25,
+        "def": 20,
+        "total": 45
+      },
+      "assists": 13,
+      "steals": 4,
+      "blocks": 15,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "ADMU",
+      "player": "Membrere, Magnum",
+      "jersey": 1,
+      "games_played": 0,
+      "minutes": 211,
+      "points": 55,
+      "three_points": {
+        "made": 7,
+        "att": 26
+      },
+      "two_points": {
+        "made": 17,
+        "att": 38
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 10,
+        "def": 15,
+        "total": 25
+      },
+      "assists": 7,
+      "steals": 9,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "ADMU",
+      "player": "Ave",
+      "jersey": 1,
+      "games_played": 0,
+      "minutes": 176,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 8,
+        "def": 12,
+        "total": 20
+      },
+      "assists": 6,
+      "steals": 8,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "ADMU",
+      "player": "Del Rosario, Christian",
+      "jersey": 1,
+      "games_played": 0,
+      "minutes": 112,
+      "points": 29,
+      "three_points": {
+        "made": 3,
+        "att": 14
+      },
+      "two_points": {
+        "made": 10,
+        "att": 27
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 2,
+        "def": 13,
+        "total": 15
+      },
+      "assists": 6,
+      "steals": 0,
+      "blocks": 1,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "ADMU",
+      "player": "Ave",
+      "jersey": 1,
+      "games_played": 0,
+      "minutes": 160,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 3,
+        "def": 19,
+        "total": 22
+      },
+      "assists": 9,
+      "steals": 0,
+      "blocks": 1,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "ADMU",
+      "player": "Kramer, Douglas",
+      "jersey": 1,
+      "games_played": 0,
+      "minutes": 170,
+      "points": 42,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 21,
+        "att": 53
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 21,
+        "def": 29,
+        "total": 50
+      },
+      "assists": 5,
+      "steals": 0,
+      "blocks": 3,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "ADMU",
+      "player": "Ave",
+      "jersey": 1,
+      "games_played": 0,
+      "minutes": 121,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 15,
+        "def": 21,
+        "total": 36
+      },
+      "assists": 4,
+      "steals": 0,
+      "blocks": 2,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "ADMU",
+      "player": "Intal, JC",
+      "jersey": 3,
+      "games_played": 0,
+      "minutes": 162,
+      "points": 44,
+      "three_points": {
+        "made": 0,
+        "att": 3
+      },
+      "two_points": {
+        "made": 22,
+        "att": 40
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 21,
+        "def": 23,
+        "total": 44
+      },
+      "assists": 5,
+      "steals": 2,
+      "blocks": 6,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "ADMU",
+      "player": "Ave",
+      "jersey": 2,
+      "games_played": 0,
+      "minutes": 116,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 15,
+        "def": 16,
+        "total": 31
+      },
+      "assists": 4,
+      "steals": 1,
+      "blocks": 4,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "ADMU",
+      "player": "Arao, Claiford",
+      "jersey": 1,
+      "games_played": 0,
+      "minutes": 61,
+      "points": 20,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 10,
+        "att": 21
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 8,
+        "def": 16,
+        "total": 24
+      },
+      "assists": 4,
+      "steals": 0,
+      "blocks": 8,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "ADMU",
+      "player": "Ave",
+      "jersey": 1,
+      "games_played": 0,
+      "minutes": 76,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 10,
+        "def": 20,
+        "total": 30
+      },
+      "assists": 5,
+      "steals": 0,
+      "blocks": 10,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "ADMU",
+      "player": "Escalona, Macky",
+      "jersey": 2,
+      "games_played": 0,
+      "minutes": 113,
+      "points": 18,
+      "three_points": {
+        "made": 0,
+        "att": 5
+      },
+      "two_points": {
+        "made": 9,
+        "att": 21
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 2,
+        "def": 12,
+        "total": 14
+      },
+      "assists": 19,
+      "steals": 8,
+      "blocks": 1,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "ADMU",
+      "player": "Ave",
+      "jersey": 2,
+      "games_played": 0,
+      "minutes": 94,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 2,
+        "def": 10,
+        "total": 12
+      },
+      "assists": 16,
+      "steals": 7,
+      "blocks": 1,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "ADMU",
+      "player": "Uichico, Jonathan",
+      "jersey": 0,
+      "games_played": 0,
+      "minutes": 1,
+      "points": 2,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 1,
+        "att": 2
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "ADMU",
+      "player": "Ave",
+      "jersey": 0,
+      "games_played": 0,
+      "minutes": 10,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "ADMU",
+      "player": "Tiu, Christopher",
+      "jersey": 0,
+      "games_played": 0,
+      "minutes": 66,
+      "points": 7,
+      "three_points": {
+        "made": 1,
+        "att": 2
+      },
+      "two_points": {
+        "made": 2,
+        "att": 6
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 2,
+        "def": 5,
+        "total": 7
+      },
+      "assists": 4,
+      "steals": 0,
+      "blocks": 1,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "ADMU",
+      "player": "Ave",
+      "jersey": 0,
+      "games_played": 0,
+      "minutes": 82,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 2,
+        "def": 6,
+        "total": 8
+      },
+      "assists": 5,
+      "steals": 0,
+      "blocks": 1,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "ADMU",
+      "player": "Yao, Eric",
+      "jersey": 0,
+      "games_played": 0,
+      "minutes": 5,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 1
+      },
+      "two_points": {
+        "made": 0,
+        "att": 3
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "ADMU",
+      "player": "Ave",
+      "jersey": 0,
+      "games_played": 0,
+      "minutes": 50,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "ADMU",
+      "player": "Team Total",
+      "jersey": 36,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 786,
+      "three_points": {
+        "made": 82,
+        "att": 255
+      },
+      "two_points": {
+        "made": 270,
+        "att": 658
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 202,
+        "def": 430,
+        "total": 632
+      },
+      "assists": 223,
+      "steals": 62,
+      "blocks": 71,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "ADMU",
+      "player": "Ave",
+      "jersey": 26,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 144,
+        "def": 307,
+        "total": 451
+      },
+      "assists": 159,
+      "steals": 44,
+      "blocks": 51,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "ADU",
+      "player": "Abadia, Mark",
+      "jersey": 7,
+      "games_played": 0,
+      "minutes": 406,
+      "points": 161,
+      "three_points": {
+        "made": 21,
+        "att": 60
+      },
+      "two_points": {
+        "made": 49,
+        "att": 106
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 25,
+        "def": 66,
+        "total": 91
+      },
+      "assists": 19,
+      "steals": 13,
+      "blocks": 10,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "ADU",
+      "player": "Ave",
+      "jersey": 5,
+      "games_played": 0,
+      "minutes": 290,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 18,
+        "def": 47,
+        "total": 65
+      },
+      "assists": 14,
+      "steals": 9,
+      "blocks": 7,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "ADU",
+      "player": "Tagupa, Ramil",
+      "jersey": 5,
+      "games_played": 0,
+      "minutes": 424,
+      "points": 104,
+      "three_points": {
+        "made": 4,
+        "att": 16
+      },
+      "two_points": {
+        "made": 46,
+        "att": 114
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 25,
+        "def": 64,
+        "total": 89
+      },
+      "assists": 52,
+      "steals": 21,
+      "blocks": 1,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "ADU",
+      "player": "Ave",
+      "jersey": 4,
+      "games_played": 0,
+      "minutes": 303,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 18,
+        "def": 46,
+        "total": 64
+      },
+      "assists": 37,
+      "steals": 15,
+      "blocks": 1,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "ADU",
+      "player": "Bono, Karl K.",
+      "jersey": 2,
+      "games_played": 0,
+      "minutes": 283,
+      "points": 72,
+      "three_points": {
+        "made": 0,
+        "att": 12
+      },
+      "two_points": {
+        "made": 36,
+        "att": 88
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 24,
+        "def": 51,
+        "total": 75
+      },
+      "assists": 20,
+      "steals": 1,
+      "blocks": 1,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "ADU",
+      "player": "Ave",
+      "jersey": 2,
+      "games_played": 0,
+      "minutes": 236,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 20,
+        "def": 42,
+        "total": 62
+      },
+      "assists": 17,
+      "steals": 1,
+      "blocks": 1,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "ADU",
+      "player": "Cabahug, Patrick",
+      "jersey": 2,
+      "games_played": 0,
+      "minutes": 192,
+      "points": 67,
+      "three_points": {
+        "made": 11,
+        "att": 39
+      },
+      "two_points": {
+        "made": 17,
+        "att": 37
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 11,
+        "def": 19,
+        "total": 30
+      },
+      "assists": 2,
+      "steals": 6,
+      "blocks": 2,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "ADU",
+      "player": "Ave",
+      "jersey": 2,
+      "games_played": 0,
+      "minutes": 175,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 10,
+        "def": 17,
+        "total": 27
+      },
+      "assists": 2,
+      "steals": 5,
+      "blocks": 2,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "ADU",
+      "player": "Alonzo, Richard",
+      "jersey": 1,
+      "games_played": 0,
+      "minutes": 277,
+      "points": 54,
+      "three_points": {
+        "made": 0,
+        "att": 1
+      },
+      "two_points": {
+        "made": 27,
+        "att": 64
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 19,
+        "def": 52,
+        "total": 71
+      },
+      "assists": 11,
+      "steals": 4,
+      "blocks": 4,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "ADU",
+      "player": "Ave",
+      "jersey": 1,
+      "games_played": 0,
+      "minutes": 198,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 14,
+        "def": 37,
+        "total": 51
+      },
+      "assists": 8,
+      "steals": 3,
+      "blocks": 3,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "ADU",
+      "player": "Hate, Jose Joel",
+      "jersey": 1,
+      "games_played": 0,
+      "minutes": 196,
+      "points": 46,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 23,
+        "att": 57
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 23,
+        "def": 39,
+        "total": 62
+      },
+      "assists": 23,
+      "steals": 6,
+      "blocks": 1,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "ADU",
+      "player": "Ave",
+      "jersey": 1,
+      "games_played": 0,
+      "minutes": 140,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 16,
+        "def": 28,
+        "total": 44
+      },
+      "assists": 16,
+      "steals": 4,
+      "blocks": 1,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "ADU",
+      "player": "Tiongco, Patrick",
+      "jersey": 2,
+      "games_played": 0,
+      "minutes": 254,
+      "points": 49,
+      "three_points": {
+        "made": 9,
+        "att": 33
+      },
+      "two_points": {
+        "made": 11,
+        "att": 26
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 5,
+        "def": 25,
+        "total": 30
+      },
+      "assists": 8,
+      "steals": 7,
+      "blocks": 1,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "ADU",
+      "player": "Ave",
+      "jersey": 2,
+      "games_played": 0,
+      "minutes": 195,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 4,
+        "def": 19,
+        "total": 23
+      },
+      "assists": 6,
+      "steals": 5,
+      "blocks": 1,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "ADU",
+      "player": "Kong, Mark J.",
+      "jersey": 4,
+      "games_played": 0,
+      "minutes": 219,
+      "points": 40,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 20,
+        "att": 56
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 12,
+        "def": 23,
+        "total": 35
+      },
+      "assists": 6,
+      "steals": 1,
+      "blocks": 4,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "ADU",
+      "player": "Ave",
+      "jersey": 3,
+      "games_played": 0,
+      "minutes": 182,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 10,
+        "def": 19,
+        "total": 29
+      },
+      "assists": 5,
+      "steals": 1,
+      "blocks": 3,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "ADU",
+      "player": "Polayapoy, Marvin",
+      "jersey": 4,
+      "games_played": 0,
+      "minutes": 189,
+      "points": 30,
+      "three_points": {
+        "made": 2,
+        "att": 13
+      },
+      "two_points": {
+        "made": 12,
+        "att": 34
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 3,
+        "def": 7,
+        "total": 10
+      },
+      "assists": 14,
+      "steals": 3,
+      "blocks": 1,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "ADU",
+      "player": "Ave",
+      "jersey": 3,
+      "games_played": 0,
+      "minutes": 135,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 2,
+        "def": 5,
+        "total": 7
+      },
+      "assists": 10,
+      "steals": 2,
+      "blocks": 1,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "ADU",
+      "player": "Tajonera, Jeffrey",
+      "jersey": 1,
+      "games_played": 0,
+      "minutes": 189,
+      "points": 33,
+      "three_points": {
+        "made": 3,
+        "att": 14
+      },
+      "two_points": {
+        "made": 12,
+        "att": 39
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 24,
+        "def": 21,
+        "total": 45
+      },
+      "assists": 5,
+      "steals": 3,
+      "blocks": 1,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "ADU",
+      "player": "Ave",
+      "jersey": 1,
+      "games_played": 0,
+      "minutes": 158,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 20,
+        "def": 18,
+        "total": 38
+      },
+      "assists": 4,
+      "steals": 2,
+      "blocks": 1,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "ADU",
+      "player": "Gandarosa, E. Hakim",
+      "jersey": 1,
+      "games_played": 0,
+      "minutes": 73,
+      "points": 16,
+      "three_points": {
+        "made": 0,
+        "att": 2
+      },
+      "two_points": {
+        "made": 8,
+        "att": 11
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 6,
+        "def": 8,
+        "total": 14
+      },
+      "assists": 6,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "ADU",
+      "player": "Ave",
+      "jersey": 2,
+      "games_played": 0,
+      "minutes": 122,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 10,
+        "def": 13,
+        "total": 23
+      },
+      "assists": 10,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "ADU",
+      "player": "Catabay, Reinell",
+      "jersey": 2,
+      "games_played": 0,
+      "minutes": 131,
+      "points": 33,
+      "three_points": {
+        "made": 1,
+        "att": 3
+      },
+      "two_points": {
+        "made": 15,
+        "att": 31
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 9,
+        "def": 9,
+        "total": 18
+      },
+      "assists": 2,
+      "steals": 2,
+      "blocks": 3,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "ADU",
+      "player": "Ave",
+      "jersey": 2,
+      "games_played": 0,
+      "minutes": 101,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 7,
+        "def": 7,
+        "total": 14
+      },
+      "assists": 2,
+      "steals": 2,
+      "blocks": 2,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "ADU",
+      "player": "Hugnatan, Roel",
+      "jersey": 1,
+      "games_played": 0,
+      "minutes": 22,
+      "points": 4,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 2,
+        "att": 4
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 1,
+        "def": 2,
+        "total": 3
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "ADU",
+      "player": "Ave",
+      "jersey": 2,
+      "games_played": 0,
+      "minutes": 55,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 2,
+        "def": 5,
+        "total": 7
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "ADU",
+      "player": "Layug, Gerard C.",
+      "jersey": 0,
+      "games_played": 0,
+      "minutes": 10,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 2
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 1,
+        "total": 1
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "ADU",
+      "player": "Ave",
+      "jersey": 0,
+      "games_played": 0,
+      "minutes": 100,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 10,
+        "total": 10
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "ADU",
+      "player": "Capati, Roel",
+      "jersey": 0,
+      "games_played": 0,
+      "minutes": 8,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 1
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 1,
+        "def": 1,
+        "total": 2
+      },
+      "assists": 1,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "ADU",
+      "player": "Ave",
+      "jersey": 0,
+      "games_played": 0,
+      "minutes": 40,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 5,
+        "def": 5,
+        "total": 10
+      },
+      "assists": 5,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "ADU",
+      "player": "Team Total",
+      "jersey": 33,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 709,
+      "three_points": {
+        "made": 51,
+        "att": 193
+      },
+      "two_points": {
+        "made": 278,
+        "att": 670
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 211,
+        "def": 417,
+        "total": 628
+      },
+      "assists": 169,
+      "steals": 67,
+      "blocks": 29,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "ADU",
+      "player": "Ave",
+      "jersey": 24,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 151,
+        "def": 298,
+        "total": 449
+      },
+      "assists": 121,
+      "steals": 48,
+      "blocks": 21,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "DLSU",
+      "player": "Player Name",
+      "jersey": 0,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "DLSU",
+      "player": "Cardona, Mark",
+      "jersey": 4,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "DLSU",
+      "player": "Ave",
+      "jersey": 3,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "DLSU",
+      "player": "Yeo, Joseph",
+      "jersey": 1,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "DLSU",
+      "player": "Ave",
+      "jersey": 1,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "DLSU",
+      "player": "Casio, Joseph",
+      "jersey": 0,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "DLSU",
+      "player": "Ave",
+      "jersey": 0,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "DLSU",
+      "player": "Gaco, Jerwin",
+      "jersey": 2,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "DLSU",
+      "player": "Ave",
+      "jersey": 1,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "DLSU",
+      "player": "Tang, Tyrone",
+      "jersey": 2,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "DLSU",
+      "player": "Ave",
+      "jersey": 2,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "DLSU",
+      "player": "Araña, Ryan",
+      "jersey": 0,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "DLSU",
+      "player": "Ave",
+      "jersey": 0,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "DLSU",
+      "player": "Sharma, Carlo",
+      "jersey": 0,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "DLSU",
+      "player": "Ave",
+      "jersey": 0,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "DLSU",
+      "player": "Ramos, Manuel",
+      "jersey": 0,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "DLSU",
+      "player": "Ave",
+      "jersey": 0,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "DLSU",
+      "player": "Benitez, Mark",
+      "jersey": 3,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "DLSU",
+      "player": "Ave",
+      "jersey": 2,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "DLSU",
+      "player": "Cabatu, Santiago",
+      "jersey": 2,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "DLSU",
+      "player": "Ave",
+      "jersey": 1,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "DLSU",
+      "player": "Aquino, Jose",
+      "jersey": 1,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "DLSU",
+      "player": "Ave",
+      "jersey": 1,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "DLSU",
+      "player": "Gatchalian, Timoteo",
+      "jersey": 0,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "DLSU",
+      "player": "Ave",
+      "jersey": 0,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "DLSU",
+      "player": "Walsham, Arthur",
+      "jersey": 0,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "DLSU",
+      "player": "Ave",
+      "jersey": 0,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "DLSU",
+      "player": "Cua, Oliver",
+      "jersey": 0,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "DLSU",
+      "player": "Ave",
+      "jersey": 0,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "DLSU",
+      "player": "Gavino, Michael",
+      "jersey": 0,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "DLSU",
+      "player": "Ave",
+      "jersey": 0,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "DLSU",
+      "player": "Chua, Paul",
+      "jersey": 0,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "DLSU",
+      "player": "Ave",
+      "jersey": 0,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "DLSU",
+      "player": "Team Total",
+      "jersey": 15,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "DLSU",
+      "player": "Ave",
+      "jersey": 11,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "FEU",
+      "player": "Name",
+      "jersey": 0,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "FEU",
+      "player": "Santos, Arwind",
+      "jersey": 2,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 147,
+      "three_points": {
+        "made": 13,
+        "att": 31
+      },
+      "two_points": {
+        "made": 54,
+        "att": 107
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "FEU",
+      "player": "Ave",
+      "jersey": 1,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "FEU",
+      "player": "Jones, Gerard",
+      "jersey": 1,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 92,
+      "three_points": {
+        "made": 0,
+        "att": 2
+      },
+      "two_points": {
+        "made": 46,
+        "att": 100
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "FEU",
+      "player": "Ave",
+      "jersey": 1,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "FEU",
+      "player": "Catli, Cesar",
+      "jersey": 2,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 106,
+      "three_points": {
+        "made": 22,
+        "att": 67
+      },
+      "two_points": {
+        "made": 20,
+        "att": 42
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "FEU",
+      "player": "Ave",
+      "jersey": 2,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "FEU",
+      "player": "Miranda, Dennis",
+      "jersey": 3,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 86,
+      "three_points": {
+        "made": 6,
+        "att": 32
+      },
+      "two_points": {
+        "made": 34,
+        "att": 98
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "FEU",
+      "player": "Ave",
+      "jersey": 2,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "FEU",
+      "player": "Rizada, Ryan",
+      "jersey": 1,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 78,
+      "three_points": {
+        "made": 4,
+        "att": 22
+      },
+      "two_points": {
+        "made": 33,
+        "att": 78
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "FEU",
+      "player": "Ave",
+      "jersey": 1,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "FEU",
+      "player": "Isip, Mark",
+      "jersey": 2,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 80,
+      "three_points": {
+        "made": 0,
+        "att": 3
+      },
+      "two_points": {
+        "made": 40,
+        "att": 72
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "FEU",
+      "player": "Ave",
+      "jersey": 1,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "FEU",
+      "player": "Sinco, Rhagnee",
+      "jersey": 3,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 57,
+      "three_points": {
+        "made": 1,
+        "att": 15
+      },
+      "two_points": {
+        "made": 27,
+        "att": 64
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "FEU",
+      "player": "Ave",
+      "jersey": 2,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "FEU",
+      "player": "Sierra, Jay",
+      "jersey": 1,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 42,
+      "three_points": {
+        "made": 8,
+        "att": 34
+      },
+      "two_points": {
+        "made": 9,
+        "att": 23
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "FEU",
+      "player": "Ave",
+      "jersey": 1,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "FEU",
+      "player": "Yabut, Don",
+      "jersey": 0,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 26,
+      "three_points": {
+        "made": 0,
+        "att": 2
+      },
+      "two_points": {
+        "made": 13,
+        "att": 29
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "FEU",
+      "player": "Ave",
+      "jersey": 0,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "FEU",
+      "player": "Zablan, James",
+      "jersey": 1,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 22,
+      "three_points": {
+        "made": 2,
+        "att": 14
+      },
+      "two_points": {
+        "made": 8,
+        "att": 24
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "FEU",
+      "player": "Ave",
+      "jersey": 1,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "FEU",
+      "player": "Razon, James",
+      "jersey": 1,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 20,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 10,
+        "att": 25
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "FEU",
+      "player": "Ave",
+      "jersey": 1,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "FEU",
+      "player": "Chan, Jeffrei",
+      "jersey": 0,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 8,
+      "three_points": {
+        "made": 0,
+        "att": 5
+      },
+      "two_points": {
+        "made": 4,
+        "att": 10
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "FEU",
+      "player": "Ave",
+      "jersey": 0,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "FEU",
+      "player": "Santiago, Cyril",
+      "jersey": 0,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 1
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "FEU",
+      "player": "Ave",
+      "jersey": 0,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "FEU",
+      "player": "Barcellano, Francis",
+      "jersey": 0,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "FEU",
+      "player": "Ave",
+      "jersey": 0,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "FEU",
+      "player": "Gaidane, Nick J.",
+      "jersey": 0,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 1
+      },
+      "two_points": {
+        "made": 0,
+        "att": 1
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "FEU",
+      "player": "Ave",
+      "jersey": 0,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "FEU",
+      "player": "Gutierrez, Eleazar",
+      "jersey": 1,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 3
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "FEU",
+      "player": "Ave",
+      "jersey": 2,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "FEU",
+      "player": "Team Total",
+      "jersey": 18,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 764,
+      "three_points": {
+        "made": 56,
+        "att": 231
+      },
+      "two_points": {
+        "made": 298,
+        "att": 674
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "FEU",
+      "player": "Ave",
+      "jersey": 13,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "UP",
+      "player": "Almeda, Artemio",
+      "jersey": 23,
+      "games_played": 0,
+      "minutes": 308,
+      "points": 103,
+      "three_points": {
+        "made": 9,
+        "att": 29
+      },
+      "two_points": {
+        "made": 38,
+        "att": 87
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 49,
+        "total": 49
+      },
+      "assists": 20,
+      "steals": 9,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "UP",
+      "player": "Ave",
+      "jersey": 18,
+      "games_played": 0,
+      "minutes": 237,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 38,
+        "total": 38
+      },
+      "assists": 15,
+      "steals": 7,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "UP",
+      "player": "Robin, Kenneth",
+      "jersey": 15,
+      "games_played": 0,
+      "minutes": 201,
+      "points": 63,
+      "three_points": {
+        "made": 3,
+        "att": 10
+      },
+      "two_points": {
+        "made": 27,
+        "att": 72
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 47,
+        "total": 47
+      },
+      "assists": 6,
+      "steals": 7,
+      "blocks": 5,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "UP",
+      "player": "Ave",
+      "jersey": 19,
+      "games_played": 0,
+      "minutes": 251,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 59,
+        "total": 59
+      },
+      "assists": 8,
+      "steals": 9,
+      "blocks": 6,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "UP",
+      "player": "Cruz, Marvin",
+      "jersey": 49,
+      "games_played": 0,
+      "minutes": 359,
+      "points": 105,
+      "three_points": {
+        "made": 11,
+        "att": 36
+      },
+      "two_points": {
+        "made": 36,
+        "att": 75
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 45,
+        "total": 45
+      },
+      "assists": 31,
+      "steals": 12,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "UP",
+      "player": "Ave",
+      "jersey": 35,
+      "games_played": 0,
+      "minutes": 256,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 32,
+        "total": 32
+      },
+      "assists": 22,
+      "steals": 9,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "UP",
+      "player": "Reyes, Jayr",
+      "jersey": 28,
+      "games_played": 0,
+      "minutes": 361,
+      "points": 82,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 41,
+        "att": 122
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 53,
+        "total": 53
+      },
+      "assists": 10,
+      "steals": 2,
+      "blocks": 25,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "UP",
+      "player": "Ave",
+      "jersey": 22,
+      "games_played": 0,
+      "minutes": 278,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 41,
+        "total": 41
+      },
+      "assists": 8,
+      "steals": 2,
+      "blocks": 19,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "UP",
+      "player": "David, Nestor",
+      "jersey": 25,
+      "games_played": 0,
+      "minutes": 218,
+      "points": 94,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 47,
+        "att": 74
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 24,
+        "total": 24
+      },
+      "assists": 8,
+      "steals": 5,
+      "blocks": 8,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "UP",
+      "player": "Ave",
+      "jersey": 19,
+      "games_played": 0,
+      "minutes": 168,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 18,
+        "total": 18
+      },
+      "assists": 6,
+      "steals": 4,
+      "blocks": 6,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "UP",
+      "player": "Bornancin, Rob",
+      "jersey": 41,
+      "games_played": 0,
+      "minutes": 366,
+      "points": 84,
+      "three_points": {
+        "made": 14,
+        "att": 55
+      },
+      "two_points": {
+        "made": 21,
+        "att": 66
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 66,
+        "total": 66
+      },
+      "assists": 28,
+      "steals": 1,
+      "blocks": 10,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "UP",
+      "player": "Ave",
+      "jersey": 29,
+      "games_played": 0,
+      "minutes": 261,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 47,
+        "total": 47
+      },
+      "assists": 20,
+      "steals": 1,
+      "blocks": 7,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "UP",
+      "player": "Cervantes, Jasant",
+      "jersey": 29,
+      "games_played": 0,
+      "minutes": 307,
+      "points": 58,
+      "three_points": {
+        "made": 0,
+        "att": 2
+      },
+      "two_points": {
+        "made": 29,
+        "att": 83
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 52,
+        "total": 52
+      },
+      "assists": 13,
+      "steals": 2,
+      "blocks": 1,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "UP",
+      "player": "Ave",
+      "jersey": 21,
+      "games_played": 0,
+      "minutes": 219,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 37,
+        "total": 37
+      },
+      "assists": 9,
+      "steals": 1,
+      "blocks": 1,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "UP",
+      "player": "Ibañez, Ralph",
+      "jersey": 27,
+      "games_played": 0,
+      "minutes": 282,
+      "points": 52,
+      "three_points": {
+        "made": 2,
+        "att": 16
+      },
+      "two_points": {
+        "made": 23,
+        "att": 61
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 32,
+        "total": 32
+      },
+      "assists": 13,
+      "steals": 8,
+      "blocks": 7,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "UP",
+      "player": "Ave",
+      "jersey": 21,
+      "games_played": 0,
+      "minutes": 217,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 25,
+        "total": 25
+      },
+      "assists": 10,
+      "steals": 6,
+      "blocks": 5,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "UP",
+      "player": "Epres, Victor",
+      "jersey": 6,
+      "games_played": 0,
+      "minutes": 66,
+      "points": 9,
+      "three_points": {
+        "made": 1,
+        "att": 10
+      },
+      "two_points": {
+        "made": 3,
+        "att": 5
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 6,
+        "total": 6
+      },
+      "assists": 5,
+      "steals": 1,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "UP",
+      "player": "Ave",
+      "jersey": 8,
+      "games_played": 0,
+      "minutes": 82,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 8,
+        "total": 8
+      },
+      "assists": 6,
+      "steals": 1,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "UP",
+      "player": "Tabique, Lino",
+      "jersey": 20,
+      "games_played": 0,
+      "minutes": 148,
+      "points": 22,
+      "three_points": {
+        "made": 2,
+        "att": 16
+      },
+      "two_points": {
+        "made": 8,
+        "att": 22
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 18,
+        "total": 18
+      },
+      "assists": 12,
+      "steals": 5,
+      "blocks": 1,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "UP",
+      "player": "Ave",
+      "jersey": 17,
+      "games_played": 0,
+      "minutes": 123,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 15,
+        "total": 15
+      },
+      "assists": 10,
+      "steals": 4,
+      "blocks": 1,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "UP",
+      "player": "Buyco, Ira",
+      "jersey": 11,
+      "games_played": 0,
+      "minutes": 106,
+      "points": 14,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 7,
+        "att": 14
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 6,
+        "total": 6
+      },
+      "assists": 1,
+      "steals": 0,
+      "blocks": 1,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "UP",
+      "player": "Ave",
+      "jersey": 9,
+      "games_played": 0,
+      "minutes": 88,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 5,
+        "total": 5
+      },
+      "assists": 1,
+      "steals": 0,
+      "blocks": 1,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "UP",
+      "player": "Ferrer, Delfin",
+      "jersey": 15,
+      "games_played": 0,
+      "minutes": 84,
+      "points": 8,
+      "three_points": {
+        "made": 2,
+        "att": 6
+      },
+      "two_points": {
+        "made": 1,
+        "att": 2
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 11,
+        "total": 11
+      },
+      "assists": 6,
+      "steals": 1,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "UP",
+      "player": "Ave",
+      "jersey": 15,
+      "games_played": 0,
+      "minutes": 84,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 11,
+        "total": 11
+      },
+      "assists": 6,
+      "steals": 1,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "UP",
+      "player": "Manlapaz, Jacob",
+      "jersey": 2,
+      "games_played": 0,
+      "minutes": 13,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 1
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 1,
+        "total": 1
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "UP",
+      "player": "Ave",
+      "jersey": 7,
+      "games_played": 0,
+      "minutes": 43,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 3,
+        "total": 3
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "UP",
+      "player": "Penson, John",
+      "jersey": 0,
+      "games_played": 0,
+      "minutes": 5,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 1
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "UP",
+      "player": "Ave",
+      "jersey": 0,
+      "games_played": 0,
+      "minutes": 50,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "UP",
+      "player": "Agbayani, Jay",
+      "jersey": 4,
+      "games_played": 0,
+      "minutes": 24,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 5
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 1,
+        "total": 1
+      },
+      "assists": 3,
+      "steals": 1,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "UP",
+      "player": "Ave",
+      "jersey": 10,
+      "games_played": 0,
+      "minutes": 60,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 2,
+        "total": 2
+      },
+      "assists": 8,
+      "steals": 2,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "UP",
+      "player": "Carlos, Roberto",
+      "jersey": 0,
+      "games_played": 0,
+      "minutes": 2,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 1
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "UP",
+      "player": "Ave",
+      "jersey": 0,
+      "games_played": 0,
+      "minutes": 20,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 0,
+        "total": 0
+      },
+      "assists": 0,
+      "steals": 0,
+      "blocks": 0,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "UP",
+      "player": "Team Total",
+      "jersey": 311,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 694,
+      "three_points": {
+        "made": 44,
+        "att": 181
+      },
+      "two_points": {
+        "made": 281,
+        "att": 690
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 433,
+        "total": 433
+      },
+      "assists": 156,
+      "steals": 54,
+      "blocks": 58,
+      "turnovers": 0,
+      "fouls": 0
+    },
+    {
+      "season": "2003-2004",
+      "division": "men",
+      "school": "UP",
+      "player": "Ave",
+      "jersey": 222,
+      "games_played": 0,
+      "minutes": 0,
+      "points": 0,
+      "three_points": {
+        "made": 0,
+        "att": 0
+      },
+      "two_points": {
+        "made": 0,
+        "att": 0
+      },
+      "free_throws": {
+        "made": 0,
+        "att": 0
+      },
+      "rebounds": {
+        "off": 0,
+        "def": 309,
+        "total": 309
+      },
+      "assists": 111,
+      "steals": 39,
+      "blocks": 41,
+      "turnovers": 0,
+      "fouls": 0
+    }
+  ]
+}

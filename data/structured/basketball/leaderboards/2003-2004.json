@@ -1,0 +1,338 @@
+{
+  "season": "2003-2004",
+  "sport": "basketball",
+  "divisions": {
+    "men": {
+      "three_point_pct": [
+        {
+          "rank": 1,
+          "player": "Cardona, Mark",
+          "school": "DLSU",
+          "games_played": 13,
+          "value": "17.9",
+          "total": "232"
+        },
+        {
+          "rank": 2,
+          "player": "Mendoza, Reynaldo",
+          "school": "NU",
+          "games_played": 14,
+          "value": "17.1",
+          "total": "239"
+        },
+        {
+          "rank": 3,
+          "player": "Yap, James",
+          "school": "UE",
+          "games_played": 14,
+          "value": "17.0",
+          "total": "238"
+        },
+        {
+          "rank": 4,
+          "player": "Abadia, Mark",
+          "school": "ADU",
+          "games_played": 14,
+          "value": "15.2",
+          "total": "213"
+        },
+        {
+          "rank": 5,
+          "player": "Gonzales, Wesley",
+          "school": "ADMU",
+          "games_played": 14,
+          "value": "12.4",
+          "total": "173"
+        },
+        {
+          "rank": 6,
+          "player": "Fonacier, Larry",
+          "school": "ADMU",
+          "games_played": 13,
+          "value": "12.2",
+          "total": "159"
+        },
+        {
+          "rank": 7,
+          "player": "Santos, Arwind",
+          "school": "FEU",
+          "games_played": 14,
+          "value": "12.1",
+          "total": "170"
+        },
+        {
+          "rank": 8,
+          "player": "Espiritu, Alwin",
+          "school": "UST",
+          "games_played": 14,
+          "value": "11.9",
+          "total": "166"
+        },
+        {
+          "rank": 9,
+          "player": "Artadi, Paul A.",
+          "school": "UE",
+          "games_played": 14,
+          "value": "11.6",
+          "total": "163"
+        },
+        {
+          "rank": 10,
+          "player": "Tenorio, LA",
+          "school": "ADMU",
+          "games_played": 14,
+          "value": "11.6",
+          "total": "162"
+        }
+      ],
+      "field_goal_pct": [
+        {
+          "rank": 1,
+          "player": "David, Nestor",
+          "school": "UP",
+          "games_played": 13,
+          "value": "63.5 %",
+          "total": "47 / 74"
+        },
+        {
+          "rank": 2,
+          "player": "Ramos, Manuel",
+          "school": "DLSU",
+          "games_played": 14,
+          "value": "58.3 %",
+          "total": "28 / 48"
+        },
+        {
+          "rank": 3,
+          "player": "Isip, Mark",
+          "school": "FEU",
+          "games_played": 14,
+          "value": "53.3 %",
+          "total": "40 / 75"
+        },
+        {
+          "rank": 4,
+          "player": "Araña, Ryan",
+          "school": "DLSU",
+          "games_played": 10,
+          "value": "52.1 %",
+          "total": "25 / 48"
+        },
+        {
+          "rank": 5,
+          "player": "Gaco, Jerwin",
+          "school": "DLSU",
+          "games_played": 14,
+          "value": "51.3 %",
+          "total": "40 / 78"
+        },
+        {
+          "rank": 6,
+          "player": "Artadi, Paul A.",
+          "school": "UE",
+          "games_played": 14,
+          "value": "50.0 %",
+          "total": "69 / 138"
+        },
+        {
+          "rank": 7,
+          "player": "Santos, Arwind",
+          "school": "FEU",
+          "games_played": 14,
+          "value": "48.5 %",
+          "total": "67 / 138"
+        },
+        {
+          "rank": 8,
+          "player": "Cardona, Mark",
+          "school": "DLSU",
+          "games_played": 13,
+          "value": "48.5 %",
+          "total": "96 / 198"
+        },
+        {
+          "rank": 9,
+          "player": "Mendoza, Reynaldo",
+          "school": "NU",
+          "games_played": 14,
+          "value": "48.1 %",
+          "total": "87 / 181"
+        },
+        {
+          "rank": 10,
+          "player": "Espiritu, Alwin",
+          "school": "UST",
+          "games_played": 14,
+          "value": "47.8 %",
+          "total": "65 / 136"
+        }
+      ],
+      "free_throw_pct": [
+        {
+          "rank": 1,
+          "player": "Cajayon, Ronnie",
+          "school": "NU",
+          "games_played": 14,
+          "value": "79.6 %",
+          "total": "39 / 49"
+        },
+        {
+          "rank": 2,
+          "player": "Fonacier, Larry",
+          "school": "ADMU",
+          "games_played": 13,
+          "value": "78.0 %",
+          "total": "39 / 50"
+        },
+        {
+          "rank": 3,
+          "player": "Casio, Joseph",
+          "school": "DLSU",
+          "games_played": 14,
+          "value": "75.7 %",
+          "total": "28 / 37"
+        },
+        {
+          "rank": 4,
+          "player": "Estrada, Jay Arr",
+          "school": "UE",
+          "games_played": 14,
+          "value": "75.0 %",
+          "total": "30 / 40"
+        },
+        {
+          "rank": 5,
+          "player": "Yap, James",
+          "school": "UE",
+          "games_played": 14,
+          "value": "72.9 %",
+          "total": "43 / 59"
+        },
+        {
+          "rank": 6,
+          "player": "Cruz, Marvin",
+          "school": "UP",
+          "games_played": 14,
+          "value": "71.4 %",
+          "total": "30 / 42"
+        },
+        {
+          "rank": 7,
+          "player": "Gonzales, Wesley",
+          "school": "ADMU",
+          "games_played": 14,
+          "value": "70.0 %",
+          "total": "35 / 50"
+        },
+        {
+          "rank": 8,
+          "player": "Cervantes, Jasant",
+          "school": "UP",
+          "games_played": 13,
+          "value": "69.7 %",
+          "total": "46 / 66"
+        },
+        {
+          "rank": 9,
+          "player": "Almeda, Artemio",
+          "school": "ADU",
+          "games_played": 14,
+          "value": "69.2 %",
+          "total": "36 / 52"
+        },
+        {
+          "rank": 10,
+          "player": "Tagupa, Ramil",
+          "school": "ADU",
+          "games_played": 14,
+          "value": "69.2 %",
+          "total": "36 / 52"
+        }
+      ],
+      "rebounds": [
+        {
+          "rank": 1,
+          "player": "Robin, Kenneth",
+          "school": "UP",
+          "games_played": 8,
+          "value": "10.1",
+          "total": "81"
+        },
+        {
+          "rank": 2,
+          "player": "Mendoza, Reynaldo",
+          "school": "NU",
+          "games_played": 14,
+          "value": "9.7",
+          "total": "136"
+        },
+        {
+          "rank": 3,
+          "player": "Santos, Arwind",
+          "school": "FEU",
+          "games_played": 14,
+          "value": "9.4",
+          "total": "131"
+        },
+        {
+          "rank": 4,
+          "player": "Alvarez, Rich",
+          "school": "ADMU",
+          "games_played": 14,
+          "value": "8.8",
+          "total": "123"
+        },
+        {
+          "rank": 5,
+          "player": "Espiritu, Alwin",
+          "school": "UST",
+          "games_played": 13,
+          "value": "8.5",
+          "total": "115"
+        },
+        {
+          "rank": 6,
+          "player": "Reyes, Jayr",
+          "school": "UP",
+          "games_played": 13,
+          "value": "6.5",
+          "total": "85"
+        },
+        {
+          "rank": 7,
+          "player": "Cardona, Mark",
+          "school": "DLSU",
+          "games_played": 14,
+          "value": "6.5",
+          "total": "91"
+        },
+        {
+          "rank": 8,
+          "player": "Abadia, Mark",
+          "school": "ADMU",
+          "games_played": 13,
+          "value": "6.4",
+          "total": "83"
+        },
+        {
+          "rank": 9,
+          "player": "Fonacier, Larry",
+          "school": "ADMU",
+          "games_played": 14,
+          "value": "6.4",
+          "total": "89"
+        },
+        {
+          "rank": 1,
+          "player": "Robin, Kenneth",
+          "school": "UP",
+          "games_played": 8,
+          "value": "4.2",
+          "total": "34"
+        }
+      ]
+    },
+    "women": {},
+    "juniors": {}
+  }
+}
