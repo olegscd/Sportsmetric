@@ -1,0 +1,12 @@
+{
+  "season": "1998-1999",
+  "sport": "swimming",
+  "divisions": {
+    "juniors": {
+      "mvp": {
+        "player": "Mikhail George O. Reyes",
+        "school": "UST"
+      }
+    }
+  }
+}

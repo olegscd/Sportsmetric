@@ -1,0 +1,56 @@
+{
+  "season": "2003-2004",
+  "sport": "baseball",
+  "divisions": {
+    "men": [
+      {
+        "school": "ADMU",
+        "wins": 10,
+        "losses": 1,
+        "ties": 9,
+        "pct": 0.5,
+        "rank": 1
+      },
+      {
+        "school": "DLSU",
+        "wins": 10,
+        "losses": 3,
+        "ties": 7,
+        "pct": 0.5,
+        "rank": 2
+      },
+      {
+        "school": "ADU",
+        "wins": 10,
+        "losses": 4,
+        "ties": 6,
+        "pct": 0.5,
+        "rank": 3
+      },
+      {
+        "school": "NU",
+        "wins": 10,
+        "losses": 4,
+        "ties": 6,
+        "pct": 0.5,
+        "rank": 4
+      },
+      {
+        "school": "UP",
+        "wins": 10,
+        "losses": 9,
+        "ties": 1,
+        "pct": 0.5,
+        "rank": 5
+      },
+      {
+        "school": "UST",
+        "wins": 10,
+        "losses": 9,
+        "ties": 1,
+        "pct": 0.5,
+        "rank": 6
+      }
+    ]
+  }
+}

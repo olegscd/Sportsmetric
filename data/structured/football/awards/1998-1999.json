@@ -1,0 +1,26 @@
+{
+  "season": "1998-1999",
+  "sport": "football",
+  "divisions": {
+    "men": {
+      "rookie_of_the_year": {
+        "player": "Paolo Buendia",
+        "school": "ADMU"
+      },
+      "mvp": {
+        "player": "Ramos V. Espejo Jr.",
+        "school": "ADMU"
+      }
+    },
+    "women": {
+      "rookie_of_the_year": {
+        "player": "Marielle Benitez",
+        "school": "DLSU"
+      },
+      "mvp": {
+        "player": "Jo Anne Lobo",
+        "school": "DLSU"
+      }
+    }
+  }
+}

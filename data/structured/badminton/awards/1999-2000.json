@@ -1,0 +1,12 @@
+{
+  "season": "1999-2000",
+  "sport": "badminton",
+  "divisions": {
+    "men": {
+      "mvp": {
+        "player": "Lloyd Escoses",
+        "school": "FEU"
+      }
+    }
+  }
+}

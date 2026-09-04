@@ -1,0 +1,166 @@
+{
+  "season": "2000-2001",
+  "sport": "volleyball",
+  "divisions": {
+    "men": [
+      {
+        "school": "UST",
+        "wins": 12,
+        "losses": 2,
+        "pct": 0.857,
+        "rank": 1
+      },
+      {
+        "school": "FEU",
+        "wins": 10,
+        "losses": 4,
+        "pct": 0.714,
+        "rank": 2
+      },
+      {
+        "school": "NU",
+        "wins": 10,
+        "losses": 4,
+        "pct": 0.714,
+        "rank": 3
+      },
+      {
+        "school": "DLSU",
+        "wins": 9,
+        "losses": 5,
+        "pct": 0.643,
+        "rank": 4
+      },
+      {
+        "school": "ADU",
+        "wins": 9,
+        "losses": 5,
+        "pct": 0.643,
+        "rank": 5
+      },
+      {
+        "school": "UP",
+        "wins": 8,
+        "losses": 6,
+        "pct": 0.571,
+        "rank": 6
+      },
+      {
+        "school": "UE",
+        "wins": 5,
+        "losses": 9,
+        "pct": 0.357,
+        "rank": 7
+      },
+      {
+        "school": "ADMU",
+        "wins": 2,
+        "losses": 12,
+        "pct": 0.143,
+        "rank": 8
+      }
+    ],
+    "women": [
+      {
+        "school": "FEU",
+        "wins": 12,
+        "losses": 2,
+        "pct": 0.857,
+        "rank": 1
+      },
+      {
+        "school": "DLSU",
+        "wins": 11,
+        "losses": 3,
+        "pct": 0.786,
+        "rank": 2
+      },
+      {
+        "school": "ADU",
+        "wins": 10,
+        "losses": 4,
+        "pct": 0.714,
+        "rank": 3
+      },
+      {
+        "school": "UST",
+        "wins": 10,
+        "losses": 4,
+        "pct": 0.714,
+        "rank": 4
+      },
+      {
+        "school": "UE",
+        "wins": 6,
+        "losses": 8,
+        "pct": 0.429,
+        "rank": 5
+      },
+      {
+        "school": "UP",
+        "wins": 5,
+        "losses": 9,
+        "pct": 0.357,
+        "rank": 6
+      },
+      {
+        "school": "NU",
+        "wins": 2,
+        "losses": 12,
+        "pct": 0.143,
+        "rank": 7
+      },
+      {
+        "school": "ADMU",
+        "wins": 0,
+        "losses": 14,
+        "pct": 0.0,
+        "rank": 8
+      }
+    ],
+    "juniors": [
+      {
+        "school": "UE",
+        "wins": 10,
+        "losses": 0,
+        "pct": 1.0,
+        "rank": 1
+      },
+      {
+        "school": "ADMU",
+        "wins": 7,
+        "losses": 3,
+        "pct": 0.7,
+        "rank": 2
+      },
+      {
+        "school": "UST",
+        "wins": 6,
+        "losses": 4,
+        "pct": 0.6,
+        "rank": 3
+      },
+      {
+        "school": "DLSU",
+        "wins": 3,
+        "losses": 7,
+        "pct": 0.3,
+        "rank": 4
+      },
+      {
+        "school": "UP",
+        "wins": 3,
+        "losses": 7,
+        "pct": 0.3,
+        "rank": 5
+      },
+      {
+        "school": "NU",
+        "wins": 1,
+        "losses": 9,
+        "pct": 0.1,
+        "rank": 6
+      }
+    ]
+  }
+}

@@ -1,0 +1,108 @@
+{
+  "season": "1998-1999",
+  "sport": "taekwondo",
+  "divisions": {
+    "men": [
+      {
+        "school": "DLSU",
+        "wins": 6,
+        "losses": 1,
+        "pct": 0.857,
+        "rank": 1
+      },
+      {
+        "school": "UST",
+        "wins": 5,
+        "losses": 1,
+        "pct": 0.833,
+        "rank": 2
+      },
+      {
+        "school": "UP",
+        "wins": 4,
+        "losses": 2,
+        "pct": 0.667,
+        "rank": 3
+      },
+      {
+        "school": "UE",
+        "wins": 3,
+        "losses": 3,
+        "pct": 0.5,
+        "rank": 4
+      },
+      {
+        "school": "ADMU",
+        "wins": 2,
+        "losses": 5,
+        "pct": 0.286,
+        "rank": 5
+      },
+      {
+        "school": "FEU",
+        "wins": 1,
+        "losses": 5,
+        "pct": 0.167,
+        "rank": 6
+      },
+      {
+        "school": "ADU",
+        "wins": 0,
+        "losses": 7,
+        "pct": 0.0,
+        "rank": 7
+      }
+    ],
+    "women": [
+      {
+        "school": "DLSU",
+        "wins": 6,
+        "losses": 0,
+        "pct": 1.0,
+        "rank": 1
+      },
+      {
+        "school": "UST",
+        "wins": 5,
+        "losses": 1,
+        "pct": 0.833,
+        "rank": 2
+      },
+      {
+        "school": "ADMU",
+        "wins": 3,
+        "losses": 3,
+        "pct": 0.5,
+        "rank": 3
+      },
+      {
+        "school": "UP",
+        "wins": 3,
+        "losses": 3,
+        "pct": 0.5,
+        "rank": 4
+      },
+      {
+        "school": "UE",
+        "wins": 2,
+        "losses": 4,
+        "pct": 0.333,
+        "rank": 5
+      },
+      {
+        "school": "FEU",
+        "wins": 2,
+        "losses": 4,
+        "pct": 0.333,
+        "rank": 6
+      },
+      {
+        "school": "ADU",
+        "wins": 0,
+        "losses": 7,
+        "pct": 0.0,
+        "rank": 7
+      }
+    ]
+  }
+}

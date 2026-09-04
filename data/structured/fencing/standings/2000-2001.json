@@ -1,0 +1,58 @@
+{
+  "season": "2000-2001",
+  "sport": "fencing",
+  "divisions": {
+    "men": [
+      {
+        "school": "UE",
+        "rank": 1
+      },
+      {
+        "school": "UP",
+        "rank": 2
+      },
+      {
+        "school": "ADMU",
+        "rank": 3
+      },
+      {
+        "school": "UST",
+        "rank": 4
+      },
+      {
+        "school": "FEU",
+        "rank": 5
+      },
+      {
+        "school": "DLSU",
+        "rank": 6
+      }
+    ],
+    "women": [
+      {
+        "school": "UP",
+        "rank": 1
+      },
+      {
+        "school": "ADMU",
+        "rank": 2
+      },
+      {
+        "school": "UST",
+        "rank": 3
+      },
+      {
+        "school": "UE",
+        "rank": 4
+      },
+      {
+        "school": "DLSU",
+        "rank": 5
+      },
+      {
+        "school": "FEU",
+        "rank": 6
+      }
+    ]
+  }
+}

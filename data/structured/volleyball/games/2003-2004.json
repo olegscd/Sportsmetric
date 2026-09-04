@@ -1,0 +1,97 @@
+{
+  "season": "2003-2004",
+  "sport": "volleyball",
+  "total_games": 6,
+  "games": [
+    {
+      "season": "2003-2004",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "second_round",
+      "winner": {
+        "school": "ADU",
+        "score": 5
+      },
+      "loser": {
+        "school": "UST",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "second_round",
+      "winner": {
+        "school": "UP",
+        "score": 6
+      },
+      "loser": {
+        "school": "FEU",
+        "score": 2
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "second_round",
+      "winner": {
+        "school": "DLSU",
+        "score": 5
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "second_round",
+      "winner": {
+        "school": "UP",
+        "score": 4
+      },
+      "loser": {
+        "school": "FEU",
+        "score": 2
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "championship",
+      "winner": {
+        "school": "DLSU",
+        "score": 5
+      },
+      "loser": {
+        "school": "UP",
+        "score": 2
+      },
+      "is_championship": true
+    },
+    {
+      "season": "2003-2004",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "championship",
+      "winner": {
+        "school": "DLSU",
+        "score": 0
+      },
+      "loser": {
+        "school": "UP",
+        "score": 2
+      },
+      "is_championship": true
+    }
+  ]
+}

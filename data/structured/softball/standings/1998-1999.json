@@ -1,0 +1,56 @@
+{
+  "season": "1998-1999",
+  "sport": "softball",
+  "divisions": {
+    "men": [
+      {
+        "school": "UST",
+        "wins": 7,
+        "losses": 2,
+        "pct": 0.778,
+        "points": 1,
+        "rank": 1
+      },
+      {
+        "school": "UP",
+        "wins": 6,
+        "losses": 3,
+        "pct": 0.667,
+        "points": 1,
+        "rank": 2
+      },
+      {
+        "school": "ADU",
+        "wins": 9,
+        "losses": 1,
+        "pct": 0.9,
+        "points": 0,
+        "rank": 3
+      },
+      {
+        "school": "DLSU",
+        "wins": 4,
+        "losses": 6,
+        "pct": 0.4,
+        "points": 0,
+        "rank": 4
+      },
+      {
+        "school": "UE",
+        "wins": 3,
+        "losses": 7,
+        "pct": 0.3,
+        "points": 0,
+        "rank": 5
+      },
+      {
+        "school": "ADMU",
+        "wins": 0,
+        "losses": 10,
+        "pct": 0.0,
+        "points": 0,
+        "rank": 6
+      }
+    ]
+  }
+}

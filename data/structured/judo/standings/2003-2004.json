@@ -1,0 +1,33 @@
+{
+  "season": "2003-2004",
+  "sport": "judo",
+  "divisions": {
+    "men": [
+      {
+        "school": "UST",
+        "points": 4,
+        "rank": 1
+      },
+      {
+        "school": "DLSU",
+        "points": 3,
+        "rank": 2
+      },
+      {
+        "school": "UP",
+        "points": 2,
+        "rank": 3
+      },
+      {
+        "school": "ADMU",
+        "points": 1,
+        "rank": 4
+      },
+      {
+        "school": "UE",
+        "points": 0,
+        "rank": 5
+      }
+    ]
+  }
+}

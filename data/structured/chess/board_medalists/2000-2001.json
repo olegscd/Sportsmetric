@@ -1,0 +1,96 @@
+{
+  "season": "2000-2001",
+  "sport": "chess",
+  "divisions": {
+    "men": [
+      {
+        "player": "Dimailig, Oliver",
+        "school": "DLSU"
+      },
+      {
+        "player": "Reyes, Andy",
+        "school": "FEU"
+      },
+      {
+        "player": "Pineda, R.",
+        "school": "UST"
+      },
+      {
+        "player": "Aton, Ariel",
+        "school": "DLSU"
+      },
+      {
+        "player": "Aton, Irwin",
+        "school": "DLSU"
+      },
+      {
+        "player": "Manliclic, Avonser",
+        "school": "FEU"
+      },
+      {
+        "player": "Dimakiling, Oliver",
+        "school": "DLSU"
+      },
+      {
+        "player": "Banag, Andy",
+        "school": "FEU"
+      },
+      {
+        "player": "Pascua, Cyrus Ian",
+        "school": "UP"
+      },
+      {
+        "player": "Aton, Ariel",
+        "school": "DLSU"
+      },
+      {
+        "player": "Aton, Irwin",
+        "school": "DLSU"
+      },
+      {
+        "player": "Manliclic, Avoneer",
+        "school": "FEU"
+      }
+    ],
+    "women": [
+      {
+        "player": "Castro, Mary Grace",
+        "school": "UE"
+      },
+      {
+        "player": "Dela Cruz, Pearl",
+        "school": "UST"
+      },
+      {
+        "player": "Rivera, Daisy",
+        "school": "UE"
+      },
+      {
+        "player": "Andres, Sheryll",
+        "school": "FEU"
+      },
+      {
+        "player": "Lihan, Jaime Anne",
+        "school": "ADMU"
+      },
+      {
+        "player": "Pajutan, Cherrie",
+        "school": "ADU"
+      }
+    ],
+    "juniors": [
+      {
+        "player": "Templo, Pedro Bernard",
+        "school": "ADMU"
+      },
+      {
+        "player": "Mora, Benedict",
+        "school": "UST"
+      },
+      {
+        "player": "Magat, Jed Angelo",
+        "school": "NU"
+      }
+    ]
+  }
+}

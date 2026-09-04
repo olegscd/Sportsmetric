@@ -1,0 +1,82 @@
+{
+  "season": "2003-2004",
+  "sport": "tennis",
+  "divisions": {
+    "men": [
+      {
+        "school": "DLSU",
+        "wins": 7,
+        "losses": 1,
+        "pct": 0.875,
+        "points": 20,
+        "rank": 1
+      },
+      {
+        "school": "UST",
+        "wins": 7,
+        "losses": 1,
+        "pct": 0.875,
+        "points": 19,
+        "rank": 2
+      },
+      {
+        "school": "UP",
+        "wins": 4,
+        "losses": 4,
+        "pct": 0.5,
+        "points": 11,
+        "rank": 3
+      },
+      {
+        "school": "ADMU",
+        "wins": 2,
+        "losses": 6,
+        "pct": 0.25,
+        "points": 6,
+        "rank": 4
+      },
+      {
+        "school": "UE",
+        "wins": 0,
+        "losses": 8,
+        "pct": 0.0,
+        "points": 4,
+        "rank": 5
+      }
+    ],
+    "women": [
+      {
+        "school": "DLSU",
+        "wins": 6,
+        "losses": 0,
+        "pct": 1.0,
+        "points": 16,
+        "rank": 1
+      },
+      {
+        "school": "UST",
+        "wins": 4,
+        "losses": 2,
+        "pct": 0.667,
+        "points": 14,
+        "rank": 2
+      },
+      {
+        "school": "UP",
+        "wins": 2,
+        "losses": 4,
+        "pct": 0.333,
+        "points": 5,
+        "rank": 3
+      },
+      {
+        "school": "ADMU",
+        "wins": 0,
+        "losses": 6,
+        "pct": 0.0,
+        "points": 1,
+        "rank": 4
+      }
+    ]
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "season": "1999-2000",
+  "sport": "football",
+  "divisions": {
+    "women": {
+      "mvp": {
+        "player": "Marielle Benitez",
+        "school": "DLSU"
+      },
+      "rookie_of_the_year": {
+        "player": "Andrea Barandiaran",
+        "school": "DLSU"
+      }
+    }
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "season": "2003-2004",
+  "sport": "chess",
+  "divisions": {
+    "women": [
+      {
+        "school": "UP",
+        "points": 3.5,
+        "rank": 1
+      },
+      {
+        "school": "DLSU",
+        "points": 2.5,
+        "rank": 2
+      },
+      {
+        "school": "UST",
+        "points": 1.5,
+        "rank": 3
+      },
+      {
+        "school": "ADMU",
+        "points": 0.5,
+        "rank": 4
+      },
+      {
+        "school": "NU",
+        "points": 0.5,
+        "rank": 5
+      },
+      {
+        "school": "UE",
+        "points": 0.0,
+        "rank": 6
+      },
+      {
+        "school": "FEU",
+        "points": 0.0,
+        "rank": 7
+      }
+    ],
+    "juniors": [
+      {
+        "school": "UE",
+        "points": 26.0,
+        "rank": 1
+      },
+      {
+        "school": "NU",
+        "points": 24.5,
+        "rank": 2
+      },
+      {
+        "school": "ADMU",
+        "points": 19.0,
+        "rank": 3
+      },
+      {
+        "school": "UST",
+        "points": 9.0,
+        "rank": 4
+      },
+      {
+        "school": "DLSU",
+        "points": 1.5,
+        "rank": 5
+      }
+    ]
+  }
+}

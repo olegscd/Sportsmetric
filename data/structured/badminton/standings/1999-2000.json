@@ -1,0 +1,64 @@
+{
+  "season": "1999-2000",
+  "sport": "badminton",
+  "divisions": {
+    "men": [
+      {
+        "school": "UP",
+        "wins": 7,
+        "losses": 0,
+        "pct": 1.0,
+        "rank": 1
+      },
+      {
+        "school": "FEU",
+        "wins": 6,
+        "losses": 1,
+        "pct": 0.857,
+        "rank": 2
+      },
+      {
+        "school": "UE",
+        "wins": 5,
+        "losses": 2,
+        "pct": 0.714,
+        "rank": 3
+      },
+      {
+        "school": "ADMU",
+        "wins": 4,
+        "losses": 3,
+        "pct": 0.571,
+        "rank": 4
+      },
+      {
+        "school": "UST",
+        "wins": 4,
+        "losses": 3,
+        "pct": 0.571,
+        "rank": 5
+      },
+      {
+        "school": "DLSU",
+        "wins": 2,
+        "losses": 5,
+        "pct": 0.286,
+        "rank": 6
+      },
+      {
+        "school": "NU",
+        "wins": 1,
+        "losses": 6,
+        "pct": 0.143,
+        "rank": 7
+      },
+      {
+        "school": "ADU",
+        "wins": 0,
+        "losses": 7,
+        "pct": 0.0,
+        "rank": 8
+      }
+    ]
+  }
+}

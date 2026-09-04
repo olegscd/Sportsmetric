@@ -1,0 +1,24 @@
+{
+  "season": "2000-2001",
+  "sport": "taekwondo",
+  "divisions": {
+    "men": {
+      "mvp": {
+        "player": "Jason Jalbuena",
+        "school": "DLSU"
+      }
+    },
+    "women": {
+      "mvp": {
+        "player": "Daleen Cordero",
+        "school": "UST"
+      }
+    },
+    "juniors": {
+      "mvp": {
+        "player": "Gregory Paul Yan",
+        "school": "ADMU"
+      }
+    }
+  }
+}

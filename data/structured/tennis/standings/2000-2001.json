@@ -1,0 +1,42 @@
+{
+  "season": "2000-2001",
+  "sport": "tennis",
+  "divisions": {
+    "men": [
+      {
+        "school": "ADU",
+        "points": 7,
+        "rank": 1
+      },
+      {
+        "school": "UP",
+        "points": 5,
+        "rank": 2
+      },
+      {
+        "school": "ADMU",
+        "points": 2,
+        "rank": 3
+      },
+      {
+        "school": "UST",
+        "points": 1,
+        "rank": 4
+      },
+      {
+        "school": "DLSU",
+        "wins": 3,
+        "losses": 7,
+        "pct": 0.3,
+        "rank": 5
+      },
+      {
+        "school": "UE",
+        "wins": 2,
+        "losses": 8,
+        "pct": 0.2,
+        "rank": 6
+      }
+    ]
+  }
+}

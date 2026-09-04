@@ -1,0 +1,54 @@
+{
+  "season": "1987-1988",
+  "sport": "taekwondo",
+  "divisions": {
+    "men": [
+      {
+        "school": "UE",
+        "wins": 1,
+        "losses": 0,
+        "pct": 1.0,
+        "points": 1,
+        "rank": 1
+      },
+      {
+        "school": "ADMU",
+        "wins": 0,
+        "losses": 1,
+        "pct": 0.0,
+        "points": 1,
+        "rank": 2
+      },
+      {
+        "school": "UP",
+        "wins": 1,
+        "losses": 0,
+        "pct": 1.0,
+        "rank": 3
+      },
+      {
+        "school": "DLSU",
+        "wins": 0,
+        "losses": 1,
+        "pct": 0.0,
+        "rank": 4
+      },
+      {
+        "school": "FEU",
+        "wins": 0,
+        "losses": 1,
+        "pct": 0.0,
+        "points": 0,
+        "rank": 5
+      },
+      {
+        "school": "ADU",
+        "wins": 0,
+        "losses": 1,
+        "pct": 0.0,
+        "points": 0,
+        "rank": 6
+      }
+    ]
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "season": "1999-2000",
+  "sport": "chess",
+  "divisions": {
+    "men": {
+      "mvp": {
+        "player": "Randy Segarra",
+        "school": "DLSU"
+      },
+      "rookie_of_the_year": {
+        "player": "Roland Salvador",
+        "school": "UST"
+      }
+    },
+    "women": {
+      "mvp": {
+        "player": "Mary Grace Castro",
+        "school": "UE"
+      },
+      "rookie_of_the_year": {
+        "player": "Pearl Dela Cruz",
+        "school": "UST"
+      }
+    },
+    "juniors": {
+      "mvp": {
+        "player": "Leonard Reyes",
+        "school": "ADMU"
+      },
+      "rookie_of_the_year": {
+        "player": "Ray Albano",
+        "school": "UE"
+      }
+    }
+  }
+}

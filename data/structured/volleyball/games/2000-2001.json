@@ -1,0 +1,322 @@
+{
+  "season": "2000-2001",
+  "sport": "volleyball",
+  "total_games": 21,
+  "games": [
+    {
+      "season": "2000-2001",
+      "sport": "volleyball",
+      "division": "juniors",
+      "round": "first_round",
+      "winner": {
+        "school": "NU",
+        "score": 5
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 0
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "volleyball",
+      "division": "juniors",
+      "round": "first_round",
+      "winner": {
+        "school": "UST",
+        "score": 5
+      },
+      "loser": {
+        "school": "UP",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "volleyball",
+      "division": "juniors",
+      "round": "first_round",
+      "winner": {
+        "school": "UE",
+        "score": 5
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "volleyball",
+      "division": "juniors",
+      "round": "first_round",
+      "winner": {
+        "school": "ADMU",
+        "score": 5
+      },
+      "loser": {
+        "school": "NU",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "volleyball",
+      "division": "juniors",
+      "round": "first_round",
+      "winner": {
+        "school": "UP",
+        "score": 5
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "volleyball",
+      "division": "juniors",
+      "round": "first_round",
+      "winner": {
+        "school": "UE",
+        "score": 5
+      },
+      "loser": {
+        "school": "UST",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "volleyball",
+      "division": "juniors",
+      "round": "first_round",
+      "winner": {
+        "school": "UE",
+        "score": 5
+      },
+      "loser": {
+        "school": "UP",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "volleyball",
+      "division": "juniors",
+      "round": "first_round",
+      "winner": {
+        "school": "UST",
+        "score": 5
+      },
+      "loser": {
+        "school": "NU",
+        "score": 5
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "volleyball",
+      "division": "juniors",
+      "round": "first_round",
+      "winner": {
+        "school": "ADMU",
+        "score": 5
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "volleyball",
+      "division": "juniors",
+      "round": "first_round",
+      "winner": {
+        "school": "UE",
+        "score": 5
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "volleyball",
+      "division": "juniors",
+      "round": "first_round",
+      "winner": {
+        "school": "UST",
+        "score": 5
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 2
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "volleyball",
+      "division": "juniors",
+      "round": "first_round",
+      "winner": {
+        "school": "UP",
+        "score": 5
+      },
+      "loser": {
+        "school": "NU",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "volleyball",
+      "division": "juniors",
+      "round": "first_round",
+      "winner": {
+        "school": "ADMU",
+        "score": 5
+      },
+      "loser": {
+        "school": "UP",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "volleyball",
+      "division": "juniors",
+      "round": "first_round",
+      "winner": {
+        "school": "UE",
+        "score": 5
+      },
+      "loser": {
+        "school": "NU",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "volleyball",
+      "division": "juniors",
+      "round": "first_round",
+      "winner": {
+        "school": "UST",
+        "score": 5
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "volleyball",
+      "division": "juniors",
+      "round": "second_round",
+      "winner": {
+        "school": "UE",
+        "score": 5
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "volleyball",
+      "division": "juniors",
+      "round": "second_round",
+      "winner": {
+        "school": "UST",
+        "score": 5
+      },
+      "loser": {
+        "school": "NU",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "volleyball",
+      "division": "juniors",
+      "round": "second_round",
+      "winner": {
+        "school": "ADMU",
+        "score": 5
+      },
+      "loser": {
+        "school": "UP",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "volleyball",
+      "division": "juniors",
+      "round": "second_round",
+      "winner": {
+        "school": "ADMU",
+        "score": 5
+      },
+      "loser": {
+        "school": "UST",
+        "score": 2
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "volleyball",
+      "division": "juniors",
+      "round": "second_round",
+      "winner": {
+        "school": "DLSU",
+        "score": 5
+      },
+      "loser": {
+        "school": "UP",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "volleyball",
+      "division": "juniors",
+      "round": "second_round",
+      "winner": {
+        "school": "UE",
+        "score": 5
+      },
+      "loser": {
+        "school": "NU",
+        "score": 8
+      },
+      "is_championship": false
+    }
+  ]
+}

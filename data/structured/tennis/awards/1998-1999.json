@@ -1,0 +1,16 @@
+{
+  "season": "1998-1999",
+  "sport": "tennis",
+  "divisions": {
+    "men": {
+      "mvp": {
+        "player": "Glenn Remigio",
+        "school": "UP"
+      },
+      "rookie_of_the_year": {
+        "player": "Ramon Fernandez",
+        "school": "UST"
+      }
+    }
+  }
+}

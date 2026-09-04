@@ -1,0 +1,18 @@
+{
+  "season": "2000-2001",
+  "sport": "volleyball",
+  "divisions": {
+    "juniors": {
+      "mvp": {
+        "player": "Jerico Magno",
+        "school": "UE"
+      }
+    },
+    "men": {
+      "mvp": {
+        "player": "Cherrie Mae Verzosa",
+        "school": "UE"
+      }
+    }
+  }
+}

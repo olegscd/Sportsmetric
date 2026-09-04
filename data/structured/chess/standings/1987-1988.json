@@ -1,0 +1,65 @@
+{
+  "season": "1987-1988",
+  "sport": "chess",
+  "divisions": {
+    "juniors": [
+      {
+        "school": "DLSU",
+        "points": 5.0,
+        "rank": 1
+      },
+      {
+        "school": "ADU",
+        "points": 4.0,
+        "rank": 2
+      },
+      {
+        "school": "ADU",
+        "points": 3.0,
+        "rank": 3
+      },
+      {
+        "school": "UE",
+        "points": 2.0,
+        "rank": 4
+      },
+      {
+        "school": "UP",
+        "points": 1.0,
+        "rank": 5
+      }
+    ],
+    "men": [
+      {
+        "school": "ADU",
+        "points": 21.0,
+        "rank": 1
+      },
+      {
+        "school": "UST",
+        "points": 19.0,
+        "rank": 2
+      },
+      {
+        "school": "DLSU",
+        "points": 17.0,
+        "rank": 3
+      },
+      {
+        "school": "FEU",
+        "points": 15.0,
+        "rank": 4
+      },
+      {
+        "school": "UE",
+        "points": 11.0,
+        "rank": 5
+      },
+      {
+        "school": "ADMU",
+        "points": 10.0,
+        "rank": 6
+      }
+    ]
+  }
+}

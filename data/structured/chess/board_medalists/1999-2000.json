@@ -1,0 +1,104 @@
+{
+  "season": "1999-2000",
+  "sport": "chess",
+  "divisions": {
+    "men": [
+      {
+        "player": "Segarra, Randy",
+        "school": "DLSU"
+      },
+      {
+        "player": "Aton, Arnel Nino",
+        "school": "DLSU"
+      },
+      {
+        "player": "Castellano, Christopher",
+        "school": "UP"
+      },
+      {
+        "player": "Cariño, Rosendo",
+        "school": "ADU"
+      },
+      {
+        "player": "Bitoon, Jerson",
+        "school": "UST"
+      },
+      {
+        "player": "Vicencio, Christopher",
+        "school": "NU"
+      }
+    ],
+    "women": [
+      {
+        "player": "Cruz, Jennifer",
+        "school": "FEU"
+      },
+      {
+        "player": "Castro, Mary Grace",
+        "school": "UE"
+      },
+      {
+        "player": "Rivera, Daisy",
+        "school": "UE"
+      },
+      {
+        "player": "Dela Cruz, Pearl",
+        "school": "UST"
+      },
+      {
+        "player": "Pajutan, Cherrie",
+        "school": "ADU"
+      },
+      {
+        "player": "Nicolas, Noemi",
+        "school": "UE"
+      },
+      {
+        "player": "Cruz, Jennifer",
+        "school": "FEU"
+      },
+      {
+        "player": "Castro, Mary Grace",
+        "school": "UE"
+      },
+      {
+        "player": "Rivera, Daisy",
+        "school": "UE"
+      },
+      {
+        "player": "Dela Cruz, Pearl",
+        "school": "UST"
+      },
+      {
+        "player": "Pajutan, Cherrie",
+        "school": "ADU"
+      },
+      {
+        "player": "Nicolas, Noemi",
+        "school": "UE"
+      }
+    ],
+    "juniors": [
+      {
+        "player": "Reyes, Leonard",
+        "school": "ADMU"
+      },
+      {
+        "player": "Albano, Ray",
+        "school": "UE"
+      },
+      {
+        "player": "Plan, Emman",
+        "school": "ADMU"
+      },
+      {
+        "player": "Lagutin, Nelneo",
+        "school": "UE"
+      },
+      {
+        "player": "Alveyra, Vermont",
+        "school": "NU"
+      }
+    ]
+  }
+}

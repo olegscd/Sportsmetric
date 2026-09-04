@@ -1,0 +1,18 @@
+{
+  "season": "1998-1999",
+  "sport": "fencing",
+  "divisions": {
+    "men": {
+      "mvp": {
+        "player": "Ramil Endriano",
+        "school": "UP"
+      }
+    },
+    "women": {
+      "mvp": {
+        "player": "Liza Enriquez",
+        "school": "UP"
+      }
+    }
+  }
+}

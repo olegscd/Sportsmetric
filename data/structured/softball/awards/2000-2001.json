@@ -1,0 +1,16 @@
+{
+  "season": "2000-2001",
+  "sport": "softball",
+  "divisions": {
+    "men": {
+      "mvp": {
+        "player": "Erlinda Pascual",
+        "school": "UE"
+      },
+      "rookie_of_the_year": {
+        "player": "Ma. Theresa Lagman",
+        "school": "UST"
+      }
+    }
+  }
+}

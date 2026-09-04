@@ -1,0 +1,18 @@
+{
+  "season": "1999-2000",
+  "sport": "judo",
+  "divisions": {
+    "men": {
+      "mvp": {
+        "player": "Paolo Vitug",
+        "school": "UST"
+      }
+    },
+    "women": {
+      "mvp": {
+        "player": "Ma Cecilia Paras",
+        "school": "UP"
+      }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "season": "1998-1999",
+  "sport": "baseball",
+  "divisions": {
+    "men": {
+      "rookie_of_the_year": {
+        "player": "Joseph Orillana",
+        "school": "DLSU"
+      }
+    }
+  }
+}

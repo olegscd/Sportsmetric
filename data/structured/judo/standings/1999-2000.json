@@ -1,0 +1,312 @@
+{
+  "season": "1999-2000",
+  "sport": "judo",
+  "divisions": {
+    "men": [
+      {
+        "school": "UE",
+        "wins": 18,
+        "losses": 1,
+        "pct": 0.947,
+        "points": 5,
+        "rank": 1
+      },
+      {
+        "school": "UP",
+        "wins": 19,
+        "losses": 1,
+        "pct": 0.95,
+        "points": 4,
+        "rank": 2
+      },
+      {
+        "school": "FEU",
+        "wins": 7,
+        "losses": 0,
+        "pct": 1.0,
+        "points": 4,
+        "rank": 3
+      },
+      {
+        "school": "FEU",
+        "wins": 0,
+        "losses": 4,
+        "pct": 0.0,
+        "points": 3,
+        "rank": 4
+      },
+      {
+        "school": "UP",
+        "wins": 15,
+        "losses": 4,
+        "pct": 0.789,
+        "points": 2,
+        "rank": 5
+      },
+      {
+        "school": "UP",
+        "wins": 11,
+        "losses": 5,
+        "pct": 0.688,
+        "points": 2,
+        "rank": 6
+      },
+      {
+        "school": "ADMU",
+        "wins": 1,
+        "losses": 4,
+        "pct": 0.2,
+        "points": 2,
+        "rank": 7
+      },
+      {
+        "school": "ADMU",
+        "wins": 1,
+        "losses": 3,
+        "pct": 0.25,
+        "points": 2,
+        "rank": 8
+      },
+      {
+        "school": "UST",
+        "wins": 16,
+        "losses": 5,
+        "pct": 0.762,
+        "points": 1,
+        "rank": 9
+      },
+      {
+        "school": "UST",
+        "wins": 12,
+        "losses": 3,
+        "pct": 0.8,
+        "points": 1,
+        "rank": 10
+      },
+      {
+        "school": "DLSU",
+        "wins": 8,
+        "losses": 4,
+        "pct": 0.667,
+        "points": 1,
+        "rank": 11
+      },
+      {
+        "school": "DLSU",
+        "wins": 5,
+        "losses": 1,
+        "pct": 0.833,
+        "points": 1,
+        "rank": 12
+      },
+      {
+        "school": "UST",
+        "wins": 4,
+        "losses": 4,
+        "pct": 0.5,
+        "points": 1,
+        "rank": 13
+      },
+      {
+        "school": "UST",
+        "wins": 4,
+        "losses": 1,
+        "pct": 0.8,
+        "points": 1,
+        "rank": 14
+      },
+      {
+        "school": "DLSU",
+        "wins": 2,
+        "losses": 4,
+        "pct": 0.333,
+        "points": 1,
+        "rank": 15
+      },
+      {
+        "school": "DLSU",
+        "wins": 1,
+        "losses": 4,
+        "pct": 0.2,
+        "points": 1,
+        "rank": 16
+      },
+      {
+        "school": "UE",
+        "wins": 1,
+        "losses": 5,
+        "pct": 0.167,
+        "points": 1,
+        "rank": 17
+      },
+      {
+        "school": "UE",
+        "wins": 4,
+        "losses": 0,
+        "pct": 1.0,
+        "rank": 18
+      },
+      {
+        "school": "UP",
+        "wins": 3,
+        "losses": 4,
+        "pct": 0.429,
+        "points": 0,
+        "rank": 19
+      },
+      {
+        "school": "UE",
+        "wins": 2,
+        "losses": 5,
+        "pct": 0.286,
+        "rank": 20
+      }
+    ],
+    "women": [
+      {
+        "school": "UST",
+        "wins": 17,
+        "losses": 2,
+        "pct": 0.895,
+        "points": 4,
+        "rank": 1
+      },
+      {
+        "school": "ADMU",
+        "wins": 14,
+        "losses": 0,
+        "pct": 1.0,
+        "points": 4,
+        "rank": 2
+      },
+      {
+        "school": "DLSU",
+        "wins": 10,
+        "losses": 1,
+        "pct": 0.909,
+        "points": 4,
+        "rank": 3
+      },
+      {
+        "school": "FEU",
+        "wins": 6,
+        "losses": 0,
+        "pct": 1.0,
+        "points": 4,
+        "rank": 4
+      },
+      {
+        "school": "UST",
+        "wins": 13,
+        "losses": 2,
+        "pct": 0.867,
+        "points": 3,
+        "rank": 5
+      },
+      {
+        "school": "UE",
+        "wins": 2,
+        "losses": 2,
+        "pct": 0.5,
+        "points": 3,
+        "rank": 6
+      },
+      {
+        "school": "ADMU",
+        "wins": 5,
+        "losses": 2,
+        "pct": 0.714,
+        "points": 2,
+        "rank": 7
+      },
+      {
+        "school": "DLSU",
+        "wins": 3,
+        "losses": 2,
+        "pct": 0.6,
+        "points": 2,
+        "rank": 8
+      },
+      {
+        "school": "FEU",
+        "wins": 0,
+        "losses": 4,
+        "pct": 0.0,
+        "points": 2,
+        "rank": 9
+      },
+      {
+        "school": "UE",
+        "wins": 0,
+        "losses": 5,
+        "pct": 0.0,
+        "points": 2,
+        "rank": 10
+      },
+      {
+        "school": "UP",
+        "wins": 4,
+        "losses": 0,
+        "pct": 1.0,
+        "points": 1,
+        "rank": 11
+      },
+      {
+        "school": "UP",
+        "wins": 4,
+        "losses": 1,
+        "pct": 0.8,
+        "points": 1,
+        "rank": 12
+      },
+      {
+        "school": "UP",
+        "wins": 4,
+        "losses": 0,
+        "pct": 1.0,
+        "points": 1,
+        "rank": 13
+      },
+      {
+        "school": "UP",
+        "wins": 4,
+        "losses": 2,
+        "pct": 0.667,
+        "points": 1,
+        "rank": 14
+      },
+      {
+        "school": "UST",
+        "wins": 1,
+        "losses": 5,
+        "pct": 0.167,
+        "points": 1,
+        "rank": 15
+      },
+      {
+        "school": "ADMU",
+        "wins": 1,
+        "losses": 5,
+        "pct": 0.167,
+        "points": 1,
+        "rank": 16
+      },
+      {
+        "school": "UST",
+        "wins": 9,
+        "losses": 5,
+        "pct": 0.643,
+        "points": 0,
+        "rank": 17
+      },
+      {
+        "school": "DLSU",
+        "wins": 2,
+        "losses": 4,
+        "pct": 0.333,
+        "points": 0,
+        "rank": 18
+      }
+    ]
+  }
+}

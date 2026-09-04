@@ -1,0 +1,16 @@
+{
+  "season": "2000-2001",
+  "sport": "judo",
+  "divisions": {
+    "women": {
+      "rookie_of_the_year": {
+        "player": "Michelle M. De Vera",
+        "school": "UST"
+      },
+      "mvp": {
+        "player": "Ma. Cecilia G. Paras",
+        "school": "UP"
+      }
+    }
+  }
+}

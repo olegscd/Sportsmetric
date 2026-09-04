@@ -1,0 +1,40 @@
+{
+  "season": "1987-1988",
+  "sport": "chess",
+  "divisions": {
+    "juniors": [
+      {
+        "player": "Erwin Carag",
+        "school": "UP"
+      },
+      {
+        "player": "Dennis Gutierrez",
+        "school": "ADU"
+      },
+      {
+        "player": "Chris Palma",
+        "school": "ADU"
+      },
+      {
+        "player": "Jojo Dy",
+        "school": "DLSU"
+      },
+      {
+        "player": "Ronald Bancod",
+        "school": "FEU"
+      },
+      {
+        "player": "Larry Batalla",
+        "school": "UST"
+      },
+      {
+        "player": "Vergil Bargola",
+        "school": "UST"
+      },
+      {
+        "player": "Tom Sha",
+        "school": "ADMU"
+      }
+    ]
+  }
+}

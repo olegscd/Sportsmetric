@@ -1,0 +1,26 @@
+{
+  "season": "2000-2001",
+  "sport": "football",
+  "divisions": {
+    "men": {
+      "mvp": {
+        "player": "Jerome Leung",
+        "school": "UP"
+      },
+      "rookie_of_the_year": {
+        "player": "Avery John del Rosario",
+        "school": "DLSU"
+      }
+    },
+    "women": {
+      "mvp": {
+        "player": "Marnelli Salvador",
+        "school": "FEU"
+      },
+      "rookie_of_the_year": {
+        "player": "Emilia Hernandez",
+        "school": "DLSU"
+      }
+    }
+  }
+}

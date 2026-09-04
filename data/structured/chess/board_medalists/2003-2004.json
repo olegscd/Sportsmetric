@@ -1,0 +1,28 @@
+{
+  "season": "2003-2004",
+  "sport": "chess",
+  "divisions": {
+    "juniors": [
+      {
+        "player": "Magat, Jed Angelo",
+        "school": "NU"
+      },
+      {
+        "player": "Hernandez, Aries",
+        "school": "NU"
+      },
+      {
+        "player": "Delfin, Andrew",
+        "school": "NU"
+      },
+      {
+        "player": "Felipe, Jaroz Philino",
+        "school": "UE"
+      },
+      {
+        "player": "Salvador, Aices",
+        "school": "UE"
+      }
+    ]
+  }
+}

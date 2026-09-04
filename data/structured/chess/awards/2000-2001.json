@@ -1,0 +1,32 @@
+{
+  "season": "2000-2001",
+  "sport": "chess",
+  "divisions": {
+    "men": {
+      "mvp": {
+        "player": "Emmanuel Franz Plan",
+        "school": "ADU"
+      },
+      "rookie_of_the_year": {
+        "player": "Ana Paula Castillo",
+        "school": "ADU"
+      }
+    },
+    "women": {
+      "mvp": {
+        "player": "Mary Grace Castro",
+        "school": "UE"
+      },
+      "rookie_of_the_year": {
+        "player": "Roselyn Santos",
+        "school": "ADU"
+      }
+    },
+    "juniors": {
+      "mvp": {
+        "player": "",
+        "school": "UE"
+      }
+    }
+  }
+}

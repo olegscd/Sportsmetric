@@ -1,0 +1,100 @@
+{
+  "season": "2003-2004",
+  "sport": "table_tennis",
+  "divisions": {
+    "men": [
+      {
+        "school": "UST",
+        "rank": 1
+      },
+      {
+        "school": "UP",
+        "rank": 2
+      },
+      {
+        "school": "UE",
+        "rank": 3
+      },
+      {
+        "school": "DLSU",
+        "rank": 4
+      },
+      {
+        "school": "FEU",
+        "rank": 5
+      },
+      {
+        "school": "ADU",
+        "rank": 6
+      },
+      {
+        "school": "ADMU",
+        "rank": 7
+      },
+      {
+        "school": "NU",
+        "rank": 8
+      }
+    ],
+    "women": [
+      {
+        "school": "UST",
+        "rank": 1
+      },
+      {
+        "school": "FEU",
+        "rank": 2
+      },
+      {
+        "school": "UP",
+        "rank": 3
+      },
+      {
+        "school": "ADU",
+        "rank": 4
+      },
+      {
+        "school": "DLSU",
+        "rank": 5
+      },
+      {
+        "school": "UE",
+        "rank": 6
+      },
+      {
+        "school": "ADMU",
+        "rank": 7
+      },
+      {
+        "school": "NU",
+        "rank": 8
+      }
+    ],
+    "juniors": [
+      {
+        "school": "UE",
+        "rank": 1
+      },
+      {
+        "school": "UP",
+        "rank": 2
+      },
+      {
+        "school": "UST",
+        "rank": 3
+      },
+      {
+        "school": "ADMU",
+        "rank": 4
+      },
+      {
+        "school": "NU",
+        "rank": 5
+      },
+      {
+        "school": "DLSU",
+        "rank": 6
+      }
+    ]
+  }
+}

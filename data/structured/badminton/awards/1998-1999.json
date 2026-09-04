@@ -1,0 +1,22 @@
+{
+  "season": "1998-1999",
+  "sport": "badminton",
+  "divisions": {
+    "men": {
+      "mvp": {
+        "player": "Kennevic C. Asuncion",
+        "school": "UP"
+      }
+    },
+    "women": {
+      "mvp": {
+        "player": "Don Carlos Ailado",
+        "school": "DLSU"
+      },
+      "rookie_of_the_year": {
+        "player": "Jose Enrico Villanueva",
+        "school": "ADMU"
+      }
+    }
+  }
+}

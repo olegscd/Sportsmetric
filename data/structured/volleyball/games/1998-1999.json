@@ -1,0 +1,802 @@
+{
+  "season": "1998-1999",
+  "sport": "volleyball",
+  "total_games": 53,
+  "games": [
+    {
+      "season": "1998-1999",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "first_round",
+      "winner": {
+        "school": "DLSU",
+        "score": 8
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "second_round",
+      "winner": {
+        "school": "UP",
+        "score": 3
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "second_round",
+      "winner": {
+        "school": "UE",
+        "score": 4
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "second_round",
+      "winner": {
+        "school": "FEU",
+        "score": 5
+      },
+      "loser": {
+        "school": "NU",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "second_round",
+      "winner": {
+        "school": "UST",
+        "score": 5
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 7
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "second_round",
+      "winner": {
+        "school": "DLSU",
+        "score": 0
+      },
+      "loser": {
+        "school": "UE",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "second_round",
+      "winner": {
+        "school": "FEU",
+        "score": 5
+      },
+      "loser": {
+        "school": "UP",
+        "score": 7
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "second_round",
+      "winner": {
+        "school": "UST",
+        "score": 5
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 4
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "second_round",
+      "winner": {
+        "school": "NU",
+        "score": 5
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 6
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "second_round",
+      "winner": {
+        "school": "ADU",
+        "score": 5
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 4
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "second_round",
+      "winner": {
+        "school": "UST",
+        "score": 5
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 7
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "second_round",
+      "winner": {
+        "school": "UE",
+        "score": 5
+      },
+      "loser": {
+        "school": "NU",
+        "score": 9
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "second_round",
+      "winner": {
+        "school": "DLSU",
+        "score": 5
+      },
+      "loser": {
+        "school": "FEU",
+        "score": 9
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "second_round",
+      "winner": {
+        "school": "NU",
+        "score": 5
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "second_round",
+      "winner": {
+        "school": "DLSU",
+        "score": 5
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "second_round",
+      "winner": {
+        "school": "FEU",
+        "score": 5
+      },
+      "loser": {
+        "school": "UE",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "second_round",
+      "winner": {
+        "school": "UST",
+        "score": 5
+      },
+      "loser": {
+        "school": "UP",
+        "score": 4
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "second_round",
+      "winner": {
+        "school": "UST",
+        "score": 5
+      },
+      "loser": {
+        "school": "UE",
+        "score": 3
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "second_round",
+      "winner": {
+        "school": "FEU",
+        "score": 5
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "second_round",
+      "winner": {
+        "school": "UP",
+        "score": 1
+      },
+      "loser": {
+        "school": "NU",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "second_round",
+      "winner": {
+        "school": "DLSU",
+        "score": 9
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "second_round",
+      "winner": {
+        "school": "DLSU",
+        "score": 5
+      },
+      "loser": {
+        "school": "UP",
+        "score": 5
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "second_round",
+      "winner": {
+        "school": "UST",
+        "score": 5
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 5
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "second_round",
+      "winner": {
+        "school": "NU",
+        "score": 5
+      },
+      "loser": {
+        "school": "UE",
+        "score": 6
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "second_round",
+      "winner": {
+        "school": "FEU",
+        "score": 5
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "second_round",
+      "winner": {
+        "school": "UE",
+        "score": 5
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 8
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "second_round",
+      "winner": {
+        "school": "ADU",
+        "score": 5
+      },
+      "loser": {
+        "school": "UP",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "second_round",
+      "winner": {
+        "school": "DLSU",
+        "score": 5
+      },
+      "loser": {
+        "school": "NU",
+        "score": 5
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "second_round",
+      "winner": {
+        "school": "FEU",
+        "score": 6
+      },
+      "loser": {
+        "school": "UST",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "second_round",
+      "winner": {
+        "school": "FEU",
+        "score": 5
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "volleyball",
+      "division": "women",
+      "round": "first_round",
+      "winner": {
+        "school": "UE",
+        "score": 8
+      },
+      "loser": {
+        "school": "UP",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "volleyball",
+      "division": "juniors",
+      "round": "first_round",
+      "winner": {
+        "school": "DLSU",
+        "score": 5
+      },
+      "loser": {
+        "school": "NU",
+        "score": 5
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "volleyball",
+      "division": "juniors",
+      "round": "first_round",
+      "winner": {
+        "school": "UST",
+        "score": 5
+      },
+      "loser": {
+        "school": "UP",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "volleyball",
+      "division": "juniors",
+      "round": "first_round",
+      "winner": {
+        "school": "UE",
+        "score": 5
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "volleyball",
+      "division": "juniors",
+      "round": "first_round",
+      "winner": {
+        "school": "UST",
+        "score": 5
+      },
+      "loser": {
+        "school": "NU",
+        "score": 5
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "volleyball",
+      "division": "juniors",
+      "round": "first_round",
+      "winner": {
+        "school": "ADMU",
+        "score": 5
+      },
+      "loser": {
+        "school": "UP",
+        "score": 5
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "volleyball",
+      "division": "juniors",
+      "round": "first_round",
+      "winner": {
+        "school": "DLSU",
+        "score": 5
+      },
+      "loser": {
+        "school": "UP",
+        "score": 7
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "volleyball",
+      "division": "juniors",
+      "round": "first_round",
+      "winner": {
+        "school": "UST",
+        "score": 5
+      },
+      "loser": {
+        "school": "NU",
+        "score": 5
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "volleyball",
+      "division": "juniors",
+      "round": "first_round",
+      "winner": {
+        "school": "UE",
+        "score": 5
+      },
+      "loser": {
+        "school": "UP",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "volleyball",
+      "division": "juniors",
+      "round": "first_round",
+      "winner": {
+        "school": "DLSU",
+        "score": 5
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 4
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "volleyball",
+      "division": "juniors",
+      "round": "first_round",
+      "winner": {
+        "school": "UP",
+        "score": 5
+      },
+      "loser": {
+        "school": "NU",
+        "score": 4
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "volleyball",
+      "division": "juniors",
+      "round": "first_round",
+      "winner": {
+        "school": "DLSU",
+        "score": 5
+      },
+      "loser": {
+        "school": "UE",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "volleyball",
+      "division": "juniors",
+      "round": "first_round",
+      "winner": {
+        "school": "ADMU",
+        "score": 5
+      },
+      "loser": {
+        "school": "UST",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "volleyball",
+      "division": "juniors",
+      "round": "first_round",
+      "winner": {
+        "school": "UE",
+        "score": 5
+      },
+      "loser": {
+        "school": "NU",
+        "score": 5
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "volleyball",
+      "division": "juniors",
+      "round": "first_round",
+      "winner": {
+        "school": "DLSU",
+        "score": 5
+      },
+      "loser": {
+        "school": "UST",
+        "score": 7
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "volleyball",
+      "division": "juniors",
+      "round": "first_round",
+      "winner": {
+        "school": "ADMU",
+        "score": 5
+      },
+      "loser": {
+        "school": "UP",
+        "score": 9
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "volleyball",
+      "division": "juniors",
+      "round": "second_round",
+      "winner": {
+        "school": "DLSU",
+        "score": 5
+      },
+      "loser": {
+        "school": "NU",
+        "score": 2
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "volleyball",
+      "division": "juniors",
+      "round": "second_round",
+      "winner": {
+        "school": "UST",
+        "score": 4
+      },
+      "loser": {
+        "school": "UP",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "volleyball",
+      "division": "juniors",
+      "round": "second_round",
+      "winner": {
+        "school": "ADMU",
+        "score": 5
+      },
+      "loser": {
+        "school": "UE",
+        "score": 4
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "volleyball",
+      "division": "juniors",
+      "round": "second_round",
+      "winner": {
+        "school": "UST",
+        "score": 5
+      },
+      "loser": {
+        "school": "UE",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "volleyball",
+      "division": "juniors",
+      "round": "second_round",
+      "winner": {
+        "school": "ADMU",
+        "score": 5
+      },
+      "loser": {
+        "school": "NU",
+        "score": 5
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "volleyball",
+      "division": "juniors",
+      "round": "second_round",
+      "winner": {
+        "school": "DLSU",
+        "score": 5
+      },
+      "loser": {
+        "school": "UP",
+        "score": 5
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "volleyball",
+      "division": "juniors",
+      "round": "second_round",
+      "winner": {
+        "school": "UST",
+        "score": 9
+      },
+      "loser": {
+        "school": "UE",
+        "score": 1
+      },
+      "is_championship": false
+    }
+  ]
+}

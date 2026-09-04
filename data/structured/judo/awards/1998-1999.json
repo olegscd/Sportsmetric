@@ -1,0 +1,18 @@
+{
+  "season": "1998-1999",
+  "sport": "judo",
+  "divisions": {
+    "men": {
+      "mvp": {
+        "player": "Rezil Rosalejos",
+        "school": "UST"
+      }
+    },
+    "women": {
+      "mvp": {
+        "player": "Rezil Rosalejos",
+        "school": "UST"
+      }
+    }
+  }
+}

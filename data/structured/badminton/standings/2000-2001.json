@@ -1,0 +1,43 @@
+{
+  "season": "2000-2001",
+  "sport": "badminton",
+  "divisions": {
+    "men": [
+      {
+        "school": "UP",
+        "wins": 6,
+        "losses": 0,
+        "pct": 1.0,
+        "rank": 1
+      },
+      {
+        "school": "UE",
+        "wins": 4,
+        "losses": 2,
+        "pct": 0.667,
+        "rank": 2
+      },
+      {
+        "school": "ADMU",
+        "wins": 3,
+        "losses": 3,
+        "pct": 0.5,
+        "rank": 3
+      },
+      {
+        "school": "DLSU",
+        "wins": 2,
+        "losses": 4,
+        "pct": 0.333,
+        "rank": 4
+      },
+      {
+        "school": "NU",
+        "wins": 1,
+        "losses": 5,
+        "pct": 0.167,
+        "rank": 5
+      }
+    ]
+  }
+}

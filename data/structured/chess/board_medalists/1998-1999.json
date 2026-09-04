@@ -1,0 +1,68 @@
+{
+  "season": "1998-1999",
+  "sport": "chess",
+  "divisions": {
+    "men": [
+      {
+        "player": "Aquino, Jose Jr.",
+        "school": "UP"
+      },
+      {
+        "player": "Banag, Andy L.",
+        "school": "FEU"
+      },
+      {
+        "player": "Lim, Peter",
+        "school": "UST"
+      },
+      {
+        "player": "Pascua, Cyrus Ian",
+        "school": "UP"
+      },
+      {
+        "player": "Gumama, Malik Faizal",
+        "school": "UE"
+      }
+    ],
+    "women": [
+      {
+        "player": "Castro, Mary Grace",
+        "school": "UE"
+      },
+      {
+        "player": "Rivera, Daisy",
+        "school": "UE"
+      },
+      {
+        "player": "Quiachon, Donna",
+        "school": "UP"
+      },
+      {
+        "player": "Atencio, Ma. Criselda",
+        "school": "ADU"
+      },
+      {
+        "player": "San Pedro, Jocelyn",
+        "school": "FEU"
+      }
+    ],
+    "juniors": [
+      {
+        "player": "Del Mundo, Anton Paolo",
+        "school": "ADMU"
+      },
+      {
+        "player": "Reyes, Leonardo A.",
+        "school": "ADMU"
+      },
+      {
+        "player": "Romero, Niven John C.",
+        "school": "UST"
+      },
+      {
+        "player": "Templo, Pedro Bernardo",
+        "school": "ADMU"
+      }
+    ]
+  }
+}

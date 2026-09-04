@@ -1,0 +1,16 @@
+{
+  "season": "2003-2004",
+  "sport": "football",
+  "divisions": {
+    "men": {
+      "mvp": {
+        "player": "Ariel Zerrudo",
+        "school": "UP"
+      },
+      "rookie_of_the_year": {
+        "player": "Patrick Ozaeta",
+        "school": "ADMU"
+      }
+    }
+  }
+}

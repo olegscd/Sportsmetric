@@ -1,0 +1,16 @@
+{
+  "season": "2000-2001",
+  "sport": "tennis",
+  "divisions": {
+    "men": {
+      "rookie_of_the_year": {
+        "player": "Ian Edward de Guzman",
+        "school": "UP"
+      },
+      "mvp": {
+        "player": "Neil Steven O. Co",
+        "school": "ADMU"
+      }
+    }
+  }
+}

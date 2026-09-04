@@ -1,0 +1,48 @@
+{
+  "season": "1988-1989",
+  "sport": "chess",
+  "divisions": {
+    "juniors": [
+      {
+        "player": "Vince Alaan",
+        "school": "ADU"
+      },
+      {
+        "player": "Dennis Gutierrez",
+        "school": "ADU"
+      },
+      {
+        "player": "David Ravara",
+        "school": "NU"
+      },
+      {
+        "player": "Rolando Abo",
+        "school": "ADU"
+      },
+      {
+        "player": "Rogelio Taopa",
+        "school": "NU"
+      },
+      {
+        "player": "Nelson Mariano II",
+        "school": "FEU"
+      },
+      {
+        "player": "Christine Rose Mariano",
+        "school": "FEU"
+      },
+      {
+        "player": "Roy Ramos",
+        "school": "FEU"
+      },
+      {
+        "player": "Ronald Castro",
+        "school": "FEU"
+      },
+      {
+        "player": "Rolin Castro",
+        "school": "FEU"
+      }
+    ]
+  }
+}

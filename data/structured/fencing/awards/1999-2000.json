@@ -1,0 +1,18 @@
+{
+  "season": "1999-2000",
+  "sport": "fencing",
+  "divisions": {
+    "men": {
+      "mvp": {
+        "player": "Ramil Endriano",
+        "school": "DLSU"
+      }
+    },
+    "women": {
+      "mvp": {
+        "player": "Elizabeth Pil",
+        "school": "UP"
+      }
+    }
+  }
+}

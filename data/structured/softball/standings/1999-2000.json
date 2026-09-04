@@ -1,0 +1,50 @@
+{
+  "season": "1999-2000",
+  "sport": "softball",
+  "divisions": {
+    "men": [
+      {
+        "school": "ADU",
+        "wins": 9,
+        "losses": 1,
+        "pct": 0.9,
+        "rank": 1
+      },
+      {
+        "school": "UP",
+        "wins": 8,
+        "losses": 2,
+        "pct": 0.8,
+        "rank": 2
+      },
+      {
+        "school": "UE",
+        "wins": 6,
+        "losses": 4,
+        "pct": 0.6,
+        "rank": 3
+      },
+      {
+        "school": "UST",
+        "wins": 5,
+        "losses": 5,
+        "pct": 0.5,
+        "rank": 4
+      },
+      {
+        "school": "DLSU",
+        "wins": 2,
+        "losses": 8,
+        "pct": 0.2,
+        "rank": 5
+      },
+      {
+        "school": "ADMU",
+        "wins": 0,
+        "losses": 10,
+        "pct": 0.0,
+        "rank": 6
+      }
+    ]
+  }
+}

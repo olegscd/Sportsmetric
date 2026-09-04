@@ -1,0 +1,16 @@
+{
+  "season": "2003-2004",
+  "sport": "softball",
+  "divisions": {
+    "men": {
+      "rookie_of_the_year": {
+        "player": "MARY JOY JUANITAS",
+        "school": "DLSU"
+      },
+      "mvp": {
+        "player": "LOVERLY PAROHINOG",
+        "school": "ADU"
+      }
+    }
+  }
+}

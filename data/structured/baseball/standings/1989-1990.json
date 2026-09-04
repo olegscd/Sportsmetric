@@ -1,0 +1,40 @@
+{
+  "season": "1989-1990",
+  "sport": "baseball",
+  "divisions": {
+    "men": [
+      {
+        "school": "ADMU",
+        "wins": 5,
+        "losses": 1,
+        "ties": 3,
+        "pct": 0.556,
+        "rank": 1
+      },
+      {
+        "school": "DLSU",
+        "wins": 5,
+        "losses": 1,
+        "ties": 2,
+        "pct": 0.625,
+        "rank": 2
+      },
+      {
+        "school": "NU",
+        "wins": 5,
+        "losses": 2,
+        "ties": 4,
+        "pct": 0.455,
+        "rank": 3
+      },
+      {
+        "school": "ADU",
+        "wins": 5,
+        "losses": 5,
+        "ties": 10,
+        "pct": 0.25,
+        "rank": 4
+      }
+    ]
+  }
+}

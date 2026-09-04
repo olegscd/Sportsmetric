@@ -1,0 +1,607 @@
+{
+  "season": "1987-1988",
+  "sport": "volleyball",
+  "total_games": 40,
+  "games": [
+    {
+      "season": "1987-1988",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "first_round",
+      "winner": {
+        "school": "UST",
+        "score": 5
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 8
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "first_round",
+      "winner": {
+        "school": "UST",
+        "score": 5
+      },
+      "loser": {
+        "school": "UE",
+        "score": 7
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "first_round",
+      "winner": {
+        "school": "UST",
+        "score": 5
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 6
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "first_round",
+      "winner": {
+        "school": "UST",
+        "score": 5
+      },
+      "loser": {
+        "school": "NU",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "first_round",
+      "winner": {
+        "school": "UST",
+        "score": 5
+      },
+      "loser": {
+        "school": "FEU",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "first_round",
+      "winner": {
+        "school": "UST",
+        "score": 5
+      },
+      "loser": {
+        "school": "UP",
+        "score": 7
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "first_round",
+      "winner": {
+        "school": "UST",
+        "score": 5
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 3
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "first_round",
+      "winner": {
+        "school": "UST",
+        "score": 5
+      },
+      "loser": {
+        "school": "NU",
+        "score": 6
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "first_round",
+      "winner": {
+        "school": "UST",
+        "score": 5
+      },
+      "loser": {
+        "school": "UE",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "first_round",
+      "winner": {
+        "school": "UST",
+        "score": 5
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "first_round",
+      "winner": {
+        "school": "UST",
+        "score": 5
+      },
+      "loser": {
+        "school": "UE",
+        "score": 7
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "first_round",
+      "winner": {
+        "school": "UST",
+        "score": 5
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 7
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "first_round",
+      "winner": {
+        "school": "UST",
+        "score": 5
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 6
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "first_round",
+      "winner": {
+        "school": "UST",
+        "score": 1
+      },
+      "loser": {
+        "school": "NU",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "first_round",
+      "winner": {
+        "school": "UST",
+        "score": 5
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 4
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "first_round",
+      "winner": {
+        "school": "UST",
+        "score": 5
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 5
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "first_round",
+      "winner": {
+        "school": "UST",
+        "score": 5
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 4
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "first_round",
+      "winner": {
+        "school": "UST",
+        "score": 5
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 3
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "first_round",
+      "winner": {
+        "school": "UST",
+        "score": 1
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "first_round",
+      "winner": {
+        "school": "UST",
+        "score": 5
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 8
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "volleyball",
+      "division": "women",
+      "round": "first_round",
+      "winner": {
+        "school": "UST",
+        "score": 5
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 6
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "volleyball",
+      "division": "women",
+      "round": "first_round",
+      "winner": {
+        "school": "UST",
+        "score": 5
+      },
+      "loser": {
+        "school": "UE",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "volleyball",
+      "division": "women",
+      "round": "first_round",
+      "winner": {
+        "school": "UST",
+        "score": 5
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 6
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "volleyball",
+      "division": "women",
+      "round": "first_round",
+      "winner": {
+        "school": "UST",
+        "score": 5
+      },
+      "loser": {
+        "school": "NU",
+        "score": 0
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "volleyball",
+      "division": "women",
+      "round": "first_round",
+      "winner": {
+        "school": "UST",
+        "score": 5
+      },
+      "loser": {
+        "school": "UP",
+        "score": 7
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "volleyball",
+      "division": "women",
+      "round": "first_round",
+      "winner": {
+        "school": "UST",
+        "score": 5
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 7
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "volleyball",
+      "division": "women",
+      "round": "first_round",
+      "winner": {
+        "school": "UST",
+        "score": 5
+      },
+      "loser": {
+        "school": "NU",
+        "score": 3
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "volleyball",
+      "division": "women",
+      "round": "first_round",
+      "winner": {
+        "school": "UST",
+        "score": 5
+      },
+      "loser": {
+        "school": "UE",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "volleyball",
+      "division": "women",
+      "round": "first_round",
+      "winner": {
+        "school": "UST",
+        "score": 5
+      },
+      "loser": {
+        "school": "UST",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "volleyball",
+      "division": "women",
+      "round": "first_round",
+      "winner": {
+        "school": "UST",
+        "score": 5
+      },
+      "loser": {
+        "school": "NU",
+        "score": 3
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "volleyball",
+      "division": "women",
+      "round": "first_round",
+      "winner": {
+        "school": "UST",
+        "score": 6
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "volleyball",
+      "division": "women",
+      "round": "first_round",
+      "winner": {
+        "school": "UST",
+        "score": 5
+      },
+      "loser": {
+        "school": "UP",
+        "score": 8
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "volleyball",
+      "division": "women",
+      "round": "first_round",
+      "winner": {
+        "school": "UST",
+        "score": 5
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 2
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "volleyball",
+      "division": "women",
+      "round": "first_round",
+      "winner": {
+        "school": "UST",
+        "score": 5
+      },
+      "loser": {
+        "school": "UE",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "volleyball",
+      "division": "women",
+      "round": "first_round",
+      "winner": {
+        "school": "UST",
+        "score": 5
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 7
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "volleyball",
+      "division": "women",
+      "round": "first_round",
+      "winner": {
+        "school": "UST",
+        "score": 5
+      },
+      "loser": {
+        "school": "UE",
+        "score": 9
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "volleyball",
+      "division": "women",
+      "round": "first_round",
+      "winner": {
+        "school": "UST",
+        "score": 5
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 8
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "volleyball",
+      "division": "women",
+      "round": "first_round",
+      "winner": {
+        "school": "UST",
+        "score": 5
+      },
+      "loser": {
+        "school": "NU",
+        "score": 9
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "volleyball",
+      "division": "women",
+      "round": "first_round",
+      "winner": {
+        "school": "UST",
+        "score": 5
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "volleyball",
+      "division": "women",
+      "round": "first_round",
+      "winner": {
+        "school": "UST",
+        "score": 5
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 1
+      },
+      "is_championship": false
+    }
+  ]
+}

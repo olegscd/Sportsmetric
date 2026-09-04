@@ -1,0 +1,442 @@
+{
+  "season": "1998-1999",
+  "sport": "baseball",
+  "total_games": 29,
+  "games": [
+    {
+      "season": "1998-1999",
+      "sport": "baseball",
+      "division": "men",
+      "round": "first_round",
+      "winner": {
+        "school": "UST",
+        "score": 10
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 6
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "baseball",
+      "division": "men",
+      "round": "first_round",
+      "winner": {
+        "school": "ADU",
+        "score": 12
+      },
+      "loser": {
+        "school": "UP",
+        "score": 2
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "baseball",
+      "division": "men",
+      "round": "first_round",
+      "winner": {
+        "school": "NU",
+        "score": 18
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 10
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "baseball",
+      "division": "men",
+      "round": "first_round",
+      "winner": {
+        "school": "DLSU",
+        "score": 10
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 9
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "baseball",
+      "division": "men",
+      "round": "first_round",
+      "winner": {
+        "school": "ADU",
+        "score": 8
+      },
+      "loser": {
+        "school": "UST",
+        "score": 0
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "baseball",
+      "division": "men",
+      "round": "first_round",
+      "winner": {
+        "school": "UP",
+        "score": 10
+      },
+      "loser": {
+        "school": "NU",
+        "score": 0
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "baseball",
+      "division": "men",
+      "round": "first_round",
+      "winner": {
+        "school": "ADU",
+        "score": 10
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 0
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "baseball",
+      "division": "men",
+      "round": "first_round",
+      "winner": {
+        "school": "DLSU",
+        "score": 4
+      },
+      "loser": {
+        "school": "NU",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "baseball",
+      "division": "men",
+      "round": "first_round",
+      "winner": {
+        "school": "UST",
+        "score": 5
+      },
+      "loser": {
+        "school": "UP",
+        "score": 3
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "baseball",
+      "division": "men",
+      "round": "first_round",
+      "winner": {
+        "school": "UST",
+        "score": 15
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "baseball",
+      "division": "men",
+      "round": "first_round",
+      "winner": {
+        "school": "DLSU",
+        "score": 6
+      },
+      "loser": {
+        "school": "UP",
+        "score": 5
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "baseball",
+      "division": "men",
+      "round": "first_round",
+      "winner": {
+        "school": "ADU",
+        "score": 9
+      },
+      "loser": {
+        "school": "NU",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "baseball",
+      "division": "men",
+      "round": "first_round",
+      "winner": {
+        "school": "UP",
+        "score": 13
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 3
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "baseball",
+      "division": "men",
+      "round": "first_round",
+      "winner": {
+        "school": "ADU",
+        "score": 5
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "baseball",
+      "division": "men",
+      "round": "first_round",
+      "winner": {
+        "school": "UST",
+        "score": 2
+      },
+      "loser": {
+        "school": "NU",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "baseball",
+      "division": "men",
+      "round": "second_round",
+      "winner": {
+        "school": "ADU",
+        "score": 23
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "baseball",
+      "division": "men",
+      "round": "second_round",
+      "winner": {
+        "school": "UST",
+        "score": 17
+      },
+      "loser": {
+        "school": "NU",
+        "score": 3
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "baseball",
+      "division": "men",
+      "round": "second_round",
+      "winner": {
+        "school": "UP",
+        "score": 10
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 3
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "baseball",
+      "division": "men",
+      "round": "second_round",
+      "winner": {
+        "school": "UP",
+        "score": 18
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 3
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "baseball",
+      "division": "men",
+      "round": "second_round",
+      "winner": {
+        "school": "DLSU",
+        "score": 17
+      },
+      "loser": {
+        "school": "NU",
+        "score": 6
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "baseball",
+      "division": "men",
+      "round": "second_round",
+      "winner": {
+        "school": "UP",
+        "score": 3
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 2
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "baseball",
+      "division": "men",
+      "round": "second_round",
+      "winner": {
+        "school": "UST",
+        "score": 17
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 9
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "baseball",
+      "division": "men",
+      "round": "second_round",
+      "winner": {
+        "school": "ADU",
+        "score": 5
+      },
+      "loser": {
+        "school": "UST",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "baseball",
+      "division": "men",
+      "round": "second_round",
+      "winner": {
+        "school": "DLSU",
+        "score": 16
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 6
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "baseball",
+      "division": "men",
+      "round": "second_round",
+      "winner": {
+        "school": "UP",
+        "score": 4
+      },
+      "loser": {
+        "school": "NU",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "baseball",
+      "division": "men",
+      "round": "second_round",
+      "winner": {
+        "school": "NU",
+        "score": 16
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 9
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "baseball",
+      "division": "men",
+      "round": "second_round",
+      "winner": {
+        "school": "UP",
+        "score": 11
+      },
+      "loser": {
+        "school": "UST",
+        "score": 5
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "baseball",
+      "division": "men",
+      "round": "second_round",
+      "winner": {
+        "school": "ADU",
+        "score": 4
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 0
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "baseball",
+      "division": "men",
+      "round": "championship",
+      "winner": {
+        "school": "ADU",
+        "score": 9
+      },
+      "loser": {
+        "school": "UP",
+        "score": 5
+      },
+      "is_championship": true
+    }
+  ]
+}

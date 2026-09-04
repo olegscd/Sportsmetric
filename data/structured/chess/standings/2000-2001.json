@@ -1,0 +1,124 @@
+{
+  "season": "2000-2001",
+  "sport": "chess",
+  "divisions": {
+    "men": [
+      {
+        "school": "DLSU",
+        "points": 39.5,
+        "notes": "CHAMPION",
+        "rank": 1
+      },
+      {
+        "school": "UP",
+        "points": 38.0,
+        "rank": 2
+      },
+      {
+        "school": "UST",
+        "points": 31.5,
+        "notes": "THIRD PLACE",
+        "rank": 3
+      },
+      {
+        "school": "FEU",
+        "points": 31.5,
+        "notes": "FOURTH PLACE",
+        "rank": 4
+      },
+      {
+        "school": "UE",
+        "points": 28.5,
+        "notes": "FIFTH PLACE",
+        "rank": 5
+      },
+      {
+        "school": "ADU",
+        "points": 25.0,
+        "notes": "SIXTH PLACE",
+        "rank": 6
+      },
+      {
+        "school": "ADMU",
+        "points": 23.5,
+        "notes": "SEVENTH PLACE",
+        "rank": 7
+      },
+      {
+        "school": "NU",
+        "points": 19.5,
+        "notes": "EIGHT PLACE",
+        "rank": 8
+      }
+    ],
+    "women": [
+      {
+        "school": "UE",
+        "points": 35.0,
+        "rank": 1
+      },
+      {
+        "school": "FEU",
+        "points": 30.5,
+        "rank": 2
+      },
+      {
+        "school": "ADU",
+        "points": 28.0,
+        "rank": 3
+      },
+      {
+        "school": "UST",
+        "points": 27.5,
+        "rank": 4
+      },
+      {
+        "school": "UP",
+        "points": 20.5,
+        "rank": 5
+      },
+      {
+        "school": "DLSU",
+        "points": 13.5,
+        "rank": 6
+      },
+      {
+        "school": "ADMU",
+        "points": 13.0,
+        "rank": 7
+      }
+    ],
+    "juniors": [
+      {
+        "school": "ADMU",
+        "points": 32.5,
+        "rank": 1
+      },
+      {
+        "school": "UE",
+        "points": 22.5,
+        "rank": 2
+      },
+      {
+        "school": "UST",
+        "points": 19.0,
+        "rank": 3
+      },
+      {
+        "school": "DLSU",
+        "points": 15.5,
+        "rank": 4
+      },
+      {
+        "school": "ADU",
+        "points": 15.5,
+        "rank": 5
+      },
+      {
+        "school": "NU",
+        "points": 15.0,
+        "rank": 6
+      }
+    ]
+  }
+}

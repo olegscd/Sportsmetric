@@ -1,0 +1,12 @@
+{
+  "season": "1998-1999",
+  "sport": "softball",
+  "divisions": {
+    "men": {
+      "rookie_of_the_year": {
+        "player": "",
+        "school": "UE"
+      }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "season": "1999-2000",
+  "sport": "baseball",
+  "divisions": {
+    "men": {
+      "mvp": {
+        "player": "Sebastian Ledesma",
+        "school": "DLSU"
+      },
+      "rookie_of_the_year": {
+        "player": "Peter Paul Dimal",
+        "school": "DLSU"
+      }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "season": "2000-2001",
+  "sport": "baseball",
+  "divisions": {
+    "men": {
+      "mvp": {
+        "player": "Darwin dela Calzada",
+        "school": "UP"
+      },
+      "rookie_of_the_year": {
+        "player": "Gil Encarnado",
+        "school": "UST"
+      }
+    }
+  }
+}

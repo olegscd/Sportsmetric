@@ -1,0 +1,72 @@
+{
+  "season": "1988-1989",
+  "sport": "volleyball",
+  "divisions": {
+    "women": [
+      {
+        "school": "FEU",
+        "wins": 14,
+        "losses": 0,
+        "pct": 1.0,
+        "notes": "Champion",
+        "rank": 1
+      },
+      {
+        "school": "UST",
+        "wins": 12,
+        "losses": 2,
+        "pct": 0.857,
+        "notes": "Runner-Up",
+        "rank": 2
+      },
+      {
+        "school": "UP",
+        "wins": 10,
+        "losses": 4,
+        "pct": 0.714,
+        "notes": "Third Place",
+        "rank": 3
+      },
+      {
+        "school": "ADU",
+        "wins": 8,
+        "losses": 6,
+        "pct": 0.571,
+        "notes": "Fourth Place",
+        "rank": 4
+      },
+      {
+        "school": "UE",
+        "wins": 5,
+        "losses": 9,
+        "pct": 0.357,
+        "notes": "Fifth Place",
+        "rank": 5
+      },
+      {
+        "school": "NU",
+        "wins": 4,
+        "losses": 10,
+        "pct": 0.286,
+        "notes": "Sixth Place",
+        "rank": 6
+      },
+      {
+        "school": "DLSU",
+        "wins": 2,
+        "losses": 12,
+        "pct": 0.143,
+        "notes": "Seventh Place",
+        "rank": 7
+      },
+      {
+        "school": "ADMU",
+        "wins": 1,
+        "losses": 13,
+        "pct": 0.071,
+        "notes": "Eight Place",
+        "rank": 8
+      }
+    ]
+  }
+}

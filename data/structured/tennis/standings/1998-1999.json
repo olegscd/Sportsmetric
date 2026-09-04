@@ -1,0 +1,43 @@
+{
+  "season": "1998-1999",
+  "sport": "tennis",
+  "divisions": {
+    "men": [
+      {
+        "school": "UST",
+        "wins": 5,
+        "losses": 0,
+        "pct": 1.0,
+        "rank": 1
+      },
+      {
+        "school": "ADMU",
+        "wins": 4,
+        "losses": 1,
+        "pct": 0.8,
+        "rank": 2
+      },
+      {
+        "school": "DLSU",
+        "wins": 3,
+        "losses": 2,
+        "pct": 0.6,
+        "rank": 3
+      },
+      {
+        "school": "ADU",
+        "wins": 2,
+        "losses": 3,
+        "pct": 0.4,
+        "rank": 4
+      },
+      {
+        "school": "UE",
+        "wins": 1,
+        "losses": 4,
+        "pct": 0.2,
+        "rank": 5
+      }
+    ]
+  }
+}

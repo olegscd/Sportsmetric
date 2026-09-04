@@ -1,0 +1,64 @@
+{
+  "season": "1989-1990",
+  "sport": "volleyball",
+  "divisions": {
+    "men": [
+      {
+        "school": "ADU",
+        "wins": 14,
+        "losses": 0,
+        "pct": 1.0,
+        "rank": 1
+      },
+      {
+        "school": "ADMU",
+        "wins": 11,
+        "losses": 3,
+        "pct": 0.786,
+        "rank": 2
+      },
+      {
+        "school": "UST",
+        "wins": 11,
+        "losses": 3,
+        "pct": 0.786,
+        "rank": 3
+      },
+      {
+        "school": "FEU",
+        "wins": 7,
+        "losses": 7,
+        "pct": 0.5,
+        "rank": 4
+      },
+      {
+        "school": "UE",
+        "wins": 5,
+        "losses": 9,
+        "pct": 0.357,
+        "rank": 5
+      },
+      {
+        "school": "NU",
+        "wins": 4,
+        "losses": 10,
+        "pct": 0.286,
+        "rank": 6
+      },
+      {
+        "school": "UP",
+        "wins": 2,
+        "losses": 12,
+        "pct": 0.143,
+        "rank": 7
+      },
+      {
+        "school": "DLSU",
+        "wins": 2,
+        "losses": 12,
+        "pct": 0.143,
+        "rank": 8
+      }
+    ]
+  }
+}

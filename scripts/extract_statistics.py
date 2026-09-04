@@ -29,6 +29,10 @@ sys.path.insert(0, str(PROJECT_ROOT))
 from scripts.parsers.page_splitter import split_and_classify, print_classification_summary
 from scripts.parsers.overall_standings_parser import parse_overall_standings, save_overall_standings
 from scripts.parsers.basketball_parser import extract_basketball
+from scripts.parsers.volleyball_parser import extract_volleyball
+from scripts.parsers.baseball_parser import extract_baseball
+from scripts.parsers.chess_parser import extract_chess
+from scripts.parsers.other_sports_parser import extract_other_sports, OTHER_SPORTS
 
 
 SEASONS_DIR = PROJECT_ROOT / "data" / "seasons"
@@ -120,6 +124,37 @@ def extract_season(season: str, sports: list[str] | None = None):
                     lb_summary.append(f"{div} ({len(cats)} categories)")
             print(f"    Leaderboards: {'; '.join(lb_summary)}")
 
+    if not sports or "volleyball" in sports:
+        print("  Extracting volleyball data...")
+        vb_data = extract_volleyball(pages, season, STRUCTURED_DIR)
+        st = vb_data["standings"].get("divisions", {})
+        gm = vb_data["games"].get("total_games", 0)
+        aw = vb_data["awards"].get("divisions", {})
+        print(f"    Standings: {len(st)} divs, Games: {gm} parsed, Awards: {len(aw)} divs")
+
+    if not sports or "baseball" in sports:
+        print("  Extracting baseball data...")
+        b_data = extract_baseball(pages, season, STRUCTURED_DIR)
+        st = b_data["standings"].get("divisions", {})
+        gm = b_data["games"].get("total_games", 0)
+        aw = b_data["awards"].get("divisions", {})
+        print(f"    Standings: {len(st)} divs, Games: {gm} parsed, Awards: {len(aw)} divs")
+
+    if not sports or "chess" in sports:
+        print("  Extracting chess data...")
+        ch_data = extract_chess(pages, season, STRUCTURED_DIR)
+        st = ch_data["standings"].get("divisions", {})
+        bm = ch_data.get("board_medalists", {}).get("divisions", {})
+        aw = ch_data["awards"].get("divisions", {})
+        print(f"    Standings: {len(st)} divs, Board Medalists: {len(bm)} divs, Awards: {len(aw)} divs")
+
+    if not sports or any(s in OTHER_SPORTS for s in (sports or [])):
+        print("  Extracting other tournament sports...")
+        other_summary = extract_other_sports(pages, season, STRUCTURED_DIR)
+        if other_summary:
+            sports_found = list(other_summary.keys())
+            print(f"    Sports extracted: {', '.join(sports_found)}")
+
     print(f"\n{'=' * 60}")
     print(f" DONE: Season {season}")
     print(f"{'=' * 60}\n")
@@ -187,28 +222,16 @@ def main():
             )
             print(f"    {jf.stem}: {div_summary}")
 
-    bb_dir = STRUCTURED_DIR / "basketball"
-    if bb_dir.exists():
-        print(f"\n  Basketball Extraction:")
-        for dtype in ["standings", "games", "awards", "player_stats", "leaderboards"]:
-            dpath = bb_dir / dtype
-            if dpath.exists():
-                files = sorted(dpath.glob("*.json"))
-                total_items = 0
-                for f in files:
-                    content = json.loads(f.read_text(encoding="utf-8"))
-                    if dtype == "games":
-                        total_items += content.get("total_games", 0)
-                    elif dtype == "standings":
-                        total_items += sum(len(v) for v in content.get("divisions", {}).values())
-                    elif dtype == "awards":
-                        total_items += len(content.get("divisions", {}))
-                    elif dtype == "player_stats":
-                        total_items += content.get("total_players", 0)
-                    elif dtype == "leaderboards":
-                        total_items += sum(len(cats) for cats in content.get("divisions", {}).values())
-                clean_dtype = dtype.replace("_", " ").title()
-                print(f"    {clean_dtype}: {len(files)} seasons ({total_items} total records)")
+    # Summary of all sports
+    print(f"\n  Structured Sports Extraction Summary:")
+    sport_dirs = sorted([d for d in STRUCTURED_DIR.iterdir() if d.is_dir() and d.name != "overall_standings"])
+    for sdir in sport_dirs:
+        subdirs = sorted([sd for sd in sdir.iterdir() if sd.is_dir()])
+        sub_info = []
+        for sd in subdirs:
+            flist = list(sd.glob("*.json"))
+            sub_info.append(f"{sd.name}: {len(flist)} seasons")
+        print(f"    {sdir.name.replace('_', ' ').title():20s} -> {', '.join(sub_info)}")
 
     print(f"\n  Output directory: {STRUCTURED_DIR.resolve()}")
     print()

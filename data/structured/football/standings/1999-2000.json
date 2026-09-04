@@ -1,0 +1,106 @@
+{
+  "season": "1999-2000",
+  "sport": "football",
+  "divisions": {
+    "men": [
+      {
+        "school": "ADMU",
+        "wins": 12,
+        "losses": 5,
+        "pct": 0.706,
+        "points": 4,
+        "rank": 1
+      },
+      {
+        "school": "UST",
+        "wins": 13,
+        "losses": 10,
+        "pct": 0.565,
+        "points": 2,
+        "rank": 2
+      },
+      {
+        "school": "FEU",
+        "wins": 13,
+        "losses": 7,
+        "pct": 0.65,
+        "points": 2,
+        "rank": 3
+      },
+      {
+        "school": "DLSU",
+        "wins": 12,
+        "losses": 6,
+        "pct": 0.667,
+        "points": 2,
+        "rank": 4
+      },
+      {
+        "school": "UP",
+        "wins": 12,
+        "losses": 7,
+        "pct": 0.632,
+        "points": 1,
+        "rank": 5
+      },
+      {
+        "school": "UE",
+        "wins": 12,
+        "losses": 2,
+        "pct": 0.857,
+        "points": 1,
+        "rank": 6
+      },
+      {
+        "school": "ADU",
+        "wins": 12,
+        "losses": 0,
+        "pct": 1.0,
+        "points": 0,
+        "rank": 7
+      }
+    ],
+    "women": [
+      {
+        "school": "DLSU",
+        "wins": 9,
+        "losses": 4,
+        "pct": 0.692,
+        "points": 5,
+        "rank": 1
+      },
+      {
+        "school": "UP",
+        "wins": 8,
+        "losses": 2,
+        "pct": 0.8,
+        "points": 5,
+        "rank": 2
+      },
+      {
+        "school": "UST",
+        "wins": 9,
+        "losses": 3,
+        "pct": 0.75,
+        "points": 4,
+        "rank": 3
+      },
+      {
+        "school": "FEU",
+        "wins": 8,
+        "losses": 3,
+        "pct": 0.727,
+        "points": 3,
+        "rank": 4
+      },
+      {
+        "school": "ADMU",
+        "wins": 8,
+        "losses": 0,
+        "pct": 1.0,
+        "points": 1,
+        "rank": 5
+      }
+    ]
+  }
+}

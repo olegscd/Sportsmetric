@@ -1,0 +1,46 @@
+{
+  "season": "2000-2001",
+  "sport": "softball",
+  "divisions": {
+    "men": [
+      {
+        "school": "ADMU",
+        "points": 10,
+        "rank": 1
+      },
+      {
+        "school": "DLSU",
+        "points": 8,
+        "rank": 2
+      },
+      {
+        "school": "UP",
+        "wins": 3,
+        "losses": 1,
+        "pct": 0.75,
+        "rank": 3
+      },
+      {
+        "school": "UE",
+        "wins": 3,
+        "losses": 1,
+        "pct": 0.75,
+        "rank": 4
+      },
+      {
+        "school": "ADU",
+        "wins": 2,
+        "losses": 1,
+        "pct": 0.667,
+        "rank": 5
+      },
+      {
+        "school": "UST",
+        "wins": 1,
+        "losses": 3,
+        "pct": 0.25,
+        "rank": 6
+      }
+    ]
+  }
+}

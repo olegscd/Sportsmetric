@@ -1,0 +1,88 @@
+{
+  "season": "1988-1989",
+  "sport": "football",
+  "divisions": {
+    "men": [
+      {
+        "school": "UST",
+        "wins": 0,
+        "losses": 2,
+        "pct": 0.0,
+        "points": 4,
+        "rank": 1
+      },
+      {
+        "school": "UE",
+        "wins": 6,
+        "losses": 2,
+        "pct": 0.75,
+        "points": 3,
+        "rank": 2
+      },
+      {
+        "school": "UST",
+        "wins": 3,
+        "losses": 2,
+        "pct": 0.6,
+        "points": 2,
+        "rank": 3
+      },
+      {
+        "school": "DLSU",
+        "wins": 2,
+        "losses": 2,
+        "pct": 0.5,
+        "points": 2,
+        "rank": 4
+      },
+      {
+        "school": "DLSU",
+        "wins": 1,
+        "losses": 1,
+        "pct": 0.5,
+        "points": 2,
+        "rank": 5
+      },
+      {
+        "school": "UE",
+        "wins": 6,
+        "losses": 0,
+        "pct": 1.0,
+        "points": 1,
+        "rank": 6
+      },
+      {
+        "school": "FEU",
+        "wins": 1,
+        "losses": 1,
+        "pct": 0.5,
+        "points": 1,
+        "rank": 7
+      },
+      {
+        "school": "FEU",
+        "wins": 1,
+        "losses": 0,
+        "pct": 1.0,
+        "points": 1,
+        "rank": 8
+      },
+      {
+        "school": "UP",
+        "wins": 2,
+        "losses": 1,
+        "pct": 0.667,
+        "points": 0,
+        "rank": 9
+      },
+      {
+        "school": "UP",
+        "wins": 1,
+        "losses": 1,
+        "pct": 0.5,
+        "points": 0,
+        "rank": 10
+      }
+    ]
+  }
+}

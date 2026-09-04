@@ -1,0 +1,487 @@
+{
+  "season": "1988-1989",
+  "sport": "volleyball",
+  "total_games": 32,
+  "games": [
+    {
+      "season": "1988-1989",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "elimination",
+      "winner": {
+        "school": "ADU",
+        "score": 5
+      },
+      "loser": {
+        "school": "UST",
+        "score": 6
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "elimination",
+      "winner": {
+        "school": "UP",
+        "score": 5
+      },
+      "loser": {
+        "school": "UE",
+        "score": 6
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "elimination",
+      "winner": {
+        "school": "FEU",
+        "score": 5
+      },
+      "loser": {
+        "school": "NU",
+        "score": 7
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "elimination",
+      "winner": {
+        "school": "DLSU",
+        "score": 5
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 7
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "elimination",
+      "winner": {
+        "school": "NU",
+        "score": 5
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "elimination",
+      "winner": {
+        "school": "UE",
+        "score": 8
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "elimination",
+      "winner": {
+        "school": "UST",
+        "score": 5
+      },
+      "loser": {
+        "school": "UP",
+        "score": 5
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "elimination",
+      "winner": {
+        "school": "FEU",
+        "score": 5
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 7
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "elimination",
+      "winner": {
+        "school": "ADU",
+        "score": 5
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 7
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "elimination",
+      "winner": {
+        "school": "NU",
+        "score": 0
+      },
+      "loser": {
+        "school": "UE",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "elimination",
+      "winner": {
+        "school": "FEU",
+        "score": 4
+      },
+      "loser": {
+        "school": "UST",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "elimination",
+      "winner": {
+        "school": "UP",
+        "score": 5
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 8
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "elimination",
+      "winner": {
+        "school": "FEU",
+        "score": 5
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 5
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "elimination",
+      "winner": {
+        "school": "UST",
+        "score": 5
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "elimination",
+      "winner": {
+        "school": "ADU",
+        "score": 5
+      },
+      "loser": {
+        "school": "UE",
+        "score": 7
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "elimination",
+      "winner": {
+        "school": "UP",
+        "score": 5
+      },
+      "loser": {
+        "school": "NU",
+        "score": 5
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "elimination",
+      "winner": {
+        "school": "UST",
+        "score": 5
+      },
+      "loser": {
+        "school": "NU",
+        "score": 3
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "elimination",
+      "winner": {
+        "school": "UE",
+        "score": 5
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 9
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "elimination",
+      "winner": {
+        "school": "FEU",
+        "score": 5
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 9
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "elimination",
+      "winner": {
+        "school": "UP",
+        "score": 5
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 9
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "elimination",
+      "winner": {
+        "school": "UP",
+        "score": 5
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 2
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "elimination",
+      "winner": {
+        "school": "FEU",
+        "score": 5
+      },
+      "loser": {
+        "school": "UE",
+        "score": 9
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "elimination",
+      "winner": {
+        "school": "NU",
+        "score": 5
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "elimination",
+      "winner": {
+        "school": "UST",
+        "score": 5
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "elimination",
+      "winner": {
+        "school": "ADU",
+        "score": 5
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "elimination",
+      "winner": {
+        "school": "UST",
+        "score": 3
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 0
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "elimination",
+      "winner": {
+        "school": "UP",
+        "score": 5
+      },
+      "loser": {
+        "school": "UE",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "elimination",
+      "winner": {
+        "school": "FEU",
+        "score": 5
+      },
+      "loser": {
+        "school": "NU",
+        "score": 7
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "elimination",
+      "winner": {
+        "school": "UST",
+        "score": 5
+      },
+      "loser": {
+        "school": "UE",
+        "score": 6
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "elimination",
+      "winner": {
+        "school": "ADU",
+        "score": 5
+      },
+      "loser": {
+        "school": "NU",
+        "score": 3
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "elimination",
+      "winner": {
+        "school": "DLSU",
+        "score": 7
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "volleyball",
+      "division": "men",
+      "round": "elimination",
+      "winner": {
+        "school": "FEU",
+        "score": 1
+      },
+      "loser": {
+        "school": "UP",
+        "score": 1
+      },
+      "is_championship": false
+    }
+  ]
+}

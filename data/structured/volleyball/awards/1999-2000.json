@@ -1,0 +1,12 @@
+{
+  "season": "1999-2000",
+  "sport": "volleyball",
+  "divisions": {
+    "men": {
+      "mvp": {
+        "player": "Cherrie Mae Verzosa",
+        "school": "UE"
+      }
+    }
+  }
+}

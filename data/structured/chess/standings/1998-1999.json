@@ -1,0 +1,28 @@
+{
+  "season": "1998-1999",
+  "sport": "chess",
+  "divisions": {
+    "men": [
+      {
+        "school": "UST",
+        "points": 39.0,
+        "rank": 1
+      },
+      {
+        "school": "UP",
+        "points": 39.0,
+        "rank": 2
+      },
+      {
+        "school": "DLSU",
+        "points": 37.0,
+        "rank": 3
+      },
+      {
+        "school": "UE",
+        "points": 33.0,
+        "rank": 4
+      }
+    ]
+  }
+}

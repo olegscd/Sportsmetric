@@ -1,0 +1,61 @@
+{
+  "season": "1987-1988",
+  "sport": "baseball",
+  "divisions": {
+    "men": [
+      {
+        "school": "ADU",
+        "wins": 8,
+        "losses": 1,
+        "ties": 17,
+        "pct": 0.308,
+        "notes": "CHAMPION",
+        "rank": 1
+      },
+      {
+        "school": "UP",
+        "wins": 7,
+        "losses": 2,
+        "ties": 15,
+        "pct": 0.292,
+        "rank": 2
+      },
+      {
+        "school": "UP",
+        "wins": 7,
+        "losses": 3,
+        "ties": 14,
+        "pct": 0.292,
+        "notes": "3rd Place",
+        "rank": 3
+      },
+      {
+        "school": "NU",
+        "wins": 5,
+        "losses": 5,
+        "ties": 10,
+        "pct": 0.25,
+        "notes": "4th Place",
+        "rank": 4
+      },
+      {
+        "school": "ADMU",
+        "wins": 2,
+        "losses": 8,
+        "ties": 4,
+        "pct": 0.143,
+        "notes": "5th Place",
+        "rank": 5
+      },
+      {
+        "school": "DLSU",
+        "wins": 0,
+        "losses": 10,
+        "ties": 0,
+        "pct": 0.0,
+        "notes": "6th Place",
+        "rank": 6
+      }
+    ]
+  }
+}

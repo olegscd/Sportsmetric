@@ -1,0 +1,24 @@
+{
+  "season": "1999-2000",
+  "sport": "table_tennis",
+  "divisions": {
+    "men": {
+      "mvp": {
+        "player": "Alvin E. Remigio",
+        "school": "UE"
+      }
+    },
+    "women": {
+      "mvp": {
+        "player": "Karen C. Jaleco",
+        "school": "UP"
+      }
+    },
+    "juniors": {
+      "mvp": {
+        "player": "Jeffrey M. Santos",
+        "school": "UE"
+      }
+    }
+  }
+}

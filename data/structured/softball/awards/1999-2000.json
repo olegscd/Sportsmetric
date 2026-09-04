@@ -1,0 +1,16 @@
+{
+  "season": "1999-2000",
+  "sport": "softball",
+  "divisions": {
+    "men": {
+      "mvp": {
+        "player": "Jenny De Jesus",
+        "school": "ADU"
+      },
+      "rookie_of_the_year": {
+        "player": "Mary Glenn Enrique",
+        "school": "UP"
+      }
+    }
+  }
+}

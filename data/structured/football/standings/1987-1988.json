@@ -1,0 +1,55 @@
+{
+  "season": "1987-1988",
+  "sport": "football",
+  "divisions": {
+    "men": [
+      {
+        "school": "UE",
+        "wins": 0,
+        "losses": 0,
+        "points": 5,
+        "rank": 1
+      },
+      {
+        "school": "ADMU",
+        "wins": 1,
+        "losses": 0,
+        "pct": 1.0,
+        "points": 4,
+        "rank": 2
+      },
+      {
+        "school": "FEU",
+        "wins": 3,
+        "losses": 0,
+        "pct": 1.0,
+        "points": 2,
+        "rank": 3
+      },
+      {
+        "school": "DLSU",
+        "wins": 2,
+        "losses": 1,
+        "pct": 0.667,
+        "points": 2,
+        "rank": 4
+      },
+      {
+        "school": "UP",
+        "wins": 4,
+        "losses": 0,
+        "pct": 1.0,
+        "points": 1,
+        "rank": 5
+      },
+      {
+        "school": "UST",
+        "wins": 4,
+        "losses": 1,
+        "pct": 0.8,
+        "points": 0,
+        "rank": 6
+      }
+    ]
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "season": "2003-2004",
+  "sport": "fencing",
+  "divisions": {
+    "men": {
+      "mvp": {
+        "player": "Edmond Velez",
+        "school": "UE"
+      }
+    },
+    "women": {
+      "mvp": {
+        "player": "Virgie Nuestro",
+        "school": "UP"
+      }
+    }
+  }
+}

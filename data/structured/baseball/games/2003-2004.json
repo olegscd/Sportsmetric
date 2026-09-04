@@ -1,0 +1,487 @@
+{
+  "season": "2003-2004",
+  "sport": "baseball",
+  "total_games": 32,
+  "games": [
+    {
+      "season": "2003-2004",
+      "sport": "baseball",
+      "division": "men",
+      "round": "first_round",
+      "winner": {
+        "school": "DLSU",
+        "score": 14
+      },
+      "loser": {
+        "school": "NU",
+        "score": 7
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "baseball",
+      "division": "men",
+      "round": "first_round",
+      "winner": {
+        "school": "UST",
+        "score": 13
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 0
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "baseball",
+      "division": "men",
+      "round": "first_round",
+      "winner": {
+        "school": "UP",
+        "score": 11
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "baseball",
+      "division": "men",
+      "round": "first_round",
+      "winner": {
+        "school": "UP",
+        "score": 14
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 3
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "baseball",
+      "division": "men",
+      "round": "first_round",
+      "winner": {
+        "school": "DLSU",
+        "score": 13
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 3
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "baseball",
+      "division": "men",
+      "round": "first_round",
+      "winner": {
+        "school": "UST",
+        "score": 15
+      },
+      "loser": {
+        "school": "NU",
+        "score": 2
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "baseball",
+      "division": "men",
+      "round": "first_round",
+      "winner": {
+        "school": "UST",
+        "score": 12
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 3
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "baseball",
+      "division": "men",
+      "round": "first_round",
+      "winner": {
+        "school": "UP",
+        "score": 11
+      },
+      "loser": {
+        "school": "NU",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "baseball",
+      "division": "men",
+      "round": "first_round",
+      "winner": {
+        "school": "ADU",
+        "score": 10
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 0
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "baseball",
+      "division": "men",
+      "round": "first_round",
+      "winner": {
+        "school": "NU",
+        "score": 10
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 8
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "baseball",
+      "division": "men",
+      "round": "first_round",
+      "winner": {
+        "school": "UP",
+        "score": 11
+      },
+      "loser": {
+        "school": "UST",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "baseball",
+      "division": "men",
+      "round": "first_round",
+      "winner": {
+        "school": "ADU",
+        "score": 12
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 7
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "baseball",
+      "division": "men",
+      "round": "first_round",
+      "winner": {
+        "school": "UST",
+        "score": 10
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 0
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "baseball",
+      "division": "men",
+      "round": "first_round",
+      "winner": {
+        "school": "ADU",
+        "score": 11
+      },
+      "loser": {
+        "school": "NU",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "baseball",
+      "division": "men",
+      "round": "first_round",
+      "winner": {
+        "school": "UP",
+        "score": 15
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 7
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "baseball",
+      "division": "men",
+      "round": "second_round",
+      "winner": {
+        "school": "UP",
+        "score": 15
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 2
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "baseball",
+      "division": "men",
+      "round": "second_round",
+      "winner": {
+        "school": "UST",
+        "score": 13
+      },
+      "loser": {
+        "school": "NU",
+        "score": 0
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "baseball",
+      "division": "men",
+      "round": "second_round",
+      "winner": {
+        "school": "DLSU",
+        "score": 11
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 8
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "baseball",
+      "division": "men",
+      "round": "second_round",
+      "winner": {
+        "school": "ADMU",
+        "score": 12
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 10
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "baseball",
+      "division": "men",
+      "round": "second_round",
+      "winner": {
+        "school": "UP",
+        "score": 12
+      },
+      "loser": {
+        "school": "NU",
+        "score": 0
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "baseball",
+      "division": "men",
+      "round": "second_round",
+      "winner": {
+        "school": "UST",
+        "score": 15
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 5
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "baseball",
+      "division": "men",
+      "round": "second_round",
+      "winner": {
+        "school": "NU",
+        "score": 9
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 8
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "baseball",
+      "division": "men",
+      "round": "second_round",
+      "winner": {
+        "school": "UST",
+        "score": 10
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 0
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "baseball",
+      "division": "men",
+      "round": "second_round",
+      "winner": {
+        "school": "UP",
+        "score": 8
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 5
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "baseball",
+      "division": "men",
+      "round": "second_round",
+      "winner": {
+        "school": "UST",
+        "score": 16
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 10
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "baseball",
+      "division": "men",
+      "round": "second_round",
+      "winner": {
+        "school": "NU",
+        "score": 12
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 8
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "baseball",
+      "division": "men",
+      "round": "second_round",
+      "winner": {
+        "school": "ADU",
+        "score": 10
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 3
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "baseball",
+      "division": "men",
+      "round": "second_round",
+      "winner": {
+        "school": "NU",
+        "score": 7
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 2
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "baseball",
+      "division": "men",
+      "round": "second_round",
+      "winner": {
+        "school": "UST",
+        "score": 7
+      },
+      "loser": {
+        "school": "UP",
+        "score": 4
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "baseball",
+      "division": "men",
+      "round": "second_round",
+      "winner": {
+        "school": "UP",
+        "score": 13
+      },
+      "loser": {
+        "school": "NU",
+        "score": 1
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "baseball",
+      "division": "men",
+      "round": "championship",
+      "winner": {
+        "school": "UP",
+        "score": 5
+      },
+      "loser": {
+        "school": "UST",
+        "score": 1
+      },
+      "is_championship": true
+    },
+    {
+      "season": "2003-2004",
+      "sport": "baseball",
+      "division": "men",
+      "round": "championship",
+      "winner": {
+        "school": "UP",
+        "score": 10
+      },
+      "loser": {
+        "school": "UST",
+        "score": 3
+      },
+      "is_championship": true
+    }
+  ]
+}

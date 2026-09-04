@@ -1,0 +1,24 @@
+{
+  "season": "1998-1999",
+  "sport": "fencing",
+  "divisions": {
+    "men": [
+      {
+        "school": "DLSU",
+        "rank": 1
+      },
+      {
+        "school": "UP",
+        "rank": 2
+      },
+      {
+        "school": "ADMU",
+        "rank": 3
+      },
+      {
+        "school": "UE",
+        "rank": 4
+      }
+    ]
+  }
+}

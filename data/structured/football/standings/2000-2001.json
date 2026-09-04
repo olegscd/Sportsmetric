@@ -1,0 +1,32 @@
+{
+  "season": "2000-2001",
+  "sport": "football",
+  "divisions": {
+    "men": [
+      {
+        "school": "UST",
+        "rank": 1
+      },
+      {
+        "school": "DLSU",
+        "rank": 2
+      },
+      {
+        "school": "UP",
+        "rank": 3
+      },
+      {
+        "school": "ADMU",
+        "rank": 4
+      },
+      {
+        "school": "UE",
+        "rank": 5
+      },
+      {
+        "school": "FEU",
+        "rank": 6
+      }
+    ]
+  }
+}

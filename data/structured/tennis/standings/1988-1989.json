@@ -1,0 +1,48 @@
+{
+  "season": "1988-1989",
+  "sport": "tennis",
+  "divisions": {
+    "men": [
+      {
+        "school": "ADU",
+        "wins": 8,
+        "losses": 1,
+        "pct": 0.889,
+        "notes": "CHAMPION",
+        "rank": 1
+      },
+      {
+        "school": "UP",
+        "wins": 6,
+        "losses": 3,
+        "pct": 0.667,
+        "notes": "Runner-up",
+        "rank": 2
+      },
+      {
+        "school": "UST",
+        "wins": 3,
+        "losses": 5,
+        "pct": 0.375,
+        "notes": "Third Place",
+        "rank": 3
+      },
+      {
+        "school": "DLSU",
+        "wins": 3,
+        "losses": 5,
+        "pct": 0.375,
+        "notes": "Fourth Place",
+        "rank": 4
+      },
+      {
+        "school": "ADMU",
+        "wins": 1,
+        "losses": 7,
+        "pct": 0.125,
+        "notes": "Fifth Place",
+        "rank": 5
+      }
+    ]
+  }
+}
