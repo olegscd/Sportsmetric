@@ -1,0 +1,75 @@
+{
+  "season": "1999-2000",
+  "sport": "basketball",
+  "divisions": {
+    "men": [
+      {
+        "school": "ADMU",
+        "rank": 1
+      },
+      {
+        "school": "ADU",
+        "rank": 2
+      },
+      {
+        "school": "UST",
+        "rank": 3
+      },
+      {
+        "school": "UE",
+        "rank": 4
+      }
+    ],
+    "juniors": [
+      {
+        "school": "ADMU",
+        "wins": 6,
+        "losses": 0,
+        "pct": 1.0,
+        "rank": 1
+      },
+      {
+        "school": "ADU",
+        "wins": 5,
+        "losses": 1,
+        "pct": 0.833,
+        "rank": 2
+      },
+      {
+        "school": "DLSU",
+        "wins": 4,
+        "losses": 2,
+        "pct": 0.667,
+        "rank": 3
+      },
+      {
+        "school": "UST",
+        "wins": 3,
+        "losses": 3,
+        "pct": 0.5,
+        "rank": 4
+      },
+      {
+        "school": "UP",
+        "wins": 2,
+        "losses": 4,
+        "pct": 0.333,
+        "rank": 5
+      },
+      {
+        "school": "NU",
+        "wins": 1,
+        "losses": 5,
+        "pct": 0.167,
+        "rank": 6
+      },
+      {
+        "school": "UE",
+        "wins": 0,
+        "losses": 6,
+        "pct": 0.0,
+        "rank": 7
+      }
+    ]
+  }
+}

@@ -189,14 +189,15 @@ def parse_overall_standings(pages: list[PageSegment], season: str) -> dict:
     }
     
     for page in pages:
-        content_upper = page.content.upper()
+        upper = page.content.upper()
         
-        # Check if this page has overall standings
-        has_overall = any(kw in content_upper for kw in [
+        # Check if this page has overall standings (including SCOREBOARD)
+        has_overall = any(term in upper for term in [
             "OVER-ALL TEAM STANDING",
             "OVERALL TEAM STANDING",
             "OVER-ALL STANDING OF TEAMS",
-            "OVERALL STANDING OF TEAMS",
+            "TEAM STANDING\nSY",
+            "UAAP SCOREBOARD",
         ])
         if not has_overall:
             continue
@@ -221,7 +222,7 @@ def parse_overall_standings(pages: list[PageSegment], season: str) -> dict:
                 current_division = "college"
                 section_lines = []
                 continue
-            elif any(kw in line_clean for kw in ["JUNIOR DIVISION", "HIGH SCHOOL DIVISION", "HIGH SCHOOL"]):
+            elif any(kw in line_clean for kw in ["JUNIOR DIVISION", "HIGH SCHOOL DIVISION", "HIGH SCHOOL", "JUNIOR'S DIVISION"]):
                 if current_division and section_lines:
                     _process_section(result, current_division, section_lines)
                 current_division = "junior"
@@ -239,24 +240,106 @@ def parse_overall_standings(pages: list[PageSegment], season: str) -> dict:
     return result
 
 
+def _parse_scoreboard_table(lines: list[str], division: str) -> list[dict]:
+    """
+    Parse a transposed scoreboard table (schools as columns, sports as rows):
+      | | UST | DLS-Z | ADMU | ... |
+      | Athletics | 10 | 6 | 12 | ... |
+      | TOTAL | 97 | 70 | 69 | ... |
+    """
+    school_columns = []
+    sport_rows = []
+    total_row = None
+
+    for line in lines:
+        line = line.strip()
+        if not line.startswith("|") or re.match(r'\|\s*[-:]+', line):
+            continue
+        cells = [c.strip() for c in line.split("|")[1:-1]]
+        if not cells:
+            continue
+
+        matched_schools = []
+        for i, c in enumerate(cells):
+            clean_c = re.sub(r'<[^>]+>|\*+', '', c).strip()
+            team = canonicalize_team(clean_c)
+            if team:
+                matched_schools.append((i, team))
+
+        if len(matched_schools) >= 4 and not school_columns:
+            school_columns = matched_schools
+            continue
+
+        first_col_clean = re.sub(r'<[^>]+>|\*+', '', cells[0]).upper().strip()
+        second_col_clean = re.sub(r'<[^>]+>|\*+', '', cells[1]).upper().strip() if len(cells) > 1 else ""
+        if "TOTAL" in first_col_clean or "TOTAL" in second_col_clean:
+            total_row = cells
+            continue
+
+        if school_columns:
+            sport_name = re.sub(r'<[^>]+>|\*+', '', cells[0]).strip()
+            if len(cells) > 1 and cells[1].startswith("(") and cells[1].endswith(")"):
+                sport_name += " " + cells[1].strip()
+            sport_rows.append((sport_name, cells))
+
+    if not school_columns or not total_row:
+        return []
+
+    rankings = []
+    for col_idx, school_code in school_columns:
+        if col_idx < len(total_row):
+            t_str = re.sub(r'[^0-9.]', '', total_row[col_idx])
+            try:
+                tot = float(t_str) if t_str else 0.0
+            except ValueError:
+                tot = 0.0
+        else:
+            tot = 0.0
+
+        sport_pts = {}
+        for sp_name, row_cells in sport_rows:
+            if col_idx < len(row_cells):
+                p_str = re.sub(r'[^0-9.]', '', row_cells[col_idx])
+                try:
+                    pts = float(p_str) if p_str else 0.0
+                except ValueError:
+                    pts = 0.0
+                if pts > 0:
+                    sport_pts[sp_name] = pts
+
+        rankings.append({
+            "school": school_code,
+            "total_points": tot,
+            "division": division,
+            "sport_points": sport_pts
+        })
+
+    rankings.sort(key=lambda x: x["total_points"], reverse=True)
+    for rank, r in enumerate(rankings, 1):
+        r["rank"] = rank
+
+    return rankings
+
+
 def _process_section(result: dict, division: str, lines: list[str]):
     """Process a division section and add results."""
-    # Check if it's a detailed table (many columns) or simple (2 columns)
     table_lines = [l for l in lines if l.strip().startswith("|")]
     if not table_lines:
         return
-    
-    # Count columns in first data row
-    first_data = table_lines[0]
-    col_count = first_data.count("|") - 1  # subtract outer pipes
-    
-    if col_count > 4:
-        rankings = _parse_detailed_standings_table(lines, division)
+
+    # First try transposed scoreboard table
+    scoreboard_rankings = _parse_scoreboard_table(lines, division)
+    if scoreboard_rankings:
+        rankings = scoreboard_rankings
     else:
-        rankings = _parse_simple_standings_table(lines, division)
-    
+        first_data = table_lines[0]
+        col_count = first_data.count("|") - 1
+        if col_count > 4:
+            rankings = _parse_detailed_standings_table(lines, division)
+        else:
+            rankings = _parse_simple_standings_table(lines, division)
+
     if rankings:
-        # Only store if we don't already have a better (more detailed) version
         existing = result["divisions"].get(division, [])
         if not existing or (rankings and len(rankings) > len(existing)):
             result["divisions"][division] = rankings

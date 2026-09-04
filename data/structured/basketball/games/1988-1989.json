@@ -1,0 +1,1231 @@
+{
+  "season": "1988-1989",
+  "sport": "basketball",
+  "total_games": 68,
+  "games": [
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "game_number": 3,
+      "date": "16 July 1988",
+      "venue": "Araneta Coliseum",
+      "winner": {
+        "school": "UP",
+        "score": 110
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 89
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "game_number": 4,
+      "date": "24 July 1988",
+      "venue": "Araneta Coliseum",
+      "winner": {
+        "school": "DLSU",
+        "score": 102
+      },
+      "loser": {
+        "school": "NU",
+        "score": 67
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "game_number": 5,
+      "date": "24 July 1988",
+      "venue": "Rizal Memorial Basketball Coliseum",
+      "winner": {
+        "school": "FEU",
+        "score": 78
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 74
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "game_number": 6,
+      "date": "24 July 1988",
+      "venue": "Rizal Memorial Basketball Coliseum",
+      "winner": {
+        "school": "ADMU",
+        "score": 84
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 81
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "game_number": 7,
+      "date": "24 July 1988",
+      "venue": "Rizal Memorial Basketball Coliseum",
+      "winner": {
+        "school": "UST",
+        "score": 93
+      },
+      "loser": {
+        "school": "NU",
+        "score": 87
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "game_number": 8,
+      "date": "30 July 1988",
+      "venue": "Rizal Memorial Basketball Coliseum",
+      "winner": {
+        "school": "UP",
+        "score": 99
+      },
+      "loser": {
+        "school": "UE",
+        "score": 81
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "game_number": 9,
+      "date": "30 July 1988",
+      "venue": "Rizal Memorial Basketball Coliseum",
+      "winner": {
+        "school": "ADMU",
+        "score": 106
+      },
+      "loser": {
+        "school": "NU",
+        "score": 72
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "game_number": 10,
+      "date": "30 July 1988",
+      "venue": "Rizal Memorial Basketball Coliseum",
+      "winner": {
+        "school": "UP",
+        "score": 89
+      },
+      "loser": {
+        "school": "UST",
+        "score": 74
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "game_number": 11,
+      "date": "30 July 1988",
+      "venue": "Rizal Memorial Basketball Coliseum",
+      "winner": {
+        "school": "DLSU",
+        "score": 84
+      },
+      "loser": {
+        "school": "UE",
+        "score": 69
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "game_number": 12,
+      "date": "4 August 1988",
+      "venue": "Rizal Memorial Basketball Coliseum",
+      "winner": {
+        "school": "ADU",
+        "score": 102
+      },
+      "loser": {
+        "school": "FEU",
+        "score": 93
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "game_number": 13,
+      "date": "4 August 1988",
+      "venue": "Rizal Memorial Basketball Coliseum",
+      "winner": {
+        "school": "UST",
+        "score": 71
+      },
+      "loser": {
+        "school": "UE",
+        "score": 66
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "game_number": 14,
+      "date": "4 August 1988",
+      "venue": "Rizal Memorial Basketball Coliseum",
+      "winner": {
+        "school": "ADMU",
+        "score": 88
+      },
+      "loser": {
+        "school": "UP",
+        "score": 58
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "game_number": 15,
+      "date": "4 August 1988",
+      "venue": "Rizal Memorial Basketball Coliseum",
+      "winner": {
+        "school": "ADU",
+        "score": 102
+      },
+      "loser": {
+        "school": "NU",
+        "score": 94
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "game_number": 16,
+      "date": "7 August 1988",
+      "venue": "Rizal Memorial Basketball Coliseum",
+      "winner": {
+        "school": "UE",
+        "score": 74
+      },
+      "loser": {
+        "school": "FEU",
+        "score": 73
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "game_number": 17,
+      "date": "7 August 1988",
+      "venue": "Rizal Memorial Basketball Coliseum",
+      "winner": {
+        "school": "UST",
+        "score": 77
+      },
+      "loser": {
+        "school": "UE",
+        "score": 75
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "game_number": 18,
+      "date": "7 August 1988",
+      "venue": "Rizal Memorial Basketball Coliseum",
+      "winner": {
+        "school": "FEU",
+        "score": 99
+      },
+      "loser": {
+        "school": "NU",
+        "score": 89
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "game_number": 19,
+      "date": "7 August 1988",
+      "venue": "Rizal Memorial Basketball Coliseum",
+      "winner": {
+        "school": "ADU",
+        "score": 78
+      },
+      "loser": {
+        "school": "UE",
+        "score": 76
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "game_number": 20,
+      "date": "10 August 1988",
+      "venue": "Rizal Memorial Basketball Coliseum",
+      "winner": {
+        "school": "ADMU",
+        "score": 94
+      },
+      "loser": {
+        "school": "UST",
+        "score": 87
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "game_number": 21,
+      "date": "10 August 1988",
+      "venue": "Rizal Memorial Basketball Coliseum",
+      "winner": {
+        "school": "UST",
+        "score": 100
+      },
+      "loser": {
+        "school": "UE",
+        "score": 89
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "game_number": 22,
+      "date": "10 August 1988",
+      "venue": "Rizal Memorial Basketball Coliseum",
+      "winner": {
+        "school": "UE",
+        "score": 93
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 81
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "game_number": 23,
+      "date": "10 August 1988",
+      "venue": "Rizal Memorial Basketball Coliseum",
+      "winner": {
+        "school": "ADMU",
+        "score": 106
+      },
+      "loser": {
+        "school": "FEU",
+        "score": 97
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "game_number": 28,
+      "date": "24 August 1988",
+      "venue": "Rizal Memorial Basketball Coliseum",
+      "winner": {
+        "school": "DLSU",
+        "score": 78
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 76
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "game_number": 29,
+      "date": "24 August 1988",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "UST",
+        "score": 86
+      },
+      "loser": {
+        "school": "UE",
+        "score": 75
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "game_number": 36,
+      "date": "4 September 1988",
+      "venue": "Rizal Memorial Basketball Coliseum",
+      "winner": {
+        "school": "UE",
+        "score": 118
+      },
+      "loser": {
+        "school": "NU",
+        "score": 78
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "game_number": 38,
+      "date": "4 September 1988",
+      "venue": "Rizal Memorial Basketball Coliseum",
+      "winner": {
+        "school": "ADU",
+        "score": 128
+      },
+      "loser": {
+        "school": "NU",
+        "score": 91
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "game_number": 39,
+      "date": "4 September 1988",
+      "venue": "Rizal Memorial Basketball Coliseum",
+      "winner": {
+        "school": "UP",
+        "score": 83
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 69
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "game_number": 40,
+      "date": "10 September 1988",
+      "venue": "Rizal Memorial Basketball Coliseum",
+      "winner": {
+        "school": "FEU",
+        "score": 99
+      },
+      "loser": {
+        "school": "UST",
+        "score": 82
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "game_number": 41,
+      "date": "10 September 1988",
+      "venue": ":",
+      "winner": {
+        "school": "UE",
+        "score": 94
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 90
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "game_number": 42,
+      "date": "10 September 1988",
+      "venue": ":",
+      "winner": {
+        "school": "UP",
+        "score": 99
+      },
+      "loser": {
+        "school": "UE",
+        "score": 93
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "game_number": 43,
+      "date": "10 September 1988",
+      "venue": ":",
+      "winner": {
+        "school": "FEU",
+        "score": 90
+      },
+      "loser": {
+        "school": "UST",
+        "score": 77
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "game_number": 44,
+      "date": "18 September 1988",
+      "venue": ":",
+      "winner": {
+        "school": "ADMU",
+        "score": 91
+      },
+      "loser": {
+        "school": "NU",
+        "score": 77
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "championship",
+      "game_number": 2,
+      "date": "7 October 1988",
+      "venue": ":",
+      "winner": {
+        "school": "FEU",
+        "score": 67
+      },
+      "loser": {
+        "school": "UE",
+        "score": 53
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "championship",
+      "game_number": 3,
+      "date": "7 October 1988",
+      "venue": ":",
+      "winner": {
+        "school": "ADU",
+        "score": 97
+      },
+      "loser": {
+        "school": "UP",
+        "score": 41
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "championship",
+      "game_number": 8,
+      "date": "31 July 1988",
+      "venue": ":",
+      "winner": {
+        "school": "ADMU",
+        "score": 102
+      },
+      "loser": {
+        "school": "UE",
+        "score": 57
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "championship",
+      "game_number": 9,
+      "date": "06 August 1988",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "UE",
+        "score": 95
+      },
+      "loser": {
+        "school": "FEU",
+        "score": 55
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "championship",
+      "game_number": 16,
+      "date": "06 August 1988",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "FEU",
+        "score": 82
+      },
+      "loser": {
+        "school": "UE",
+        "score": 51
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "championship",
+      "game_number": 22,
+      "date": "August 20, 1988",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "ADU",
+        "score": 103
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 48
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "championship",
+      "game_number": 23,
+      "date": "August 20, 1988",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "FEU",
+        "score": 88
+      },
+      "loser": {
+        "school": "UE",
+        "score": 84
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "championship",
+      "game_number": 25,
+      "date": "August 20, 1988",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "UST",
+        "score": 80
+      },
+      "loser": {
+        "school": "UE",
+        "score": 73
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "championship",
+      "game_number": 26,
+      "date": "August 20, 1988",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "UE",
+        "score": 95
+      },
+      "loser": {
+        "school": "NU",
+        "score": 43
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "championship",
+      "game_number": 27,
+      "date": "August 20, 1988",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "UP",
+        "score": 61
+      },
+      "loser": {
+        "school": "FEU",
+        "score": 57
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "game_number": 28,
+      "date": "August 20, 1988",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "ADMU",
+        "score": 94
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 52
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "game_number": 29,
+      "date": "August 20, 1988",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "ADU",
+        "score": 119
+      },
+      "loser": {
+        "school": "NU",
+        "score": 57
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "game_number": 30,
+      "date": "August 20, 1988",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "UE",
+        "score": 118
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 51
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "game_number": 32,
+      "date": "August 20, 1988",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "ADMU",
+        "score": 94
+      },
+      "loser": {
+        "school": "UE",
+        "score": 67
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "game_number": 34,
+      "date": "August 20, 1988",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "FEU",
+        "score": 64
+      },
+      "loser": {
+        "school": "UE",
+        "score": 59
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "game_number": 40,
+      "date": "August 20, 1988",
+      "venue": ":",
+      "winner": {
+        "school": "UST",
+        "score": 112
+      },
+      "loser": {
+        "school": "FEU",
+        "score": 88
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "game_number": 42,
+      "date": "August 20, 1988",
+      "venue": ":",
+      "winner": {
+        "school": "NU",
+        "score": 62
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 56
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "game_number": 49,
+      "date": "August 20, 1988",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "UE",
+        "score": 71
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 69
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "game_number": 50,
+      "date": "August 20, 1988",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "UE",
+        "score": 96
+      },
+      "loser": {
+        "school": "NU",
+        "score": 67
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "game_number": 51,
+      "date": "August 20, 1988",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "UST",
+        "score": 94
+      },
+      "loser": {
+        "school": "UE",
+        "score": 76
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "women",
+      "round": "first_round",
+      "game_number": 1,
+      "date": "July 17, 1938",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "DLSU",
+        "score": 64
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 54
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "women",
+      "round": "first_round",
+      "game_number": 3,
+      "date": "July 17, 1938",
+      "venue": ":",
+      "winner": {
+        "school": "UST",
+        "score": 75
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 47
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "women",
+      "round": "first_round",
+      "game_number": 9,
+      "date": "July 17, 1938",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "UST",
+        "score": 93
+      },
+      "loser": {
+        "school": "UP",
+        "score": 34
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "women",
+      "round": "first_round",
+      "game_number": 12,
+      "date": "July 17, 1938",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "ADMU",
+        "score": 69
+      },
+      "loser": {
+        "school": "UP",
+        "score": 42
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "women",
+      "round": "first_round",
+      "game_number": 15,
+      "date": "July 17, 1938",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "FEU",
+        "score": 65
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 46
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "women",
+      "round": "first_round",
+      "game_number": 16,
+      "date": "July 17, 1938",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "ADMU",
+        "score": 51
+      },
+      "loser": {
+        "school": "UE",
+        "score": 49
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "women",
+      "round": "first_round",
+      "game_number": 18,
+      "date": "July 17, 1938",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "DLSU",
+        "score": 67
+      },
+      "loser": {
+        "school": "UE",
+        "score": 57
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "game_number": 21,
+      "date": "July 17, 1938",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "FEU",
+        "score": 67
+      },
+      "loser": {
+        "school": "UE",
+        "score": 49
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "game_number": 25,
+      "date": "July 17, 1938",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "UE",
+        "score": 77
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 74
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "game_number": 27,
+      "date": "July 17, 1938",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "FEU",
+        "score": 68
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 58
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "game_number": 28,
+      "date": "July 17, 1938",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "UE",
+        "score": 65
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 61
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "game_number": 30,
+      "date": "July 17, 1938",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "ADU",
+        "score": 61
+      },
+      "loser": {
+        "school": "FEU",
+        "score": 46
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "game_number": 31,
+      "date": "July 17, 1938",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "UE",
+        "score": 71
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 64
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "game_number": 32,
+      "date": "July 17, 1938",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "UST",
+        "score": 104
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 61
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "game_number": 33,
+      "date": "July 17, 1938",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "DLSU",
+        "score": 52
+      },
+      "loser": {
+        "school": "UP",
+        "score": 40
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "game_number": 37,
+      "date": "July 17, 1938",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "UE",
+        "score": 76
+      },
+      "loser": {
+        "school": "FEU",
+        "score": 66
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1988-1989",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "game_number": 43,
+      "date": "July 17, 1938",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "UE",
+        "score": 69
+      },
+      "loser": {
+        "school": "UST",
+        "score": 65
+      },
+      "is_championship": false
+    }
+  ]
+}

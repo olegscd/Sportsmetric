@@ -1,0 +1,721 @@
+{
+  "season": "1999-2000",
+  "sport": "basketball",
+  "total_games": 42,
+  "games": [
+    {
+      "season": "1999-2000",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "SUNDAY, JULY 11, 1999",
+      "venue": null,
+      "winner": {
+        "school": "DLSU",
+        "score": 50
+      },
+      "loser": {
+        "school": "UE",
+        "score": 39
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1999-2000",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "SUNDAY, JULY 11, 1999",
+      "venue": null,
+      "winner": {
+        "school": "UP",
+        "score": 68
+      },
+      "loser": {
+        "school": "NU",
+        "score": 56
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1999-2000",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "SUNDAY, JULY 11, 1999",
+      "venue": null,
+      "winner": {
+        "school": "ADMU",
+        "score": 75
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 51
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1999-2000",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "WEDNESDAY, JULY 14, 1999",
+      "venue": null,
+      "winner": {
+        "school": "NU",
+        "score": 80
+      },
+      "loser": {
+        "school": "UE",
+        "score": 67
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1999-2000",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "WEDNESDAY, JULY 14, 1999",
+      "venue": null,
+      "winner": {
+        "school": "DLSU",
+        "score": 59
+      },
+      "loser": {
+        "school": "UP",
+        "score": 35
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1999-2000",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "THURSDAY, JULY 15, 1999",
+      "venue": null,
+      "winner": {
+        "school": "ADU",
+        "score": 68
+      },
+      "loser": {
+        "school": "UST",
+        "score": 52
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1999-2000",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "SATURDAY, JULY 17, 1999",
+      "venue": null,
+      "winner": {
+        "school": "DLSU",
+        "score": 62
+      },
+      "loser": {
+        "school": "UST",
+        "score": 53
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1999-2000",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "SUNDAY, JULY 18, 1999",
+      "venue": null,
+      "winner": {
+        "school": "ADMU",
+        "score": 124
+      },
+      "loser": {
+        "school": "NU",
+        "score": 51
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1999-2000",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "SUNDAY, JULY 18, 1999",
+      "venue": null,
+      "winner": {
+        "school": "ADU",
+        "score": 64
+      },
+      "loser": {
+        "school": "UP",
+        "score": 55
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1999-2000",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "SATURDAY, JULY 24, 1999",
+      "venue": null,
+      "winner": {
+        "school": "DLSU",
+        "score": 67
+      },
+      "loser": {
+        "school": "NU",
+        "score": 42
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1999-2000",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "SATURDAY, JULY 24, 1999",
+      "venue": null,
+      "winner": {
+        "school": "ADMU",
+        "score": 85
+      },
+      "loser": {
+        "school": "UST",
+        "score": 61
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1999-2000",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "SUNDAY, JULY 25, 1999",
+      "venue": null,
+      "winner": {
+        "school": "UP",
+        "score": 58
+      },
+      "loser": {
+        "school": "UE",
+        "score": 50
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1999-2000",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "WEDNESDAY, JULY 28, 1999",
+      "venue": null,
+      "winner": {
+        "school": "ADMU",
+        "score": 77
+      },
+      "loser": {
+        "school": "UE",
+        "score": 36
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1999-2000",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "THURSDAY, JULY 29, 1999",
+      "venue": null,
+      "winner": {
+        "school": "UST",
+        "score": 64
+      },
+      "loser": {
+        "school": "NU",
+        "score": 60
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1999-2000",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "THURSDAY, JULY 29, 1999",
+      "venue": null,
+      "winner": {
+        "school": "ADU",
+        "score": 57
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 41
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1999-2000",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "SUNDAY, AUGUST 1, 1999",
+      "venue": null,
+      "winner": {
+        "school": "ADMU",
+        "score": 74
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 37
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1999-2000",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "SUNDAY, AUGUST 1, 1999",
+      "venue": null,
+      "winner": {
+        "school": "UST",
+        "score": 58
+      },
+      "loser": {
+        "school": "UP",
+        "score": 43
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1999-2000",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "SUNDAY, AUGUST 1, 1999",
+      "venue": null,
+      "winner": {
+        "school": "ADU",
+        "score": 62
+      },
+      "loser": {
+        "school": "UE",
+        "score": 45
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1999-2000",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "SUNDAY, AUGUST 11, 1999",
+      "venue": null,
+      "winner": {
+        "school": "ADMU",
+        "score": 95
+      },
+      "loser": {
+        "school": "UP",
+        "score": 40
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1999-2000",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "SUNDAY, AUGUST 11, 1999",
+      "venue": null,
+      "winner": {
+        "school": "ADU",
+        "score": 92
+      },
+      "loser": {
+        "school": "NU",
+        "score": 73
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1999-2000",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "SUNDAY, AUGUST 11, 1999",
+      "venue": null,
+      "winner": {
+        "school": "UST",
+        "score": 69
+      },
+      "loser": {
+        "school": "UE",
+        "score": 39
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1999-2000",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": "WEDNESDAY, AUGUST 18, 1999",
+      "venue": null,
+      "winner": {
+        "school": "UST",
+        "score": 65
+      },
+      "loser": {
+        "school": "UP",
+        "score": 54
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1999-2000",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": "WEDNESDAY, AUGUST 18, 1999",
+      "venue": null,
+      "winner": {
+        "school": "DLSU",
+        "score": 77
+      },
+      "loser": {
+        "school": "NU",
+        "score": 50
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1999-2000",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": "THURSDAY, AUGUST 19, 1999",
+      "venue": null,
+      "winner": {
+        "school": "ADMU",
+        "score": 98
+      },
+      "loser": {
+        "school": "UE",
+        "score": 61
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1999-2000",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": "SATURDAY, AUGUST 21, 1999",
+      "venue": null,
+      "winner": {
+        "school": "ADMU",
+        "score": 104
+      },
+      "loser": {
+        "school": "NU",
+        "score": 58
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1999-2000",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": "SATURDAY, AUGUST 21, 1999",
+      "venue": null,
+      "winner": {
+        "school": "DLSU",
+        "score": 62
+      },
+      "loser": {
+        "school": "UE",
+        "score": 53
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1999-2000",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": "SATURDAY, AUGUST 21, 1999",
+      "venue": null,
+      "winner": {
+        "school": "UST",
+        "score": 69
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 57
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1999-2000",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": "SATURDAY, AUGUST 28, 1999",
+      "venue": null,
+      "winner": {
+        "school": "ADMU",
+        "score": 68
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 51
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1999-2000",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": "SUNDAY, AUGUST 29, 1999",
+      "venue": null,
+      "winner": {
+        "school": "ADU",
+        "score": 50
+      },
+      "loser": {
+        "school": "UP",
+        "score": 43
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1999-2000",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": "SUNDAY, AUGUST 29, 1999",
+      "venue": null,
+      "winner": {
+        "school": "NU",
+        "score": 76
+      },
+      "loser": {
+        "school": "UE",
+        "score": 72
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1999-2000",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": "WEDNESDAY, SEPTEMBER 1, 1999",
+      "venue": null,
+      "winner": {
+        "school": "UST",
+        "score": 85
+      },
+      "loser": {
+        "school": "UE",
+        "score": 59
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1999-2000",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": "WEDNESDAY, SEPTEMBER 1, 1999",
+      "venue": null,
+      "winner": {
+        "school": "ADMU",
+        "score": 73
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 61
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1999-2000",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": "THURSDAY, SEPTEMBER 2, 1999",
+      "venue": null,
+      "winner": {
+        "school": "DLSU",
+        "score": 67
+      },
+      "loser": {
+        "school": "UP",
+        "score": 37
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1999-2000",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": "SUNDAY, SEPTEMBER 5, 1999",
+      "venue": null,
+      "winner": {
+        "school": "ADU",
+        "score": 67
+      },
+      "loser": {
+        "school": "UE",
+        "score": 50
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1999-2000",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": "SUNDAY, SEPTEMBER 5, 1999",
+      "venue": null,
+      "winner": {
+        "school": "ADMU",
+        "score": 85
+      },
+      "loser": {
+        "school": "UST",
+        "score": 65
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1999-2000",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": "SUNDAY, SEPTEMBER 5, 1999",
+      "venue": null,
+      "winner": {
+        "school": "UP",
+        "score": 56
+      },
+      "loser": {
+        "school": "NU",
+        "score": 52
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1999-2000",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": "WEDNESDAY, SEPTEMBER 8, 1999",
+      "venue": null,
+      "winner": {
+        "school": "ADMU",
+        "score": 98
+      },
+      "loser": {
+        "school": "UP",
+        "score": 34
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1999-2000",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": "WEDNESDAY, SEPTEMBER 8, 1999",
+      "venue": null,
+      "winner": {
+        "school": "UST",
+        "score": 80
+      },
+      "loser": {
+        "school": "NU",
+        "score": 52
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1999-2000",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": "WEDNESDAY, SEPTEMBER 8, 1999",
+      "venue": null,
+      "winner": {
+        "school": "DLSU",
+        "score": 75
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 68
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1999-2000",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": "SUNDAY, SEPTEMBER 12, 1999",
+      "venue": null,
+      "winner": {
+        "school": "ADU",
+        "score": 105
+      },
+      "loser": {
+        "school": "NU",
+        "score": 50
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1999-2000",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": "SUNDAY, SEPTEMBER 12, 1999",
+      "venue": null,
+      "winner": {
+        "school": "UP",
+        "score": 55
+      },
+      "loser": {
+        "school": "UE",
+        "score": 51
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1999-2000",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "final_four",
+      "date": "SUNDAY, SEPTEMBER 26, 1999",
+      "venue": "| Game | Result | Score |",
+      "winner": {
+        "school": "ADMU",
+        "score": 86
+      },
+      "loser": {
+        "school": "UST",
+        "score": 85
+      },
+      "is_championship": false
+    }
+  ]
+}

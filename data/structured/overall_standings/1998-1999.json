@@ -1,0 +1,110 @@
+{
+  "season": "1998-1999",
+  "divisions": {
+    "junior": [
+      {
+        "school": "UST",
+        "total_points": 97.0,
+        "division": "junior",
+        "sport_points": {
+          "Athletics (Boys)": 10.0,
+          "Basketball (Boys)": 15.0,
+          "Chess": 10.0,
+          "Swimming (Boys)": 15.0,
+          "Swimming (Girls)": 15.0,
+          "Table Tennis": 8.0,
+          "Volleyball (Boys)": 12.0,
+          "Volleyball (Girls)": 12.0
+        },
+        "rank": 1
+      },
+      {
+        "school": "DLSU",
+        "total_points": 70.0,
+        "division": "junior",
+        "sport_points": {
+          "Athletics (Boys)": 6.0,
+          "Basketball (Boys)": 8.0,
+          "Swimming (Boys)": 12.0,
+          "Swimming (Girls)": 12.0,
+          "Table Tennis": 2.0,
+          "Volleyball (Boys)": 15.0,
+          "Volleyball (Girls)": 15.0
+        },
+        "rank": 2
+      },
+      {
+        "school": "ADMU",
+        "total_points": 69.0,
+        "division": "junior",
+        "sport_points": {
+          "Athletics (Boys)": 12.0,
+          "Basketball (Boys)": 12.0,
+          "Chess": 15.0,
+          "Swimming (Boys)": 10.0,
+          "Table Tennis": 10.0,
+          "Volleyball (Boys)": 10.0
+        },
+        "rank": 3
+      },
+      {
+        "school": "ADU",
+        "total_points": 67.0,
+        "division": "junior",
+        "sport_points": {
+          "Athletics (Boys)": 15.0,
+          "Basketball (Boys)": 10.0,
+          "Chess": 12.0,
+          "Swimming (Boys)": 8.0,
+          "Swimming (Girls)": 10.0,
+          "Table Tennis": 12.0
+        },
+        "rank": 4
+      },
+      {
+        "school": "UE",
+        "total_points": 63.0,
+        "division": "junior",
+        "sport_points": {
+          "Athletics (Boys)": 4.0,
+          "Basketball (Boys)": 6.0,
+          "Chess": 8.0,
+          "Swimming (Boys)": 4.0,
+          "Swimming (Girls)": 8.0,
+          "Table Tennis": 15.0,
+          "Volleyball (Boys)": 8.0,
+          "Volleyball (Girls)": 10.0
+        },
+        "rank": 5
+      },
+      {
+        "school": "UP",
+        "total_points": 42.0,
+        "division": "junior",
+        "sport_points": {
+          "Athletics (Boys)": 8.0,
+          "Basketball (Boys)": 4.0,
+          "Swimming (Boys)": 6.0,
+          "Swimming (Girls)": 6.0,
+          "Table Tennis": 6.0,
+          "Volleyball (Boys)": 6.0,
+          "Volleyball (Girls)": 6.0
+        },
+        "rank": 6
+      },
+      {
+        "school": "NU",
+        "total_points": 24.0,
+        "division": "junior",
+        "sport_points": {
+          "Basketball (Boys)": 2.0,
+          "Chess": 6.0,
+          "Table Tennis": 4.0,
+          "Volleyball (Boys)": 4.0,
+          "Volleyball (Girls)": 8.0
+        },
+        "rank": 7
+      }
+    ]
+  }
+}

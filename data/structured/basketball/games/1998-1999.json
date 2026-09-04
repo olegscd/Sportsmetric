@@ -1,0 +1,1503 @@
+{
+  "season": "1998-1999",
+  "sport": "basketball",
+  "total_games": 88,
+  "games": [
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": "11 JULY 1998",
+      "venue": ": ARANETA COLISEUM",
+      "winner": {
+        "school": "UE",
+        "score": 77
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 68
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": "11 JULY 1998",
+      "venue": ": ARANETA COLISEUM",
+      "winner": {
+        "school": "FEU",
+        "score": 63
+      },
+      "loser": {
+        "school": "UST",
+        "score": 58
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": "11 JULY 1998",
+      "venue": ": ARANETA COLISEUM",
+      "winner": {
+        "school": "NU",
+        "score": 59
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 51
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": "11 JULY 1998",
+      "venue": ": ARANETA COLISEUM",
+      "winner": {
+        "school": "DLSU",
+        "score": 75
+      },
+      "loser": {
+        "school": "UP",
+        "score": 68
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": "18 JULY 1998",
+      "venue": ": NINOY AQUINO STADIUM",
+      "winner": {
+        "school": "DLSU",
+        "score": 66
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 55
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": "18 JULY 1998",
+      "venue": ": NINOY AQUINO STADIUM",
+      "winner": {
+        "school": "FEU",
+        "score": 71
+      },
+      "loser": {
+        "school": "UE",
+        "score": 64
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": "19 JULY 1998",
+      "venue": ": NINOY AQUINO STADIUM",
+      "winner": {
+        "school": "UP",
+        "score": 71
+      },
+      "loser": {
+        "school": "NU",
+        "score": 55
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": "19 JULY 1998",
+      "venue": ": NINOY AQUINO STADIUM",
+      "winner": {
+        "school": "UST",
+        "score": 80
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 66
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": "25 JULY 1998",
+      "venue": ": NINOY AQUINO STADIUM",
+      "winner": {
+        "school": "UE",
+        "score": 74
+      },
+      "loser": {
+        "school": "NU",
+        "score": 66
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": "25 JULY 1998",
+      "venue": ": NINOY AQUINO STADIUM",
+      "winner": {
+        "school": "FEU",
+        "score": 66
+      },
+      "loser": {
+        "school": "UP",
+        "score": 56
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": "26 JULY 1998",
+      "venue": ": NINOY AQUINO STADIUM",
+      "winner": {
+        "school": "ADMU",
+        "score": 70
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 57
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": "26 JULY 1998",
+      "venue": ": NINOY AQUINO STADIUM",
+      "winner": {
+        "school": "DLSU",
+        "score": 76
+      },
+      "loser": {
+        "school": "UST",
+        "score": 62
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": "1 AUGUST 1998",
+      "venue": ": ARANETA COLISEUM",
+      "winner": {
+        "school": "FEU",
+        "score": 66
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 64
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": "1 AUGUST 1998",
+      "venue": ": ARANETA COLISEUM",
+      "winner": {
+        "school": "UP",
+        "score": 92
+      },
+      "loser": {
+        "school": "UE",
+        "score": 90
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": "1 AUGUST 1998",
+      "venue": ": ARANETA COLISEUM",
+      "winner": {
+        "school": "DLSU",
+        "score": 64
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 50
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": "1 AUGUST 1998",
+      "venue": ": ARANETA COLISEUM",
+      "winner": {
+        "school": "UST",
+        "score": 96
+      },
+      "loser": {
+        "school": "NU",
+        "score": 73
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": "5 AUGUST 1998",
+      "venue": ": LOYOLA GYM",
+      "winner": {
+        "school": "DLSU",
+        "score": 75
+      },
+      "loser": {
+        "school": "NU",
+        "score": 55
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": "5 AUGUST 1998",
+      "venue": ": LOYOLA GYM",
+      "winner": {
+        "school": "FEU",
+        "score": 71
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 56
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": "6 AUGUST 1998",
+      "venue": ": LOYOLA GYM",
+      "winner": {
+        "school": "UP",
+        "score": 88
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 82
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": "6 AUGUST 1998",
+      "venue": ": LOYOLA GYM",
+      "winner": {
+        "school": "UE",
+        "score": 72
+      },
+      "loser": {
+        "school": "UST",
+        "score": 58
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": "8 AUGUST 1998",
+      "venue": ": LOYOLA GYM",
+      "winner": {
+        "school": "FEU",
+        "score": 80
+      },
+      "loser": {
+        "school": "NU",
+        "score": 47
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": "8 AUGUST 1998",
+      "venue": ": LOYOLA GYM",
+      "winner": {
+        "school": "DLSU",
+        "score": 82
+      },
+      "loser": {
+        "school": "UE",
+        "score": 66
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": "9 AUGUST 1998",
+      "venue": ": LOYOLA GYM",
+      "winner": {
+        "school": "UST",
+        "score": 77
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 63
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": "9 AUGUST 1998",
+      "venue": ": LOYOLA GYM",
+      "winner": {
+        "school": "UP",
+        "score": 83
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 80
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "date": "19 SEPTEMBER 1998",
+      "venue": ": NINOY AQUINO STADIUM",
+      "winner": {
+        "school": "NU",
+        "score": 70
+      },
+      "loser": {
+        "school": "UE",
+        "score": 58
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "date": "19 SEPTEMBER 1998",
+      "venue": ": NINOY AQUINO STADIUM",
+      "winner": {
+        "school": "FEU",
+        "score": 65
+      },
+      "loser": {
+        "school": "UST",
+        "score": 58
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "date": "20 SEPTEMBER 1998",
+      "venue": ": NINOY AQUINO STADIUM",
+      "winner": {
+        "school": "DLSU",
+        "score": 63
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 60
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "date": "20 SEPTEMBER 1998",
+      "venue": ": NINOY AQUINO STADIUM",
+      "winner": {
+        "school": "ADMU",
+        "score": 81
+      },
+      "loser": {
+        "school": "UP",
+        "score": 78
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "date": "24 SEPTEMBER 1998",
+      "venue": ": NINOY AQUINO STADIUM",
+      "winner": {
+        "school": "ADMU",
+        "score": 73
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 48
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "date": "24 SEPTEMBER 1998",
+      "venue": ": NINOY AQUINO STADIUM",
+      "winner": {
+        "school": "UE",
+        "score": 73
+      },
+      "loser": {
+        "school": "UP",
+        "score": 62
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "date": "26 SEPTEMBER 1998",
+      "venue": ": NINOY AQUINO STADIUM",
+      "winner": {
+        "school": "NU",
+        "score": 78
+      },
+      "loser": {
+        "school": "UST",
+        "score": 74
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "date": "26 SEPTEMBER 1998",
+      "venue": ": NINOY AQUINO STADIUM",
+      "winner": {
+        "school": "DLSU",
+        "score": 75
+      },
+      "loser": {
+        "school": "FEU",
+        "score": 59
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "date": "28 SEPTEMBER 1998",
+      "venue": ": NINOY AQUINO STADIUM",
+      "winner": {
+        "school": "UST",
+        "score": 80
+      },
+      "loser": {
+        "school": "UP",
+        "score": 72
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "men",
+      "round": "final_four",
+      "date": "1 OCTOBER 1998",
+      "venue": ": ARANETA COLISEUM",
+      "winner": {
+        "school": "UST",
+        "score": 55
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 51
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "men",
+      "round": "final_four",
+      "date": "1 OCTOBER 1998",
+      "venue": ": ARANETA COLISEUM",
+      "winner": {
+        "school": "UE",
+        "score": 81
+      },
+      "loser": {
+        "school": "FEU",
+        "score": 68
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "men",
+      "round": "final_four",
+      "date": "3 OCTOBER 1998",
+      "venue": ": ARANETA COLISEUM",
+      "winner": {
+        "school": "FEU",
+        "score": 83
+      },
+      "loser": {
+        "school": "UE",
+        "score": 61
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "men",
+      "round": "final_four",
+      "date": "3 OCTOBER 1998",
+      "venue": ": ARANETA COLISEUM",
+      "winner": {
+        "school": "DLSU",
+        "score": 56
+      },
+      "loser": {
+        "school": "UST",
+        "score": 51
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "men",
+      "round": "championship",
+      "date": "5 OCTOBER 1998",
+      "venue": ": ARANETA COLISEUM",
+      "winner": {
+        "school": "DLSU",
+        "score": 72
+      },
+      "loser": {
+        "school": "FEU",
+        "score": 47
+      },
+      "is_championship": true
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "men",
+      "round": "championship",
+      "date": "7 OCTOBER 1998",
+      "venue": ": ARANETA COLISEUM",
+      "winner": {
+        "school": "DLSU",
+        "score": 63
+      },
+      "loser": {
+        "school": "FEU",
+        "score": 59
+      },
+      "is_championship": true
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "23 AUGUST 1998",
+      "venue": ": ADAMSON GYM",
+      "winner": {
+        "school": "UST",
+        "score": 104
+      },
+      "loser": {
+        "school": "UE",
+        "score": 37
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "23 AUGUST 1998",
+      "venue": ": ADAMSON GYM",
+      "winner": {
+        "school": "ADU",
+        "score": 72
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 50
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "23 AUGUST 1998",
+      "venue": ": ADAMSON GYM",
+      "winner": {
+        "school": "DLSU",
+        "score": 54
+      },
+      "loser": {
+        "school": "UP",
+        "score": 39
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "30 AUGUST 1998",
+      "venue": ": ADAMSON GYM",
+      "winner": {
+        "school": "ADU",
+        "score": 69
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 63
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "30 AUGUST 1998",
+      "venue": ": ADAMSON GYM",
+      "winner": {
+        "school": "FEU",
+        "score": 56
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 31
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "30 AUGUST 1998",
+      "venue": ": ADAMSON GYM",
+      "winner": {
+        "school": "UST",
+        "score": 76
+      },
+      "loser": {
+        "school": "UP",
+        "score": 41
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "2 SEPTEMBER 1998",
+      "venue": ": ADAMSON GYM",
+      "winner": {
+        "school": "ADU",
+        "score": 71
+      },
+      "loser": {
+        "school": "UE",
+        "score": 58
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "2 SEPTEMBER 1998",
+      "venue": ": ADAMSON GYM",
+      "winner": {
+        "school": "FEU",
+        "score": 69
+      },
+      "loser": {
+        "school": "UST",
+        "score": 47
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "6 SEPTEMBER 1998",
+      "venue": ": ADAMSON GYM",
+      "winner": {
+        "school": "UP",
+        "score": 67
+      },
+      "loser": {
+        "school": "UE",
+        "score": 41
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "6 SEPTEMBER 1998",
+      "venue": ": ADAMSON GYM",
+      "winner": {
+        "school": "FEU",
+        "score": 55
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 42
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "6 SEPTEMBER 1998",
+      "venue": ": ADAMSON GYM",
+      "winner": {
+        "school": "UST",
+        "score": 68
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 59
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "10 SEPTEMBER 1998",
+      "venue": ": ADAMSON GYM",
+      "winner": {
+        "school": "UP",
+        "score": 54
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 47
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "10 SEPTEMBER 1998",
+      "venue": ": ADAMSON GYM",
+      "winner": {
+        "school": "UST",
+        "score": 73
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 59
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "10 SEPTEMBER 1998",
+      "venue": ": ADAMSON GYM",
+      "winner": {
+        "school": "FEU",
+        "score": 81
+      },
+      "loser": {
+        "school": "UE",
+        "score": 32
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "19 SEPTEMBER 1998",
+      "venue": ": NINOY AQUINO STADIUM",
+      "winner": {
+        "school": "DLSU",
+        "score": 67
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 36
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "23 SEPTEMBER 1998",
+      "venue": ": ADAMSON GYM",
+      "winner": {
+        "school": "UST",
+        "score": 39
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 38
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "23 SEPTEMBER 1998",
+      "venue": ": ADAMSON GYM",
+      "winner": {
+        "school": "UP",
+        "score": 58
+      },
+      "loser": {
+        "school": "FEU",
+        "score": 50
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "23 SEPTEMBER 1998",
+      "venue": ": ADAMSON GYM",
+      "winner": {
+        "school": "UE",
+        "score": 49
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 36
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "27 SEPTEMBER 1998",
+      "venue": ": ADAMSON GYM",
+      "winner": {
+        "school": "FEU",
+        "score": 54
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 39
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "27 SEPTEMBER 1998",
+      "venue": ": ADAMSON GYM",
+      "winner": {
+        "school": "DLSU",
+        "score": 46
+      },
+      "loser": {
+        "school": "UE",
+        "score": 26
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "27 SEPTEMBER 1998",
+      "venue": ": ADAMSON GYM",
+      "winner": {
+        "school": "UP",
+        "score": 40
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 36
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "women",
+      "round": "final_four",
+      "date": "30 SEPTEMBER 1998",
+      "venue": ": LOYOLA GYM",
+      "winner": {
+        "school": "FEU",
+        "score": 66
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 35
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "women",
+      "round": "final_four",
+      "date": "30 SEPTEMBER 1998",
+      "venue": ": LOYOLA GYM",
+      "winner": {
+        "school": "UST",
+        "score": 63
+      },
+      "loser": {
+        "school": "UP",
+        "score": 49
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "12 JULY 1998",
+      "venue": ": LOYOLA GYM",
+      "winner": {
+        "school": "ADMU",
+        "score": 75
+      },
+      "loser": {
+        "school": "UE",
+        "score": 44
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "12 JULY 1998",
+      "venue": ": LOYOLA GYM",
+      "winner": {
+        "school": "ADU",
+        "score": 79
+      },
+      "loser": {
+        "school": "NU",
+        "score": 49
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "12 JULY 1998",
+      "venue": ": LOYOLA GYM",
+      "winner": {
+        "school": "DLSU",
+        "score": 63
+      },
+      "loser": {
+        "school": "UP",
+        "score": 35
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "18 JULY 1998",
+      "venue": ": NINOY AQUINO STADIUM",
+      "winner": {
+        "school": "DLSU",
+        "score": 55
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 51
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "19 JULY 1998",
+      "venue": ": NINOY AQUINO STADIUM",
+      "winner": {
+        "school": "UP",
+        "score": 70
+      },
+      "loser": {
+        "school": "NU",
+        "score": 43
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "19 JULY 1998",
+      "venue": ": NINOY AQUINO STADIUM",
+      "winner": {
+        "school": "UST",
+        "score": 81
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 66
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "25 JULY 1998",
+      "venue": ": NINOY AQUINO STADIUM",
+      "winner": {
+        "school": "UE",
+        "score": 84
+      },
+      "loser": {
+        "school": "NU",
+        "score": 70
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "26 JULY 1998",
+      "venue": ": NINOY AQUINO STADIUM",
+      "winner": {
+        "school": "ADMU",
+        "score": 85
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 65
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "26 JULY 1998",
+      "venue": ": NINOY AQUINO STADIUM",
+      "winner": {
+        "school": "UST",
+        "score": 80
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 45
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "2 AUGUST 1998",
+      "venue": ": LOYOLA GYM",
+      "winner": {
+        "school": "ADMU",
+        "score": 65
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 52
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "2 AUGUST 1998",
+      "venue": ": LOYOLA GYM",
+      "winner": {
+        "school": "UE",
+        "score": 48
+      },
+      "loser": {
+        "school": "UP",
+        "score": 36
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "2 AUGUST 1998",
+      "venue": ": LOYOLA GYM",
+      "winner": {
+        "school": "UST",
+        "score": 80
+      },
+      "loser": {
+        "school": "NU",
+        "score": 25
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "5 AUGUST 1998",
+      "venue": ": LOYOLA GYM",
+      "winner": {
+        "school": "DLSU",
+        "score": 80
+      },
+      "loser": {
+        "school": "NU",
+        "score": 48
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "6 AUGUST 1998",
+      "venue": ": LOYOLA GYM",
+      "winner": {
+        "school": "ADU",
+        "score": 79
+      },
+      "loser": {
+        "school": "UP",
+        "score": 63
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "6 AUGUST 1998",
+      "venue": ": LOYOLA GYM",
+      "winner": {
+        "school": "UST",
+        "score": 81
+      },
+      "loser": {
+        "school": "UE",
+        "score": 32
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "8 AUGUST 1998",
+      "venue": ": LOYOLA GYM",
+      "winner": {
+        "school": "UE",
+        "score": 62
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 59
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "9 AUGUST 1998",
+      "venue": ": LOYOLA GYM",
+      "winner": {
+        "school": "ADMU",
+        "score": 63
+      },
+      "loser": {
+        "school": "UP",
+        "score": 23
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "9 AUGUST 1998",
+      "venue": ": LOYOLA GYM",
+      "winner": {
+        "school": "UST",
+        "score": 77
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 60
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "13 AUGUST 1998",
+      "venue": ": NINOY AQUINO STADIUM",
+      "winner": {
+        "school": "UE",
+        "score": 63
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 52
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "15 AUGUST 1998",
+      "venue": ": LOYOLA GYM",
+      "winner": {
+        "school": "UST",
+        "score": 81
+      },
+      "loser": {
+        "school": "UP",
+        "score": 47
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "15 AUGUST 1998",
+      "venue": ": LOYOLA GYM",
+      "winner": {
+        "school": "ADMU",
+        "score": 68
+      },
+      "loser": {
+        "school": "NU",
+        "score": 48
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "final_four",
+      "date": "1 OCTOBER 1998",
+      "venue": ": ARANETA COLISEUM",
+      "winner": {
+        "school": "UST",
+        "score": 78
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 70
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "final_four",
+      "date": "1 OCTOBER 1998",
+      "venue": ": ARANETA COLISEUM",
+      "winner": {
+        "school": "ADMU",
+        "score": 72
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 45
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "championship",
+      "date": "5 OCTOBER 1998",
+      "venue": ": ARANETA COLISEUM",
+      "winner": {
+        "school": "UST",
+        "score": 75
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 71
+      },
+      "is_championship": true
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "championship",
+      "date": "7 OCTOBER 1998",
+      "venue": ": ARANETA COLISEUM",
+      "winner": {
+        "school": "ADMU",
+        "score": 65
+      },
+      "loser": {
+        "school": "UST",
+        "score": 58
+      },
+      "is_championship": true
+    },
+    {
+      "season": "1998-1999",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "championship",
+      "date": "10 OCTOBER 1998",
+      "venue": ": ARANETA COLISEUM",
+      "winner": {
+        "school": "UST",
+        "score": 75
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 73
+      },
+      "is_championship": true
+    }
+  ]
+}

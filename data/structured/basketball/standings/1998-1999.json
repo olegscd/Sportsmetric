@@ -1,0 +1,40 @@
+{
+  "season": "1998-1999",
+  "sport": "basketball",
+  "divisions": {
+    "men": [
+      {
+        "school": "DLSU",
+        "rank": 1
+      },
+      {
+        "school": "UP",
+        "rank": 2
+      },
+      {
+        "school": "FEU",
+        "rank": 3
+      },
+      {
+        "school": "UE",
+        "rank": 4
+      },
+      {
+        "school": "UST",
+        "rank": 5
+      },
+      {
+        "school": "ADMU",
+        "rank": 6
+      },
+      {
+        "school": "NU",
+        "rank": 7
+      },
+      {
+        "school": "ADU",
+        "rank": 8
+      }
+    ]
+  }
+}

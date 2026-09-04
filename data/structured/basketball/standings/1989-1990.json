@@ -1,0 +1,32 @@
+{
+  "season": "1989-1990",
+  "sport": "basketball",
+  "divisions": {
+    "juniors": [
+      {
+        "school": "UST",
+        "rank": 1
+      },
+      {
+        "school": "FEU",
+        "rank": 2
+      },
+      {
+        "school": "DLSU",
+        "rank": 3
+      },
+      {
+        "school": "UE",
+        "rank": 4
+      },
+      {
+        "school": "UP",
+        "rank": 5
+      },
+      {
+        "school": "ADU",
+        "rank": 6
+      }
+    ]
+  }
+}

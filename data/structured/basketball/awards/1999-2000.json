@@ -1,0 +1,23 @@
+{
+  "season": "1999-2000",
+  "sport": "basketball",
+  "divisions": {
+    "juniors": {
+      "mvp": {
+        "player": "Leonard Reyes",
+        "school": "ADMU"
+      },
+      "mythical_five": [
+        {
+          "player": "Hernando J. Elmido, Jr.",
+          "school": "ADMU",
+          "position": "Center/Forward"
+        }
+      ],
+      "rookie_of_the_year": {
+        "player": "Ray Albano",
+        "school": "UE"
+      }
+    }
+  }
+}

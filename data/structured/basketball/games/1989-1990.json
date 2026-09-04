@@ -1,0 +1,967 @@
+{
+  "season": "1989-1990",
+  "sport": "basketball",
+  "total_games": 49,
+  "games": [
+    {
+      "season": "1989-1990",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": null,
+      "venue": null,
+      "winner": {
+        "school": "FEU",
+        "score": 93
+      },
+      "loser": {
+        "school": "UP",
+        "score": 74
+      },
+      "halftime": {
+        "winner": 46,
+        "loser": 34
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1989-1990",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": null,
+      "venue": null,
+      "winner": {
+        "school": "DLSU",
+        "score": 88
+      },
+      "loser": {
+        "school": "UST",
+        "score": 69
+      },
+      "halftime": {
+        "winner": 41,
+        "loser": 39
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1989-1990",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": null,
+      "venue": null,
+      "winner": {
+        "school": "ADMU",
+        "score": 85
+      },
+      "loser": {
+        "school": "NU",
+        "score": 72
+      },
+      "halftime": {
+        "winner": 48,
+        "loser": 41
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1989-1990",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": null,
+      "venue": null,
+      "winner": {
+        "school": "UE",
+        "score": 92
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 91
+      },
+      "halftime": {
+        "winner": 47,
+        "loser": 57
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1989-1990",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": null,
+      "venue": null,
+      "winner": {
+        "school": "ADMU",
+        "score": 81
+      },
+      "loser": {
+        "school": "UST",
+        "score": 78
+      },
+      "halftime": {
+        "winner": 43,
+        "loser": 53
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1989-1990",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": null,
+      "venue": null,
+      "winner": {
+        "school": "ADU",
+        "score": 88
+      },
+      "loser": {
+        "school": "UP",
+        "score": 71
+      },
+      "halftime": {
+        "winner": 45,
+        "loser": 35
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1989-1990",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": null,
+      "venue": null,
+      "winner": {
+        "school": "FEU",
+        "score": 97
+      },
+      "loser": {
+        "school": "NU",
+        "score": 65
+      },
+      "halftime": {
+        "winner": 46,
+        "loser": 28
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1989-1990",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": null,
+      "venue": null,
+      "winner": {
+        "school": "DLSU",
+        "score": 81
+      },
+      "loser": {
+        "school": "UE",
+        "score": 80
+      },
+      "halftime": {
+        "winner": 39,
+        "loser": 47
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1989-1990",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": null,
+      "venue": null,
+      "winner": {
+        "school": "FEU",
+        "score": 102
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 92
+      },
+      "halftime": {
+        "winner": 59,
+        "loser": 47
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1989-1990",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": null,
+      "venue": null,
+      "winner": {
+        "school": "UE",
+        "score": 104
+      },
+      "loser": {
+        "school": "UST",
+        "score": 75
+      },
+      "halftime": {
+        "winner": 54,
+        "loser": 34
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1989-1990",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": null,
+      "venue": null,
+      "winner": {
+        "school": "ADU",
+        "score": 79
+      },
+      "loser": {
+        "school": "NU",
+        "score": 78
+      },
+      "halftime": {
+        "winner": 46,
+        "loser": 41
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1989-1990",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": null,
+      "venue": null,
+      "winner": {
+        "school": "DLSU",
+        "score": 78
+      },
+      "loser": {
+        "school": "UP",
+        "score": 69
+      },
+      "halftime": null,
+      "is_championship": false
+    },
+    {
+      "season": "1989-1990",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": null,
+      "venue": null,
+      "winner": {
+        "school": "UE",
+        "score": 107
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 90
+      },
+      "halftime": {
+        "winner": 57,
+        "loser": 54
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1989-1990",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": null,
+      "venue": null,
+      "winner": {
+        "school": "ADU",
+        "score": 112
+      },
+      "loser": {
+        "school": "FEU",
+        "score": 110
+      },
+      "halftime": null,
+      "is_championship": false
+    },
+    {
+      "season": "1989-1990",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": null,
+      "venue": null,
+      "winner": {
+        "school": "DLSU",
+        "score": 94
+      },
+      "loser": {
+        "school": "NU",
+        "score": 65
+      },
+      "halftime": {
+        "winner": 40,
+        "loser": 35
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1989-1990",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": null,
+      "venue": null,
+      "winner": {
+        "school": "UP",
+        "score": 123
+      },
+      "loser": {
+        "school": "UST",
+        "score": 81
+      },
+      "halftime": {
+        "winner": 58,
+        "loser": 33
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1989-1990",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": null,
+      "venue": null,
+      "winner": {
+        "school": "UST",
+        "score": 84
+      },
+      "loser": {
+        "school": "NU",
+        "score": 79
+      },
+      "halftime": {
+        "winner": 50,
+        "loser": 43
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1989-1990",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": null,
+      "venue": null,
+      "winner": {
+        "school": "ADMU",
+        "score": 74
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 71
+      },
+      "halftime": {
+        "winner": 43,
+        "loser": 29
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1989-1990",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": null,
+      "venue": null,
+      "winner": {
+        "school": "UP",
+        "score": 92
+      },
+      "loser": {
+        "school": "UE",
+        "score": 71
+      },
+      "halftime": {
+        "winner": 54,
+        "loser": 41
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1989-1990",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": null,
+      "venue": null,
+      "winner": {
+        "school": "DLSU",
+        "score": 111
+      },
+      "loser": {
+        "school": "FEU",
+        "score": 101
+      },
+      "halftime": {
+        "winner": 62,
+        "loser": 51
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1989-1990",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": null,
+      "venue": null,
+      "winner": {
+        "school": "DLSU",
+        "score": 91
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 89
+      },
+      "halftime": {
+        "winner": 50,
+        "loser": 45
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1989-1990",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": null,
+      "venue": null,
+      "winner": {
+        "school": "UE",
+        "score": 76
+      },
+      "loser": {
+        "school": "NU",
+        "score": 74
+      },
+      "halftime": {
+        "winner": 45,
+        "loser": 36
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1989-1990",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": null,
+      "venue": null,
+      "winner": {
+        "school": "UP",
+        "score": 84
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 71
+      },
+      "halftime": {
+        "winner": 46,
+        "loser": 37
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1989-1990",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": null,
+      "venue": null,
+      "winner": {
+        "school": "FEU",
+        "score": 101
+      },
+      "loser": {
+        "school": "UST",
+        "score": 90
+      },
+      "halftime": {
+        "winner": 45,
+        "loser": 44
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1989-1990",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": null,
+      "venue": null,
+      "winner": {
+        "school": "DLSU",
+        "score": 77
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 69
+      },
+      "halftime": {
+        "winner": 39,
+        "loser": 36
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1989-1990",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": null,
+      "venue": null,
+      "winner": {
+        "school": "UP",
+        "score": 97
+      },
+      "loser": {
+        "school": "NU",
+        "score": 84
+      },
+      "halftime": {
+        "winner": 39,
+        "loser": 44
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1989-1990",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": null,
+      "venue": null,
+      "winner": {
+        "school": "FEU",
+        "score": 97
+      },
+      "loser": {
+        "school": "UE",
+        "score": 95
+      },
+      "halftime": {
+        "winner": 50,
+        "loser": 47
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1989-1990",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": null,
+      "venue": null,
+      "winner": {
+        "school": "ADU",
+        "score": 115
+      },
+      "loser": {
+        "school": "UST",
+        "score": 72
+      },
+      "halftime": {
+        "winner": 63,
+        "loser": 41
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1989-1990",
+      "sport": "basketball",
+      "division": "men",
+      "round": "championship",
+      "date": null,
+      "venue": null,
+      "winner": {
+        "school": "DLSU",
+        "score": 51
+      },
+      "loser": {
+        "school": "UE",
+        "score": 38
+      },
+      "halftime": null,
+      "is_championship": true
+    },
+    {
+      "season": "1989-1990",
+      "sport": "basketball",
+      "division": "men",
+      "round": "championship",
+      "date": null,
+      "venue": null,
+      "winner": {
+        "school": "UST",
+        "score": 74
+      },
+      "loser": {
+        "school": "FEU",
+        "score": 47
+      },
+      "halftime": null,
+      "is_championship": true
+    },
+    {
+      "season": "1989-1990",
+      "sport": "basketball",
+      "division": "men",
+      "round": "championship",
+      "date": null,
+      "venue": null,
+      "winner": {
+        "school": "FEU",
+        "score": 65
+      },
+      "loser": {
+        "school": "UP",
+        "score": 51
+      },
+      "halftime": null,
+      "is_championship": true
+    },
+    {
+      "season": "1989-1990",
+      "sport": "basketball",
+      "division": "men",
+      "round": "championship",
+      "date": null,
+      "venue": null,
+      "winner": {
+        "school": "DLSU",
+        "score": 62
+      },
+      "loser": {
+        "school": "UE",
+        "score": 47
+      },
+      "halftime": null,
+      "is_championship": true
+    },
+    {
+      "season": "1989-1990",
+      "sport": "basketball",
+      "division": "men",
+      "round": "championship",
+      "date": null,
+      "venue": null,
+      "winner": {
+        "school": "UST",
+        "score": 72
+      },
+      "loser": {
+        "school": "FEU",
+        "score": 62
+      },
+      "halftime": null,
+      "is_championship": true
+    },
+    {
+      "season": "1989-1990",
+      "sport": "basketball",
+      "division": "men",
+      "round": "championship",
+      "date": null,
+      "venue": null,
+      "winner": {
+        "school": "UP",
+        "score": 66
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 59
+      },
+      "halftime": null,
+      "is_championship": true
+    },
+    {
+      "season": "1989-1990",
+      "sport": "basketball",
+      "division": "men",
+      "round": "championship",
+      "date": null,
+      "venue": null,
+      "winner": {
+        "school": "FEU",
+        "score": 64
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 56
+      },
+      "halftime": null,
+      "is_championship": true
+    },
+    {
+      "season": "1989-1990",
+      "sport": "basketball",
+      "division": "men",
+      "round": "championship",
+      "date": null,
+      "venue": null,
+      "winner": {
+        "school": "UP",
+        "score": 57
+      },
+      "loser": {
+        "school": "UE",
+        "score": 52
+      },
+      "halftime": null,
+      "is_championship": true
+    },
+    {
+      "season": "1989-1990",
+      "sport": "basketball",
+      "division": "men",
+      "round": "championship",
+      "date": null,
+      "venue": null,
+      "winner": {
+        "school": "UST",
+        "score": 61
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 41
+      },
+      "halftime": null,
+      "is_championship": true
+    },
+    {
+      "season": "1989-1990",
+      "sport": "basketball",
+      "division": "men",
+      "round": "championship",
+      "date": null,
+      "venue": null,
+      "winner": {
+        "school": "DLSU",
+        "score": 36
+      },
+      "loser": {
+        "school": "UP",
+        "score": 31
+      },
+      "halftime": null,
+      "is_championship": true
+    },
+    {
+      "season": "1989-1990",
+      "sport": "basketball",
+      "division": "men",
+      "round": "championship",
+      "date": null,
+      "venue": null,
+      "winner": {
+        "school": "FEU",
+        "score": 79
+      },
+      "loser": {
+        "school": "UE",
+        "score": 67
+      },
+      "halftime": null,
+      "is_championship": true
+    },
+    {
+      "season": "1989-1990",
+      "sport": "basketball",
+      "division": "men",
+      "round": "championship",
+      "date": null,
+      "venue": null,
+      "winner": {
+        "school": "UST",
+        "score": 53
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 36
+      },
+      "halftime": null,
+      "is_championship": true
+    },
+    {
+      "season": "1989-1990",
+      "sport": "basketball",
+      "division": "men",
+      "round": "championship",
+      "date": null,
+      "venue": null,
+      "winner": {
+        "school": "FEU",
+        "score": 82
+      },
+      "loser": {
+        "school": "UE",
+        "score": 49
+      },
+      "halftime": null,
+      "is_championship": true
+    },
+    {
+      "season": "1989-1990",
+      "sport": "basketball",
+      "division": "men",
+      "round": "championship",
+      "date": null,
+      "venue": null,
+      "winner": {
+        "school": "UST",
+        "score": 69
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 47
+      },
+      "halftime": null,
+      "is_championship": true
+    },
+    {
+      "season": "1989-1990",
+      "sport": "basketball",
+      "division": "men",
+      "round": "championship",
+      "date": null,
+      "venue": null,
+      "winner": {
+        "school": "DLSU",
+        "score": 48
+      },
+      "loser": {
+        "school": "UP",
+        "score": 41
+      },
+      "halftime": null,
+      "is_championship": true
+    },
+    {
+      "season": "1989-1990",
+      "sport": "basketball",
+      "division": "men",
+      "round": "championship",
+      "date": null,
+      "venue": null,
+      "winner": {
+        "school": "UP",
+        "score": 53
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 46
+      },
+      "halftime": null,
+      "is_championship": true
+    },
+    {
+      "season": "1989-1990",
+      "sport": "basketball",
+      "division": "men",
+      "round": "championship",
+      "date": null,
+      "venue": null,
+      "winner": {
+        "school": "FEU",
+        "score": 61
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 40
+      },
+      "halftime": null,
+      "is_championship": true
+    },
+    {
+      "season": "1989-1990",
+      "sport": "basketball",
+      "division": "men",
+      "round": "championship",
+      "date": null,
+      "venue": null,
+      "winner": {
+        "school": "UST",
+        "score": 68
+      },
+      "loser": {
+        "school": "UE",
+        "score": 45
+      },
+      "halftime": null,
+      "is_championship": true
+    },
+    {
+      "season": "1989-1990",
+      "sport": "basketball",
+      "division": "men",
+      "round": "championship",
+      "date": null,
+      "venue": null,
+      "winner": {
+        "school": "UE",
+        "score": 56
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 54
+      },
+      "halftime": null,
+      "is_championship": true
+    },
+    {
+      "season": "1989-1990",
+      "sport": "basketball",
+      "division": "men",
+      "round": "championship",
+      "date": null,
+      "venue": null,
+      "winner": {
+        "school": "UST",
+        "score": 75
+      },
+      "loser": {
+        "school": "UP",
+        "score": 33
+      },
+      "halftime": null,
+      "is_championship": true
+    },
+    {
+      "season": "1989-1990",
+      "sport": "basketball",
+      "division": "men",
+      "round": "championship",
+      "date": null,
+      "venue": null,
+      "winner": {
+        "school": "FEU",
+        "score": 65
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 52
+      },
+      "halftime": null,
+      "is_championship": true
+    }
+  ]
+}

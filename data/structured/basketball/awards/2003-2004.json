@@ -1,0 +1,34 @@
+{
+  "season": "2003-2004",
+  "sport": "basketball",
+  "divisions": {
+    "men": {
+      "mythical_five": [
+        {
+          "player": "Paul Anthony D. Artadi",
+          "school": "UE",
+          "position": "GUARD"
+        },
+        {
+          "player": "Arwind A. Santos",
+          "school": "FEU",
+          "position": "FORWARD"
+        },
+        {
+          "player": "Reynaldo D. Mendoza",
+          "school": "NU",
+          "position": "CENTER"
+        }
+      ]
+    },
+    "juniors": {
+      "mythical_five": [
+        {
+          "player": "Simon David L. Atkins",
+          "school": "DLSU",
+          "position": "OFF-GUARD"
+        }
+      ]
+    }
+  }
+}

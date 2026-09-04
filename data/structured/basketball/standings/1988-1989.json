@@ -1,0 +1,135 @@
+{
+  "season": "1988-1989",
+  "sport": "basketball",
+  "divisions": {
+    "men": [
+      {
+        "school": "ADMU",
+        "rank": 1
+      },
+      {
+        "school": "DLSU",
+        "rank": 2
+      },
+      {
+        "school": "UP",
+        "rank": 3
+      },
+      {
+        "school": "ADU",
+        "rank": 4
+      },
+      {
+        "school": "UE",
+        "rank": 5
+      },
+      {
+        "school": "FEU",
+        "rank": 6
+      },
+      {
+        "school": "UST",
+        "rank": 7
+      },
+      {
+        "school": "NU",
+        "rank": 8
+      }
+    ],
+    "juniors": [
+      {
+        "school": "ADU",
+        "wins": 14,
+        "losses": 0,
+        "pct": 1.0,
+        "notes": "Champion",
+        "rank": 1
+      },
+      {
+        "school": "UP",
+        "wins": 12,
+        "losses": 2,
+        "pct": 0.857,
+        "rank": 2
+      },
+      {
+        "school": "NU",
+        "wins": 9,
+        "losses": 5,
+        "pct": 0.643,
+        "notes": "Third Place",
+        "rank": 3
+      },
+      {
+        "school": "ADMU",
+        "wins": 8,
+        "losses": 6,
+        "pct": 0.571,
+        "notes": "Fourth Place",
+        "rank": 4
+      },
+      {
+        "school": "UE",
+        "wins": 6,
+        "losses": 8,
+        "pct": 0.429,
+        "notes": "Fifth Place",
+        "rank": 5
+      },
+      {
+        "school": "UP",
+        "wins": 4,
+        "losses": 10,
+        "pct": 0.286,
+        "notes": "Sixth Place",
+        "rank": 6
+      },
+      {
+        "school": "DLSU",
+        "wins": 3,
+        "losses": 11,
+        "pct": 0.214,
+        "notes": "Seventh Place",
+        "rank": 7
+      },
+      {
+        "school": "NU",
+        "wins": 0,
+        "losses": 14,
+        "pct": 0.0,
+        "notes": "Eighth Place",
+        "rank": 8
+      }
+    ],
+    "women": [
+      {
+        "school": "UST",
+        "rank": 1
+      },
+      {
+        "school": "ADU",
+        "rank": 2
+      },
+      {
+        "school": "UP",
+        "rank": 3
+      },
+      {
+        "school": "DLSU",
+        "rank": 4
+      },
+      {
+        "school": "FEU",
+        "rank": 5
+      },
+      {
+        "school": "UE",
+        "rank": 6
+      },
+      {
+        "school": "ADMU",
+        "rank": 7
+      }
+    ]
+  }
+}

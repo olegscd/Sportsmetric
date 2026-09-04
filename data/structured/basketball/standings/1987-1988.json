@@ -1,0 +1,173 @@
+{
+  "season": "1987-1988",
+  "sport": "basketball",
+  "divisions": {
+    "men": [
+      {
+        "school": "ADMU",
+        "wins": 14,
+        "losses": 1,
+        "pct": 0.933,
+        "rank": 1
+      },
+      {
+        "school": "UE",
+        "wins": 10,
+        "losses": 5,
+        "pct": 0.667,
+        "rank": 2
+      },
+      {
+        "school": "UP",
+        "wins": 9,
+        "losses": 5,
+        "pct": 0.643,
+        "rank": 3
+      },
+      {
+        "school": "FEU",
+        "wins": 8,
+        "losses": 6,
+        "pct": 0.571,
+        "rank": 4
+      },
+      {
+        "school": "DLSU",
+        "wins": 7,
+        "losses": 7,
+        "pct": 0.5,
+        "rank": 5
+      },
+      {
+        "school": "ADU",
+        "wins": 5,
+        "losses": 9,
+        "pct": 0.357,
+        "rank": 6
+      },
+      {
+        "school": "UST",
+        "wins": 3,
+        "losses": 11,
+        "pct": 0.214,
+        "rank": 7
+      },
+      {
+        "school": "NU",
+        "wins": 2,
+        "losses": 12,
+        "pct": 0.143,
+        "rank": 8
+      }
+    ],
+    "juniors": [
+      {
+        "school": "FEU",
+        "wins": 13,
+        "losses": 2,
+        "pct": 0.867,
+        "rank": 1
+      },
+      {
+        "school": "ADU",
+        "wins": 12,
+        "losses": 3,
+        "pct": 0.8,
+        "rank": 2
+      },
+      {
+        "school": "ADMU",
+        "wins": 10,
+        "losses": 4,
+        "pct": 0.714,
+        "rank": 3
+      },
+      {
+        "school": "UST",
+        "wins": 9,
+        "losses": 5,
+        "pct": 0.643,
+        "rank": 4
+      },
+      {
+        "school": "DLSU",
+        "wins": 6,
+        "losses": 8,
+        "pct": 0.429,
+        "rank": 5
+      },
+      {
+        "school": "NU",
+        "wins": 4,
+        "losses": 10,
+        "pct": 0.286,
+        "rank": 6
+      },
+      {
+        "school": "UP",
+        "wins": 2,
+        "losses": 12,
+        "pct": 0.143,
+        "rank": 7
+      },
+      {
+        "school": "UE",
+        "wins": 1,
+        "losses": 13,
+        "pct": 0.071,
+        "rank": 8
+      }
+    ],
+    "women": [
+      {
+        "school": "UST",
+        "wins": 12,
+        "losses": 1,
+        "pct": 0.923,
+        "rank": 1
+      },
+      {
+        "school": "ADMU",
+        "wins": 8,
+        "losses": 6,
+        "pct": 0.571,
+        "rank": 2
+      },
+      {
+        "school": "FEU",
+        "wins": 7,
+        "losses": 6,
+        "pct": 0.538,
+        "rank": 3
+      },
+      {
+        "school": "ADU",
+        "wins": 6,
+        "losses": 6,
+        "pct": 0.5,
+        "rank": 4
+      },
+      {
+        "school": "DLSU",
+        "wins": 6,
+        "losses": 6,
+        "pct": 0.5,
+        "rank": 5
+      },
+      {
+        "school": "UE",
+        "wins": 3,
+        "losses": 9,
+        "pct": 0.25,
+        "rank": 6
+      },
+      {
+        "school": "UP",
+        "wins": 2,
+        "losses": 10,
+        "pct": 0.167,
+        "rank": 7
+      }
+    ]
+  }
+}

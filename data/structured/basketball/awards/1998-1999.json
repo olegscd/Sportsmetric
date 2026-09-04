@@ -1,0 +1,16 @@
+{
+  "season": "1998-1999",
+  "sport": "basketball",
+  "divisions": {
+    "men": {
+      "mvp": {
+        "player": "Anton Paolo del Mundo",
+        "school": "ADMU"
+      },
+      "rookie_of_the_year": {
+        "player": "Larry Alexander Fonacier",
+        "school": "ADMU"
+      }
+    }
+  }
+}

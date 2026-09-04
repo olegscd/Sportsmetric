@@ -1,0 +1,3301 @@
+{
+  "season": "1987-1988",
+  "sport": "basketball",
+  "total_games": 157,
+  "games": [
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": "July 18, 1987",
+      "venue": "Rizal Memorial Sports Complex",
+      "winner": {
+        "school": "UP",
+        "score": 88
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 80
+      },
+      "halftime": {
+        "winner": 43,
+        "loser": 48
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": "July 18, 1987",
+      "venue": "Rizal Memorial Sports Complex",
+      "winner": {
+        "school": "ADU",
+        "score": 97
+      },
+      "loser": {
+        "school": "NU",
+        "score": 77
+      },
+      "halftime": {
+        "winner": 45,
+        "loser": 45
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": "July 18, 1987",
+      "venue": "Rizal Memorial Sports Complex",
+      "winner": {
+        "school": "UE",
+        "score": 105
+      },
+      "loser": {
+        "school": "UST",
+        "score": 101
+      },
+      "halftime": {
+        "winner": 47,
+        "loser": 47
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": "July 18, 1987",
+      "venue": "Rizal Memorial Sports Complex",
+      "winner": {
+        "school": "FEU",
+        "score": 83
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 79
+      },
+      "halftime": {
+        "winner": 39,
+        "loser": 44
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": "July 26, 1987",
+      "venue": "Rizal Memorial Sports Complex",
+      "winner": {
+        "school": "UP",
+        "score": 100
+      },
+      "loser": {
+        "school": "NU",
+        "score": 81
+      },
+      "halftime": {
+        "winner": 50,
+        "loser": 48
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": "July 26, 1987",
+      "venue": "Rizal Memorial Sports Complex",
+      "winner": {
+        "school": "UST",
+        "score": 88
+      },
+      "loser": {
+        "school": "FEU",
+        "score": 81
+      },
+      "halftime": {
+        "winner": 47,
+        "loser": 44
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": "July 26, 1987",
+      "venue": "Rizal Memorial Sports Complex",
+      "winner": {
+        "school": "UE",
+        "score": 104
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 95
+      },
+      "halftime": {
+        "winner": 61,
+        "loser": 52
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": "July 26, 1987",
+      "venue": "Rizal Memorial Sports Complex",
+      "winner": {
+        "school": "ADMU",
+        "score": 89
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 75
+      },
+      "halftime": {
+        "winner": 41,
+        "loser": 34
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": "August 1, 1987",
+      "venue": "Rizal Memorial Sports Complex",
+      "winner": {
+        "school": "ADMU",
+        "score": 107
+      },
+      "loser": {
+        "school": "NU",
+        "score": 94
+      },
+      "halftime": {
+        "winner": 54,
+        "loser": 41
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": "August 1, 1987",
+      "venue": "Rizal Memorial Sports Complex",
+      "winner": {
+        "school": "DLSU",
+        "score": 89
+      },
+      "loser": {
+        "school": "UST",
+        "score": 76
+      },
+      "halftime": {
+        "winner": 41,
+        "loser": 37
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": "August 1, 1987",
+      "venue": "Rizal Memorial Sports Complex",
+      "winner": {
+        "school": "ADU",
+        "score": 95
+      },
+      "loser": {
+        "school": "UP",
+        "score": 85
+      },
+      "halftime": {
+        "winner": 42,
+        "loser": 45
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": "August 1, 1987",
+      "venue": "Rizal Memorial Sports Complex",
+      "winner": {
+        "school": "FEU",
+        "score": 107
+      },
+      "loser": {
+        "school": "UE",
+        "score": 94
+      },
+      "halftime": {
+        "winner": 44,
+        "loser": 46
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": "August 12, 1987",
+      "venue": "Rizal Memorial Sports Complex",
+      "winner": {
+        "school": "FEU",
+        "score": 118
+      },
+      "loser": {
+        "school": "NU",
+        "score": 93
+      },
+      "halftime": {
+        "winner": 54,
+        "loser": 39
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": "August 12, 1987",
+      "venue": "Rizal Memorial Sports Complex",
+      "winner": {
+        "school": "DLSU",
+        "score": 83
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 71
+      },
+      "halftime": {
+        "winner": 39,
+        "loser": 40
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": "August 12, 1987",
+      "venue": "Rizal Memorial Sports Complex",
+      "winner": {
+        "school": "UP",
+        "score": 97
+      },
+      "loser": {
+        "school": "UST",
+        "score": 92
+      },
+      "halftime": {
+        "winner": 44,
+        "loser": 45
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": "August 12, 1987",
+      "venue": "Rizal Memorial Sports Complex",
+      "winner": {
+        "school": "ADMU",
+        "score": 102
+      },
+      "loser": {
+        "school": "UE",
+        "score": 100
+      },
+      "halftime": {
+        "winner": 49,
+        "loser": 44
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": "August 15, 1987",
+      "venue": "Rizal Memorial Sports Complex",
+      "winner": {
+        "school": "DLSU",
+        "score": 91
+      },
+      "loser": {
+        "school": "NU",
+        "score": 89
+      },
+      "halftime": {
+        "winner": 50,
+        "loser": 44
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": "August 15, 1987",
+      "venue": "Rizal Memorial Sports Complex",
+      "winner": {
+        "school": "UST",
+        "score": 84
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 81
+      },
+      "halftime": {
+        "winner": 40,
+        "loser": 47
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": "August 15, 1987",
+      "venue": "Rizal Memorial Sports Complex",
+      "winner": {
+        "school": "ADMU",
+        "score": 78
+      },
+      "loser": {
+        "school": "FEU",
+        "score": 68
+      },
+      "halftime": {
+        "winner": 38,
+        "loser": 34
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": "August 15, 1987",
+      "venue": "Rizal Memorial Sports Complex",
+      "winner": {
+        "school": "UE",
+        "score": 116
+      },
+      "loser": {
+        "school": "UP",
+        "score": 110
+      },
+      "halftime": {
+        "winner": 51,
+        "loser": 47
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": "August 20, 1987",
+      "venue": "Rizal Memorial Sports Complex",
+      "winner": {
+        "school": "UE",
+        "score": 96
+      },
+      "loser": {
+        "school": "NU",
+        "score": 75
+      },
+      "halftime": {
+        "winner": 56,
+        "loser": 46
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": "August 20, 1987",
+      "venue": "Rizal Memorial Sports Complex",
+      "winner": {
+        "school": "ADU",
+        "score": 87
+      },
+      "loser": {
+        "school": "FEU",
+        "score": 84
+      },
+      "halftime": {
+        "winner": 44,
+        "loser": 42
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": "August 20, 1987",
+      "venue": "Rizal Memorial Sports Complex",
+      "winner": {
+        "school": "UST",
+        "score": 91
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 89
+      },
+      "halftime": {
+        "winner": 50,
+        "loser": 55
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": "August 20, 1987",
+      "venue": "Rizal Memorial Sports Complex",
+      "winner": {
+        "school": "UP",
+        "score": 123
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 109
+      },
+      "halftime": {
+        "winner": 59,
+        "loser": 46
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": "August 23, 1987",
+      "venue": "Rizal Memorial Sports Complex",
+      "winner": {
+        "school": "UST",
+        "score": 92
+      },
+      "loser": {
+        "school": "NU",
+        "score": 47
+      },
+      "halftime": {
+        "winner": 43,
+        "loser": 39
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": "August 23, 1987",
+      "venue": "Rizal Memorial Sports Complex",
+      "winner": {
+        "school": "UE",
+        "score": 114
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 98
+      },
+      "halftime": {
+        "winner": 56,
+        "loser": 47
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": "August 23, 1987",
+      "venue": "Rizal Memorial Sports Complex",
+      "winner": {
+        "school": "UP",
+        "score": 105
+      },
+      "loser": {
+        "school": "FEU",
+        "score": 104
+      },
+      "halftime": {
+        "winner": 61,
+        "loser": 53
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": "August 23, 1987",
+      "venue": "Rizal Memorial Sports Complex",
+      "winner": {
+        "school": "ADMU",
+        "score": 95
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 91
+      },
+      "halftime": {
+        "winner": 58,
+        "loser": 55
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "date": "September 3, 1987",
+      "venue": "Rizal Memorial Sports Complex",
+      "winner": {
+        "school": "DLSU",
+        "score": 99
+      },
+      "loser": {
+        "school": "UP",
+        "score": 90
+      },
+      "halftime": {
+        "winner": 44,
+        "loser": 48
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "date": "September 3, 1987",
+      "venue": "Rizal Memorial Sports Complex",
+      "winner": {
+        "school": "UE",
+        "score": 94
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 82
+      },
+      "halftime": {
+        "winner": 41,
+        "loser": 47
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "date": "September 3, 1987",
+      "venue": "Rizal Memorial Sports Complex",
+      "winner": {
+        "school": "UST",
+        "score": 116
+      },
+      "loser": {
+        "school": "NU",
+        "score": 104
+      },
+      "halftime": {
+        "winner": 55,
+        "loser": 49
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "date": "September 3, 1987",
+      "venue": "Rizal Memorial Sports Complex",
+      "winner": {
+        "school": "ADMU",
+        "score": 89
+      },
+      "loser": {
+        "school": "FEU",
+        "score": 81
+      },
+      "halftime": {
+        "winner": 46,
+        "loser": 51
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "date": "September 6, 1987",
+      "venue": "Rizal Memorial Sports Complex",
+      "winner": {
+        "school": "UE",
+        "score": 89
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 76
+      },
+      "halftime": {
+        "winner": 44,
+        "loser": 46
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "date": "September 6, 1987",
+      "venue": "Rizal Memorial Sports Complex",
+      "winner": {
+        "school": "ADMU",
+        "score": 94
+      },
+      "loser": {
+        "school": "NU",
+        "score": 85
+      },
+      "halftime": {
+        "winner": 50,
+        "loser": 36
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "date": "September 6, 1987",
+      "venue": "Rizal Memorial Sports Complex",
+      "winner": {
+        "school": "UST",
+        "score": 99
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 81
+      },
+      "halftime": {
+        "winner": 42,
+        "loser": 44
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "date": "September 6, 1987",
+      "venue": "Rizal Memorial Sports Complex",
+      "winner": {
+        "school": "UP",
+        "score": 109
+      },
+      "loser": {
+        "school": "FEU",
+        "score": 81
+      },
+      "halftime": {
+        "winner": 47,
+        "loser": 31
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "date": "September 9, 1987",
+      "venue": "Rizal Memorial Sports Complex",
+      "winner": {
+        "school": "NU",
+        "score": 89
+      },
+      "loser": {
+        "school": "UP",
+        "score": 75
+      },
+      "halftime": {
+        "winner": 43,
+        "loser": 35
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "date": "September 9, 1987",
+      "venue": "Rizal Memorial Sports Complex",
+      "winner": {
+        "school": "UST",
+        "score": 100
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 83
+      },
+      "halftime": {
+        "winner": 45,
+        "loser": 35
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "date": "September 9, 1987",
+      "venue": "Rizal Memorial Sports Complex",
+      "winner": {
+        "school": "UE",
+        "score": 91
+      },
+      "loser": {
+        "school": "FEU",
+        "score": 82
+      },
+      "halftime": {
+        "winner": 43,
+        "loser": 42
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "date": "September 9, 1987",
+      "venue": "Rizal Memorial Sports Complex",
+      "winner": {
+        "school": "ADMU",
+        "score": 105
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 94
+      },
+      "halftime": {
+        "winner": 56,
+        "loser": 51
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "date": "September 12, 1987",
+      "venue": "Rizal Memorial Sports Complex",
+      "winner": {
+        "school": "FEU",
+        "score": 107
+      },
+      "loser": {
+        "school": "NU",
+        "score": 89
+      },
+      "halftime": {
+        "winner": 55,
+        "loser": 38
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "date": "September 12, 1987",
+      "venue": "Rizal Memorial Sports Complex",
+      "winner": {
+        "school": "DLSU",
+        "score": 88
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 71
+      },
+      "halftime": {
+        "winner": 41,
+        "loser": 40
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "date": "September 12, 1987",
+      "venue": "Rizal Memorial Sports Complex",
+      "winner": {
+        "school": "UE",
+        "score": 116
+      },
+      "loser": {
+        "school": "UST",
+        "score": 110
+      },
+      "halftime": {
+        "winner": 60,
+        "loser": 54
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "date": "September 12, 1987",
+      "venue": "Rizal Memorial Sports Complex",
+      "winner": {
+        "school": "ADMU",
+        "score": 88
+      },
+      "loser": {
+        "school": "UP",
+        "score": 56
+      },
+      "halftime": {
+        "winner": 41,
+        "loser": 34
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "date": "September 20, 1987",
+      "venue": "Rizal Memorial Sports Complex",
+      "winner": {
+        "school": "DLSU",
+        "score": 113
+      },
+      "loser": {
+        "school": "NU",
+        "score": 88
+      },
+      "halftime": {
+        "winner": 49,
+        "loser": 51
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "date": "September 20, 1987",
+      "venue": "Rizal Memorial Sports Complex",
+      "winner": {
+        "school": "UP",
+        "score": 92
+      },
+      "loser": {
+        "school": "UST",
+        "score": 83
+      },
+      "halftime": {
+        "winner": 41,
+        "loser": 31
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "date": "September 20, 1987",
+      "venue": "Rizal Memorial Sports Complex",
+      "winner": {
+        "school": "FEU",
+        "score": 108
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 91
+      },
+      "halftime": {
+        "winner": 53,
+        "loser": 44
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "date": "September 20, 1987",
+      "venue": "Rizal Memorial Sports Complex",
+      "winner": {
+        "school": "ADMU",
+        "score": 105
+      },
+      "loser": {
+        "school": "UE",
+        "score": 102
+      },
+      "halftime": {
+        "winner": 60,
+        "loser": 58
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": "September 20, 1987",
+      "venue": ":",
+      "winner": {
+        "school": "ADMU",
+        "score": 98
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 89
+      },
+      "halftime": {
+        "winner": 52,
+        "loser": 49
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": "September 20, 1987",
+      "venue": ":",
+      "winner": {
+        "school": "UE",
+        "score": 102
+      },
+      "loser": {
+        "school": "NU",
+        "score": 99
+      },
+      "halftime": {
+        "winner": 55,
+        "loser": 37
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": "September 20, 1987",
+      "venue": ":",
+      "winner": {
+        "school": "UP",
+        "score": 107
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 103
+      },
+      "halftime": {
+        "winner": 52,
+        "loser": 60
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": "September 20, 1987",
+      "venue": ":",
+      "winner": {
+        "school": "FEU",
+        "score": 96
+      },
+      "loser": {
+        "school": "UST",
+        "score": 84
+      },
+      "halftime": {
+        "winner": 49,
+        "loser": 35
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": "September 20, 1987",
+      "venue": ":",
+      "winner": {
+        "school": "NU",
+        "score": 98
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 96
+      },
+      "halftime": {
+        "winner": 55,
+        "loser": 50
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": "September 20, 1987",
+      "venue": ":",
+      "winner": {
+        "school": "FEU",
+        "score": 99
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 87
+      },
+      "halftime": {
+        "winner": 45,
+        "loser": 48
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": "September 20, 1987",
+      "venue": ":",
+      "winner": {
+        "school": "ADMU",
+        "score": 108
+      },
+      "loser": {
+        "school": "UST",
+        "score": 101
+      },
+      "halftime": {
+        "winner": 60,
+        "loser": 56
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": "September 20, 1987",
+      "venue": ":",
+      "winner": {
+        "school": "UP",
+        "score": 101
+      },
+      "loser": {
+        "school": "UE",
+        "score": 87
+      },
+      "halftime": {
+        "winner": 47,
+        "loser": 45
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "championship",
+      "date": "September 20, 1987",
+      "venue": ":",
+      "winner": {
+        "school": "ADMU",
+        "score": 94
+      },
+      "loser": {
+        "school": "UE",
+        "score": 92
+      },
+      "halftime": {
+        "winner": 38,
+        "loser": 51
+      },
+      "is_championship": true
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "September 20, 1987",
+      "venue": ":",
+      "winner": {
+        "school": "ADMU",
+        "score": 95
+      },
+      "loser": {
+        "school": "UP",
+        "score": 65
+      },
+      "halftime": {
+        "winner": 40,
+        "loser": 19
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "September 20, 1987",
+      "venue": ":",
+      "winner": {
+        "school": "ADU",
+        "score": 99
+      },
+      "loser": {
+        "school": "NU",
+        "score": 77
+      },
+      "halftime": {
+        "winner": 62,
+        "loser": 35
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "September 20, 1987",
+      "venue": ":",
+      "winner": {
+        "school": "UST",
+        "score": 75
+      },
+      "loser": {
+        "school": "UE",
+        "score": 69
+      },
+      "halftime": {
+        "winner": 35,
+        "loser": 29
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "September 20, 1987",
+      "venue": ":",
+      "winner": {
+        "school": "FEU",
+        "score": 107
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 84
+      },
+      "halftime": null,
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "July 25, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "ADU",
+        "score": 68
+      },
+      "loser": {
+        "school": "FEU",
+        "score": 66
+      },
+      "halftime": {
+        "winner": 38,
+        "loser": 28
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "July 25, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "ADMU",
+        "score": 74
+      },
+      "loser": {
+        "school": "UST",
+        "score": 68
+      },
+      "halftime": {
+        "winner": 41,
+        "loser": 27
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "July 25, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "DLSU",
+        "score": 89
+      },
+      "loser": {
+        "school": "UP",
+        "score": 87
+      },
+      "halftime": {
+        "winner": 47,
+        "loser": 36
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "July 25, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "NU",
+        "score": 74
+      },
+      "loser": {
+        "school": "UE",
+        "score": 72
+      },
+      "halftime": {
+        "winner": 36,
+        "loser": 34
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "July 30, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "ADU",
+        "score": 89
+      },
+      "loser": {
+        "school": "UST",
+        "score": 75
+      },
+      "halftime": {
+        "winner": 37,
+        "loser": 31
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "July 30, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "NU",
+        "score": 74
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 68
+      },
+      "halftime": {
+        "winner": 38,
+        "loser": 31
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "July 30, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "UE",
+        "score": 83
+      },
+      "loser": {
+        "school": "UP",
+        "score": 78
+      },
+      "halftime": {
+        "winner": 26,
+        "loser": 31
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "July 30, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "FEU",
+        "score": 88
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 73
+      },
+      "halftime": {
+        "winner": 43,
+        "loser": 36
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "August 2, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "UP",
+        "score": 85
+      },
+      "loser": {
+        "school": "NU",
+        "score": 81
+      },
+      "halftime": {
+        "winner": 45,
+        "loser": 27
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "August 2, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "ADU",
+        "score": 79
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 74
+      },
+      "halftime": {
+        "winner": 36,
+        "loser": 40
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "August 2, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "FEU",
+        "score": 88
+      },
+      "loser": {
+        "school": "UST",
+        "score": 74
+      },
+      "halftime": {
+        "winner": 43,
+        "loser": 37
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "August 2, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "DLSU",
+        "score": 88
+      },
+      "loser": {
+        "school": "UE",
+        "score": 76
+      },
+      "halftime": {
+        "winner": 35,
+        "loser": 33
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "August 5, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "FEU",
+        "score": 87
+      },
+      "loser": {
+        "school": "NU",
+        "score": 78
+      },
+      "halftime": {
+        "winner": 40,
+        "loser": 42
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "August 5, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "ADU",
+        "score": 92
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 64
+      },
+      "halftime": {
+        "winner": 32,
+        "loser": 31
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "August 5, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "UST",
+        "score": 85
+      },
+      "loser": {
+        "school": "UP",
+        "score": 57
+      },
+      "halftime": {
+        "winner": 42,
+        "loser": 25
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "August 5, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "ADMU",
+        "score": 90
+      },
+      "loser": {
+        "school": "UE",
+        "score": 68
+      },
+      "halftime": {
+        "winner": 35,
+        "loser": 28
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "August 8, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "UST",
+        "score": 85
+      },
+      "loser": {
+        "school": "NU",
+        "score": 72
+      },
+      "halftime": {
+        "winner": 42,
+        "loser": 32
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "August 8, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "ADMU",
+        "score": 97
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 70
+      },
+      "halftime": {
+        "winner": 42,
+        "loser": 30
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "August 8, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "ADU",
+        "score": 106
+      },
+      "loser": {
+        "school": "UE",
+        "score": 75
+      },
+      "halftime": {
+        "winner": 53,
+        "loser": 37
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "August 8, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "FEU",
+        "score": 101
+      },
+      "loser": {
+        "school": "UP",
+        "score": 96
+      },
+      "halftime": {
+        "winner": 54,
+        "loser": 54
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "August 16, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "ADMU",
+        "score": 87
+      },
+      "loser": {
+        "school": "NU",
+        "score": 80
+      },
+      "halftime": {
+        "winner": 41,
+        "loser": 33
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "August 16, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "UST",
+        "score": 92
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 62
+      },
+      "halftime": {
+        "winner": 48,
+        "loser": 30
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "August 16, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "ADU",
+        "score": 111
+      },
+      "loser": {
+        "school": "UP",
+        "score": 64
+      },
+      "halftime": {
+        "winner": 55,
+        "loser": 38
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": "August 16, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "FEU",
+        "score": 95
+      },
+      "loser": {
+        "school": "UE",
+        "score": 74
+      },
+      "halftime": {
+        "winner": 34,
+        "loser": 27
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": "August 22, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "FEU",
+        "score": 86
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 75
+      },
+      "halftime": {
+        "winner": 46,
+        "loser": 33
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": "August 22, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "ADU",
+        "score": 136
+      },
+      "loser": {
+        "school": "UE",
+        "score": 91
+      },
+      "halftime": {
+        "winner": 61,
+        "loser": 40
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": "August 22, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "ADMU",
+        "score": 111
+      },
+      "loser": {
+        "school": "NU",
+        "score": 74
+      },
+      "halftime": {
+        "winner": 57,
+        "loser": 42
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": "August 22, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "UST",
+        "score": 80
+      },
+      "loser": {
+        "school": "UP",
+        "score": 61
+      },
+      "halftime": {
+        "winner": 38,
+        "loser": 37
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": "August 30, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "ADU",
+        "score": 120
+      },
+      "loser": {
+        "school": "UP",
+        "score": 85
+      },
+      "halftime": {
+        "winner": 50,
+        "loser": 42
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": "August 30, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "FEU",
+        "score": 112
+      },
+      "loser": {
+        "school": "UE",
+        "score": 82
+      },
+      "halftime": {
+        "winner": 46,
+        "loser": 36
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": "August 30, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "DLSU",
+        "score": 74
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 73
+      },
+      "halftime": {
+        "winner": 36,
+        "loser": 46
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": "August 30, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "UST",
+        "score": 91
+      },
+      "loser": {
+        "school": "NU",
+        "score": 82
+      },
+      "halftime": {
+        "winner": 40,
+        "loser": 48
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": "September 2, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "UST",
+        "score": 103
+      },
+      "loser": {
+        "school": "UE",
+        "score": 72
+      },
+      "halftime": {
+        "winner": 55,
+        "loser": 41
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": "September 2, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "ADMU",
+        "score": 104
+      },
+      "loser": {
+        "school": "UP",
+        "score": 95
+      },
+      "halftime": {
+        "winner": 61,
+        "loser": 44
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": "September 2, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "FEU",
+        "score": 100
+      },
+      "loser": {
+        "school": "NU",
+        "score": 75
+      },
+      "halftime": {
+        "winner": 48,
+        "loser": 25
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": "September 2, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "ADU",
+        "score": 116
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 90
+      },
+      "halftime": {
+        "winner": 62,
+        "loser": 40
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": "September 5, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "FEU",
+        "score": 60
+      },
+      "loser": {
+        "school": "UP",
+        "score": 55
+      },
+      "halftime": {
+        "winner": 28,
+        "loser": 25
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": "September 5, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "ADMU",
+        "score": 109
+      },
+      "loser": {
+        "school": "UE",
+        "score": 89
+      },
+      "halftime": {
+        "winner": 56,
+        "loser": 33
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": "September 5, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "ADU",
+        "score": 117
+      },
+      "loser": {
+        "school": "NU",
+        "score": 76
+      },
+      "halftime": {
+        "winner": 60,
+        "loser": 33
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": "September 5, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "UST",
+        "score": 104
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 64
+      },
+      "halftime": {
+        "winner": 47,
+        "loser": 26
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": "September 10, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "DLSU",
+        "score": 87
+      },
+      "loser": {
+        "school": "UE",
+        "score": 65
+      },
+      "halftime": {
+        "winner": 36,
+        "loser": 36
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": "September 10, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "NU",
+        "score": 69
+      },
+      "loser": {
+        "school": "UP",
+        "score": 65
+      },
+      "halftime": {
+        "winner": 36,
+        "loser": 23
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": "September 10, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "UST",
+        "score": 85
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 83
+      },
+      "halftime": {
+        "winner": 42,
+        "loser": 42
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": "September 10, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "FEU",
+        "score": 61
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 55
+      },
+      "halftime": {
+        "winner": 24,
+        "loser": 21
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": "September 13, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "UP",
+        "score": 62
+      },
+      "loser": {
+        "school": "UE",
+        "score": 61
+      },
+      "halftime": {
+        "winner": 27,
+        "loser": 25
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": "September 13, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "DLSU",
+        "score": 72
+      },
+      "loser": {
+        "school": "NU",
+        "score": 66
+      },
+      "halftime": {
+        "winner": 30,
+        "loser": 32
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": "September 13, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "ADMU",
+        "score": 73
+      },
+      "loser": {
+        "school": "UST",
+        "score": 71
+      },
+      "halftime": {
+        "winner": 34,
+        "loser": 40
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": "September 13, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "FEU",
+        "score": 77
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 74
+      },
+      "halftime": {
+        "winner": 44,
+        "loser": 38
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": "September 19, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "DLSU",
+        "score": 67
+      },
+      "loser": {
+        "school": "UP",
+        "score": 60
+      },
+      "halftime": {
+        "winner": 21,
+        "loser": 32
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": "September 19, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "NU",
+        "score": 76
+      },
+      "loser": {
+        "school": "UE",
+        "score": 69
+      },
+      "halftime": {
+        "winner": 36,
+        "loser": 27
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": "September 19, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "FEU",
+        "score": 83
+      },
+      "loser": {
+        "school": "UST",
+        "score": 79
+      },
+      "halftime": {
+        "winner": 37,
+        "loser": 42
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": "September 19, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "ADMU",
+        "score": 98
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 88
+      },
+      "halftime": {
+        "winner": 50,
+        "loser": 40
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "championship",
+      "date": "October 4, 1987",
+      "venue": "Rizal Memorial Sports Complex",
+      "winner": {
+        "school": "ADU",
+        "score": 77
+      },
+      "loser": {
+        "school": "FEU",
+        "score": 69
+      },
+      "halftime": {
+        "winner": 36,
+        "loser": 38
+      },
+      "is_championship": true
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "championship",
+      "date": "October 8, 1987",
+      "venue": "Rizal Memorial Sports Complex",
+      "winner": {
+        "school": "FEU",
+        "score": 87
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 78
+      },
+      "halftime": {
+        "winner": 46,
+        "loser": 34
+      },
+      "is_championship": true
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "women",
+      "round": "first_round",
+      "date": "July 19, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "UST",
+        "score": 73
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 56
+      },
+      "halftime": {
+        "winner": 39,
+        "loser": 20
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "women",
+      "round": "first_round",
+      "date": "July 19, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "FEU",
+        "score": 49
+      },
+      "loser": {
+        "school": "UP",
+        "score": 31
+      },
+      "halftime": {
+        "winner": 17,
+        "loser": 21
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "women",
+      "round": "first_round",
+      "date": "July 19, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "ADMU",
+        "score": 65
+      },
+      "loser": {
+        "school": "UE",
+        "score": 59
+      },
+      "halftime": {
+        "winner": 29,
+        "loser": 28
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "women",
+      "round": "first_round",
+      "date": "July 26, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "ADU",
+        "score": 79
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 28
+      },
+      "halftime": {
+        "winner": 44,
+        "loser": 13
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "women",
+      "round": "first_round",
+      "date": "July 26, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "DLSU",
+        "score": 69
+      },
+      "loser": {
+        "school": "UP",
+        "score": 32
+      },
+      "halftime": {
+        "winner": 36,
+        "loser": 16
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "women",
+      "round": "first_round",
+      "date": "July 26, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "UE",
+        "score": 47
+      },
+      "loser": {
+        "school": "FEU",
+        "score": 43
+      },
+      "halftime": {
+        "winner": 18,
+        "loser": 20
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "women",
+      "round": "first_round",
+      "date": "July 29, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "UST",
+        "score": 62
+      },
+      "loser": {
+        "school": "FEU",
+        "score": 54
+      },
+      "halftime": {
+        "winner": 37,
+        "loser": 25
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "women",
+      "round": "first_round",
+      "date": "July 29, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "ADU",
+        "score": 70
+      },
+      "loser": {
+        "school": "UE",
+        "score": 60
+      },
+      "halftime": {
+        "winner": 27,
+        "loser": 28
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "women",
+      "round": "first_round",
+      "date": "July 29, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "ADMU",
+        "score": 66
+      },
+      "loser": {
+        "school": "UP",
+        "score": 61
+      },
+      "halftime": {
+        "winner": 34,
+        "loser": 27
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "women",
+      "round": "first_round",
+      "date": "August 2, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "DLSU",
+        "score": 47
+      },
+      "loser": {
+        "school": "UE",
+        "score": 44
+      },
+      "halftime": {
+        "winner": 23,
+        "loser": 26
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "women",
+      "round": "first_round",
+      "date": "August 2, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "UST",
+        "score": 84
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 41
+      },
+      "halftime": {
+        "winner": 41,
+        "loser": 26
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "women",
+      "round": "first_round",
+      "date": "August 2, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "ADU",
+        "score": 76
+      },
+      "loser": {
+        "school": "UP",
+        "score": 29
+      },
+      "halftime": {
+        "winner": 37,
+        "loser": 16
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "women",
+      "round": "first_round",
+      "date": "August 6, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "ADU",
+        "score": 77
+      },
+      "loser": {
+        "school": "FEU",
+        "score": 50
+      },
+      "halftime": {
+        "winner": 31,
+        "loser": 26
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "women",
+      "round": "first_round",
+      "date": "August 6, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "UST",
+        "score": 69
+      },
+      "loser": {
+        "school": "UE",
+        "score": 42
+      },
+      "halftime": {
+        "winner": 31,
+        "loser": 19
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "women",
+      "round": "first_round",
+      "date": "August 6, 1987",
+      "venue": "Loyola Gym",
+      "winner": {
+        "school": "ADMU",
+        "score": 68
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 66
+      },
+      "halftime": {
+        "winner": 29,
+        "loser": 18
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "women",
+      "round": "first_round",
+      "date": "August 6, 1987",
+      "venue": ":",
+      "winner": {
+        "school": "ADU",
+        "score": 71
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 52
+      },
+      "halftime": {
+        "winner": 34,
+        "loser": 23
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "women",
+      "round": "first_round",
+      "date": "August 6, 1987",
+      "venue": ":",
+      "winner": {
+        "school": "UST",
+        "score": 82
+      },
+      "loser": {
+        "school": "UP",
+        "score": 38
+      },
+      "halftime": {
+        "winner": 38,
+        "loser": 20
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "women",
+      "round": "first_round",
+      "date": "August 6, 1987",
+      "venue": ":",
+      "winner": {
+        "school": "FEU",
+        "score": 85
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 73
+      },
+      "halftime": {
+        "winner": 48,
+        "loser": 33
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "women",
+      "round": "first_round",
+      "date": "August 6, 1987",
+      "venue": ":",
+      "winner": {
+        "school": "UP",
+        "score": 61
+      },
+      "loser": {
+        "school": "UE",
+        "score": 57
+      },
+      "halftime": {
+        "winner": 25,
+        "loser": 30
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "women",
+      "round": "first_round",
+      "date": "August 6, 1987",
+      "venue": ":",
+      "winner": {
+        "school": "FEU",
+        "score": 58
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 38
+      },
+      "halftime": {
+        "winner": 27,
+        "loser": 20
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "women",
+      "round": "first_round",
+      "date": "August 6, 1987",
+      "venue": ":",
+      "winner": {
+        "school": "UST",
+        "score": 94
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 62
+      },
+      "halftime": {
+        "winner": 50,
+        "loser": 35
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "August 6, 1987",
+      "venue": ":",
+      "winner": {
+        "school": "UE",
+        "score": 58
+      },
+      "loser": {
+        "school": "UP",
+        "score": 42
+      },
+      "halftime": {
+        "winner": 23,
+        "loser": 13
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "August 6, 1987",
+      "venue": ":",
+      "winner": {
+        "school": "DLSU",
+        "score": 64
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 59
+      },
+      "halftime": {
+        "winner": 36,
+        "loser": 26
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "August 6, 1987",
+      "venue": ":",
+      "winner": {
+        "school": "ADU",
+        "score": 70
+      },
+      "loser": {
+        "school": "FEU",
+        "score": 62
+      },
+      "halftime": {
+        "winner": 33,
+        "loser": 26
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "August 6, 1987",
+      "venue": ":",
+      "winner": {
+        "school": "UST",
+        "score": 64
+      },
+      "loser": {
+        "school": "UE",
+        "score": 54
+      },
+      "halftime": {
+        "winner": 43,
+        "loser": 25
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "August 6, 1987",
+      "venue": ":",
+      "winner": {
+        "school": "FEU",
+        "score": 65
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 41
+      },
+      "halftime": {
+        "winner": 37,
+        "loser": 17
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "August 6, 1987",
+      "venue": ":",
+      "winner": {
+        "school": "ADMU",
+        "score": 55
+      },
+      "loser": {
+        "school": "UP",
+        "score": 42
+      },
+      "halftime": {
+        "winner": 25,
+        "loser": 17
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "August 6, 1987",
+      "venue": ":",
+      "winner": {
+        "school": "UST",
+        "score": 83
+      },
+      "loser": {
+        "school": "UP",
+        "score": 34
+      },
+      "halftime": {
+        "winner": 36,
+        "loser": 12
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "August 6, 1987",
+      "venue": ":",
+      "winner": {
+        "school": "DLSU",
+        "score": 68
+      },
+      "loser": {
+        "school": "UE",
+        "score": 51
+      },
+      "halftime": {
+        "winner": 29,
+        "loser": 27
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "August 6, 1987",
+      "venue": ":",
+      "winner": {
+        "school": "ADU",
+        "score": 74
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 45
+      },
+      "halftime": {
+        "winner": 34,
+        "loser": 12
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "August 6, 1987",
+      "venue": ":",
+      "winner": {
+        "school": "ADU",
+        "score": 64
+      },
+      "loser": {
+        "school": "UE",
+        "score": 45
+      },
+      "halftime": {
+        "winner": 28,
+        "loser": 26
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "August 6, 1987",
+      "venue": ":",
+      "winner": {
+        "school": "UST",
+        "score": 96
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 75
+      },
+      "halftime": {
+        "winner": 48,
+        "loser": 26
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "August 6, 1987",
+      "venue": ":",
+      "winner": {
+        "school": "FEU",
+        "score": 73
+      },
+      "loser": {
+        "school": "UP",
+        "score": 53
+      },
+      "halftime": {
+        "winner": 29,
+        "loser": 26
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "August 6, 1987",
+      "venue": ":",
+      "winner": {
+        "school": "FEU",
+        "score": 64
+      },
+      "loser": {
+        "school": "UE",
+        "score": 55
+      },
+      "halftime": {
+        "winner": 29,
+        "loser": 28
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "August 6, 1987",
+      "venue": ":",
+      "winner": {
+        "school": "ADU",
+        "score": 88
+      },
+      "loser": {
+        "school": "UP",
+        "score": 43
+      },
+      "halftime": {
+        "winner": 46,
+        "loser": 26
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "August 6, 1987",
+      "venue": ":",
+      "winner": {
+        "school": "UST",
+        "score": 105
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 40
+      },
+      "halftime": {
+        "winner": 52,
+        "loser": 20
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "August 6, 1987",
+      "venue": ":",
+      "winner": {
+        "school": "ADU",
+        "score": 80
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 62
+      },
+      "halftime": {
+        "winner": 37,
+        "loser": 26
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "August 6, 1987",
+      "venue": ":",
+      "winner": {
+        "school": "ADMU",
+        "score": 66
+      },
+      "loser": {
+        "school": "UE",
+        "score": 60
+      },
+      "halftime": {
+        "winner": 34,
+        "loser": 22
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "August 6, 1987",
+      "venue": ":",
+      "winner": {
+        "school": "UST",
+        "score": 102
+      },
+      "loser": {
+        "school": "FEU",
+        "score": 65
+      },
+      "halftime": {
+        "winner": 42,
+        "loser": 34
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "August 6, 1987",
+      "venue": ":",
+      "winner": {
+        "school": "DLSU",
+        "score": 67
+      },
+      "loser": {
+        "school": "UP",
+        "score": 49
+      },
+      "halftime": {
+        "winner": 30,
+        "loser": 29
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "August 6, 1987",
+      "venue": ":",
+      "winner": {
+        "school": "ADMU",
+        "score": 62
+      },
+      "loser": {
+        "school": "FEU",
+        "score": 61
+      },
+      "halftime": {
+        "winner": 27,
+        "loser": 22
+      },
+      "is_championship": false
+    },
+    {
+      "season": "1987-1988",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "August 6, 1987",
+      "venue": ":",
+      "winner": {
+        "school": "ADU",
+        "score": 86
+      },
+      "loser": {
+        "school": "UST",
+        "score": 67
+      },
+      "halftime": {
+        "winner": 44,
+        "loser": 27
+      },
+      "is_championship": false
+    }
+  ]
+}

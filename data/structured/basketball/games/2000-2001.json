@@ -1,0 +1,993 @@
+{
+  "season": "2000-2001",
+  "sport": "basketball",
+  "total_games": 58,
+  "games": [
+    {
+      "season": "2000-2001",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "THURSDAY, SEPTEMBER 7, 2000",
+      "venue": null,
+      "winner": {
+        "school": "UST",
+        "score": 52
+      },
+      "loser": {
+        "school": "UE",
+        "score": 40
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "THURSDAY, SEPTEMBER 7, 2000",
+      "venue": null,
+      "winner": {
+        "school": "ADU",
+        "score": 67
+      },
+      "loser": {
+        "school": "UP",
+        "score": 51
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "THURSDAY, SEPTEMBER 7, 2000",
+      "venue": null,
+      "winner": {
+        "school": "FEU",
+        "score": 61
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 51
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "SUNDAY, SEPTEMBER 10, 2000",
+      "venue": null,
+      "winner": {
+        "school": "ADU",
+        "score": 60
+      },
+      "loser": {
+        "school": "UST",
+        "score": 49
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "SUNDAY, SEPTEMBER 10, 2000",
+      "venue": null,
+      "winner": {
+        "school": "DLSU",
+        "score": 72
+      },
+      "loser": {
+        "school": "UE",
+        "score": 53
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "WEDNESDAY, SEPTEMBER 13, 2000",
+      "venue": null,
+      "winner": {
+        "school": "UE",
+        "score": 66
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 60
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "WEDNESDAY, SEPTEMBER 13, 2000",
+      "venue": null,
+      "winner": {
+        "school": "UST",
+        "score": 55
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 52
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "WEDNESDAY, SEPTEMBER 13, 2000",
+      "venue": null,
+      "winner": {
+        "school": "ADU",
+        "score": 58
+      },
+      "loser": {
+        "school": "FEU",
+        "score": 52
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "SUNDAY, SEPTEMBER 17, 2000",
+      "venue": null,
+      "winner": {
+        "school": "UST",
+        "score": 54
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 52
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "SUNDAY, SEPTEMBER 17, 2000",
+      "venue": null,
+      "winner": {
+        "school": "UE",
+        "score": 61
+      },
+      "loser": {
+        "school": "UP",
+        "score": 55
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "basketball",
+      "division": "women",
+      "round": "final_four",
+      "date": "SATURDAY, SEPTEMBER 23, 2000",
+      "venue": null,
+      "winner": {
+        "school": "FEU",
+        "score": 50
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 41
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "basketball",
+      "division": "women",
+      "round": "final_four",
+      "date": "SATURDAY, SEPTEMBER 23, 2000",
+      "venue": null,
+      "winner": {
+        "school": "ADU",
+        "score": 49
+      },
+      "loser": {
+        "school": "UST",
+        "score": 42
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "basketball",
+      "division": "women",
+      "round": "final_four",
+      "date": "THURSDAY, SEPTEMBER 28, 2000",
+      "venue": null,
+      "winner": {
+        "school": "DLSU",
+        "score": 60
+      },
+      "loser": {
+        "school": "FEU",
+        "score": 40
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "basketball",
+      "division": "women",
+      "round": "championship",
+      "date": "SUNDAY, OCTOBER 1, 2000",
+      "venue": null,
+      "winner": {
+        "school": "DLSU",
+        "score": 74
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 61
+      },
+      "is_championship": true
+    },
+    {
+      "season": "2000-2001",
+      "sport": "basketball",
+      "division": "women",
+      "round": "championship",
+      "date": "THURSDAY, OCTOBER 5, 2000",
+      "venue": null,
+      "winner": {
+        "school": "ADU",
+        "score": 55
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 46
+      },
+      "is_championship": true
+    },
+    {
+      "season": "2000-2001",
+      "sport": "basketball",
+      "division": "women",
+      "round": "championship",
+      "date": "SATURDAY, OCTOBER 7, 2000",
+      "venue": null,
+      "winner": {
+        "school": "DLSU",
+        "score": 63
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 50
+      },
+      "is_championship": true
+    },
+    {
+      "season": "2000-2001",
+      "sport": "basketball",
+      "division": "women",
+      "round": "first_round",
+      "date": "THURSDAY, OCTOBER 5, 2000",
+      "venue": null,
+      "winner": {
+        "school": "ADU",
+        "score": 63
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 58
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "basketball",
+      "division": "women",
+      "round": "first_round",
+      "date": "THURSDAY, OCTOBER 5, 2000",
+      "venue": null,
+      "winner": {
+        "school": "FEU",
+        "score": 44
+      },
+      "loser": {
+        "school": "UP",
+        "score": 36
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "basketball",
+      "division": "women",
+      "round": "first_round",
+      "date": "THURSDAY, OCTOBER 5, 2000",
+      "venue": null,
+      "winner": {
+        "school": "UST",
+        "score": 55
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 31
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "basketball",
+      "division": "women",
+      "round": "first_round",
+      "date": "THURSDAY, OCTOBER 5, 2000",
+      "venue": null,
+      "winner": {
+        "school": "ADU",
+        "score": 68
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 33
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "basketball",
+      "division": "women",
+      "round": "first_round",
+      "date": "THURSDAY, OCTOBER 5, 2000",
+      "venue": null,
+      "winner": {
+        "school": "DLSU",
+        "score": 65
+      },
+      "loser": {
+        "school": "UST",
+        "score": 58
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "basketball",
+      "division": "women",
+      "round": "first_round",
+      "date": "THURSDAY, OCTOBER 5, 2000",
+      "venue": null,
+      "winner": {
+        "school": "UP",
+        "score": 58
+      },
+      "loser": {
+        "school": "UE",
+        "score": 45
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "basketball",
+      "division": "women",
+      "round": "first_round",
+      "date": "THURSDAY, OCTOBER 5, 2000",
+      "venue": null,
+      "winner": {
+        "school": "UST",
+        "score": 52
+      },
+      "loser": {
+        "school": "UP",
+        "score": 35
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "basketball",
+      "division": "women",
+      "round": "first_round",
+      "date": "THURSDAY, OCTOBER 5, 2000",
+      "venue": null,
+      "winner": {
+        "school": "ADU",
+        "score": 85
+      },
+      "loser": {
+        "school": "UE",
+        "score": 52
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "basketball",
+      "division": "women",
+      "round": "first_round",
+      "date": "THURSDAY, OCTOBER 5, 2000",
+      "venue": null,
+      "winner": {
+        "school": "FEU",
+        "score": 70
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 50
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "basketball",
+      "division": "women",
+      "round": "first_round",
+      "date": "THURSDAY, OCTOBER 5, 2000",
+      "venue": null,
+      "winner": {
+        "school": "FEU",
+        "score": 48
+      },
+      "loser": {
+        "school": "UST",
+        "score": 35
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "basketball",
+      "division": "women",
+      "round": "first_round",
+      "date": "THURSDAY, OCTOBER 5, 2000",
+      "venue": null,
+      "winner": {
+        "school": "UP",
+        "score": 64
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 53
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "basketball",
+      "division": "women",
+      "round": "first_round",
+      "date": "THURSDAY, OCTOBER 5, 2000",
+      "venue": null,
+      "winner": {
+        "school": "DLSU",
+        "score": 83
+      },
+      "loser": {
+        "school": "UE",
+        "score": 28
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "basketball",
+      "division": "women",
+      "round": "first_round",
+      "date": "THURSDAY, OCTOBER 5, 2000",
+      "venue": null,
+      "winner": {
+        "school": "DLSU",
+        "score": 76
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 47
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "basketball",
+      "division": "women",
+      "round": "first_round",
+      "date": "THURSDAY, OCTOBER 5, 2000",
+      "venue": null,
+      "winner": {
+        "school": "ADU",
+        "score": 50
+      },
+      "loser": {
+        "school": "UST",
+        "score": 48
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "basketball",
+      "division": "women",
+      "round": "first_round",
+      "date": "THURSDAY, OCTOBER 5, 2000",
+      "venue": null,
+      "winner": {
+        "school": "FEU",
+        "score": 59
+      },
+      "loser": {
+        "school": "UE",
+        "score": 36
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "basketball",
+      "division": "women",
+      "round": "first_round",
+      "date": "THURSDAY, OCTOBER 5, 2000",
+      "venue": null,
+      "winner": {
+        "school": "DLSU",
+        "score": 56
+      },
+      "loser": {
+        "school": "FEU",
+        "score": 55
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "basketball",
+      "division": "women",
+      "round": "first_round",
+      "date": "THURSDAY, OCTOBER 5, 2000",
+      "venue": null,
+      "winner": {
+        "school": "ADU",
+        "score": 60
+      },
+      "loser": {
+        "school": "UP",
+        "score": 55
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "basketball",
+      "division": "women",
+      "round": "first_round",
+      "date": "THURSDAY, OCTOBER 5, 2000",
+      "venue": null,
+      "winner": {
+        "school": "UE",
+        "score": 52
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 48
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "basketball",
+      "division": "women",
+      "round": "first_round",
+      "date": "THURSDAY, OCTOBER 5, 2000",
+      "venue": null,
+      "winner": {
+        "school": "DLSU",
+        "score": 79
+      },
+      "loser": {
+        "school": "UP",
+        "score": 62
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "basketball",
+      "division": "women",
+      "round": "first_round",
+      "date": "THURSDAY, OCTOBER 5, 2000",
+      "venue": null,
+      "winner": {
+        "school": "ADU",
+        "score": 68
+      },
+      "loser": {
+        "school": "FEU",
+        "score": 50
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "basketball",
+      "division": "women",
+      "round": "first_round",
+      "date": "THURSDAY, OCTOBER 5, 2000",
+      "venue": null,
+      "winner": {
+        "school": "UST",
+        "score": 55
+      },
+      "loser": {
+        "school": "UE",
+        "score": 34
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "THURSDAY, OCTOBER 5, 2000",
+      "venue": null,
+      "winner": {
+        "school": "UST",
+        "score": 44
+      },
+      "loser": {
+        "school": "UP",
+        "score": 39
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "THURSDAY, OCTOBER 5, 2000",
+      "venue": null,
+      "winner": {
+        "school": "FEU",
+        "score": 47
+      },
+      "loser": {
+        "school": "UE",
+        "score": 25
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "THURSDAY, OCTOBER 5, 2000",
+      "venue": null,
+      "winner": {
+        "school": "DLSU",
+        "score": 67
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 45
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "THURSDAY, OCTOBER 5, 2000",
+      "venue": null,
+      "winner": {
+        "school": "UP",
+        "score": 54
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 49
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "THURSDAY, OCTOBER 5, 2000",
+      "venue": null,
+      "winner": {
+        "school": "FEU",
+        "score": 41
+      },
+      "loser": {
+        "school": "UST",
+        "score": 40
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "THURSDAY, OCTOBER 5, 2000",
+      "venue": null,
+      "winner": {
+        "school": "ADU",
+        "score": 47
+      },
+      "loser": {
+        "school": "UE",
+        "score": 38
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "THURSDAY, OCTOBER 5, 2000",
+      "venue": null,
+      "winner": {
+        "school": "ADU",
+        "score": 67
+      },
+      "loser": {
+        "school": "UE",
+        "score": 49
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "THURSDAY, OCTOBER 5, 2000",
+      "venue": null,
+      "winner": {
+        "school": "UP",
+        "score": 52
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 30
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "THURSDAY, OCTOBER 5, 2000",
+      "venue": null,
+      "winner": {
+        "school": "FEU",
+        "score": 54
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 54
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "THURSDAY, OCTOBER 5, 2000",
+      "venue": null,
+      "winner": {
+        "school": "UST",
+        "score": 52
+      },
+      "loser": {
+        "school": "UE",
+        "score": 40
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "THURSDAY, OCTOBER 5, 2000",
+      "venue": null,
+      "winner": {
+        "school": "ADU",
+        "score": 67
+      },
+      "loser": {
+        "school": "UP",
+        "score": 51
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "THURSDAY, OCTOBER 5, 2000",
+      "venue": null,
+      "winner": {
+        "school": "FEU",
+        "score": 61
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 51
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "THURSDAY, OCTOBER 5, 2000",
+      "venue": null,
+      "winner": {
+        "school": "FEU",
+        "score": 67
+      },
+      "loser": {
+        "school": "UP",
+        "score": 62
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "THURSDAY, OCTOBER 5, 2000",
+      "venue": null,
+      "winner": {
+        "school": "ADU",
+        "score": 60
+      },
+      "loser": {
+        "school": "UST",
+        "score": 49
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "THURSDAY, OCTOBER 5, 2000",
+      "venue": null,
+      "winner": {
+        "school": "DLSU",
+        "score": 72
+      },
+      "loser": {
+        "school": "UE",
+        "score": 53
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "THURSDAY, OCTOBER 5, 2000",
+      "venue": null,
+      "winner": {
+        "school": "UE",
+        "score": 66
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 60
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "THURSDAY, OCTOBER 5, 2000",
+      "venue": null,
+      "winner": {
+        "school": "UST",
+        "score": 55
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 52
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "THURSDAY, OCTOBER 5, 2000",
+      "venue": null,
+      "winner": {
+        "school": "ADU",
+        "score": 58
+      },
+      "loser": {
+        "school": "FEU",
+        "score": 52
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "THURSDAY, OCTOBER 5, 2000",
+      "venue": null,
+      "winner": {
+        "school": "UST",
+        "score": 54
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 52
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "THURSDAY, OCTOBER 5, 2000",
+      "venue": null,
+      "winner": {
+        "school": "UE",
+        "score": 61
+      },
+      "loser": {
+        "school": "UP",
+        "score": 55
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2000-2001",
+      "sport": "basketball",
+      "division": "women",
+      "round": "second_round",
+      "date": "THURSDAY, OCTOBER 5, 2000",
+      "venue": null,
+      "winner": {
+        "school": "DLSU",
+        "score": 71
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 63
+      },
+      "is_championship": false
+    }
+  ]
+}

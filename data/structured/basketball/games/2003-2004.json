@@ -1,0 +1,1962 @@
+{
+  "season": "2003-2004",
+  "sport": "basketball",
+  "total_games": 115,
+  "games": [
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": null,
+      "venue": "| Time | Score | Team | vs. | Team | Score | Division |",
+      "winner": {
+        "school": "NU",
+        "score": 74
+      },
+      "loser": {
+        "school": "UP",
+        "score": 70
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": null,
+      "venue": "| Time | Score | Team | vs. | Team | Score | Division |",
+      "winner": {
+        "school": "DLSU",
+        "score": 88
+      },
+      "loser": {
+        "school": "UST",
+        "score": 75
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": null,
+      "venue": "| Time | Score | Team | vs. | Team | Score | Division |",
+      "winner": {
+        "school": "DLSU",
+        "score": 72
+      },
+      "loser": {
+        "school": "UST",
+        "score": 59
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": null,
+      "venue": "| Time | Score | Team | vs. | Team | Score | Division |",
+      "winner": {
+        "school": "UP",
+        "score": 91
+      },
+      "loser": {
+        "school": "NU",
+        "score": 41
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": null,
+      "venue": "| Time | Score | Team | vs. | Team | Score | Division |",
+      "winner": {
+        "school": "FEU",
+        "score": 57
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 53
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": null,
+      "venue": "| Time | Score | Team | vs. | Team | Score | Division |",
+      "winner": {
+        "school": "UE",
+        "score": 69
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 68
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": null,
+      "venue": "| Time | Score | Team | vs. | Team | Score | Division |",
+      "winner": {
+        "school": "ADMU",
+        "score": 107
+      },
+      "loser": {
+        "school": "UE",
+        "score": 84
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": null,
+      "venue": "| Time | Score | Team | vs. | Team | Score | Division |",
+      "winner": {
+        "school": "UST",
+        "score": 124
+      },
+      "loser": {
+        "school": "NU",
+        "score": 35
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": null,
+      "venue": "| Time | Score | Team | vs. | Team | Score | Division |",
+      "winner": {
+        "school": "UST",
+        "score": 84
+      },
+      "loser": {
+        "school": "NU",
+        "score": 77
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": null,
+      "venue": "| Time | Score | Team | vs. | Team | Score | Division |",
+      "winner": {
+        "school": "FEU",
+        "score": 73
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 62
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": null,
+      "venue": "| Time | Score | Team | vs. | Team | Score | Division |",
+      "winner": {
+        "school": "ADU",
+        "score": 95
+      },
+      "loser": {
+        "school": "UE",
+        "score": 51
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": null,
+      "venue": "| Time | Score | Team | vs. | Team | Score | Division |",
+      "winner": {
+        "school": "UE",
+        "score": 74
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 61
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": null,
+      "venue": "| Time | Score | Team | vs. | Team | Score | Division |",
+      "winner": {
+        "school": "DLSU",
+        "score": 67
+      },
+      "loser": {
+        "school": "UP",
+        "score": 58
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": null,
+      "venue": "| Time | Score | Team | vs. | Team | Score | Division |",
+      "winner": {
+        "school": "DLSU",
+        "score": 49
+      },
+      "loser": {
+        "school": "UP",
+        "score": 47
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": null,
+      "venue": "| Time | Score | Team | vs. | Team | Score | Division |",
+      "winner": {
+        "school": "FEU",
+        "score": 71
+      },
+      "loser": {
+        "school": "NU",
+        "score": 49
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": null,
+      "venue": "| Time | Score | Team | vs. | Team | Score | Division |",
+      "winner": {
+        "school": "ADMU",
+        "score": 69
+      },
+      "loser": {
+        "school": "UST",
+        "score": 65
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": null,
+      "venue": "| Time | Score | Team | vs. | Team | Score | Division |",
+      "winner": {
+        "school": "UST",
+        "score": 75
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 70
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": null,
+      "venue": "| Time | Score | Team | vs. | Team | Score | Division |",
+      "winner": {
+        "school": "ADU",
+        "score": 78
+      },
+      "loser": {
+        "school": "UP",
+        "score": 68
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": null,
+      "venue": "| Time | Score | Team | vs. | Team | Score | Division |",
+      "winner": {
+        "school": "ADU",
+        "score": 83
+      },
+      "loser": {
+        "school": "UP",
+        "score": 80
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": null,
+      "venue": "| Time | Score | Team | vs. | Team | Score | Division |",
+      "winner": {
+        "school": "DLSU",
+        "score": 84
+      },
+      "loser": {
+        "school": "UE",
+        "score": 65
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": null,
+      "venue": "| Time | Score | Team | vs. | Team | Score | Division |",
+      "winner": {
+        "school": "UE",
+        "score": 75
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 67
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": null,
+      "venue": "| Time | Score | Team | vs. | Team | Score | Division |",
+      "winner": {
+        "school": "ADMU",
+        "score": 108
+      },
+      "loser": {
+        "school": "NU",
+        "score": 25
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": null,
+      "venue": "| Time | Score | Team | vs. | Team | Score | Division |",
+      "winner": {
+        "school": "ADMU",
+        "score": 63
+      },
+      "loser": {
+        "school": "NU",
+        "score": 57
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": null,
+      "venue": "| Time | Score | Team | vs. | Team | Score | Division |",
+      "winner": {
+        "school": "UST",
+        "score": 51
+      },
+      "loser": {
+        "school": "FEU",
+        "score": 45
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": null,
+      "venue": "| Time | Score | Team | vs. | Team | Score | Division |",
+      "winner": {
+        "school": "ADMU",
+        "score": 80
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 74
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": null,
+      "venue": "| Time | Score | Team | vs. | Team | Score | Division |",
+      "winner": {
+        "school": "ADMU",
+        "score": 70
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 62
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": null,
+      "venue": "| Time | Score | Team | vs. | Team | Score | Division |",
+      "winner": {
+        "school": "FEU",
+        "score": 74
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 72
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": null,
+      "venue": "| Time | Score | Team | vs. | Team | Score | Division |",
+      "winner": {
+        "school": "DLSU",
+        "score": 81
+      },
+      "loser": {
+        "school": "NU",
+        "score": 38
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": null,
+      "venue": "| Time | Score | Team | vs. | Team | Score | Division |",
+      "winner": {
+        "school": "UE",
+        "score": 71
+      },
+      "loser": {
+        "school": "UP",
+        "score": 66
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": null,
+      "venue": "| Time | Score | Team | vs. | Team | Score | Division |",
+      "winner": {
+        "school": "DLSU",
+        "score": 92
+      },
+      "loser": {
+        "school": "NU",
+        "score": 85
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": null,
+      "venue": "| Time | Score | Team | vs. | Team | Score | Division |",
+      "winner": {
+        "school": "ADMU",
+        "score": 70
+      },
+      "loser": {
+        "school": "UP",
+        "score": 68
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": null,
+      "venue": "| Time | Score | Team | vs. | Team | Score | Division |",
+      "winner": {
+        "school": "ADU",
+        "score": 77
+      },
+      "loser": {
+        "school": "UST",
+        "score": 58
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": null,
+      "venue": "| Time | Score | Team | vs. | Team | Score | Division |",
+      "winner": {
+        "school": "ADU",
+        "score": 60
+      },
+      "loser": {
+        "school": "UST",
+        "score": 57
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": null,
+      "venue": "| Time | Score | Team | vs. | Team | Score | Division |",
+      "winner": {
+        "school": "FEU",
+        "score": 64
+      },
+      "loser": {
+        "school": "UE",
+        "score": 62
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": null,
+      "venue": "| Time | Score | Team | vs. | Team | Score | Division |",
+      "winner": {
+        "school": "UE",
+        "score": 98
+      },
+      "loser": {
+        "school": "NU",
+        "score": 47
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": null,
+      "venue": "| Time | Score | Team | vs. | Team | Score | Division |",
+      "winner": {
+        "school": "UE",
+        "score": 76
+      },
+      "loser": {
+        "school": "NU",
+        "score": 69
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": null,
+      "venue": "| Time | Score | Team | vs. | Team | Score | Division |",
+      "winner": {
+        "school": "UP",
+        "score": 73
+      },
+      "loser": {
+        "school": "UST",
+        "score": 55
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": null,
+      "venue": "| Time | Score | Team | vs. | Team | Score | Division |",
+      "winner": {
+        "school": "UST",
+        "score": 68
+      },
+      "loser": {
+        "school": "UP",
+        "score": 46
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": null,
+      "venue": "| Time | Score | Team | vs. | Team | Score | Division |",
+      "winner": {
+        "school": "FEU",
+        "score": 65
+      },
+      "loser": {
+        "school": "UP",
+        "score": 60
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": null,
+      "venue": "| Time | Score | Team | vs. | Team | Score | Division |",
+      "winner": {
+        "school": "ADMU",
+        "score": 82
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 68
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": null,
+      "venue": "| Time | Score | Team | vs. | Team | Score | Division |",
+      "winner": {
+        "school": "ADMU",
+        "score": 79
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 74
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": null,
+      "venue": "| Time | Score | Team | vs. | Team | Score | Division |",
+      "winner": {
+        "school": "ADU",
+        "score": 111
+      },
+      "loser": {
+        "school": "NU",
+        "score": 30
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": null,
+      "venue": "| Time | Score | Team | vs. | Team | Score | Division |",
+      "winner": {
+        "school": "ADU",
+        "score": 74
+      },
+      "loser": {
+        "school": "NU",
+        "score": 70
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": null,
+      "venue": "| Time | Score | Team | vs. | Team | Score | Division |",
+      "winner": {
+        "school": "UE",
+        "score": 73
+      },
+      "loser": {
+        "school": "UST",
+        "score": 69
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": null,
+      "venue": "| Time | Score | Team | vs. | Team | Score | Division |",
+      "winner": {
+        "school": "UST",
+        "score": 50
+      },
+      "loser": {
+        "school": "UE",
+        "score": 47
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": null,
+      "venue": "| Time | Score | Team | vs. | Team | Score | Division |",
+      "winner": {
+        "school": "ADU",
+        "score": 78
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 68
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": null,
+      "venue": "| Time | Score | Team | vs. | Team | Score | Division |",
+      "winner": {
+        "school": "DLSU",
+        "score": 81
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 61
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "men",
+      "round": "first_round",
+      "date": null,
+      "venue": "| Time | Score | Team | vs. | Team | Score | Division |",
+      "winner": {
+        "school": "UE",
+        "score": 75
+      },
+      "loser": {
+        "school": "UP",
+        "score": 65
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "first_round",
+      "date": null,
+      "venue": "| Time | Score | Team | vs. | Team | Score | Division |",
+      "winner": {
+        "school": "ADMU",
+        "score": 71
+      },
+      "loser": {
+        "school": "UP",
+        "score": 60
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division |",
+      "winner": {
+        "school": "ADU",
+        "score": 68
+      },
+      "loser": {
+        "school": "UP",
+        "score": 64
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division |",
+      "winner": {
+        "school": "ADU",
+        "score": 68
+      },
+      "loser": {
+        "school": "UP",
+        "score": 66
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division |",
+      "winner": {
+        "school": "FEU",
+        "score": 76
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 74
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division |",
+      "winner": {
+        "school": "UST",
+        "score": 79
+      },
+      "loser": {
+        "school": "NU",
+        "score": 37
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division |",
+      "winner": {
+        "school": "UST",
+        "score": 83
+      },
+      "loser": {
+        "school": "NU",
+        "score": 78
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division |",
+      "winner": {
+        "school": "ADMU",
+        "score": 76
+      },
+      "loser": {
+        "school": "UE",
+        "score": 67
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division |",
+      "winner": {
+        "school": "ADMU",
+        "score": 85
+      },
+      "loser": {
+        "school": "UE",
+        "score": 75
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division |",
+      "winner": {
+        "school": "FEU",
+        "score": 69
+      },
+      "loser": {
+        "school": "NU",
+        "score": 56
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division |",
+      "winner": {
+        "school": "ADMU",
+        "score": 69
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 55
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division |",
+      "winner": {
+        "school": "ADMU",
+        "score": 88
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 71
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division |",
+      "winner": {
+        "school": "UE",
+        "score": 73
+      },
+      "loser": {
+        "school": "UP",
+        "score": 70
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division |",
+      "winner": {
+        "school": "UE",
+        "score": 68
+      },
+      "loser": {
+        "school": "UP",
+        "score": 61
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division |",
+      "winner": {
+        "school": "DLSU",
+        "score": 71
+      },
+      "loser": {
+        "school": "UST",
+        "score": 66
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division |",
+      "winner": {
+        "school": "DLSU",
+        "score": 63
+      },
+      "loser": {
+        "school": "UST",
+        "score": 62
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division |",
+      "winner": {
+        "school": "ADU",
+        "score": 83
+      },
+      "loser": {
+        "school": "NU",
+        "score": 56
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division |",
+      "winner": {
+        "school": "ADU",
+        "score": 85
+      },
+      "loser": {
+        "school": "NU",
+        "score": 67
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division |",
+      "winner": {
+        "school": "ADMU",
+        "score": 87
+      },
+      "loser": {
+        "school": "FEU",
+        "score": 63
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division |",
+      "winner": {
+        "school": "ADMU",
+        "score": 118
+      },
+      "loser": {
+        "school": "NU",
+        "score": 34
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division |",
+      "winner": {
+        "school": "NU",
+        "score": 76
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 62
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division |",
+      "winner": {
+        "school": "UP",
+        "score": 80
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 70
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division |",
+      "winner": {
+        "school": "DLSU",
+        "score": 49
+      },
+      "loser": {
+        "school": "UP",
+        "score": 45
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division |",
+      "winner": {
+        "school": "ADU",
+        "score": 82
+      },
+      "loser": {
+        "school": "UST",
+        "score": 69
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division |",
+      "winner": {
+        "school": "UST",
+        "score": 64
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 61
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division |",
+      "winner": {
+        "school": "UE",
+        "score": 77
+      },
+      "loser": {
+        "school": "FEU",
+        "score": 72
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division |",
+      "winner": {
+        "school": "ADMU",
+        "score": 106
+      },
+      "loser": {
+        "school": "UP",
+        "score": 60
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division |",
+      "winner": {
+        "school": "ADMU",
+        "score": 56
+      },
+      "loser": {
+        "school": "UP",
+        "score": 53
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division |",
+      "winner": {
+        "school": "NU",
+        "score": 80
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 59
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division |",
+      "winner": {
+        "school": "DLSU",
+        "score": 87
+      },
+      "loser": {
+        "school": "NU",
+        "score": 36
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division |",
+      "winner": {
+        "school": "UE",
+        "score": 80
+      },
+      "loser": {
+        "school": "NU",
+        "score": 69
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division |",
+      "winner": {
+        "school": "ADMU",
+        "score": 63
+      },
+      "loser": {
+        "school": "UST",
+        "score": 56
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division |",
+      "winner": {
+        "school": "ADU",
+        "score": 64
+      },
+      "loser": {
+        "school": "UP",
+        "score": 56
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division |",
+      "winner": {
+        "school": "ADMU",
+        "score": 79
+      },
+      "loser": {
+        "school": "UST",
+        "score": 77
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division |",
+      "winner": {
+        "school": "UP",
+        "score": 98
+      },
+      "loser": {
+        "school": "NU",
+        "score": 43
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division |",
+      "winner": {
+        "school": "FEU",
+        "score": 67
+      },
+      "loser": {
+        "school": "UP",
+        "score": 61
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division |",
+      "winner": {
+        "school": "DLSU",
+        "score": 82
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 74
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division |",
+      "winner": {
+        "school": "ADU",
+        "score": 62
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 52
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division |",
+      "winner": {
+        "school": "FEU",
+        "score": 66
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 53
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division |",
+      "winner": {
+        "school": "UE",
+        "score": 78
+      },
+      "loser": {
+        "school": "UST",
+        "score": 59
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division |",
+      "winner": {
+        "school": "UE",
+        "score": 81
+      },
+      "loser": {
+        "school": "UST",
+        "score": 78
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division |",
+      "winner": {
+        "school": "UP",
+        "score": 75
+      },
+      "loser": {
+        "school": "NU",
+        "score": 67
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division |",
+      "winner": {
+        "school": "ADMU",
+        "score": 98
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 89
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division |",
+      "winner": {
+        "school": "DLSU",
+        "score": 66
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 58
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division |",
+      "winner": {
+        "school": "ADU",
+        "score": 72
+      },
+      "loser": {
+        "school": "UE",
+        "score": 70
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division |",
+      "winner": {
+        "school": "UE",
+        "score": 82
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 76
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division |",
+      "winner": {
+        "school": "FEU",
+        "score": 71
+      },
+      "loser": {
+        "school": "UST",
+        "score": 58
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division |",
+      "winner": {
+        "school": "UST",
+        "score": 74
+      },
+      "loser": {
+        "school": "UP",
+        "score": 68
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division |",
+      "winner": {
+        "school": "UST",
+        "score": 92
+      },
+      "loser": {
+        "school": "UP",
+        "score": 89
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "men",
+      "round": "second_round",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division |",
+      "winner": {
+        "school": "DLSU",
+        "score": 65
+      },
+      "loser": {
+        "school": "UE",
+        "score": 64
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "second_round",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division |",
+      "winner": {
+        "school": "DLSU",
+        "score": 60
+      },
+      "loser": {
+        "school": "UE",
+        "score": 55
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "playoff",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division / Event |",
+      "winner": {
+        "school": "ADU",
+        "score": 71
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 58
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "women",
+      "round": "playoff",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division / Event |",
+      "winner": {
+        "school": "DLSU",
+        "score": 56
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 49
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "men",
+      "round": "playoff",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division / Event |",
+      "winner": {
+        "school": "FEU",
+        "score": 80
+      },
+      "loser": {
+        "school": "UE",
+        "score": 75
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "playoff",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division / Event |",
+      "winner": {
+        "school": "UST",
+        "score": 87
+      },
+      "loser": {
+        "school": "UE",
+        "score": 64
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "final_four",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division / Event |",
+      "winner": {
+        "school": "ADMU",
+        "score": 73
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 67
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "women",
+      "round": "final_four",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division / Event |",
+      "winner": {
+        "school": "ADU",
+        "score": 74
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 54
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "women",
+      "round": "final_four",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division / Event |",
+      "winner": {
+        "school": "UP",
+        "score": 49
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 42
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "final_four",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division / Event |",
+      "winner": {
+        "school": "ADU",
+        "score": 65
+      },
+      "loser": {
+        "school": "UST",
+        "score": 59
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "men",
+      "round": "final_four",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division / Event |",
+      "winner": {
+        "school": "FEU",
+        "score": 67
+      },
+      "loser": {
+        "school": "UE",
+        "score": 63
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "men",
+      "round": "final_four",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division / Event |",
+      "winner": {
+        "school": "DLSU",
+        "score": 76
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 72
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "men",
+      "round": "final_four",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division / Event |",
+      "winner": {
+        "school": "ADMU",
+        "score": 74
+      },
+      "loser": {
+        "school": "DLSU",
+        "score": 68
+      },
+      "is_championship": false
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "women",
+      "round": "championship",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division / Event |",
+      "winner": {
+        "school": "ADU",
+        "score": 61
+      },
+      "loser": {
+        "school": "UP",
+        "score": 39
+      },
+      "is_championship": true
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "championship",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division / Event |",
+      "winner": {
+        "school": "ADMU",
+        "score": 80
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 78
+      },
+      "is_championship": true
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "men",
+      "round": "championship",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division / Event |",
+      "winner": {
+        "school": "FEU",
+        "score": 83
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 65
+      },
+      "is_championship": true
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "women",
+      "round": "championship",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division / Event |",
+      "winner": {
+        "school": "ADU",
+        "score": 46
+      },
+      "loser": {
+        "school": "UP",
+        "score": 44
+      },
+      "is_championship": true
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "juniors",
+      "round": "championship",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division / Event |",
+      "winner": {
+        "school": "ADMU",
+        "score": 84
+      },
+      "loser": {
+        "school": "ADU",
+        "score": 82
+      },
+      "is_championship": true
+    },
+    {
+      "season": "2003-2004",
+      "sport": "basketball",
+      "division": "men",
+      "round": "championship",
+      "date": null,
+      "venue": "| Time | Score | Light Uniform | vs. | Dark Uniform | Score | Division / Event |",
+      "winner": {
+        "school": "FEU",
+        "score": 69
+      },
+      "loser": {
+        "school": "ADMU",
+        "score": 56
+      },
+      "is_championship": true
+    }
+  ]
+}

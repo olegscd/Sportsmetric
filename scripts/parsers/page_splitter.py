@@ -32,13 +32,27 @@ SPORT_PATTERNS: list[tuple[str, list[str]]] = [
 
 # Data type detection patterns
 DATA_TYPE_PATTERNS: list[tuple[str, list[str]]] = [
-    ("overall_standings", ["OVER-ALL TEAM STANDING", "OVERALL TEAM STANDING", "OVER-ALL STANDING OF TEAMS", "TEAM STANDING\nSY"]),
+    ("overall_standings", [
+        "OVER-ALL TEAM STANDING",
+        "OVERALL TEAM STANDING",
+        "OVER-ALL STANDING OF TEAMS",
+        "TEAM STANDING\nSY",
+        "UAAP SCOREBOARD",
+    ]),
     ("sport_champions",   ["TEAM STANDING\n", "CHAMPION"]),
     ("game_results",      ["RESULT", "DEFEATED", "GAME NO", "MATCH NO"]),
     ("player_stats",      ["PLAYER", "STATISTIC", "FIELD GOAL", "REBOUND"]),
     ("awards",            ["MVP", "MOST VALUABLE", "ROOKIE OF THE YEAR", "MYTHICAL"]),
     ("standings",         ["STANDING", "WIN", "LOSS", "W-L", "W |"]),
     ("schedule",          ["SCHEDULE"]),
+]
+
+OVERALL_PATTERNS = [
+    "OVER-ALL TEAM STANDING",
+    "OVERALL TEAM STANDING",
+    "OVER-ALL STANDING OF TEAMS",
+    "TEAM STANDING\nSY",
+    "UAAP SCOREBOARD",
 ]
 
 
@@ -89,23 +103,43 @@ def split_pages(compiled_book_path: Path) -> list[PageSegment]:
     return pages
 
 
-def classify_page(page: PageSegment) -> PageSegment:
-    """
-    Classify a page by sport and data type based on its content.
-    Modifies the page in-place and returns it.
-    """
-    upper_content = page.content.upper()
+def detect_sport_heading(page_content: str) -> str | None:
+    """Detect if the page top lines / headings initiate a sport section."""
+    lines = [l.strip() for l in page_content.splitlines() if l.strip() and not l.strip().startswith("*(")]
+    if not lines:
+        return None
 
-    # Detect sport
+    top_block = "\n".join(lines[:12]).upper()
+
+    # If it is overall standings, it is not a specific sport
+    if any(p in top_block for p in OVERALL_PATTERNS):
+        return None
+
     for sport_name, keywords in SPORT_PATTERNS:
         for kw in keywords:
-            if kw in upper_content:
-                page.sport = sport_name
-                break
-        if page.sport:
-            break
+            for line in lines[:8]:
+                lu = line.upper()
+                if kw in lu:
+                    is_heading = (
+                        line.startswith("#") or
+                        any(term in lu for term in [
+                            "TOURNAMENT", "CHAMPIONSHIP", "RESULTS", "DIVISION",
+                            "SCHEDULE", "SCOREBOARD", "UAAP"
+                        ]) or
+                        len(line) < 35
+                    )
+                    # Don't trigger on venue mentions like "Venue: UST Basketball Gymnasium"
+                    if ("GYMNASIUM" in lu or "GYM" in lu) and not any(t in lu for t in ["TOURNAMENT", "CHAMPIONSHIP"]):
+                        continue
+                    if is_heading:
+                        return sport_name
+    return None
 
-    # Detect data types (a page can have multiple)
+
+def classify_page(page: PageSegment) -> PageSegment:
+    """Classify data types present on a page."""
+    upper_content = page.content.upper()
+
     for dtype, patterns in DATA_TYPE_PATTERNS:
         for pat in patterns:
             if pat in upper_content:
@@ -117,10 +151,25 @@ def classify_page(page: PageSegment) -> PageSegment:
 
 
 def split_and_classify(compiled_book_path: Path) -> list[PageSegment]:
-    """Split a book into pages and classify each one."""
+    """Split a book into pages, carry forward active sport sections, and classify data types."""
     pages = split_pages(compiled_book_path)
+    current_sport: str | None = None
+
     for page in pages:
+        detected = detect_sport_heading(page.content)
+        upper = page.content.upper()
+
+        if any(pat in upper for pat in OVERALL_PATTERNS):
+            page.sport = "overall"
+            current_sport = None
+        elif detected:
+            current_sport = detected
+            page.sport = current_sport
+        else:
+            page.sport = current_sport
+
         classify_page(page)
+
     return pages
 
 

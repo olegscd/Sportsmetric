@@ -1,0 +1,115 @@
+{
+  "season": "2000-2001",
+  "sport": "basketball",
+  "divisions": {
+    "juniors": [
+      {
+        "school": "ADU",
+        "wins": 14,
+        "losses": 0,
+        "pct": 1.0,
+        "rank": 1
+      },
+      {
+        "school": "NU",
+        "wins": 14,
+        "losses": 4,
+        "pct": 0.778,
+        "rank": 2
+      },
+      {
+        "school": "UP",
+        "wins": 14,
+        "losses": 4,
+        "pct": 0.778,
+        "rank": 3
+      },
+      {
+        "school": "UE",
+        "wins": 14,
+        "losses": 8,
+        "pct": 0.636,
+        "rank": 4
+      },
+      {
+        "school": "UST",
+        "wins": 14,
+        "losses": 8,
+        "pct": 0.636,
+        "rank": 5
+      },
+      {
+        "school": "FEU",
+        "wins": 14,
+        "losses": 9,
+        "pct": 0.609,
+        "rank": 6
+      },
+      {
+        "school": "ADMU",
+        "wins": 14,
+        "losses": 11,
+        "pct": 0.56,
+        "rank": 7
+      },
+      {
+        "school": "DLSU",
+        "wins": 14,
+        "losses": 12,
+        "pct": 0.538,
+        "rank": 8
+      }
+    ],
+    "men": [
+      {
+        "school": "ADMU",
+        "wins": 12,
+        "losses": 0,
+        "pct": 1.0,
+        "rank": 1
+      },
+      {
+        "school": "UE",
+        "wins": 12,
+        "losses": 3,
+        "pct": 0.8,
+        "rank": 2
+      },
+      {
+        "school": "UP",
+        "wins": 12,
+        "losses": 4,
+        "pct": 0.75,
+        "rank": 3
+      },
+      {
+        "school": "UST",
+        "wins": 12,
+        "losses": 7,
+        "pct": 0.632,
+        "rank": 4
+      },
+      {
+        "school": "DLSU",
+        "wins": 12,
+        "losses": 8,
+        "pct": 0.6,
+        "rank": 5
+      },
+      {
+        "school": "FEU",
+        "wins": 12,
+        "losses": 9,
+        "pct": 0.571,
+        "rank": 6
+      },
+      {
+        "school": "ADU",
+        "wins": 12,
+        "losses": 11,
+        "pct": 0.522,
+        "rank": 7
+      }
+    ]
+  }
+}

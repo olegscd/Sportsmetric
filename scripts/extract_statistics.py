@@ -28,6 +28,7 @@ sys.path.insert(0, str(PROJECT_ROOT))
 
 from scripts.parsers.page_splitter import split_and_classify, print_classification_summary
 from scripts.parsers.overall_standings_parser import parse_overall_standings, save_overall_standings
+from scripts.parsers.basketball_parser import extract_basketball
 
 
 SEASONS_DIR = PROJECT_ROOT / "data" / "seasons"
@@ -84,9 +85,28 @@ def extract_season(season: str, sports: list[str] | None = None):
 
     # Step 3: Sport-specific extraction
     print(f"\n[3/3] Sport-specific extraction...")
-    # Basketball parser will be added in Phase 2
-    # Other sport parsers will be added in Phases 3-4
-    print("  (Sport parsers will be added incrementally)")
+    if not sports or "basketball" in sports:
+        print("  Extracting basketball data...")
+        bb_data = extract_basketball(pages, season, STRUCTURED_DIR)
+        
+        st_divs = bb_data["standings"].get("divisions", {})
+        if st_divs:
+            print(f"    Standings: {', '.join(f'{k} ({len(v)} teams)' for k, v in st_divs.items())}")
+        else:
+            print("    Standings: none found")
+
+        total_games = bb_data["games"].get("total_games", 0)
+        print(f"    Games: {total_games} games parsed")
+
+        aw_divs = bb_data["awards"].get("divisions", {})
+        if aw_divs:
+            aw_parts = []
+            for div, awards in aw_divs.items():
+                keys = list(awards.keys())
+                aw_parts.append(f"{div} ({', '.join(keys)})")
+            print(f"    Awards: {'; '.join(aw_parts)}")
+        else:
+            print("    Awards: none found")
 
     print(f"\n{'=' * 60}")
     print(f" DONE: Season {season}")
@@ -154,6 +174,24 @@ def main():
                 f"{k}: {len(v)} schools" for k, v in divs.items()
             )
             print(f"    {jf.stem}: {div_summary}")
+
+    bb_dir = STRUCTURED_DIR / "basketball"
+    if bb_dir.exists():
+        print(f"\n  Basketball Extraction:")
+        for dtype in ["standings", "games", "awards"]:
+            dpath = bb_dir / dtype
+            if dpath.exists():
+                files = sorted(dpath.glob("*.json"))
+                total_items = 0
+                for f in files:
+                    content = json.loads(f.read_text(encoding="utf-8"))
+                    if dtype == "games":
+                        total_items += content.get("total_games", 0)
+                    elif dtype == "standings":
+                        total_items += sum(len(v) for v in content.get("divisions", {}).values())
+                    elif dtype == "awards":
+                        total_items += len(content.get("divisions", {}))
+                print(f"    {dtype.title()}: {len(files)} seasons ({total_items} total records)")
 
     print(f"\n  Output directory: {STRUCTURED_DIR.resolve()}")
     print()

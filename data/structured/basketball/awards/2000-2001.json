@@ -1,0 +1,93 @@
+{
+  "season": "2000-2001",
+  "sport": "basketball",
+  "divisions": {
+    "men": {
+      "mvp": {
+        "player": "RICHARD ALVAREZ",
+        "school": "ADMU"
+      },
+      "rookie_of_the_year": {
+        "player": "MIKE CORTEZ",
+        "school": "DLSU"
+      },
+      "mythical_five": [
+        {
+          "player": "152 )",
+          "school": "ADU",
+          "position": "NARCIZA"
+        },
+        {
+          "player": "TORRES",
+          "school": "ADU",
+          "position": null
+        },
+        {
+          "player": "USON",
+          "school": "UST",
+          "position": null
+        },
+        {
+          "player": "ORTIZ",
+          "school": "UE",
+          "position": null
+        },
+        {
+          "player": "SANTOS",
+          "school": "DLSU",
+          "position": null
+        }
+      ]
+    },
+    "women": {
+      "mvp": {
+        "player": "NARCIZA",
+        "school": "ADU"
+      },
+      "rookie_of_the_year": {
+        "player": "ERICA DY",
+        "school": "ADMU"
+      },
+      "mythical_five": [
+        {
+          "player": "USON",
+          "school": "UST",
+          "position": "CENTER"
+        },
+        {
+          "player": "SANTOS",
+          "school": "DLSU",
+          "position": "FORWARD"
+        },
+        {
+          "player": "TORRES",
+          "school": "ADU",
+          "position": "GUARD"
+        },
+        {
+          "player": "ORTIZ",
+          "school": "UE",
+          "position": "GUARD"
+        }
+      ]
+    },
+    "juniors": {
+      "rookie_of_the_year": {
+        "player": "ALDOVER",
+        "school": "ADMU"
+      },
+      "mythical_five": [
+        {
+          "player": "ALDOVER",
+          "school": "ADMU",
+          "position": "CENTER"
+        },
+        {
+          "player": "URRA",
+          "school": "DLSU",
+          "position": "FORWARD"
+        }
+      ]
+    }
+  }
+}

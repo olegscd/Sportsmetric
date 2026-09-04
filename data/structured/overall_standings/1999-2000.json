@@ -1,0 +1,108 @@
+{
+  "season": "1999-2000",
+  "divisions": {
+    "junior": [
+      {
+        "school": "UST",
+        "total_points": 84.0,
+        "division": "junior",
+        "sport_points": {
+          "ATHLETICS": 6.0,
+          "BASKETBALL": 10.0,
+          "CHESS": 6.0,
+          "SWIMMING": 15.0,
+          "TABLE TENNIS": 8.0,
+          "VOLLEYBALL": 12.0
+        },
+        "rank": 1
+      },
+      {
+        "school": "ADMU",
+        "total_points": 77.0,
+        "division": "junior",
+        "sport_points": {
+          "ATHLETICS": 15.0,
+          "BASKETBALL": 15.0,
+          "CHESS": 15.0,
+          "SWIMMING": 12.0,
+          "TABLE TENNIS": 12.0,
+          "VOLLEYBALL": 8.0
+        },
+        "rank": 2
+      },
+      {
+        "school": "DLSU",
+        "total_points": 73.0,
+        "division": "junior",
+        "sport_points": {
+          "ATHLETICS": 10.0,
+          "BASKETBALL": 8.0,
+          "CHESS": 4.0,
+          "SWIMMING": 12.0,
+          "TABLE TENNIS": 6.0,
+          "VOLLEYBALL": 8.0
+        },
+        "rank": 3
+      },
+      {
+        "school": "ADU",
+        "total_points": 65.0,
+        "division": "junior",
+        "sport_points": {
+          "ATHLETICS": 12.0,
+          "BASKETBALL": 12.0,
+          "CHESS": 12.0,
+          "SWIMMING": 10.0,
+          "TABLE TENNIS": 15.0
+        },
+        "rank": 4
+      },
+      {
+        "school": "UE",
+        "total_points": 57.0,
+        "division": "junior",
+        "sport_points": {
+          "ATHLETICS": 4.0,
+          "BASKETBALL": 2.0,
+          "CHESS": 10.0,
+          "SWIMMING": 8.0,
+          "TABLE TENNIS": 2.0,
+          "VOLLEYBALL": 15.0
+        },
+        "rank": 5
+      },
+      {
+        "school": "UP",
+        "total_points": 54.0,
+        "division": "junior",
+        "sport_points": {
+          "ATHLETICS": 8.0,
+          "BASKETBALL": 6.0,
+          "SWIMMING": 6.0,
+          "TABLE TENNIS": 10.0,
+          "VOLLEYBALL": 10.0
+        },
+        "rank": 6
+      },
+      {
+        "school": "NU",
+        "total_points": 20.0,
+        "division": "junior",
+        "sport_points": {
+          "BASKETBALL": 4.0,
+          "CHESS": 8.0,
+          "TABLE TENNIS": 4.0,
+          "VOLLEYBALL": 4.0
+        },
+        "rank": 7
+      },
+      {
+        "school": "FEU",
+        "total_points": 0.0,
+        "division": "junior",
+        "sport_points": {},
+        "rank": 8
+      }
+    ]
+  }
+}

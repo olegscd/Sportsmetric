@@ -34,11 +34,15 @@ SCHOOL_ALIASES: dict[str, list[str]] = {
     ],
     "DLSU": [
         "DE LA SALLE UNIVERSITY",
+        "DE LA SALLE ZOBEL",
         "DE LA SALLE UNIV.",
         "DE LA SALLE UNIV",
         "DE LA SALLE",
         "LA SALLE",
         "D L S U",
+        "DLS-Z",
+        "DLSZ",
+        "DLS-2",
         "DLSU",
     ],
     "UST": [
@@ -68,6 +72,7 @@ SCHOOL_ALIASES: dict[str, list[str]] = {
         "UNIVERSITY OF THE PHILIPPINES",
         "UNIV. OF THE PHILS.",
         "UNIV. OF THE PHILIPPINES",
+        "UPIS",
         "U P",
         "U.P.",
         "UP",
