@@ -5,31 +5,38 @@
     "men": [
       {
         "school": "UST",
-        "rank": 1
+        "rank": 1,
+        "details": "Champion"
       },
       {
         "school": "UP",
-        "rank": 2
+        "rank": 2,
+        "details": "Second Place"
       },
       {
         "school": "UE",
-        "rank": 3
+        "rank": 3,
+        "details": "Third Place"
       },
       {
         "school": "DLSU",
-        "rank": 4
+        "rank": 4,
+        "details": "Fourth Place"
       },
       {
         "school": "FEU",
-        "rank": 5
+        "rank": 5,
+        "details": "Fifth Place"
       },
       {
         "school": "ADU",
-        "rank": 6
+        "rank": 6,
+        "details": "Sixth Place"
       },
       {
         "school": "ADMU",
-        "rank": 7
+        "rank": 7,
+        "details": "Seventh Place"
       },
       {
         "school": "NU",
@@ -39,31 +46,38 @@
     "women": [
       {
         "school": "UST",
-        "rank": 1
+        "rank": 1,
+        "details": "Champion"
       },
       {
         "school": "FEU",
-        "rank": 2
+        "rank": 2,
+        "details": "Second Place"
       },
       {
         "school": "UP",
-        "rank": 3
+        "rank": 3,
+        "details": "Third Place"
       },
       {
         "school": "ADU",
-        "rank": 4
+        "rank": 4,
+        "details": "Fourth Place"
       },
       {
         "school": "DLSU",
-        "rank": 5
+        "rank": 5,
+        "details": "Fifth Place"
       },
       {
         "school": "UE",
-        "rank": 6
+        "rank": 6,
+        "details": "Sixth Place"
       },
       {
         "school": "ADMU",
-        "rank": 7
+        "rank": 7,
+        "details": "Seventh Place"
       },
       {
         "school": "NU",
@@ -73,27 +87,33 @@
     "juniors": [
       {
         "school": "UE",
-        "rank": 1
+        "rank": 1,
+        "details": "Champion"
       },
       {
         "school": "UP",
-        "rank": 2
+        "rank": 2,
+        "details": "Second Place"
       },
       {
         "school": "UST",
-        "rank": 3
+        "rank": 3,
+        "details": "Third Place"
       },
       {
         "school": "ADMU",
-        "rank": 4
+        "rank": 4,
+        "details": "Fourth Place"
       },
       {
         "school": "NU",
-        "rank": 5
+        "rank": 5,
+        "details": "Fifth Place"
       },
       {
         "school": "DLSU",
-        "rank": 6
+        "rank": 6,
+        "details": "Sixth Place"
       }
     ]
   }

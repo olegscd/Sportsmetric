@@ -71,67 +71,43 @@
     "women": [
       {
         "school": "UP",
-        "wins": 14,
-        "losses": 14,
-        "pct": 0.5,
-        "points": 21,
-        "rank": 1
+        "rank": 1,
+        "details": "CHAMPION"
       },
       {
         "school": "DLSU",
-        "wins": 13,
-        "losses": 11,
-        "pct": 0.542,
-        "points": 20,
-        "rank": 2
-      },
-      {
-        "school": "UST",
-        "wins": 12,
-        "losses": 10,
-        "pct": 0.545,
-        "points": 16,
-        "rank": 3
-      },
-      {
-        "school": "FEU",
-        "wins": 11,
-        "losses": 11,
-        "pct": 0.5,
-        "points": 12,
-        "rank": 4
+        "rank": 2,
+        "details": "SECOND PLACE"
       },
       {
         "school": "ADU",
-        "wins": 10,
-        "losses": 13,
-        "pct": 0.435,
-        "points": 12,
-        "rank": 5
+        "rank": 3,
+        "details": "THIRD PLACE"
+      },
+      {
+        "school": "UST",
+        "rank": 4,
+        "details": "FOURTH PLACE"
+      },
+      {
+        "school": "FEU",
+        "rank": 5,
+        "details": "FIFTH PLACE"
       },
       {
         "school": "UE",
-        "wins": 9,
-        "losses": 10,
-        "pct": 0.474,
-        "points": 11,
-        "rank": 6
+        "rank": 6,
+        "details": "SIXTH PLACE"
       },
       {
         "school": "ADMU",
-        "wins": 8,
-        "losses": 7,
-        "pct": 0.533,
-        "points": 3,
-        "rank": 7
+        "rank": 7,
+        "details": "SEVENTH PLACE"
       },
       {
         "school": "NU",
-        "wins": 6,
-        "losses": 8,
-        "pct": 0.429,
-        "points": 1,
-        "rank": 8
+        "rank": 8,
+        "details": "EIGHTH PLACE"
       }
     ],
     "juniors": [

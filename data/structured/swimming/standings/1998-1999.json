@@ -1,10 +1,10 @@
 {
-  "season": "1988-1989",
-  "sport": "tennis",
+  "season": "1998-1999",
+  "sport": "swimming",
   "divisions": {
     "men": [
       {
-        "school": "DLSU",
+        "school": "UP",
         "rank": 1
       },
       {
@@ -12,16 +12,12 @@
         "rank": 2
       },
       {
-        "school": "ADU",
+        "school": "DLSU",
         "rank": 3
       },
       {
         "school": "UE",
         "rank": 4
-      },
-      {
-        "school": "UST",
-        "rank": 5
       }
     ]
   }

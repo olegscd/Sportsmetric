@@ -4,52 +4,32 @@
   "divisions": {
     "men": [
       {
-        "school": "UST",
-        "wins": 11,
-        "losses": 6,
-        "pct": 0.647,
-        "points": 3,
+        "school": "ADU",
         "rank": 1
       },
       {
         "school": "DLSU",
-        "wins": 10,
-        "losses": 4,
-        "pct": 0.714,
-        "points": 2,
         "rank": 2
       },
       {
-        "school": "FEU",
-        "wins": 10,
-        "losses": 3,
-        "pct": 0.769,
-        "points": 2,
+        "school": "ADMU",
         "rank": 3
       },
       {
-        "school": "ADMU",
-        "wins": 11,
-        "losses": 8,
-        "pct": 0.579,
-        "points": 1,
+        "school": "UST",
         "rank": 4
       },
       {
-        "school": "UP",
-        "wins": 10,
-        "losses": 5,
-        "pct": 0.667,
-        "points": 1,
+        "school": "UE",
         "rank": 5
       },
       {
-        "school": "UE",
-        "wins": 10,
-        "losses": 0,
-        "pct": 1.0,
-        "points": 1,
+        "school": "UP",
         "rank": 6
+      },
+      {
+        "school": "FEU",
+        "rank": 7
       }
     ],
     "women": [

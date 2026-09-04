@@ -1,0 +1,26 @@
+{
+  "season": "2003-2004",
+  "sport": "badminton",
+  "divisions": {
+    "men": {
+      "mvp": {
+        "player": "Lloyd Escoses",
+        "school": "FEU"
+      },
+      "rookie_of_the_year": {
+        "player": "Wilmer Frias",
+        "school": "FEU"
+      }
+    },
+    "women": {
+      "mvp": {
+        "player": "Irene Chiu",
+        "school": "ADMU"
+      },
+      "rookie_of_the_year": {
+        "player": "Theresa Sebastian",
+        "school": "FEU"
+      }
+    }
+  }
+}

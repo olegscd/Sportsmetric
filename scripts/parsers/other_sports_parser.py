@@ -131,24 +131,69 @@ def parse_sport_standings(pages: list[PageSegment], sport: str, season: str) -> 
                     if not existing or len(rows) > len(existing):
                         result["divisions"][current_div] = rows
 
-            # Ranked list (CHAMPION, RUNNER-UP, etc.)
+            # Ranked list or table (CHAMPION, RUNNER-UP, SECOND PLACE, etc.)
             if any(term in lu for term in ["FINAL RESULTS", "FINAL RANKING", "FINAL STANDING", "FINAL TEAM STANDINGS"]):
                 ranked = []
+                rank_words = {
+                    "CHAMPION": 1, "WINNER": 1, "FIRST": 1, "1ST": 1,
+                    "RUNNER": 2, "SECOND": 2, "2ND": 2,
+                    "THIRD": 3, "3RD": 3,
+                    "FOURTH": 4, "4TH": 4,
+                    "FIFTH": 5, "5TH": 5,
+                    "SIXTH": 6, "6TH": 6,
+                    "SEVENTH": 7, "7TH": 7,
+                    "EIGHTH": 8, "8TH": 8,
+                }
+
                 for next_line in lines[i+1:]:
                     nl = next_line.strip()
-                    if not nl or nl.startswith("---") or nl.startswith("###"):
-                        if ranked and len(ranked) >= 3:
-                            break
+                    if not nl:
                         continue
+                    if nl.startswith("---") or (nl.startswith("##") and not any(r in nl.upper() for r in ["DIVISION", "MEN", "WOMEN", "JUNIOR"])):
+                        if len(ranked) >= 3:
+                            break
+
+                    nlu = nl.upper()
+                    if "WOMEN" in nlu and "DIVISION" in nlu:
+                        current_div = "women"
+                    elif any(j in nlu for j in ["JUNIOR", "BOY"]) and "DIVISION" in nlu:
+                        current_div = "juniors"
+                    elif "MEN" in nlu and "DIVISION" in nlu:
+                        current_div = "men"
+
+                    # Markdown table row: | Place | : | School | or | Place | School |
+                    if nl.startswith("|"):
+                        if re.match(r'\|\s*[-:]+', nl):
+                            continue
+                        cells = [re.sub(r'[*`_#]', '', c).strip() for c in nl.split("|")[1:-1]]
+                        cells = [c for c in cells if c and c != ":"]
+                        if len(cells) >= 2:
+                            r_num = None
+                            for rw, num in rank_words.items():
+                                if rw in cells[0].upper():
+                                    r_num = num
+                                    break
+                            tc = canonicalize_team(cells[1])
+                            if not tc and len(cells) > 2:
+                                tc = canonicalize_team(cells[2])
+                            if tc and (tc not in [r["school"] for r in ranked]):
+                                entry = {"school": tc, "rank": r_num or (len(ranked) + 1)}
+                                if r_num:
+                                    entry["details"] = cells[0]
+                                ranked.append(entry)
+                        continue
+
                     clean_nl = re.sub(r'[*`_#]', '', nl).strip()
-                    m_rank = re.search(r'(?:CHAMPION|RUNNER-UP|\d+(?:st|nd|rd|th)?\s+PLACE|\d+\.)\s*[:–—\-]?\s*([A-Za-z\s.]+)', clean_nl, re.IGNORECASE)
+                    m_rank = re.search(r'(?:CHAMPION|RUNNER-UP|FIRST|SECOND|THIRD|FOURTH|FIFTH|SIXTH|SEVENTH|EIGHTH|\d+(?:st|nd|rd|th)?\s+PLACE|\d+\.)\s*[:–—\-]?\s*([A-Za-z\s.]+)', clean_nl, re.IGNORECASE)
                     if m_rank:
                         tc = canonicalize_team(m_rank.group(1).strip())
                         if tc and tc not in [r["school"] for r in ranked]:
-                            ranked.append({"school": tc})
-                if len(ranked) >= 3 and current_div not in result["divisions"]:
-                    for rank, r in enumerate(ranked, 1):
-                        r["rank"] = rank
+                            ranked.append({"school": tc, "rank": len(ranked) + 1})
+
+                if len(ranked) >= 3:
+                    ranked.sort(key=lambda x: x.get("rank", 99))
+                    for rank_idx, r in enumerate(ranked, 1):
+                        r["rank"] = rank_idx
                     result["divisions"][current_div] = ranked
 
     return result
@@ -168,7 +213,7 @@ def parse_sport_awards(pages: list[PageSegment], sport: str, season: str) -> dic
         pu = page.content.upper()
         current_div = "women" if "WOMEN" in pu else ("juniors" if any(j in pu for j in ["JUNIOR", "BOY"]) else "men")
 
-        for line in lines:
+        for idx, line in enumerate(lines):
             line_str = line.strip()
             lu = line_str.upper()
 
@@ -178,7 +223,7 @@ def parse_sport_awards(pages: list[PageSegment], sport: str, season: str) -> dic
 
             if "MOST VALUABLE PLAYER" in lu or "MVP" in lu:
                 clean = re.sub(r'[*`_#]', '', line_str).strip()
-                m_mvp = re.search(r'(?:MVP|MOST VALUABLE PLAYER)[^:]*?[:|]\s*([A-Za-z\s.,\'-]+?)(?:\s*[-–—|]\s*|\s*\()([A-Za-z\s.]+)\)?', clean, re.IGNORECASE)
+                m_mvp = re.search(r'(?:MVP|MOST VALUABLE PLAYER)[^:]*?[:|–—\-]\s*([A-Za-z\s.,\'-]+?)(?:\s*[-–—|]\s*|\s*\()([A-Za-z\s.]+)\)?', clean, re.IGNORECASE)
                 if m_mvp:
                     p_name = m_mvp.group(1).strip()
                     p_team = canonicalize_team(m_mvp.group(2))
@@ -186,10 +231,27 @@ def parse_sport_awards(pages: list[PageSegment], sport: str, season: str) -> dic
                         if current_div not in result["divisions"]:
                             result["divisions"][current_div] = {}
                         result["divisions"][current_div]["mvp"] = {"player": p_name, "school": p_team}
+                else:
+                    # Look ahead 1-4 lines for recipient
+                    for next_line in lines[idx+1:idx+5]:
+                        nl_clean = re.sub(r'[*`_#<>]|br|/br', '', next_line).strip()
+                        if not nl_clean:
+                            continue
+                        if nl_clean.startswith("---") or "ROOKIE" in nl_clean.upper():
+                            break
+                        m_next = re.search(r'^([A-Za-z\s.,\'-]+?)(?:\s*[-–—|]\s*|\s*\()([A-Za-z\s.]+)\)?$', nl_clean)
+                        if m_next:
+                            p_name = m_next.group(1).strip()
+                            p_team = canonicalize_team(m_next.group(2))
+                            if p_team and p_name.upper() not in ["WINNER", "NAME", "PLAYER"]:
+                                if current_div not in result["divisions"]:
+                                    result["divisions"][current_div] = {}
+                                result["divisions"][current_div]["mvp"] = {"player": p_name, "school": p_team}
+                                break
 
             if "ROOKIE OF THE YEAR" in lu or "ROOKIE" in lu:
                 clean = re.sub(r'[*`_#]', '', line_str).strip()
-                m_roy = re.search(r'(?:ROOKIE OF THE YEAR|ROOKIE)[^:]*?[:|]\s*([A-Za-z\s.,\'-]+?)(?:\s*[-–—|]\s*|\s*\()([A-Za-z\s.]+)\)?', clean, re.IGNORECASE)
+                m_roy = re.search(r'(?:ROOKIE OF THE YEAR|ROOKIE)[^:]*?[:|–—\-]\s*([A-Za-z\s.,\'-]+?)(?:\s*[-–—|]\s*|\s*\()([A-Za-z\s.]+)\)?', clean, re.IGNORECASE)
                 if m_roy:
                     p_name = m_roy.group(1).strip()
                     p_team = canonicalize_team(m_roy.group(2))
@@ -197,6 +259,23 @@ def parse_sport_awards(pages: list[PageSegment], sport: str, season: str) -> dic
                         if current_div not in result["divisions"]:
                             result["divisions"][current_div] = {}
                         result["divisions"][current_div]["rookie_of_the_year"] = {"player": p_name, "school": p_team}
+                else:
+                    # Look ahead 1-4 lines
+                    for next_line in lines[idx+1:idx+5]:
+                        nl_clean = re.sub(r'[*`_#<>]|br|/br', '', next_line).strip()
+                        if not nl_clean:
+                            continue
+                        if nl_clean.startswith("---") or "MVP" in nl_clean.upper():
+                            break
+                        m_next = re.search(r'^([A-Za-z\s.,\'-]+?)(?:\s*[-–—|]\s*|\s*\()([A-Za-z\s.]+)\)?$', nl_clean)
+                        if m_next:
+                            p_name = m_next.group(1).strip()
+                            p_team = canonicalize_team(m_next.group(2))
+                            if p_team and p_name.upper() not in ["WINNER", "NAME", "PLAYER"]:
+                                if current_div not in result["divisions"]:
+                                    result["divisions"][current_div] = {}
+                                result["divisions"][current_div]["rookie_of_the_year"] = {"player": p_name, "school": p_team}
+                                break
 
     return result
 

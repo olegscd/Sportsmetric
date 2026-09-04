@@ -1,0 +1,12 @@
+{
+  "season": "2000-2001",
+  "sport": "badminton",
+  "divisions": {
+    "men": {
+      "rookie_of_the_year": {
+        "player": "Miss Beress Aun Sy",
+        "school": "UST"
+      }
+    }
+  }
+}

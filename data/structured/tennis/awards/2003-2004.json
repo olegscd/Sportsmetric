@@ -1,0 +1,26 @@
+{
+  "season": "2003-2004",
+  "sport": "tennis",
+  "divisions": {
+    "men": {
+      "mvp": {
+        "player": "YANNICK GUBA",
+        "school": "DLSU"
+      },
+      "rookie_of_the_year": {
+        "player": "ERWIN DE GUZMAN",
+        "school": "DLSU"
+      }
+    },
+    "women": {
+      "mvp": {
+        "player": "Bernardine Aurell Sepulveda",
+        "school": "DLSU"
+      },
+      "rookie_of_the_year": {
+        "player": "Mary Rose Celiste Panis",
+        "school": "DLSU"
+      }
+    }
+  }
+}

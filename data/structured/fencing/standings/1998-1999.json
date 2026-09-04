@@ -4,20 +4,38 @@
   "divisions": {
     "men": [
       {
-        "school": "DLSU",
+        "school": "UP",
         "rank": 1
       },
       {
-        "school": "UP",
+        "school": "DLSU",
         "rank": 2
       },
       {
-        "school": "ADMU",
+        "school": "FEU",
         "rank": 3
       },
       {
-        "school": "UE",
+        "school": "ADMU",
         "rank": 4
+      },
+      {
+        "school": "UE",
+        "rank": 5
+      }
+    ],
+    "women": [
+      {
+        "school": "UP",
+        "rank": 1
+      },
+      {
+        "school": "ADMU",
+        "rank": 2
+      },
+      {
+        "school": "UE",
+        "rank": 3
       }
     ]
   }

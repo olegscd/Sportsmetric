@@ -1,0 +1,70 @@
+{
+  "season": "2003-2004",
+  "sport": "badminton",
+  "divisions": {
+    "men": [
+      {
+        "school": "FEU",
+        "rank": 1,
+        "details": "Champion"
+      },
+      {
+        "school": "UST",
+        "rank": 2,
+        "details": "Second Place"
+      },
+      {
+        "school": "UP",
+        "rank": 3,
+        "details": "Third Place"
+      },
+      {
+        "school": "UE",
+        "rank": 4,
+        "details": "Fourth Place"
+      },
+      {
+        "school": "DLSU",
+        "rank": 5,
+        "details": "Fifth Place"
+      },
+      {
+        "school": "ADMU",
+        "rank": 6,
+        "details": "Sixth Place"
+      }
+    ],
+    "women": [
+      {
+        "school": "ADMU",
+        "rank": 1,
+        "details": "Champion"
+      },
+      {
+        "school": "FEU",
+        "rank": 2,
+        "details": "Second Place"
+      },
+      {
+        "school": "DLSU",
+        "rank": 3,
+        "details": "Third Place"
+      },
+      {
+        "school": "UST",
+        "rank": 4,
+        "details": "Fourth Place"
+      },
+      {
+        "school": "UP",
+        "rank": 5,
+        "details": "Fifth Place"
+      },
+      {
+        "school": "UE",
+        "rank": 6,
+        "details": "Sixth Place"
+      }
+    ]
+  }
+}

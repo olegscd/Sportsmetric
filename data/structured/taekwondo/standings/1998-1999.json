@@ -5,52 +5,38 @@
     "men": [
       {
         "school": "DLSU",
-        "wins": 6,
-        "losses": 1,
-        "pct": 0.857,
-        "rank": 1
+        "rank": 1,
+        "details": "CHAMPION"
       },
       {
         "school": "UST",
-        "wins": 5,
-        "losses": 1,
-        "pct": 0.833,
-        "rank": 2
+        "rank": 2,
+        "details": "RUNNER-UP"
       },
       {
         "school": "UP",
-        "wins": 4,
-        "losses": 2,
-        "pct": 0.667,
-        "rank": 3
+        "rank": 3,
+        "details": "THIRD PLACE"
       },
       {
         "school": "UE",
-        "wins": 3,
-        "losses": 3,
-        "pct": 0.5,
-        "rank": 4
+        "rank": 4,
+        "details": "FOURTH PLACE"
       },
       {
         "school": "ADMU",
-        "wins": 2,
-        "losses": 5,
-        "pct": 0.286,
-        "rank": 5
+        "rank": 5,
+        "details": "FIFTH PLACE"
       },
       {
         "school": "FEU",
-        "wins": 1,
-        "losses": 5,
-        "pct": 0.167,
-        "rank": 6
+        "rank": 6,
+        "details": "SIXTH PLACE"
       },
       {
         "school": "ADU",
-        "wins": 0,
-        "losses": 7,
-        "pct": 0.0,
-        "rank": 7
+        "rank": 7,
+        "details": "SEVENTH PLACE"
       }
     ],
     "women": [

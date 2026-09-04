@@ -1,0 +1,36 @@
+{
+  "season": "2003-2004",
+  "sport": "table_tennis",
+  "divisions": {
+    "men": {
+      "rookie_of_the_year": {
+        "player": "William K. Ng",
+        "school": "DLSU"
+      },
+      "mvp": {
+        "player": "Celedonio T. Pisan, Jr.",
+        "school": "UST"
+      }
+    },
+    "women": {
+      "rookie_of_the_year": {
+        "player": "Louise Ann O. Clemente",
+        "school": "FEU"
+      },
+      "mvp": {
+        "player": "Jaymee P. Yanga",
+        "school": "UST"
+      }
+    },
+    "juniors": {
+      "rookie_of_the_year": {
+        "player": "Joseph Felix V. Marfori",
+        "school": "UE"
+      },
+      "mvp": {
+        "player": "Mark Jester D. Tariga",
+        "school": "UE"
+      }
+    }
+  }
+}

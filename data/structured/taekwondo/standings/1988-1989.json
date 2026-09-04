@@ -1,26 +1,26 @@
 {
   "season": "1988-1989",
-  "sport": "tennis",
+  "sport": "taekwondo",
   "divisions": {
     "men": [
       {
-        "school": "DLSU",
+        "school": "UP",
         "rank": 1
       },
       {
-        "school": "ADMU",
+        "school": "ADU",
         "rank": 2
       },
       {
-        "school": "ADU",
+        "school": "FEU",
         "rank": 3
       },
       {
-        "school": "UE",
+        "school": "DLSU",
         "rank": 4
       },
       {
-        "school": "UST",
+        "school": "NU",
         "rank": 5
       }
     ]

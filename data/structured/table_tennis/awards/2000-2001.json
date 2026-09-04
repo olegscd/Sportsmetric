@@ -1,0 +1,18 @@
+{
+  "season": "2000-2001",
+  "sport": "table_tennis",
+  "divisions": {
+    "men": {
+      "mvp": {
+        "player": "PHILIP JOHN SILOS",
+        "school": "DLSU"
+      }
+    },
+    "women": {
+      "mvp": {
+        "player": "Karen Jaleco",
+        "school": "UP"
+      }
+    }
+  }
+}

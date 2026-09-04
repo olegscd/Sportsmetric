@@ -1,0 +1,43 @@
+{
+  "season": "1988-1989",
+  "sport": "table_tennis",
+  "divisions": {
+    "men": [
+      {
+        "school": "UST",
+        "rank": 1,
+        "details": "CHAMPION"
+      },
+      {
+        "school": "ADU",
+        "rank": 2,
+        "details": "Runner-up"
+      },
+      {
+        "school": "NU",
+        "rank": 3,
+        "details": "Third Place"
+      },
+      {
+        "school": "FEU",
+        "rank": 4,
+        "details": "Fourth Place"
+      },
+      {
+        "school": "DLSU",
+        "rank": 5,
+        "details": "Fifth Place"
+      },
+      {
+        "school": "UP",
+        "rank": 6,
+        "details": "Sixth Place"
+      },
+      {
+        "school": "ADMU",
+        "rank": 7,
+        "details": "Seventh Place"
+      }
+    ]
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "season": "1998-1999",
+  "sport": "judo",
+  "divisions": {
+    "men": [
+      {
+        "school": "UST",
+        "rank": 1,
+        "details": "CHAMPION"
+      },
+      {
+        "school": "UP",
+        "rank": 2,
+        "details": "RUNNER-UP"
+      },
+      {
+        "school": "ADMU",
+        "rank": 3,
+        "details": "THIRD PLACE"
+      },
+      {
+        "school": "UE",
+        "rank": 4,
+        "details": "FOURTH PLACE"
+      },
+      {
+        "school": "DLSU",
+        "rank": 5,
+        "details": "FIFTH PLACE"
+      },
+      {
+        "school": "ADU",
+        "rank": 6,
+        "details": "SIXTH PLACE"
+      }
+    ],
+    "women": [
+      {
+        "school": "UST",
+        "rank": 1,
+        "details": "CHAMPION"
+      },
+      {
+        "school": "UP",
+        "rank": 2,
+        "details": "RUNNER-UP"
+      },
+      {
+        "school": "ADMU",
+        "rank": 3,
+        "details": "THIRD PLACE"
+      },
+      {
+        "school": "DLSU",
+        "rank": 4,
+        "details": "FOURTH PLACE"
+      },
+      {
+        "school": "UE",
+        "rank": 5,
+        "details": "FIFTH PLACE"
+      },
+      {
+        "school": "ADU",
+        "rank": 6,
+        "details": "SIXTH PLACE"
+      }
+    ]
+  }
+}

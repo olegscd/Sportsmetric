@@ -2,6 +2,28 @@
   "season": "1998-1999",
   "sport": "tennis",
   "divisions": {
+    "women": [
+      {
+        "school": "UP",
+        "rank": 1
+      },
+      {
+        "school": "DLSU",
+        "rank": 2
+      },
+      {
+        "school": "ADMU",
+        "rank": 3
+      },
+      {
+        "school": "UE",
+        "rank": 4
+      },
+      {
+        "school": "UST",
+        "rank": 5
+      }
+    ],
     "men": [
       {
         "school": "UST",

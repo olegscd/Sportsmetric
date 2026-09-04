@@ -1,5 +1,5 @@
 {
-  "season": "2003-2004",
+  "season": "2000-2001",
   "sport": "judo",
   "divisions": {
     "men": [
@@ -9,12 +9,12 @@
         "details": "CHAMPION"
       },
       {
-        "school": "UP",
+        "school": "ADMU",
         "rank": 2,
         "details": "SECOND PLACE"
       },
       {
-        "school": "ADMU",
+        "school": "UP",
         "rank": 3,
         "details": "THIRD PLACE"
       },

@@ -1,22 +1,22 @@
 {
-  "season": "2000-2001",
+  "season": "2003-2004",
   "sport": "fencing",
   "divisions": {
     "men": [
       {
-        "school": "UP",
+        "school": "UE",
         "rank": 1
       },
       {
-        "school": "DLSU",
+        "school": "FEU",
         "rank": 2
       },
       {
-        "school": "FEU",
+        "school": "ADMU",
         "rank": 3
       },
       {
-        "school": "ADMU",
+        "school": "UP",
         "rank": 4
       },
       {
@@ -24,7 +24,7 @@
         "rank": 5
       },
       {
-        "school": "UE",
+        "school": "DLSU",
         "rank": 6
       }
     ],
@@ -34,11 +34,11 @@
         "rank": 1
       },
       {
-        "school": "ADMU",
+        "school": "UST",
         "rank": 2
       },
       {
-        "school": "UST",
+        "school": "ADMU",
         "rank": 3
       },
       {
@@ -46,12 +46,8 @@
         "rank": 4
       },
       {
-        "school": "DLSU",
-        "rank": 5
-      },
-      {
         "school": "FEU",
-        "rank": 6
+        "rank": 5
       }
     ]
   }

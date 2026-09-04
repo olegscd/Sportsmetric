@@ -4,28 +4,34 @@
   "divisions": {
     "men": [
       {
-        "school": "UST",
-        "rank": 1
+        "school": "UP",
+        "rank": 1,
+        "details": "Champion"
       },
       {
         "school": "DLSU",
-        "rank": 2
+        "rank": 2,
+        "details": "2nd Place"
       },
       {
-        "school": "UP",
-        "rank": 3
+        "school": "UST",
+        "rank": 3,
+        "details": "3rd Place"
       },
       {
         "school": "ADMU",
-        "rank": 4
+        "rank": 4,
+        "details": "4th Place"
       },
       {
         "school": "UE",
-        "rank": 5
+        "rank": 5,
+        "details": "5th Place"
       },
       {
         "school": "FEU",
-        "rank": 6
+        "rank": 6,
+        "details": "6th Place"
       }
     ]
   }

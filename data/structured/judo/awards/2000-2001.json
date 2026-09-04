@@ -2,6 +2,12 @@
   "season": "2000-2001",
   "sport": "judo",
   "divisions": {
+    "men": {
+      "mvp": {
+        "player": "Host",
+        "school": "UP"
+      }
+    },
     "women": {
       "rookie_of_the_year": {
         "player": "Michelle M. De Vera",
