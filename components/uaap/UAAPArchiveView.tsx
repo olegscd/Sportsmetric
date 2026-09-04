@@ -12,10 +12,7 @@ import {
   Volleyball as VolleyballIcon,
   Medal,
   Sparkles,
-  Search,
   Award,
-  TrendingUp,
-  Activity,
 } from "lucide-react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
@@ -307,14 +304,11 @@ export function UAAPArchiveView() {
   const tabParam = searchParams.get("tab") || "standings";
 
   const [stageFilter, setStageFilter] = useState<string>("All");
-  const [matchSearch, setMatchSearch] = useState<string>("");
 
   const data = standingsData as StandingRecord[];
   const archiveExtras = archiveExtrasData as unknown as {
     awards: Record<string, Record<string, any>>;
-    games: Record<string, any[]>;
     chess_medalists: Record<string, Record<string, any>>;
-    leaderboards: Record<string, Record<string, Record<string, any[]>>>;
   };
 
   const currentSportMeta = useMemo(() => {
@@ -377,19 +371,9 @@ export function UAAPArchiveView() {
     return archiveExtras.awards?.[extrasKey] || null;
   }, [archiveExtras, extrasKey]);
 
-  const gamesData = useMemo(() => {
-    if (!extrasKey) return [];
-    return archiveExtras.games?.[extrasKey] || [];
-  }, [archiveExtras, extrasKey]);
-
   const chessMedalistsData = useMemo(() => {
     if (!extrasKey) return null;
     return archiveExtras.chess_medalists?.[extrasKey] || null;
-  }, [archiveExtras, extrasKey]);
-
-  const leaderboardsData = useMemo(() => {
-    if (!extrasKey) return null;
-    return archiveExtras.leaderboards?.[extrasKey] || null;
   }, [archiveExtras, extrasKey]);
 
   // Filtered standings for the selected sport, season & division
@@ -426,17 +410,6 @@ export function UAAPArchiveView() {
     return Array.from(stages);
   }, [data, currentSportMeta, currentSeason, currentDivision]);
 
-  // Filtered games if available
-  const filteredGames = useMemo(() => {
-    if (!gamesData || gamesData.length === 0) return [];
-    return gamesData.filter((g) => {
-      if (!matchSearch) return true;
-      const q = matchSearch.toUpperCase();
-      const w = (g.winner?.school || "").toUpperCase();
-      const l = (g.loser?.school || "").toUpperCase();
-      return w.includes(q) || l.includes(q);
-    });
-  }, [gamesData, matchSearch]);
 
   const handleSelectSport = (sport: SportMeta) => {
     router.push(`/uaap?sport=${encodeURIComponent(sport.name)}`);
@@ -689,7 +662,6 @@ export function UAAPArchiveView() {
                   (r) => r.rank === 1 && (r.details?.includes("Champion") || r.stage.toLowerCase().includes("final"))
                 );
 
-                const hasGames = (archiveExtras.games?.[`${currentSportMeta.name}|${season}`] || []).length > 0;
                 const hasAwards = !!archiveExtras.awards?.[`${currentSportMeta.name}|${season}`];
 
                 return (
@@ -734,11 +706,6 @@ export function UAAPArchiveView() {
                         {hasAwards && (
                           <span className="px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-400 font-semibold text-[10px]">
                             Awards
-                          </span>
-                        )}
-                        {hasGames && (
-                          <span className="px-1.5 py-0.5 rounded bg-sky-500/10 text-sky-400 font-semibold text-[10px]">
-                            Games
                           </span>
                         )}
                       </div>
@@ -840,25 +807,25 @@ export function UAAPArchiveView() {
             </div>
           </div>
 
-          {/* Sub-Navigation Tabs: Standings / Awards / Games / Leaders */}
-          <div className="flex items-center gap-2 border-b border-border pb-1 overflow-x-auto">
-            <button
-              onClick={() => handleSelectTab("standings")}
-              className={cn(
-                "inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer",
-                tabParam === "standings"
-                  ? "bg-amber-500 text-slate-950 shadow-sm"
-                  : "text-muted hover:text-foreground hover:bg-elevated"
-              )}
-            >
-              <Trophy size={14} />
-              <span>Standings</span>
-              <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-black/15 font-semibold">
-                {sportStandings.length}
-              </span>
-            </button>
+          {/* Sub-Navigation Tabs: Standings / Awards */}
+          {(awardsData || chessMedalistsData) && (
+            <div className="flex items-center gap-2 border-b border-border pb-1 overflow-x-auto">
+              <button
+                onClick={() => handleSelectTab("standings")}
+                className={cn(
+                  "inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer",
+                  tabParam === "standings"
+                    ? "bg-amber-500 text-slate-950 shadow-sm"
+                    : "text-muted hover:text-foreground hover:bg-elevated"
+                )}
+              >
+                <Trophy size={14} />
+                <span>Standings</span>
+                <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-black/15 font-semibold">
+                  {sportStandings.length}
+                </span>
+              </button>
 
-            {(awardsData || chessMedalistsData) && (
               <button
                 onClick={() => handleSelectTab("awards")}
                 className={cn(
@@ -874,41 +841,8 @@ export function UAAPArchiveView() {
                   ★
                 </span>
               </button>
-            )}
-
-            {gamesData.length > 0 && (
-              <button
-                onClick={() => handleSelectTab("games")}
-                className={cn(
-                  "inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer",
-                  tabParam === "games"
-                    ? "bg-amber-500 text-slate-950 shadow-sm"
-                    : "text-muted hover:text-foreground hover:bg-elevated"
-                )}
-              >
-                <Activity size={14} />
-                <span>Game Results</span>
-                <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-black/15 font-semibold">
-                  {gamesData.length}
-                </span>
-              </button>
-            )}
-
-            {leaderboardsData && (
-              <button
-                onClick={() => handleSelectTab("leaders")}
-                className={cn(
-                  "inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer",
-                  tabParam === "leaders"
-                    ? "bg-amber-500 text-slate-950 shadow-sm"
-                    : "text-muted hover:text-foreground hover:bg-elevated"
-                )}
-              >
-                <TrendingUp size={14} />
-                <span>Stat Leaders</span>
-              </button>
-            )}
-          </div>
+            </div>
+          )}
 
           {/* TAB CONTENT 1: STANDINGS */}
           {tabParam === "standings" && (
@@ -1215,155 +1149,6 @@ export function UAAPArchiveView() {
               {!divisionAwards && !divisionChessMedalists && (
                 <div className="p-12 text-center text-muted bg-surface border border-border rounded-2xl">
                   No individual awards recorded for this division in {currentSeason}.
-                </div>
-              )}
-            </div>
-          )}
-
-          {/* TAB CONTENT 3: GAME RESULTS */}
-          {tabParam === "games" && (
-            <div className="space-y-4">
-              <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
-                <div className="relative w-full sm:w-72">
-                  <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted" />
-                  <input
-                    type="text"
-                    value={matchSearch}
-                    onChange={(e) => setMatchSearch(e.target.value)}
-                    placeholder="Search by team (e.g. ADMU, FEU)..."
-                    className="w-full pl-9 pr-3 py-1.5 rounded-xl text-xs bg-surface border border-border text-foreground placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-amber-500/50"
-                  />
-                </div>
-                <span className="text-xs text-muted font-medium self-end sm:self-auto">
-                  Showing {filteredGames.length} of {gamesData.length} matches
-                </span>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-                {filteredGames.length === 0 ? (
-                  <div className="col-span-full p-12 text-center text-muted bg-surface border border-border rounded-2xl">
-                    No game results matched your filter.
-                  </div>
-                ) : (
-                  filteredGames.map((game, gIdx) => {
-                    const wTheme = getSchoolTheme(game.winner?.school);
-                    const lTheme = getSchoolTheme(game.loser?.school);
-                    const wScore = game.winner?.score;
-                    const lScore = game.loser?.score;
-
-                    return (
-                      <div
-                        key={gIdx}
-                        className={cn(
-                          "p-4 rounded-2xl bg-surface border border-border shadow-sm flex flex-col justify-between space-y-3",
-                          game.is_championship && "border-amber-500/40 bg-gradient-to-br from-amber-500/5 via-surface to-surface"
-                        )}
-                      >
-                        <div className="flex items-center justify-between text-[11px] text-muted">
-                          <span className="font-semibold uppercase tracking-wider">
-                            {game.round ? game.round.replace(/_/g, " ") : "Match"}
-                          </span>
-                          {game.is_championship ? (
-                            <span className="px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-400 font-bold text-[10px]">
-                              🏆 Championship
-                            </span>
-                          ) : (
-                            game.date && <span>{game.date}</span>
-                          )}
-                        </div>
-
-                        {/* Matchup row */}
-                        <div className="space-y-2">
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-2">
-                              <span className={cn("px-2 py-0.5 rounded-md border text-xs font-bold", wTheme.bg, wTheme.text)}>
-                                {game.winner?.school}
-                              </span>
-                              <span className="text-xs font-semibold text-foreground truncate max-w-[120px]">
-                                {wTheme.name}
-                              </span>
-                            </div>
-                            <span className="text-base font-black text-foreground font-mono">
-                              {wScore ?? "W"}
-                            </span>
-                          </div>
-
-                          <div className="flex items-center justify-between opacity-80">
-                            <div className="flex items-center gap-2">
-                              <span className={cn("px-2 py-0.5 rounded-md border text-xs font-bold", lTheme.bg, lTheme.text)}>
-                                {game.loser?.school}
-                              </span>
-                              <span className="text-xs font-medium text-muted truncate max-w-[120px]">
-                                {lTheme.name}
-                              </span>
-                            </div>
-                            <span className="text-base font-medium text-muted font-mono">
-                              {lScore ?? "L"}
-                            </span>
-                          </div>
-                        </div>
-
-                        {game.stage && (
-                          <div className="pt-2 border-t border-border/60 text-[10px] text-muted truncate">
-                            {game.stage}
-                          </div>
-                        )}
-                      </div>
-                    );
-                  })
-                )}
-              </div>
-            </div>
-          )}
-
-          {/* TAB CONTENT 4: STATISTICAL LEADERS */}
-          {tabParam === "leaders" && (
-            <div className="space-y-6">
-              {leaderboardsData ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {Object.entries(
-                    (leaderboardsData as any)["men"] || (currentDivision ? (leaderboardsData as any)[currentDivision.toLowerCase()] : null) || leaderboardsData
-                  ).map(([cat, players]: [string, any]) => {
-                    if (!Array.isArray(players)) return null;
-                    return (
-                      <div key={cat} className="p-5 rounded-2xl bg-surface border border-border shadow-sm space-y-3">
-                        <div className="flex items-center justify-between border-b border-border/60 pb-2">
-                          <h4 className="text-sm font-bold uppercase tracking-wider text-amber-400">
-                            Top {cat.replace(/_/g, " ")}
-                          </h4>
-                          <span className="text-[10px] font-semibold text-muted">Average</span>
-                        </div>
-
-                        <div className="space-y-2">
-                          {players.slice(0, 10).map((p: any, idx: number) => {
-                            const theme = getSchoolTheme(p.school);
-                            return (
-                              <div key={idx} className="flex items-center justify-between text-xs">
-                                <div className="flex items-center gap-2 truncate">
-                                  <span className="text-muted font-mono w-4 text-center font-bold">
-                                    {p.rank || idx + 1}
-                                  </span>
-                                  <span className="font-semibold text-foreground truncate">
-                                    {p.player}
-                                  </span>
-                                  <span className={cn("px-1.5 py-0.2 rounded border text-[10px] font-bold shrink-0", theme.bg, theme.text)}>
-                                    {p.school}
-                                  </span>
-                                </div>
-                                <span className="font-mono font-bold text-foreground ml-2 shrink-0">
-                                  {p.value || p.stat}
-                                </span>
-                              </div>
-                            );
-                          })}
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              ) : (
-                <div className="p-12 text-center text-muted bg-surface border border-border rounded-2xl">
-                  No statistical leaderboards compiled for this season.
                 </div>
               )}
             </div>

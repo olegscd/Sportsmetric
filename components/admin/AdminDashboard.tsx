@@ -12,9 +12,10 @@ import { PlayersManager } from "./PlayersManager";
 import { ScheduleManagerTab } from "./ScheduleManagerTab";
 import { SeasonsManager } from "./SeasonsManager";
 import { TeamsManager } from "./TeamsManager";
+import { UAAPArchiveManager } from "./UAAPArchiveManager";
 import { Toast, type ToastState } from "./Toast";
 
-type AdminTab = "importer" | "schedule" | "games" | "players" | "teams" | "seasons";
+type AdminTab = "importer" | "schedule" | "games" | "players" | "teams" | "seasons" | "uaap";
 
 const TABS: { value: AdminTab; label: string; emoji: string }[] = [
   { value: "importer", label: "Importer", emoji: "⚡" },
@@ -23,6 +24,7 @@ const TABS: { value: AdminTab; label: string; emoji: string }[] = [
   { value: "players", label: "Players", emoji: "\u{1F465}" },
   { value: "teams", label: "Teams", emoji: "\u{1F6E1}\uFE0F" },
   { value: "seasons", label: "Seasons", emoji: "\u{1F4C6}" },
+  { value: "uaap", label: "UAAP Archive", emoji: "🏛️" },
 ];
 
 
@@ -96,6 +98,7 @@ export function AdminDashboard() {
         {tab === "players" ? <PlayersManager onToast={showToast} /> : null}
         {tab === "teams" ? <TeamsManager onToast={showToast} /> : null}
         {tab === "seasons" ? <SeasonsManager onToast={showToast} /> : null}
+        {tab === "uaap" ? <UAAPArchiveManager onToast={showToast} /> : null}
       </div>
 
     </div>
