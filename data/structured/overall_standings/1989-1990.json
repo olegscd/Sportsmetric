@@ -1,0 +1,175 @@
+{
+  "season": "1989-1990",
+  "divisions": {
+    "college": [
+      {
+        "rank": 1,
+        "school": "UST",
+        "total_points": 113.0,
+        "sport_points": {
+          "BB M": 2.0,
+          "BB W": 10.0,
+          "VB M": 15.0,
+          "VB W": 12.0,
+          "VB BBB M": 6.0,
+          "CH M/W": 6.0,
+          "FB M": 6.0,
+          "LT M": 4.0,
+          "TT M": 10.0,
+          "TT W": 12.0,
+          "TF M": 10.0,
+          "TF W": 4.0,
+          "SW M": 10.0,
+          "SW W": 6.0
+        }
+      },
+      {
+        "rank": 2,
+        "school": "FEU",
+        "total_points": 101.0,
+        "sport_points": {
+          "BB M": 12.0,
+          "BB W": 8.0,
+          "VB M": 10.0,
+          "VB W": 15.0,
+          "VB BBB M": 0,
+          "CH M/W": 15.0,
+          "FB M": 4.0,
+          "LT M": 0,
+          "TT M": 6.0,
+          "TT W": 10.0,
+          "TF M": 8.0,
+          "TF W": 12.0,
+          "SW M": 1.0,
+          "SW W": 0
+        }
+      },
+      {
+        "rank": 3,
+        "school": "ADU",
+        "total_points": 86.0,
+        "sport_points": {
+          "BB M": 4.0,
+          "BB W": 1.0,
+          "VB M": 8.0,
+          "VB W": 10.0,
+          "VB BBB M": 10.0,
+          "CH M/W": 12.0,
+          "FB M": 1.0,
+          "LT M": 2.0,
+          "TT M": 12.0,
+          "TT W": 2.0,
+          "TF M": 12.0,
+          "TF W": 10.0,
+          "SW M": 2.0,
+          "SW W": 0
+        }
+      },
+      {
+        "rank": 4,
+        "school": "UP",
+        "total_points": 86.0,
+        "sport_points": {
+          "BB M": 8.0,
+          "BB W": 2.0,
+          "VB M": 12.0,
+          "VB W": 6.0,
+          "VB BBB M": 8.0,
+          "CH M/W": 2.0,
+          "FB M": 12.0,
+          "LT M": 8.0,
+          "TT M": 2.0,
+          "TT W": 8.0,
+          "TF M": 6.0,
+          "TF W": 2.0,
+          "SW M": 6.0,
+          "SW W": 4.0
+        }
+      },
+      {
+        "rank": 5,
+        "school": "DLSU",
+        "total_points": 80.0,
+        "sport_points": {
+          "BB M": 15.0,
+          "BB W": 6.0,
+          "VB M": 6.0,
+          "VB W": 4.0,
+          "VB BBB M": 1.0,
+          "CH M/W": 4.0,
+          "FB M": 8.0,
+          "LT M": 6.0,
+          "TT M": 4.0,
+          "TT W": 6.0,
+          "TF M": 2.0,
+          "TF W": 8.0,
+          "SW M": 8.0,
+          "SW W": 2.0
+        }
+      },
+      {
+        "rank": 6,
+        "school": "UE",
+        "total_points": 44.0,
+        "sport_points": {
+          "BB M": 10.0,
+          "BB W": 4.0,
+          "VB M": 2.0,
+          "VB W": 8.0,
+          "VB BBB M": 0,
+          "CH M/W": 8.0,
+          "FB M": 2.0,
+          "LT M": 0,
+          "TT M": 0,
+          "TT W": 0,
+          "TF M": 4.0,
+          "TF W": 6.0,
+          "SW M": 0,
+          "SW W": 0
+        }
+      },
+      {
+        "rank": 7,
+        "school": "ADMU",
+        "total_points": 34.0,
+        "sport_points": {
+          "BB M": 6.0,
+          "BB W": 0,
+          "VB M": 1.0,
+          "VB W": 2.0,
+          "VB BBB M": 4.0,
+          "CH M/W": 1.0,
+          "FB M": 10.0,
+          "LT M": 1.0,
+          "TT M": 1.0,
+          "TT W": 1.0,
+          "TF M": 1.0,
+          "TF W": 1.0,
+          "SW M": 4.0,
+          "SW W": 1.0
+        }
+      },
+      {
+        "rank": 8,
+        "school": "NU",
+        "total_points": 30.0,
+        "sport_points": {
+          "BB M": 1.0,
+          "BB W": 0,
+          "VB M": 4.0,
+          "VB W": 1.0,
+          "VB BBB M": 2.0,
+          "CH M/W": 10.0,
+          "FB M": 0,
+          "LT M": 0,
+          "TT M": 8.0,
+          "TT W": 4.0,
+          "TF M": 0,
+          "TF W": 0,
+          "SW M": 0,
+          "SW W": 0
+        }
+      }
+    ]
+  }
+}

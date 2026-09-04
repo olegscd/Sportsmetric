@@ -1,0 +1,84 @@
+{
+  "season": "1987-1988",
+  "divisions": {
+    "college": [
+      {
+        "rank": 1,
+        "school": "UST",
+        "total_points": 120.0
+      },
+      {
+        "rank": 2,
+        "school": "FEU",
+        "total_points": 84.0
+      },
+      {
+        "rank": 3,
+        "school": "ADU",
+        "total_points": 57.0
+      },
+      {
+        "rank": 4,
+        "school": "UP",
+        "total_points": 53.0
+      },
+      {
+        "rank": 5,
+        "school": "ADMU",
+        "total_points": 46.0
+      },
+      {
+        "rank": 6,
+        "school": "DLSU",
+        "total_points": 41.0
+      },
+      {
+        "rank": 7,
+        "school": "UE",
+        "total_points": 18.0
+      },
+      {
+        "rank": 8,
+        "school": "NU",
+        "total_points": 15.0
+      }
+    ],
+    "junior": [
+      {
+        "rank": 1,
+        "school": "ADMU",
+        "total_points": 30.0
+      },
+      {
+        "rank": 2,
+        "school": "UST",
+        "total_points": 26.0
+      },
+      {
+        "rank": 3,
+        "school": "FEU",
+        "total_points": 24.0
+      },
+      {
+        "rank": 4,
+        "school": "DLSU",
+        "total_points": 19.0
+      },
+      {
+        "rank": 5,
+        "school": "NU",
+        "total_points": 16.0
+      },
+      {
+        "rank": 6,
+        "school": "ADU",
+        "total_points": 12.0
+      },
+      {
+        "rank": 7,
+        "school": "UP",
+        "total_points": 9.0
+      }
+    ]
+  }
+}
