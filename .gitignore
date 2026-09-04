@@ -51,5 +51,10 @@ node_modules/
 # Raw physical archive camera dumps
 data/**/raw_photos/
 data/sample_pages/
+
+# UAAP Archival book generated assets (PDFs, HTML viewers)
+data/seasons/**/*.pdf
+data/seasons/**/*.html
+
 __pycache__/
 *.pyc
