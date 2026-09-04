@@ -192,6 +192,17 @@ def run_transcription(season_name: str, model_name: str, force: bool = False):
     print(f"\nProcessing summary: {completed} new pages transcribed, {skipped} skipped.")
     compile_book(pages_dir, book_file, season_name)
 
+    # Automatically generate interactive HTML book viewer and printable PDF
+    try:
+        print("\n--- Generating Digital Book Viewer and PDF ---")
+        try:
+            from scripts.build_book_pdf_and_viewer import generate_html_and_pdf
+        except ImportError:
+            from build_book_pdf_and_viewer import generate_html_and_pdf
+        generate_html_and_pdf(season_name)
+    except Exception as e:
+        print(f"[!] PDF/Viewer generation notice: {e}")
+
 
 def main():
     parser = argparse.ArgumentParser(description="Transcribe an entire UAAP annual report book season into digital Markdown.")

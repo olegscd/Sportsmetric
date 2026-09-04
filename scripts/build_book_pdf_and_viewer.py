@@ -414,10 +414,11 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 """
 
 def generate_html_and_pdf(season_name: str):
+    season_clean = season_name.replace("-", "_")
     base_dir = Path(__file__).resolve().parent.parent / "data" / "seasons" / season_name
     pages_dir = base_dir / "digital_pages"
-    output_html = base_dir / "UAAP_2003_2004_Annual_Report.html"
-    output_pdf = base_dir / "UAAP_2003_2004_Annual_Report.pdf"
+    output_html = base_dir / f"UAAP_{season_clean}_Annual_Report.html"
+    output_pdf = base_dir / f"UAAP_{season_clean}_Annual_Report.pdf"
 
     md_files = sorted(pages_dir.glob("*.md"))
     if not md_files:
