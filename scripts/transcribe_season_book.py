@@ -73,42 +73,67 @@ def transcribe_page(client, image_path: Path, model_name: str) -> str:
     with open(image_path, "rb") as f:
         img_bytes = f.read()
 
+FALLBACK_MODELS = [
+    "gemini-3.5-flash-lite",
+    "gemini-3.1-flash-lite",
+    "gemini-3-flash-preview",
+    "gemini-3.5-flash",
+]
+
+def transcribe_page(client, image_path: Path, model_name: str) -> tuple[str, str]:
+    from google.genai import types
+
+    with open(image_path, "rb") as f:
+        img_bytes = f.read()
+
     ext = image_path.suffix.lower()
     mime_type = "image/png" if ext == ".png" else "image/jpeg"
 
-    # Retry with exponential backoff for rate limits or transient issues
-    max_retries = 5
-    for attempt in range(max_retries):
-        try:
-            response = client.models.generate_content(
-                model=model_name,
-                contents=[
-                    types.Part.from_bytes(data=img_bytes, mime_type=mime_type),
-                    TRANSCRIBE_PROMPT
-                ],
-                config=types.GenerateContentConfig(
-                    temperature=0.1
+    models_to_try = [model_name] + [m for m in FALLBACK_MODELS if m != model_name]
+
+    for current_model in models_to_try:
+        max_retries = 3
+        daily_limit_hit = False
+        for attempt in range(max_retries):
+            try:
+                response = client.models.generate_content(
+                    model=current_model,
+                    contents=[
+                        types.Part.from_bytes(data=img_bytes, mime_type=mime_type),
+                        TRANSCRIBE_PROMPT
+                    ],
+                    config=types.GenerateContentConfig(
+                        temperature=0.1
+                    )
                 )
-            )
-            text = response.text.strip()
-            # Strip outer markdown fence if the model accidentally wrapped it
-            if text.startswith("```markdown"):
-                text = text[11:]
-            if text.startswith("```"):
-                text = text[3:]
-            if text.endswith("```"):
-                text = text[:-3]
-            return text.strip()
-        except Exception as e:
-            if "429" in str(e) or "ResourceExhausted" in str(e):
-                wait_sec = (attempt + 1) * 12
-                print(f"[Rate limit] waiting {wait_sec}s...")
-                time.sleep(wait_sec)
-            else:
-                if attempt == max_retries - 1:
-                    raise e
-                time.sleep(3)
-    raise RuntimeError("Failed after retries")
+                text = response.text.strip()
+                # Strip outer markdown fence if the model accidentally wrapped it
+                if text.startswith("```markdown"):
+                    text = text[11:]
+                if text.startswith("```"):
+                    text = text[3:]
+                if text.endswith("```"):
+                    text = text[:-3]
+                return text.strip(), current_model
+            except Exception as e:
+                err_str = str(e)
+                # Check for daily quota ceiling
+                if "GenerateRequestsPerDay" in err_str or ("429" in err_str and "PerDay" in err_str) or ("limit: 20" in err_str):
+                    print(f"\n[Daily limit reached on {current_model}] Switching to next fallback model...", end=" ", flush=True)
+                    daily_limit_hit = True
+                    break
+                elif "429" in err_str or "ResourceExhausted" in err_str:
+                    wait_sec = (attempt + 1) * 12
+                    print(f"[Rate limit] waiting {wait_sec}s...", end=" ", flush=True)
+                    time.sleep(wait_sec)
+                else:
+                    if attempt == max_retries - 1:
+                        break
+                    time.sleep(3)
+        if not daily_limit_hit and attempt == max_retries - 1:
+            continue
+
+    raise RuntimeError("Failed after trying all fallback models")
 
 
 def compile_book(digital_pages_dir: Path, compiled_book_path: Path, season_name: str):
@@ -180,7 +205,7 @@ def run_transcription(season_name: str, model_name: str, force: bool = False):
 
         print(f"[{idx}/{len(photos)}] Transcribing: {photo_path.name} ...", end=" ", flush=True)
         try:
-            markdown_content = transcribe_page(client, photo_path, model_name)
+            markdown_content, model_name = transcribe_page(client, photo_path, model_name)
             target_md.write_text(markdown_content, encoding="utf-8")
             print("DONE!")
             completed += 1
@@ -207,7 +232,7 @@ def run_transcription(season_name: str, model_name: str, force: bool = False):
 def main():
     parser = argparse.ArgumentParser(description="Transcribe an entire UAAP annual report book season into digital Markdown.")
     parser.add_argument("--season", default="2003-2004", help="Season name/folder (default: 2003-2004)")
-    parser.add_argument("--model", default="gemini-3.5-flash", help="Model name (default: gemini-3.5-flash)")
+    parser.add_argument("--model", default="gemini-3.5-flash-lite", help="Model name (default: gemini-3.5-flash-lite)")
     parser.add_argument("--force", action="store_true", help="Re-transcribe pages even if .md already exists")
     args = parser.parse_args()
 
