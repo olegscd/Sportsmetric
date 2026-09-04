@@ -469,33 +469,6 @@ export function UAAPArchiveView() {
       {/* VIEW 1: OFF THE RIP — GRID OF ALL SPORTS & GENERAL CHAMPIONSHIP HERO */}
       {!currentSportMeta ? (
         <div className="space-y-6 animate-in fade-in duration-200">
-          {/* Header Banner */}
-          <div className="p-6 md:p-8 rounded-3xl bg-gradient-to-br from-surface via-surface to-elevated border border-border relative overflow-hidden shadow-lg">
-            <div className="absolute -right-10 -bottom-10 w-64 h-64 bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />
-            <div className="max-w-2xl relative z-10">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-amber-500/10 text-amber-400 border border-amber-500/20 mb-3">
-                <Trophy size={13} />
-                Multi-Era Official Historical Archive
-              </span>
-              <h1 className="text-2xl md:text-3xl font-black text-foreground tracking-tight">
-                UAAP Tournament & Athletics Archive
-              </h1>
-              <p className="text-sm text-muted mt-2 leading-relaxed">
-                Digitized annual reports across 7 benchmark seasons (1987 to 2004). Explore general championship standings, 13 official sports tournaments, individual awards, and game results.
-              </p>
-
-              {/* Season Pills */}
-              <div className="flex flex-wrap items-center gap-2 mt-4">
-                <span className="text-xs font-bold text-muted uppercase tracking-wider mr-1">Digitized Seasons:</span>
-                {["1987-1988", "1988-1989", "1989-1990", "1998-1999", "1999-2000", "2000-2001", "2003-2004"].map((s) => (
-                  <span key={s} className="px-2.5 py-0.5 rounded-lg text-xs font-semibold bg-surface border border-border text-foreground/80">
-                    {s}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
-
           {/* Featured: General Championship Card */}
           {(() => {
             const genSport = SPORTS_META.find((s) => s.slug === "general-championship");
