@@ -15,6 +15,7 @@ import {
   Sparkles,
   Trophy,
 } from "lucide-react";
+import Link from "next/link";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useMemo, useState, useEffect } from "react";
 import {
@@ -87,8 +88,8 @@ function SchoolCell({ team }: { team: string }) {
 }
 
 export function UAAPArchiveView() {
-  const router = useRouter();
   const searchParams = useSearchParams();
+  const router = useRouter();
 
   const sportParam = searchParams.get("sport");
   const seasonParam = searchParams.get("season");
@@ -134,6 +135,15 @@ export function UAAPArchiveView() {
     if (!seasonParam) return null;
     return availableSeasons.find((s) => s.toLowerCase() === seasonParam.toLowerCase()) ?? null;
   }, [seasonParam, availableSeasons]);
+
+  // The dropdown's option list must always contain the selected value, even
+  // while the live fetch is mid-flight and the season list is still settling.
+  const seasonOptions = useMemo(() => {
+    if (currentSeason && !availableSeasons.includes(currentSeason)) {
+      return [currentSeason, ...availableSeasons];
+    }
+    return availableSeasons;
+  }, [availableSeasons, currentSeason]);
 
   const tablesForSeason = useMemo(
     () => tablesForSport.filter((t) => t.season === currentSeason),
@@ -207,22 +217,23 @@ export function UAAPArchiveView() {
   }, [tables]);
 
   // ---------------------------------------------------------------------------
-  // Navigation
+  // Navigation — build hrefs, render with <Link>. Using Link (not router.push)
+  // makes query-only navigations reliably re-render this Suspense-wrapped view.
   // ---------------------------------------------------------------------------
 
-  const go = (params: Record<string, string | undefined>) => {
+  const hrefFor = (params: Record<string, string | undefined>): string => {
     const search = new URLSearchParams();
     for (const [key, value] of Object.entries(params)) {
       if (value) search.set(key, value);
     }
     const query = search.toString();
-    router.push(query ? `/uaap?${query}` : "/uaap");
+    return query ? `/uaap?${query}` : "/uaap";
   };
 
-  const selectSeason = (season: string) => {
-    if (!sportMeta) return;
+  const seasonHref = (season: string): string => {
+    if (!sportMeta) return "/uaap";
     const firstDivision = tablesForSport.find((t) => t.season === season)?.division;
-    go({ sport: sportMeta.name, season, division: firstDivision, tab: "standings" });
+    return hrefFor({ sport: sportMeta.name, season, division: firstDivision, tab: "standings" });
   };
 
   const availableTabs = useMemo(() => {
@@ -254,8 +265,8 @@ export function UAAPArchiveView() {
     return (
       <div className="space-y-6 max-w-7xl mx-auto p-4 md:p-6 pb-20 animate-in fade-in duration-200">
         {featured && (
-          <button
-            onClick={() => go({ sport: featured.name })}
+          <Link
+            href={hrefFor({ sport: featured.name })}
             className="w-full text-left p-5 md:p-6 rounded-3xl bg-gradient-to-r from-amber-500/10 via-amber-500/5 to-surface border border-amber-500/30 hover:border-amber-400/60 transition-all cursor-pointer group shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
           >
             <div className="flex items-center gap-4">
@@ -287,7 +298,7 @@ export function UAAPArchiveView() {
                 <ChevronRight size={16} />
               </div>
             </div>
-          </button>
+          </Link>
         )}
 
         <div className="space-y-3">
@@ -312,9 +323,9 @@ export function UAAPArchiveView() {
               const Icon = sport.icon;
               const count = seasonCountBySport.get(sport.slug) ?? 0;
               return (
-                <button
+                <Link
                   key={sport.slug}
-                  onClick={() => go({ sport: sport.name })}
+                  href={hrefFor({ sport: sport.name })}
                   className={cn(
                     "aspect-square flex flex-col items-center justify-between p-4 rounded-2xl bg-surface border border-border transition-all duration-200 group text-center cursor-pointer",
                     "hover:scale-[1.03] hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-amber-500/50",
@@ -339,7 +350,7 @@ export function UAAPArchiveView() {
                   <span className="text-sm font-bold text-foreground group-hover:text-amber-400 transition-colors block truncate w-full">
                     {sport.name}
                   </span>
-                </button>
+                </Link>
               );
             })}
           </div>
@@ -365,13 +376,13 @@ export function UAAPArchiveView() {
       <div className="space-y-6 max-w-7xl mx-auto p-4 md:p-6 pb-20 animate-in fade-in slide-in-from-bottom-2 duration-200">
         <div className="flex flex-wrap items-center justify-between gap-4 border-b border-border/60 pb-4">
           <div className="flex items-center gap-3">
-            <button
-              onClick={() => go({})}
+            <Link
+              href={hrefFor({})}
               className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-surface border border-border text-muted hover:text-foreground hover:bg-elevated transition-colors cursor-pointer"
             >
               <ArrowLeft size={14} />
               <span>All sports</span>
-            </button>
+            </Link>
             <div className="flex items-center gap-2.5">
               <div className={cn("p-2 rounded-xl bg-elevated/70", sportMeta.color)}>
                 <SportIcon className="w-5 h-5" />
@@ -391,13 +402,13 @@ export function UAAPArchiveView() {
             <p className="text-xs text-muted mt-1 max-w-sm mx-auto">
               Historical records for {sportMeta.name} have not been added to the archive.
             </p>
-            <button
-              onClick={() => go({})}
+            <Link
+              href={hrefFor({})}
               className="mt-4 inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-elevated hover:bg-elevated/80 border border-border text-foreground transition-all cursor-pointer"
             >
               <ArrowLeft size={14} />
               <span>Back to all sports</span>
-            </button>
+            </Link>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -411,9 +422,9 @@ export function UAAPArchiveView() {
               const hasAwards = !!extras.awards?.[makeExtrasKey(sportMeta.name, season)];
 
               return (
-                <button
+                <Link
                   key={season}
-                  onClick={() => selectSeason(season)}
+                  href={seasonHref(season)}
                   className="flex flex-col justify-between p-5 rounded-2xl bg-surface border border-border transition-all duration-200 text-left group cursor-pointer shadow-sm hover:border-amber-500/60 hover:bg-elevated/40 hover:scale-[1.02] hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-amber-500/50"
                 >
                   <div className="flex items-start justify-between w-full">
@@ -458,7 +469,7 @@ export function UAAPArchiveView() {
                       {rowCount} rows
                     </span>
                   </div>
-                </button>
+                </Link>
               );
             })}
           </div>
@@ -471,8 +482,8 @@ export function UAAPArchiveView() {
   // View 3: season detail
   // ---------------------------------------------------------------------------
 
-  const navTo = (overrides: Partial<Record<string, string>>) =>
-    go({
+  const navHref = (overrides: Partial<Record<string, string>>): string =>
+    hrefFor({
       sport: sportMeta.name,
       season: currentSeason,
       division: currentDivision ?? undefined,
@@ -484,19 +495,19 @@ export function UAAPArchiveView() {
     <div className="space-y-6 max-w-7xl mx-auto p-4 md:p-6 pb-20 animate-in fade-in slide-in-from-bottom-2 duration-200">
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-border/60 pb-4">
         <div className="flex flex-wrap items-center gap-3">
-          <button
-            onClick={() => go({ sport: sportMeta.name })}
+          <Link
+            href={hrefFor({ sport: sportMeta.name })}
             className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-surface border border-border text-muted hover:text-foreground hover:bg-elevated transition-colors cursor-pointer"
           >
             <ArrowLeft size={14} />
             <span>Seasons</span>
-          </button>
-          <button
-            onClick={() => go({})}
+          </Link>
+          <Link
+            href={hrefFor({})}
             className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-medium text-muted hover:text-foreground hover:bg-elevated transition-colors cursor-pointer"
           >
             All sports
-          </button>
+          </Link>
           <div className="flex items-center gap-2.5">
             <div className={cn("p-2 rounded-xl bg-elevated/70", sportMeta.color)}>
               <SportIcon className="w-5 h-5" />
@@ -518,11 +529,11 @@ export function UAAPArchiveView() {
         <div className="flex flex-wrap items-center gap-2">
           <select
             value={currentSeason}
-            onChange={(e) => selectSeason(e.target.value)}
+            onChange={(e) => router.push(seasonHref(e.target.value))}
             className="px-3 py-1.5 rounded-xl text-xs font-bold bg-surface border border-border text-foreground focus:outline-none focus:ring-2 focus:ring-amber-500/40"
             aria-label="Season"
           >
-            {availableSeasons.map((s) => (
+            {seasonOptions.map((s) => (
               <option key={s} value={s}>
                 {formatSeasonLabel(s).label}
               </option>
@@ -532,9 +543,9 @@ export function UAAPArchiveView() {
           {availableDivisions.length > 1 ? (
             <div className="flex items-center gap-1.5 p-1 bg-surface border border-border rounded-xl">
               {availableDivisions.map((div) => (
-                <button
+                <Link
                   key={div}
-                  onClick={() => navTo({ division: div })}
+                  href={navHref({ division: div })}
                   className={cn(
                     "px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer",
                     currentDivision === div
@@ -543,7 +554,7 @@ export function UAAPArchiveView() {
                   )}
                 >
                   {div}
-                </button>
+                </Link>
               ))}
             </div>
           ) : currentDivision ? (
@@ -557,9 +568,9 @@ export function UAAPArchiveView() {
       {availableTabs.length > 1 && (
         <div className="flex items-center gap-2 border-b border-border pb-1 overflow-x-auto">
           {availableTabs.map((tab) => (
-            <button
+            <Link
               key={tab.id}
-              onClick={() => navTo({ tab: tab.id })}
+              href={navHref({ tab: tab.id })}
               className={cn(
                 "inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer whitespace-nowrap",
                 activeTab === tab.id
@@ -574,7 +585,7 @@ export function UAAPArchiveView() {
                   {tab.count}
                 </span>
               )}
-            </button>
+            </Link>
           ))}
         </div>
       )}
