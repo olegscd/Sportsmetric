@@ -502,7 +502,14 @@ export function UAAPArchiveView() {
               <SportIcon className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="text-xl font-bold text-foreground">{sportMeta.name}</h2>
+              <div className="flex items-center gap-2">
+                <h2 className="text-xl font-bold text-foreground">{sportMeta.name}</h2>
+                {currentDivision && (
+                  <span className="text-xs font-bold px-2 py-0.5 rounded-md bg-amber-500/15 text-amber-400 border border-amber-500/25">
+                    {currentDivision}
+                  </span>
+                )}
+              </div>
               <span className="text-xs text-muted">{formatSeasonLabel(currentSeason).label}</span>
             </div>
           </div>
@@ -522,7 +529,7 @@ export function UAAPArchiveView() {
             ))}
           </select>
 
-          {availableDivisions.length > 1 && (
+          {availableDivisions.length > 1 ? (
             <div className="flex items-center gap-1.5 p-1 bg-surface border border-border rounded-xl">
               {availableDivisions.map((div) => (
                 <button
@@ -539,7 +546,11 @@ export function UAAPArchiveView() {
                 </button>
               ))}
             </div>
-          )}
+          ) : currentDivision ? (
+            <div className="flex items-center px-3 py-1.5 bg-surface border border-border rounded-xl text-xs font-bold text-muted">
+              {currentDivision}
+            </div>
+          ) : null}
         </div>
       </div>
 
@@ -649,7 +660,7 @@ export function UAAPArchiveView() {
 
           {activeTable && (
             <p className="text-[11px] text-muted px-1">
-              {activeTable.stage} · Source: {activeTable.source_page}
+              {activeTable.division} · {activeTable.stage} · Source: {activeTable.source_page}
             </p>
           )}
         </div>
