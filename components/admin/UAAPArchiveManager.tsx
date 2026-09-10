@@ -28,7 +28,7 @@ import {
   type UAAPRow,
   type UAAPTable,
 } from "@/lib/uaap-schema";
-import { UAAP_SCHOOLS, getSchoolTheme } from "@/lib/uaap-schools";
+import { UAAP_SCHOOLS, getSchoolTheme, matchSchoolCode } from "@/lib/uaap-schools";
 import standingsData from "@/data/uaap_standings.json";
 import archiveExtrasData from "@/data/uaap_archive_extras.json";
 import {
@@ -680,13 +680,22 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
         <BulkImportPanel
           columns={draft.columns}
           onClose={() => setShowImport(false)}
-          onApply={(rows, mode) => {
+          onApply={(rows, mode, newColumns) => {
             setDraft((prev) => {
               const next = mode === "replace" ? rows : [...prev.rows, ...rows];
-              return { ...prev, rows: next.map((r, i) => ({ ...r, rank: r.rank || i + 1 })) };
+              return {
+                ...prev,
+                columns: newColumns ?? prev.columns,
+                rows: next.map((r, i) => ({ ...r, rank: r.rank || i + 1 })),
+              };
             });
             setShowImport(false);
-            onToast(`Loaded ${rows.length} ${rows.length === 1 ? "row" : "rows"} into the editor.`, "success");
+            onToast(
+              `Loaded ${rows.length} ${rows.length === 1 ? "row" : "rows"}${
+                newColumns ? " and updated columns" : ""
+              } into the editor.`,
+              "success"
+            );
           }}
         />
       )}
@@ -806,7 +815,7 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
                       </td>
 
                       <td className="py-2 px-3">
-                        <div className="flex items-center gap-1.5">
+                        <div className="flex items-center gap-2">
                           {row.team && (
                             <span
                               className={cn(
@@ -818,17 +827,33 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
                               {row.team}
                             </span>
                           )}
-                          <input
-                            type="text"
-                            list={SCHOOL_DATALIST_ID}
-                            value={row.team}
-                            data-cell={`${idx}:team`}
-                            onChange={(e) => updateRow(idx, { team: e.target.value })}
-                            onKeyDown={(e) => handleCellKeyDown(e, idx, "team")}
-                            placeholder="School"
-                            className="px-2 py-1 rounded bg-elevated border border-border text-foreground text-xs font-semibold flex-1 min-w-0"
-                            aria-label={`School for row ${idx + 1}`}
-                          />
+                          <div className="flex-1 min-w-0">
+                            <input
+                              type="text"
+                              list={SCHOOL_DATALIST_ID}
+                              value={row.team}
+                              data-cell={`${idx}:team`}
+                              onChange={(e) => updateRow(idx, { team: e.target.value })}
+                              onBlur={() => {
+                                const matched = matchSchoolCode(row.team);
+                                if (matched && matched !== row.team) {
+                                  updateRow(idx, { team: matched });
+                                }
+                              }}
+                              onKeyDown={(e) => handleCellKeyDown(e, idx, "team")}
+                              placeholder="School code (e.g. UP)"
+                              className="w-full px-2 py-1 rounded bg-elevated border border-border text-foreground text-xs font-semibold"
+                              aria-label={`School for row ${idx + 1}`}
+                            />
+                            {theme.name && theme.name !== row.team && (
+                              <div
+                                className="text-[10px] text-muted truncate mt-0.5"
+                                title={theme.name}
+                              >
+                                {theme.name}
+                              </div>
+                            )}
+                          </div>
                         </div>
                       </td>
 

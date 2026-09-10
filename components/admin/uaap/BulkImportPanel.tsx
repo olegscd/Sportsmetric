@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { cn } from "@/lib/utils";
 import { ArrowRight, FileUp, Sparkles, X } from "lucide-react";
 import {
@@ -10,7 +10,12 @@ import {
   type ImportTarget,
   type ParsedGrid,
 } from "@/lib/uaap-import";
-import type { UAAPColumn, UAAPRow } from "@/lib/uaap-schema";
+import {
+  COLUMN_PRESETS,
+  type UAAPColumn,
+  type UAAPColumnPreset,
+  type UAAPRow,
+} from "@/lib/uaap-schema";
 
 const PLACEHOLDER = `Paste rows from a spreadsheet, CSV, or typed-out scan. For example:
 
@@ -24,15 +29,25 @@ export function BulkImportPanel({
   onClose,
 }: {
   columns: UAAPColumn[];
-  onApply: (rows: UAAPRow[], mode: "replace" | "append") => void;
+  onApply: (rows: UAAPRow[], mode: "replace" | "append", newColumns?: UAAPColumn[]) => void;
   onClose: () => void;
 }) {
   const [text, setText] = useState("");
   const [grid, setGrid] = useState<ParsedGrid | null>(null);
+  const [activeColumns, setActiveColumns] = useState<UAAPColumn[]>(columns);
+  const [detectedPreset, setDetectedPreset] = useState<UAAPColumnPreset | null>(null);
   const [targets, setTargets] = useState<ImportTarget[]>([]);
   const [mode, setMode] = useState<"replace" | "append">("replace");
 
-  const enterableColumns = useMemo(() => columns.filter((c) => !c.derived), [columns]);
+  useEffect(() => {
+    setActiveColumns(columns);
+    setDetectedPreset(null);
+  }, [columns]);
+
+  const enterableColumns = useMemo(
+    () => activeColumns.filter((c) => !c.derived),
+    [activeColumns]
+  );
 
   const targetOptions = useMemo(() => {
     const base = [
@@ -53,16 +68,46 @@ export function BulkImportPanel({
     if (parsed.rows.length === 0) {
       setGrid(null);
       setTargets([]);
+      setDetectedPreset(null);
       return;
     }
+
+    let colsToUse = activeColumns;
+    let foundPreset: UAAPColumnPreset | null = null;
+
+    // If current columns are empty (e.g. Placement only), detect if pasted headers match a preset
+    if (colsToUse.length === 0 && parsed.headers) {
+      const headerStrs = parsed.headers.map((h) => h.toLowerCase().trim());
+      const hasW = headerStrs.some((h) => /^(w|wins)$/i.test(h));
+      const hasL = headerStrs.some((h) => /^(l|losses)$/i.test(h));
+      const hasPts = headerStrs.some((h) => /^(pts|points)$/i.test(h));
+      const hasMedals = headerStrs.some((h) => /^(gold|silver|bronze)$/i.test(h));
+
+      if (hasW && hasL && hasPts) {
+        foundPreset = COLUMN_PRESETS.find((p) => p.id === "win-loss-points") ?? null;
+      } else if (hasW && hasL) {
+        foundPreset = COLUMN_PRESETS.find((p) => p.id === "win-loss") ?? null;
+      } else if (hasPts) {
+        foundPreset = COLUMN_PRESETS.find((p) => p.id === "points") ?? null;
+      } else if (hasMedals) {
+        foundPreset = COLUMN_PRESETS.find((p) => p.id === "medals") ?? null;
+      }
+
+      if (foundPreset) {
+        colsToUse = foundPreset.columns.map((c) => ({ ...c }));
+        setActiveColumns(colsToUse);
+        setDetectedPreset(foundPreset);
+      }
+    }
+
     setGrid(parsed);
-    setTargets(guessTargets(parsed, columns));
+    setTargets(guessTargets(parsed, colsToUse));
   };
 
   const previewRows = useMemo(() => {
     if (!grid) return [];
-    return applyImport(grid, targets, columns);
-  }, [grid, targets, columns]);
+    return applyImport(grid, targets, activeColumns);
+  }, [grid, targets, activeColumns]);
 
   const setTarget = (idx: number, value: string) => {
     setTargets((prev) =>
@@ -126,6 +171,28 @@ export function BulkImportPanel({
 
       {grid && (
         <>
+          {detectedPreset && (
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 text-xs">
+              <div className="flex items-center gap-2 text-amber-400 font-medium">
+                <Sparkles size={15} className="shrink-0" />
+                <span>
+                  Detected stats headers. Auto-applied <strong>{detectedPreset.label}</strong> columns for this table.
+                </span>
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  setActiveColumns(columns);
+                  setDetectedPreset(null);
+                  if (grid) setTargets(guessTargets(grid, columns));
+                }}
+                className="text-[11px] underline text-muted hover:text-foreground cursor-pointer shrink-0"
+              >
+                Revert to original columns
+              </button>
+            </div>
+          )}
+
           <div className="space-y-2">
             <span className="text-[11px] font-bold uppercase tracking-wider text-muted">
               Confirm what each column is
@@ -238,7 +305,13 @@ export function BulkImportPanel({
 
             <button
               type="button"
-              onClick={() => onApply(previewRows, mode)}
+              onClick={() =>
+                onApply(
+                  previewRows,
+                  mode,
+                  activeColumns !== columns ? activeColumns : undefined
+                )
+              }
               disabled={previewRows.length === 0}
               className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-xl text-xs font-bold bg-amber-500 text-slate-950 hover:bg-amber-400 disabled:opacity-40 cursor-pointer"
             >
