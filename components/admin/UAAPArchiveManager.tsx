@@ -66,7 +66,7 @@ const ALL_SPORTS = [
   "Swimming",
 ];
 
-const BASE_DIVISIONS = ["Men's", "Women's", "Juniors", "Collegiate", "Boys", "Girls"];
+const BASE_DIVISIONS = ["Men's", "Women's", "Juniors"];
 
 const FALLBACK_SEASONS = [
   "2003-2004",
