@@ -13,7 +13,6 @@ import {
   Medal,
   Search,
   Sparkles,
-  Swords,
   Trophy,
 } from "lucide-react";
 import { useSearchParams, useRouter } from "next/navigation";
@@ -35,7 +34,7 @@ import archiveExtrasData from "@/data/uaap_archive_extras.json";
 
 export { formatSeasonLabel };
 
-type TabId = "standings" | "awards" | "games" | "leaders";
+type TabId = "standings" | "awards" | "leaders";
 
 function isChampionRow(details: string | null, rank: number): boolean {
   if (rank !== 1) return false;
@@ -190,12 +189,6 @@ export function UAAPArchiveView() {
     return normalizeChessMedalists(raw);
   }, [extras, extrasKey, currentDivision]);
 
-  const games = useMemo(() => {
-    if (!extrasKey) return [];
-    const raw = extras.games?.[extrasKey];
-    return Array.isArray(raw) ? raw : [];
-  }, [extras, extrasKey]);
-
   const leaderboards = useMemo(() => {
     if (!extrasKey) return null;
     const raw = extras.leaderboards?.[extrasKey];
@@ -239,14 +232,11 @@ export function UAAPArchiveView() {
     if (divisionAwards || chessMedalists) {
       tabs.push({ id: "awards", label: "Awards", icon: <Award size={14} /> });
     }
-    if (games.length > 0) {
-      tabs.push({ id: "games", label: "Games", icon: <Swords size={14} />, count: games.length });
-    }
     if (leaderboards) {
       tabs.push({ id: "leaders", label: "Leaders", icon: <ListOrdered size={14} /> });
     }
     return tabs;
-  }, [activeTable, divisionAwards, chessMedalists, games, leaderboards]);
+  }, [activeTable, divisionAwards, chessMedalists, leaderboards]);
 
   const activeTab: TabId = availableTabs.some((t) => t.id === tabParam) ? tabParam : "standings";
 
@@ -797,56 +787,6 @@ export function UAAPArchiveView() {
               No individual awards recorded for this division in {currentSeason}.
             </div>
           )}
-        </div>
-      )}
-
-      {activeTab === "games" && (
-        <div className="bg-surface border border-border rounded-2xl overflow-hidden shadow-sm">
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm border-collapse">
-              <thead>
-                <tr className="border-b border-border bg-elevated/40 text-[11px] font-bold uppercase tracking-wider text-muted">
-                  <th className="py-3 px-4">Date</th>
-                  <th className="py-3 px-4">Round</th>
-                  <th className="py-3 px-4">Result</th>
-                  <th className="py-3 px-4 hidden md:table-cell">Venue</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-border/60">
-                {games.map((game: any, idx: number) => (
-                  <tr key={idx} className="hover:bg-elevated/40 transition-colors">
-                    <td className="py-3 px-4 text-xs text-muted whitespace-nowrap">
-                      {game.date || "—"}
-                    </td>
-                    <td className="py-3 px-4">
-                      <span className="inline-block px-2 py-0.5 rounded-md bg-elevated text-[11px] text-muted font-medium capitalize">
-                        {String(game.round || "").replace(/_/g, " ") || "—"}
-                      </span>
-                      {game.is_championship && (
-                        <span className="ml-1.5 inline-block px-2 py-0.5 rounded-md bg-amber-500/15 text-amber-400 text-[10px] font-bold">
-                          Final
-                        </span>
-                      )}
-                    </td>
-                    <td className="py-3 px-4">
-                      <div className="flex items-center gap-2 text-xs font-semibold flex-wrap">
-                        <span className="text-foreground">{game.winner?.school ?? "?"}</span>
-                        <span className="font-mono font-bold text-amber-400">
-                          {game.winner?.score ?? "—"}
-                        </span>
-                        <span className="text-muted">def.</span>
-                        <span className="text-muted">{game.loser?.school ?? "?"}</span>
-                        <span className="font-mono text-muted">{game.loser?.score ?? "—"}</span>
-                      </div>
-                    </td>
-                    <td className="py-3 px-4 text-xs text-muted hidden md:table-cell">
-                      {game.venue || "—"}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
         </div>
       )}
 

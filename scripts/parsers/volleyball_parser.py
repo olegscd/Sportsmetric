@@ -257,11 +257,8 @@ def extract_volleyball(pages: list[PageSegment], season: str, structured_dir: Pa
         (vb_dir / "standings").mkdir(parents=True, exist_ok=True)
         (vb_dir / "standings" / f"{season}.json").write_text(json.dumps(standings, indent=2, ensure_ascii=False), encoding="utf-8")
 
-    games = parse_volleyball_games(pages, season)
-    games_doc = {"season": season, "sport": "volleyball", "total_games": len(games), "games": games}
-    if games:
-        (vb_dir / "games").mkdir(parents=True, exist_ok=True)
-        (vb_dir / "games" / f"{season}.json").write_text(json.dumps(games_doc, indent=2, ensure_ascii=False), encoding="utf-8")
+    # Games omitted - historical game scores are unreliable
+    games_doc = {"season": season, "sport": "volleyball", "total_games": 0, "games": []}
 
     awards = parse_volleyball_awards(pages, season)
     if awards["divisions"]:

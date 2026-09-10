@@ -134,19 +134,6 @@ def compile_extras() -> dict[str, Any]:
                         clean_divs[DIV_MAP.get(dk, dk.title())] = dv
                     extras["awards"][key] = clean_divs
 
-    # Games (basketball, volleyball, baseball)
-    for sp in ["basketball", "volleyball", "baseball"]:
-        sport_name = SPORT_NAME_MAP[sp]
-        gm_dir = STRUCTURED_DIR / sp / "games"
-        if gm_dir.exists():
-            for f in sorted(gm_dir.glob("*.json")):
-                season = f.stem
-                data = json.loads(f.read_text(encoding="utf-8"))
-                games_list = data.get("games", [])
-                if games_list:
-                    key = f"{sport_name}|{season}"
-                    extras["games"][key] = games_list
-
     # Chess board medalists
     ch_bm_dir = STRUCTURED_DIR / "chess" / "board_medalists"
     if ch_bm_dir.exists():
@@ -187,7 +174,6 @@ def main():
     out_extras.write_text(json.dumps(extras, indent=2, ensure_ascii=False), encoding="utf-8")
     print(f"Saved extras to {out_extras.resolve()}:")
     print(f"  Awards: {len(extras['awards'])} sport-seasons")
-    print(f"  Game sets: {len(extras['games'])} sport-seasons")
     print(f"  Chess Medalists: {len(extras['chess_medalists'])} seasons")
     print(f"  Leaderboards: {len(extras['leaderboards'])} seasons")
 

@@ -827,16 +827,13 @@ def extract_basketball(pages: list[PageSegment], season: str, structured_dir: Pa
     if standings["divisions"]:
         save_basketball_data(standings, "standings", bb_dir)
 
-    # 2. Games
-    games = parse_basketball_game_results(pages, season)
+    # 2. Games omitted - historical game scores are unreliable
     games_doc = {
         "season": season,
         "sport": "basketball",
-        "total_games": len(games),
-        "games": games
+        "total_games": 0,
+        "games": []
     }
-    if games:
-        save_basketball_data(games_doc, "games", bb_dir)
 
     # 3. Awards
     awards = parse_basketball_awards(pages, season)

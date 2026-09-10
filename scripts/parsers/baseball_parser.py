@@ -242,11 +242,8 @@ def extract_baseball(pages: list[PageSegment], season: str, structured_dir: Path
         (b_dir / "standings").mkdir(parents=True, exist_ok=True)
         (b_dir / "standings" / f"{season}.json").write_text(json.dumps(standings, indent=2, ensure_ascii=False), encoding="utf-8")
 
-    games = parse_baseball_games(pages, season)
-    games_doc = {"season": season, "sport": "baseball", "total_games": len(games), "games": games}
-    if games:
-        (b_dir / "games").mkdir(parents=True, exist_ok=True)
-        (b_dir / "games" / f"{season}.json").write_text(json.dumps(games_doc, indent=2, ensure_ascii=False), encoding="utf-8")
+    # Games omitted - historical game scores are unreliable
+    games_doc = {"season": season, "sport": "baseball", "total_games": 0, "games": []}
 
     awards = parse_baseball_awards(pages, season)
     if awards["divisions"]:
