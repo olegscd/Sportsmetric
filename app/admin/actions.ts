@@ -108,6 +108,7 @@ export async function getLatestUAAPData(): Promise<MergedUAAPData> {
 export async function saveUAAPArchiveData(payload: UAAPSavePayload): Promise<{
   success: boolean;
   error?: string;
+  warning?: string;
   count?: number;
   data?: MergedUAAPData;
 }> {
@@ -128,7 +129,7 @@ export async function deleteUAAPArchiveDivision(
   season: string,
   sport: string,
   division: string
-): Promise<{ success: boolean; error?: string; data?: MergedUAAPData }> {
+): Promise<{ success: boolean; error?: string; warning?: string; data?: MergedUAAPData }> {
   const auth = await isAdminAuthenticated();
   if (!auth) {
     return { success: false, error: "Unauthorized." };

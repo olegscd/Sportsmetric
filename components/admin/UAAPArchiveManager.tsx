@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useEffect, useCallback } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import type { ToastFn } from "@/components/admin/Toast";
 import {
@@ -8,70 +8,46 @@ import {
   deleteUAAPArchiveDivision,
   getUAAPAnnualReportSnippet,
 } from "@/app/admin/actions";
-import type { UAAPStandingEntry } from "@/lib/uaap-data";
+import { ColumnEditor } from "@/components/admin/uaap/ColumnEditor";
+import { BulkImportPanel } from "@/components/admin/uaap/BulkImportPanel";
+import { CoveragePanel } from "@/components/admin/uaap/CoveragePanel";
+import {
+  COLUMN_PRESETS,
+  createEmptyTable,
+  formatCellValue,
+  legacyRecordsToTables,
+  makeDivisionKey,
+  makeExtrasKey,
+  normalizeChessMedalists,
+  normalizeDivision,
+  resolveCellValue,
+  toNumberOrNull,
+  type LegacyStandingRecord,
+  type UAAPArchiveExtras,
+  type UAAPColumn,
+  type UAAPRow,
+  type UAAPTable,
+} from "@/lib/uaap-schema";
+import { UAAP_SCHOOLS, getSchoolTheme } from "@/lib/uaap-schools";
 import standingsData from "@/data/uaap_standings.json";
 import archiveExtrasData from "@/data/uaap_archive_extras.json";
 import {
-  Trophy,
-  Crown,
   Award,
-  Plus,
-  Trash2,
-  ArrowUp,
-  ArrowDown,
-  Sparkles,
-  ExternalLink,
   BookOpen,
-  Save,
-  RotateCcw,
-  Wand2,
+  ChevronDown,
+  Columns3,
+  Copy,
+  Crown,
+  ExternalLink,
   FileText,
+  FileUp,
+  LayoutGrid,
+  Plus,
+  RotateCcw,
+  Save,
+  Sparkles,
+  Trash2,
 } from "lucide-react";
-
-const STANDARD_UAAP_SCHOOLS = [
-  { code: "ADMU", name: "Ateneo de Manila" },
-  { code: "DLSU", name: "De La Salle" },
-  { code: "FEU", name: "Far Eastern" },
-  { code: "UST", name: "Univ. of Santo Tomas" },
-  { code: "UP", name: "Univ. of the Philippines" },
-  { code: "UE", name: "Univ. of the East" },
-  { code: "AdU", name: "Adamson University" },
-  { code: "NU", name: "National University" },
-  { code: "DLSZ", name: "De La Salle Zobel (Juniors)" },
-  { code: "UPIS", name: "UP Integrated School (Juniors)" },
-  { code: "USTHS", name: "UST High School" },
-  { code: "FEU-FERN", name: "FEU Diliman (FERN)" },
-  { code: "AHS", name: "Ateneo High School" },
-  { code: "UEHS", name: "UE High School" },
-  { code: "NU-HS", name: "NU Nazareth (Juniors)" },
-];
-
-const SCHOOL_THEMES: Record<string, { bg: string; text: string; name: string }> = {
-  ADMU: { bg: "bg-blue-600/15 border-blue-500/30", text: "text-blue-400", name: "Ateneo" },
-  DLSU: { bg: "bg-emerald-600/15 border-emerald-500/30", text: "text-emerald-400", name: "La Salle" },
-  FEU: { bg: "bg-green-600/15 border-yellow-500/30", text: "text-yellow-400", name: "Far Eastern" },
-  UST: { bg: "bg-amber-500/15 border-amber-500/30", text: "text-amber-400", name: "Santo Tomas" },
-  UP: { bg: "bg-rose-700/15 border-rose-500/30", text: "text-rose-400", name: "UP" },
-  UPIS: { bg: "bg-rose-700/15 border-rose-500/30", text: "text-rose-400", name: "UPIS" },
-  UE: { bg: "bg-red-600/15 border-red-500/30", text: "text-red-400", name: "UE" },
-  AdU: { bg: "bg-sky-600/15 border-sky-500/30", text: "text-sky-400", name: "Adamson" },
-  ADU: { bg: "bg-sky-600/15 border-sky-500/30", text: "text-sky-400", name: "Adamson" },
-  NU: { bg: "bg-indigo-600/15 border-yellow-500/30", text: "text-indigo-400", name: "National U" },
-  DLSZ: { bg: "bg-emerald-600/15 border-emerald-500/30", text: "text-emerald-400", name: "DLSZ" },
-  USTHS: { bg: "bg-amber-500/15 border-amber-500/30", text: "text-amber-400", name: "UST High" },
-  "FEU-FERN": { bg: "bg-green-600/15 border-yellow-500/30", text: "text-yellow-400", name: "FEU Diliman" },
-  AHS: { bg: "bg-blue-600/15 border-blue-500/30", text: "text-blue-400", name: "Ateneo High" },
-  UEHS: { bg: "bg-red-600/15 border-red-500/30", text: "text-red-400", name: "UE High" },
-  "NU-HS": { bg: "bg-indigo-600/15 border-yellow-500/30", text: "text-indigo-400", name: "NU High" },
-};
-
-function getSchoolTheme(code: string) {
-  if (!code) return { bg: "bg-surface border-border", text: "text-foreground", name: "Unknown" };
-  const upper = code.toUpperCase();
-  if (SCHOOL_THEMES[code]) return SCHOOL_THEMES[code];
-  if (SCHOOL_THEMES[upper]) return SCHOOL_THEMES[upper];
-  return { bg: "bg-elevated border-border", text: "text-foreground", name: code };
-}
 
 const ALL_SPORTS = [
   "General Championship",
@@ -90,439 +66,470 @@ const ALL_SPORTS = [
   "Swimming",
 ];
 
-const ALL_DIVISIONS = ["Men's", "Women's", "Juniors", "Collegiate", "Boys", "Girls"];
+const BASE_DIVISIONS = ["Men's", "Women's", "Juniors", "Collegiate", "Boys", "Girls"];
+
+const FALLBACK_SEASONS = [
+  "2003-2004",
+  "2000-2001",
+  "1999-2000",
+  "1998-1999",
+  "1989-1990",
+  "1988-1989",
+  "1987-1988",
+];
+
+const SCHOOL_DATALIST_ID = "uaap-school-codes";
+
+function Section({
+  title,
+  icon,
+  subtitle,
+  defaultOpen = false,
+  children,
+}: {
+  title: string;
+  icon: React.ReactNode;
+  subtitle?: string;
+  defaultOpen?: boolean;
+  children: React.ReactNode;
+}) {
+  const [open, setOpen] = useState(defaultOpen);
+  return (
+    <div className="rounded-2xl bg-surface border border-border shadow-sm overflow-hidden">
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        className="w-full flex items-center justify-between gap-3 p-4 text-left cursor-pointer hover:bg-elevated/40 transition-colors"
+      >
+        <span className="flex items-center gap-2">
+          <span className="text-amber-400">{icon}</span>
+          <span className="text-sm font-bold text-foreground">{title}</span>
+          {subtitle && <span className="text-xs text-muted hidden sm:inline">{subtitle}</span>}
+        </span>
+        <ChevronDown
+          size={16}
+          className={cn("text-muted transition-transform shrink-0", open && "rotate-180")}
+        />
+      </button>
+      {open && <div className="px-4 pb-4 border-t border-border/60 pt-4">{children}</div>}
+    </div>
+  );
+}
 
 export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
-  // Dynamic live dataset (seeded initially from static bundle for zero-latency mount)
-  const [dynamicStandings, setDynamicStandings] = useState<any[]>(standingsData as any[]);
-  const [dynamicExtras, setDynamicExtras] = useState<any>(archiveExtrasData);
+  const [tables, setTables] = useState<UAAPTable[]>(() =>
+    legacyRecordsToTables(standingsData as LegacyStandingRecord[])
+  );
+  const [extras, setExtras] = useState<UAAPArchiveExtras>(archiveExtrasData as UAAPArchiveExtras);
+  const [customSeasons, setCustomSeasons] = useState<string[]>([]);
 
-  const fetchLiveUAAPData = useCallback(async () => {
+  const fetchLive = useCallback(async () => {
     try {
       const res = await fetch("/api/uaap/data", { cache: "no-store" });
-      if (res.ok) {
-        const json = await res.json();
-        if (json.standings) setDynamicStandings(json.standings);
-        if (json.extras) setDynamicExtras(json.extras);
-      }
+      if (!res.ok) return;
+      const json = await res.json();
+      if (Array.isArray(json.tables)) setTables(json.tables);
+      if (json.extras) setExtras(json.extras);
     } catch (err) {
-      console.warn("[UAAPArchiveManager] Dynamic data fetch failed, using local cache:", err);
+      console.warn("[UAAPArchiveManager] Live fetch failed, using bundled data:", err);
     }
   }, []);
 
   useEffect(() => {
-    fetchLiveUAAPData();
-  }, [fetchLiveUAAPData]);
+    fetchLive();
+  }, [fetchLive]);
 
-  // Existing seasons discovered dynamically from live data
-  const existingSeasons = useMemo(() => {
-    const list = Array.from(new Set(dynamicStandings.map((item: any) => item.season))).sort().reverse();
-    return list.length > 0
-      ? list
-      : ["2003-2004", "2000-2001", "1999-2000", "1998-1999", "1989-1990", "1988-1989", "1987-1988"];
-  }, [dynamicStandings]);
+  const seasons = useMemo(() => {
+    const set = new Set<string>([
+      ...tables.map((t) => t.season),
+      ...FALLBACK_SEASONS,
+      ...customSeasons,
+    ]);
+    return Array.from(set).filter(Boolean).sort().reverse();
+  }, [tables, customSeasons]);
 
-  // Selection states
-  const [season, setSeason] = useState<string>(existingSeasons[0] || "2003-2004");
-  const [newSeasonInput, setNewSeasonInput] = useState<string>("");
-  const [showNewSeasonModal, setShowNewSeasonModal] = useState<boolean>(false);
-
+  const [season, setSeason] = useState<string>(FALLBACK_SEASONS[0]);
   const [sport, setSport] = useState<string>("Basketball");
   const [division, setDivision] = useState<string>("Men's");
 
-  // Mode: W-L format or Points format
-  const [isPointsMode, setIsPointsMode] = useState<boolean>(false);
+  const divisions = useMemo(() => {
+    const fromData = tables
+      .filter((t) => t.season === season && t.sport.toLowerCase() === sport.toLowerCase())
+      .map((t) => t.division);
+    return Array.from(new Set([...BASE_DIVISIONS, ...fromData]));
+  }, [tables, season, sport]);
 
-  // Editable rows
-  const [standings, setStandings] = useState<UAAPStandingEntry[]>([]);
+  // -------------------------------------------------------------------------
+  // Draft table
+  // -------------------------------------------------------------------------
 
-  // Editable awards
-  const [mvpName, setMvpName] = useState<string>("");
-  const [mvpSchool, setMvpSchool] = useState<string>("FEU");
-  const [royName, setRoyName] = useState<string>("");
-  const [roySchool, setRoySchool] = useState<string>("FEU");
-  const [mythicalFive, setMythicalFive] = useState<Array<{ player: string; school: string; position?: string }>>([]);
+  const [draft, setDraft] = useState<UAAPTable>(() =>
+    createEmptyTable(FALLBACK_SEASONS[0], "Basketball", "Men's", COLUMN_PRESETS[0].columns)
+  );
+  const [baseline, setBaseline] = useState<string>("");
 
-  // Chess medalists (Boards 1-6)
+  const [mvp, setMvp] = useState({ player: "", school: "FEU" });
+  const [roy, setRoy] = useState({ player: "", school: "FEU" });
+  const [mythical, setMythical] = useState<
+    Array<{ player: string; school: string; position?: string }>
+  >([]);
   const [chessBoards, setChessBoards] = useState<
     Record<string, Array<{ medal: "gold" | "silver" | "bronze"; player: string; school: string }>>
-  >({
-    "1": [],
-    "2": [],
-    "3": [],
-    "4": [],
-    "5": [],
-    "6": [],
-  });
+  >({});
 
-  // Smart quick-paste drawer state
-  const [pasteText, setPasteText] = useState<string>("");
-  const [showPasteBox, setShowPasteBox] = useState<boolean>(false);
-
-  // Raw report reference drawer state
-  const [showReportRef, setShowReportRef] = useState<boolean>(false);
-  const [reportSnippet, setReportSnippet] = useState<string>("");
-  const [reportSourceFile, setReportSourceFile] = useState<string>("");
-  const [loadingReport, setLoadingReport] = useState<boolean>(false);
-
-  // Saving state
-  const [isSaving, setIsSaving] = useState<boolean>(false);
-
-  // Load existing records whenever season, sport, division, or dynamicStandings changes
-  const loadCurrentData = useCallback(() => {
-    // 1. Find matching standings
-    const matching = dynamicStandings.filter(
-      (item: any) =>
-        item.season === season &&
-        item.sport.toLowerCase() === sport.toLowerCase() &&
-        item.division.toLowerCase() === division.toLowerCase()
+  const loadDivision = useCallback(() => {
+    const key = makeDivisionKey(season, sport, division);
+    const existing = tables.find(
+      (t) => makeDivisionKey(t.season, t.sport, t.division) === key
     );
 
-    if (matching.length > 0) {
-      setStandings(
-        matching.map((m: any, idx: number) => ({
-          rank: m.rank || idx + 1,
-          team: m.team,
-          wins: m.wins,
-          losses: m.losses,
-          pct: m.pct,
-          points: m.points,
-          details: m.details,
-        }))
+    const table =
+      existing ??
+      createEmptyTable(
+        season,
+        sport,
+        division,
+        sport === "General Championship" || sport === "Chess"
+          ? COLUMN_PRESETS[1].columns
+          : COLUMN_PRESETS[0].columns
       );
-      setIsPointsMode(sport === "General Championship" || sport === "Chess" || matching.some((m: any) => m.points !== null && m.points !== undefined));
-    } else {
-      // Blank or pre-fill standard 8 schools
-      setStandings([]);
-      setIsPointsMode(sport === "General Championship" || sport === "Chess");
-    }
 
-    // 2. Load awards from extras
-    const extrasKey = `${sport}|${season}`;
-    const allExtras = dynamicExtras as any;
-    const aw = allExtras.awards?.[extrasKey]?.[division];
-    if (aw) {
-      setMvpName(aw.mvp?.player || "");
-      setMvpSchool(aw.mvp?.school || "FEU");
-      setRoyName(aw.rookie_of_the_year?.player || "");
-      setRoySchool(aw.rookie_of_the_year?.school || "FEU");
-      setMythicalFive(aw.mythical_five || []);
-    } else {
-      setMvpName("");
-      setMvpSchool("FEU");
-      setRoyName("");
-      setRoySchool("FEU");
-      setMythicalFive([]);
-    }
+    const cloned: UAAPTable = JSON.parse(JSON.stringify(table));
+    setDraft(cloned);
+    setBaseline(JSON.stringify(cloned));
 
-    // 3. Load chess medalists if sport is Chess
-    if (sport === "Chess") {
-      const cm = allExtras.chess_medalists?.[extrasKey]?.[division];
-      if (cm) {
-        setChessBoards(cm);
-      } else {
-        setChessBoards({ "1": [], "2": [], "3": [], "4": [], "5": [], "6": [] });
-      }
-    }
-  }, [season, sport, division, dynamicStandings, dynamicExtras]);
-
-  useEffect(() => {
-    loadCurrentData();
-  }, [loadCurrentData]);
-
-  // Load raw report snippet if drawer is open
-  useEffect(() => {
-    if (showReportRef) {
-      setLoadingReport(true);
-      getUAAPAnnualReportSnippet(season, sport).then((res) => {
-        setReportSnippet(res.content);
-        setReportSourceFile(res.sourceFile || "");
-        setLoadingReport(false);
-      });
-    }
-  }, [showReportRef, season, sport]);
-
-  // Table row modifiers
-  const handleUpdateRow = (idx: number, field: keyof UAAPStandingEntry, value: any) => {
-    setStandings((prev) => {
-      const next = [...prev];
-      const row = { ...next[idx], [field]: value };
-
-      // Auto-calc win % if wins and losses change
-      if (field === "wins" || field === "losses") {
-        const w = field === "wins" ? (value === "" ? null : Number(value)) : row.wins;
-        const l = field === "losses" ? (value === "" ? null : Number(value)) : row.losses;
-        if (typeof w === "number" && !isNaN(w) && typeof l === "number" && !isNaN(l) && w + l > 0) {
-          row.pct = Number((w / (w + l)).toFixed(3));
-        }
-      }
-
-      next[idx] = row;
-      return next;
+    const extrasKey = makeExtrasKey(sport, season);
+    const awards = extras.awards?.[extrasKey]?.[normalizeDivision(division)];
+    setMvp({ player: awards?.mvp?.player || "", school: awards?.mvp?.school || "FEU" });
+    setRoy({
+      player: awards?.rookie_of_the_year?.player || "",
+      school: awards?.rookie_of_the_year?.school || "FEU",
     });
-  };
+    setMythical(Array.isArray(awards?.mythical_five) ? awards.mythical_five : []);
 
-  const handleAddRow = (prefillTeam?: string) => {
-    setStandings((prev) => [
+    const medalists = normalizeChessMedalists(
+      extras.chess_medalists?.[extrasKey]?.[normalizeDivision(division)]
+    );
+    setChessBoards(
+      medalists
+        ? (Object.fromEntries(
+            Object.entries(medalists).map(([board, list]) => [
+              board,
+              list.map((m) => ({ medal: m.medal ?? "gold", player: m.player, school: m.school })),
+            ])
+          ) as typeof chessBoards)
+        : { "1": [], "2": [], "3": [], "4": [], "5": [], "6": [] }
+    );
+  }, [season, sport, division, tables, extras]);
+
+  useEffect(() => {
+    loadDivision();
+  }, [loadDivision]);
+
+  const isDirty = baseline !== "" && JSON.stringify(draft) !== baseline;
+
+  const enterableColumns = useMemo(
+    () => draft.columns.filter((c) => !c.derived),
+    [draft.columns]
+  );
+
+  // -------------------------------------------------------------------------
+  // Row helpers
+  // -------------------------------------------------------------------------
+
+  const updateDraft = (patch: Partial<UAAPTable>) => setDraft((prev) => ({ ...prev, ...patch }));
+
+  const setRows = (rows: UAAPRow[]) => updateDraft({ rows });
+
+  const updateRow = (idx: number, patch: Partial<UAAPRow>) => {
+    setDraft((prev) => ({
       ...prev,
-      {
-        rank: prev.length + 1,
-        team: prefillTeam || "FEU",
-        wins: isPointsMode ? null : 0,
-        losses: isPointsMode ? null : 0,
-        pct: isPointsMode ? null : 0.0,
-        points: isPointsMode ? 0 : null,
-        details: null,
-      },
-    ]);
+      rows: prev.rows.map((row, i) => (i === idx ? { ...row, ...patch } : row)),
+    }));
   };
 
-  const handleDeleteRow = (idx: number) => {
-    setStandings((prev) => {
-      const next = prev.filter((_, i) => i !== idx);
-      // Re-number ranks
-      return next.map((r, i) => ({ ...r, rank: i + 1 }));
+  const updateCell = (idx: number, key: string, raw: string) => {
+    setDraft((prev) => ({
+      ...prev,
+      rows: prev.rows.map((row, i) => {
+        if (i !== idx) return row;
+        const column = prev.columns.find((c) => c.key === key);
+        const value = column?.type === "text" ? raw : raw === "" ? null : raw;
+        return { ...row, values: { ...row.values, [key]: value } };
+      }),
+    }));
+  };
+
+  const addRow = (team = "") => {
+    setDraft((prev) => ({
+      ...prev,
+      rows: [...prev.rows, { rank: prev.rows.length + 1, team, values: {}, details: null }],
+    }));
+  };
+
+  const duplicateRow = (idx: number) => {
+    setDraft((prev) => {
+      const copy: UAAPRow = JSON.parse(JSON.stringify(prev.rows[idx]));
+      const rows = [...prev.rows];
+      rows.splice(idx + 1, 0, copy);
+      return { ...prev, rows: rows.map((r, i) => ({ ...r, rank: i + 1 })) };
     });
   };
 
-  const handleMoveRow = (idx: number, dir: -1 | 1) => {
-    setStandings((prev) => {
+  const deleteRow = (idx: number) => {
+    setDraft((prev) => ({
+      ...prev,
+      rows: prev.rows.filter((_, i) => i !== idx).map((r, i) => ({ ...r, rank: i + 1 })),
+    }));
+  };
+
+  const moveRow = (idx: number, dir: -1 | 1) => {
+    setDraft((prev) => {
       const target = idx + dir;
-      if (target < 0 || target >= prev.length) return prev;
-      const next = [...prev];
-      const temp = next[idx];
-      next[idx] = next[target];
-      next[target] = temp;
-      return next.map((r, i) => ({ ...r, rank: i + 1 }));
+      if (target < 0 || target >= prev.rows.length) return prev;
+      const rows = [...prev.rows];
+      [rows[idx], rows[target]] = [rows[target], rows[idx]];
+      return { ...prev, rows: rows.map((r, i) => ({ ...r, rank: i + 1 })) };
     });
   };
 
-  const handlePrefillEightSchools = () => {
-    const schools = ["UST", "DLSU", "FEU", "ADMU", "UP", "UE", "AdU", "NU"];
-    setStandings(
-      schools.map((team, idx) => ({
+  const prefillStandardEight = () => {
+    const codes = ["UST", "DLSU", "FEU", "ADMU", "UP", "UE", "AdU", "NU"];
+    setRows(
+      codes.map((team, idx) => ({
         rank: idx + 1,
         team,
-        wins: isPointsMode ? null : 0,
-        losses: isPointsMode ? null : 0,
-        pct: isPointsMode ? null : 0.0,
-        points: isPointsMode ? 0 : null,
+        values: {},
         details: idx === 0 ? "Champion" : idx === 1 ? "Runner-up" : null,
       }))
     );
-    onToast("Populated standard 8 UAAP teams.", "success");
+    onToast("Added the eight standard UAAP schools.", "success");
   };
 
-  const handleAutoSort = () => {
-    setStandings((prev) => {
-      const sorted = [...prev].sort((a, b) => {
-        if (isPointsMode) {
-          return (b.points || 0) - (a.points || 0);
-        }
-        if ((b.wins || 0) !== (a.wins || 0)) {
-          return (b.wins || 0) - (a.wins || 0);
-        }
-        return (a.losses || 0) - (b.losses || 0);
+  const autoRank = () => {
+    const sortKey =
+      enterableColumns.find((c) => c.key === "points")?.key ||
+      enterableColumns.find((c) => c.key === "wins")?.key ||
+      enterableColumns[0]?.key;
+
+    if (!sortKey) {
+      onToast("Add a stat column first so rows can be ranked.", "error");
+      return;
+    }
+
+    setDraft((prev) => {
+      const sorted = [...prev.rows].sort((a, b) => {
+        const av = toNumberOrNull(a.values[sortKey]) ?? -Infinity;
+        const bv = toNumberOrNull(b.values[sortKey]) ?? -Infinity;
+        if (bv !== av) return bv - av;
+        const al = toNumberOrNull(a.values.losses) ?? 0;
+        const bl = toNumberOrNull(b.values.losses) ?? 0;
+        return al - bl;
       });
-      return sorted.map((r, i) => ({
-        ...r,
-        rank: i + 1,
-        details: i === 0 && !r.details ? "Champion" : i === 1 && !r.details ? "Runner-up" : r.details,
-      }));
+      return { ...prev, rows: sorted.map((r, i) => ({ ...r, rank: i + 1 })) };
     });
-    onToast("Auto-sorted table by record / points.", "success");
+
+    const label = draft.columns.find((c) => c.key === sortKey)?.label ?? sortKey;
+    onToast(`Ranked rows by ${label}.`, "success");
   };
 
-  // Smart Text Parser for Quick Paste
-  const handleParsePasteText = () => {
-    if (!pasteText.trim()) return;
+  // Keyboard flow: Enter walks down a column and appends a row at the bottom.
+  const gridRef = useRef<HTMLTableSectionElement>(null);
 
-    const lines = pasteText.split("\n").map((l) => l.trim()).filter(Boolean);
-    const newRows: UAAPStandingEntry[] = [];
+  const handleCellKeyDown = (
+    e: React.KeyboardEvent<HTMLInputElement>,
+    rowIdx: number,
+    field: string
+  ) => {
+    if (e.key !== "Enter") return;
+    e.preventDefault();
 
-    for (let i = 0; i < lines.length; i++) {
-      const line = lines[i];
-      const upper = line.toUpperCase();
-
-      // Look for known school code or alias
-      let matchedSchool: string | null = null;
-      for (const s of STANDARD_UAAP_SCHOOLS) {
-        if (upper.includes(s.code) || upper.includes(s.name.toUpperCase())) {
-          matchedSchool = s.code;
-          break;
-        }
-      }
-
-      if (!matchedSchool) {
-        // Simple word search
-        if (upper.includes("ATENEO")) matchedSchool = "ADMU";
-        else if (upper.includes("LA SALLE") || upper.includes("DLSU")) matchedSchool = "DLSU";
-        else if (upper.includes("SANTO TOMAS") || upper.includes("UST")) matchedSchool = "UST";
-        else if (upper.includes("FAR EASTERN") || upper.includes("FEU")) matchedSchool = "FEU";
-        else if (upper.includes("PHILIPPINES") || upper.includes("UP")) matchedSchool = "UP";
-        else if (upper.includes("EAST") || upper.includes("UE")) matchedSchool = "UE";
-        else if (upper.includes("ADAMSON") || upper.includes("ADU")) matchedSchool = "AdU";
-        else if (upper.includes("NATIONAL") || upper.includes("NU")) matchedSchool = "NU";
-      }
-
-      if (matchedSchool) {
-        // Look for W-L pattern (e.g. 12-2, 12 - 2, 12 2)
-        const wlMatch = line.match(/\b(\d{1,2})\s*[-–—/]\s*(\d{1,2})\b/);
-        // Look for points pattern (e.g. 120.0 pts or 120 pts)
-        const ptsMatch = line.match(/\b(\d{1,3}(?:\.\d)?)\s*(?:pts|points)?\b/i);
-
-        let w: number | null = null;
-        let l: number | null = null;
-        let pts: number | null = null;
-
-        if (wlMatch) {
-          w = parseInt(wlMatch[1], 10);
-          l = parseInt(wlMatch[2], 10);
-        } else if (ptsMatch && isPointsMode) {
-          pts = parseFloat(ptsMatch[1]);
-        }
-
-        let details: string | null = null;
-        if (upper.includes("CHAMPION") || upper.includes("1ST")) details = "Champion";
-        else if (upper.includes("RUNNER") || upper.includes("2ND")) details = "Runner-up";
-        else if (upper.includes("3RD") || upper.includes("THIRD")) details = "3rd Place";
-
-        newRows.push({
-          rank: newRows.length + 1,
-          team: matchedSchool,
-          wins: w,
-          losses: l,
-          pct: w !== null && l !== null && w + l > 0 ? Number((w / (w + l)).toFixed(3)) : null,
-          points: pts,
-          details,
-        });
-      }
+    const isLast = rowIdx === draft.rows.length - 1;
+    if (isLast) {
+      addRow();
+      requestAnimationFrame(() => {
+        gridRef.current
+          ?.querySelector<HTMLInputElement>(`[data-cell="${rowIdx + 1}:${field}"]`)
+          ?.focus();
+      });
+      return;
     }
 
-    if (newRows.length > 0) {
-      setStandings(newRows);
-      setShowPasteBox(false);
-      setPasteText("");
-      onToast(`✨ Extracted ${newRows.length} team standings from text!`, "success");
-    } else {
-      onToast("Could not recognize school names in pasted text.", "error");
-    }
+    gridRef.current
+      ?.querySelector<HTMLInputElement>(`[data-cell="${rowIdx + 1}:${field}"]`)
+      ?.focus();
   };
 
-  // Save changes
-  const handleSave = async () => {
+  /** Keeps values for columns that survive an edit, drops the rest. */
+  const handleColumnsChange = (columns: UAAPColumn[]) => {
+    const keptKeys = new Set(columns.filter((c) => !c.derived).map((c) => c.key));
+    setDraft((prev) => ({
+      ...prev,
+      columns,
+      rows: prev.rows.map((row) => ({
+        ...row,
+        values: Object.fromEntries(
+          Object.entries(row.values).filter(([key]) => keptKeys.has(key))
+        ),
+      })),
+    }));
+  };
+
+  // -------------------------------------------------------------------------
+  // Persistence
+  // -------------------------------------------------------------------------
+
+  const [isSaving, setIsSaving] = useState(false);
+  const [showImport, setShowImport] = useState(false);
+
+  const handleSave = useCallback(async () => {
+    if (draft.rows.length === 0) {
+      onToast("Nothing to save — add at least one row.", "error");
+      return;
+    }
+
     setIsSaving(true);
 
-    const awardsPayload =
-      mvpName.trim() || royName.trim() || mythicalFive.length > 0
-        ? {
-            mvp: mvpName.trim() ? { player: mvpName.trim(), school: mvpSchool } : null,
-            rookie_of_the_year: royName.trim() ? { player: royName.trim(), school: roySchool } : null,
-            mythical_five: mythicalFive.length > 0 ? mythicalFive : null,
-          }
+    const hasAwards = mvp.player.trim() || roy.player.trim() || mythical.length > 0;
+    const chessPayload =
+      sport === "Chess"
+        ? Object.fromEntries(Object.entries(chessBoards).filter(([, list]) => list.length > 0))
         : null;
 
-    const chessPayload = sport === "Chess" ? chessBoards : null;
-
     const res = await saveUAAPArchiveData({
-      season,
-      sport,
-      division,
-      standings,
-      awards: awardsPayload,
-      chess_medalists: chessPayload,
+      table: draft,
+      awards: hasAwards
+        ? {
+            mvp: mvp.player.trim() ? { ...mvp, player: mvp.player.trim() } : null,
+            rookie_of_the_year: roy.player.trim() ? { ...roy, player: roy.player.trim() } : null,
+            mythical_five: mythical.length > 0 ? mythical : null,
+          }
+        : null,
+      chess_medalists: chessPayload && Object.keys(chessPayload).length > 0 ? chessPayload : null,
     });
 
     setIsSaving(false);
 
-    if (res.success) {
-      onToast(`✅ Saved ${season} ${sport} (${division}) — ${standings.length} records!`, "success");
-      if (res.data) {
-        setDynamicStandings(res.data.standings);
-        if (res.data.extras) setDynamicExtras(res.data.extras);
-      } else {
-        fetchLiveUAAPData();
-      }
-    } else {
+    if (!res.success) {
       onToast(`Save failed: ${res.error}`, "error");
-    }
-  };
-
-  // Delete division
-  const handleDeleteDivision = async () => {
-    if (!confirm(`Are you sure you want to delete all standings for ${season} ${sport} (${division})?`)) {
       return;
     }
-    const res = await deleteUAAPArchiveDivision(season, sport, division);
-    if (res.success) {
-      setStandings([]);
-      if (res.data) {
-        setDynamicStandings(res.data.standings);
-        if (res.data.extras) setDynamicExtras(res.data.extras);
-      } else {
-        fetchLiveUAAPData();
-      }
-      onToast(`Deleted ${season} ${sport} (${division}) standings.`, "success");
+
+    if (res.data) {
+      setTables(res.data.tables);
+      setExtras(res.data.extras);
     } else {
-      onToast(`Delete failed: ${res.error}`, "error");
+      fetchLive();
     }
+    setBaseline(JSON.stringify(draft));
+
+    if (res.warning) {
+      onToast(res.warning, "error");
+    } else {
+      onToast(
+        `Saved ${season} ${sport} (${division}) — ${res.count} ${res.count === 1 ? "row" : "rows"}.`,
+        "success"
+      );
+    }
+  }, [draft, mvp, roy, mythical, chessBoards, sport, season, division, onToast, fetchLive]);
+
+  const handleDelete = async () => {
+    if (!confirm(`Delete all recorded standings for ${season} ${sport} (${division})?`)) return;
+
+    const res = await deleteUAAPArchiveDivision(season, sport, division);
+    if (!res.success) {
+      onToast(`Delete failed: ${res.error}`, "error");
+      return;
+    }
+    if (res.data) {
+      setTables(res.data.tables);
+      setExtras(res.data.extras);
+    }
+    onToast(res.warning || `Deleted ${season} ${sport} (${division}).`, res.warning ? "error" : "success");
   };
 
-  // Keyboard shortcut Ctrl+S
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.ctrlKey || e.metaKey) && e.key === "s") {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "s") {
         e.preventDefault();
         handleSave();
       }
     };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  });
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [handleSave]);
+
+  // -------------------------------------------------------------------------
+  // Navigation guard
+  // -------------------------------------------------------------------------
+
+  const switchTo = (next: { season?: string; sport?: string; division?: string }) => {
+    if (isDirty && !confirm("You have unsaved changes. Discard them and switch?")) return;
+    if (next.season !== undefined) setSeason(next.season);
+    if (next.sport !== undefined) setSport(next.sport);
+    if (next.division !== undefined) setDivision(normalizeDivision(next.division));
+  };
+
+  // -------------------------------------------------------------------------
+  // OCR reference drawer
+  // -------------------------------------------------------------------------
+
+  const [showReport, setShowReport] = useState(false);
+  const [report, setReport] = useState({ content: "", sourceFile: "", loading: false });
+
+  useEffect(() => {
+    if (!showReport) return;
+    setReport((r) => ({ ...r, loading: true }));
+    getUAAPAnnualReportSnippet(season, sport).then((res) => {
+      setReport({ content: res.content, sourceFile: res.sourceFile || "", loading: false });
+    });
+  }, [showReport, season, sport]);
+
+  const [newSeason, setNewSeason] = useState("");
+  const [newDivision, setNewDivision] = useState("");
 
   return (
-    <div className="space-y-6 max-w-6xl mx-auto pb-24">
-      {/* HEADER BAR */}
+    <div className="space-y-5 max-w-6xl mx-auto pb-24">
+      <datalist id={SCHOOL_DATALIST_ID}>
+        {UAAP_SCHOOLS.map((s) => (
+          <option key={s.code} value={s.code}>
+            {s.name}
+          </option>
+        ))}
+      </datalist>
+
+      {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border pb-4">
         <div>
           <h2 className="text-xl font-black text-foreground flex items-center gap-2">
             <span className="p-2 rounded-xl bg-amber-500/20 text-amber-400 border border-amber-500/30">
-              <Trophy size={18} />
+              <LayoutGrid size={18} />
             </span>
-            UAAP Historical Archive Curation
+            UAAP Historical Archive
           </h2>
           <p className="text-xs text-muted mt-1">
-            Manually enter, edit, and fine-tune team standings, points, and awards for any season or sport.
+            Each division defines its own columns, so a 1988 placement list and a 2003 win-loss table
+            can both be recorded accurately.
           </p>
         </div>
 
         <div className="flex items-center gap-2.5">
+          {isDirty && (
+            <span className="text-[11px] font-bold text-amber-400 px-2 py-1 rounded-lg bg-amber-500/10 border border-amber-500/30">
+              Unsaved
+            </span>
+          )}
           <a
-            href={`/uaap?sport=${encodeURIComponent(sport)}&season=${encodeURIComponent(season)}&division=${encodeURIComponent(division)}`}
+            href={`/uaap?sport=${encodeURIComponent(sport)}&season=${encodeURIComponent(
+              season
+            )}&division=${encodeURIComponent(division)}`}
             target="_blank"
             rel="noreferrer"
             className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-surface border border-border text-muted hover:text-foreground hover:bg-elevated transition-colors"
-            title="Open live view in new tab"
           >
-            <span>Preview Live</span>
+            <span>Preview</span>
             <ExternalLink size={13} />
           </a>
-
-          <button
-            type="button"
-            onClick={() => setShowReportRef(!showReportRef)}
-            className={cn(
-              "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer",
-              showReportRef
-                ? "bg-amber-500/20 text-amber-400 border-amber-500/40"
-                : "bg-surface border-border text-muted hover:text-foreground"
-            )}
-            title="Inspect raw annual report text"
-          >
-            <BookOpen size={14} />
-            <span>OCR Reference</span>
-          </button>
-
           <button
             type="button"
             onClick={handleSave}
@@ -530,14 +537,13 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
             className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-xl text-xs font-bold bg-amber-500 text-slate-950 hover:bg-amber-400 active:scale-95 transition-all shadow-sm cursor-pointer disabled:opacity-50"
           >
             <Save size={14} />
-            <span>{isSaving ? "Saving..." : "Save (Ctrl+S)"}</span>
+            <span>{isSaving ? "Saving…" : "Save (Ctrl+S)"}</span>
           </button>
         </div>
       </div>
 
-      {/* SELECTORS ROW */}
+      {/* Selectors */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-5 rounded-2xl bg-surface border border-border shadow-sm">
-        {/* Season Selector */}
         <div>
           <label className="text-[11px] font-bold uppercase tracking-wider text-muted block mb-1.5">
             Season
@@ -545,379 +551,358 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
           <div className="flex items-center gap-2">
             <select
               value={season}
-              onChange={(e) => setSeason(e.target.value)}
+              onChange={(e) => switchTo({ season: e.target.value })}
               className="flex-1 px-3 py-2 rounded-xl text-xs font-bold bg-elevated border border-border text-foreground focus:outline-none focus:ring-2 focus:ring-amber-500/50"
             >
-              {existingSeasons.map((s) => (
+              {seasons.map((s) => (
                 <option key={s} value={s}>
                   {s}
                 </option>
               ))}
             </select>
+          </div>
+          <div className="flex items-center gap-1.5 mt-2">
+            <input
+              type="text"
+              value={newSeason}
+              onChange={(e) => setNewSeason(e.target.value)}
+              placeholder="Add season, e.g. 2004-2005"
+              className="flex-1 px-2.5 py-1 rounded-lg text-[11px] bg-elevated border border-border text-foreground placeholder:text-muted"
+            />
             <button
               type="button"
-              onClick={() => setShowNewSeasonModal(true)}
-              className="p-2 rounded-xl bg-elevated border border-border text-muted hover:text-foreground hover:bg-elevated/80"
-              title="Add new season"
+              onClick={() => {
+                const value = newSeason.trim();
+                if (!value) return;
+                setCustomSeasons((prev) => Array.from(new Set([...prev, value])));
+                switchTo({ season: value });
+                setNewSeason("");
+              }}
+              className="p-1.5 rounded-lg bg-elevated border border-border text-muted hover:text-foreground cursor-pointer"
+              aria-label="Add season"
             >
-              <Plus size={15} />
+              <Plus size={13} />
             </button>
           </div>
         </div>
 
-        {/* Sport Selector */}
         <div>
           <label className="text-[11px] font-bold uppercase tracking-wider text-muted block mb-1.5">
-            Sport Tournament
+            Sport
           </label>
           <select
             value={sport}
-            onChange={(e) => setSport(e.target.value)}
+            onChange={(e) => switchTo({ sport: e.target.value })}
             className="w-full px-3 py-2 rounded-xl text-xs font-bold bg-elevated border border-border text-foreground focus:outline-none focus:ring-2 focus:ring-amber-500/50"
           >
-            {ALL_SPORTS.map((sp) => (
-              <option key={sp} value={sp}>
-                {sp}
+            {ALL_SPORTS.map((s) => (
+              <option key={s} value={s}>
+                {s}
               </option>
             ))}
           </select>
         </div>
 
-        {/* Division Selector */}
         <div>
           <label className="text-[11px] font-bold uppercase tracking-wider text-muted block mb-1.5">
             Division
           </label>
           <div className="flex flex-wrap items-center gap-1.5">
-            {ALL_DIVISIONS.map((div) => {
-              const active = division === div;
-              return (
-                <button
-                  key={div}
-                  type="button"
-                  onClick={() => setDivision(div)}
-                  className={cn(
-                    "px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer",
-                    active
-                      ? "bg-amber-500 text-slate-950 font-bold shadow-sm"
-                      : "bg-elevated border border-border text-muted hover:text-foreground"
-                  )}
-                >
-                  {div}
-                </button>
-              );
-            })}
+            {divisions.map((div) => (
+              <button
+                key={div}
+                type="button"
+                onClick={() => switchTo({ division: div })}
+                className={cn(
+                  "px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer",
+                  normalizeDivision(division) === normalizeDivision(div)
+                    ? "bg-amber-500 text-slate-950 font-bold shadow-sm"
+                    : "bg-elevated border border-border text-muted hover:text-foreground"
+                )}
+              >
+                {div}
+              </button>
+            ))}
+          </div>
+          <div className="flex items-center gap-1.5 mt-2">
+            <input
+              type="text"
+              value={newDivision}
+              onChange={(e) => setNewDivision(e.target.value)}
+              placeholder="Custom division"
+              className="flex-1 px-2.5 py-1 rounded-lg text-[11px] bg-elevated border border-border text-foreground placeholder:text-muted"
+            />
+            <button
+              type="button"
+              onClick={() => {
+                const value = newDivision.trim();
+                if (!value) return;
+                switchTo({ division: value });
+                setNewDivision("");
+              }}
+              className="p-1.5 rounded-lg bg-elevated border border-border text-muted hover:text-foreground cursor-pointer"
+              aria-label="Add division"
+            >
+              <Plus size={13} />
+            </button>
           </div>
         </div>
       </div>
 
-      {/* NEW SEASON MODAL */}
-      {showNewSeasonModal && (
-        <div className="p-4 rounded-2xl bg-surface border border-amber-500/40 shadow-lg flex items-center justify-between gap-3 animate-in fade-in">
-          <div className="flex items-center gap-2 flex-1">
-            <span className="text-xs font-bold text-foreground">New Season ID:</span>
-            <input
-              type="text"
-              value={newSeasonInput}
-              onChange={(e) => setNewSeasonInput(e.target.value)}
-              placeholder="e.g. 2004-2005"
-              className="px-3 py-1 rounded-xl text-xs bg-elevated border border-border text-foreground w-40"
-            />
-          </div>
-          <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={() => {
-                if (newSeasonInput.trim()) {
-                  setSeason(newSeasonInput.trim());
-                  setShowNewSeasonModal(false);
-                  setNewSeasonInput("");
-                }
-              }}
-              className="px-3 py-1 rounded-xl text-xs font-bold bg-amber-500 text-slate-950"
-            >
-              Add Season
-            </button>
-            <button
-              type="button"
-              onClick={() => setShowNewSeasonModal(false)}
-              className="px-2.5 py-1 rounded-xl text-xs text-muted hover:text-foreground"
-            >
-              Cancel
-            </button>
-          </div>
-        </div>
+      <Section
+        title="Coverage map"
+        subtitle="Find the gaps"
+        icon={<LayoutGrid size={16} />}
+      >
+        <CoveragePanel
+          tables={tables}
+          seasons={seasons}
+          sports={ALL_SPORTS}
+          activeSeason={season}
+          activeSport={sport}
+          onSelect={(s, sp, div) => switchTo({ season: s, sport: sp, division: div ?? "Men's" })}
+        />
+      </Section>
+
+      <Section
+        title="Columns"
+        subtitle={
+          draft.columns.length === 0
+            ? "Placement only"
+            : draft.columns.map((c) => c.label).join(" · ")
+        }
+        icon={<Columns3 size={16} />}
+      >
+        <ColumnEditor columns={draft.columns} onChange={handleColumnsChange} />
+      </Section>
+
+      {showImport && (
+        <BulkImportPanel
+          columns={draft.columns}
+          onClose={() => setShowImport(false)}
+          onApply={(rows, mode) => {
+            setDraft((prev) => {
+              const next = mode === "replace" ? rows : [...prev.rows, ...rows];
+              return { ...prev, rows: next.map((r, i) => ({ ...r, rank: r.rank || i + 1 })) };
+            });
+            setShowImport(false);
+            onToast(`Loaded ${rows.length} ${rows.length === 1 ? "row" : "rows"} into the editor.`, "success");
+          }}
+        />
       )}
 
-      {/* RAW OCR REFERENCE DRAWER */}
-      {showReportRef && (
-        <div className="p-5 rounded-2xl bg-surface border border-border shadow-md space-y-3 animate-in fade-in">
-          <div className="flex items-center justify-between border-b border-border/60 pb-2.5">
-            <div className="flex items-center gap-2">
-              <FileText size={16} className="text-amber-400" />
-              <h4 className="text-xs font-bold uppercase tracking-wider text-foreground">
-                Raw Annual Report Reference ({season} {sport})
-              </h4>
-            </div>
-            <span className="text-[11px] font-mono text-muted">{reportSourceFile}</span>
-          </div>
-
-          {loadingReport ? (
-            <div className="py-8 text-center text-xs text-muted">Loading reference text...</div>
-          ) : (
-            <div className="max-h-60 overflow-y-auto font-mono text-[11px] bg-elevated p-3 rounded-xl text-muted leading-relaxed whitespace-pre-wrap">
-              {reportSnippet || "No relevant section found in annual report for this sport."}
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* SMART QUICK-PASTE DRAWER */}
-      {showPasteBox && (
-        <div className="p-5 rounded-2xl bg-surface border border-amber-500/30 shadow-md space-y-3 animate-in fade-in">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Wand2 size={16} className="text-amber-400" />
-              <h4 className="text-xs font-bold uppercase tracking-wider text-foreground">
-                Smart Quick-Paste / Text Importer
-              </h4>
-            </div>
-            <span className="text-[11px] text-muted">Paste lines like &quot;1. FEU 12-2 Champion&quot;</span>
-          </div>
-
-          <textarea
-            rows={5}
-            value={pasteText}
-            onChange={(e) => setPasteText(e.target.value)}
-            placeholder="Paste text, e.g.:&#10;1. FEU 12-2 Champion&#10;2. UST 11-3 Runner-up&#10;3. UP 8-6&#10;4. DLSU 8-6..."
-            className="w-full p-3 rounded-xl text-xs font-mono bg-elevated border border-border text-foreground placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-amber-500/50"
-          />
-
-          <div className="flex items-center justify-between">
-            <button
-              type="button"
-              onClick={handleParsePasteText}
-              className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-xl text-xs font-bold bg-amber-500 text-slate-950 hover:bg-amber-400 cursor-pointer"
-            >
-              <Sparkles size={14} />
-              <span>Auto-Populate Table</span>
-            </button>
-            <button
-              type="button"
-              onClick={() => setShowPasteBox(false)}
-              className="px-3 py-1 text-xs text-muted hover:text-foreground"
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* STANDINGS TABLE EDITOR */}
+      {/* Standings editor */}
       <div className="p-5 rounded-3xl bg-surface border border-border shadow-sm space-y-4">
-        {/* Table Toolbar */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-border/60 pb-3">
           <div className="flex items-center gap-2">
             <h3 className="text-sm font-bold text-foreground">
-              Standings Table ({standings.length} Teams)
+              Standings ({draft.rows.length} {draft.rows.length === 1 ? "row" : "rows"})
             </h3>
             <span className="px-2 py-0.5 rounded-md text-[10px] font-bold bg-elevated text-muted">
-              {season} · {sport} · {division}
+              {season} · {sport} · {normalizeDivision(division)}
             </span>
           </div>
 
           <div className="flex flex-wrap items-center gap-2">
-            {/* Format toggle: W-L vs Points */}
             <button
               type="button"
-              onClick={() => setIsPointsMode(!isPointsMode)}
-              className={cn(
-                "px-2.5 py-1 rounded-lg text-xs font-medium border transition-colors cursor-pointer",
-                isPointsMode
-                  ? "bg-amber-500/20 text-amber-400 border-amber-500/30"
-                  : "bg-elevated border-border text-muted hover:text-foreground"
-              )}
+              onClick={() => setShowImport((v) => !v)}
+              className="px-2.5 py-1 rounded-lg text-xs font-medium bg-elevated border border-border text-foreground hover:bg-elevated/80 inline-flex items-center gap-1 cursor-pointer"
             >
-              {isPointsMode ? "Points Format" : "Win-Loss Format"}
+              <FileUp size={13} />
+              <span>Bulk import</span>
             </button>
-
             <button
               type="button"
-              onClick={() => setShowPasteBox(!showPasteBox)}
-              className="px-2.5 py-1 rounded-lg text-xs font-medium bg-elevated border border-border text-foreground hover:bg-elevated/80 transition-colors inline-flex items-center gap-1 cursor-pointer"
+              onClick={prefillStandardEight}
+              className="px-2.5 py-1 rounded-lg text-xs font-medium bg-elevated border border-border text-foreground hover:bg-elevated/80 cursor-pointer"
             >
-              <Wand2 size={13} />
-              <span>Quick Paste</span>
+              + 8 standard schools
             </button>
-
             <button
               type="button"
-              onClick={handlePrefillEightSchools}
-              className="px-2.5 py-1 rounded-lg text-xs font-medium bg-elevated border border-border text-foreground hover:bg-elevated/80 transition-colors inline-flex items-center gap-1 cursor-pointer"
-            >
-              <span>+ 8 Standard Teams</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={handleAutoSort}
-              className="px-2.5 py-1 rounded-lg text-xs font-medium bg-elevated border border-border text-foreground hover:bg-elevated/80 transition-colors inline-flex items-center gap-1 cursor-pointer"
+              onClick={autoRank}
+              className="px-2.5 py-1 rounded-lg text-xs font-medium bg-elevated border border-border text-foreground hover:bg-elevated/80 inline-flex items-center gap-1 cursor-pointer"
             >
               <RotateCcw size={12} />
-              <span>Auto-Rank</span>
+              <span>Auto-rank</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setShowReport((v) => !v)}
+              className={cn(
+                "px-2.5 py-1 rounded-lg text-xs font-medium border inline-flex items-center gap-1 cursor-pointer transition-colors",
+                showReport
+                  ? "bg-amber-500/20 text-amber-400 border-amber-500/40"
+                  : "bg-elevated border-border text-foreground hover:bg-elevated/80"
+              )}
+            >
+              <BookOpen size={13} />
+              <span>Source scan</span>
             </button>
           </div>
         </div>
 
-        {/* Table Rows */}
+        {showReport && (
+          <div className="rounded-2xl bg-elevated/40 border border-border p-4 space-y-2">
+            <div className="flex items-center justify-between border-b border-border/60 pb-2">
+              <span className="flex items-center gap-2 text-xs font-bold text-foreground">
+                <FileText size={14} className="text-amber-400" />
+                Annual report text — {season} {sport}
+              </span>
+              <span className="text-[11px] font-mono text-muted">{report.sourceFile}</span>
+            </div>
+            {report.loading ? (
+              <p className="py-6 text-center text-xs text-muted">Loading reference text…</p>
+            ) : (
+              <div className="max-h-60 overflow-y-auto font-mono text-[11px] bg-surface p-3 rounded-xl text-muted leading-relaxed whitespace-pre-wrap">
+                {report.content || "No matching section found in the annual report for this sport."}
+              </div>
+            )}
+          </div>
+        )}
+
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs border-collapse">
             <thead>
               <tr className="border-b border-border bg-elevated/40 text-[10px] font-bold uppercase tracking-wider text-muted">
-                <th className="py-2.5 px-3 w-16 text-center">Rank</th>
-                <th className="py-2.5 px-3 w-44">School</th>
-                {!isPointsMode ? (
-                  <>
-                    <th className="py-2.5 px-3 w-20 text-center">Wins</th>
-                    <th className="py-2.5 px-3 w-20 text-center">Losses</th>
-                    <th className="py-2.5 px-3 w-20 text-center">Win %</th>
-                  </>
-                ) : (
-                  <th className="py-2.5 px-3 w-28 text-center">Total Points</th>
-                )}
+                <th className="py-2.5 px-3 w-14 text-center">Rank</th>
+                <th className="py-2.5 px-3 w-48">School</th>
+                {draft.columns.map((col) => (
+                  <th key={col.key} className="py-2.5 px-3 w-24 text-center">
+                    {col.label}
+                  </th>
+                ))}
                 <th className="py-2.5 px-3">Result / Notes</th>
-                <th className="py-2.5 px-3 w-20 text-center">Reorder</th>
-                <th className="py-2.5 px-3 w-12 text-center">Del</th>
+                <th className="py-2.5 px-3 w-24 text-center">Row</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-border/60 font-medium">
-              {standings.length === 0 ? (
+            <tbody ref={gridRef} className="divide-y divide-border/60 font-medium">
+              {draft.rows.length === 0 ? (
                 <tr>
-                  <td colSpan={isPointsMode ? 5 : 7} className="py-10 text-center text-muted">
-                    No teams added yet. Click &quot;+ 8 Standard Teams&quot; or &quot;Quick Paste&quot; to populate.
+                  <td
+                    colSpan={draft.columns.length + 4}
+                    className="py-10 text-center text-muted"
+                  >
+                    No rows yet. Use “Bulk import”, “+ 8 standard schools”, or add rows one at a
+                    time.
                   </td>
                 </tr>
               ) : (
-                standings.map((row, idx) => {
+                draft.rows.map((row, idx) => {
                   const theme = getSchoolTheme(row.team);
                   return (
                     <tr key={idx} className="hover:bg-elevated/40 transition-colors">
-                      {/* Rank Input */}
                       <td className="py-2 px-3 text-center">
                         <input
                           type="number"
-                          value={row.rank || idx + 1}
-                          onChange={(e) => handleUpdateRow(idx, "rank", parseInt(e.target.value, 10) || 1)}
+                          value={row.rank}
+                          onChange={(e) =>
+                            updateRow(idx, { rank: parseInt(e.target.value, 10) || idx + 1 })
+                          }
                           className="w-12 text-center px-1 py-1 rounded bg-elevated border border-border text-foreground font-bold font-mono"
+                          aria-label={`Rank for row ${idx + 1}`}
                         />
                       </td>
 
-                      {/* School Select */}
                       <td className="py-2 px-3">
                         <div className="flex items-center gap-1.5">
-                          <span
-                            className={cn(
-                              "px-2 py-0.5 rounded border text-[11px] font-bold shrink-0",
-                              theme.bg,
-                              theme.text
-                            )}
-                          >
-                            {row.team}
-                          </span>
-                          <select
+                          {row.team && (
+                            <span
+                              className={cn(
+                                "px-2 py-0.5 rounded border text-[11px] font-bold shrink-0",
+                                theme.bg,
+                                theme.text
+                              )}
+                            >
+                              {row.team}
+                            </span>
+                          )}
+                          <input
+                            type="text"
+                            list={SCHOOL_DATALIST_ID}
                             value={row.team}
-                            onChange={(e) => handleUpdateRow(idx, "team", e.target.value)}
-                            className="px-2 py-1 rounded bg-elevated border border-border text-foreground text-xs font-semibold truncate flex-1"
-                          >
-                            {STANDARD_UAAP_SCHOOLS.map((s) => (
-                              <option key={s.code} value={s.code}>
-                                {s.code} ({s.name})
-                              </option>
-                            ))}
-                          </select>
+                            data-cell={`${idx}:team`}
+                            onChange={(e) => updateRow(idx, { team: e.target.value })}
+                            onKeyDown={(e) => handleCellKeyDown(e, idx, "team")}
+                            placeholder="School"
+                            className="px-2 py-1 rounded bg-elevated border border-border text-foreground text-xs font-semibold flex-1 min-w-0"
+                            aria-label={`School for row ${idx + 1}`}
+                          />
                         </div>
                       </td>
 
-                      {/* Wins / Losses or Points */}
-                      {!isPointsMode ? (
-                        <>
-                          <td className="py-2 px-3 text-center">
+                      {draft.columns.map((col) => (
+                        <td key={col.key} className="py-2 px-3 text-center">
+                          {col.derived ? (
+                            <span className="font-mono text-xs text-muted">
+                              {formatCellValue(row, col)}
+                            </span>
+                          ) : (
                             <input
-                              type="number"
-                              value={row.wins !== null && row.wins !== undefined ? row.wins : ""}
-                              onChange={(e) => handleUpdateRow(idx, "wins", e.target.value)}
-                              placeholder="0"
-                              className="w-14 text-center px-1 py-1 rounded bg-elevated border border-border text-foreground font-bold font-mono"
+                              type={col.type === "text" ? "text" : "number"}
+                              step={col.type === "decimal" ? "any" : undefined}
+                              value={(resolveCellValue(row, col) as string | number) ?? ""}
+                              data-cell={`${idx}:${col.key}`}
+                              onChange={(e) => updateCell(idx, col.key, e.target.value)}
+                              onKeyDown={(e) => handleCellKeyDown(e, idx, col.key)}
+                              className="w-16 text-center px-1 py-1 rounded bg-elevated border border-border text-foreground font-bold font-mono"
+                              aria-label={`${col.label} for row ${idx + 1}`}
                             />
-                          </td>
-                          <td className="py-2 px-3 text-center">
-                            <input
-                              type="number"
-                              value={row.losses !== null && row.losses !== undefined ? row.losses : ""}
-                              onChange={(e) => handleUpdateRow(idx, "losses", e.target.value)}
-                              placeholder="0"
-                              className="w-14 text-center px-1 py-1 rounded bg-elevated border border-border text-foreground font-bold font-mono"
-                            />
-                          </td>
-                          <td className="py-2 px-3 text-center font-mono font-semibold text-foreground">
-                            {row.pct !== null && row.pct !== undefined ? row.pct.toFixed(3) : "—"}
-                          </td>
-                        </>
-                      ) : (
-                        <td className="py-2 px-3 text-center">
-                          <input
-                            type="number"
-                            step="any"
-                            value={row.points !== null && row.points !== undefined ? row.points : ""}
-                            onChange={(e) => handleUpdateRow(idx, "points", e.target.value)}
-                            placeholder="0.0"
-                            className="w-20 text-center px-2 py-1 rounded bg-elevated border border-border text-amber-400 font-bold font-mono"
-                          />
+                          )}
                         </td>
-                      )}
+                      ))}
 
-                      {/* Result / Notes */}
                       <td className="py-2 px-3">
                         <input
                           type="text"
                           value={row.details || ""}
-                          onChange={(e) => handleUpdateRow(idx, "details", e.target.value)}
-                          placeholder="e.g. Champion, Runner-up..."
+                          data-cell={`${idx}:details`}
+                          onChange={(e) => updateRow(idx, { details: e.target.value })}
+                          onKeyDown={(e) => handleCellKeyDown(e, idx, "details")}
+                          placeholder="Champion, Runner-up, withdrew…"
                           className="w-full px-2 py-1 rounded bg-elevated border border-border text-foreground text-xs"
+                          aria-label={`Notes for row ${idx + 1}`}
                         />
                       </td>
 
-                      {/* Reorder buttons */}
-                      <td className="py-2 px-3 text-center">
-                        <div className="inline-flex items-center gap-1">
+                      <td className="py-2 px-3">
+                        <div className="flex items-center justify-center gap-0.5">
                           <button
                             type="button"
-                            onClick={() => handleMoveRow(idx, -1)}
+                            onClick={() => moveRow(idx, -1)}
                             disabled={idx === 0}
-                            className="p-1 rounded bg-elevated text-muted hover:text-foreground disabled:opacity-30"
+                            className="p-1 rounded text-muted hover:text-foreground disabled:opacity-30 cursor-pointer"
+                            aria-label="Move row up"
                           >
-                            <ArrowUp size={12} />
+                            ↑
                           </button>
                           <button
                             type="button"
-                            onClick={() => handleMoveRow(idx, 1)}
-                            disabled={idx === standings.length - 1}
-                            className="p-1 rounded bg-elevated text-muted hover:text-foreground disabled:opacity-30"
+                            onClick={() => moveRow(idx, 1)}
+                            disabled={idx === draft.rows.length - 1}
+                            className="p-1 rounded text-muted hover:text-foreground disabled:opacity-30 cursor-pointer"
+                            aria-label="Move row down"
                           >
-                            <ArrowDown size={12} />
+                            ↓
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => duplicateRow(idx)}
+                            className="p-1 rounded text-muted hover:text-foreground cursor-pointer"
+                            aria-label="Duplicate row"
+                          >
+                            <Copy size={12} />
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => deleteRow(idx)}
+                            className="p-1 rounded text-rose-400 hover:bg-rose-500/10 cursor-pointer"
+                            aria-label="Delete row"
+                          >
+                            <Trash2 size={12} />
                           </button>
                         </div>
-                      </td>
-
-                      {/* Delete */}
-                      <td className="py-2 px-3 text-center">
-                        <button
-                          type="button"
-                          onClick={() => handleDeleteRow(idx)}
-                          className="p-1 rounded text-rose-400 hover:bg-rose-500/10"
-                        >
-                          <Trash2 size={13} />
-                        </button>
                       </td>
                     </tr>
                   );
@@ -927,214 +912,232 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
           </table>
         </div>
 
-        {/* Add Row Button & Delete Division */}
         <div className="flex items-center justify-between pt-2 border-t border-border/60">
           <button
             type="button"
-            onClick={() => handleAddRow()}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-elevated border border-border text-foreground hover:bg-elevated/80 transition-colors cursor-pointer"
+            onClick={() => addRow()}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-elevated border border-border text-foreground hover:bg-elevated/80 cursor-pointer"
           >
             <Plus size={14} />
-            <span>Add Team Row</span>
+            <span>Add row</span>
           </button>
-
-          {standings.length > 0 && (
+          <span className="text-[11px] text-muted hidden sm:inline">
+            Press Enter to move down a column; Enter on the last row adds another.
+          </span>
+          {draft.rows.length > 0 && (
             <button
               type="button"
-              onClick={handleDeleteDivision}
+              onClick={handleDelete}
               className="text-xs text-rose-400 hover:underline cursor-pointer"
             >
-              Delete this division standings
+              Delete this division
             </button>
           )}
         </div>
       </div>
 
-      {/* AWARDS & HONORS EDITOR */}
-      <div className="p-5 rounded-3xl bg-surface border border-border shadow-sm space-y-4">
-        <div className="flex items-center gap-2 border-b border-border/60 pb-3">
-          <Award size={16} className="text-amber-400" />
-          <h3 className="text-sm font-bold text-foreground">
-            Awards &amp; Honors ({season} {sport} - {division})
-          </h3>
-        </div>
-
+      {/* Notes */}
+      <div className="p-5 rounded-2xl bg-surface border border-border shadow-sm space-y-3">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {/* MVP */}
-          <div className="p-4 rounded-2xl bg-elevated/40 border border-border space-y-2">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-amber-400 flex items-center gap-1">
-              <Crown size={13} /> Most Valuable Player (MVP)
-            </span>
-            <div className="flex items-center gap-2">
-              <input
-                type="text"
-                value={mvpName}
-                onChange={(e) => setMvpName(e.target.value)}
-                placeholder="Player full name"
-                className="flex-1 px-3 py-1.5 rounded-xl text-xs bg-surface border border-border text-foreground"
-              />
-              <select
-                value={mvpSchool}
-                onChange={(e) => setMvpSchool(e.target.value)}
-                className="w-28 px-2 py-1.5 rounded-xl text-xs font-bold bg-surface border border-border text-foreground"
-              >
-                {STANDARD_UAAP_SCHOOLS.map((s) => (
-                  <option key={s.code} value={s.code}>
-                    {s.code}
-                  </option>
-                ))}
-              </select>
-            </div>
+          <div>
+            <label className="text-[11px] font-bold uppercase tracking-wider text-muted block mb-1.5">
+              Stage label
+            </label>
+            <input
+              type="text"
+              value={draft.stage}
+              onChange={(e) => updateDraft({ stage: e.target.value })}
+              placeholder="Final Standings"
+              className="w-full px-3 py-1.5 rounded-xl text-xs bg-elevated border border-border text-foreground"
+            />
           </div>
-
-          {/* Rookie of the Year */}
-          <div className="p-4 rounded-2xl bg-elevated/40 border border-border space-y-2">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-sky-400 flex items-center gap-1">
-              <Sparkles size={13} /> Rookie of the Year (ROY)
-            </span>
-            <div className="flex items-center gap-2">
-              <input
-                type="text"
-                value={royName}
-                onChange={(e) => setRoyName(e.target.value)}
-                placeholder="Player full name"
-                className="flex-1 px-3 py-1.5 rounded-xl text-xs bg-surface border border-border text-foreground"
-              />
-              <select
-                value={roySchool}
-                onChange={(e) => setRoySchool(e.target.value)}
-                className="w-28 px-2 py-1.5 rounded-xl text-xs font-bold bg-surface border border-border text-foreground"
-              >
-                {STANDARD_UAAP_SCHOOLS.map((s) => (
-                  <option key={s.code} value={s.code}>
-                    {s.code}
-                  </option>
-                ))}
-              </select>
-            </div>
+          <div>
+            <label className="text-[11px] font-bold uppercase tracking-wider text-muted block mb-1.5">
+              Source
+            </label>
+            <input
+              type="text"
+              value={draft.source_page}
+              onChange={(e) => updateDraft({ source_page: e.target.value })}
+              className="w-full px-3 py-1.5 rounded-xl text-xs bg-elevated border border-border text-foreground"
+            />
           </div>
         </div>
+        <div>
+          <label className="text-[11px] font-bold uppercase tracking-wider text-muted block mb-1.5">
+            Note shown above the public table
+          </label>
+          <input
+            type="text"
+            value={draft.note || ""}
+            onChange={(e) => updateDraft({ note: e.target.value })}
+            placeholder="e.g. Only the top four placements were printed in this year's report."
+            className="w-full px-3 py-1.5 rounded-xl text-xs bg-elevated border border-border text-foreground placeholder:text-muted"
+          />
+        </div>
+      </div>
 
-        {/* Mythical Selection */}
-        <div className="p-4 rounded-2xl bg-elevated/40 border border-border space-y-3">
-          <div className="flex items-center justify-between">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-foreground">
-              Mythical Selection / All-Star Team ({mythicalFive.length} players)
-            </span>
-            <button
-              type="button"
-              onClick={() => setMythicalFive((prev) => [...prev, { player: "", school: "FEU" }])}
-              className="text-xs font-bold text-amber-400 hover:underline"
-            >
-              + Add Player
-            </button>
-          </div>
-
-          <div className="space-y-2">
-            {mythicalFive.map((p, pIdx) => (
-              <div key={pIdx} className="flex items-center gap-2">
-                <input
-                  type="text"
-                  value={p.player}
-                  onChange={(e) => {
-                    const next = [...mythicalFive];
-                    next[pIdx] = { ...next[pIdx], player: e.target.value };
-                    setMythicalFive(next);
-                  }}
-                  placeholder="Player name"
-                  className="flex-1 px-3 py-1.5 rounded-xl text-xs bg-surface border border-border text-foreground"
-                />
-                <select
-                  value={p.school}
-                  onChange={(e) => {
-                    const next = [...mythicalFive];
-                    next[pIdx] = { ...next[pIdx], school: e.target.value };
-                    setMythicalFive(next);
-                  }}
-                  className="w-28 px-2 py-1.5 rounded-xl text-xs font-bold bg-surface border border-border text-foreground"
+      {/* Awards */}
+      <Section title="Awards & honors" icon={<Award size={16} />} subtitle={`${season} ${sport}`}>
+        <div className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {[
+              { label: "Most Valuable Player", state: mvp, setState: setMvp, icon: <Crown size={13} />, tone: "text-amber-400" },
+              { label: "Rookie of the Year", state: roy, setState: setRoy, icon: <Sparkles size={13} />, tone: "text-sky-400" },
+            ].map((award) => (
+              <div
+                key={award.label}
+                className="p-4 rounded-2xl bg-elevated/40 border border-border space-y-2"
+              >
+                <span
+                  className={cn(
+                    "text-[11px] font-bold uppercase tracking-wider flex items-center gap-1",
+                    award.tone
+                  )}
                 >
-                  {STANDARD_UAAP_SCHOOLS.map((s) => (
-                    <option key={s.code} value={s.code}>
-                      {s.code}
-                    </option>
-                  ))}
-                </select>
-                <button
-                  type="button"
-                  onClick={() => setMythicalFive((prev) => prev.filter((_, i) => i !== pIdx))}
-                  className="p-1 rounded text-rose-400 hover:bg-rose-500/10"
-                >
-                  <Trash2 size={13} />
-                </button>
+                  {award.icon} {award.label}
+                </span>
+                <div className="flex items-center gap-2">
+                  <input
+                    type="text"
+                    value={award.state.player}
+                    onChange={(e) =>
+                      award.setState({ ...award.state, player: e.target.value })
+                    }
+                    placeholder="Player full name"
+                    className="flex-1 px-3 py-1.5 rounded-xl text-xs bg-surface border border-border text-foreground"
+                  />
+                  <input
+                    type="text"
+                    list={SCHOOL_DATALIST_ID}
+                    value={award.state.school}
+                    onChange={(e) =>
+                      award.setState({ ...award.state, school: e.target.value })
+                    }
+                    className="w-24 px-2 py-1.5 rounded-xl text-xs font-bold bg-surface border border-border text-foreground"
+                    aria-label={`${award.label} school`}
+                  />
+                </div>
               </div>
             ))}
           </div>
-        </div>
 
-        {/* Chess Board Medalists (if Chess) */}
-        {sport === "Chess" && (
           <div className="p-4 rounded-2xl bg-elevated/40 border border-border space-y-3">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-amber-400">
-              Chess Board Medalists (Boards 1 through 6)
-            </h4>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-              {["1", "2", "3", "4", "5", "6"].map((bNum) => (
-                <div key={bNum} className="p-3 rounded-xl bg-surface border border-border space-y-2">
-                  <span className="text-xs font-bold text-foreground">Board {bNum}</span>
-                  {(["gold", "silver", "bronze"] as const).map((medal) => {
-                    const existing = (chessBoards[bNum] || []).find((m) => m.medal === medal);
-                    const emoji = medal === "gold" ? "🥇" : medal === "silver" ? "🥈" : "🥉";
-                    return (
-                      <div key={medal} className="flex items-center gap-1.5 text-xs">
-                        <span>{emoji}</span>
-                        <input
-                          type="text"
-                          value={existing?.player || ""}
-                          onChange={(e) => {
-                            const val = e.target.value;
-                            setChessBoards((prev) => {
-                              const bList = [...(prev[bNum] || [])].filter((m) => m.medal !== medal);
-                              if (val.trim()) {
-                                bList.push({
-                                  medal,
-                                  player: val.trim(),
-                                  school: existing?.school || "UST",
-                                });
-                              }
-                              return { ...prev, [bNum]: bList };
-                            });
-                          }}
-                          placeholder={`${medal} player`}
-                          className="flex-1 px-2 py-1 rounded bg-elevated border border-border text-[11px]"
-                        />
-                        <select
-                          value={existing?.school || "UST"}
-                          onChange={(e) => {
-                            const sch = e.target.value;
-                            setChessBoards((prev) => {
-                              const bList = [...(prev[bNum] || [])].map((m) =>
-                                m.medal === medal ? { ...m, school: sch } : m
-                              );
-                              return { ...prev, [bNum]: bList };
-                            });
-                          }}
-                          className="w-16 px-1 py-1 rounded bg-elevated border border-border text-[10px] font-bold"
-                        >
-                          {STANDARD_UAAP_SCHOOLS.map((s) => (
-                            <option key={s.code} value={s.code}>
-                              {s.code}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                    );
-                  })}
+            <div className="flex items-center justify-between">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-foreground">
+                Mythical selection ({mythical.length})
+              </span>
+              <button
+                type="button"
+                onClick={() => setMythical((prev) => [...prev, { player: "", school: "FEU" }])}
+                className="text-xs font-bold text-amber-400 hover:underline cursor-pointer"
+              >
+                + Add player
+              </button>
+            </div>
+            <div className="space-y-2">
+              {mythical.map((p, i) => (
+                <div key={i} className="flex items-center gap-2">
+                  <input
+                    type="text"
+                    value={p.player}
+                    onChange={(e) =>
+                      setMythical((prev) =>
+                        prev.map((m, mi) => (mi === i ? { ...m, player: e.target.value } : m))
+                      )
+                    }
+                    placeholder="Player name"
+                    className="flex-1 px-3 py-1.5 rounded-xl text-xs bg-surface border border-border text-foreground"
+                  />
+                  <input
+                    type="text"
+                    list={SCHOOL_DATALIST_ID}
+                    value={p.school}
+                    onChange={(e) =>
+                      setMythical((prev) =>
+                        prev.map((m, mi) => (mi === i ? { ...m, school: e.target.value } : m))
+                      )
+                    }
+                    className="w-24 px-2 py-1.5 rounded-xl text-xs font-bold bg-surface border border-border text-foreground"
+                    aria-label="Mythical selection school"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setMythical((prev) => prev.filter((_, mi) => mi !== i))}
+                    className="p-1 rounded text-rose-400 hover:bg-rose-500/10 cursor-pointer"
+                    aria-label="Remove player"
+                  >
+                    <Trash2 size={13} />
+                  </button>
                 </div>
               ))}
             </div>
           </div>
-        )}
-      </div>
+
+          {sport === "Chess" && (
+            <div className="p-4 rounded-2xl bg-elevated/40 border border-border space-y-3">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-amber-400">
+                Board medalists
+              </h4>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                {["1", "2", "3", "4", "5", "6"].map((board) => (
+                  <div key={board} className="p-3 rounded-xl bg-surface border border-border space-y-2">
+                    <span className="text-xs font-bold text-foreground">Board {board}</span>
+                    {(["gold", "silver", "bronze"] as const).map((medal) => {
+                      const existing = (chessBoards[board] || []).find((m) => m.medal === medal);
+                      const emoji = medal === "gold" ? "🥇" : medal === "silver" ? "🥈" : "🥉";
+                      return (
+                        <div key={medal} className="flex items-center gap-1.5 text-xs">
+                          <span>{emoji}</span>
+                          <input
+                            type="text"
+                            value={existing?.player || ""}
+                            onChange={(e) => {
+                              const value = e.target.value;
+                              setChessBoards((prev) => {
+                                const list = [...(prev[board] || [])].filter(
+                                  (m) => m.medal !== medal
+                                );
+                                if (value.trim()) {
+                                  list.push({
+                                    medal,
+                                    player: value.trim(),
+                                    school: existing?.school || "UST",
+                                  });
+                                }
+                                return { ...prev, [board]: list };
+                              });
+                            }}
+                            placeholder={`${medal} medalist`}
+                            className="flex-1 min-w-0 px-2 py-1 rounded bg-elevated border border-border text-[11px]"
+                          />
+                          <input
+                            type="text"
+                            list={SCHOOL_DATALIST_ID}
+                            value={existing?.school || ""}
+                            onChange={(e) => {
+                              const school = e.target.value;
+                              setChessBoards((prev) => ({
+                                ...prev,
+                                [board]: (prev[board] || []).map((m) =>
+                                  m.medal === medal ? { ...m, school } : m
+                                ),
+                              }));
+                            }}
+                            placeholder="School"
+                            className="w-16 px-1 py-1 rounded bg-elevated border border-border text-[10px] font-bold"
+                            aria-label={`${medal} medalist school for board ${board}`}
+                          />
+                        </div>
+                      );
+                    })}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      </Section>
     </div>
   );
 }

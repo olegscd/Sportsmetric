@@ -1,68 +1,56 @@
 import fs from "fs/promises";
 import path from "path";
 import { supabase } from "@/lib/supabase";
+import {
+  DEFAULT_STAGE,
+  MANUAL_SOURCE,
+  legacyRecordsToTable,
+  legacyRecordsToTables,
+  makeDivisionKey,
+  makeExtrasKey,
+  normalizeDivision,
+  toNumberOrNull,
+  type LegacyStandingRecord,
+  type MergedUAAPData,
+  type UAAPArchiveExtras,
+  type UAAPColumn,
+  type UAAPRow,
+  type UAAPTable,
+} from "@/lib/uaap-schema";
 
-export interface UAAPStandingRecord {
-  season: string;
-  sport: string;
-  division: string;
-  stage: string;
-  rank: number;
-  team: string;
-  wins: number | null;
-  losses: number | null;
-  pct: number | null;
-  points?: number | null;
-  details: string | null;
-  source_page: string;
-}
-
-export interface UAAPArchiveExtras {
-  awards?: Record<string, Record<string, any>>;
-  chess_medalists?: Record<string, Record<string, any>>;
-  games?: Record<string, any>;
-  leaderboards?: Record<string, any>;
-}
-
-export interface UAAPStandingInput {
-  rank: number;
-  team: string;
-  wins?: number | null;
-  losses?: number | null;
-  pct?: number | null;
-  points?: number | null;
-  details?: string | null;
-}
-
-export type UAAPStandingEntry = UAAPStandingInput;
+export type {
+  LegacyStandingRecord,
+  MergedUAAPData,
+  UAAPArchiveExtras,
+  UAAPColumn,
+  UAAPRow,
+  UAAPTable,
+} from "@/lib/uaap-schema";
 
 export interface UAAPSavePayload {
-  season: string;
-  sport: string;
-  division: string;
-  standings: UAAPStandingInput[];
+  table: UAAPTable;
   awards?: {
     mvp?: { player: string; school: string } | null;
     rookie_of_the_year?: { player: string; school: string } | null;
     mythical_five?: Array<{ player: string; school: string; position?: string }> | null;
   } | null;
-  chess_medalists?: Record<string, Array<{ medal: "gold" | "silver" | "bronze"; player: string; school: string }>> | null;
+  chess_medalists?: Record<
+    string,
+    Array<{ medal: "gold" | "silver" | "bronze"; player: string; school: string }>
+  > | null;
 }
 
-export interface UAAPAdminOverridesFile {
+export interface UAAPAdminOverrides {
   updated_at: string;
-  standings_overrides: Record<string, UAAPStandingRecord[]>;
+  /** Current format: one fully described table per division key. */
+  tables_overrides: Record<string, UAAPTable>;
+  /** Pre-flexible-column format, still read so older saves are not lost. */
+  standings_overrides: Record<string, LegacyStandingRecord[]>;
   deleted_divisions: string[];
   extras_overrides: {
     awards: Record<string, Record<string, any>>;
     chess_medalists: Record<string, Record<string, any>>;
   };
-}
-
-export interface MergedUAAPData {
-  standings: UAAPStandingRecord[];
-  extras: UAAPArchiveExtras;
-  seasons: string[];
 }
 
 const OVERRIDES_STORAGE_ROW_ID = "__uaap_archive_overrides__";
@@ -75,24 +63,43 @@ function getDataPaths() {
   };
 }
 
-function makeDivisionKey(season: string, sport: string, division: string): string {
-  return `${season.trim()}|${sport.trim()}|${division.trim()}`;
-}
-
+/**
+ * Vercel serves the deployment bundle from a read-only /var/task, so disk
+ * writes are a local-development convenience only. Supabase is the source of
+ * truth; a failed write here must never fail the save.
+ */
 async function safeWriteFile(filePath: string, content: string): Promise<void> {
   try {
     await fs.writeFile(filePath, content, "utf-8");
   } catch (err: any) {
-    // Silently ignore in read-only serverless environment (e.g. Vercel AWS Lambda /var/task)
-    if (err.code === "EROFS" || err.message?.includes("read-only")) {
+    if (err?.code === "EROFS" || err?.code === "EACCES" || err?.message?.includes("read-only")) {
       return;
     }
-    console.warn(`[UAAP Data] File write warning (${filePath}):`, err.message);
+    console.warn(`[UAAP Data] File write skipped (${filePath}):`, err?.message);
   }
 }
 
-export async function readAdminOverrides(): Promise<UAAPAdminOverridesFile> {
-  // 1. Try reading from Supabase first (persistent across serverless instances and redeployments)
+function emptyOverrides(): UAAPAdminOverrides {
+  return {
+    updated_at: new Date().toISOString(),
+    tables_overrides: {},
+    standings_overrides: {},
+    deleted_divisions: [],
+    extras_overrides: { awards: {}, chess_medalists: {} },
+  };
+}
+
+function coerceOverrides(raw: any): UAAPAdminOverrides {
+  return {
+    updated_at: raw?.updated_at || new Date().toISOString(),
+    tables_overrides: raw?.tables_overrides || {},
+    standings_overrides: raw?.standings_overrides || {},
+    deleted_divisions: raw?.deleted_divisions || [],
+    extras_overrides: raw?.extras_overrides || { awards: {}, chess_medalists: {} },
+  };
+}
+
+export async function readAdminOverrides(): Promise<UAAPAdminOverrides> {
   if (supabase) {
     try {
       const { data, error } = await supabase
@@ -101,45 +108,67 @@ export async function readAdminOverrides(): Promise<UAAPAdminOverridesFile> {
         .eq("id", OVERRIDES_STORAGE_ROW_ID)
         .maybeSingle();
 
-      if (!error && data?.record?.standings_overrides) {
-        return {
-          updated_at: data.record.updated_at || new Date().toISOString(),
-          standings_overrides: data.record.standings_overrides || {},
-          deleted_divisions: data.record.deleted_divisions || [],
-          extras_overrides: data.record.extras_overrides || { awards: {}, chess_medalists: {} },
-        };
+      if (!error && data?.record) {
+        return coerceOverrides(data.record);
+      }
+      if (error) {
+        console.warn("[UAAP Data] Supabase override read failed:", error.message);
       }
     } catch (err) {
-      console.warn("[UAAP Data] Supabase read warning:", err);
+      console.warn("[UAAP Data] Supabase override read threw:", err);
     }
   }
 
-  // 2. Fallback to local file system
   const { overridesPath } = getDataPaths();
   try {
-    const raw = await fs.readFile(overridesPath, "utf-8");
-    const parsed = JSON.parse(raw);
-    return {
-      updated_at: parsed.updated_at || new Date().toISOString(),
-      standings_overrides: parsed.standings_overrides || {},
-      deleted_divisions: parsed.deleted_divisions || [],
-      extras_overrides: parsed.extras_overrides || { awards: {}, chess_medalists: {} },
-    };
+    return coerceOverrides(JSON.parse(await fs.readFile(overridesPath, "utf-8")));
   } catch {
-    return {
-      updated_at: new Date().toISOString(),
-      standings_overrides: {},
-      deleted_divisions: [],
-      extras_overrides: { awards: {}, chess_medalists: {} },
-    };
+    return emptyOverrides();
   }
 }
 
-export async function readBaseStandings(): Promise<UAAPStandingRecord[]> {
+async function persistOverrides(overrides: UAAPAdminOverrides): Promise<string | null> {
+  let supabaseError: string | null = null;
+
+  if (supabase) {
+    try {
+      const seasonRes = await supabase.from("seasons").select("id").limit(1);
+      const validSeasonId = seasonRes.data?.[0]?.id || "pvl-2026-on-tour";
+
+      const { error } = await supabase.from("teams").upsert({
+        id: OVERRIDES_STORAGE_ROW_ID,
+        name: "__UAAP_ARCHIVE_STORAGE__",
+        short_name: "UAAP_ARCHIVE",
+        logo: null,
+        league: "UAAP",
+        accent_color: "#000000",
+        season_id: validSeasonId,
+        record: overrides,
+      });
+
+      if (error) {
+        supabaseError = error.message;
+        console.error("[UAAP Data] Supabase persist failed:", error.message);
+      }
+    } catch (err: any) {
+      supabaseError = err?.message || "Unknown Supabase error";
+      console.error("[UAAP Data] Supabase persist threw:", err);
+    }
+  } else {
+    supabaseError = "Supabase is not configured (missing NEXT_PUBLIC_SUPABASE_* env vars).";
+  }
+
+  const { overridesPath } = getDataPaths();
+  await safeWriteFile(overridesPath, JSON.stringify(overrides, null, 2));
+
+  return supabaseError;
+}
+
+export async function readBaseStandings(): Promise<LegacyStandingRecord[]> {
   const { standingsPath } = getDataPaths();
   try {
-    const raw = await fs.readFile(standingsPath, "utf-8");
-    return JSON.parse(raw);
+    const parsed = JSON.parse(await fs.readFile(standingsPath, "utf-8"));
+    return Array.isArray(parsed) ? parsed : [];
   } catch {
     return [];
   }
@@ -148,264 +177,212 @@ export async function readBaseStandings(): Promise<UAAPStandingRecord[]> {
 export async function readBaseExtras(): Promise<UAAPArchiveExtras> {
   const { extrasPath } = getDataPaths();
   try {
-    const raw = await fs.readFile(extrasPath, "utf-8");
-    return JSON.parse(raw);
+    return JSON.parse(await fs.readFile(extrasPath, "utf-8"));
   } catch {
     return { awards: {}, games: {}, chess_medalists: {}, leaderboards: {} };
   }
 }
 
 /**
- * Returns merged UAAP Archive dataset where Admin Panel overrides have STRICT TOP PRIORITY.
+ * Builds the archive by layering admin overrides on top of the digitised base
+ * dataset. Precedence, lowest to highest: base records, legacy overrides,
+ * table overrides. Deleted divisions win over everything.
  */
-export async function getMergedUAAPData(): Promise<MergedUAAPData> {
-  const [baseStandings, baseExtras, overrides] = await Promise.all([
-    readBaseStandings(),
-    readBaseExtras(),
-    readAdminOverrides(),
-  ]);
+export function mergeUAAPData(
+  baseStandings: LegacyStandingRecord[],
+  baseExtras: UAAPArchiveExtras,
+  overrides: UAAPAdminOverrides
+): MergedUAAPData {
+  const byKey = new Map<string, UAAPTable>();
 
-  const deletedSet = new Set(
-    overrides.deleted_divisions.map((k) => k.toLowerCase())
-  );
-
-  // 1. Filter out deleted divisions from base
-  let mergedStandings = baseStandings.filter((item) => {
-    const key = makeDivisionKey(item.season, item.sport, item.division).toLowerCase();
-    return !deletedSet.has(key);
-  });
-
-  // 2. Apply admin overrides (Admin entries completely replace or create new divisions)
-  const overrideEntries = Object.entries(overrides.standings_overrides);
-  for (const [key, records] of overrideEntries) {
-    if (deletedSet.has(key.toLowerCase())) continue;
-    const parts = key.split("|");
-    if (parts.length !== 3) continue;
-    const [season, sport, division] = parts;
-
-    // Remove any base records matching this season, sport, division
-    mergedStandings = mergedStandings.filter(
-      (item) =>
-        !(
-          item.season.toLowerCase() === season.toLowerCase() &&
-          item.sport.toLowerCase() === sport.toLowerCase() &&
-          item.division.toLowerCase() === division.toLowerCase()
-        )
-    );
-
-    // Append prioritized admin records
-    mergedStandings.push(...records);
+  for (const table of legacyRecordsToTables(baseStandings)) {
+    byKey.set(makeDivisionKey(table.season, table.sport, table.division), table);
   }
 
-  // 3. Merge extras with admin overrides taking top priority
+  for (const [key, records] of Object.entries(overrides.standings_overrides || {})) {
+    if (!Array.isArray(records) || records.length === 0) continue;
+    byKey.set(key, legacyRecordsToTable(records));
+  }
+
+  for (const [key, table] of Object.entries(overrides.tables_overrides || {})) {
+    if (!table) continue;
+    byKey.set(key, {
+      ...table,
+      division: normalizeDivision(table.division),
+      columns: table.columns || [],
+      rows: table.rows || [],
+    });
+  }
+
+  for (const key of overrides.deleted_divisions || []) {
+    byKey.delete(key);
+  }
+
+  const tables = Array.from(byKey.values()).sort(
+    (a, b) =>
+      b.season.localeCompare(a.season) ||
+      a.sport.localeCompare(b.sport) ||
+      a.division.localeCompare(b.division)
+  );
+
   const mergedExtras: UAAPArchiveExtras = {
     ...baseExtras,
     awards: { ...(baseExtras.awards || {}) },
     chess_medalists: { ...(baseExtras.chess_medalists || {}) },
   };
 
-  if (overrides.extras_overrides?.awards) {
-    for (const [sportSeason, divMap] of Object.entries(overrides.extras_overrides.awards)) {
-      if (!mergedExtras.awards![sportSeason]) {
-        mergedExtras.awards![sportSeason] = {};
-      }
-      mergedExtras.awards![sportSeason] = {
-        ...mergedExtras.awards![sportSeason],
-        ...divMap,
-      };
-    }
+  for (const [extrasKey, divMap] of Object.entries(overrides.extras_overrides?.awards || {})) {
+    mergedExtras.awards![extrasKey] = { ...(mergedExtras.awards![extrasKey] || {}), ...divMap };
   }
 
-  if (overrides.extras_overrides?.chess_medalists) {
-    for (const [sportSeason, divMap] of Object.entries(overrides.extras_overrides.chess_medalists)) {
-      if (!mergedExtras.chess_medalists![sportSeason]) {
-        mergedExtras.chess_medalists![sportSeason] = {};
-      }
-      mergedExtras.chess_medalists![sportSeason] = {
-        ...mergedExtras.chess_medalists![sportSeason],
-        ...divMap,
-      };
-    }
+  for (const [extrasKey, divMap] of Object.entries(
+    overrides.extras_overrides?.chess_medalists || {}
+  )) {
+    mergedExtras.chess_medalists![extrasKey] = {
+      ...(mergedExtras.chess_medalists![extrasKey] || {}),
+      ...divMap,
+    };
   }
 
-  // 4. Derive distinct sorted seasons
-  const seasonSet = new Set<string>();
-  for (const item of mergedStandings) {
-    if (item.season) seasonSet.add(item.season);
-  }
-  const defaultSeasons = ["2003-2004", "2000-2001", "1999-2000", "1998-1999", "1989-1990", "1988-1989", "1987-1988"];
-  for (const s of defaultSeasons) {
-    seasonSet.add(s);
-  }
-  const seasons = Array.from(seasonSet).sort().reverse();
+  const seasons = Array.from(new Set(tables.map((t) => t.season).filter(Boolean)))
+    .sort()
+    .reverse();
 
-  return {
-    standings: mergedStandings,
-    extras: mergedExtras,
-    seasons,
-  };
+  return { tables, extras: mergedExtras, seasons };
 }
 
-/**
- * Saves changes made on the Admin Panel.
- * Admin changes take STRICT TOP PRIORITY in overrides and are persisted to Supabase
- * (and safely synced to local disk if writable).
- */
-export async function saveUAAPAdminOverride(payload: UAAPSavePayload): Promise<{
-  success: boolean;
-  error?: string;
-  count?: number;
-  data?: MergedUAAPData;
-}> {
-  const { season, sport, division, standings, awards, chess_medalists } = payload;
-  if (!season || !sport || !division) {
-    return { success: false, error: "Missing required fields (season, sport, or division)." };
-  }
+export async function getMergedUAAPData(): Promise<MergedUAAPData> {
+  const [baseStandings, baseExtras, overrides] = await Promise.all([
+    readBaseStandings(),
+    readBaseExtras(),
+    readAdminOverrides(),
+  ]);
+  return mergeUAAPData(baseStandings, baseExtras, overrides);
+}
 
-  const { standingsPath, extrasPath, overridesPath } = getDataPaths();
+function sanitizeTable(input: UAAPTable): UAAPTable {
+  const columns: UAAPColumn[] = (input.columns || []).map((col) => ({
+    key: col.key,
+    label: col.label,
+    type: col.type,
+    ...(col.derived ? { derived: col.derived } : {}),
+  }));
 
-  try {
-    const divisionKey = makeDivisionKey(season, sport, division);
-    const overrides = await readAdminOverrides();
+  const entered = columns.filter((c) => !c.derived);
 
-    // Map and sanitize records
-    const newRecords: UAAPStandingRecord[] = standings.map((item, idx) => {
-      const w = item.wins !== undefined && item.wins !== null && (item.wins as any) !== "" ? Number(item.wins) : null;
-      const l = item.losses !== undefined && item.losses !== null && (item.losses as any) !== "" ? Number(item.losses) : null;
-      const pts = item.points !== undefined && item.points !== null && (item.points as any) !== "" ? Number(item.points) : null;
-
-      let pct = item.pct ?? null;
-      if (w !== null && l !== null && w + l > 0) {
-        pct = Number((w / (w + l)).toFixed(3));
+  const rows: UAAPRow[] = (input.rows || [])
+    .filter((row) => (row?.team || "").trim() !== "")
+    .map((row, idx) => {
+      const values: Record<string, string | number | null> = {};
+      for (const col of entered) {
+        const raw = row.values?.[col.key];
+        values[col.key] = col.type === "text" ? (raw ?? null) : toNumberOrNull(raw);
       }
-
-      const team = (item.team || "").trim().toUpperCase();
-      const details = (item.details || "").trim() || (pts !== null ? `${pts} pts` : null);
-
+      const details = (row.details || "").trim();
       return {
-        season: season.trim(),
-        sport: sport.trim(),
-        division: division.trim(),
-        stage: "Final Standings",
-        rank: item.rank || idx + 1,
-        team,
-        wins: w,
-        losses: l,
-        pct,
-        points: pts,
-        details,
-        source_page: "Manual Entry / Curated (Admin)",
+        rank: row.rank || idx + 1,
+        team: row.team.trim(),
+        values,
+        details: details || null,
       };
     });
 
-    // 1. Update overrides object
+  return {
+    season: input.season.trim(),
+    sport: input.sport.trim(),
+    division: normalizeDivision(input.division),
+    stage: (input.stage || DEFAULT_STAGE).trim() || DEFAULT_STAGE,
+    columns,
+    rows,
+    note: (input.note || "").trim() || null,
+    source_page: (input.source_page || "").trim() || MANUAL_SOURCE,
+  };
+}
+
+export async function saveUAAPAdminOverride(payload: UAAPSavePayload): Promise<{
+  success: boolean;
+  error?: string;
+  warning?: string;
+  count?: number;
+  data?: MergedUAAPData;
+}> {
+  const { table, awards, chess_medalists } = payload;
+
+  if (!table?.season?.trim() || !table?.sport?.trim() || !table?.division?.trim()) {
+    return { success: false, error: "Season, sport, and division are all required." };
+  }
+
+  try {
+    const clean = sanitizeTable(table);
+    const divisionKey = makeDivisionKey(clean.season, clean.sport, clean.division);
+    const overrides = await readAdminOverrides();
+
     overrides.updated_at = new Date().toISOString();
-    overrides.standings_overrides[divisionKey] = newRecords;
+    overrides.tables_overrides[divisionKey] = clean;
+    // The table override supersedes any pre-flexible-column entry for this key.
+    delete overrides.standings_overrides[divisionKey];
     overrides.deleted_divisions = overrides.deleted_divisions.filter(
       (k) => k.toLowerCase() !== divisionKey.toLowerCase()
     );
 
-    const extrasKey = `${sport}|${season}`;
+    const extrasKey = makeExtrasKey(clean.sport, clean.season);
     if (awards) {
-      if (!overrides.extras_overrides.awards) overrides.extras_overrides.awards = {};
-      if (!overrides.extras_overrides.awards[extrasKey]) overrides.extras_overrides.awards[extrasKey] = {};
-      overrides.extras_overrides.awards[extrasKey][division] = awards;
+      overrides.extras_overrides.awards ||= {};
+      overrides.extras_overrides.awards[extrasKey] ||= {};
+      overrides.extras_overrides.awards[extrasKey][clean.division] = awards;
     }
-
     if (chess_medalists) {
-      if (!overrides.extras_overrides.chess_medalists) overrides.extras_overrides.chess_medalists = {};
-      if (!overrides.extras_overrides.chess_medalists[extrasKey]) overrides.extras_overrides.chess_medalists[extrasKey] = {};
-      overrides.extras_overrides.chess_medalists[extrasKey][division] = chess_medalists;
+      overrides.extras_overrides.chess_medalists ||= {};
+      overrides.extras_overrides.chess_medalists[extrasKey] ||= {};
+      overrides.extras_overrides.chess_medalists[extrasKey][clean.division] = chess_medalists;
     }
 
-    // 2. Persist to Supabase (persistent database across all environments)
-    if (supabase) {
-      try {
-        const seasonRes = await supabase.from("seasons").select("id").limit(1);
-        const validSeasonId = seasonRes.data?.[0]?.id || "pvl-2026-on-tour";
-        await supabase.from("teams").upsert({
-          id: OVERRIDES_STORAGE_ROW_ID,
-          name: "__UAAP_ARCHIVE_STORAGE__",
-          short_name: "UAAP_ARCHIVE",
-          logo: null,
-          league: "UAAP",
-          accent_color: "#000000",
-          season_id: validSeasonId,
-          record: overrides,
-        });
-      } catch (dbErr: any) {
-        console.error("[UAAP Data] Supabase persist error:", dbErr);
-      }
-    }
-
-    // 3. Persist overrides file if local disk is writable (silently bypasses EROFS on Vercel)
-    await safeWriteFile(overridesPath, JSON.stringify(overrides, null, 2));
-
-    // 4. Compute full merged dataset
-    const mergedData = await getMergedUAAPData();
-
-    // 5. Keep base standings and extras synchronized if disk is writable
-    await safeWriteFile(standingsPath, JSON.stringify(mergedData.standings, null, 2));
-    await safeWriteFile(extrasPath, JSON.stringify(mergedData.extras, null, 2));
+    const supabaseError = await persistOverrides(overrides);
+    const data = await getMergedUAAPData();
 
     return {
       success: true,
-      count: newRecords.length,
-      data: mergedData,
+      count: clean.rows.length,
+      data,
+      ...(supabaseError
+        ? { warning: `Saved locally but the database rejected the write: ${supabaseError}` }
+        : {}),
     };
   } catch (err: any) {
     console.error("[saveUAAPAdminOverride] error:", err);
-    return { success: false, error: err.message || "Failed to save admin overrides." };
+    return { success: false, error: err?.message || "Failed to save archive data." };
   }
 }
 
-/**
- * Deletes a division from the UAAP Archive and updates overrides.
- */
 export async function deleteUAAPAdminDivision(
   season: string,
   sport: string,
   division: string
-): Promise<{ success: boolean; error?: string; data?: MergedUAAPData }> {
-  const { standingsPath, overridesPath } = getDataPaths();
-
+): Promise<{ success: boolean; error?: string; warning?: string; data?: MergedUAAPData }> {
   try {
     const divisionKey = makeDivisionKey(season, sport, division);
     const overrides = await readAdminOverrides();
 
     overrides.updated_at = new Date().toISOString();
+    delete overrides.tables_overrides[divisionKey];
     delete overrides.standings_overrides[divisionKey];
 
     if (!overrides.deleted_divisions.some((k) => k.toLowerCase() === divisionKey.toLowerCase())) {
       overrides.deleted_divisions.push(divisionKey);
     }
 
-    if (supabase) {
-      try {
-        const seasonRes = await supabase.from("seasons").select("id").limit(1);
-        const validSeasonId = seasonRes.data?.[0]?.id || "pvl-2026-on-tour";
-        await supabase.from("teams").upsert({
-          id: OVERRIDES_STORAGE_ROW_ID,
-          name: "__UAAP_ARCHIVE_STORAGE__",
-          short_name: "UAAP_ARCHIVE",
-          logo: null,
-          league: "UAAP",
-          accent_color: "#000000",
-          season_id: validSeasonId,
-          record: overrides,
-        });
-      } catch (dbErr: any) {
-        console.error("[UAAP Data] Supabase delete error:", dbErr);
-      }
-    }
+    const supabaseError = await persistOverrides(overrides);
+    const data = await getMergedUAAPData();
 
-    await safeWriteFile(overridesPath, JSON.stringify(overrides, null, 2));
-
-    const mergedData = await getMergedUAAPData();
-    await safeWriteFile(standingsPath, JSON.stringify(mergedData.standings, null, 2));
-
-    return { success: true, data: mergedData };
+    return {
+      success: true,
+      data,
+      ...(supabaseError
+        ? { warning: `Deleted locally but the database rejected the write: ${supabaseError}` }
+        : {}),
+    };
   } catch (err: any) {
-    return { success: false, error: err.message };
+    console.error("[deleteUAAPAdminDivision] error:", err);
+    return { success: false, error: err?.message || "Failed to delete division." };
   }
 }
