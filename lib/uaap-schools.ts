@@ -6,21 +6,21 @@ export interface UAAPSchool {
 }
 
 export const UAAP_SCHOOLS: UAAPSchool[] = [
-  { code: "ADMU", name: "Ateneo de Manila" },
-  { code: "DLSU", name: "De La Salle" },
-  { code: "FEU", name: "Far Eastern" },
-  { code: "UST", name: "Univ. of Santo Tomas" },
-  { code: "UP", name: "Univ. of the Philippines" },
-  { code: "UE", name: "Univ. of the East" },
+  { code: "ADMU", name: "Ateneo de Manila University" },
+  { code: "DLSU", name: "De La Salle University" },
+  { code: "FEU", name: "Far Eastern University" },
+  { code: "UST", name: "University of Santo Tomas" },
+  { code: "UP", name: "University of the Philippines" },
+  { code: "UE", name: "University of the East" },
   { code: "AdU", name: "Adamson University" },
   { code: "NU", name: "National University" },
-  { code: "DLSZ", name: "De La Salle Zobel", juniors: true },
+  { code: "DLSZ", name: "De La Salle Santiago Zobel School", juniors: true },
   { code: "UPIS", name: "UP Integrated School", juniors: true },
   { code: "USTHS", name: "UST High School", juniors: true },
   { code: "FEU-FERN", name: "FEU Diliman (FERN)", juniors: true },
   { code: "AHS", name: "Ateneo High School", juniors: true },
   { code: "UEHS", name: "UE High School", juniors: true },
-  { code: "NU-HS", name: "NU Nazareth", juniors: true },
+  { code: "NU-HS", name: "NU Nazareth School", juniors: true },
 ];
 
 export interface SchoolTheme {
@@ -30,22 +30,22 @@ export interface SchoolTheme {
 }
 
 const SCHOOL_THEMES: Record<string, SchoolTheme> = {
-  ADMU: { bg: "bg-blue-600/15 border-blue-500/30", text: "text-blue-400", name: "Ateneo" },
-  AHS: { bg: "bg-blue-600/15 border-blue-500/30", text: "text-blue-400", name: "Ateneo High" },
-  DLSU: { bg: "bg-emerald-600/15 border-emerald-500/30", text: "text-emerald-400", name: "La Salle" },
-  DLSZ: { bg: "bg-emerald-600/15 border-emerald-500/30", text: "text-emerald-400", name: "DLSZ" },
-  "DLS-Z": { bg: "bg-emerald-600/15 border-emerald-500/30", text: "text-emerald-400", name: "DLSZ" },
-  FEU: { bg: "bg-green-600/15 border-yellow-500/30", text: "text-yellow-400", name: "Far Eastern" },
+  ADMU: { bg: "bg-blue-600/15 border-blue-500/30", text: "text-blue-400", name: "Ateneo de Manila University" },
+  AHS: { bg: "bg-blue-600/15 border-blue-500/30", text: "text-blue-400", name: "Ateneo High School" },
+  DLSU: { bg: "bg-emerald-600/15 border-emerald-500/30", text: "text-emerald-400", name: "De La Salle University" },
+  DLSZ: { bg: "bg-emerald-600/15 border-emerald-500/30", text: "text-emerald-400", name: "De La Salle Zobel" },
+  "DLS-Z": { bg: "bg-emerald-600/15 border-emerald-500/30", text: "text-emerald-400", name: "De La Salle Zobel" },
+  FEU: { bg: "bg-green-600/15 border-yellow-500/30", text: "text-yellow-400", name: "Far Eastern University" },
   "FEU-FERN": { bg: "bg-green-600/15 border-yellow-500/30", text: "text-yellow-400", name: "FEU Diliman" },
-  UST: { bg: "bg-amber-500/15 border-amber-500/30", text: "text-amber-400", name: "Santo Tomas" },
-  USTHS: { bg: "bg-amber-500/15 border-amber-500/30", text: "text-amber-400", name: "UST High" },
-  UP: { bg: "bg-rose-700/15 border-rose-500/30", text: "text-rose-400", name: "Univ. of the Philippines" },
-  UPIS: { bg: "bg-rose-700/15 border-rose-500/30", text: "text-rose-400", name: "UPIS" },
-  UE: { bg: "bg-red-600/15 border-red-500/30", text: "text-red-400", name: "Univ. of the East" },
-  UEHS: { bg: "bg-red-600/15 border-red-500/30", text: "text-red-400", name: "UE High" },
-  ADU: { bg: "bg-sky-600/15 border-sky-500/30", text: "text-sky-400", name: "Adamson" },
-  NU: { bg: "bg-indigo-600/15 border-yellow-500/30", text: "text-indigo-400", name: "National U" },
-  "NU-HS": { bg: "bg-indigo-600/15 border-yellow-500/30", text: "text-indigo-400", name: "NU High" },
+  UST: { bg: "bg-amber-500/15 border-amber-500/30", text: "text-amber-400", name: "University of Santo Tomas" },
+  USTHS: { bg: "bg-amber-500/15 border-amber-500/30", text: "text-amber-400", name: "UST High School" },
+  UP: { bg: "bg-rose-700/15 border-rose-500/30", text: "text-rose-400", name: "University of the Philippines" },
+  UPIS: { bg: "bg-rose-700/15 border-rose-500/30", text: "text-rose-400", name: "UP Integrated School" },
+  UE: { bg: "bg-red-600/15 border-red-500/30", text: "text-red-400", name: "University of the East" },
+  UEHS: { bg: "bg-red-600/15 border-red-500/30", text: "text-red-400", name: "UE High School" },
+  ADU: { bg: "bg-sky-600/15 border-sky-500/30", text: "text-sky-400", name: "Adamson University" },
+  NU: { bg: "bg-indigo-600/15 border-yellow-500/30", text: "text-indigo-400", name: "National University" },
+  "NU-HS": { bg: "bg-indigo-600/15 border-yellow-500/30", text: "text-indigo-400", name: "NU High School" },
 };
 
 const NEUTRAL_THEME: SchoolTheme = {
