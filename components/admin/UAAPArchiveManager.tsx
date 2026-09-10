@@ -7,8 +7,8 @@ import {
   saveUAAPArchiveData,
   deleteUAAPArchiveDivision,
   getUAAPAnnualReportSnippet,
-  type UAAPStandingEntry,
 } from "@/app/admin/actions";
+import type { UAAPStandingEntry } from "@/lib/uaap-data";
 import standingsData from "@/data/uaap_standings.json";
 import archiveExtrasData from "@/data/uaap_archive_extras.json";
 import {
@@ -93,13 +93,34 @@ const ALL_SPORTS = [
 const ALL_DIVISIONS = ["Men's", "Women's", "Juniors", "Collegiate", "Boys", "Girls"];
 
 export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
-  // Existing seasons discovered from current data
+  // Dynamic live dataset (seeded initially from static bundle for zero-latency mount)
+  const [dynamicStandings, setDynamicStandings] = useState<any[]>(standingsData as any[]);
+  const [dynamicExtras, setDynamicExtras] = useState<any>(archiveExtrasData);
+
+  const fetchLiveUAAPData = useCallback(async () => {
+    try {
+      const res = await fetch("/api/uaap/data", { cache: "no-store" });
+      if (res.ok) {
+        const json = await res.json();
+        if (json.standings) setDynamicStandings(json.standings);
+        if (json.extras) setDynamicExtras(json.extras);
+      }
+    } catch (err) {
+      console.warn("[UAAPArchiveManager] Dynamic data fetch failed, using local cache:", err);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchLiveUAAPData();
+  }, [fetchLiveUAAPData]);
+
+  // Existing seasons discovered dynamically from live data
   const existingSeasons = useMemo(() => {
-    const list = Array.from(new Set(standingsData.map((item: any) => item.season))).sort().reverse();
+    const list = Array.from(new Set(dynamicStandings.map((item: any) => item.season))).sort().reverse();
     return list.length > 0
       ? list
       : ["2003-2004", "2000-2001", "1999-2000", "1998-1999", "1989-1990", "1988-1989", "1987-1988"];
-  }, []);
+  }, [dynamicStandings]);
 
   // Selection states
   const [season, setSeason] = useState<string>(existingSeasons[0] || "2003-2004");
@@ -147,10 +168,10 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
   // Saving state
   const [isSaving, setIsSaving] = useState<boolean>(false);
 
-  // Load existing records whenever season, sport, or division changes
+  // Load existing records whenever season, sport, division, or dynamicStandings changes
   const loadCurrentData = useCallback(() => {
     // 1. Find matching standings
-    const matching = standingsData.filter(
+    const matching = dynamicStandings.filter(
       (item: any) =>
         item.season === season &&
         item.sport.toLowerCase() === sport.toLowerCase() &&
@@ -178,7 +199,7 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
 
     // 2. Load awards from extras
     const extrasKey = `${sport}|${season}`;
-    const allExtras = archiveExtrasData as any;
+    const allExtras = dynamicExtras as any;
     const aw = allExtras.awards?.[extrasKey]?.[division];
     if (aw) {
       setMvpName(aw.mvp?.player || "");
@@ -203,7 +224,7 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
         setChessBoards({ "1": [], "2": [], "3": [], "4": [], "5": [], "6": [] });
       }
     }
-  }, [season, sport, division]);
+  }, [season, sport, division, dynamicStandings, dynamicExtras]);
 
   useEffect(() => {
     loadCurrentData();
@@ -416,6 +437,12 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
 
     if (res.success) {
       onToast(`✅ Saved ${season} ${sport} (${division}) — ${standings.length} records!`, "success");
+      if (res.data) {
+        setDynamicStandings(res.data.standings);
+        if (res.data.extras) setDynamicExtras(res.data.extras);
+      } else {
+        fetchLiveUAAPData();
+      }
     } else {
       onToast(`Save failed: ${res.error}`, "error");
     }
@@ -429,6 +456,12 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
     const res = await deleteUAAPArchiveDivision(season, sport, division);
     if (res.success) {
       setStandings([]);
+      if (res.data) {
+        setDynamicStandings(res.data.standings);
+        if (res.data.extras) setDynamicExtras(res.data.extras);
+      } else {
+        fetchLiveUAAPData();
+      }
       onToast(`Deleted ${season} ${sport} (${division}) standings.`, "success");
     } else {
       onToast(`Delete failed: ${res.error}`, "error");

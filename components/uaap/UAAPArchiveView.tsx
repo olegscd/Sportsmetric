@@ -15,7 +15,7 @@ import {
   Award,
 } from "lucide-react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import standingsData from "@/data/uaap_standings.json";
 import archiveExtrasData from "@/data/uaap_archive_extras.json";
 
@@ -305,11 +305,37 @@ export function UAAPArchiveView() {
 
   const [stageFilter, setStageFilter] = useState<string>("All");
 
-  const data = standingsData as StandingRecord[];
-  const archiveExtras = archiveExtrasData as unknown as {
+  // Dynamic live dataset (seeded initially from static bundle for zero-latency mount)
+  const [data, setData] = useState<StandingRecord[]>(standingsData as StandingRecord[]);
+  const [archiveExtras, setArchiveExtras] = useState<{
     awards: Record<string, Record<string, any>>;
     chess_medalists: Record<string, Record<string, any>>;
-  };
+  }>(archiveExtrasData as any);
+
+  useEffect(() => {
+    let isMounted = true;
+    fetch("/api/uaap/data", { cache: "no-store" })
+      .then((res) => {
+        if (!res.ok) return null;
+        return res.json();
+      })
+      .then((json) => {
+        if (!isMounted || !json) return;
+        if (Array.isArray(json.standings)) {
+          setData(json.standings);
+        }
+        if (json.extras) {
+          setArchiveExtras(json.extras);
+        }
+      })
+      .catch((err) => {
+        console.warn("[UAAPArchiveView] Dynamic data fetch failed, using local cache:", err);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const currentSportMeta = useMemo(() => {
     if (!sportParam) return null;
