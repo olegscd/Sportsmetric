@@ -28,7 +28,7 @@ import {
   type UAAPRow,
   type UAAPTable,
 } from "@/lib/uaap-schema";
-import { UAAP_SCHOOLS, getSchoolTheme, matchSchoolCode } from "@/lib/uaap-schools";
+import { UAAP_SCHOOLS, getSchoolCode, getSchoolName, getSchoolTheme, matchSchoolCode } from "@/lib/uaap-schools";
 import standingsData from "@/data/uaap_standings.json";
 import archiveExtrasData from "@/data/uaap_archive_extras.json";
 import {
@@ -195,6 +195,10 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
       );
 
     const cloned: UAAPTable = JSON.parse(JSON.stringify(table));
+    cloned.rows = cloned.rows.map((r) => ({
+      ...r,
+      team: getSchoolName(r.team),
+    }));
     setDraft(cloned);
     setBaseline(JSON.stringify(cloned));
 
@@ -296,9 +300,9 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
   const prefillStandardEight = () => {
     const codes = ["UST", "DLSU", "FEU", "ADMU", "UP", "UE", "AdU", "NU"];
     setRows(
-      codes.map((team, idx) => ({
+      codes.map((code, idx) => ({
         rank: idx + 1,
-        team,
+        team: getSchoolName(code),
         values: {},
         details: idx === 0 ? "Champion" : idx === 1 ? "Runner-up" : null,
       }))
@@ -391,18 +395,41 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
     setIsSaving(true);
 
     const hasAwards = mvp.player.trim() || roy.player.trim() || mythical.length > 0;
+    const normalizeSchoolVal = (s: string) => matchSchoolCode(s) || s.trim();
     const chessPayload =
       sport === "Chess"
-        ? Object.fromEntries(Object.entries(chessBoards).filter(([, list]) => list.length > 0))
+        ? Object.fromEntries(
+            Object.entries(chessBoards)
+              .filter(([, list]) => list.length > 0)
+              .map(([b, list]) => [
+                b,
+                list.map((m) => ({ ...m, school: normalizeSchoolVal(m.school) })),
+              ])
+          )
         : null;
 
+    const normalizedDraft: UAAPTable = {
+      ...draft,
+      rows: draft.rows.map((r) => ({
+        ...r,
+        team: normalizeSchoolVal(r.team),
+      })),
+    };
+
     const res = await saveUAAPArchiveData({
-      table: draft,
+      table: normalizedDraft,
       awards: hasAwards
         ? {
-            mvp: mvp.player.trim() ? { ...mvp, player: mvp.player.trim() } : null,
-            rookie_of_the_year: roy.player.trim() ? { ...roy, player: roy.player.trim() } : null,
-            mythical_five: mythical.length > 0 ? mythical : null,
+            mvp: mvp.player.trim()
+              ? { player: mvp.player.trim(), school: normalizeSchoolVal(mvp.school) }
+              : null,
+            rookie_of_the_year: roy.player.trim()
+              ? { player: roy.player.trim(), school: normalizeSchoolVal(roy.school) }
+              : null,
+            mythical_five:
+              mythical.length > 0
+                ? mythical.map((m) => ({ ...m, school: normalizeSchoolVal(m.school) }))
+                : null,
           }
         : null,
       chess_medalists: chessPayload && Object.keys(chessPayload).length > 0 ? chessPayload : null,
@@ -492,8 +519,8 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
     <div className="space-y-5 max-w-6xl mx-auto pb-24">
       <datalist id={SCHOOL_DATALIST_ID}>
         {UAAP_SCHOOLS.map((s) => (
-          <option key={s.code} value={s.code}>
-            {s.name}
+          <option key={s.code} value={s.name}>
+            {s.code}
           </option>
         ))}
       </datalist>
@@ -681,8 +708,12 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
           columns={draft.columns}
           onClose={() => setShowImport(false)}
           onApply={(rows, mode, newColumns) => {
+            const displayRows = rows.map((r) => ({
+              ...r,
+              team: getSchoolName(r.team),
+            }));
             setDraft((prev) => {
-              const next = mode === "replace" ? rows : [...prev.rows, ...rows];
+              const next = mode === "replace" ? displayRows : [...prev.rows, ...displayRows];
               return {
                 ...prev,
                 columns: newColumns ?? prev.columns,
@@ -800,6 +831,7 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
               ) : (
                 draft.rows.map((row, idx) => {
                   const theme = getSchoolTheme(row.team);
+                  const schoolCode = getSchoolCode(row.team);
                   return (
                     <tr key={idx} className="hover:bg-elevated/40 transition-colors">
                       <td className="py-2 px-3 text-center">
@@ -816,7 +848,7 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
 
                       <td className="py-2 px-3">
                         <div className="flex items-center gap-2">
-                          {row.team && (
+                          {schoolCode && (
                             <span
                               className={cn(
                                 "px-2 py-0.5 rounded border text-[11px] font-bold shrink-0",
@@ -824,7 +856,7 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
                                 theme.text
                               )}
                             >
-                              {row.team}
+                              {schoolCode}
                             </span>
                           )}
                           <div className="flex-1 min-w-0">
@@ -835,24 +867,16 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
                               data-cell={`${idx}:team`}
                               onChange={(e) => updateRow(idx, { team: e.target.value })}
                               onBlur={() => {
-                                const matched = matchSchoolCode(row.team);
-                                if (matched && matched !== row.team) {
-                                  updateRow(idx, { team: matched });
+                                const name = getSchoolName(row.team);
+                                if (name && name !== row.team) {
+                                  updateRow(idx, { team: name });
                                 }
                               }}
                               onKeyDown={(e) => handleCellKeyDown(e, idx, "team")}
-                              placeholder="School code (e.g. UP)"
-                              className="w-full px-2 py-1 rounded bg-elevated border border-border text-foreground text-xs font-semibold"
+                              placeholder="School name (e.g. University of the Philippines)"
+                              className="w-full px-2.5 py-1 rounded bg-elevated border border-border text-foreground text-xs font-semibold"
                               aria-label={`School for row ${idx + 1}`}
                             />
-                            {theme.name && theme.name !== row.team && (
-                              <div
-                                className="text-[10px] text-muted truncate mt-0.5"
-                                title={theme.name}
-                              >
-                                {theme.name}
-                              </div>
-                            )}
                           </div>
                         </div>
                       </td>

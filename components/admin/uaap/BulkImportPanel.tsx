@@ -16,6 +16,7 @@ import {
   type UAAPColumnPreset,
   type UAAPRow,
 } from "@/lib/uaap-schema";
+import { getSchoolName } from "@/lib/uaap-schools";
 
 const PLACEHOLDER = `Paste rows from a spreadsheet, CSV, or typed-out scan. For example:
 
@@ -268,7 +269,9 @@ export function BulkImportPanel({
                   {previewRows.map((row, idx) => (
                     <tr key={idx}>
                       <td className="py-1 px-2 text-center font-mono">{row.rank}</td>
-                      <td className="py-1 px-2 font-bold text-foreground">{row.team || "—"}</td>
+                      <td className="py-1 px-2 font-bold text-foreground">
+                        {getSchoolName(row.team) || "—"}
+                      </td>
                       {enterableColumns.map((col) => (
                         <td key={col.key} className="py-1 px-2 text-center font-mono">
                           {row.values[col.key] ?? "—"}

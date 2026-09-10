@@ -54,13 +54,38 @@ const NEUTRAL_THEME: SchoolTheme = {
   name: "",
 };
 
-export function getSchoolTheme(code: string): SchoolTheme {
-  if (!code) return { ...NEUTRAL_THEME, name: "Unknown" };
-  const exact = SCHOOL_THEMES[code];
+export function getSchoolTheme(codeOrName: string): SchoolTheme {
+  if (!codeOrName) return { ...NEUTRAL_THEME, name: "Unknown" };
+  const exact = SCHOOL_THEMES[codeOrName];
   if (exact) return exact;
-  const upper = SCHOOL_THEMES[code.toUpperCase()];
+  const upper = SCHOOL_THEMES[codeOrName.toUpperCase()];
   if (upper) return upper;
-  return { ...NEUTRAL_THEME, name: code };
+  const matched = matchSchoolCode(codeOrName);
+  if (matched && SCHOOL_THEMES[matched]) return SCHOOL_THEMES[matched];
+  return { ...NEUTRAL_THEME, name: codeOrName };
+}
+
+export function getSchoolName(codeOrName: string): string {
+  if (!codeOrName) return "";
+  const matched = matchSchoolCode(codeOrName);
+  if (matched) {
+    const found = UAAP_SCHOOLS.find((s) => s.code.toUpperCase() === matched.toUpperCase());
+    if (found?.name) return found.name;
+    const theme = SCHOOL_THEMES[matched];
+    if (theme?.name) return theme.name;
+  }
+  const exact = UAAP_SCHOOLS.find(
+    (s) =>
+      s.code.toUpperCase() === codeOrName.toUpperCase() ||
+      s.name.toLowerCase() === codeOrName.toLowerCase()
+  );
+  if (exact?.name) return exact.name;
+  return codeOrName;
+}
+
+export function getSchoolCode(codeOrName: string): string {
+  if (!codeOrName) return "";
+  return matchSchoolCode(codeOrName) || codeOrName.trim().toUpperCase();
 }
 
 /**
