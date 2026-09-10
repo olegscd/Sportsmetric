@@ -9,7 +9,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 120,
+    "points": 120.0,
     "details": "120 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -23,7 +23,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 84,
+    "points": 84.0,
     "details": "84 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -37,7 +37,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 57,
+    "points": 57.0,
     "details": "57 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -51,7 +51,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 53,
+    "points": 53.0,
     "details": "53 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -65,7 +65,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 46,
+    "points": 46.0,
     "details": "46 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -79,7 +79,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 41,
+    "points": 41.0,
     "details": "41 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -93,7 +93,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 18,
+    "points": 18.0,
     "details": "18 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -107,7 +107,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 15,
+    "points": 15.0,
     "details": "15 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -121,7 +121,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 30,
+    "points": 30.0,
     "details": "30 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -135,7 +135,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 26,
+    "points": 26.0,
     "details": "26 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -149,7 +149,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 24,
+    "points": 24.0,
     "details": "24 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -163,7 +163,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 19,
+    "points": 19.0,
     "details": "19 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -177,7 +177,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 16,
+    "points": 16.0,
     "details": "16 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -191,7 +191,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 12,
+    "points": 12.0,
     "details": "12 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -205,7 +205,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 9,
+    "points": 9.0,
     "details": "9 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -219,7 +219,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 105,
+    "points": 105.0,
     "details": "105 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -233,7 +233,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 79,
+    "points": 79.0,
     "details": "79 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -247,7 +247,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 60,
+    "points": 60.0,
     "details": "60 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -261,7 +261,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 59,
+    "points": 59.0,
     "details": "59 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -303,7 +303,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 21,
+    "points": 21.0,
     "details": "21 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -317,7 +317,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 12,
+    "points": 12.0,
     "details": "12 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -331,7 +331,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 35,
+    "points": 35.0,
     "details": "35 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -345,7 +345,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 31,
+    "points": 31.0,
     "details": "31 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -359,7 +359,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 19,
+    "points": 19.0,
     "details": "19 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -373,7 +373,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 18,
+    "points": 18.0,
     "details": "18 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -387,7 +387,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 15,
+    "points": 15.0,
     "details": "15 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -401,7 +401,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 12,
+    "points": 12.0,
     "details": "12 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -415,7 +415,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 8,
+    "points": 8.0,
     "details": "8 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -429,7 +429,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 3,
+    "points": 3.0,
     "details": "3 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -443,7 +443,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 113,
+    "points": 113.0,
     "details": "113 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -457,7 +457,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 101,
+    "points": 101.0,
     "details": "101 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -471,7 +471,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 86,
+    "points": 86.0,
     "details": "86 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -485,7 +485,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 86,
+    "points": 86.0,
     "details": "86 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -499,7 +499,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 80,
+    "points": 80.0,
     "details": "80 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -513,7 +513,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 44,
+    "points": 44.0,
     "details": "44 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -527,7 +527,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 34,
+    "points": 34.0,
     "details": "34 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -541,7 +541,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 30,
+    "points": 30.0,
     "details": "30 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -555,7 +555,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 97,
+    "points": 97.0,
     "details": "97 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -569,7 +569,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 70,
+    "points": 70.0,
     "details": "70 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -583,7 +583,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 69,
+    "points": 69.0,
     "details": "69 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -597,7 +597,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 67,
+    "points": 67.0,
     "details": "67 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -611,7 +611,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 63,
+    "points": 63.0,
     "details": "63 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -625,7 +625,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 42,
+    "points": 42.0,
     "details": "42 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -639,7 +639,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 24,
+    "points": 24.0,
     "details": "24 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -653,7 +653,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 84,
+    "points": 84.0,
     "details": "84 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -667,7 +667,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 77,
+    "points": 77.0,
     "details": "77 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -681,7 +681,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 73,
+    "points": 73.0,
     "details": "73 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -695,7 +695,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 65,
+    "points": 65.0,
     "details": "65 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -709,7 +709,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 57,
+    "points": 57.0,
     "details": "57 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -723,7 +723,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 54,
+    "points": 54.0,
     "details": "54 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -737,7 +737,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 20,
+    "points": 20.0,
     "details": "20 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -751,7 +751,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 0,
+    "points": 0.0,
     "details": "0 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -764,7 +764,7 @@
     "team": "UP",
     "wins": 7,
     "losses": 0,
-    "pct": 1,
+    "pct": 1.0,
     "points": null,
     "details": null,
     "source_page": "UAAP Annual Report"
@@ -862,7 +862,7 @@
     "team": "NU",
     "wins": 0,
     "losses": 7,
-    "pct": 0,
+    "pct": 0.0,
     "points": null,
     "details": null,
     "source_page": "UAAP Annual Report"
@@ -876,7 +876,7 @@
     "team": "UP",
     "wins": 7,
     "losses": 0,
-    "pct": 1,
+    "pct": 1.0,
     "points": null,
     "details": null,
     "source_page": "UAAP Annual Report"
@@ -974,7 +974,7 @@
     "team": "NU",
     "wins": 0,
     "losses": 7,
-    "pct": 0,
+    "pct": 0.0,
     "points": null,
     "details": null,
     "source_page": "UAAP Annual Report"
@@ -988,7 +988,7 @@
     "team": "UP",
     "wins": 7,
     "losses": 0,
-    "pct": 1,
+    "pct": 1.0,
     "points": null,
     "details": null,
     "source_page": "UAAP Annual Report"
@@ -1086,7 +1086,7 @@
     "team": "ADU",
     "wins": 0,
     "losses": 7,
-    "pct": 0,
+    "pct": 0.0,
     "points": null,
     "details": null,
     "source_page": "UAAP Annual Report"
@@ -1100,7 +1100,7 @@
     "team": "UP",
     "wins": 6,
     "losses": 0,
-    "pct": 1,
+    "pct": 1.0,
     "points": null,
     "details": null,
     "source_page": "UAAP Annual Report"
@@ -1408,7 +1408,7 @@
     "team": "DLSU",
     "wins": 0,
     "losses": 10,
-    "pct": 0,
+    "pct": 0.0,
     "points": null,
     "details": "6th Place",
     "source_page": "UAAP Annual Report"
@@ -1548,7 +1548,7 @@
     "team": "ADMU",
     "wins": 0,
     "losses": 10,
-    "pct": 0,
+    "pct": 0.0,
     "points": null,
     "details": null,
     "source_page": "UAAP Annual Report"
@@ -1632,7 +1632,7 @@
     "team": "ADMU",
     "wins": 0,
     "losses": 10,
-    "pct": 0,
+    "pct": 0.0,
     "points": null,
     "details": null,
     "source_page": "UAAP Annual Report"
@@ -2248,7 +2248,7 @@
     "team": "ADU",
     "wins": 14,
     "losses": 0,
-    "pct": 1,
+    "pct": 1.0,
     "points": null,
     "details": "Champion",
     "source_page": "UAAP Annual Report"
@@ -2346,7 +2346,7 @@
     "team": "NU",
     "wins": 0,
     "losses": 14,
-    "pct": 0,
+    "pct": 0.0,
     "points": null,
     "details": "Eighth Place",
     "source_page": "UAAP Annual Report"
@@ -2710,7 +2710,7 @@
     "team": "ADMU",
     "wins": 6,
     "losses": 0,
-    "pct": 1,
+    "pct": 1.0,
     "points": null,
     "details": null,
     "source_page": "UAAP Annual Report"
@@ -2794,7 +2794,7 @@
     "team": "UE",
     "wins": 0,
     "losses": 6,
-    "pct": 0,
+    "pct": 0.0,
     "points": null,
     "details": null,
     "source_page": "UAAP Annual Report"
@@ -2808,7 +2808,7 @@
     "team": "ADU",
     "wins": 14,
     "losses": 0,
-    "pct": 1,
+    "pct": 1.0,
     "points": null,
     "details": null,
     "source_page": "UAAP Annual Report"
@@ -2920,7 +2920,7 @@
     "team": "ADMU",
     "wins": 12,
     "losses": 0,
-    "pct": 1,
+    "pct": 1.0,
     "points": null,
     "details": null,
     "source_page": "UAAP Annual Report"
@@ -3131,7 +3131,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 5,
+    "points": 5.0,
     "details": "5 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -3145,7 +3145,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 4,
+    "points": 4.0,
     "details": "4 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -3159,7 +3159,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 3,
+    "points": 3.0,
     "details": "3 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -3173,7 +3173,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 2,
+    "points": 2.0,
     "details": "2 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -3187,7 +3187,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 1,
+    "points": 1.0,
     "details": "1 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -3201,7 +3201,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 21,
+    "points": 21.0,
     "details": "21 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -3215,7 +3215,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 19,
+    "points": 19.0,
     "details": "19 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -3229,7 +3229,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 17,
+    "points": 17.0,
     "details": "17 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -3243,7 +3243,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 15,
+    "points": 15.0,
     "details": "15 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -3257,7 +3257,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 11,
+    "points": 11.0,
     "details": "11 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -3271,7 +3271,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 10,
+    "points": 10.0,
     "details": "10 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -3285,7 +3285,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 8,
+    "points": 8.0,
     "details": "8 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -3299,7 +3299,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 7,
+    "points": 7.0,
     "details": "7 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -3313,7 +3313,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 6,
+    "points": 6.0,
     "details": "6 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -3327,7 +3327,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 5,
+    "points": 5.0,
     "details": "5 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -3341,7 +3341,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 4,
+    "points": 4.0,
     "details": "4 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -3355,7 +3355,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 3,
+    "points": 3.0,
     "details": "3 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -3369,7 +3369,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 2,
+    "points": 2.0,
     "details": "2 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -3383,7 +3383,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 1,
+    "points": 1.0,
     "details": "1 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -3397,7 +3397,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 39,
+    "points": 39.0,
     "details": "39 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -3411,7 +3411,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 39,
+    "points": 39.0,
     "details": "39 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -3425,7 +3425,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 37,
+    "points": 37.0,
     "details": "37 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -3439,7 +3439,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 33,
+    "points": 33.0,
     "details": "33 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -3467,7 +3467,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 35,
+    "points": 35.0,
     "details": "35 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -3509,7 +3509,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 27,
+    "points": 27.0,
     "details": "27 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -3523,7 +3523,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 26,
+    "points": 26.0,
     "details": "26 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -3537,7 +3537,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 23,
+    "points": 23.0,
     "details": "23 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -3621,7 +3621,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 18,
+    "points": 18.0,
     "details": "18 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -3635,7 +3635,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 12,
+    "points": 12.0,
     "details": "12 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -3649,7 +3649,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 31,
+    "points": 31.0,
     "details": "31 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -3691,7 +3691,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 17,
+    "points": 17.0,
     "details": "17 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -3719,7 +3719,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 5,
+    "points": 5.0,
     "details": "5 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -3747,7 +3747,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 38,
+    "points": 38.0,
     "details": "38 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -3803,7 +3803,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 25,
+    "points": 25.0,
     "details": "SIXTH PLACE",
     "source_page": "UAAP Annual Report"
   },
@@ -3845,7 +3845,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 35,
+    "points": 35.0,
     "details": "35 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -3873,7 +3873,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 28,
+    "points": 28.0,
     "details": "28 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -3929,7 +3929,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 13,
+    "points": 13.0,
     "details": "13 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -3971,7 +3971,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 19,
+    "points": 19.0,
     "details": "19 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -4013,7 +4013,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 15,
+    "points": 15.0,
     "details": "15 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -4097,7 +4097,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 0,
+    "points": 0.0,
     "details": "0 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -4111,7 +4111,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 0,
+    "points": 0.0,
     "details": "0 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -4125,7 +4125,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 26,
+    "points": 26.0,
     "details": "26 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -4153,7 +4153,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 19,
+    "points": 19.0,
     "details": "19 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -4167,7 +4167,7 @@
     "wins": null,
     "losses": null,
     "pct": null,
-    "points": 9,
+    "points": 9.0,
     "details": "9 pts",
     "source_page": "UAAP Annual Report"
   },
@@ -4642,7 +4642,7 @@
     "team": "ADMU",
     "wins": 1,
     "losses": 0,
-    "pct": 1,
+    "pct": 1.0,
     "points": 4,
     "details": "4 pts",
     "source_page": "UAAP Annual Report"
@@ -4656,7 +4656,7 @@
     "team": "FEU",
     "wins": 3,
     "losses": 0,
-    "pct": 1,
+    "pct": 1.0,
     "points": 2,
     "details": "2 pts",
     "source_page": "UAAP Annual Report"
@@ -4684,7 +4684,7 @@
     "team": "UP",
     "wins": 4,
     "losses": 0,
-    "pct": 1,
+    "pct": 1.0,
     "points": 1,
     "details": "1 pts",
     "source_page": "UAAP Annual Report"
@@ -4712,7 +4712,7 @@
     "team": "UST",
     "wins": 0,
     "losses": 2,
-    "pct": 0,
+    "pct": 0.0,
     "points": 4,
     "details": "4 pts",
     "source_page": "UAAP Annual Report"
@@ -4782,7 +4782,7 @@
     "team": "UE",
     "wins": 6,
     "losses": 0,
-    "pct": 1,
+    "pct": 1.0,
     "points": 1,
     "details": "1 pts",
     "source_page": "UAAP Annual Report"
@@ -4810,7 +4810,7 @@
     "team": "FEU",
     "wins": 1,
     "losses": 0,
-    "pct": 1,
+    "pct": 1.0,
     "points": 1,
     "details": "1 pts",
     "source_page": "UAAP Annual Report"
@@ -4964,7 +4964,7 @@
     "team": "UST",
     "wins": 8,
     "losses": 0,
-    "pct": 1,
+    "pct": 1.0,
     "points": 1,
     "details": "1 pts",
     "source_page": "UAAP Annual Report"
@@ -5174,7 +5174,7 @@
     "team": "ADMU",
     "wins": 8,
     "losses": 0,
-    "pct": 1,
+    "pct": 1.0,
     "points": 1,
     "details": "1 pts",
     "source_page": "UAAP Annual Report"
@@ -5622,7 +5622,7 @@
     "team": "FEU",
     "wins": 7,
     "losses": 0,
-    "pct": 1,
+    "pct": 1.0,
     "points": 4,
     "details": "4 pts",
     "source_page": "UAAP Annual Report"
@@ -5636,7 +5636,7 @@
     "team": "FEU",
     "wins": 0,
     "losses": 4,
-    "pct": 0,
+    "pct": 0.0,
     "points": 3,
     "details": "3 pts",
     "source_page": "UAAP Annual Report"
@@ -5832,7 +5832,7 @@
     "team": "UE",
     "wins": 4,
     "losses": 0,
-    "pct": 1,
+    "pct": 1.0,
     "points": null,
     "details": null,
     "source_page": "UAAP Annual Report"
@@ -5888,7 +5888,7 @@
     "team": "ADMU",
     "wins": 14,
     "losses": 0,
-    "pct": 1,
+    "pct": 1.0,
     "points": 4,
     "details": "4 pts",
     "source_page": "UAAP Annual Report"
@@ -5916,7 +5916,7 @@
     "team": "FEU",
     "wins": 6,
     "losses": 0,
-    "pct": 1,
+    "pct": 1.0,
     "points": 4,
     "details": "4 pts",
     "source_page": "UAAP Annual Report"
@@ -5986,7 +5986,7 @@
     "team": "FEU",
     "wins": 0,
     "losses": 4,
-    "pct": 0,
+    "pct": 0.0,
     "points": 2,
     "details": "2 pts",
     "source_page": "UAAP Annual Report"
@@ -6000,7 +6000,7 @@
     "team": "UE",
     "wins": 0,
     "losses": 5,
-    "pct": 0,
+    "pct": 0.0,
     "points": 2,
     "details": "2 pts",
     "source_page": "UAAP Annual Report"
@@ -6014,7 +6014,7 @@
     "team": "UP",
     "wins": 4,
     "losses": 0,
-    "pct": 1,
+    "pct": 1.0,
     "points": 1,
     "details": "1 pts",
     "source_page": "UAAP Annual Report"
@@ -6042,7 +6042,7 @@
     "team": "UP",
     "wins": 4,
     "losses": 0,
-    "pct": 1,
+    "pct": 1.0,
     "points": 1,
     "details": "1 pts",
     "source_page": "UAAP Annual Report"
@@ -6336,7 +6336,7 @@
     "team": "ADMU",
     "wins": 0,
     "losses": 10,
-    "pct": 0,
+    "pct": 0.0,
     "points": 0,
     "details": "0 pts",
     "source_page": "UAAP Annual Report"
@@ -6420,7 +6420,7 @@
     "team": "ADMU",
     "wins": 0,
     "losses": 10,
-    "pct": 0,
+    "pct": 0.0,
     "points": null,
     "details": null,
     "source_page": "UAAP Annual Report"
@@ -6518,7 +6518,7 @@
     "team": "ADMU",
     "wins": 10,
     "losses": 0,
-    "pct": 1,
+    "pct": 1.0,
     "points": 10,
     "details": "10 pts",
     "source_page": "UAAP Annual Report"
@@ -6602,7 +6602,7 @@
     "team": "NU",
     "wins": 8,
     "losses": 0,
-    "pct": 1,
+    "pct": 1.0,
     "points": null,
     "details": null,
     "source_page": "UAAP Annual Report"
@@ -6658,7 +6658,7 @@
     "team": "DLSU",
     "wins": 0,
     "losses": 8,
-    "pct": 0,
+    "pct": 0.0,
     "points": null,
     "details": null,
     "source_page": "UAAP Annual Report"
@@ -6812,7 +6812,7 @@
     "team": "DLSU",
     "wins": 0,
     "losses": 10,
-    "pct": 0,
+    "pct": 0.0,
     "points": 10,
     "details": "10 pts",
     "source_page": "UAAP Annual Report"
@@ -7694,7 +7694,7 @@
     "team": "UE",
     "wins": 12,
     "losses": 0,
-    "pct": 1,
+    "pct": 1.0,
     "points": 0,
     "details": "0 pts",
     "source_page": "UAAP Annual Report"
@@ -7736,7 +7736,7 @@
     "team": "NU",
     "wins": 7,
     "losses": 0,
-    "pct": 1,
+    "pct": 1.0,
     "points": 18,
     "details": "18 pts",
     "source_page": "UAAP Annual Report"
@@ -7820,7 +7820,7 @@
     "team": "NU",
     "wins": 7,
     "losses": 0,
-    "pct": 1,
+    "pct": 1.0,
     "points": 21,
     "details": "21 pts",
     "source_page": "UAAP Annual Report"
@@ -8240,7 +8240,7 @@
     "team": "UE",
     "wins": 1,
     "losses": 0,
-    "pct": 1,
+    "pct": 1.0,
     "points": 1,
     "details": "1 pts",
     "source_page": "UAAP Annual Report"
@@ -8254,7 +8254,7 @@
     "team": "ADMU",
     "wins": 0,
     "losses": 1,
-    "pct": 0,
+    "pct": 0.0,
     "points": 1,
     "details": "1 pts",
     "source_page": "UAAP Annual Report"
@@ -8268,7 +8268,7 @@
     "team": "UP",
     "wins": 1,
     "losses": 0,
-    "pct": 1,
+    "pct": 1.0,
     "points": null,
     "details": null,
     "source_page": "UAAP Annual Report"
@@ -8282,7 +8282,7 @@
     "team": "DLSU",
     "wins": 0,
     "losses": 1,
-    "pct": 0,
+    "pct": 0.0,
     "points": null,
     "details": null,
     "source_page": "UAAP Annual Report"
@@ -8296,7 +8296,7 @@
     "team": "FEU",
     "wins": 0,
     "losses": 1,
-    "pct": 0,
+    "pct": 0.0,
     "points": 0,
     "details": "0 pts",
     "source_page": "UAAP Annual Report"
@@ -8310,7 +8310,7 @@
     "team": "ADU",
     "wins": 0,
     "losses": 1,
-    "pct": 0,
+    "pct": 0.0,
     "points": 0,
     "details": "0 pts",
     "source_page": "UAAP Annual Report"
@@ -8492,7 +8492,7 @@
     "team": "DLSU",
     "wins": 6,
     "losses": 0,
-    "pct": 1,
+    "pct": 1.0,
     "points": null,
     "details": null,
     "source_page": "UAAP Annual Report"
@@ -8576,7 +8576,7 @@
     "team": "ADU",
     "wins": 0,
     "losses": 7,
-    "pct": 0,
+    "pct": 0.0,
     "points": null,
     "details": null,
     "source_page": "UAAP Annual Report"
@@ -8688,7 +8688,7 @@
     "team": "UST",
     "wins": 6,
     "losses": 0,
-    "pct": 1,
+    "pct": 1.0,
     "points": null,
     "details": null,
     "source_page": "UAAP Annual Report"
@@ -8772,7 +8772,7 @@
     "team": "ADU",
     "wins": 0,
     "losses": 6,
-    "pct": 0,
+    "pct": 0.0,
     "points": null,
     "details": null,
     "source_page": "UAAP Annual Report"
@@ -8786,7 +8786,7 @@
     "team": "UST",
     "wins": 8,
     "losses": 0,
-    "pct": 1,
+    "pct": 1.0,
     "points": null,
     "details": null,
     "source_page": "UAAP Annual Report"
@@ -8842,7 +8842,7 @@
     "team": "ADMU",
     "wins": 0,
     "losses": 8,
-    "pct": 0,
+    "pct": 0.0,
     "points": null,
     "details": null,
     "source_page": "UAAP Annual Report"
@@ -8996,7 +8996,7 @@
     "team": "UST",
     "wins": 5,
     "losses": 0,
-    "pct": 1,
+    "pct": 1.0,
     "points": null,
     "details": null,
     "source_page": "UAAP Annual Report"
@@ -9248,7 +9248,7 @@
     "team": "UE",
     "wins": 0,
     "losses": 8,
-    "pct": 0,
+    "pct": 0.0,
     "points": 4,
     "details": "4 pts",
     "source_page": "UAAP Annual Report"
@@ -9262,7 +9262,7 @@
     "team": "DLSU",
     "wins": 6,
     "losses": 0,
-    "pct": 1,
+    "pct": 1.0,
     "points": 16,
     "details": "16 pts",
     "source_page": "UAAP Annual Report"
@@ -9304,7 +9304,7 @@
     "team": "ADMU",
     "wins": 0,
     "losses": 6,
-    "pct": 0,
+    "pct": 0.0,
     "points": 1,
     "details": "1 pts",
     "source_page": "UAAP Annual Report"
@@ -9318,7 +9318,7 @@
     "team": "FEU",
     "wins": 14,
     "losses": 0,
-    "pct": 1,
+    "pct": 1.0,
     "points": null,
     "details": "Champion",
     "source_page": "UAAP Annual Report"
@@ -9430,7 +9430,7 @@
     "team": "ADU",
     "wins": 14,
     "losses": 0,
-    "pct": 1,
+    "pct": 1.0,
     "points": null,
     "details": null,
     "source_page": "UAAP Annual Report"
@@ -9542,7 +9542,7 @@
     "team": "UST",
     "wins": 7,
     "losses": 0,
-    "pct": 1,
+    "pct": 1.0,
     "points": null,
     "details": null,
     "source_page": "UAAP Annual Report"
@@ -9640,7 +9640,7 @@
     "team": "ADMU",
     "wins": 0,
     "losses": 7,
-    "pct": 0,
+    "pct": 0.0,
     "points": null,
     "details": null,
     "source_page": "UAAP Annual Report"
@@ -9752,7 +9752,7 @@
     "team": "ADMU",
     "wins": 0,
     "losses": 14,
-    "pct": 0,
+    "pct": 0.0,
     "points": null,
     "details": null,
     "source_page": "UAAP Annual Report"
@@ -9766,7 +9766,7 @@
     "team": "DLSU",
     "wins": 10,
     "losses": 0,
-    "pct": 1,
+    "pct": 1.0,
     "points": null,
     "details": null,
     "source_page": "UAAP Annual Report"
@@ -9836,7 +9836,7 @@
     "team": "NU",
     "wins": 0,
     "losses": 10,
-    "pct": 0,
+    "pct": 0.0,
     "points": null,
     "details": null,
     "source_page": "UAAP Annual Report"
@@ -9850,7 +9850,7 @@
     "team": "UST",
     "wins": 14,
     "losses": 0,
-    "pct": 1,
+    "pct": 1.0,
     "points": null,
     "details": null,
     "source_page": "UAAP Annual Report"
@@ -9948,7 +9948,7 @@
     "team": "ADMU",
     "wins": 0,
     "losses": 14,
-    "pct": 0,
+    "pct": 0.0,
     "points": null,
     "details": null,
     "source_page": "UAAP Annual Report"
@@ -10060,7 +10060,7 @@
     "team": "ADMU",
     "wins": 0,
     "losses": 14,
-    "pct": 0,
+    "pct": 0.0,
     "points": null,
     "details": null,
     "source_page": "UAAP Annual Report"
@@ -10074,7 +10074,7 @@
     "team": "DLSU",
     "wins": 10,
     "losses": 0,
-    "pct": 1,
+    "pct": 1.0,
     "points": null,
     "details": null,
     "source_page": "UAAP Annual Report"
@@ -10144,7 +10144,7 @@
     "team": "NU",
     "wins": 0,
     "losses": 10,
-    "pct": 0,
+    "pct": 0.0,
     "points": null,
     "details": null,
     "source_page": "UAAP Annual Report"
@@ -10368,7 +10368,7 @@
     "team": "ADMU",
     "wins": 0,
     "losses": 14,
-    "pct": 0,
+    "pct": 0.0,
     "points": null,
     "details": null,
     "source_page": "UAAP Annual Report"
@@ -10382,7 +10382,7 @@
     "team": "UE",
     "wins": 10,
     "losses": 0,
-    "pct": 1,
+    "pct": 1.0,
     "points": null,
     "details": null,
     "source_page": "UAAP Annual Report"
@@ -10564,7 +10564,7 @@
     "team": "ADMU",
     "wins": 0,
     "losses": 14,
-    "pct": 0,
+    "pct": 0.0,
     "points": null,
     "details": null,
     "source_page": "UAAP Annual Report"
@@ -10676,7 +10676,7 @@
     "team": "NU",
     "wins": 0,
     "losses": 14,
-    "pct": 0,
+    "pct": 0.0,
     "points": null,
     "details": null,
     "source_page": "UAAP Annual Report"
@@ -10690,7 +10690,7 @@
     "team": "DLSU",
     "wins": 8,
     "losses": 0,
-    "pct": 1,
+    "pct": 1.0,
     "points": null,
     "details": null,
     "source_page": "UAAP Annual Report"
@@ -10746,233 +10746,9 @@
     "team": "UP",
     "wins": 0,
     "losses": 8,
-    "pct": 0,
+    "pct": 0.0,
     "points": null,
     "details": null,
     "source_page": "UAAP Annual Report"
-  },
-  {
-    "season": "1987-1988",
-    "sport": "Volleyball",
-    "division": "Men's",
-    "stage": "Final Standings",
-    "rank": 1,
-    "team": "UST",
-    "wins": 14,
-    "losses": 1,
-    "pct": 0.933,
-    "points": null,
-    "details": "Champion",
-    "source_page": "Manual Entry / Curated (Admin)"
-  },
-  {
-    "season": "1987-1988",
-    "sport": "Volleyball",
-    "division": "Men's",
-    "stage": "Final Standings",
-    "rank": 2,
-    "team": "FEU",
-    "wins": 12,
-    "losses": 3,
-    "pct": 0.8,
-    "points": null,
-    "details": "Runner-up",
-    "source_page": "Manual Entry / Curated (Admin)"
-  },
-  {
-    "season": "1987-1988",
-    "sport": "Volleyball",
-    "division": "Men's",
-    "stage": "Final Standings",
-    "rank": 3,
-    "team": "UP",
-    "wins": null,
-    "losses": null,
-    "pct": null,
-    "points": null,
-    "details": "3rd Place",
-    "source_page": "Manual Entry / Curated (Admin)"
-  },
-  {
-    "season": "1987-1988",
-    "sport": "Volleyball",
-    "division": "Men's",
-    "stage": "Final Standings",
-    "rank": 4,
-    "team": "ADU",
-    "wins": null,
-    "losses": null,
-    "pct": null,
-    "points": null,
-    "details": "4th Place",
-    "source_page": "Manual Entry / Curated (Admin)"
-  },
-  {
-    "season": "1987-1988",
-    "sport": "Volleyball",
-    "division": "Men's",
-    "stage": "Final Standings",
-    "rank": 5,
-    "team": "UE",
-    "wins": null,
-    "losses": null,
-    "pct": null,
-    "points": null,
-    "details": "5th Place",
-    "source_page": "Manual Entry / Curated (Admin)"
-  },
-  {
-    "season": "1987-1988",
-    "sport": "Volleyball",
-    "division": "Men's",
-    "stage": "Final Standings",
-    "rank": 6,
-    "team": "NU",
-    "wins": null,
-    "losses": null,
-    "pct": null,
-    "points": null,
-    "details": "6th Place",
-    "source_page": "Manual Entry / Curated (Admin)"
-  },
-  {
-    "season": "1987-1988",
-    "sport": "Volleyball",
-    "division": "Men's",
-    "stage": "Final Standings",
-    "rank": 7,
-    "team": "ADMU",
-    "wins": null,
-    "losses": null,
-    "pct": null,
-    "points": null,
-    "details": "7th Place",
-    "source_page": "Manual Entry / Curated (Admin)"
-  },
-  {
-    "season": "1987-1988",
-    "sport": "Volleyball",
-    "division": "Men's",
-    "stage": "Final Standings",
-    "rank": 8,
-    "team": "DLSU",
-    "wins": null,
-    "losses": null,
-    "pct": null,
-    "points": null,
-    "details": "8th Place",
-    "source_page": "Manual Entry / Curated (Admin)"
-  },
-  {
-    "season": "1987-1988",
-    "sport": "Volleyball",
-    "division": "Women's",
-    "stage": "Final Standings",
-    "rank": 1,
-    "team": "UST",
-    "wins": 15,
-    "losses": 1,
-    "pct": 0.938,
-    "points": null,
-    "details": "Champion",
-    "source_page": "Manual Entry / Curated (IMG_0909)"
-  },
-  {
-    "season": "1987-1988",
-    "sport": "Volleyball",
-    "division": "Women's",
-    "stage": "Final Standings",
-    "rank": 2,
-    "team": "FEU",
-    "wins": 13,
-    "losses": 3,
-    "pct": 0.813,
-    "points": null,
-    "details": "Runner-up",
-    "source_page": "Manual Entry / Curated (IMG_0909)"
-  },
-  {
-    "season": "1987-1988",
-    "sport": "Volleyball",
-    "division": "Women's",
-    "stage": "Final Standings",
-    "rank": 3,
-    "team": "ADU",
-    "wins": null,
-    "losses": null,
-    "pct": null,
-    "points": null,
-    "details": "3rd Place",
-    "source_page": "Manual Entry / Curated (IMG_0909)"
-  },
-  {
-    "season": "1987-1988",
-    "sport": "Volleyball",
-    "division": "Women's",
-    "stage": "Final Standings",
-    "rank": 4,
-    "team": "UP",
-    "wins": null,
-    "losses": null,
-    "pct": null,
-    "points": null,
-    "details": "4th Place",
-    "source_page": "Manual Entry / Curated (IMG_0909)"
-  },
-  {
-    "season": "1987-1988",
-    "sport": "Volleyball",
-    "division": "Women's",
-    "stage": "Final Standings",
-    "rank": 5,
-    "team": "DLSU",
-    "wins": null,
-    "losses": null,
-    "pct": null,
-    "points": null,
-    "details": "5th Place",
-    "source_page": "Manual Entry / Curated (IMG_0909)"
-  },
-  {
-    "season": "1987-1988",
-    "sport": "Volleyball",
-    "division": "Women's",
-    "stage": "Final Standings",
-    "rank": 6,
-    "team": "UE",
-    "wins": null,
-    "losses": null,
-    "pct": null,
-    "points": null,
-    "details": "6th Place",
-    "source_page": "Manual Entry / Curated (IMG_0909)"
-  },
-  {
-    "season": "1987-1988",
-    "sport": "Volleyball",
-    "division": "Women's",
-    "stage": "Final Standings",
-    "rank": 7,
-    "team": "ADMU",
-    "wins": null,
-    "losses": null,
-    "pct": null,
-    "points": null,
-    "details": "7th Place",
-    "source_page": "Manual Entry / Curated (IMG_0909)"
-  },
-  {
-    "season": "1987-1988",
-    "sport": "Volleyball",
-    "division": "Women's",
-    "stage": "Final Standings",
-    "rank": 8,
-    "team": "NU",
-    "wins": null,
-    "losses": null,
-    "pct": null,
-    "points": null,
-    "details": "8th Place",
-    "source_page": "Manual Entry / Curated (IMG_0909)"
   }
 ]

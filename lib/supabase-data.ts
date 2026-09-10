@@ -132,18 +132,16 @@ export function mapTeamRows(
     record: Team["record"];
   }>
 ): Team[] {
-  return rows
-    .filter((t) => !t.id.startsWith("__"))
-    .map((t) => ({
-      id: t.id,
-      name: t.name,
-      shortName: t.short_name,
-      logo: t.logo,
-      league: t.league,
-      accentColor: t.accent_color,
-      seasonId: t.season_id,
-      record: t.record ?? { wins: 0, losses: 0 },
-    }));
+  return rows.map((t) => ({
+    id: t.id,
+    name: t.name,
+    shortName: t.short_name,
+    logo: t.logo,
+    league: t.league,
+    accentColor: t.accent_color,
+    seasonId: t.season_id,
+    record: t.record ?? { wins: 0, losses: 0 },
+  }));
 }
 
 export function mapPlayerRows(

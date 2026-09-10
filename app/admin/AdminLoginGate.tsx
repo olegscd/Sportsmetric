@@ -1,19 +1,12 @@
 "use client";
 
-import { useActionState, useEffect } from "react";
+import { useActionState } from "react";
 import { loginAdmin } from "./actions";
 
 export function AdminLoginGate() {
   const [state, formAction, isPending] = useActionState(loginAdmin, {
     error: null,
-    success: false,
   });
-
-  useEffect(() => {
-    if (state?.success) {
-      window.location.reload();
-    }
-  }, [state?.success]);
 
   return (
     <div className="flex min-h-dvh items-center justify-center bg-bg px-4">
