@@ -65,7 +65,6 @@ const ALL_SPORTS = [
   "Fencing",
   "Chess",
   "Lawn Tennis",
-  "Swimming",
 ];
 
 const BASE_DIVISIONS = ["Men's", "Women's", "Juniors"];

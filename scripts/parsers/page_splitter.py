@@ -26,7 +26,6 @@ SPORT_PATTERNS: list[tuple[str, list[str]]] = [
     ("badminton",    ["BADMINTON"]),
     ("judo",         ["JUDO"]),
     ("fencing",      ["FENCING"]),
-    ("swimming",     ["SWIMMING", "FREESTYLE", "BACKSTROKE", "BREASTSTROKE", "BUTTERFLY"]),
     ("track_field",  ["TRACK & FIELD", "TRACK AND FIELD"]),
 ]
 

@@ -542,14 +542,6 @@
         }
       }
     },
-    "Swimming|1998-1999": {
-      "Juniors": {
-        "mvp": {
-          "player": "Mikhail George O. Reyes",
-          "school": "UST"
-        }
-      }
-    },
     "Table Tennis|1998-1999": {
       "Men's": {
         "mvp": {
@@ -922,7 +914,7 @@
           "school": "UP"
         },
         {
-          "player": "Cariño, Rosendo",
+          "player": "Cari\u00f1o, Rosendo",
           "school": "ADU"
         },
         {
@@ -1236,7 +1228,7 @@
           },
           {
             "rank": 4,
-            "player": "Araña, Ryan",
+            "player": "Ara\u00f1a, Ryan",
             "school": "DLSU",
             "games_played": 10,
             "value": "52.1 %",

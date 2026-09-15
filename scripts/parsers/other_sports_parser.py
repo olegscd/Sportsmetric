@@ -36,7 +36,6 @@ OTHER_SPORTS = [
     "judo",
     "fencing",
     "softball",
-    "swimming",
     "track_field"
 ]
 

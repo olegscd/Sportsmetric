@@ -27,7 +27,6 @@ SPORT_NAME_MAP = {
     "fencing": "Fencing",
     "chess": "Chess",
     "tennis": "Lawn Tennis",
-    "swimming": "Swimming",
     "overall_standings": "General Championship",
 }
 

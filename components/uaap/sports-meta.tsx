@@ -85,17 +85,6 @@ function TennisIcon({ className }: IconProps) {
   );
 }
 
-function SwimmingIcon({ className }: IconProps) {
-  return (
-    <svg viewBox="0 0 24 24" {...strokeProps} className={className}>
-      <path d="M2 18c2 0 3-1 5-1s3 1 5 1 3-1 5-1 3 1 5 1" />
-      <path d="M2 21c2 0 3-1 5-1s3 1 5 1 3-1 5-1 3 1 5 1" />
-      <circle cx="18" cy="6" r="3" />
-      <path d="M7 12l5-4 5 3-3 4" />
-    </svg>
-  );
-}
-
 export interface SportMeta {
   name: string;
   slug: string;
@@ -197,13 +186,6 @@ export const SPORTS_META: SportMeta[] = [
     icon: TennisIcon,
     color: "text-lime-400",
     bgGlow: "group-hover:border-lime-500/60 group-hover:bg-lime-500/5",
-  },
-  {
-    name: "Swimming",
-    slug: "swimming",
-    icon: SwimmingIcon,
-    color: "text-cyan-400",
-    bgGlow: "group-hover:border-cyan-500/60 group-hover:bg-cyan-500/5",
   },
 ];
 
