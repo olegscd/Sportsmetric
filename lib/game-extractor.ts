@@ -68,8 +68,14 @@ const UAAP_TOURNAMENTS = [
 const STAT_COLUMNS_UAAP = {
   mins: 3,
   pts: 4,
+  // col 5: FG2 "m-a" string, col 6-7 are m/a separately, col 8 is FG2%
+  fg2: 5,
   fg2_pct: 8,
+  // col 9: FG3 "m-a" string, col 10 is FG3%
+  fg3: 9,
   fg3_pct: 10,
+  // col 11: FT "m-a" string, col 12 is FT%
+  ft: 11,
   ft_pct: 12,
   reb: 15,
   ast: 16,
@@ -84,10 +90,16 @@ const STAT_COLUMNS_UAAP = {
 const STAT_COLUMNS_PBA = {
   mins: 3,
   pts: 4,
+  // col 5: FG2 "m-a" string, col 8 is FG2%
+  fg2: 5,
   fg2_pct: 8,
+  // col 9: FG3 "m-a" string, col 10 is FG3%
+  fg3: 9,
   fg3_pct: 10,
   fg4: 11,
   fg4_pct: 12,
+  // col 13: FT "m-a" string, col 14 is FT%
+  ft: 13,
   ft_pct: 14,
   reb: 17,
   ast: 18,
@@ -142,6 +154,17 @@ function parseIsoDate(rawDate?: string): string {
     // Fall back to current date
   }
   return new Date().toISOString();
+}
+
+/**
+ * Parses a "made-attempted" string like "3-7" into [made, attempted].
+ * Returns null if the string doesn't match the m-a pattern.
+ */
+function parseMadeAttempted(raw: string | undefined | null): [number, number] | null {
+  if (!raw) return null;
+  const m = raw.trim().match(/^(\d+)-(\d+)$/);
+  if (!m) return null;
+  return [parseInt(m[1], 10), parseInt(m[2], 10)];
 }
 
 function estimateShooting(pts: number, fg2Pct: number, fg3Pct: number, ftPct: number) {
@@ -611,11 +634,35 @@ export async function extractGameFromUrl(
       const to = parseNumber(cells[statCols.to]) || 0;
       const pf = parseNumber(cells[statCols.pf]) || 0;
 
-      const fg2Pct = parseNumber(cells[statCols.fg2_pct]) || 0;
-      const fg3Pct = parseNumber(cells[statCols.fg3_pct]) || 0;
-      const ftPct = parseNumber(cells[statCols.ft_pct]) || 0;
+      const fg2Raw = cells[(statCols as Record<string, number>).fg2] ?? null;
+      const fg3Raw = cells[(statCols as Record<string, number>).fg3] ?? null;
+      const ftRaw = cells[(statCols as Record<string, number>).ft] ?? null;
 
-      const splits = estimateShooting(pts, fg2Pct, fg3Pct, ftPct);
+      const fg2Parsed = parseMadeAttempted(fg2Raw);
+      const fg3Parsed = parseMadeAttempted(fg3Raw);
+      const ftParsed = parseMadeAttempted(ftRaw);
+
+      let splits: ReturnType<typeof estimateShooting>;
+      if (fg2Parsed || fg3Parsed || ftParsed) {
+        // Use the actual m-a data from the box score table
+        const [fg2M, fg2A] = fg2Parsed ?? [0, 0];
+        const [threeM, threeA] = fg3Parsed ?? [0, 0];
+        const [ftM, ftA] = ftParsed ?? [0, 0];
+        splits = {
+          fgM: fg2M + threeM,
+          fgA: fg2A + threeA,
+          threeM,
+          threeA,
+          ftM,
+          ftA,
+        };
+      } else {
+        // Fall back to estimation when m-a columns are unavailable
+        const fg2Pct = parseNumber(cells[statCols.fg2_pct]) || 0;
+        const fg3Pct = parseNumber(cells[statCols.fg3_pct]) || 0;
+        const ftPct = parseNumber(cells[statCols.ft_pct]) || 0;
+        splits = estimateShooting(pts, fg2Pct, fg3Pct, ftPct);
+      }
 
       rows.push({
         playerName,

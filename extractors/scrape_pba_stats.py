@@ -34,10 +34,16 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 STAT_COLUMNS = {
     "mins": 3,
     "pts": 4,
+    # col 5: FG2 "m-a" string  col 8: FG2%
+    "fg2": 5,
     "fg2_pct": 8,
+    # col 9: FG3 "m-a" string  col 10: FG3%
+    "fg3": 9,
     "fg3_pct": 10,
     "fg4": 11,
     "fg4_pct": 12,
+    # col 13: FT "m-a" string  col 14: FT%
+    "ft": 13,
     "ft_pct": 14,
     "reb": 17,
     "ast": 18,
@@ -212,10 +218,13 @@ def parse_player_rows(game_id: str, html: str) -> list[dict]:
                     "blk": parse_number(cell_value(cells, STAT_COLUMNS["blk"])),
                     "pf": parse_number(cell_value(cells, STAT_COLUMNS["pf"])),
                     "fls_on": parse_number(cell_value(cells, STAT_COLUMNS["fls_on"])),
+                    "fg2": cell_value(cells, STAT_COLUMNS["fg2"]),
                     "fg2_pct": parse_number(cell_value(cells, STAT_COLUMNS["fg2_pct"])),
+                    "fg3": cell_value(cells, STAT_COLUMNS["fg3"]),
                     "fg3_pct": parse_number(cell_value(cells, STAT_COLUMNS["fg3_pct"])),
                     "fg4": cell_value(cells, STAT_COLUMNS["fg4"]),
                     "fg4_pct": parse_number(cell_value(cells, STAT_COLUMNS["fg4_pct"])),
+                    "ft": cell_value(cells, STAT_COLUMNS["ft"]),
                     "ft_pct": parse_number(cell_value(cells, STAT_COLUMNS["ft_pct"])),
                     "plus_minus": parse_number(cell_value(cells, STAT_COLUMNS["plus_minus"])),
                 }

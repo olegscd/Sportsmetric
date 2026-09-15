@@ -42,8 +42,14 @@ def output_excel_path() -> Path:
 STAT_COLUMNS = {
     "mins": 3,
     "pts": 4,
+    # col 5: FG2 "m-a" string  col 8: FG2%
+    "fg2": 5,
     "fg2_pct": 8,
+    # col 9: FG3 "m-a" string  col 10: FG3%
+    "fg3": 9,
     "fg3_pct": 10,
+    # col 11: FT "m-a" string  col 12: FT%
+    "ft": 11,
     "ft_pct": 12,
     "reb": 15,
     "ast": 16,
@@ -235,8 +241,11 @@ def parse_player_rows(game: GameRef, html: str) -> list[dict]:
                     "blk": parse_number(cell_value(cells, STAT_COLUMNS["blk"])),
                     "pf": parse_number(cell_value(cells, STAT_COLUMNS["pf"])),
                     "fls_on": parse_number(cell_value(cells, STAT_COLUMNS["fls_on"])),
+                    "fg2": cell_value(cells, STAT_COLUMNS["fg2"]),
                     "fg2_pct": parse_number(cell_value(cells, STAT_COLUMNS["fg2_pct"])),
+                    "fg3": cell_value(cells, STAT_COLUMNS["fg3"]),
                     "fg3_pct": parse_number(cell_value(cells, STAT_COLUMNS["fg3_pct"])),
+                    "ft": cell_value(cells, STAT_COLUMNS["ft"]),
                     "ft_pct": parse_number(cell_value(cells, STAT_COLUMNS["ft_pct"])),
                     "plus_minus": parse_number(cell_value(cells, STAT_COLUMNS["plus_minus"])),
                 }

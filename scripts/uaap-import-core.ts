@@ -34,6 +34,10 @@ export type UaapStatsRow = {
   blk?: string;
   to?: string;
   pf?: string;
+  /** Actual made-attempted strings (e.g. "3-7") — preferred over pct when available */
+  fg2?: string;
+  fg3?: string;
+  ft?: string;
   fg2_pct: string;
   fg3_pct: string;
   ft_pct: string;
@@ -105,6 +109,41 @@ function estimateShooting(pts: number, fg2Pct: number, fg3Pct: number, ftPct: nu
   const fgA = fg2A + threeA;
   const ftA = ftPct > 0 ? Math.max(ftM, Math.round(ftM / (ftPct / 100))) : ftM;
   return { fgM, fgA, threeM, threeA, ftM, ftA };
+}
+
+/**
+ * Parses a "made-attempted" string like "3-7" into [made, attempted].
+ * Returns null if the string doesn't match the m-a pattern.
+ */
+function parseMadeAttempted(raw: string | undefined): [number, number] | null {
+  if (!raw) return null;
+  const m = raw.trim().match(/^(\d+)-(\d+)$/);
+  if (!m) return null;
+  return [parseInt(m[1], 10), parseInt(m[2], 10)];
+}
+
+/**
+ * Resolves FG splits from a row, using actual m-a strings when available
+ * and falling back to estimation from percentages otherwise.
+ */
+function resolveShooting(row: { pts: string; fg2?: string; fg3?: string; ft?: string; fg2_pct: string; fg3_pct: string; ft_pct: string }) {
+  const fg2Parsed = parseMadeAttempted(row.fg2);
+  const fg3Parsed = parseMadeAttempted(row.fg3);
+  const ftParsed = parseMadeAttempted(row.ft);
+
+  if (fg2Parsed || fg3Parsed || ftParsed) {
+    const [fg2M, fg2A] = fg2Parsed ?? [0, 0];
+    const [threeM, threeA] = fg3Parsed ?? [0, 0];
+    const [ftM, ftA] = ftParsed ?? [0, 0];
+    return { fgM: fg2M + threeM, fgA: fg2A + threeA, threeM, threeA, ftM, ftA };
+  }
+
+  return estimateShooting(
+    parseNum(row.pts),
+    parseNum(row.fg2_pct),
+    parseNum(row.fg3_pct),
+    parseNum(row.ft_pct)
+  );
 }
 
 function emptyAverages(): SeasonAverages {
@@ -188,7 +227,7 @@ export function importUaapStats(rows: UaapStatsRow[], config: UaapImportConfig) 
     const fg2Pct = parseNum(row.fg2_pct);
     const fg3Pct = parseNum(row.fg3_pct);
     const ftPct = parseNum(row.ft_pct);
-    const shooting = estimateShooting(pts, fg2Pct, fg3Pct, ftPct);
+    const shooting = resolveShooting(row);
 
     const teamId = teamIdForCode(teamCode, config);
     const jersey = parseInt(row.jersey, 10) || 0;
