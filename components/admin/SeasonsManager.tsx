@@ -24,6 +24,43 @@ function getSeasonLeague(s: Season): League {
   return inferLeague(s.id, s.league);
 }
 
+function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/['’]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+function generateSeasonId(trimmedLabel: string, league: League): string {
+  const baseSlug = slugify(trimmedLabel);
+
+  if (league === "UAAP") {
+    const yearMatch = trimmedLabel.match(/\b(20\d{2}(?:-\d{2,4})?)\b/);
+    const specificQualifier = trimmedLabel
+      .replace(/\b(20\d{2}(?:-\d{2,4})?)\b/gi, "")
+      .replace(/\b(uaap|season|s\d+)\b/gi, "")
+      .replace(/[^a-z0-9]/gi, "");
+
+    // If the label is purely a generic year/season (e.g. "2026-27", "2026-27 Season", "UAAP S89")
+    if (yearMatch && specificQualifier.length === 0) {
+      return yearMatch[1];
+    }
+    // If it has tournament, sport, or division qualifiers (e.g. "Men's Basketball", "U16 Basketball")
+    return baseSlug || generateId();
+  }
+
+  if (league === "PBA") {
+    return baseSlug.startsWith("pba-") ? baseSlug : `pba-${baseSlug}`;
+  }
+
+  if (league === "PVL") {
+    return baseSlug.startsWith("pvl-") ? baseSlug : `pvl-${baseSlug}`;
+  }
+
+  return baseSlug || generateId();
+}
+
 export function SeasonsManager({ onToast }: { onToast: ToastFn }) {
   const {
     seasons,
@@ -39,6 +76,8 @@ export function SeasonsManager({ onToast }: { onToast: ToastFn }) {
   const [selectedLeague, setSelectedLeague] = useState<League | "ALL">("UAAP");
   const [label, setLabel] = useState("");
   const [createLeague, setCreateLeague] = useState<League>("UAAP");
+  const [editingSeasonId, setEditingSeasonId] = useState<string | null>(null);
+  const [editingLabel, setEditingLabel] = useState("");
 
   const filteredSeasons = seasons.filter(
     (s) => selectedLeague === "ALL" || getSeasonLeague(s) === selectedLeague
@@ -52,16 +91,14 @@ export function SeasonsManager({ onToast }: { onToast: ToastFn }) {
       return;
     }
 
-    let id = generateId();
-    const yearMatch = trimmedLabel.match(/\b(20\d{2}(?:-\d{2,4})?)\b/);
-    if (createLeague === "UAAP" && yearMatch) {
-      id = yearMatch[1];
-    } else if (createLeague === "PBA") {
-      const slug = trimmedLabel.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-      id = slug.startsWith("pba-") ? slug : `pba-${slug}`;
-    } else if (createLeague === "PVL") {
-      const slug = trimmedLabel.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-      id = slug.startsWith("pvl-") ? slug : `pvl-${slug}`;
+    const id = generateSeasonId(trimmedLabel, createLeague);
+
+    if (seasons.some((s) => s.id === id)) {
+      onToast(
+        `A season with ID "${id}" already exists. If this is for a specific tournament or division (e.g. U16 Basketball), please ensure the label is distinct.`,
+        "error"
+      );
+      return;
     }
 
     const season: Season = {
@@ -77,6 +114,26 @@ export function SeasonsManager({ onToast }: { onToast: ToastFn }) {
       onToast(`Season created successfully for ${createLeague}!`);
     } catch {
       onToast("Failed to create season in database.", "error");
+    }
+  }
+
+  function handleStartEdit(season: Season) {
+    setEditingSeasonId(season.id);
+    setEditingLabel(season.label);
+  }
+
+  async function handleSaveEdit(season: Season) {
+    const trimmed = editingLabel.trim();
+    if (!trimmed) {
+      onToast("Season label cannot be empty.", "error");
+      return;
+    }
+    try {
+      await saveSeason({ ...season, label: trimmed });
+      setEditingSeasonId(null);
+      onToast(`Season updated to "${trimmed}".`);
+    } catch {
+      onToast("Failed to update season label in database.", "error");
     }
   }
 
@@ -190,7 +247,7 @@ export function SeasonsManager({ onToast }: { onToast: ToastFn }) {
                 key={season.id}
                 className="flex items-center justify-between gap-2 rounded-xl border border-border bg-surface px-3 py-2.5"
               >
-                <div className="flex items-center gap-2 min-w-0">
+                <div className="flex items-center gap-2 min-w-0 flex-1">
                   <div className="flex flex-col gap-0.5 shrink-0">
                     <button
                       type="button"
@@ -212,42 +269,85 @@ export function SeasonsManager({ onToast }: { onToast: ToastFn }) {
                     </button>
                   </div>
 
-                  <div className="min-w-0">
-                    <div className="flex items-center gap-1.5">
-                      <p className="truncate text-sm font-semibold text-foreground">{season.label}</p>
-                      <span className="shrink-0 rounded bg-muted/20 px-1.5 py-0.5 text-[9px] font-bold text-muted uppercase">
-                        {leagueLabel}
-                      </span>
-                      {season.isCurrent ? (
-                        <span className="shrink-0 rounded-full bg-primary/20 px-2 py-0.5 text-[10px] font-bold text-primary">
-                          CURRENT
-                        </span>
-                      ) : null}
+                  {editingSeasonId === season.id ? (
+                    <div className="flex flex-1 items-center gap-2 min-w-0">
+                      <input
+                        type="text"
+                        value={editingLabel}
+                        onChange={(e) => setEditingLabel(e.target.value)}
+                        className="flex-1 rounded-lg border border-border bg-elevated px-2.5 py-1 text-xs font-semibold text-foreground focus:outline-none focus:ring-1 focus:ring-primary"
+                        autoFocus
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            e.preventDefault();
+                            handleSaveEdit(season);
+                          } else if (e.key === "Escape") {
+                            setEditingSeasonId(null);
+                          }
+                        }}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => handleSaveEdit(season)}
+                        className="rounded-full bg-primary px-3 py-1 text-[11px] font-bold text-primary-foreground active:opacity-80 shrink-0 cursor-pointer"
+                      >
+                        Save
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setEditingSeasonId(null)}
+                        className={cn(ghostButtonClass, "shrink-0 cursor-pointer")}
+                      >
+                        Cancel
+                      </button>
                     </div>
-                    <p className="truncate text-[11px] text-muted">
-                      {teamCount} teams &middot; {playerCount} players &middot; {gameCount} games
-                    </p>
-                  </div>
+                  ) : (
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-1.5">
+                        <p className="truncate text-sm font-semibold text-foreground">{season.label}</p>
+                        <span className="shrink-0 rounded bg-muted/20 px-1.5 py-0.5 text-[9px] font-bold text-muted uppercase">
+                          {leagueLabel}
+                        </span>
+                        {season.isCurrent ? (
+                          <span className="shrink-0 rounded-full bg-primary/20 px-2 py-0.5 text-[10px] font-bold text-primary">
+                            CURRENT
+                          </span>
+                        ) : null}
+                      </div>
+                      <p className="truncate text-[11px] text-muted">
+                        {teamCount} teams &middot; {playerCount} players &middot; {gameCount} games
+                      </p>
+                    </div>
+                  )}
                 </div>
 
-                <div className="flex shrink-0 gap-1.5">
-                  {!season.isCurrent ? (
+                {editingSeasonId !== season.id && (
+                  <div className="flex shrink-0 gap-1.5">
                     <button
                       type="button"
-                      onClick={() => handleSetCurrent(season)}
+                      onClick={() => handleStartEdit(season)}
                       className={ghostButtonClass}
                     >
-                      Set Current
+                      Edit
                     </button>
-                  ) : null}
-                  <button
-                    type="button"
-                    onClick={() => handleDelete(season)}
-                    className={dangerButtonClass}
-                  >
-                    Delete
-                  </button>
-                </div>
+                    {!season.isCurrent ? (
+                      <button
+                        type="button"
+                        onClick={() => handleSetCurrent(season)}
+                        className={ghostButtonClass}
+                      >
+                        Set Current
+                      </button>
+                    ) : null}
+                    <button
+                      type="button"
+                      onClick={() => handleDelete(season)}
+                      className={dangerButtonClass}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                )}
               </div>
             );
           })
