@@ -159,6 +159,8 @@ export interface Season {
   label: string;
   isCurrent: boolean;
   league?: League;
+  /** Admin-controlled display order; lower sorts first. */
+  sortOrder?: number;
 }
 
 export interface PlayByPlayEvent {

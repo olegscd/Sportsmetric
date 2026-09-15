@@ -3,6 +3,7 @@
 import type { ToastFn } from "@/components/admin/Toast";
 import { useSportsData } from "@/context/SportsDataContext";
 import type { ExtractedBoxRow, ExtractedGamePayload } from "@/lib/game-extractor";
+import { inferLeague } from "@/lib/league-utils";
 import { cn } from "@/lib/utils";
 import type { Game, League, TournamentStage } from "@/types/sports";
 import {
@@ -19,7 +20,7 @@ import {
   Trash2,
 } from "lucide-react";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Field, primaryButtonClass, SectionCard, selectClass } from "./formPrimitives";
 
 const LEAGUES: League[] = ["UAAP", "PBA", "PVL"];
@@ -54,13 +55,18 @@ export function GameImporterTab({ onToast }: { onToast: ToastFn }) {
   const [status, setStatus] = useState<"FINAL" | "LIVE" | "UPCOMING">("FINAL");
   const [urlInput, setUrlInput] = useState("");
 
-  const leagueSeasons = seasons.filter(
-    (s) => s.league === league || (league === "UAAP" && !s.id.startsWith("pba") && !s.id.startsWith("pvl"))
+  const leagueSeasons = useMemo(
+    () => seasons.filter((s) => inferLeague(s) === league),
+    [seasons, league]
   );
 
-  const [seasonId, setSeasonId] = useState<string>(() => {
-    return leagueSeasons.find((s) => s.isCurrent)?.id ?? leagueSeasons[0]?.id ?? "pba-gov-cup-50";
-  });
+  const [seasonId, setSeasonId] = useState<string>("");
+
+  useEffect(() => {
+    if (leagueSeasons.some((s) => s.id === seasonId)) return;
+    const next = leagueSeasons.find((s) => s.isCurrent)?.id ?? leagueSeasons[0]?.id ?? "";
+    setSeasonId(next);
+  }, [leagueSeasons, seasonId]);
 
   const [batchItems, setBatchItems] = useState<BatchItem[]>([]);
   const [isExtractingAll, setIsExtractingAll] = useState(false);
@@ -76,9 +82,7 @@ export function GameImporterTab({ onToast }: { onToast: ToastFn }) {
 
   function handleLeagueChange(newLeague: League) {
     setLeague(newLeague);
-    const targetSeasons = seasons.filter(
-      (s) => s.league === newLeague || (newLeague === "UAAP" && !s.id.startsWith("pba") && !s.id.startsWith("pvl"))
-    );
+    const targetSeasons = seasons.filter((s) => inferLeague(s) === newLeague);
     const curr = targetSeasons.find((s) => s.isCurrent)?.id ?? targetSeasons[0]?.id ?? "";
     setSeasonId(curr);
     setBatchItems([]);

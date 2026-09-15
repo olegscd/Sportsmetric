@@ -40,10 +40,10 @@ export function SectionCard({
 }
 
 export const primaryButtonClass =
-  "w-full rounded-xl bg-primary py-2.5 text-sm font-bold text-primary-foreground active:opacity-80";
+  "inline-flex items-center justify-center gap-1.5 rounded-xl bg-primary px-4 py-2.5 text-sm font-bold text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-60 active:opacity-90";
 
 export const ghostButtonClass =
-  "rounded-full border border-border px-2.5 py-1 text-[11px] font-semibold text-foreground active:bg-elevated";
+  "inline-flex items-center justify-center rounded-full border border-border px-2.5 py-1 text-[11px] font-semibold text-foreground transition-colors hover:bg-elevated focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-50";
 
 export const dangerButtonClass =
-  "rounded-full border border-live/30 px-2.5 py-1 text-[11px] font-semibold text-live active:bg-live/10";
+  "inline-flex items-center justify-center rounded-full border border-live/30 px-2.5 py-1 text-[11px] font-semibold text-live transition-colors hover:bg-live/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-live disabled:cursor-not-allowed disabled:opacity-50";

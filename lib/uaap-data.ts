@@ -1,6 +1,7 @@
 import fs from "fs/promises";
 import path from "path";
 import { supabase } from "@/lib/supabase";
+import { getServiceSupabase } from "@/lib/supabase-admin";
 import {
   DEFAULT_STAGE,
   MANUAL_SOURCE,
@@ -48,12 +49,20 @@ export interface UAAPAdminOverrides {
   standings_overrides: Record<string, LegacyStandingRecord[]>;
   deleted_divisions: string[];
   extras_overrides: {
-    awards: Record<string, Record<string, any>>;
-    chess_medalists: Record<string, Record<string, any>>;
+    awards: Record<string, Record<string, unknown>>;
+    chess_medalists: Record<string, Record<string, unknown>>;
   };
 }
 
-const OVERRIDES_STORAGE_ROW_ID = "__uaap_archive_overrides__";
+/** Row id in the dedicated `uaap_overrides` table. */
+const OVERRIDES_ROW_ID = "default";
+
+/**
+ * Overrides used to live in a fake `teams` row. That table gets wiped by the
+ * seed script, so they now have their own table; this id is still read once so
+ * existing deployments do not lose data before the migration is applied.
+ */
+const LEGACY_OVERRIDES_TEAM_ROW_ID = "__uaap_archive_overrides__";
 
 function getDataPaths() {
   return {
@@ -71,11 +80,13 @@ function getDataPaths() {
 async function safeWriteFile(filePath: string, content: string): Promise<void> {
   try {
     await fs.writeFile(filePath, content, "utf-8");
-  } catch (err: any) {
-    if (err?.code === "EROFS" || err?.code === "EACCES" || err?.message?.includes("read-only")) {
+  } catch (err) {
+    const code = (err as NodeJS.ErrnoException)?.code;
+    const message = err instanceof Error ? err.message : String(err);
+    if (code === "EROFS" || code === "EACCES" || message.includes("read-only")) {
       return;
     }
-    console.warn(`[UAAP Data] File write skipped (${filePath}):`, err?.message);
+    console.warn(`[UAAP Data] File write skipped (${filePath}):`, message);
   }
 }
 
@@ -89,13 +100,14 @@ function emptyOverrides(): UAAPAdminOverrides {
   };
 }
 
-function coerceOverrides(raw: any): UAAPAdminOverrides {
+function coerceOverrides(raw: unknown): UAAPAdminOverrides {
+  const r = (raw ?? {}) as Partial<UAAPAdminOverrides>;
   return {
-    updated_at: raw?.updated_at || new Date().toISOString(),
-    tables_overrides: raw?.tables_overrides || {},
-    standings_overrides: raw?.standings_overrides || {},
-    deleted_divisions: raw?.deleted_divisions || [],
-    extras_overrides: raw?.extras_overrides || { awards: {}, chess_medalists: {} },
+    updated_at: r.updated_at || new Date().toISOString(),
+    tables_overrides: r.tables_overrides || {},
+    standings_overrides: r.standings_overrides || {},
+    deleted_divisions: r.deleted_divisions || [],
+    extras_overrides: r.extras_overrides || { awards: {}, chess_medalists: {} },
   };
 }
 
@@ -103,19 +115,32 @@ export async function readAdminOverrides(): Promise<UAAPAdminOverrides> {
   if (supabase) {
     try {
       const { data, error } = await supabase
-        .from("teams")
-        .select("record")
-        .eq("id", OVERRIDES_STORAGE_ROW_ID)
+        .from("uaap_overrides")
+        .select("payload")
+        .eq("id", OVERRIDES_ROW_ID)
         .maybeSingle();
 
-      if (!error && data?.record) {
-        return coerceOverrides(data.record);
+      if (!error && data?.payload) {
+        return coerceOverrides(data.payload);
       }
       if (error) {
-        console.warn("[UAAP Data] Supabase override read failed:", error.message);
+        console.warn("[UAAP Data] Override read failed:", error.message);
       }
     } catch (err) {
-      console.warn("[UAAP Data] Supabase override read threw:", err);
+      console.warn("[UAAP Data] Override read threw:", err);
+    }
+
+    // Fall back to the pre-migration sentinel row.
+    try {
+      const { data } = await supabase
+        .from("teams")
+        .select("record")
+        .eq("id", LEGACY_OVERRIDES_TEAM_ROW_ID)
+        .maybeSingle();
+
+      if (data?.record) return coerceOverrides(data.record);
+    } catch {
+      // Ignore: the legacy row is optional.
     }
   }
 
@@ -130,32 +155,30 @@ export async function readAdminOverrides(): Promise<UAAPAdminOverrides> {
 async function persistOverrides(overrides: UAAPAdminOverrides): Promise<string | null> {
   let supabaseError: string | null = null;
 
-  if (supabase) {
-    try {
-      const seasonRes = await supabase.from("seasons").select("id").limit(1);
-      const validSeasonId = seasonRes.data?.[0]?.id || "pvl-2026-on-tour";
+  // Overrides are admin-authored content, so they need the service-role client
+  // to get past row-level security. Never fall back to the anon key — those
+  // writes look successful then vanish under RLS.
+  const db = getServiceSupabase();
 
-      const { error } = await supabase.from("teams").upsert({
-        id: OVERRIDES_STORAGE_ROW_ID,
-        name: "__UAAP_ARCHIVE_STORAGE__",
-        short_name: "UAAP_ARCHIVE",
-        logo: null,
-        league: "UAAP",
-        accent_color: "#000000",
-        season_id: validSeasonId,
-        record: overrides,
+  if (db) {
+    try {
+      const { error } = await db.from("uaap_overrides").upsert({
+        id: OVERRIDES_ROW_ID,
+        payload: overrides,
+        updated_at: new Date().toISOString(),
       });
 
       if (error) {
         supabaseError = error.message;
-        console.error("[UAAP Data] Supabase persist failed:", error.message);
+        console.error("[UAAP Data] Override persist failed:", error.message);
       }
-    } catch (err: any) {
-      supabaseError = err?.message || "Unknown Supabase error";
-      console.error("[UAAP Data] Supabase persist threw:", err);
+    } catch (err) {
+      supabaseError = err instanceof Error ? err.message : "Unknown Supabase error";
+      console.error("[UAAP Data] Override persist threw:", err);
     }
   } else {
-    supabaseError = "Supabase is not configured (missing NEXT_PUBLIC_SUPABASE_* env vars).";
+    supabaseError =
+      "Supabase service role is not configured (missing SUPABASE_SERVICE_ROLE_KEY). Archive saves will not persist in production.";
   }
 
   const { overridesPath } = getDataPaths();
@@ -326,15 +349,23 @@ export async function saveUAAPAdminOverride(payload: UAAPSavePayload): Promise<{
     );
 
     const extrasKey = makeExtrasKey(clean.sport, clean.season);
-    if (awards) {
+    if (awards !== undefined) {
       overrides.extras_overrides.awards ||= {};
       overrides.extras_overrides.awards[extrasKey] ||= {};
-      overrides.extras_overrides.awards[extrasKey][clean.division] = awards;
+      if (awards === null) {
+        delete overrides.extras_overrides.awards[extrasKey][clean.division];
+      } else {
+        overrides.extras_overrides.awards[extrasKey][clean.division] = awards;
+      }
     }
-    if (chess_medalists) {
+    if (chess_medalists !== undefined) {
       overrides.extras_overrides.chess_medalists ||= {};
       overrides.extras_overrides.chess_medalists[extrasKey] ||= {};
-      overrides.extras_overrides.chess_medalists[extrasKey][clean.division] = chess_medalists;
+      if (chess_medalists === null || Object.keys(chess_medalists).length === 0) {
+        delete overrides.extras_overrides.chess_medalists[extrasKey][clean.division];
+      } else {
+        overrides.extras_overrides.chess_medalists[extrasKey][clean.division] = chess_medalists;
+      }
     }
 
     const supabaseError = await persistOverrides(overrides);

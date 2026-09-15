@@ -1,60 +1,37 @@
 "use server";
 
-import crypto from "crypto";
 import fs from "fs/promises";
 import path from "path";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { revalidatePath } from "next/cache";
 
-const COOKIE_NAME = "sportsmetric_admin";
-const COOKIE_MAX_AGE = 60 * 60 * 24 * 7; // 7 days (in seconds)
-
-function getAdminSecret(): string {
-  const secret = process.env.ADMIN_PASSWORD;
-  if (!secret) {
-    console.error("[Admin Auth] ADMIN_PASSWORD is not defined in environment variables.");
-  }
-  return secret || "";
-}
-
-function generateAuthToken(secret: string): string {
-  const timestamp = Date.now().toString();
-  const hmac = crypto.createHmac("sha256", secret).update(`admin:${timestamp}`).digest("hex");
-  return `${timestamp}.${hmac}`;
-}
-
-function verifyAuthToken(token: string | undefined, secret: string): boolean {
-  if (!token || !secret) return false;
-  const parts = token.split(".");
-  if (parts.length !== 2) return false;
-  const [timestampStr, providedHmac] = parts;
-  const timestamp = parseInt(timestampStr, 10);
-  if (Number.isNaN(timestamp)) return false;
-
-  // Check token age (must be within COOKIE_MAX_AGE)
-  const ageMs = Date.now() - timestamp;
-  if (ageMs < 0 || ageMs > COOKIE_MAX_AGE * 1000) {
-    return false;
-  }
-
-  const expectedHmac = crypto.createHmac("sha256", secret).update(`admin:${timestampStr}`).digest("hex");
-  try {
-    const bufProvided = Buffer.from(providedHmac, "hex");
-    const bufExpected = Buffer.from(expectedHmac, "hex");
-    if (bufProvided.length !== bufExpected.length) return false;
-    return crypto.timingSafeEqual(bufProvided, bufExpected);
-  } catch {
-    return false;
-  }
-}
-
+import {
+  ADMIN_COOKIE_MAX_AGE,
+  ADMIN_COOKIE_NAME,
+  checkLoginThrottle,
+  clearLoginAttempts,
+  generateAuthToken,
+  getAdminSecret,
+  isAdminAuthenticated as isAdminAuthenticatedInternal,
+  passwordMatches,
+  recordFailedLogin,
+} from "@/lib/admin-auth";
 import {
   saveUAAPAdminOverride,
   deleteUAAPAdminDivision as deleteUAAPAdminDivisionHelper,
-  getMergedUAAPData,
   type MergedUAAPData,
   type UAAPSavePayload,
 } from "@/lib/uaap-data";
+
+export async function isAdminAuthenticated(): Promise<boolean> {
+  return isAdminAuthenticatedInternal();
+}
+
+async function getClientKey(): Promise<string> {
+  const headerList = await headers();
+  const forwarded = headerList.get("x-forwarded-for");
+  return forwarded?.split(",")[0]?.trim() || headerList.get("x-real-ip") || "unknown";
+}
 
 export async function loginAdmin(
   _prevState: { error: string | null; success?: boolean },
@@ -67,18 +44,27 @@ export async function loginAdmin(
     return { error: "Server authentication is misconfigured (missing ADMIN_PASSWORD)." };
   }
 
-  if (typeof password !== "string" || password !== secret) {
+  const clientKey = await getClientKey();
+  const throttle = checkLoginThrottle(clientKey);
+  if (!throttle.allowed) {
+    const minutes = Math.ceil(throttle.retryAfterSeconds / 60);
+    return { error: `Too many failed attempts. Try again in ${minutes} minute(s).` };
+  }
+
+  if (typeof password !== "string" || !passwordMatches(password, secret)) {
+    recordFailedLogin(clientKey);
     return { error: "Incorrect password." };
   }
 
-  const token = generateAuthToken(secret);
+  clearLoginAttempts(clientKey);
+
   const cookieStore = await cookies();
-  cookieStore.set(COOKIE_NAME, token, {
+  cookieStore.set(ADMIN_COOKIE_NAME, generateAuthToken(secret), {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
     path: "/",
-    maxAge: COOKIE_MAX_AGE,
+    maxAge: ADMIN_COOKIE_MAX_AGE,
   });
 
   return { error: null, success: true };
@@ -86,24 +72,12 @@ export async function loginAdmin(
 
 export async function logoutAdmin(): Promise<void> {
   const cookieStore = await cookies();
-  cookieStore.delete(COOKIE_NAME);
-}
-
-export async function isAdminAuthenticated(): Promise<boolean> {
-  const secret = getAdminSecret();
-  if (!secret) return false;
-  const cookieStore = await cookies();
-  const token = cookieStore.get(COOKIE_NAME)?.value;
-  return verifyAuthToken(token, secret);
+  cookieStore.delete(ADMIN_COOKIE_NAME);
 }
 
 // ---------------------------------------------------------------------------
 // UAAP Archive Manual Management Actions (Prioritized Admin Overrides)
 // ---------------------------------------------------------------------------
-
-export async function getLatestUAAPData(): Promise<MergedUAAPData> {
-  return getMergedUAAPData();
-}
 
 export async function saveUAAPArchiveData(payload: UAAPSavePayload): Promise<{
   success: boolean;
@@ -112,8 +86,7 @@ export async function saveUAAPArchiveData(payload: UAAPSavePayload): Promise<{
   count?: number;
   data?: MergedUAAPData;
 }> {
-  const auth = await isAdminAuthenticated();
-  if (!auth) {
+  if (!(await isAdminAuthenticatedInternal())) {
     return { success: false, error: "Unauthorized. Please log in as admin." };
   }
 
@@ -130,8 +103,7 @@ export async function deleteUAAPArchiveDivision(
   sport: string,
   division: string
 ): Promise<{ success: boolean; error?: string; warning?: string; data?: MergedUAAPData }> {
-  const auth = await isAdminAuthenticated();
-  if (!auth) {
+  if (!(await isAdminAuthenticatedInternal())) {
     return { success: false, error: "Unauthorized." };
   }
 
@@ -143,9 +115,31 @@ export async function deleteUAAPArchiveDivision(
   return res;
 }
 
-export async function getUAAPAnnualReportSnippet(season: string, sport?: string): Promise<{ content: string; sourceFile?: string }> {
+/** Season folders are named like "1999-2000"; anything else is rejected. */
+const SEASON_FOLDER = /^\d{4}-\d{4}$/;
+
+export async function getUAAPAnnualReportSnippet(
+  season: string,
+  sport?: string
+): Promise<{ content: string; sourceFile?: string }> {
+  if (!(await isAdminAuthenticatedInternal())) {
+    return { content: "Unauthorized." };
+  }
+
+  if (typeof season !== "string" || !SEASON_FOLDER.test(season)) {
+    return { content: "Invalid season identifier." };
+  }
+
+  const seasonsRoot = path.resolve(process.cwd(), "data", "seasons");
+  const seasonDir = path.resolve(seasonsRoot, season);
+
+  // Defence in depth: the regex already blocks traversal, but confirm the
+  // resolved path stayed inside the seasons directory before touching disk.
+  if (seasonDir !== seasonsRoot && !seasonDir.startsWith(seasonsRoot + path.sep)) {
+    return { content: "Invalid season identifier." };
+  }
+
   try {
-    const seasonDir = path.resolve(process.cwd(), "data", "seasons", season);
     const files = await fs.readdir(seasonDir);
     const reportFile = files.find((f) => f.endsWith(".md") && !f.startsWith("IMG_"));
 
@@ -153,8 +147,7 @@ export async function getUAAPAnnualReportSnippet(season: string, sport?: string)
       return { content: `No report found for season ${season}.` };
     }
 
-    const fullPath = path.join(/*turbopackIgnore: true*/ seasonDir, reportFile);
-    const text = await fs.readFile(fullPath, "utf-8");
+    const text = await fs.readFile(path.join(seasonDir, reportFile), "utf-8");
 
     if (!sport || sport === "All") {
       return { content: text.slice(0, 15000), sourceFile: reportFile };
@@ -193,9 +186,8 @@ export async function getUAAPAnnualReportSnippet(season: string, sport?: string)
 
     const result = matchingSections.length > 0 ? matchingSections.join("\n\n---\n\n") : text.slice(0, 15000);
     return { content: result.slice(0, 20000), sourceFile: reportFile };
-  } catch (err: any) {
-    return { content: `Error reading report: ${err.message}` };
+  } catch (err) {
+    console.error(`[Admin] Failed to read annual report for ${season}:`, err);
+    return { content: `Could not read the annual report for ${season}.` };
   }
 }
-
-

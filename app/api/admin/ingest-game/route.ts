@@ -1,4 +1,4 @@
-import { isAdminAuthenticated } from "@/app/admin/actions";
+import { isAdminAuthenticated } from "@/lib/admin-auth";
 import { generateId } from "@/lib/data";
 import {
   extractGameFromUrl,
@@ -6,10 +6,10 @@ import {
   type ExtractedGamePayload,
 } from "@/lib/game-extractor";
 import { supabase } from "@/lib/supabase";
+import { hasServiceRoleAccess } from "@/lib/supabase-admin";
 import {
   upsertGameInSupabase,
   upsertPlayerInSupabase,
-  upsertTeamInSupabase,
 } from "@/lib/supabase-data";
 import type { BoxScoreItem, Game, League, Player, Team, TournamentStage } from "@/types/sports";
 import { NextRequest, NextResponse } from "next/server";
@@ -193,11 +193,20 @@ function findBestPlayerMatch(row: ExtractedBoxRow, teamRoster: Player[]): Player
   return bySub;
 }
 
-
 export async function POST(req: NextRequest) {
   const isAuth = await isAdminAuthenticated();
   if (!isAuth) {
     return NextResponse.json({ error: "Unauthorized. Please log in as admin." }, { status: 401 });
+  }
+
+  if (!hasServiceRoleAccess()) {
+    return NextResponse.json(
+      {
+        error:
+          "Server is missing SUPABASE_SERVICE_ROLE_KEY, so writes would be rejected by row-level security. Set it in the environment and redeploy.",
+      },
+      { status: 503 }
+    );
   }
 
   let body: {
@@ -380,8 +389,7 @@ export async function POST(req: NextRequest) {
   const mappedHomeBox = await resolveBoxRows(parsedPayload.boxScore.home, homeTeamMatch, homeRoster);
   const mappedAwayBox = await resolveBoxRows(parsedPayload.boxScore.away, awayTeamMatch, awayRoster);
 
-  // Generate clean natural ID or composite ID for game
-  const dateSlug = parsedPayload.startTime.split("T")[0];
+  const dateSlug = parsedPayload.startTime.slice(0, 10);
   const gameId = `${league.toLowerCase()}-${seasonId}-${homeTeamMatch.shortName.toLowerCase()}-vs-${awayTeamMatch.shortName.toLowerCase()}-${dateSlug}`;
 
   const game: Game = {
@@ -418,37 +426,9 @@ export async function POST(req: NextRequest) {
     });
   }
 
-  // Commit to Supabase
   const success = await upsertGameInSupabase(game);
   if (!success) {
     return NextResponse.json({ error: "Failed to upsert game in database." }, { status: 500 });
-  }
-
-  // Persist updated team records into database
-  if (game.status === "FINAL") {
-    const isHomeWin = game.homeScore > game.awayScore;
-    const isAwayWin = game.awayScore > game.homeScore;
-
-    const updatedHome: Team = {
-      ...homeTeamMatch,
-      record: {
-        wins: (homeTeamMatch.record?.wins ?? 0) + (isHomeWin ? 1 : 0),
-        losses: (homeTeamMatch.record?.losses ?? 0) + (isAwayWin ? 1 : 0),
-      },
-    };
-
-    const updatedAway: Team = {
-      ...awayTeamMatch,
-      record: {
-        wins: (awayTeamMatch.record?.wins ?? 0) + (isAwayWin ? 1 : 0),
-        losses: (awayTeamMatch.record?.losses ?? 0) + (isHomeWin ? 1 : 0),
-      },
-    };
-
-    await Promise.all([
-      upsertTeamInSupabase(updatedHome),
-      upsertTeamInSupabase(updatedAway),
-    ]);
   }
 
   return NextResponse.json({

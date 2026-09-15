@@ -2,16 +2,10 @@
 
 import { useSportsData } from "@/context/SportsDataContext";
 import { LIFETIME_SEASON_ID } from "@/lib/derivations";
+import { inferLeague } from "@/lib/league-utils";
 import type { League } from "@/types/sports";
 import { ChevronDown } from "lucide-react";
 import { useMemo } from "react";
-
-function getSeasonLeague(sId: string, sLeague?: League): League {
-  if (sLeague) return sLeague;
-  if (sId.startsWith("pba")) return "PBA";
-  if (sId.startsWith("pvl")) return "PVL";
-  return "UAAP";
-}
 
 export function SeasonPicker({
   value,
@@ -27,7 +21,7 @@ export function SeasonPicker({
   const { seasons } = useSportsData();
 
   const filteredSeasons = useMemo(() => {
-    return seasons.filter((s) => getSeasonLeague(s.id, s.league) === league);
+    return seasons.filter((s) => inferLeague(s) === league);
   }, [seasons, league]);
 
   return (
@@ -35,7 +29,7 @@ export function SeasonPicker({
       <select
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        className="appearance-none rounded-full border border-border bg-surface py-1.5 pl-3 pr-7 text-xs font-semibold text-foreground focus:border-primary focus:outline-none"
+        className="appearance-none rounded-full border border-border bg-surface py-1.5 pl-3 pr-7 text-xs font-semibold text-foreground transition-colors hover:border-primary/50 focus:border-primary focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
       >
         {includeLifetime && <option value={LIFETIME_SEASON_ID}>Lifetime</option>}
         {filteredSeasons.map((season) => (

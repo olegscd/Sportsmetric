@@ -1,12 +1,18 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { ArrowRight, FileUp, Sparkles, X } from "lucide-react";
 import {
   applyImport,
+  detectColumnPreset,
+  extractAwardsFromText,
+  extractStandingsFromReport,
   guessTargets,
   parsePastedTable,
+  parsePlacementLabel,
+  unmatchedSchoolLabels,
+  type ExtractedAwards,
   type ImportTarget,
   type ParsedGrid,
 } from "@/lib/uaap-import";
@@ -18,27 +24,47 @@ import {
 } from "@/lib/uaap-schema";
 import { getSchoolName } from "@/lib/uaap-schools";
 
-const PLACEHOLDER = `Paste rows from a spreadsheet, CSV, or typed-out scan. For example:
+const PLACEHOLDER = `Paste a spreadsheet, CSV, or the annual-report scan for this division. For example:
 
 1  FEU   12-2  Champion
 2  UST   11-3  Runner-up
 3  UP     8-6`;
 
+function looksLikeReportScan(text: string): boolean {
+  const lines = text.split(/\r?\n/).length;
+  return (
+    lines > 6 &&
+    (/FINAL STANDING/i.test(text) ||
+      /Most Valuable Player/i.test(text) ||
+      (text.includes("|") && text.includes("---")))
+  );
+}
+
 export function BulkImportPanel({
   columns,
+  division,
+  initialText,
   onApply,
   onClose,
+  onExtractedAwards,
 }: {
   columns: UAAPColumn[];
+  division?: string;
+  initialText?: string;
   onApply: (rows: UAAPRow[], mode: "replace" | "append", newColumns?: UAAPColumn[]) => void;
   onClose: () => void;
+  onExtractedAwards?: (awards: ExtractedAwards) => void;
 }) {
-  const [text, setText] = useState("");
+  const [text, setText] = useState(initialText ?? "");
   const [grid, setGrid] = useState<ParsedGrid | null>(null);
   const [activeColumns, setActiveColumns] = useState<UAAPColumn[]>(columns);
   const [detectedPreset, setDetectedPreset] = useState<UAAPColumnPreset | null>(null);
   const [targets, setTargets] = useState<ImportTarget[]>([]);
   const [mode, setMode] = useState<"replace" | "append">("replace");
+  const [extractedAwards, setExtractedAwards] = useState<ExtractedAwards | null>(null);
+  const [extractNote, setExtractNote] = useState<string>("");
+  const fileRef = useRef<HTMLInputElement>(null);
+  const seeded = useRef(false);
 
   useEffect(() => {
     setActiveColumns(columns);
@@ -64,51 +90,85 @@ export function BulkImportPanel({
     ];
   }, [enterableColumns]);
 
-  const handleParse = () => {
-    const parsed = parsePastedTable(text);
+  const runParse = (raw: string) => {
+    const source = raw.trim();
+    if (!source) {
+      setGrid(null);
+      setTargets([]);
+      setDetectedPreset(null);
+      setExtractedAwards(null);
+      setExtractNote("");
+      return;
+    }
+
+    let toParse = source;
+    let awards = extractAwardsFromText(source);
+    let note = "";
+
+    if (looksLikeReportScan(source)) {
+      const extracted = extractStandingsFromReport(source, division);
+      toParse = extracted.paste;
+      awards = extracted.awards;
+      const bits = [extracted.delimiterLabel];
+      if (extracted.usedDivisionSlice) bits.push(`limited to ${division}`);
+      if (extracted.tableCount > 1) bits.push(`${extracted.tableCount} tables in the scan`);
+      note = bits.join(" · ");
+    }
+
+    const parsed = parsePastedTable(toParse);
     if (parsed.rows.length === 0) {
       setGrid(null);
       setTargets([]);
       setDetectedPreset(null);
+      setExtractedAwards(awards.mvp || awards.rookie_of_the_year ? awards : null);
+      setExtractNote(note);
       return;
     }
 
     let colsToUse = activeColumns;
-    let foundPreset: UAAPColumnPreset | null = null;
+    let foundPreset = detectColumnPreset(parsed.headers);
+    const looksLikePlacement =
+      parsed.rows.length > 0 &&
+      parsed.rows.every((row) => row.some((cell) => parsePlacementLabel(cell)));
+    if (!foundPreset && looksLikePlacement) {
+      foundPreset = COLUMN_PRESETS.find((p) => p.id === "placement") ?? null;
+    }
+    const missingPresetColumns =
+      foundPreset &&
+      foundPreset.columns.some(
+        (col) => !col.derived && !colsToUse.some((existing) => existing.key === col.key)
+      );
 
-    // If current columns are empty (e.g. Placement only), detect if pasted headers match a preset
-    if (colsToUse.length === 0 && parsed.headers) {
-      const headerStrs = parsed.headers.map((h) => h.toLowerCase().trim());
-      const hasW = headerStrs.some((h) => /^(w|wins)$/i.test(h));
-      const hasL = headerStrs.some((h) => /^(l|losses)$/i.test(h));
-      const hasPts = headerStrs.some((h) => /^(pts|points)$/i.test(h));
-      const hasMedals = headerStrs.some((h) => /^(gold|silver|bronze)$/i.test(h));
-
-      if (hasW && hasL && hasPts) {
-        foundPreset = COLUMN_PRESETS.find((p) => p.id === "win-loss-points") ?? null;
-      } else if (hasW && hasL) {
-        foundPreset = COLUMN_PRESETS.find((p) => p.id === "win-loss") ?? null;
-      } else if (hasPts) {
-        foundPreset = COLUMN_PRESETS.find((p) => p.id === "points") ?? null;
-      } else if (hasMedals) {
-        foundPreset = COLUMN_PRESETS.find((p) => p.id === "medals") ?? null;
-      }
-
-      if (foundPreset) {
-        colsToUse = foundPreset.columns.map((c) => ({ ...c }));
-        setActiveColumns(colsToUse);
-        setDetectedPreset(foundPreset);
-      }
+    if (
+      foundPreset &&
+      (colsToUse.length === 0 || missingPresetColumns || foundPreset.id === "placement")
+    ) {
+      colsToUse = foundPreset.columns.map((c) => ({ ...c }));
+      setActiveColumns(colsToUse);
+      setDetectedPreset(foundPreset);
     }
 
     setGrid(parsed);
     setTargets(guessTargets(parsed, colsToUse));
+    setExtractedAwards(awards.mvp || awards.rookie_of_the_year ? awards : null);
+    setExtractNote(note || parsed.delimiterLabel);
   };
+
+  useEffect(() => {
+    if (seeded.current) return;
+    if (!initialText?.trim()) return;
+    seeded.current = true;
+    setText(initialText);
+    runParse(initialText);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialText]);
 
   const previewRows = useMemo(() => {
     if (!grid) return [];
     return applyImport(grid, targets, activeColumns);
   }, [grid, targets, activeColumns]);
+
+  const unmatched = useMemo(() => unmatchedSchoolLabels(previewRows), [previewRows]);
 
   const setTarget = (idx: number, value: string) => {
     setTargets((prev) =>
@@ -124,6 +184,12 @@ export function BulkImportPanel({
 
   const targetToValue = (target: ImportTarget) =>
     target.kind === "column" && target.columnKey ? `column:${target.columnKey}` : target.kind;
+
+  const handleFile = async (file: File) => {
+    const raw = await file.text();
+    setText(raw);
+    runParse(raw);
+  };
 
   return (
     <div className="p-5 rounded-2xl bg-surface border border-amber-500/30 shadow-md space-y-4">
@@ -148,27 +214,82 @@ export function BulkImportPanel({
         rows={6}
         value={text}
         onChange={(e) => setText(e.target.value)}
+        onPaste={(e) => {
+          const pasted = e.clipboardData.getData("text");
+          if (!pasted.trim()) return;
+          requestAnimationFrame(() => runParse(pasted));
+        }}
+        onDrop={(e) => {
+          const file = e.dataTransfer.files?.[0];
+          if (!file) return;
+          e.preventDefault();
+          void handleFile(file);
+        }}
         placeholder={PLACEHOLDER}
         className="w-full p-3 rounded-xl text-xs font-mono bg-elevated border border-border text-foreground placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-amber-500/50"
       />
 
-      <div className="flex items-center gap-2">
+      <div className="flex flex-wrap items-center gap-2">
         <button
           type="button"
-          onClick={handleParse}
+          onClick={() => runParse(text)}
           disabled={!text.trim()}
           className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-xl text-xs font-bold bg-amber-500 text-slate-950 hover:bg-amber-400 disabled:opacity-40 cursor-pointer"
         >
           <Sparkles size={14} />
           <span>Parse</span>
         </button>
+        <button
+          type="button"
+          onClick={() => fileRef.current?.click()}
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-elevated border border-border text-foreground hover:bg-elevated/80 cursor-pointer"
+        >
+          <FileUp size={13} />
+          <span>Upload CSV / MD</span>
+        </button>
+        <input
+          ref={fileRef}
+          type="file"
+          accept=".csv,.tsv,.txt,.md"
+          className="hidden"
+          onChange={(e) => {
+            const file = e.target.files?.[0];
+            if (file) void handleFile(file);
+            e.target.value = "";
+          }}
+        />
         {grid && (
           <span className="text-[11px] text-muted">
-            Read {grid.rows.length} {grid.rows.length === 1 ? "row" : "rows"}, {grid.delimiterLabel}
-            {grid.headers ? ", header row detected" : ""}.
+            Read {grid.rows.length} {grid.rows.length === 1 ? "row" : "rows"}
+            {extractNote ? ` · ${extractNote}` : ` · ${grid.delimiterLabel}`}
+            {grid.headers ? " · header row detected" : ""}.
           </span>
         )}
       </div>
+
+      {extractedAwards && onExtractedAwards && (
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-3 rounded-xl bg-sky-500/10 border border-sky-500/30 text-xs">
+          <span className="text-sky-300">
+            Found{" "}
+            {[
+              extractedAwards.mvp ? `MVP ${extractedAwards.mvp.player}` : null,
+              extractedAwards.rookie_of_the_year
+                ? `Rookie ${extractedAwards.rookie_of_the_year.player}`
+                : null,
+            ]
+              .filter(Boolean)
+              .join(" · ")}
+            .
+          </span>
+          <button
+            type="button"
+            onClick={() => onExtractedAwards(extractedAwards)}
+            className="text-[11px] font-bold text-sky-300 hover:underline cursor-pointer shrink-0"
+          >
+            Fill awards fields
+          </button>
+        </div>
+      )}
 
       {grid && (
         <>
@@ -177,7 +298,8 @@ export function BulkImportPanel({
               <div className="flex items-center gap-2 text-amber-400 font-medium">
                 <Sparkles size={15} className="shrink-0" />
                 <span>
-                  Detected stats headers. Auto-applied <strong>{detectedPreset.label}</strong> columns for this table.
+                  Detected stats headers. Auto-applied <strong>{detectedPreset.label}</strong> columns
+                  for this table.
                 </span>
               </div>
               <button
@@ -251,6 +373,13 @@ export function BulkImportPanel({
             <span className="text-[11px] font-bold uppercase tracking-wider text-muted">
               Preview ({previewRows.length} {previewRows.length === 1 ? "row" : "rows"})
             </span>
+            {unmatched.length > 0 && (
+              <p className="text-[11px] text-amber-400">
+                Unrecognised school
+                {unmatched.length === 1 ? "" : "s"}: {unmatched.join(", ")}. Fix the mapping or the
+                name before saving.
+              </p>
+            )}
             <div className="max-h-48 overflow-y-auto rounded-xl border border-border">
               <table className="w-full text-left text-xs border-collapse">
                 <thead className="sticky top-0 bg-elevated">

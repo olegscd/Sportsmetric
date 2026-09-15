@@ -1,10 +1,11 @@
 "use client";
 
+import { SegmentedControl } from "@/components/ui/FilterChip";
 import { TeamBadge } from "@/components/ui/TeamBadge";
 import { useSportsData } from "@/context/SportsDataContext";
+import { getEffectiveGameStatus } from "@/lib/derivations";
 import { useGameModal } from "@/lib/game-modal-context";
 import { cn, formatGameDate } from "@/lib/utils";
-import { getEffectiveGameStatus } from "@/lib/derivations";
 import { X } from "lucide-react";
 
 import Link from "next/link";
@@ -29,19 +30,24 @@ export function GameDetailModal() {
 
   const game = games.find((g) => g.id === activeGameId);
 
+  useEffect(() => {
+    setTab("overview");
+    setSide("away");
+  }, [activeGameId]);
 
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") {
-        closeGame();
-      }
+      if (event.key === "Escape") closeGame();
     }
 
-    if (activeGameId) {
-      document.addEventListener("keydown", handleKeyDown);
-    }
+    if (!activeGameId) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    document.addEventListener("keydown", handleKeyDown);
 
     return () => {
+      document.body.style.overflow = previousOverflow;
       document.removeEventListener("keydown", handleKeyDown);
     };
   }, [activeGameId, closeGame]);
@@ -55,21 +61,21 @@ export function GameDetailModal() {
     <div
       role="dialog"
       aria-modal="true"
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+      aria-labelledby="game-detail-title"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
       onClick={closeGame}
     >
       <div
-        className="relative flex flex-col w-full max-w-lg max-h-[90vh] rounded-3xl border border-border bg-bg shadow-2xl overflow-hidden"
+        className="relative flex max-h-[90vh] w-full max-w-2xl flex-col overflow-hidden rounded-3xl border border-border bg-bg shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Header */}
-        <div className="flex items-center justify-between px-6 pt-5 pb-3 border-b border-border">
+        <div className="flex items-center justify-between border-b border-border px-6 pb-3 pt-5">
           <div className="flex flex-col">
-            <span className="text-xs font-bold uppercase tracking-wider text-muted">
+            <span id="game-detail-title" className="text-xs font-bold uppercase tracking-wider text-muted">
               {game.league} {dateStr ? `\u2022 ${dateStr}` : ""} &middot; {effectiveStatus}
             </span>
             {game.venue && (
-              <span className="text-[11px] text-muted truncate max-w-[280px]">
+              <span className="max-w-[280px] truncate text-[11px] text-muted">
                 {game.venue}
               </span>
             )}
@@ -77,18 +83,18 @@ export function GameDetailModal() {
           <button
             type="button"
             onClick={closeGame}
-            className="rounded-full p-1.5 text-muted hover:bg-surface hover:text-foreground transition-colors"
+            aria-label="Close game details"
+            className="rounded-full p-1.5 text-muted transition-colors hover:bg-surface hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
           >
             <X size={18} />
           </button>
         </div>
 
-        {/* Scoreboard */}
-        <div className="flex items-center justify-between px-6 py-4 bg-surface/40">
+        <div className="flex items-center justify-between bg-surface/40 px-6 py-4">
           <Link
             href={`/teams/${game.awayTeam.id}`}
             onClick={closeGame}
-            className="flex flex-1 flex-col items-center gap-2"
+            className="flex flex-1 flex-col items-center gap-2 rounded-xl p-1 transition-colors hover:bg-elevated/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
           >
             <TeamBadge team={game.awayTeam} size="lg" />
             <span className="text-sm font-semibold text-foreground">
@@ -113,7 +119,7 @@ export function GameDetailModal() {
           <Link
             href={`/teams/${game.homeTeam.id}`}
             onClick={closeGame}
-            className="flex flex-1 flex-col items-center gap-2"
+            className="flex flex-1 flex-col items-center gap-2 rounded-xl p-1 transition-colors hover:bg-elevated/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
           >
             <TeamBadge team={game.homeTeam} size="lg" />
             <span className="text-sm font-semibold text-foreground">
@@ -122,20 +128,8 @@ export function GameDetailModal() {
           </Link>
         </div>
 
-        <div className="mx-4 flex shrink-0 items-center gap-1 rounded-full bg-surface p-1">
-          {TABS.map((t) => (
-            <button
-              key={t.value}
-              type="button"
-              onClick={() => setTab(t.value)}
-              className={cn(
-                "flex-1 rounded-full py-1.5 text-xs font-semibold transition-colors",
-                tab === t.value ? "bg-primary text-primary-foreground" : "text-muted"
-              )}
-            >
-              {t.label}
-            </button>
-          ))}
+        <div className="mx-4">
+          <SegmentedControl options={TABS} value={tab} onChange={setTab} />
         </div>
 
         <div className="flex-1 overflow-y-auto px-4 py-4">
@@ -148,8 +142,10 @@ export function GameDetailModal() {
                   type="button"
                   onClick={() => setSide("away")}
                   className={cn(
-                    "rounded-full border px-3 py-1 text-xs font-semibold",
-                    side === "away" ? "border-primary text-primary" : "border-border text-muted"
+                    "rounded-full border px-3 py-1 text-xs font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
+                    side === "away"
+                      ? "border-primary bg-primary/10 text-primary"
+                      : "border-border text-muted hover:text-foreground"
                   )}
                 >
                   {game.awayTeam.shortName}
@@ -158,8 +154,10 @@ export function GameDetailModal() {
                   type="button"
                   onClick={() => setSide("home")}
                   className={cn(
-                    "rounded-full border px-3 py-1 text-xs font-semibold",
-                    side === "home" ? "border-primary text-primary" : "border-border text-muted"
+                    "rounded-full border px-3 py-1 text-xs font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
+                    side === "home"
+                      ? "border-primary bg-primary/10 text-primary"
+                      : "border-border text-muted hover:text-foreground"
                   )}
                 >
                   {game.homeTeam.shortName}

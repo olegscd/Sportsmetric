@@ -117,6 +117,10 @@ export function TeamsManager({ onToast }: { onToast: ToastFn }) {
       onToast("Team name and short name are required.", "error");
       return;
     }
+    if (!HEX_COLOR.test(form.accentColor.trim())) {
+      onToast("Accent color must be a 6-digit hex value, e.g. #FF6B35.", "error");
+      return;
+    }
 
     const id = form.id ?? generateId();
     const team: Team = {
@@ -320,7 +324,7 @@ export function TeamsManager({ onToast }: { onToast: ToastFn }) {
             </Field>
           </div>
 
-          <button type="submit" className={primaryButtonClass}>
+          <button type="submit" className={`${primaryButtonClass} w-full`}>
             {form.id ? "Save Team Changes" : "Create Team"}
           </button>
         </form>

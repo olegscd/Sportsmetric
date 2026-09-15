@@ -378,7 +378,7 @@ export function SeasonsManager({ onToast }: { onToast: ToastFn }) {
               placeholder="e.g. 2026-27 Season"
             />
           </Field>
-          <button type="submit" className={primaryButtonClass}>
+          <button type="submit" className={`${primaryButtonClass} w-full`}>
             Create Season for {createLeague}
           </button>
           <p className="text-[11px] text-muted">

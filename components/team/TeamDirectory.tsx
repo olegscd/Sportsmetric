@@ -1,14 +1,19 @@
 "use client";
 
+import { EmptyState } from "@/components/ui/EmptyState";
+import { ErrorNotice } from "@/components/ui/ErrorNotice";
+import { FilterChip } from "@/components/ui/FilterChip";
+import { SearchInput } from "@/components/ui/SearchInput";
 import { SeasonPicker } from "@/components/ui/SeasonPicker";
+import { SkeletonCardGrid } from "@/components/ui/Skeleton";
 import { TeamBadge } from "@/components/ui/TeamBadge";
 import { useSportsData } from "@/context/SportsDataContext";
-import type { DerivedTeamStandings } from "@/lib/derivations";
-import { cn, formatRecord } from "@/lib/utils";
+import { inferLeague } from "@/lib/league-utils";
+import { formatRecord } from "@/lib/utils";
 import type { League } from "@/types/sports";
+import { Shield } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
-
+import { useMemo, useState } from "react";
 
 const LEAGUE_CHIPS: { value: League | "ALL"; label: string }[] = [
   { value: "UAAP", label: "UAAP" },
@@ -17,20 +22,15 @@ const LEAGUE_CHIPS: { value: League | "ALL"; label: string }[] = [
   { value: "ALL", label: "All Leagues" },
 ];
 
-function getSeasonLeague(sId: string, sLeague?: League): League {
-  if (sLeague) return sLeague;
-  if (sId.startsWith("pba")) return "PBA";
-  if (sId.startsWith("pvl")) return "PVL";
-  return "UAAP";
-}
-
 export function TeamDirectory() {
-  const { currentSeasonId, seasons, getStandings } = useSportsData();
+  const { currentSeasonId, seasons, getStandings, teams, loading, error, refreshData } =
+    useSportsData();
   const [league, setLeague] = useState<League | "ALL">("UAAP");
+  const [query, setQuery] = useState("");
   const [userSelectedSeasonId, setUserSelectedSeasonId] = useState<string | null>(null);
   const activeLeague: League = league === "ALL" ? "UAAP" : league;
 
-  const targetSeasons = seasons.filter((s) => getSeasonLeague(s.id, s.league) === activeLeague);
+  const targetSeasons = seasons.filter((s) => inferLeague(s) === activeLeague);
   const activeCurrent = targetSeasons.find((s) => s.isCurrent)?.id ?? targetSeasons[0]?.id ?? currentSeasonId;
   const seasonId = userSelectedSeasonId && targetSeasons.some((s) => s.id === userSelectedSeasonId)
     ? userSelectedSeasonId
@@ -41,26 +41,95 @@ export function TeamDirectory() {
     setUserSelectedSeasonId(null);
   }
 
-
   const leagues: League[] = league === "ALL" ? ["UAAP", "PBA", "PVL"] : [league];
-  const standings: DerivedTeamStandings[] = leagues.flatMap((l) => getStandings(l, seasonId));
+  const standings = leagues.flatMap((l) => getStandings(l, seasonId));
+
+  const normalizedQuery = query.trim().toLowerCase();
+  const filteredStandings = useMemo(() => {
+    if (!normalizedQuery) return standings;
+    return standings.filter((item) => {
+      const team = item.team;
+      return (
+        team.name.toLowerCase().includes(normalizedQuery) ||
+        team.shortName.toLowerCase().includes(normalizedQuery)
+      );
+    });
+  }, [standings, normalizedQuery]);
+
+  function renderBody() {
+    if (error && teams.length === 0) {
+      return <ErrorNotice message={error} onRetry={() => void refreshData()} />;
+    }
+    if (loading && teams.length === 0) {
+      return <SkeletonCardGrid count={6} height="h-20" />;
+    }
+    if (standings.length === 0) {
+      return (
+        <EmptyState
+          icon={<Shield size={22} aria-hidden="true" />}
+          title="No teams for this season yet"
+          description="Team cards appear here once the season roster has been published. Try another league or season."
+        />
+      );
+    }
+    if (filteredStandings.length === 0) {
+      return (
+        <EmptyState
+          icon={<Shield size={22} aria-hidden="true" />}
+          title={`No teams match "${query.trim()}"`}
+          description="Search by team name or short code."
+        />
+      );
+    }
+    return (
+      <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
+        {filteredStandings.map((item) => {
+          const team = item.team;
+          const record = { wins: item.wins, losses: item.losses };
+          const pctStr = item.winPct.toFixed(3).replace(/^0/, "");
+          return (
+            <Link
+              key={team.id}
+              href={`/teams/${team.id}`}
+              className="flex items-center gap-3 rounded-2xl border border-border bg-surface p-3 shadow-sm transition-all hover:border-primary/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary active:scale-[0.99]"
+            >
+              <span className="w-4 shrink-0 text-center text-xs font-extrabold text-muted">
+                {standings.findIndex((row) => row.team.id === team.id) + 1}
+              </span>
+              <TeamBadge team={team} size="md" />
+              <div className="min-w-0 flex-1">
+                <p className="truncate text-sm font-bold text-foreground">{team.name}</p>
+                <p className="truncate text-xs font-semibold text-muted">
+                  {team.league} &middot; {formatRecord(record)}
+                </p>
+              </div>
+              <span className="shrink-0 text-xs font-bold tabular-nums text-foreground">
+                {pctStr}
+              </span>
+            </Link>
+          );
+        })}
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col gap-4 px-4 py-4">
+      <div className="hidden md:block">
+        <h1 className="text-lg font-extrabold tracking-tight text-foreground">Teams</h1>
+        <p className="text-xs text-muted">Directory and records by league</p>
+      </div>
+
       <div className="flex items-center justify-between gap-2">
-        <div className="flex gap-2 overflow-x-auto">
+        <div className="flex gap-2 overflow-x-auto pb-0.5">
           {LEAGUE_CHIPS.map((chip) => (
-            <button
+            <FilterChip
               key={chip.value}
-              type="button"
+              selected={league === chip.value}
               onClick={() => handleLeagueChange(chip.value)}
-              className={cn(
-                "shrink-0 rounded-full border px-3 py-1 text-xs font-semibold transition-colors",
-                league === chip.value ? "border-primary text-primary" : "border-border text-muted"
-              )}
             >
               {chip.label}
-            </button>
+            </FilterChip>
           ))}
         </div>
         <SeasonPicker
@@ -68,43 +137,16 @@ export function TeamDirectory() {
           onChange={setUserSelectedSeasonId}
           league={activeLeague}
         />
-
       </div>
 
-      {standings.length === 0 ? (
-        <p className="py-12 text-center text-sm text-muted">
-          No teams yet for this season. Add some from the Admin Dashboard.
-        </p>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-          {standings.map((item, index) => {
-            const team = item.team;
-            const record = { wins: item.wins, losses: item.losses };
-            const pctStr = item.winPct.toFixed(3).replace(/^0/, "");
-            return (
-              <Link
-                key={team.id}
-                href={`/teams/${team.id}`}
-                className="flex items-center gap-3 rounded-2xl border border-border bg-surface p-3 shadow-sm hover:border-primary/50 active:scale-[0.99] transition-all"
-              >
-                <span className="w-4 shrink-0 text-center text-xs font-extrabold text-muted">
-                  {index + 1}
-                </span>
-                <TeamBadge team={team} size="md" />
-                <div className="min-w-0 flex-1">
-                  <p className="truncate text-sm font-bold text-foreground">{team.name}</p>
-                  <p className="truncate text-xs font-semibold text-muted">
-                    {team.league} &middot; {formatRecord(record)}
-                  </p>
-                </div>
-                <span className="shrink-0 text-xs font-bold tabular-nums text-foreground">
-                  {pctStr}
-                </span>
-              </Link>
-            );
-          })}
-        </div>
-      )}
+      <SearchInput
+        value={query}
+        onChange={setQuery}
+        label="Search teams"
+        placeholder="Search teams"
+      />
+
+      {renderBody()}
     </div>
   );
 }

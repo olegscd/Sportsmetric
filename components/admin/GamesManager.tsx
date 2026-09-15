@@ -1,10 +1,13 @@
 "use client";
 
 import type { ToastFn } from "@/components/admin/Toast";
+import { FilterChip } from "@/components/ui/FilterChip";
 import { useSportsData } from "@/context/SportsDataContext";
 import { generateId } from "@/lib/data";
+import { buildGameId } from "@/lib/game-id";
 import type { Game, GameStatus, PlayByPlayEvent, PlayByPlayEventType } from "@/types/sports";
-import { useState, type FormEvent } from "react";
+import { Loader2 } from "lucide-react";
+import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import {
   dangerButtonClass,
   Field,
@@ -80,6 +83,22 @@ function GameQuickRow({
   const [status, setStatus] = useState<GameStatus>(game.status);
   const [period, setPeriod] = useState(periodInputDefault(game));
 
+  // Realtime pushes new scores into the parent, but these inputs seeded their
+  // state once on mount. Re-sync whenever the incoming game actually changes so
+  // an admin does not overwrite a newer score with a stale one.
+  const syncedFrom = useRef<string>("");
+  const incoming = `${game.homeScore}|${game.awayScore}|${game.status}|${game.quarterOrSet}|${game.timeRemaining ?? ""}`;
+  useEffect(() => {
+    if (syncedFrom.current === incoming) return;
+    syncedFrom.current = incoming;
+    setHomeScore(String(game.homeScore));
+    setAwayScore(String(game.awayScore));
+    setStatus(game.status);
+    setPeriod(periodInputDefault(game));
+  }, [incoming, game]);
+
+  const [saving, setSaving] = useState(false);
+
   async function handleSave() {
     // Parse period input: "Q4 1:42" → quarterOrSet=4, timeRemaining="1:42"
     //                     "Set 3"   → quarterOrSet=3, timeRemaining=null
@@ -105,6 +124,7 @@ function GameQuickRow({
     }
 
     try {
+      setSaving(true);
       await onUpdateScore(
         game.id,
         parseInt(homeScore, 10) || 0,
@@ -116,6 +136,8 @@ function GameQuickRow({
       onToast("Score updated successfully!");
     } catch {
       onToast("Failed to update score in database.", "error");
+    } finally {
+      setSaving(false);
     }
   }
 
@@ -182,14 +204,21 @@ function GameQuickRow({
       </div>
 
       <div className="flex gap-2">
-        <button type="button" onClick={handleSave} className={primaryButtonClass}>
-          Save Score
+        <button type="button" onClick={handleSave} disabled={saving} className={primaryButtonClass}>
+          {saving ? (
+            <>
+              <Loader2 size={14} className="animate-spin" aria-hidden="true" />
+              Saving…
+            </>
+          ) : (
+            "Save Score"
+          )}
         </button>
         {onEdit && (
           <button
             type="button"
             onClick={() => onEdit(game)}
-            className="rounded-lg border border-border bg-surface px-3 py-1.5 text-xs font-semibold text-foreground hover:bg-elevated transition-colors"
+            className="rounded-lg border border-border bg-surface px-3 py-1.5 text-xs font-semibold text-foreground transition-colors hover:bg-elevated"
           >
             Edit Details
           </button>
@@ -247,9 +276,39 @@ export function GamesManager({ onToast }: { onToast: ToastFn }) {
   } = useSportsData();
 
   const [seasonFilter, setSeasonFilter] = useState(() => currentSeasonId);
+  const [statusFilter, setStatusFilter] = useState<"ALL" | GameStatus>("ALL");
+  const [search, setSearch] = useState("");
+  const [savingGame, setSavingGame] = useState(false);
+  const [visibleCount, setVisibleCount] = useState(20);
 
   const games = allGames.filter((g) => g.seasonId === seasonFilter);
   const teamsInListSeason = allTeams.filter((t) => t.seasonId === seasonFilter);
+
+  const filteredGames = useMemo(() => {
+    const q = search.trim().toLowerCase();
+    const matched = games.filter((game) => {
+      if (statusFilter !== "ALL" && game.status !== statusFilter) return false;
+      if (!q) return true;
+      return (
+        game.homeTeam.name.toLowerCase().includes(q) ||
+        game.awayTeam.name.toLowerCase().includes(q) ||
+        game.homeTeam.shortName.toLowerCase().includes(q) ||
+        game.awayTeam.shortName.toLowerCase().includes(q) ||
+        (game.venue ?? "").toLowerCase().includes(q)
+      );
+    });
+
+    const rank = (status: GameStatus) =>
+      status === "LIVE" ? 0 : status === "UPCOMING" ? 1 : 2;
+
+    return [...matched].sort((a, b) => {
+      const byStatus = rank(a.status) - rank(b.status);
+      if (byStatus !== 0) return byStatus;
+      return new Date(b.startTime).getTime() - new Date(a.startTime).getTime();
+    });
+  }, [games, search, statusFilter]);
+
+  const visibleGames = filteredGames.slice(0, visibleCount);
 
   const [fullForm, setFullForm] = useState<FullGameFormState>(() =>
     emptyFullForm(
@@ -287,6 +346,7 @@ export function GamesManager({ onToast }: { onToast: ToastFn }) {
 
   function handleSeasonFilterChange(nextSeasonId: string) {
     setSeasonFilter(nextSeasonId);
+    setVisibleCount(20);
     const teamsInNextSeason = allTeams.filter((t) => t.seasonId === nextSeasonId);
     setFullForm(
       emptyFullForm(
@@ -317,7 +377,14 @@ export function GamesManager({ onToast }: { onToast: ToastFn }) {
     const game: Game = existing
       ? { ...existing, homeTeam, awayTeam, league: homeTeam.league, venue: fullForm.venue.trim(), startTime }
       : {
-          id: generateId(),
+          id: buildGameId({
+            league: homeTeam.league,
+            seasonId: fullForm.seasonId,
+            homeShort: homeTeam.shortName,
+            awayShort: awayTeam.shortName,
+            startTimeIso: startTime,
+            claimedIds: allGames.map((g) => g.id),
+          }),
           league: homeTeam.league,
           homeTeam,
           awayTeam,
@@ -334,11 +401,14 @@ export function GamesManager({ onToast }: { onToast: ToastFn }) {
         };
 
     try {
+      setSavingGame(true);
       await saveGame(game);
       onToast(fullForm.id ? "Game updated successfully!" : "Game created successfully!");
       setFullForm(gameToFullForm(game));
     } catch {
       onToast("Failed to save game to database.", "error");
+    } finally {
+      setSavingGame(false);
     }
   }
 
@@ -404,11 +474,38 @@ export function GamesManager({ onToast }: { onToast: ToastFn }) {
       </Field>
 
       <SectionCard title="Quick Live Score Update">
-        {games.length === 0 ? (
-          <p className="text-xs text-muted">No games for this season yet.</p>
+        <div className="flex flex-col gap-3">
+          <Field label="Search matchups">
+            <input
+              className={inputClass}
+              value={search}
+              onChange={(event) => {
+                setSearch(event.target.value);
+                setVisibleCount(20);
+              }}
+              placeholder="Team name or venue"
+            />
+          </Field>
+          <div className="flex flex-wrap gap-2">
+            {(["ALL", "LIVE", "UPCOMING", "FINAL"] as const).map((value) => (
+              <FilterChip
+                key={value}
+                selected={statusFilter === value}
+                onClick={() => {
+                  setStatusFilter(value);
+                  setVisibleCount(20);
+                }}
+              >
+                {value === "ALL" ? "All statuses" : value}
+              </FilterChip>
+            ))}
+          </div>
+        </div>
+        {filteredGames.length === 0 ? (
+          <p className="text-xs text-muted">No games match these filters for this season.</p>
         ) : (
           <div className="flex flex-col gap-3">
-            {games.map((g) => (
+            {visibleGames.map((g) => (
               <GameQuickRow
                 key={g.id}
                 game={g}
@@ -417,8 +514,16 @@ export function GamesManager({ onToast }: { onToast: ToastFn }) {
                 onEdit={startEditGame}
                 onUpdateScore={updateGameScore}
               />
-
             ))}
+            {filteredGames.length > visibleCount ? (
+              <button
+                type="button"
+                onClick={() => setVisibleCount((count) => count + 20)}
+                className="rounded-xl border border-border px-3 py-2 text-xs font-semibold text-foreground transition-colors hover:bg-elevated"
+              >
+                Show more ({filteredGames.length - visibleCount} remaining)
+              </button>
+            ) : null}
           </div>
         )}
       </SectionCard>
@@ -505,8 +610,12 @@ export function GamesManager({ onToast }: { onToast: ToastFn }) {
             />
           </Field>
 
-          <button type="submit" className={primaryButtonClass}>
-            {fullForm.id ? "Update Game Info" : "Create Game"}
+          <button type="submit" disabled={savingGame} className={`${primaryButtonClass} w-full`}>
+            {savingGame
+              ? "Saving…"
+              : fullForm.id
+                ? "Update Game Info"
+                : "Create Game"}
           </button>
         </form>
       </SectionCard>

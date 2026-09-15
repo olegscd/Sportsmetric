@@ -128,7 +128,7 @@ export function GameCard({ game }: { game: Game }) {
           openGame(game.id);
         }
       }}
-      className="w-full cursor-pointer rounded-2xl border border-border bg-surface p-4 text-left shadow-sm hover:border-primary/50 active:scale-[0.99] transition-all"
+      className="w-full cursor-pointer rounded-2xl border border-border bg-surface p-4 text-left shadow-sm transition-all hover:border-primary/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary active:scale-[0.99]"
     >
       <div className="flex items-center justify-between gap-2 border-b border-border/40 pb-2.5">
         <div className="flex items-center gap-1.5">

@@ -1,6 +1,8 @@
-import { supabase } from "@/lib/supabase";
-import { inferLeague } from "@/lib/league-utils";
+import { ValidationError } from "@/lib/admin-validation";
 import { getEffectiveGameStatus } from "@/lib/derivations";
+import { inferLeague } from "@/lib/league-utils";
+import { supabase } from "@/lib/supabase";
+import { getServiceSupabase } from "@/lib/supabase-admin";
 import type { Game, GameStatus, League, Player, Season, Team } from "@/types/sports";
 
 
@@ -10,6 +12,15 @@ function logSupabaseError(context: string, error: { message: string } | null): b
     return true;
   }
   return false;
+}
+
+/**
+ * Reads use the anon client (RLS allows public SELECT). Writes need the
+ * service-role client, because RLS blocks anon writes. Never fall back to the
+ * anon key -- those writes look successful in the UI and then vanish.
+ */
+function getWriteClient() {
+  return getServiceSupabase();
 }
 
 export interface SupabaseDataResult {
@@ -25,7 +36,8 @@ export function seasonToRecord(season: Season) {
     label: season.label,
     year: season.id,
     is_current: season.isCurrent,
-    // NOTE: 'league' column does not exist in the seasons table — inferred from season ID at read time
+    league: inferLeague(season.id, season.league),
+    sort_order: season.sortOrder ?? null,
   };
 }
 
@@ -71,6 +83,11 @@ export function gameToRecord(game: Game) {
     start_time: game.startTime,
     quarter_or_set: game.quarterOrSet,
     time_remaining: game.timeRemaining,
+    // Venue/stage/playoff live in dedicated columns. They are mirrored into
+    // box_score so rows written before those columns existed stay readable.
+    venue: game.venue ?? null,
+    stage: game.stage ?? "ELIMINATION",
+    is_playoff: game.isPlayoff ?? false,
     box_score: {
       home: game.boxScore?.home ?? [],
       away: game.boxScore?.away ?? [],
@@ -83,10 +100,27 @@ export function gameToRecord(game: Game) {
 }
 
 
-export function mapSeasonRows(rows: Array<{ id: string; label: string; is_current: boolean; league?: League }>): Season[] {
+export function mapSeasonRows(
+  rows: Array<{
+    id: string;
+    label: string;
+    is_current: boolean;
+    league?: League;
+    sort_order?: number | null;
+  }>
+): Season[] {
   const seenLeaguesWithCurrent = new Set<League>();
 
-  const mapped = rows.map((s) => {
+  // Respect the admin-defined order, falling back to id-descending for rows
+  // saved before sort_order existed.
+  const ordered = [...rows].sort((a, b) => {
+    const aOrder = a.sort_order ?? Number.MAX_SAFE_INTEGER;
+    const bOrder = b.sort_order ?? Number.MAX_SAFE_INTEGER;
+    if (aOrder !== bOrder) return aOrder - bOrder;
+    return b.id.localeCompare(a.id);
+  });
+
+  const mapped = ordered.map((s) => {
     const league = inferLeague(s.id, s.league);
 
     let isCurrent = Boolean(s.is_current);
@@ -105,6 +139,7 @@ export function mapSeasonRows(rows: Array<{ id: string; label: string; is_curren
       label: s.label,
       isCurrent,
       league,
+      sortOrder: s.sort_order ?? undefined,
     };
   });
 
@@ -262,6 +297,7 @@ type SeasonDbRow = {
   label: string;
   is_current: boolean;
   league?: League;
+  sort_order?: number | null;
 };
 
 type TeamDbRow = {
@@ -364,11 +400,68 @@ export async function fetchAllSupabaseData(): Promise<SupabaseDataResult | null>
 }
 
 
-export async function upsertGameInSupabase(game: Game): Promise<boolean> {
-  if (!supabase) return false;
+/**
+ * Rebuilds win/loss from FINAL games in the season. Used after every game
+ * write so marking a match FINAL (or un-finalising it) cannot drift from
+ * the denormalised `teams.record` column.
+ */
+export async function recomputeTeamRecords(
+  seasonId: string,
+  teamIds: string[]
+): Promise<boolean> {
+  const db = getWriteClient();
+  const uniqueIds = Array.from(new Set(teamIds.filter(Boolean)));
+  if (!db || uniqueIds.length === 0) return false;
+
   try {
-    const { error } = await supabase.from("games").upsert([gameToRecord(game)]);
-    return !logSupabaseError("upsert game", error);
+    const { data: gameRows, error: gamesError } = await db
+      .from("games")
+      .select("home_team_id, away_team_id, home_score, away_score, status")
+      .eq("season_id", seasonId)
+      .eq("status", "FINAL");
+
+    if (logSupabaseError("recompute team records (games)", gamesError)) return false;
+
+    const { data: teamRows, error: teamsError } = await db
+      .from("teams")
+      .select("*")
+      .in("id", uniqueIds);
+
+    if (logSupabaseError("recompute team records (teams)", teamsError) || !teamRows) {
+      return false;
+    }
+
+    const updates = teamRows.map((team) => {
+      let wins = 0;
+      let losses = 0;
+      for (const row of gameRows ?? []) {
+        const isHome = row.home_team_id === team.id;
+        const isAway = row.away_team_id === team.id;
+        if (!isHome && !isAway) continue;
+        const own = isHome ? row.home_score : row.away_score;
+        const other = isHome ? row.away_score : row.home_score;
+        if (own > other) wins += 1;
+        else if (other > own) losses += 1;
+      }
+      return { ...team, record: { wins, losses } };
+    });
+
+    const { error: upsertError } = await db.from("teams").upsert(updates);
+    return !logSupabaseError("recompute team records (upsert)", upsertError);
+  } catch (err) {
+    console.error("[Sportsmetric DB] Unexpected error during recomputeTeamRecords:", err);
+    return false;
+  }
+}
+
+export async function upsertGameInSupabase(game: Game): Promise<boolean> {
+  const db = getWriteClient();
+  if (!db) return false;
+  try {
+    const { error } = await db.from("games").upsert([gameToRecord(game)]);
+    if (logSupabaseError("upsert game", error)) return false;
+    await recomputeTeamRecords(game.seasonId, [game.homeTeam.id, game.awayTeam.id]);
+    return true;
   } catch (err) {
     console.error("[Sportsmetric DB] Unexpected error during upsertGame:", err);
     return false;
@@ -376,10 +469,25 @@ export async function upsertGameInSupabase(game: Game): Promise<boolean> {
 }
 
 export async function deleteGameInSupabase(id: string): Promise<boolean> {
-  if (!supabase) return false;
+  const db = getWriteClient();
+  if (!db) return false;
   try {
-    const { error } = await supabase.from("games").delete().eq("id", id);
-    return !logSupabaseError("delete game", error);
+    const { data: existing } = await db
+      .from("games")
+      .select("season_id, home_team_id, away_team_id")
+      .eq("id", id)
+      .maybeSingle();
+
+    const { error } = await db.from("games").delete().eq("id", id);
+    if (logSupabaseError("delete game", error)) return false;
+
+    if (existing) {
+      await recomputeTeamRecords(existing.season_id, [
+        existing.home_team_id,
+        existing.away_team_id,
+      ]);
+    }
+    return true;
   } catch (err) {
     console.error("[Sportsmetric DB] Unexpected error during deleteGame:", err);
     return false;
@@ -387,9 +495,10 @@ export async function deleteGameInSupabase(id: string): Promise<boolean> {
 }
 
 export async function upsertTeamInSupabase(team: Team): Promise<boolean> {
-  if (!supabase) return false;
+  const db = getWriteClient();
+  if (!db) return false;
   try {
-    const { error } = await supabase.from("teams").upsert([teamToRecord(team)]);
+    const { error } = await db.from("teams").upsert([teamToRecord(team)]);
     return !logSupabaseError("upsert team", error);
   } catch (err) {
     console.error("[Sportsmetric DB] Unexpected error during upsertTeam:", err);
@@ -398,20 +507,38 @@ export async function upsertTeamInSupabase(team: Team): Promise<boolean> {
 }
 
 export async function deleteTeamInSupabase(id: string): Promise<boolean> {
-  if (!supabase) return false;
+  const db = getWriteClient();
+  if (!db) return false;
   try {
-    const { error } = await supabase.from("teams").delete().eq("id", id);
+    const [asHome, asAway] = await Promise.all([
+      db.from("games").select("id").eq("home_team_id", id).limit(1),
+      db.from("games").select("id").eq("away_team_id", id).limit(1),
+    ]);
+    if (logSupabaseError("delete team (check home games)", asHome.error)) return false;
+    if (logSupabaseError("delete team (check away games)", asAway.error)) return false;
+    if ((asHome.data && asHome.data.length > 0) || (asAway.data && asAway.data.length > 0)) {
+      throw new ValidationError(
+        "This team still has games on the schedule. Delete those games first."
+      );
+    }
+
+    const { error: playersError } = await db.from("players").delete().eq("team_id", id);
+    if (logSupabaseError("delete team (players)", playersError)) return false;
+
+    const { error } = await db.from("teams").delete().eq("id", id);
     return !logSupabaseError("delete team", error);
   } catch (err) {
+    if (err instanceof ValidationError) throw err;
     console.error("[Sportsmetric DB] Unexpected error during deleteTeam:", err);
     return false;
   }
 }
 
 export async function upsertPlayerInSupabase(player: Player): Promise<boolean> {
-  if (!supabase) return false;
+  const db = getWriteClient();
+  if (!db) return false;
   try {
-    const { error } = await supabase.from("players").upsert([playerToRecord(player)]);
+    const { error } = await db.from("players").upsert([playerToRecord(player)]);
     return !logSupabaseError("upsert player", error);
   } catch (err) {
     console.error("[Sportsmetric DB] Unexpected error during upsertPlayer:", err);
@@ -419,10 +546,23 @@ export async function upsertPlayerInSupabase(player: Player): Promise<boolean> {
   }
 }
 
-export async function deletePlayerInSupabase(id: string): Promise<boolean> {
-  if (!supabase) return false;
+export async function batchUpsertPlayersInSupabase(players: Player[]): Promise<boolean> {
+  const db = getWriteClient();
+  if (!db || players.length === 0) return false;
   try {
-    const { error } = await supabase.from("players").delete().eq("id", id);
+    const { error } = await db.from("players").upsert(players.map(playerToRecord));
+    return !logSupabaseError("batch upsert players", error);
+  } catch (err) {
+    console.error("[Sportsmetric DB] Unexpected error during batchUpsertPlayers:", err);
+    return false;
+  }
+}
+
+export async function deletePlayerInSupabase(id: string): Promise<boolean> {
+  const db = getWriteClient();
+  if (!db) return false;
+  try {
+    const { error } = await db.from("players").delete().eq("id", id);
     return !logSupabaseError("delete player", error);
   } catch (err) {
     console.error("[Sportsmetric DB] Unexpected error during deletePlayer:", err);
@@ -430,10 +570,18 @@ export async function deletePlayerInSupabase(id: string): Promise<boolean> {
   }
 }
 
-export async function deleteAllPlayersInSupabase(): Promise<boolean> {
-  if (!supabase) return false;
+/**
+ * Deletes every player in one season. Passing no season wipes the whole table,
+ * so callers must opt into that explicitly rather than getting it by default.
+ */
+export async function deleteAllPlayersInSupabase(seasonId?: string): Promise<boolean> {
+  const db = getWriteClient();
+  if (!db) return false;
   try {
-    const { error } = await supabase.from("players").delete().neq("id", "");
+    const query = db.from("players").delete();
+    const { error } = seasonId
+      ? await query.eq("season_id", seasonId)
+      : await query.neq("id", "");
     return !logSupabaseError("delete all players", error);
   } catch (err) {
     console.error("[Sportsmetric DB] Unexpected error during deleteAllPlayers:", err);
@@ -442,9 +590,10 @@ export async function deleteAllPlayersInSupabase(): Promise<boolean> {
 }
 
 export async function upsertSeasonInSupabase(season: Season): Promise<boolean> {
-  if (!supabase) return false;
+  const db = getWriteClient();
+  if (!db) return false;
   try {
-    const { error } = await supabase.from("seasons").upsert([seasonToRecord(season)]);
+    const { error } = await db.from("seasons").upsert([seasonToRecord(season)]);
     return !logSupabaseError("upsert season", error);
   } catch (err) {
     console.error("[Sportsmetric DB] Unexpected error during upsertSeason:", err);
@@ -453,10 +602,11 @@ export async function upsertSeasonInSupabase(season: Season): Promise<boolean> {
 }
 
 export async function batchUpsertSeasonsInSupabase(seasons: Season[]): Promise<boolean> {
-  if (!supabase || seasons.length === 0) return false;
+  const db = getWriteClient();
+  if (!db || seasons.length === 0) return false;
   try {
     const records = seasons.map(seasonToRecord);
-    const { error } = await supabase.from("seasons").upsert(records);
+    const { error } = await db.from("seasons").upsert(records);
     return !logSupabaseError("batch upsert seasons", error);
   } catch (err) {
     console.error("[Sportsmetric DB] Unexpected error during batchUpsertSeasons:", err);
@@ -464,10 +614,20 @@ export async function batchUpsertSeasonsInSupabase(seasons: Season[]): Promise<b
   }
 }
 
+/**
+ * Removes a season along with the games, players and teams that belong to it.
+ * Without this, deleting a season leaves orphaned rows that still surface in
+ * league-wide queries.
+ */
 export async function deleteSeasonInSupabase(id: string): Promise<boolean> {
-  if (!supabase) return false;
+  const db = getWriteClient();
+  if (!db) return false;
   try {
-    const { error } = await supabase.from("seasons").delete().eq("id", id);
+    for (const table of ["games", "players", "teams"] as const) {
+      const { error } = await db.from(table).delete().eq("season_id", id);
+      if (logSupabaseError(`delete ${table} for season ${id}`, error)) return false;
+    }
+    const { error } = await db.from("seasons").delete().eq("id", id);
     return !logSupabaseError("delete season", error);
   } catch (err) {
     console.error("[Sportsmetric DB] Unexpected error during deleteSeason:", err);
@@ -476,11 +636,25 @@ export async function deleteSeasonInSupabase(id: string): Promise<boolean> {
 }
 
 export async function batchUpsertGamesInSupabase(games: Game[]): Promise<boolean> {
-  if (!supabase || games.length === 0) return false;
+  const db = getWriteClient();
+  if (!db || games.length === 0) return false;
   try {
     const records = games.map(gameToRecord);
-    const { error } = await supabase.from("games").upsert(records);
-    return !logSupabaseError("batch upsert games", error);
+    const { error } = await db.from("games").upsert(records);
+    if (logSupabaseError("batch upsert games", error)) return false;
+
+    const bySeason = new Map<string, string[]>();
+    for (const game of games) {
+      const ids = bySeason.get(game.seasonId) ?? [];
+      ids.push(game.homeTeam.id, game.awayTeam.id);
+      bySeason.set(game.seasonId, ids);
+    }
+    await Promise.all(
+      Array.from(bySeason.entries()).map(([seasonId, teamIds]) =>
+        recomputeTeamRecords(seasonId, teamIds)
+      )
+    );
+    return true;
   } catch (err) {
     console.error("[Sportsmetric DB] Unexpected error during batchUpsertGames:", err);
     return false;

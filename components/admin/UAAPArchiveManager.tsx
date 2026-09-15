@@ -20,6 +20,7 @@ import {
   makeExtrasKey,
   normalizeChessMedalists,
   normalizeDivision,
+  normalizeSeasonLabel,
   resolveCellValue,
   toNumberOrNull,
   type LegacyStandingRecord,
@@ -28,6 +29,7 @@ import {
   type UAAPRow,
   type UAAPTable,
 } from "@/lib/uaap-schema";
+import { extractStandingsFromReport } from "@/lib/uaap-import";
 import { UAAP_SCHOOLS, getSchoolCode, getSchoolName, getSchoolTheme, matchSchoolCode } from "@/lib/uaap-schools";
 import standingsData from "@/data/uaap_standings.json";
 import archiveExtrasData from "@/data/uaap_archive_extras.json";
@@ -167,6 +169,7 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
     createEmptyTable(FALLBACK_SEASONS[0], "Basketball", "Men's", COLUMN_PRESETS[0].columns)
   );
   const [baseline, setBaseline] = useState<string>("");
+  const [extrasBaseline, setExtrasBaseline] = useState("");
 
   const [mvp, setMvp] = useState({ player: "", school: "FEU" });
   const [roy, setRoy] = useState({ player: "", school: "FEU" });
@@ -204,25 +207,30 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
 
     const extrasKey = makeExtrasKey(sport, season);
     const awards = extras.awards?.[extrasKey]?.[normalizeDivision(division)];
-    setMvp({ player: awards?.mvp?.player || "", school: awards?.mvp?.school || "FEU" });
-    setRoy({
+    const nextMvp = { player: awards?.mvp?.player || "", school: awards?.mvp?.school || "FEU" };
+    const nextRoy = {
       player: awards?.rookie_of_the_year?.player || "",
       school: awards?.rookie_of_the_year?.school || "FEU",
-    });
-    setMythical(Array.isArray(awards?.mythical_five) ? awards.mythical_five : []);
+    };
+    const nextMythical = Array.isArray(awards?.mythical_five) ? awards.mythical_five : [];
+    setMvp(nextMvp);
+    setRoy(nextRoy);
+    setMythical(nextMythical);
 
     const medalists = normalizeChessMedalists(
       extras.chess_medalists?.[extrasKey]?.[normalizeDivision(division)]
     );
-    setChessBoards(
-      medalists
-        ? (Object.fromEntries(
-            Object.entries(medalists).map(([board, list]) => [
-              board,
-              list.map((m) => ({ medal: m.medal ?? "gold", player: m.player, school: m.school })),
-            ])
-          ) as typeof chessBoards)
-        : { "1": [], "2": [], "3": [], "4": [], "5": [], "6": [] }
+    const nextChess = medalists
+      ? (Object.fromEntries(
+          Object.entries(medalists).map(([board, list]) => [
+            board,
+            list.map((m) => ({ medal: m.medal ?? "gold", player: m.player, school: m.school })),
+          ])
+        ) as typeof chessBoards)
+      : { "1": [], "2": [], "3": [], "4": [], "5": [], "6": [] };
+    setChessBoards(nextChess);
+    setExtrasBaseline(
+      JSON.stringify({ mvp: nextMvp, roy: nextRoy, mythical: nextMythical, chessBoards: nextChess })
     );
   }, [season, sport, division, tables, extras]);
 
@@ -230,7 +238,10 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
     loadDivision();
   }, [loadDivision]);
 
-  const isDirty = baseline !== "" && JSON.stringify(draft) !== baseline;
+  const isDirty =
+    (baseline !== "" && JSON.stringify(draft) !== baseline) ||
+    (extrasBaseline !== "" &&
+      JSON.stringify({ mvp, roy, mythical, chessBoards }) !== extrasBaseline);
 
   const enterableColumns = useMemo(
     () => draft.columns.filter((c) => !c.derived),
@@ -385,6 +396,7 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
 
   const [isSaving, setIsSaving] = useState(false);
   const [showImport, setShowImport] = useState(false);
+  const [importSeed, setImportSeed] = useState<string | undefined>(undefined);
 
   const handleSave = useCallback(async () => {
     if (draft.rows.length === 0) {
@@ -394,7 +406,6 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
 
     setIsSaving(true);
 
-    const hasAwards = mvp.player.trim() || roy.player.trim() || mythical.length > 0;
     const normalizeSchoolVal = (s: string) => matchSchoolCode(s) || s.trim();
     const chessPayload =
       sport === "Chess"
@@ -406,7 +417,7 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
                 list.map((m) => ({ ...m, school: normalizeSchoolVal(m.school) })),
               ])
           )
-        : null;
+        : undefined;
 
     const normalizedDraft: UAAPTable = {
       ...draft,
@@ -418,21 +429,21 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
 
     const res = await saveUAAPArchiveData({
       table: normalizedDraft,
-      awards: hasAwards
-        ? {
-            mvp: mvp.player.trim()
-              ? { player: mvp.player.trim(), school: normalizeSchoolVal(mvp.school) }
-              : null,
-            rookie_of_the_year: roy.player.trim()
-              ? { player: roy.player.trim(), school: normalizeSchoolVal(roy.school) }
-              : null,
-            mythical_five:
-              mythical.length > 0
-                ? mythical.map((m) => ({ ...m, school: normalizeSchoolVal(m.school) }))
-                : null,
-          }
-        : null,
-      chess_medalists: chessPayload && Object.keys(chessPayload).length > 0 ? chessPayload : null,
+      awards: {
+        mvp: mvp.player.trim()
+          ? { player: mvp.player.trim(), school: normalizeSchoolVal(mvp.school) }
+          : null,
+        rookie_of_the_year: roy.player.trim()
+          ? { player: roy.player.trim(), school: normalizeSchoolVal(roy.school) }
+          : null,
+        mythical_five:
+          mythical.filter((m) => m.player.trim()).length > 0
+            ? mythical
+                .filter((m) => m.player.trim())
+                .map((m) => ({ ...m, school: normalizeSchoolVal(m.school) }))
+            : null,
+      },
+      chess_medalists: sport === "Chess" ? chessPayload ?? {} : undefined,
     });
 
     setIsSaving(false);
@@ -449,6 +460,7 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
       fetchLive();
     }
     setBaseline(JSON.stringify(draft));
+    setExtrasBaseline(JSON.stringify({ mvp, roy, mythical, chessBoards }));
 
     if (res.warning) {
       onToast(res.warning, "error");
@@ -511,6 +523,30 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
       setReport({ content: res.content, sourceFile: res.sourceFile || "", loading: false });
     });
   }, [showReport, season, sport]);
+
+  const openImportFromScan = async () => {
+    setShowReport(true);
+    setReport((r) => ({ ...r, loading: true }));
+    const res = await getUAAPAnnualReportSnippet(season, sport);
+    setReport({ content: res.content, sourceFile: res.sourceFile || "", loading: false });
+    if (!res.content || res.content.startsWith("No report") || res.content.startsWith("Could not") || res.content === "Unauthorized." || res.content === "Invalid season identifier.") {
+      onToast(res.content || "No annual report found for this season.", "error");
+      return;
+    }
+    const extracted = extractStandingsFromReport(res.content, division);
+    setImportSeed(extracted.paste);
+    setShowImport(true);
+    const awardBits = [
+      extracted.awards.mvp ? "MVP" : null,
+      extracted.awards.rookie_of_the_year ? "Rookie of the Year" : null,
+    ].filter(Boolean);
+    onToast(
+      extracted.tableCount > 0
+        ? `Pulled a ${extracted.delimiterLabel}${awardBits.length ? ` · found ${awardBits.join(" and ")}` : ""}. Confirm columns, then apply.`
+        : "Opened the scan in bulk import — parse it and map the columns.",
+      "success"
+    );
+  };
 
   const [newSeason, setNewSeason] = useState("");
   const [newDivision, setNewDivision] = useState("");
@@ -599,8 +635,12 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
             <button
               type="button"
               onClick={() => {
-                const value = newSeason.trim();
+                const value = normalizeSeasonLabel(newSeason) ?? newSeason.trim();
                 if (!value) return;
+                if (!/^\d{4}-\d{4}$/.test(value)) {
+                  onToast("Use a season like 2004-2005.", "error");
+                  return;
+                }
                 setCustomSeasons((prev) => Array.from(new Set([...prev, value])));
                 switchTo({ season: value });
                 setNewSeason("");
@@ -705,8 +745,31 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
 
       {showImport && (
         <BulkImportPanel
+          key={importSeed ? `seed-${season}-${sport}-${division}` : "blank"}
           columns={draft.columns}
-          onClose={() => setShowImport(false)}
+          division={division}
+          initialText={importSeed}
+          onClose={() => {
+            setShowImport(false);
+            setImportSeed(undefined);
+          }}
+          onExtractedAwards={(awards) => {
+            if (awards.mvp) {
+              setMvp({
+                player: awards.mvp.player,
+                school: getSchoolName(awards.mvp.school) || awards.mvp.school,
+              });
+            }
+            if (awards.rookie_of_the_year) {
+              setRoy({
+                player: awards.rookie_of_the_year.player,
+                school:
+                  getSchoolName(awards.rookie_of_the_year.school) ||
+                  awards.rookie_of_the_year.school,
+              });
+            }
+            onToast("Filled awards from the pasted scan. Save when the table looks right.", "success");
+          }}
           onApply={(rows, mode, newColumns) => {
             const displayRows = rows.map((r) => ({
               ...r,
@@ -721,6 +784,7 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
               };
             });
             setShowImport(false);
+            setImportSeed(undefined);
             onToast(
               `Loaded ${rows.length} ${rows.length === 1 ? "row" : "rows"}${
                 newColumns ? " and updated columns" : ""
@@ -746,11 +810,22 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
           <div className="flex flex-wrap items-center gap-2">
             <button
               type="button"
-              onClick={() => setShowImport((v) => !v)}
+              onClick={() => {
+                setImportSeed(undefined);
+                setShowImport((v) => !v);
+              }}
               className="px-2.5 py-1 rounded-lg text-xs font-medium bg-elevated border border-border text-foreground hover:bg-elevated/80 inline-flex items-center gap-1 cursor-pointer"
             >
               <FileUp size={13} />
               <span>Bulk import</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => void openImportFromScan()}
+              className="px-2.5 py-1 rounded-lg text-xs font-medium bg-amber-500/15 border border-amber-500/40 text-amber-400 hover:bg-amber-500/25 inline-flex items-center gap-1 cursor-pointer"
+            >
+              <Sparkles size={13} />
+              <span>Import from scan</span>
             </button>
             <button
               type="button"
@@ -785,12 +860,22 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
 
         {showReport && (
           <div className="rounded-2xl bg-elevated/40 border border-border p-4 space-y-2">
-            <div className="flex items-center justify-between border-b border-border/60 pb-2">
+            <div className="flex items-center justify-between border-b border-border/60 pb-2 gap-2">
               <span className="flex items-center gap-2 text-xs font-bold text-foreground">
                 <FileText size={14} className="text-amber-400" />
                 Annual report text — {season} {sport}
               </span>
-              <span className="text-[11px] font-mono text-muted">{report.sourceFile}</span>
+              <div className="flex items-center gap-2">
+                <span className="text-[11px] font-mono text-muted">{report.sourceFile}</span>
+                <button
+                  type="button"
+                  onClick={() => void openImportFromScan()}
+                  disabled={report.loading || !report.content}
+                  className="px-2 py-1 rounded-lg text-[11px] font-bold bg-amber-500 text-slate-950 hover:bg-amber-400 disabled:opacity-40 cursor-pointer"
+                >
+                  Extract table
+                </button>
+              </div>
             </div>
             {report.loading ? (
               <p className="py-6 text-center text-xs text-muted">Loading reference text…</p>
@@ -824,8 +909,33 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
                     colSpan={draft.columns.length + 4}
                     className="py-10 text-center text-muted"
                   >
-                    No rows yet. Use “Bulk import”, “+ 8 standard schools”, or add rows one at a
-                    time.
+                    <p>No rows yet for this division.</p>
+                    <div className="mt-3 flex flex-wrap items-center justify-center gap-2">
+                      <button
+                        type="button"
+                        onClick={() => void openImportFromScan()}
+                        className="px-3 py-1.5 rounded-xl text-xs font-bold bg-amber-500 text-slate-950 hover:bg-amber-400 cursor-pointer"
+                      >
+                        Import from annual report
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setImportSeed(undefined);
+                          setShowImport(true);
+                        }}
+                        className="px-3 py-1.5 rounded-xl text-xs font-semibold bg-elevated border border-border text-foreground cursor-pointer"
+                      >
+                        Paste a table
+                      </button>
+                      <button
+                        type="button"
+                        onClick={prefillStandardEight}
+                        className="px-3 py-1.5 rounded-xl text-xs font-semibold bg-elevated border border-border text-foreground cursor-pointer"
+                      >
+                        + 8 standard schools
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ) : (
@@ -1187,6 +1297,23 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
           )}
         </div>
       </Section>
+
+      {isDirty && (
+        <div className="fixed bottom-4 inset-x-0 z-40 flex justify-center px-4 pointer-events-none">
+          <div className="pointer-events-auto flex items-center gap-3 px-4 py-2.5 rounded-2xl bg-surface border border-amber-500/40 shadow-lg">
+            <span className="text-xs font-bold text-amber-400">Unsaved changes</span>
+            <button
+              type="button"
+              onClick={() => void handleSave()}
+              disabled={isSaving}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-amber-500 text-slate-950 hover:bg-amber-400 disabled:opacity-50 cursor-pointer"
+            >
+              <Save size={13} />
+              {isSaving ? "Saving…" : "Save"}
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

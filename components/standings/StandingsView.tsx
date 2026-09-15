@@ -1,17 +1,27 @@
 "use client";
 
+import { EmptyState } from "@/components/ui/EmptyState";
+import { ErrorNotice } from "@/components/ui/ErrorNotice";
+import { SegmentedControl } from "@/components/ui/FilterChip";
 import { SeasonPicker } from "@/components/ui/SeasonPicker";
+import { SkeletonRows } from "@/components/ui/Skeleton";
 import { useSportsData } from "@/context/SportsDataContext";
 import { getUAAPGamePartition } from "@/lib/derivations";
-import { cn, formatAvg } from "@/lib/utils";
+import { inferLeague } from "@/lib/league-utils";
+import { formatAvg } from "@/lib/utils";
 import type { League, Player } from "@/types/sports";
+import { Trophy } from "lucide-react";
 import { useState } from "react";
 
 import { FinalFourBracket } from "./FinalFourBracket";
 import { StandingsTable } from "./StandingsTable";
 import { StatLeaderCard } from "./StatLeaderCard";
 
-const LEAGUES: League[] = ["UAAP", "PBA", "PVL"];
+const LEAGUES: { value: League; label: string }[] = [
+  { value: "UAAP", label: "UAAP" },
+  { value: "PBA", label: "PBA" },
+  { value: "PVL", label: "PVL" },
+];
 
 interface LeaderConfig {
   statKey: keyof Player["seasonAverages"];
@@ -39,23 +49,18 @@ const LEADER_CONFIGS: Record<League, LeaderConfig[]> = {
   PVL: VOLLEYBALL_LEADERS,
 };
 
-function getSeasonLeague(sId: string, sLeague?: League): League {
-  if (sLeague) return sLeague;
-  if (sId.startsWith("pba")) return "PBA";
-  if (sId.startsWith("pvl")) return "PVL";
-  return "UAAP";
-}
-
 export function StandingsView() {
-  const { currentSeasonId, seasons, games, getStandings, getStatLeaders } = useSportsData();
+  const { currentSeasonId, seasons, games, getStandings, getStatLeaders, loading, error, refreshData, teams } =
+    useSportsData();
   const [league, setLeague] = useState<League>("UAAP");
   const [userSelectedSeasonId, setUserSelectedSeasonId] = useState<string | null>(null);
 
-  const targetSeasons = seasons.filter((s) => getSeasonLeague(s.id, s.league) === league);
+  const targetSeasons = seasons.filter((s) => inferLeague(s) === league);
   const activeCurrent = targetSeasons.find((s) => s.isCurrent)?.id ?? targetSeasons[0]?.id ?? currentSeasonId;
-  const seasonId = userSelectedSeasonId && targetSeasons.some((s) => s.id === userSelectedSeasonId)
-    ? userSelectedSeasonId
-    : activeCurrent;
+  const seasonId =
+    userSelectedSeasonId && targetSeasons.some((s) => s.id === userSelectedSeasonId)
+      ? userSelectedSeasonId
+      : activeCurrent;
 
   function handleLeagueChange(newLeague: League) {
     setLeague(newLeague);
@@ -68,76 +73,76 @@ export function StandingsView() {
   const selectedSeason = seasons.find((s) => s.id === seasonId);
   const isOldSeason = selectedSeason ? !selectedSeason.isCurrent : seasonId !== currentSeasonId;
 
-  // Separate UAAP playoff games if applicable
-  const { playoffGames } = league === "UAAP"
-    ? getUAAPGamePartition(games, seasonId)
-    : { playoffGames: [] };
+  const { playoffGames } =
+    league === "UAAP" ? getUAAPGamePartition(games, seasonId) : { playoffGames: [] };
 
   return (
     <div className="flex flex-col gap-4 px-4 py-4">
-      <div className="flex items-center justify-end">
-        <SeasonPicker value={seasonId} onChange={setUserSelectedSeasonId} league={league} includeLifetime={false} />
+      <div className="flex items-end justify-between gap-3">
+        <div className="hidden md:block">
+          <h1 className="text-lg font-extrabold tracking-tight text-foreground">Standings</h1>
+          <p className="text-xs text-muted">Records and league leaders</p>
+        </div>
+        <SeasonPicker
+          value={seasonId}
+          onChange={setUserSelectedSeasonId}
+          league={league}
+          includeLifetime={false}
+        />
       </div>
 
+      <SegmentedControl options={LEAGUES} value={league} onChange={handleLeagueChange} />
 
-      <div className="flex items-center gap-1 rounded-full bg-surface p-1">
-        {LEAGUES.map((value) => (
-          <button
-            key={value}
-            type="button"
-            onClick={() => handleLeagueChange(value)}
-            className={cn(
-              "flex-1 rounded-full py-1.5 text-xs font-semibold transition-colors",
-              league === value ? "bg-primary text-primary-foreground" : "text-muted"
-            )}
-          >
-            {value}
-          </button>
-        ))}
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2">
-          <div className="mb-2 flex items-center justify-between">
-            <p className="text-[11px] font-semibold uppercase tracking-wide text-muted">
-              {league === "UAAP"
-                ? "Elimination Round Standings (Capped at 56 Games)"
-                : league === "PVL"
-                ? "Elimination Round Standings (Regular Season)"
-                : "Standings"}
-            </p>
-          </div>
-          {standings.length === 0 ? (
-            <p className="py-8 text-center text-sm text-muted">
-              No teams yet for this season.
-            </p>
-          ) : (
-            <StandingsTable standings={standings} isOldSeason={isOldSeason} />
-          )}
-
-          {league === "UAAP" && standings.length >= 4 && playoffGames.length > 0 && (
-            <div className="pt-4">
-              <FinalFourBracket standings={standings} playoffGames={playoffGames} />
+      {error && teams.length === 0 ? (
+        <ErrorNotice message={error} onRetry={() => void refreshData()} />
+      ) : loading && teams.length === 0 ? (
+        <SkeletonRows count={8} />
+      ) : (
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+          <div className="lg:col-span-2">
+            <div className="mb-2 flex items-center justify-between">
+              <p className="text-[11px] font-semibold uppercase tracking-wide text-muted">
+                {league === "UAAP"
+                  ? "Elimination Round Standings (Capped at 56 Games)"
+                  : league === "PVL"
+                    ? "Elimination Round Standings (Regular Season)"
+                    : "Standings"}
+              </p>
             </div>
-          )}
-        </div>
-
-        <div className="lg:col-span-1">
-          <p className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-muted">
-            Stat Leaders (Regular Season)
-          </p>
-          <div className="flex flex-col gap-3">
-            {leaderConfigs.map((config) => (
-              <StatLeaderCard
-                key={config.statKey}
-                title={config.title}
-                entries={getStatLeaders(league, config.statKey, 3, seasonId)}
-                formatValue={config.formatValue}
+            {standings.length === 0 ? (
+              <EmptyState
+                icon={<Trophy size={22} aria-hidden="true" />}
+                title="No standings for this season yet"
+                description="Records appear here once teams and completed games have been published."
               />
-            ))}
+            ) : (
+              <StandingsTable standings={standings} isOldSeason={isOldSeason} />
+            )}
+
+            {league === "UAAP" && standings.length >= 4 && playoffGames.length > 0 && (
+              <div className="pt-4">
+                <FinalFourBracket standings={standings} playoffGames={playoffGames} />
+              </div>
+            )}
+          </div>
+
+          <div className="lg:col-span-1">
+            <p className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-muted">
+              Stat Leaders (Regular Season)
+            </p>
+            <div className="flex flex-col gap-3">
+              {leaderConfigs.map((config) => (
+                <StatLeaderCard
+                  key={config.statKey}
+                  title={config.title}
+                  entries={getStatLeaders(league, config.statKey, 3, seasonId)}
+                  formatValue={config.formatValue}
+                />
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

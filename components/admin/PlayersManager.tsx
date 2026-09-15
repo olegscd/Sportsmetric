@@ -170,6 +170,7 @@ export function PlayersManager({ onToast }: { onToast: ToastFn }) {
     savePlayer,
     deletePlayer,
     deleteAllPlayers,
+    batchSavePlayers,
     currentSeasonId,
   } = useSportsData();
 
@@ -283,9 +284,9 @@ export function PlayersManager({ onToast }: { onToast: ToastFn }) {
 
     let count = 0;
     try {
-      for (const item of parsed) {
+      const playersToSave: Player[] = parsed.map((item) => {
         const id = generateId();
-        const player: Player = {
+        return {
           id,
           personId: id,
           name: item.name,
@@ -308,15 +309,15 @@ export function PlayersManager({ onToast }: { onToast: ToastFn }) {
           rankBadges: [],
           seasonId: seasonFilter,
         };
-        await savePlayer(player);
-        count++;
-      }
+      });
+      await batchSavePlayers(playersToSave);
+      count = playersToSave.length;
 
       onToast(`Successfully imported ${count} players to roster!`);
       setBulkText("");
       setShowBulkPaste(false);
     } catch {
-      onToast(`Bulk import partially failed after ${count} players.`, "error");
+      onToast(`Bulk import failed after preparing ${count} players.`, "error");
     }
   }
 
@@ -384,14 +385,28 @@ export function PlayersManager({ onToast }: { onToast: ToastFn }) {
     }
   }
 
-  async function handleDeleteAll() {
-    if (!window.confirm("Are you sure you want to delete ALL players? This cannot be undone.")) return;
+  // Scoped to the season being viewed. This used to wipe every season's roster
+  // regardless of the filter, which is not what the surrounding UI implies.
+  async function handleDeleteSeasonRoster() {
+    const seasonLabel = seasons.find((s) => s.id === seasonFilter)?.label ?? seasonFilter;
+    const count = players.length;
+    if (count === 0) {
+      onToast(`No players to delete in ${seasonLabel}.`, "error");
+      return;
+    }
+    if (
+      !window.confirm(
+        `Delete all ${count} player(s) in ${seasonLabel}? Other seasons are not affected. This cannot be undone.`
+      )
+    ) {
+      return;
+    }
     try {
-      await deleteAllPlayers();
+      await deleteAllPlayers(seasonFilter);
       startCreate();
-      onToast("All players deleted successfully.");
-    } catch {
-      onToast("Failed to delete all players from database.", "error");
+      onToast(`Deleted ${count} player(s) from ${seasonLabel}.`);
+    } catch (err) {
+      onToast(err instanceof Error ? err.message : "Failed to delete players.", "error");
     }
   }
 
@@ -416,9 +431,14 @@ export function PlayersManager({ onToast }: { onToast: ToastFn }) {
             </select>
           </Field>
         </div>
-        {allPlayers.length > 0 && (
-          <button type="button" onClick={handleDeleteAll} className={dangerButtonClass}>
-            Delete All Players
+        {players.length > 0 && (
+          <button
+            type="button"
+            onClick={handleDeleteSeasonRoster}
+            className={dangerButtonClass}
+            title="Deletes only the players in the season selected above"
+          >
+            Clear Season Roster
           </button>
         )}
       </div>
@@ -487,7 +507,7 @@ export function PlayersManager({ onToast }: { onToast: ToastFn }) {
             <button
               type="button"
               onClick={handleBulkImport}
-              className={primaryButtonClass}
+              className={`${primaryButtonClass} w-full`}
             >
               Import {bulkParsedPreview.length} Players
             </button>
@@ -726,7 +746,7 @@ export function PlayersManager({ onToast }: { onToast: ToastFn }) {
             />
           </Field>
 
-          <button type="submit" className={primaryButtonClass}>
+          <button type="submit" className={`${primaryButtonClass} w-full`}>
             {form.id ? "Update Player" : "Create Player"}
           </button>
         </form>

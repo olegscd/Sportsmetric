@@ -18,6 +18,8 @@ interface NavItem {
 export function Sidebar() {
   const pathname = usePathname();
   const { games } = useSportsData();
+  const isAdmin = pathname.startsWith("/admin");
+
   const liveCount = games.filter((g) => g.status === "LIVE").length;
 
   const navItems: NavItem[] = [
@@ -55,7 +57,7 @@ export function Sidebar() {
   ];
 
   return (
-    <aside className="hidden md:flex w-64 shrink-0 flex-col border-r border-border bg-surface p-4 min-h-screen">
+    <aside className={cn("hidden w-64 shrink-0 flex-col border-r border-border bg-surface p-4 min-h-screen md:flex", isAdmin && "!hidden")}>
       <Link href="/" className="flex items-center gap-2 mb-8 px-2 py-1">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
@@ -72,8 +74,9 @@ export function Sidebar() {
             <Link
               key={href}
               href={href}
+              aria-current={active ? "page" : undefined}
               className={cn(
-                "flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold transition-all",
+                "flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
                 active
                   ? "bg-primary text-primary-foreground shadow-sm"
                   : "text-muted hover:bg-elevated hover:text-foreground"

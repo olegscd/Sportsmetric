@@ -18,6 +18,8 @@ interface NavItem {
 export function BottomNav() {
   const pathname = usePathname();
   const { games } = useSportsData();
+  const isAdmin = pathname.startsWith("/admin");
+
   const liveCount = games.filter((g) => g.status === "LIVE").length;
 
   const navItems: NavItem[] = [
@@ -55,15 +57,15 @@ export function BottomNav() {
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-30 mx-auto flex max-w-md shrink-0 items-stretch border-t border-border bg-surface/95 shadow-lg backdrop-blur-md md:hidden">
+    <nav className={cn("fixed bottom-0 left-0 right-0 z-30 mx-auto flex max-w-md shrink-0 items-stretch border-t border-border bg-surface/95 shadow-lg backdrop-blur-md md:hidden", isAdmin && "hidden")}>
       {navItems.map(({ href, label, icon: Icon, isActive, badgeCount }) => {
         const active = isActive(pathname);
         return (
           <Link
             key={href}
             href={href}
-            scroll={false}
-            className="flex flex-1 flex-col items-center gap-1 py-2.5 transition-colors"
+            aria-current={active ? "page" : undefined}
+            className="flex flex-1 flex-col items-center gap-1 py-2.5 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
           >
             <span className="relative">
               <Icon size={22} className={cn(active ? "text-primary" : "text-muted")} />

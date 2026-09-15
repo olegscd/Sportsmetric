@@ -4,6 +4,8 @@ import type { ToastFn } from "@/components/admin/Toast";
 import { TeamBadge } from "@/components/ui/TeamBadge";
 import { useSportsData } from "@/context/SportsDataContext";
 import { generateId } from "@/lib/data";
+import { buildGameId } from "@/lib/game-id";
+import { inferLeague } from "@/lib/league-utils";
 import { cn, formatFullDayHeader, formatGameDate, formatStartTime } from "@/lib/utils";
 import type { Game, League, TournamentStage } from "@/types/sports";
 
@@ -16,7 +18,7 @@ import {
   Radio,
   Trash2,
 } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   Field,
   inputClass,
@@ -63,7 +65,6 @@ interface DraftFixture {
   awayTeamId: string;
   venue: string;
   stage: TournamentStage;
-  feedUrl: string;
 }
 
 function createEmptyDraft(defaultDate: string, defaultVenue: string): DraftFixture {
@@ -75,7 +76,6 @@ function createEmptyDraft(defaultDate: string, defaultVenue: string): DraftFixtu
     awayTeamId: "",
     venue: defaultVenue,
     stage: "ELIMINATION",
-    feedUrl: "",
   };
 }
 
@@ -85,7 +85,7 @@ export function ScheduleManagerTab({ onToast }: { onToast: ToastFn }) {
   // League & Season Selector
   const [selectedLeague, setSelectedLeague] = useState<League>("UAAP");
   const leagueSeasons = useMemo(
-    () => seasons.filter((s) => (s.league ? s.league === selectedLeague : s.id.toLowerCase().includes(selectedLeague.toLowerCase()))),
+    () => seasons.filter((s) => inferLeague(s) === selectedLeague),
     [seasons, selectedLeague]
   );
 
@@ -95,6 +95,12 @@ export function ScheduleManagerTab({ onToast }: { onToast: ToastFn }) {
   }, [leagueSeasons, currentSeasonId]);
 
   const [selectedSeasonId, setSelectedSeasonId] = useState<string>(defaultSeasonId);
+
+  useEffect(() => {
+    if (!leagueSeasons.some((s) => s.id === selectedSeasonId)) {
+      setSelectedSeasonId(defaultSeasonId);
+    }
+  }, [leagueSeasons, selectedSeasonId, defaultSeasonId]);
 
   // Active season teams
   const seasonTeams = useMemo(
@@ -204,19 +210,31 @@ export function ScheduleManagerTab({ onToast }: { onToast: ToastFn }) {
     setIsSubmitting(true);
     let savedCount = 0;
 
+    // Two fixtures with the same teams on the same day previously produced the
+    // same id, so the second silently overwrote the first. Track ids claimed in
+    // this batch as well as those already stored.
+    const claimedIds = new Set(games.map((g) => g.id));
+
     try {
       for (const d of drafts) {
         const homeTeam = seasonTeams.find((t) => t.id === d.homeTeamId);
         const awayTeam = seasonTeams.find((t) => t.id === d.awayTeamId);
         if (!homeTeam || !awayTeam) continue;
 
-        // Construct ISO Start Time
-        const [y, m, day] = d.date.split("-").map(Number);
-        const [hh, mm] = d.time.split(":").map(Number);
-        // Save in Philippine Time (+08:00) UTC representation
-        const startTime = new Date(Date.UTC(y, m - 1, day, hh - 8, mm)).toISOString();
+        // Fixtures are entered in Philippine time, which is a fixed UTC+08:00
+        // with no daylight saving. Encoding the offset in the string keeps the
+        // conversion explicit instead of doing arithmetic on the hour.
+        const startTime = new Date(`${d.date}T${d.time}:00+08:00`).toISOString();
 
-        const gameId = `${selectedLeague.toLowerCase()}-${selectedSeasonId}-${homeTeam.shortName.toLowerCase()}-vs-${awayTeam.shortName.toLowerCase()}-${d.date}`;
+        const gameId = buildGameId({
+          league: selectedLeague,
+          seasonId: selectedSeasonId,
+          homeShort: homeTeam.shortName,
+          awayShort: awayTeam.shortName,
+          startTimeIso: startTime,
+          claimedIds,
+        });
+        claimedIds.add(gameId);
 
         const newUpcomingGame: Game = {
           id: gameId,
@@ -297,7 +315,8 @@ export function ScheduleManagerTab({ onToast }: { onToast: ToastFn }) {
               onChange={(e) => {
                 const nextLeague = e.target.value as League;
                 setSelectedLeague(nextLeague);
-                const nextSeason = seasons.find((s) => s.league === nextLeague || s.id.includes(nextLeague.toLowerCase()));
+                const nextSeasons = seasons.filter((s) => inferLeague(s) === nextLeague);
+                const nextSeason = nextSeasons.find((s) => s.isCurrent) ?? nextSeasons[0];
                 if (nextSeason) setSelectedSeasonId(nextSeason.id);
               }}
               className={selectClass}

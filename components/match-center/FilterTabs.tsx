@@ -1,16 +1,17 @@
 "use client";
 
+import { EmptyState } from "@/components/ui/EmptyState";
+import { ErrorNotice } from "@/components/ui/ErrorNotice";
+import { FilterChip, SegmentedControl } from "@/components/ui/FilterChip";
 import { SeasonPicker } from "@/components/ui/SeasonPicker";
+import { SkeletonCardGrid } from "@/components/ui/Skeleton";
 import { useSportsData } from "@/context/SportsDataContext";
 import { getEffectiveGameStatus, isLifetimeSeason } from "@/lib/derivations";
-import { cn, formatFullDayHeader, formatGameDate } from "@/lib/utils";
+import { inferLeague } from "@/lib/league-utils";
+import { formatFullDayHeader, formatGameDate } from "@/lib/utils";
 import type { Game, League } from "@/types/sports";
-import { useMemo, useState } from "react";
-
-
-
-
-
+import { Radio } from "lucide-react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { GameCard } from "./GameCard";
 
 type GameStatusTab = "LIVE" | "UPCOMING" | "FINAL";
@@ -27,13 +28,6 @@ const LEAGUE_CHIPS: { value: League | "ALL"; label: string }[] = [
   { value: "PVL", label: "PVL" },
   { value: "ALL", label: "All Leagues" },
 ];
-
-function getSeasonLeague(sId: string, sLeague?: League): League {
-  if (sLeague) return sLeague;
-  if (sId.startsWith("pba")) return "PBA";
-  if (sId.startsWith("pvl")) return "PVL";
-  return "UAAP";
-}
 
 function getSmartStatusTab(
   gamesList: Game[],
@@ -59,12 +53,12 @@ function getSmartStatusTab(
 }
 
 export function FilterTabs() {
-  const { games, teams, seasons, currentSeasonId } = useSportsData();
+  const { games, teams, seasons, currentSeasonId, loading, error, refreshData } = useSportsData();
   const [league, setLeague] = useState<League | "ALL">("UAAP");
   const [userSelectedSeasonId, setUserSelectedSeasonId] = useState<string | null>(null);
   const activeLeague: League = league === "ALL" ? "UAAP" : league;
 
-  const targetSeasons = seasons.filter((s) => getSeasonLeague(s.id, s.league) === activeLeague);
+  const targetSeasons = seasons.filter((s) => inferLeague(s) === activeLeague);
   const activeCurrent = targetSeasons.find((s) => s.isCurrent)?.id ?? targetSeasons[0]?.id ?? currentSeasonId;
   const seasonId = userSelectedSeasonId && targetSeasons.some((s) => s.id === userSelectedSeasonId)
     ? userSelectedSeasonId
@@ -73,13 +67,16 @@ export function FilterTabs() {
   const selectedSeason = seasons.find((s) => s.id === seasonId);
   const isOldSeason = selectedSeason ? !selectedSeason.isCurrent : seasonId !== currentSeasonId;
 
-  // Initial smart default status based on active league & season games
-  const [status, setStatus] = useState<GameStatusTab>(() =>
-    getSmartStatusTab(games, activeCurrent, "UAAP", false)
-  );
+  const [status, setStatus] = useState<GameStatusTab>("FINAL");
   const [teamId, setTeamId] = useState<string>("ALL");
+  const statusTouched = useRef(false);
 
   const activeStatus = isOldSeason ? "FINAL" : status;
+
+  useEffect(() => {
+    if (statusTouched.current) return;
+    setStatus(getSmartStatusTab(games, seasonId, league, isOldSeason));
+  }, [games, seasonId, league, isOldSeason]);
 
   const seasonGames = useMemo(() => {
     if (!seasonId || isLifetimeSeason(seasonId)) return games;
@@ -107,7 +104,6 @@ export function FilterTabs() {
     [seasonGames, activeStatus, league, teamId]
   );
 
-  // Group and sort upcoming games chronologically by date
   const upcomingGrouped = useMemo(() => {
     if (activeStatus !== "UPCOMING") return null;
 
@@ -135,13 +131,12 @@ export function FilterTabs() {
   }, [filteredGames, activeStatus]);
 
   function handleSeasonChange(newSeasonId: string) {
-
     setUserSelectedSeasonId(newSeasonId);
     setTeamId("ALL");
     const targetSeason = seasons.find((s) => s.id === newSeasonId);
     const isOld = targetSeason ? !targetSeason.isCurrent : false;
-    const nextStatus = getSmartStatusTab(games, newSeasonId, league, isOld);
-    setStatus(nextStatus);
+    statusTouched.current = false;
+    setStatus(getSmartStatusTab(games, newSeasonId, league, isOld));
   }
 
   function handleLeagueChange(newLeague: League | "ALL") {
@@ -150,20 +145,86 @@ export function FilterTabs() {
     setUserSelectedSeasonId(null);
 
     const effLeague: League = newLeague === "ALL" ? "UAAP" : newLeague;
-    const effSeasons = seasons.filter((s) => getSeasonLeague(s.id, s.league) === effLeague);
+    const effSeasons = seasons.filter((s) => inferLeague(s) === effLeague);
     const targetCurrent = effSeasons.find((s) => s.isCurrent)?.id ?? effSeasons[0]?.id ?? currentSeasonId;
     const targetSeason = seasons.find((s) => s.id === targetCurrent);
     const isOld = targetSeason ? !targetSeason.isCurrent : false;
-
-    const nextStatus = getSmartStatusTab(games, targetCurrent, newLeague, isOld);
-    setStatus(nextStatus);
+    statusTouched.current = false;
+    setStatus(getSmartStatusTab(games, targetCurrent, newLeague, isOld));
   }
 
+  const showPvlLivePlaceholder =
+    (league === "PVL" || (league === "ALL" && activeLeague === "PVL")) &&
+    activeStatus === "LIVE" &&
+    filteredGames.length === 0;
 
+  function renderBody() {
+    if (error && games.length === 0) {
+      return <ErrorNotice message={error} onRetry={() => void refreshData()} />;
+    }
+    if (loading && games.length === 0) {
+      return <SkeletonCardGrid count={6} />;
+    }
+    if (showPvlLivePlaceholder) {
+      return (
+        <EmptyState
+          icon={<Radio size={22} aria-hidden="true" />}
+          title="PVL live scoring coming soon"
+          description="Official Premier Volleyball League box scores are published after the match. Check Upcoming for fixtures or Final for completed reports."
+        />
+      );
+    }
+    if (filteredGames.length === 0) {
+      return (
+        <EmptyState
+          icon={<Radio size={22} aria-hidden="true" />}
+          title="No games match these filters"
+          description="Try another status, league, team, or season."
+        />
+      );
+    }
+    if (activeStatus === "UPCOMING" && upcomingGrouped) {
+      return (
+        <div className="flex flex-col gap-6">
+          {upcomingGrouped.map((group) => (
+            <div key={group.dateKey} className="flex flex-col gap-2.5">
+              <div className="flex items-center justify-between px-1">
+                <div className="flex items-center gap-2">
+                  <span className="flex h-2 w-2 rounded-full bg-primary" />
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-foreground">
+                    {group.dateLabel}
+                  </h3>
+                </div>
+                <span className="rounded-full border border-border/50 bg-surface px-2.5 py-0.5 text-[10px] font-bold text-muted">
+                  {group.games.length} {group.games.length === 1 ? "Match" : "Matches"}
+                </span>
+              </div>
+              <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
+                {group.games.map((game) => (
+                  <GameCard key={game.id} game={game} />
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      );
+    }
+    return (
+      <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
+        {filteredGames.map((game) => (
+          <GameCard key={game.id} game={game} />
+        ))}
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col gap-4 px-4 py-4">
-      <div className="flex items-center justify-end">
+      <div className="flex items-end justify-between gap-3">
+        <div className="hidden md:block">
+          <h1 className="text-lg font-extrabold tracking-tight text-foreground">Match Center</h1>
+          <p className="text-xs text-muted">Live scores and upcoming fixtures</p>
+        </div>
         <SeasonPicker
           value={seasonId}
           onChange={handleSeasonChange}
@@ -173,49 +234,31 @@ export function FilterTabs() {
       </div>
 
       {isOldSeason ? (
-        <div className="flex items-center rounded-full bg-surface p-1">
-          <button
-            type="button"
-            className="flex-1 rounded-full bg-primary py-1.5 text-xs font-semibold text-primary-foreground transition-colors"
-          >
-            Final
-          </button>
-        </div>
+        <SegmentedControl
+          options={[{ value: "FINAL", label: "Final" }]}
+          value="FINAL"
+          onChange={() => undefined}
+        />
       ) : (
-        <div className="flex items-center gap-1 rounded-full bg-surface p-1">
-          {STATUS_TABS.map((tab) => (
-            <button
-              key={tab.value}
-              type="button"
-              onClick={() => setStatus(tab.value)}
-              className={cn(
-                "flex-1 rounded-full py-1.5 text-xs font-semibold transition-colors",
-                activeStatus === tab.value
-                  ? "bg-primary text-primary-foreground"
-                  : "text-muted"
-              )}
-            >
-              {tab.label}
-            </button>
-          ))}
-        </div>
+        <SegmentedControl
+          options={STATUS_TABS}
+          value={activeStatus}
+          onChange={(value) => {
+            statusTouched.current = true;
+            setStatus(value);
+          }}
+        />
       )}
 
-      <div className="flex gap-2 overflow-x-auto">
+      <div className="flex gap-2 overflow-x-auto pb-0.5">
         {LEAGUE_CHIPS.map((chip) => (
-          <button
+          <FilterChip
             key={chip.value}
-            type="button"
+            selected={league === chip.value}
             onClick={() => handleLeagueChange(chip.value)}
-            className={cn(
-              "shrink-0 rounded-full border px-3 py-1 text-xs font-semibold transition-colors",
-              league === chip.value
-                ? "border-primary text-primary"
-                : "border-border text-muted"
-            )}
           >
             {chip.label}
-          </button>
+          </FilterChip>
         ))}
       </div>
 
@@ -227,7 +270,7 @@ export function FilterTabs() {
           id="team-filter"
           value={teamId}
           onChange={(e) => setTeamId(e.target.value)}
-          className="flex-1 rounded-xl border border-border bg-surface px-3 py-1.5 text-xs font-semibold text-foreground focus:outline-none focus:ring-1 focus:ring-primary"
+          className="flex-1 rounded-xl border border-border bg-surface px-3 py-1.5 text-xs font-semibold text-foreground focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
         >
           <option value="ALL">All Teams</option>
           {availableTeams.map((team) => (
@@ -238,58 +281,7 @@ export function FilterTabs() {
         </select>
       </div>
 
-      {/* PVL Live Coming Soon Banner */}
-      {(league === "PVL" || activeLeague === "PVL") && activeStatus === "LIVE" ? (
-        <div className="flex flex-col items-center justify-center rounded-3xl border border-border/80 bg-surface/70 backdrop-blur-sm p-8 text-center shadow-lg my-2">
-          <div className="mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-primary border border-primary/20">
-            <span className="text-3xl">🏐</span>
-          </div>
-          <h3 className="text-base font-bold text-foreground">
-            PVL Live Scoring Coming Soon
-          </h3>
-          <p className="mt-2 max-w-md text-xs leading-relaxed text-muted">
-            Official Premier Volleyball League match sheets and verified 14-player box scores are published upon match conclusion. Check the <strong className="text-foreground">Upcoming</strong> tab for scheduled fixtures or <strong className="text-foreground">Final</strong> for match reports.
-          </p>
-        </div>
-      ) : filteredGames.length === 0 ? (
-        <p className="py-12 text-center text-sm text-muted">
-          No games match these filters.
-        </p>
-      ) : activeStatus === "UPCOMING" && upcomingGrouped ? (
-        <div className="flex flex-col gap-6">
-          {upcomingGrouped.map((group) => (
-            <div key={group.dateKey} className="flex flex-col gap-2.5">
-              {/* Date Header Badge */}
-              <div className="flex items-center justify-between px-1">
-                <div className="flex items-center gap-2">
-                  <span className="flex h-2 w-2 rounded-full bg-primary" />
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-foreground">
-                    {group.dateLabel}
-                  </h3>
-                </div>
-                <span className="rounded-full bg-surface px-2.5 py-0.5 text-[10px] font-bold text-muted border border-border/50">
-                  {group.games.length} {group.games.length === 1 ? "Match" : "Matches"}
-                </span>
-              </div>
-
-              {/* Bunched Same-Day Match Cards */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-                {group.games.map((game) => (
-                  <GameCard key={game.id} game={game} />
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-          {filteredGames.map((game) => (
-            <GameCard key={game.id} game={game} />
-          ))}
-        </div>
-      )}
+      {renderBody()}
     </div>
   );
 }
-
-

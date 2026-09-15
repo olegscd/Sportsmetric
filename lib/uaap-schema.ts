@@ -159,6 +159,19 @@ export function normalizeDivision(division: string): string {
   return DIVISION_ALIASES[trimmed.toLowerCase()] ?? trimmed;
 }
 
+/** Turns "2004 – 2005" / "2004-05" into the folder-style "2004-2005". */
+export function normalizeSeasonLabel(raw: string): string | null {
+  const cleaned = raw.trim().replace(/[–—]/g, "-").replace(/\s+/g, "");
+  const full = cleaned.match(/^(\d{4})-(\d{4})$/);
+  if (full) return `${full[1]}-${full[2]}`;
+  const short = cleaned.match(/^(\d{4})-(\d{2})$/);
+  if (!short) return null;
+  const startYear = Number(short[1]);
+  const endYear = Number(`${short[1].slice(0, 2)}${short[2]}`);
+  if (!Number.isFinite(startYear) || !Number.isFinite(endYear)) return null;
+  return `${startYear}-${endYear}`;
+}
+
 export function makeDivisionKey(season: string, sport: string, division: string): string {
   return `${season.trim()}|${sport.trim()}|${normalizeDivision(division)}`;
 }

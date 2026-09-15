@@ -109,13 +109,17 @@ export function matchSchoolCode(text: string): string | null {
     [/\bATENEO\b.*\bHIGH\b/, "AHS"],
     [/\bATENEO\b/, "ADMU"],
     [/\bLA\s*SALLE\b.*\bZOBEL\b/, "DLSZ"],
+    [/\bSANTIAGO\s*ZOBEL\b/, "DLSZ"],
     [/\bLA\s*SALLE\b/, "DLSU"],
     [/\bSANTO\s*TOMAS\b/, "UST"],
+    [/\bSTO\.?\s*TOMAS\b/, "UST"],
     [/\bFAR\s*EASTERN\b/, "FEU"],
+    [/\bINTEGRATED\s*SCHOOL\b/, "UPIS"],
     [/\bPHILIPPINES\b/, "UP"],
     [/\bEAST\b/, "UE"],
     [/\bADAMSON\b/, "AdU"],
     [/\bNATIONAL\b/, "NU"],
+    [/\bNAZARETH\b/, "NU-HS"],
   ];
 
   for (const [pattern, code] of aliases) {
