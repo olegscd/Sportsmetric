@@ -22,25 +22,22 @@ const STATUS_TABS: { value: GameStatusTab; label: string }[] = [
   { value: "FINAL", label: "Final" },
 ];
 
-const LEAGUE_CHIPS: { value: League | "ALL"; label: string }[] = [
+const LEAGUE_CHIPS: { value: League; label: string }[] = [
   { value: "UAAP", label: "UAAP" },
   { value: "PBA", label: "PBA" },
   { value: "PVL", label: "PVL" },
-  { value: "ALL", label: "All Leagues" },
 ];
 
 function getSmartStatusTab(
   gamesList: Game[],
   targetSeasonId: string,
-  targetLeague: League | "ALL",
+  targetLeague: League,
   isOld: boolean
 ): GameStatusTab {
   if (isOld) return "FINAL";
 
   const relevant = gamesList.filter(
-    (g) =>
-      g.seasonId === targetSeasonId &&
-      (targetLeague === "ALL" || g.league === targetLeague)
+    (g) => g.seasonId === targetSeasonId && g.league === targetLeague
   );
 
   const hasLive = relevant.some((g) => getEffectiveGameStatus(g) === "LIVE");
@@ -54,11 +51,10 @@ function getSmartStatusTab(
 
 export function FilterTabs() {
   const { games, teams, seasons, currentSeasonId, loading, error, refreshData } = useSportsData();
-  const [league, setLeague] = useState<League | "ALL">("UAAP");
+  const [league, setLeague] = useState<League>("UAAP");
   const [userSelectedSeasonId, setUserSelectedSeasonId] = useState<string | null>(null);
-  const activeLeague: League = league === "ALL" ? "UAAP" : league;
 
-  const targetSeasons = seasons.filter((s) => inferLeague(s) === activeLeague);
+  const targetSeasons = seasons.filter((s) => inferLeague(s) === league);
   const activeCurrent = targetSeasons.find((s) => s.isCurrent)?.id ?? targetSeasons[0]?.id ?? currentSeasonId;
   const seasonId = userSelectedSeasonId && targetSeasons.some((s) => s.id === userSelectedSeasonId)
     ? userSelectedSeasonId
@@ -87,7 +83,6 @@ export function FilterTabs() {
     const teamsInSeason = isLifetimeSeason(seasonId)
       ? teams
       : teams.filter((t) => t.seasonId === seasonId);
-    if (league === "ALL") return teamsInSeason;
     return teamsInSeason.filter((t) => t.league === league);
   }, [teams, seasonId, league]);
 
@@ -97,7 +92,7 @@ export function FilterTabs() {
         const effectiveStatus = getEffectiveGameStatus(game);
         return (
           effectiveStatus === activeStatus &&
-          (league === "ALL" || game.league === league) &&
+          game.league === league &&
           (teamId === "ALL" || game.homeTeam.id === teamId || game.awayTeam.id === teamId)
         );
       }),
@@ -139,13 +134,12 @@ export function FilterTabs() {
     setStatus(getSmartStatusTab(games, newSeasonId, league, isOld));
   }
 
-  function handleLeagueChange(newLeague: League | "ALL") {
+  function handleLeagueChange(newLeague: League) {
     setLeague(newLeague);
     setTeamId("ALL");
     setUserSelectedSeasonId(null);
 
-    const effLeague: League = newLeague === "ALL" ? "UAAP" : newLeague;
-    const effSeasons = seasons.filter((s) => inferLeague(s) === effLeague);
+    const effSeasons = seasons.filter((s) => inferLeague(s) === newLeague);
     const targetCurrent = effSeasons.find((s) => s.isCurrent)?.id ?? effSeasons[0]?.id ?? currentSeasonId;
     const targetSeason = seasons.find((s) => s.id === targetCurrent);
     const isOld = targetSeason ? !targetSeason.isCurrent : false;
@@ -154,9 +148,7 @@ export function FilterTabs() {
   }
 
   const showPvlLivePlaceholder =
-    (league === "PVL" || (league === "ALL" && activeLeague === "PVL")) &&
-    activeStatus === "LIVE" &&
-    filteredGames.length === 0;
+    league === "PVL" && activeStatus === "LIVE" && filteredGames.length === 0;
 
   function renderBody() {
     if (error && games.length === 0) {
@@ -228,7 +220,7 @@ export function FilterTabs() {
         <SeasonPicker
           value={seasonId}
           onChange={handleSeasonChange}
-          league={activeLeague}
+          league={league}
           includeLifetime={false}
         />
       </div>
