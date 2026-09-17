@@ -1,19 +1,18 @@
 "use client";
 
+import { NAV_ITEMS } from "@/components/layout/nav-items";
 import { useSportsData } from "@/context/SportsDataContext";
 import { cn } from "@/lib/utils";
-import { Award, Radio, Shield, Trophy, Users } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import type { ComponentType } from "react";
 
-interface NavItem {
-  href: string;
-  label: string;
-  icon: ComponentType<{ size?: number; className?: string }>;
-  isActive: (pathname: string) => boolean;
-  badgeCount?: number;
-}
+const MOBILE_LABELS: Record<string, string> = {
+  "/": "Matches",
+  "/standings": "Standings",
+  "/uaap": "UAAP",
+  "/teams": "Teams",
+  "/players": "Players",
+};
 
 export function BottomNav() {
   const pathname = usePathname();
@@ -22,44 +21,11 @@ export function BottomNav() {
 
   const liveCount = games.filter((g) => g.status === "LIVE").length;
 
-  const navItems: NavItem[] = [
-    {
-      href: "/",
-      label: "Matches",
-      icon: Radio,
-      isActive: (path) => path === "/",
-      badgeCount: liveCount,
-    },
-    {
-      href: "/standings",
-      label: "Standings",
-      icon: Trophy,
-      isActive: (path) => path.startsWith("/standings"),
-    },
-    {
-      href: "/uaap",
-      label: "UAAP",
-      icon: Award,
-      isActive: (path) => path.startsWith("/uaap"),
-    },
-    {
-      href: "/teams",
-      label: "Teams",
-      icon: Shield,
-      isActive: (path) => path.startsWith("/teams"),
-    },
-    {
-      href: "/players",
-      label: "Players",
-      icon: Users,
-      isActive: (path) => path.startsWith("/players"),
-    },
-  ];
-
   return (
     <nav className={cn("fixed bottom-0 left-0 right-0 z-30 mx-auto flex max-w-md shrink-0 items-stretch border-t border-border bg-surface/95 shadow-lg backdrop-blur-md md:hidden", isAdmin && "hidden")}>
-      {navItems.map(({ href, label, icon: Icon, isActive, badgeCount }) => {
+      {NAV_ITEMS.map(({ href, label, icon: Icon, isActive }) => {
         const active = isActive(pathname);
+        const badgeCount = href === "/" ? liveCount : 0;
         return (
           <Link
             key={href}
@@ -81,7 +47,7 @@ export function BottomNav() {
                 active ? "font-bold text-primary" : "font-medium text-muted"
               )}
             >
-              {label}
+              {MOBILE_LABELS[href] ?? label}
             </span>
           </Link>
         );

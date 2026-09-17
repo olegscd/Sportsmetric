@@ -77,7 +77,7 @@ export function StandingsView() {
     league === "UAAP" ? getUAAPGamePartition(games, seasonId) : { playoffGames: [] };
 
   return (
-    <div className="flex flex-col gap-4 px-4 py-4">
+    <div className="mx-auto flex w-full max-w-7xl min-w-0 flex-col gap-4 px-4 py-4 md:px-6">
       <div className="flex items-end justify-between gap-3">
         <div className="hidden md:block">
           <h1 className="text-lg font-extrabold tracking-tight text-foreground">Standings</h1>
@@ -103,7 +103,7 @@ export function StandingsView() {
             <div className="mb-2 flex items-center justify-between">
               <p className="text-[11px] font-semibold uppercase tracking-wide text-muted">
                 {league === "UAAP"
-                  ? "Elimination Round Standings (Capped at 56 Games)"
+                  ? "Elimination Round Standings"
                   : league === "PVL"
                     ? "Elimination Round Standings (Regular Season)"
                     : "Standings"}

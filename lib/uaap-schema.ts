@@ -159,6 +159,32 @@ export function normalizeDivision(division: string): string {
   return DIVISION_ALIASES[trimmed.toLowerCase()] ?? trimmed;
 }
 
+/** Display / default priority: Men's → Women's → Juniors → others. */
+const DIVISION_PRIORITY: Record<string, number> = {
+  "Men's": 0,
+  "Women's": 1,
+  Juniors: 2,
+  Boys: 3,
+  Girls: 4,
+  Collegiate: 5,
+};
+
+export function divisionPriority(division: string): number {
+  return DIVISION_PRIORITY[normalizeDivision(division)] ?? 99;
+}
+
+export function sortDivisions(divisions: Iterable<string>): string[] {
+  return Array.from(new Set(divisions)).sort((a, b) => {
+    const byPriority = divisionPriority(a) - divisionPriority(b);
+    return byPriority !== 0 ? byPriority : a.localeCompare(b);
+  });
+}
+
+export function pickPreferredDivision(divisions: Iterable<string>): string | null {
+  const sorted = sortDivisions(divisions);
+  return sorted[0] ?? null;
+}
+
 /** Turns "2004 – 2005" / "2004-05" into the folder-style "2004-2005". */
 export function normalizeSeasonLabel(raw: string): string | null {
   const cleaned = raw.trim().replace(/[–—]/g, "-").replace(/\s+/g, "");

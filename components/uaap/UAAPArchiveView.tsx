@@ -24,11 +24,14 @@ import {
   makeExtrasKey,
   normalizeChessMedalists,
   normalizeDivision,
+  pickPreferredDivision,
+  sortDivisions,
   type LegacyStandingRecord,
   type UAAPArchiveExtras,
   type UAAPTable,
 } from "@/lib/uaap-schema";
 import { getSchoolTheme } from "@/lib/uaap-schools";
+import { PAGE_SHELL } from "@/components/layout/page-shell";
 import { SPORTS_META, findSportMeta, formatSeasonLabel } from "@/components/uaap/sports-meta";
 import standingsData from "@/data/uaap_standings.json";
 import archiveExtrasData from "@/data/uaap_archive_extras.json";
@@ -81,7 +84,9 @@ function SchoolCell({ team }: { team: string }) {
         {team || "—"}
       </span>
       {theme.name && theme.name !== team && (
-        <span className="font-semibold text-foreground text-xs hidden sm:inline">{theme.name}</span>
+        <span className="hidden max-w-[10rem] truncate font-semibold text-foreground text-xs sm:inline">
+          {theme.name}
+        </span>
       )}
     </div>
   );
@@ -151,7 +156,7 @@ export function UAAPArchiveView() {
   );
 
   const availableDivisions = useMemo(
-    () => Array.from(new Set(tablesForSeason.map((t) => t.division))),
+    () => sortDivisions(tablesForSeason.map((t) => t.division)),
     [tablesForSeason]
   );
 
@@ -232,8 +237,11 @@ export function UAAPArchiveView() {
 
   const seasonHref = (season: string): string => {
     if (!sportMeta) return "/uaap";
-    const firstDivision = tablesForSport.find((t) => t.season === season)?.division;
-    return hrefFor({ sport: sportMeta.name, season, division: firstDivision, tab: "standings" });
+    const seasonDivisions = tablesForSport
+      .filter((t) => t.season === season)
+      .map((t) => t.division);
+    const firstDivision = pickPreferredDivision(seasonDivisions);
+    return hrefFor({ sport: sportMeta.name, season, division: firstDivision ?? undefined, tab: "standings" });
   };
 
   const availableTabs = useMemo(() => {
@@ -263,7 +271,7 @@ export function UAAPArchiveView() {
     );
 
     return (
-      <div className="space-y-6 max-w-7xl mx-auto p-4 md:p-6 pb-20 animate-in fade-in duration-200">
+      <div className={`${PAGE_SHELL} space-y-6 pb-20 pt-4 md:pt-6 animate-in fade-in duration-200`}>
         {featured && (
           <Link
             href={hrefFor({ sport: featured.name })}
@@ -373,7 +381,7 @@ export function UAAPArchiveView() {
 
   if (!currentSeason) {
     return (
-      <div className="space-y-6 max-w-7xl mx-auto p-4 md:p-6 pb-20 animate-in fade-in slide-in-from-bottom-2 duration-200">
+      <div className={`${PAGE_SHELL} space-y-6 pb-20 pt-4 md:pt-6 animate-in fade-in slide-in-from-bottom-2 duration-200`}>
         <div className="flex flex-wrap items-center justify-between gap-4 border-b border-border/60 pb-4">
           <div className="flex items-center gap-3">
             <Link
@@ -416,9 +424,13 @@ export function UAAPArchiveView() {
               const info = formatSeasonLabel(season);
               const seasonTables = tablesForSport.filter((t) => t.season === season);
               const rowCount = seasonTables.reduce((sum, t) => sum + t.rows.length, 0);
-              const champion = seasonTables
-                .flatMap((t) => t.rows.map((r) => ({ row: r, division: t.division })))
-                .find(({ row }) => isChampionRow(row.details, row.rank));
+              const champion = sortDivisions(seasonTables.map((t) => t.division))
+                .map((division) => {
+                  const table = seasonTables.find((t) => t.division === division);
+                  const row = table?.rows.find((r) => isChampionRow(r.details, r.rank));
+                  return row ? { row, division } : null;
+                })
+                .find(Boolean);
               const hasAwards = !!extras.awards?.[makeExtrasKey(sportMeta.name, season)];
 
               return (
@@ -492,9 +504,9 @@ export function UAAPArchiveView() {
     });
 
   return (
-    <div className="space-y-6 max-w-7xl mx-auto p-4 md:p-6 pb-20 animate-in fade-in slide-in-from-bottom-2 duration-200">
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-border/60 pb-4">
-        <div className="flex flex-wrap items-center gap-3">
+    <div className={`${PAGE_SHELL} space-y-6 pb-20 pt-4 md:pt-6 animate-in fade-in slide-in-from-bottom-2 duration-200`}>
+      <div className="flex flex-col gap-4 border-b border-border/60 pb-4 lg:flex-row lg:items-center lg:justify-between">
+        <div className="flex min-w-0 flex-wrap items-center gap-3">
           <Link
             href={hrefFor({ sport: sportMeta.name })}
             className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-surface border border-border text-muted hover:text-foreground hover:bg-elevated transition-colors cursor-pointer"
@@ -526,11 +538,11 @@ export function UAAPArchiveView() {
           </div>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex min-w-0 flex-wrap items-center gap-2">
           <select
             value={currentSeason}
             onChange={(e) => router.push(seasonHref(e.target.value))}
-            className="px-3 py-1.5 rounded-xl text-xs font-bold bg-surface border border-border text-foreground focus:outline-none focus:ring-2 focus:ring-amber-500/40"
+            className="max-w-full rounded-xl border border-border bg-surface px-3 py-1.5 text-xs font-bold text-foreground focus:outline-none focus:ring-2 focus:ring-amber-500/40"
             aria-label="Season"
           >
             {seasonOptions.map((s) => (
@@ -541,13 +553,13 @@ export function UAAPArchiveView() {
           </select>
 
           {availableDivisions.length > 1 ? (
-            <div className="flex items-center gap-1.5 p-1 bg-surface border border-border rounded-xl">
+            <div className="flex items-center gap-1.5 rounded-xl border border-border bg-surface p-1">
               {availableDivisions.map((div) => (
                 <Link
                   key={div}
                   href={navHref({ division: div })}
                   className={cn(
-                    "px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer",
+                    "rounded-lg px-3.5 py-1.5 text-xs font-semibold transition-all cursor-pointer",
                     currentDivision === div
                       ? "bg-primary text-primary-foreground font-bold shadow-sm"
                       : "text-muted hover:text-foreground hover:bg-elevated"
@@ -599,9 +611,9 @@ export function UAAPArchiveView() {
             </div>
           )}
 
-          <div className="bg-surface border border-border rounded-2xl overflow-hidden shadow-sm">
+          <div className="min-w-0 overflow-hidden rounded-2xl border border-border bg-surface shadow-sm">
             <div className="overflow-x-auto">
-              <table className="w-full text-left text-sm border-collapse">
+              <table className="w-full min-w-[36rem] text-left text-sm border-collapse">
                 <thead>
                   <tr className="border-b border-border bg-elevated/40 text-[11px] font-bold uppercase tracking-wider text-muted">
                     <th className="py-3 px-4 w-14 text-center">Rank</th>

@@ -37,7 +37,7 @@ export function TeamDetailView({ id }: { id: string }) {
     : team.record;
 
   return (
-    <div className="flex flex-col gap-5 px-4 py-4">
+    <div className="mx-auto flex w-full max-w-7xl min-w-0 flex-col gap-5 px-4 py-4 md:px-6">
       <div className="flex items-center gap-4 rounded-2xl border border-border bg-surface p-5 shadow-sm">
         <TeamBadge team={team} size="lg" />
         <div className="min-w-0 flex-1">

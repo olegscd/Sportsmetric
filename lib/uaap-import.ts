@@ -139,7 +139,7 @@ function padGrid(rows: string[][]): string[][] {
   });
 }
 
-function parseMarkdownTables(text: string): ParsedGrid[] {
+export function parseMarkdownTables(text: string): ParsedGrid[] {
   const lines = text.split(/\r?\n/);
   const tables: ParsedGrid[] = [];
   let current: string[][] = [];
@@ -185,7 +185,7 @@ const PLACEMENT_RULES: Array<{ pattern: RegExp; rank: number; label: string }> =
   { pattern: /^(fifth|5th)(\s+p[a-z]*)?$/, rank: 5, label: "Fifth place" },
   { pattern: /^(sixth|6th)(\s+p[a-z]*)?$/, rank: 6, label: "Sixth place" },
   { pattern: /^(seventh|7th)(\s+p[a-z]*)?$/, rank: 7, label: "Seventh place" },
-  { pattern: /^(eighth|8th)(\s+p[a-z]*)?$/, rank: 8, label: "Eighth place" },
+  { pattern: /^(eighth|eight|8th)(\s+p[a-z]*)?$/, rank: 8, label: "Eighth place" },
 ];
 
 export function parsePlacementLabel(raw: string): { rank: number; label: string } | null {
@@ -200,7 +200,7 @@ export function parsePlacementLabel(raw: string): { rank: number; label: string 
   return null;
 }
 
-function parsePlacementLines(text: string): ParsedGrid | null {
+export function parsePlacementLines(text: string): ParsedGrid | null {
   const rows: string[][] = [];
   for (const line of text.split(/\r?\n/)) {
     const cleaned = stripMarkup(line);
@@ -251,16 +251,32 @@ function gridToTsv(grid: ParsedGrid): string {
 
 function isGameResultTable(grid: ParsedGrid): boolean {
   const blob = [...(grid.headers ?? []), ...grid.rows.flat()].join(" ").toUpperCase();
-  return (
+  if (
     blob.includes("DEFEATED") ||
     blob.includes("M/A") ||
     /\bAST\b/.test(blob) ||
     /\bBLK\b/.test(blob) ||
-    blob.includes("STRT")
-  );
+    blob.includes("STRT") ||
+    blob.includes("OPENING CEREMONIES") ||
+    blob.includes("FINAL FOUR")
+  ) {
+    return true;
+  }
+  const headerBlob = (grid.headers ?? []).join(" ").toUpperCase();
+  if (
+    (/\bNAME\b/.test(headerBlob) && !/\b(TEAM|SCHOOL)\b/.test(headerBlob)) ||
+    /\bMIN\b/.test(headerBlob) ||
+    /\bREB\b/.test(headerBlob)
+  ) {
+    return true;
+  }
+  const dayHits = grid.rows.filter((row) =>
+    row.some((cell) => /^(sunday|monday|tuesday|wednesday|thursday|friday|saturday)$/i.test(cell))
+  ).length;
+  return dayHits >= 2;
 }
 
-function scoreStandingsGrid(grid: ParsedGrid): number {
+export function scoreStandingsGrid(grid: ParsedGrid): number {
   if (grid.rows.length === 0) return -100;
   if (isGameResultTable(grid)) return -100;
 

@@ -30,13 +30,13 @@ export function MatchHistory({ entries }: { entries: PlayerGameLogEntry[] }) {
             key={game.id}
             type="button"
             onClick={() => openGame(game.id)}
-            className="flex items-center gap-3 rounded-2xl border border-stone-300/60 bg-[#F4EBD9] p-3 text-left shadow-sm active:scale-[0.99] transition-transform"
+            className="flex items-center gap-3 rounded-2xl border border-border bg-elevated p-3 text-left shadow-sm active:scale-[0.99] transition-transform"
           >
             <div
               className={cn(
                 "flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-bold",
-                isWin && "bg-emerald-600/20 text-emerald-800",
-                isLoss && "bg-stone-300/80 text-zinc-700",
+                isWin && "bg-success/20 text-success",
+                isLoss && "bg-border/60 text-muted",
                 game.status === "LIVE" && "bg-live/20 text-live"
               )}
             >
@@ -47,14 +47,14 @@ export function MatchHistory({ entries }: { entries: PlayerGameLogEntry[] }) {
 
             <div className="min-w-0 flex-1">
               <div className="flex items-center gap-1.5 truncate">
-                <p className="truncate text-sm font-bold text-zinc-900">
+                <p className="truncate text-sm font-bold text-foreground">
                   {isHome ? "vs" : "@"} {opponent.shortName}
-                  <span className="ml-1.5 font-semibold tabular-nums text-zinc-700">
+                  <span className="ml-1.5 font-semibold tabular-nums text-muted">
                     {teamScore}-{oppScore}
                   </span>
                 </p>
                 {playoff && (
-                  <span className="rounded bg-amber-600/20 px-1.5 py-0.5 text-[9px] font-extrabold text-amber-900 uppercase tracking-wider shrink-0">
+                  <span className="rounded bg-amber-500/20 px-1.5 py-0.5 text-[9px] font-extrabold text-amber-400 uppercase tracking-wider shrink-0">
                     Playoffs
                   </span>
                 )}

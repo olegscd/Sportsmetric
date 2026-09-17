@@ -114,7 +114,7 @@ export function TeamDirectory() {
   }
 
   return (
-    <div className="flex flex-col gap-4 px-4 py-4">
+    <div className="mx-auto flex w-full max-w-7xl min-w-0 flex-col gap-4 px-4 py-4 md:px-6">
       <div className="hidden md:block">
         <h1 className="text-lg font-extrabold tracking-tight text-foreground">Teams</h1>
         <p className="text-xs text-muted">Directory and records by league</p>

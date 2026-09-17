@@ -219,7 +219,7 @@ export function FilterTabs() {
   }
 
   return (
-    <div className="flex flex-col gap-4 px-4 py-4">
+    <div className="mx-auto flex w-full min-w-0 max-w-7xl flex-col gap-4 px-4 py-4 md:px-6">
       <div className="flex items-end justify-between gap-3">
         <div className="hidden md:block">
           <h1 className="text-lg font-extrabold tracking-tight text-foreground">Match Center</h1>

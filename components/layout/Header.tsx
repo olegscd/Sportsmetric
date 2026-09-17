@@ -37,9 +37,8 @@ export function Header() {
   return (
     <header
       className={cn(
-        "relative z-30 flex h-14 shrink-0 items-center gap-3 border-b border-border bg-surface px-4 shadow-sm",
-        isAdmin && "hidden",
-        !isNested && !isAdmin && "md:hidden"
+        "relative z-30 flex h-14 shrink-0 items-center gap-3 border-b border-border bg-surface px-4 shadow-sm md:hidden",
+        isAdmin && "hidden"
       )}
     >
       {isNested ? (
