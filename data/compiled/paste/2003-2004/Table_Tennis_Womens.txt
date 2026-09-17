@@ -1,0 +1,12 @@
+# 2003-2004 | Table Tennis | Women's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	PTS	Notes
+1	UST	13	1	14	Champion
+2	FEU	13	1	14	Second Place
+3	UP	8	6	11	Third Place
+4	AdU	8	6	11	Fourth Place
+5	DLSU	6	8	10	Fifth Place
+6	UE	4	10	9	Sixth Place
+7	ADMU	4	10	9	Seventh Place
+8	NU	0	14	7	Eight Place

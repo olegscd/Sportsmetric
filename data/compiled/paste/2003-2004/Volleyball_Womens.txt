@@ -1,0 +1,12 @@
+# 2003-2004 | Volleyball | Women's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	Notes
+1	FEU	13	1	BEST SPIKER
+2	UST	12	2	
+3	DLSU	11	3	MOST VALUABLE PLAYER
+4	UE	8	6	
+5	UP	5	9	
+6	ADMU	4	10	ROOKIE OF THE YEAR
+7	AdU	3	11	BEST RECEIVER
+8	NU	0	14	

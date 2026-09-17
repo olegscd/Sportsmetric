@@ -1,0 +1,9 @@
+# 2003-2004 | Volleyball | Juniors
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	Notes
+1	DLSU	8	0	
+2	UE	5	3	
+3	UST	5	3	
+4	ADMU	2	6	
+5	UP	0	8	

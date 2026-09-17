@@ -1,0 +1,10 @@
+# 1998-1999 | Baseball | Men's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	Notes
+1	AdU	8	1	Champion
+2	UP	7	3	0
+3	UST	6	3	Third place
+4	DLSU	5	4	Fourth place
+5	NU	2	7	Fifth place
+6	ADMU	0	10	Sixth place

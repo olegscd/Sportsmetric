@@ -1,0 +1,12 @@
+# 1989-1990 | General Championship | Collegiate
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	PTS	Notes
+1	UST	113	
+2	FEU	101	
+3	AdU	86	
+4	UP	86	
+5	DLSU	80	
+6	UE	44	
+7	ADMU	34	
+8	NU	30	

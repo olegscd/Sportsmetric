@@ -1,0 +1,10 @@
+# 2000-2001 | Chess | Juniors
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	PTS	Notes
+1	ADMU	32.5	Templo, Pedro Bernard
+2	UE	22.5	
+3	UST	19	Mora, Benedict
+4	DLSZ	15.5	7.0
+5	AdU	15.5	6.0
+6	NU	15	Magat, Jed Angelo

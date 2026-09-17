@@ -1,0 +1,9 @@
+# 1987-1988 | Basketball | Juniors
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	Notes
+2	FEU	BASKETBALL
+3	UST	CHESS
+4	DLSU	SWIMMING
+5	ADMU	TRACK & FIELD
+6	NU	TABLE TENNIS

@@ -1,0 +1,11 @@
+# 1998-1999 | General Championship | junior
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	PTS	Notes
+1	UST	97	
+2	DLSU	70	
+3	ADMU	69	
+4	AdU	67	
+5	UE	63	
+6	UP	42	
+7	NU	24	

@@ -1,0 +1,7 @@
+# 1999-2000 | Tae Kwon Do | Juniors
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	Notes
+1	ADMU	Champion
+2	DLSZ	Runner-up
+3	UE	Third place

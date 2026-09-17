@@ -1,0 +1,11 @@
+# 1999-2000 | Chess | Women's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	PTS	Notes
+1	UE	34.5	Champion
+2	FEU	29.5	Cruz, Jennifer
+3	UST	27	Third place
+4	AdU	25.5	Fourth place
+5	UP	21.5	Fifth place
+6	DLSU	18	Sixth place
+7	ADMU	12	Seventh place

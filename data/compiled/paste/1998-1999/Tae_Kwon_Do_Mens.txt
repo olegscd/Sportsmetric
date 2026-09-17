@@ -1,0 +1,11 @@
+# 1998-1999 | Tae Kwon Do | Men's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	Notes
+1	DLSU	6	1	7 - 0
+2	UST	5	1	7 - 0
+3	UP	4	2	7 - 0
+4	UE	3	3	5 - 2
+5	ADMU	2	5	^
+6	FEU	1	5	3 - 4
+7	AdU	0	7	4 - 3

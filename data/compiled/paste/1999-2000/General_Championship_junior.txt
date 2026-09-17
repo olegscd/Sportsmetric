@@ -1,0 +1,12 @@
+# 1999-2000 | General Championship | junior
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	PTS	Notes
+1	UST	84	
+2	ADMU	77	
+3	DLSU	73	
+4	AdU	65	
+5	UE	57	
+6	UP	54	
+7	NU	20	
+8	FEU	0	

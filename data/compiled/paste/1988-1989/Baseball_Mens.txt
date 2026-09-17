@@ -1,0 +1,7 @@
+# 1988-1989 | Baseball | Men's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	Notes
+1	UP	DATE
+2	DLSU	November 30, 1988
+3	ADMU	December 04, 1988

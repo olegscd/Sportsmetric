@@ -1,0 +1,8 @@
+# 1999-2000 | Volleyball | Girls
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	Notes
+1	UE	6	0	
+2	UST	4	2	
+3	UP	2	4	
+4	DLSZ	0	6	

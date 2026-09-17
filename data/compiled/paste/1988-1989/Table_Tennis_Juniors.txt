@@ -1,0 +1,11 @@
+# 1988-1989 | Table Tennis | Juniors
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	Notes
+1	ADMU	3	0	Track and Field
+1	AdU			Basketball
+2	UST	3	1	Swimming
+2	FEU			Chess
+2	NU			
+3	UP	3	0	
+5	DLSU	0	3	

@@ -1,0 +1,10 @@
+# 2000-2001 | Fencing | Women's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	Notes
+2	ADMU	1		REYES, MA. REGINA
+3	DLSU	1	-17	PALOMO, SHERRYL
+4	FEU	1		ACEVEDA, DOREEN FAY
+5	UE	2		RONQUILLO, GERALDINE
+6	UP	4		GAMALLO, MA. MARGARITA
+7	UST	4		RAMOS, RETCHIE

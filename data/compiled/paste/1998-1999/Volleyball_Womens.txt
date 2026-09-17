@@ -1,0 +1,12 @@
+# 1998-1999 | Volleyball | Women's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	Notes
+1	FEU	11	3	
+2	DLSU	10	4	
+3	UE	10	4	
+4	UST	10	4	
+5	UP	9	5	
+6	AdU	4	10	
+7	NU	2	12	
+8	ADMU	0	14	

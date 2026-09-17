@@ -1,0 +1,8 @@
+# 2000-2001 | Judo | Women's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	Notes
+1	UP	Champion
+2	UST	Runner-up
+3	ADMU	Third place
+4	UE	Fourth place

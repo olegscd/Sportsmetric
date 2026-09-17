@@ -1,0 +1,11 @@
+# 1988-1989 | Table Tennis | Women's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	Notes
+1	FEU	
+2	UST	
+3	DLSU	
+4	NU	
+5	ADMU	
+6	UP	
+7	AdU	

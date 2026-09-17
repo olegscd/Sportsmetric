@@ -1,0 +1,9 @@
+# 1998-1999 | Lawn Tennis | Women's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	Notes
+1	UP	
+2	DLSU	
+3	ADMU	
+4	UE	
+5	UST	

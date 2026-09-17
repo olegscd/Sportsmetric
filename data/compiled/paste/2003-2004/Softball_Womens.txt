@@ -1,0 +1,10 @@
+# 2003-2004 | Softball | Women's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	Notes
+1	AdU	10	3	Champion
+2	UST	8	6	Second Place
+3	UE	9	3	Third Place
+4	UP	6	5	Fourth Place
+5	DLSU	2	8	Fifth Place
+6	ADMU	0	10	Sixth Place

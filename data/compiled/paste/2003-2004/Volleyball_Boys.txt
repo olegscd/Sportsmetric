@@ -1,0 +1,9 @@
+# 2003-2004 | Volleyball | Boys
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	Notes
+1	DLSZ	8	0	Champion
+2	UE	5	3	3.0
+3	UST	5	3	Third place
+4	ADMU	2	6	Fourth place
+5	UP	0	8	Fifth place

@@ -1,0 +1,12 @@
+# 1987-1988 | Table Tennis | Collegiate
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	PTS	Notes
+1	UST	120	
+2	FEU	84	
+3	AdU	57	
+4	UP	53	
+5	ADMU	46	
+6	DLSU	41	
+7	UE	18	
+8	NU	15	

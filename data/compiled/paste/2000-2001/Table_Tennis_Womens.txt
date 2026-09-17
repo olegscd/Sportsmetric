@@ -1,0 +1,12 @@
+# 2000-2001 | Table Tennis | Women's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	Notes
+1	UP	14	21	3
+2	UST	13	19	6
+3	UE	12	17	8
+4	AdU	11	16	10
+5	FEU	10	10	13
+6	DLSU	9	9	15
+7	ADMU	8	3	18
+8	NU	7	0	21

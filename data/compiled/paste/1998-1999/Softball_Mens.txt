@@ -1,0 +1,10 @@
+# 1998-1999 | Softball | Men's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	Notes
+1	AdU	9	1	0
+2	UST	7	2	1
+3	UP	6	3	1
+4	DLSU	4	6	0
+5	UE	3	7	0
+6	ADMU	0	10	0

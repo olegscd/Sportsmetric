@@ -1,0 +1,12 @@
+# 1998-1999 | Basketball | Men's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	Notes
+1	DLSU	13	1	
+2	FEU	11	3	
+3	UE	7	7	
+4	UST	7	7	
+5	UP	7	7	
+6	ADMU	5	9	
+7	NU	5	9	
+8	AdU	1	13	

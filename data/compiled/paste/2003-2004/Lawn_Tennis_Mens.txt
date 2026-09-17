@@ -1,0 +1,10 @@
+# 2003-2004 | Lawn Tennis | Men's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	Notes
+1	AdU	10	3	Champion
+1	DLSU	7	1	Champion
+2	UST	7	1	19
+4	UP	4	4	Fourth place
+4	ADMU	2	6	Fourth place
+5	UE	0	8	Fifth place

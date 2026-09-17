@@ -1,0 +1,10 @@
+# 2003-2004 | Fencing | Men's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	Notes
+1	UE	5	3	Champion
+3	FEU	5	5	Vizcayno, Wilfredo
+3	UST	4	2	Third place
+4	UP	5	4	Fourth place
+5	ADMU		4	Fifth place
+6	DLSU	3	2	Sixth place

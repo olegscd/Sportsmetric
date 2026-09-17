@@ -1,0 +1,10 @@
+# 1998-1999 | Track and Field | Juniors
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	Notes
+1	AdU	Champion
+2	ADMU	RUNNER-UP
+3	UST	Third place
+4	DLSU	Fourth place
+5	UP	Fifth place
+6	UE	Sixth place

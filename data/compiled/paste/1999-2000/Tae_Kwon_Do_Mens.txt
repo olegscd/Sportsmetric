@@ -1,0 +1,11 @@
+# 1999-2000 | Tae Kwon Do | Men's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	Notes
+1	UST	5	1	Champion
+2	DLSU	5	1	4 - 2
+3	UP	4	2	Third place
+4	FEU	4	2	Fourth place
+5	UE	2	4	Fifth place
+6	ADMU	1	5	Sixth place
+7	AdU	0	6	Seventh place

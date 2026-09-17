@@ -1,0 +1,10 @@
+# 1989-1990 | Basketball | Juniors
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	Notes
+1	UST	
+2	FEU	
+3	DLSU	
+4	UE	
+5	UP	
+6	AdU	

@@ -1,0 +1,12 @@
+# 1988-1989 | General Championship | Collegiate
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	PTS	Notes
+2	UST	105	1
+3	FEU	79	2
+4	AdU	60	5
+5	UP	59	7
+6	DLSU	58.5	10
+7	ADMU	33.5	15
+8	NU	21	-
+9	UE	12	3

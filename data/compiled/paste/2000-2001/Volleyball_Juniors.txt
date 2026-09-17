@@ -1,0 +1,10 @@
+# 2000-2001 | Volleyball | Juniors
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	Notes
+1	UE	10	0	
+2	ADMU	7	3	
+3	UST	6	4	
+4	DLSU	3	7	
+5	UP	3	7	
+6	NU	1	9	

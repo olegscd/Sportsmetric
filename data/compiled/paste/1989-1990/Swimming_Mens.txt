@@ -1,0 +1,11 @@
+# 1989-1990 | Swimming | Men's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	Notes
+1	NU		8	0
+1	UST		3	Champion
+3	UP			Third place
+4	ADMU		6	Fourth place
+5	AdU		3	Fifth place
+5	DLSU		0	8
+6	FEU			Sixth place

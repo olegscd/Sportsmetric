@@ -1,0 +1,12 @@
+# 2000-2001 | Basketball | Men's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	Notes
+1	DLSU			Champion
+2	FEU			Runner-up
+3	ADMU			Third place
+4	UST	24	11	Fourth place
+5	UE	40	12	Fifth place
+6	UP	10	10	Sixth place
+7	NU			Seventh place
+8	AdU	14	12	Eighth place

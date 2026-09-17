@@ -1,0 +1,12 @@
+# 1999-2000 | Volleyball | Women's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	Notes
+1	UST	13	1	Runner-up
+1	DLSU	11	3	Champion
+3	AdU	9	5	Third place
+4	FEU	9	5	Fourth place
+5	UP	6	8	Fifth place
+6	UE	5	9	Sixth place
+7	NU	3	11	Seventh place
+8	ADMU	0	14	Eighth place

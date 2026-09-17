@@ -1,0 +1,11 @@
+# 1999-2000 | Chess | Juniors
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	PTS	Notes
+1	ADMU	31	Champion
+2	AdU	28.5	RUNNER-UP
+3	UE	24.5	Third place
+4	NU	17	Fourth place
+5	UST	13.5	Fifth place
+6	DLSU	5	
+6	DLSZ		Sixth place

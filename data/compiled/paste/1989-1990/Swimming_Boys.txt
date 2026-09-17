@@ -1,0 +1,7 @@
+# 1989-1990 | Swimming | Boys
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	Notes
+1	UST	Champion
+3	UP	Third place
+4	FEU	Fourth place

@@ -1,0 +1,12 @@
+# 1988-1989 | Basketball | Men's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	Notes
+1	ADMU	
+2	DLSU	
+3	UP	
+4	AdU	
+5	UE	
+6	FEU	
+7	UST	
+8	NU	

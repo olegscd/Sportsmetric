@@ -1,0 +1,8 @@
+# 1999-2000 | Basketball | Men's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	Notes
+1	ADMU	
+2	AdU	
+3	UST	
+4	UE	

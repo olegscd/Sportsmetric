@@ -1,0 +1,11 @@
+# 1987-1988 | General Championship | junior
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	PTS	Notes
+1	ADMU	30	
+2	UST	26	
+3	FEU	24	
+4	DLSU	19	
+5	NU	16	
+6	AdU	12	
+7	UP	9	

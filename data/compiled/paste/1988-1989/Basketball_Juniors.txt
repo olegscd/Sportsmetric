@@ -1,0 +1,8 @@
+# 1988-1989 | Basketball | Juniors
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	Notes
+1	AdU	Basketball
+2	FEU	Chess
+3	UST	Swimming
+4	ADMU	Track and Field

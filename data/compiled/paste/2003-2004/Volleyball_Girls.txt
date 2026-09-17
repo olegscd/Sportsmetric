@@ -1,0 +1,8 @@
+# 2003-2004 | Volleyball | Girls
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	Notes
+1	UST	6	0	Champion
+2	UE	4	2	Runner-up
+3	DLSZ	2	4	Third place
+4	UP	0	6	Fourth place

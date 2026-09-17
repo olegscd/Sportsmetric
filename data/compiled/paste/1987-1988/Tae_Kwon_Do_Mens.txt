@@ -1,0 +1,11 @@
+# 1987-1988 | Tae Kwon Do | Men's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	Notes
+1	UST			FIRST PLACE
+2	ADMU	1	0	ADMU
+3	UE	1	0	Third place
+4	UP	1	0	Fourth place
+5	DLSU	0	1	Fifth place
+6	FEU	0	1	Sixth place
+7	AdU	0	1	Seventh place

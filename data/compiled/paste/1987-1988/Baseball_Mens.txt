@@ -1,0 +1,9 @@
+# 1987-1988 | Baseball | Men's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	Notes
+1	AdU	8	1	CHAMPION
+3	UP	7	3	3rd Place
+4	NU	5	5	4th Place
+5	ADMU	2	8	5th Place
+6	DLSU	0	10	6th Place

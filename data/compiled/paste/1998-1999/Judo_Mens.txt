@@ -1,0 +1,10 @@
+# 1998-1999 | Judo | Men's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	Notes
+1	UST	CHAMPION
+2	UP	RUNNER-UP
+3	ADMU	THIRD PLACE
+4	UE	FOURTH PLACE
+5	DLSU	FIFTH PLACE
+6	AdU	SIXTH PLACE

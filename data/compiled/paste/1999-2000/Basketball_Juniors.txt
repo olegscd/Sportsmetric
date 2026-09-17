@@ -1,0 +1,12 @@
+# 1999-2000 | Basketball | Juniors
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	Notes
+1	ADMU	14	1	Champion
+2	AdU	11	6	Guard/Forward
+3	UST	10	5	Third place
+4	DLSU	7	6	
+4	DLSZ			Fourth place
+5	UP	4	8	Fifth place
+6	NU	2	10	Sixth place
+7	UE	0	12	Seventh place

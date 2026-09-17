@@ -1,0 +1,10 @@
+# 1999-2000 | Softball | Men's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	Notes
+1	AdU	9	1	Champion
+2	UP	8	2	Rookie of the Year
+3	UE	6	4	Third place
+4	UST	5	5	Fourth place
+5	DLSU	2	8	Fifth place
+6	ADMU	0	10	Sixth place

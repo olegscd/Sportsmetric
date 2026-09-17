@@ -1,0 +1,10 @@
+# 1987-1988 | Football | Men's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	PTS	Notes
+1	UST	4	1	0	17
+2	UP	4	0	1	15
+3	FEU	3	0	2	13
+4	DLSU	2	1	2	10
+5	ADMU	1	0	4	7
+6	UE	0	0	5	3

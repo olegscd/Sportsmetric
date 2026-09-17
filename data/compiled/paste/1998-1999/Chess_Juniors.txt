@@ -1,0 +1,9 @@
+# 1998-1999 | Chess | Juniors
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	PTS	Notes
+1	ADMU	6	7	26	Champion
+2	AdU			17	RUNNER-UP
+3	UST	4	7		Third place
+4	UE			13	Fourth place
+5	NU				Fifth place

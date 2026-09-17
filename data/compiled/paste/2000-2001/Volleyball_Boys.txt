@@ -1,0 +1,10 @@
+# 2000-2001 | Volleyball | Boys
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	Notes
+1	UE	10	0	Champion
+2	ADMU	7	3	RUNNER-UP
+3	UST	6	4	Third place
+3	DLSZ	3	7	Third place
+4	UP	3	7	Fourth place
+5	NU	1	9	Fifth place

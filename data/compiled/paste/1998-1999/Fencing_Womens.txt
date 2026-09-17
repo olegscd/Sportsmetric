@@ -1,0 +1,7 @@
+# 1998-1999 | Fencing | Women's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	Notes
+1	UP	
+2	ADMU	
+3	UE	

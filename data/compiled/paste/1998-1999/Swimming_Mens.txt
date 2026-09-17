@@ -1,0 +1,10 @@
+# 1998-1999 | Swimming | Men's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	Notes
+1	UST	182 pts.
+2	DLSU	95 pts.
+3	ADMU	101 pts.
+4	AdU	21 pts.
+5	UP	20 pts.
+6	UE	9 pts.

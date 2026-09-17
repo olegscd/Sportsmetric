@@ -1,0 +1,12 @@
+# 2003-2004 | Basketball | Juniors
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	Notes
+1	ADMU	10	2	Champion
+2	AdU	10	2	0.833
+3	DLSZ	8	4	0.667
+4	UE	6	6	0.500
+5	UST	6	6	0.500
+6	UPIS	2	10	0.167
+6	UP			6$^{th}$ Place
+7	NU	0	12	0.000

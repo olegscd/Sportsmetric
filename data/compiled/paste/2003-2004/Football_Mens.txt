@@ -1,0 +1,10 @@
+# 2003-2004 | Football | Men's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	PTS	Notes
+1	ADMU	7	2	2	Champion
+2	UP	5	4	2	13
+3	FEU	4	4	2	10
+4	UST	3	4	3	6
+5	UE	2	3	5	4
+6	DLSU	0	3	7	5

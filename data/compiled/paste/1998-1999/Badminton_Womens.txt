@@ -1,0 +1,12 @@
+# 1998-1999 | Badminton | Women's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	Notes
+1	UP	7	0	Champion
+2	FEU	6	1	RUNNER-UP
+3	ADMU	5	2	Third place
+4	UST	4	3	Fourth place
+5	DLSU	3	4	Fifth place
+6	AdU	2	5	Sixth place
+7	UE	1	6	Seventh place
+8	NU	0	7	Eighth place

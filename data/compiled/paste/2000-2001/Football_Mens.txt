@@ -1,0 +1,10 @@
+# 2000-2001 | Football | Men's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	Notes
+1	UST	Champion
+2	DLSU	Runner-up
+3	UP	Third place
+4	ADMU	Fourth place
+5	UE	Fifth place
+6	FEU	Sixth place

@@ -1,0 +1,12 @@
+# 1998-1999 | Chess | Men's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	PTS	Notes
+1	UST	39	12
+2	UP	39	11.5
+3	DLSU	37	
+4	UE	33	Gumama, Malik Faizal
+5	FEU		Banag, Andy L.
+6	AdU		
+7	ADMU		
+8	NU		

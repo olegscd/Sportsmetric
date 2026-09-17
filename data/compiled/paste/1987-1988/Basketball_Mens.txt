@@ -1,0 +1,12 @@
+# 1987-1988 | Basketball | Men's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	Notes
+1	ADMU	14	1	
+2	UE	10	5	
+3	UP	9	5	
+4	FEU	8	6	
+5	DLSU	7	7	
+6	AdU	5	9	
+7	UST	3	11	
+8	NU	2	12	

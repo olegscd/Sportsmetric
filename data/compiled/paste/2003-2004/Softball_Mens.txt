@@ -1,0 +1,10 @@
+# 2003-2004 | Softball | Men's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	Notes
+1	AdU	10	3	
+2	UST	8	6	
+3	UE	9	3	
+4	UP	6	5	
+5	DLSU	2	8	
+6	ADMU	0	10	

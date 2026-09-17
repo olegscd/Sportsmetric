@@ -1,0 +1,11 @@
+# 1988-1989 | Basketball | Women's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	Notes
+1	UST	
+2	AdU	
+3	UP	
+4	DLSU	
+5	FEU	
+6	UE	
+7	ADMU	

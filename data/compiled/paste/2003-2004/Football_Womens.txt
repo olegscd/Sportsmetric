@@ -1,0 +1,9 @@
+# 2003-2004 | Football | Women's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	PTS	Notes
+1	DLSU	8		1	Champion
+2	FEU	3	3	3	4
+3	UST	1	5	2	Third place
+4	UP	1	5	2	Fourth place
+5	ADMU		3	5	Fifth place

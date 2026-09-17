@@ -1,0 +1,12 @@
+# 2003-2004 | Chess | Juniors
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	PTS	Notes
+1	UP		Champion
+2	DLSU		Runner-up
+2	NU	24.5	Magat, Jed Angelo
+3	ADMU	19	Queseng, John
+3	UST	9	Third place
+4	UE	26	Fourth place
+5	DLSZ	1.5	
+5	FEU		Fifth place

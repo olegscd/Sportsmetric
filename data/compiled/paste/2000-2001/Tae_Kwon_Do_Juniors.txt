@@ -1,0 +1,9 @@
+# 2000-2001 | Tae Kwon Do | Juniors
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	Notes
+1	ADMU	Champion
+2	UP	Runner-up
+3	UST	Third place
+4	DLSZ	Fourth place
+5	UE	Fifth place

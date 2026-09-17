@@ -1,0 +1,10 @@
+# 1987-1988 | Chess | Juniors
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	PTS	Notes
+1	FEU	9	Ronald Bancod
+1	UST	10	Champion
+3	NU		Third place
+4	ADMU	6	Fourth place
+5	AdU		Fifth place
+6	DLSU		Sixth place

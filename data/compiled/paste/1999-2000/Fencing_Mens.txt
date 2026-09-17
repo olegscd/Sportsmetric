@@ -1,0 +1,10 @@
+# 1999-2000 | Fencing | Men's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	Notes
+1	DLSU	0		Champion
+3	UP	2		Third place
+4	ADMU	1		Fourth place
+5	UE	2		PADILLA Andrew
+5	FEU	0		Fifth place
+6	UST	0		Sixth place

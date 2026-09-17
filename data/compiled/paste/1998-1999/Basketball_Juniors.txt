@@ -1,0 +1,11 @@
+# 1998-1999 | Basketball | Juniors
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	Notes
+1	UST	11	1	
+2	ADMU	10	2	
+3	AdU	8	4	
+4	DLSZ	6	6	
+5	UE	5	7	
+6	UP	1	11	
+7	NU	1	11	

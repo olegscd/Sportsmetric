@@ -1,0 +1,9 @@
+# 2003-2004 | Chess | Boys
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	Notes
+2	UE	Bye
+3	NU	3
+4	ADMU	4
+5	DLSU	0
+6	UST	1

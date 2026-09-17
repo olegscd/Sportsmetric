@@ -1,0 +1,12 @@
+# 1999-2000 | Table Tennis | Men's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	Notes
+1	UE	Champion
+2	DLSU	Runner-up
+3	UP	Third place
+4	UST	Fourth place
+5	AdU	Fifth place
+6	FEU	Sixth place
+7	ADMU	Seventh place
+8	NU	Eighth place

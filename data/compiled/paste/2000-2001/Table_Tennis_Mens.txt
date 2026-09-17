@@ -1,0 +1,12 @@
+# 2000-2001 | Table Tennis | Men's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	Notes
+1	DLSU	13	20	7
+2	UST	12	18	11
+3	UE	11	17	13
+4	UP	12	16	15
+5	AdU	12	12	19
+6	FEU	9	9	16
+7	ADMU	8	8	18
+8	NU	7	0	18

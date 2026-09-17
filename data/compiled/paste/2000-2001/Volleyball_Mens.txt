@@ -1,0 +1,12 @@
+# 2000-2001 | Volleyball | Men's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	Notes
+1	UST	12	2	Champion
+1	FEU	10	4	Best Server:
+3	NU	10	4	Third place
+4	DLSU	9	5	Fourth place
+5	AdU	9	5	Fifth place
+6	UP	8	6	Sixth place
+7	UE	5	9	Seventh place
+8	ADMU	2	12	Eighth place

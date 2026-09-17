@@ -1,0 +1,7 @@
+# 2000-2001 | Volleyball | Girls
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	Notes
+1	UE	4	0	Champion
+2	UST	2	2	RUNNER-UP
+3	UP	0	4	Third place

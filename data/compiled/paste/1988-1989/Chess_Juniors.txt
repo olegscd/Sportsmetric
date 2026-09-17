@@ -1,0 +1,9 @@
+# 1988-1989 | Chess | Juniors
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	PTS	Notes
+1	AdU	9	Vince Alaan
+1	FEU	7	Nelson Mariano II
+2	ADMU		
+3	NU	10	David Ravara
+3	UST		

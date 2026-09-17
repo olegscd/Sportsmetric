@@ -1,0 +1,10 @@
+# 1999-2000 | Judo | Men's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	Notes
+1	UST	4		Champion
+1	UP	3		W
+3	DLSU	2		Third place
+4	UE	1		Fourth place
+5	ADMU	0		Fifth place
+6	FEU	0		Sixth place

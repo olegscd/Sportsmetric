@@ -1,0 +1,10 @@
+# 2003-2004 | Fencing | Women's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	Notes
+1	UP	1	3	Champion
+3	UE	2	0	Third place
+4	ADMU		5	Fourth place
+5	FEU	3	5	Fifth place
+6	DLSU	5	5	Sixth place
+6	UST	5	5	ORENDAIN, Harlene

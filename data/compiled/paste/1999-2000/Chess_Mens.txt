@@ -1,0 +1,12 @@
+# 1999-2000 | Chess | Men's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	PTS	Notes
+1	DLSU	41.5	Champion
+2	UP	35	Castellano, Christopher
+3	UST	33.5	Third place
+4	UE	28.5	Fourth place
+5	AdU	27	Fifth place
+6	FEU	26	Sixth place
+7	ADMU	23	Seventh place
+8	NU	9.5	Eighth place

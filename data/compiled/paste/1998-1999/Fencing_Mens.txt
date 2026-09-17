@@ -1,0 +1,9 @@
+# 1998-1999 | Fencing | Men's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	Notes
+1	DLSU	1	2	Champion
+3	FEU	5	2	Third place
+3	UP	2	1	de GUZMAN, Richard
+4	ADMU	4	1	Fourth place
+5	UE	6	0	Fifth place

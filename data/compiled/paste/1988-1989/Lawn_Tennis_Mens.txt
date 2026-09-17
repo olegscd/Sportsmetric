@@ -1,0 +1,9 @@
+# 1988-1989 | Lawn Tennis | Men's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	Notes
+1	DLSU	
+2	ADMU	
+3	AdU	
+4	UE	
+5	UST	

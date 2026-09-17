@@ -1,0 +1,12 @@
+# 1998-1999 | Table Tennis | Women's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	Notes
+3	UP	
+4	UST	1 0
+5	DLSU	1 2
+6	FEU	1 0
+7	UE	1 0
+8	AdU	1 1
+9	ADMU	1 0
+10	NU	1 0

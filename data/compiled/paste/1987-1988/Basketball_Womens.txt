@@ -1,0 +1,11 @@
+# 1987-1988 | Basketball | Women's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	Notes
+1	UST	12	1	
+2	ADMU	8	6	
+3	FEU	7	6	
+4	AdU	6	6	
+5	DLSU	6	6	
+6	UE	3	9	
+7	UP	2	10	

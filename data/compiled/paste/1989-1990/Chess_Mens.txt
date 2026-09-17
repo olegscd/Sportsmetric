@@ -1,0 +1,12 @@
+# 1989-1990 | Chess | Men's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	Notes
+1	AdU			Board # 1
+2	ADMU	4	0	4 - 0
+3	DLSU	3	1	Board # 5
+3	NU			Board # 3
+4	FEU	3	1	Board # 2
+4	UST	3	1	2.5 - 1.5
+4	UE			3.5 - .5
+4	UP			4 - 0

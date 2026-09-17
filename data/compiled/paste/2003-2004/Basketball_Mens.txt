@@ -1,0 +1,12 @@
+# 2003-2004 | Basketball | Men's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	Notes
+1	ADMU	11	3	0.786
+1	FEU	11	3	Champion
+3	UE	11	3	Third place
+4	DLSU	7	7	Fourth place
+5	AdU	5	9	Fifth place
+6	UST	5	9	Sixth place
+7	UP	3	11	Seventh place
+8	NU	3	11	Eighth place

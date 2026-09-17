@@ -1,0 +1,12 @@
+# 1989-1990 | Volleyball | Men's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	Notes
+1	AdU	14	0	
+2	ADMU	11	3	
+3	UST	11	3	
+4	FEU	7	7	
+5	UE	5	9	
+6	NU	4	10	
+7	UP	2	12	
+8	DLSU	2	12	

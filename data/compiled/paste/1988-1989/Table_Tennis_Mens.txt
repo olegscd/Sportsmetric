@@ -1,0 +1,11 @@
+# 1988-1989 | Table Tennis | Men's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	Notes
+1	UST	CHAMPION
+2	AdU	Runner-up
+3	NU	Third Place
+4	FEU	Fourth Place
+5	DLSU	Fifth Place
+6	UP	Sixth Place
+7	ADMU	Seventh Place

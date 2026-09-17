@@ -1,0 +1,11 @@
+# 2000-2001 | Basketball | Women's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	Notes
+1	AdU	11	1	756
+2	FEU	9	3	648
+3	DLSU	8	4	779
+4	UST	7	5	597
+5	UP	4	8	623
+6	UE	3	9	541
+7	ADMU	0	12	538

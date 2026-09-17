@@ -1,0 +1,10 @@
+# 2003-2004 | Tae Kwon Do | Men's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	Notes
+1	UST	5	0	Champion
+2	DLSU	3	2	Runner-up
+3	ADMU	1	4	Third place
+4	UE	3	2	Fourth place
+5	UP	2	3	Fifth place
+6	FEU	1	4	Sixth place

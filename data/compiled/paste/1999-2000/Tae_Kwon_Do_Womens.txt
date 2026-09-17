@@ -1,0 +1,11 @@
+# 1999-2000 | Tae Kwon Do | Women's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	Notes
+1	UST	6	0	Champion
+2	UP	1	5	2 - 5
+3	ADMU	3	3	Third place
+4	UE	5	1	Fourth place
+5	FEU	4	2	Fifth place
+6	DLSU	2	4	Sixth place
+7	AdU	0	6	Seventh place

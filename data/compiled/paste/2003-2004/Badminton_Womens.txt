@@ -1,0 +1,10 @@
+# 2003-2004 | Badminton | Women's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	Notes
+1	ADMU	Champion
+2	FEU	Runner-up
+3	DLSU	Third place
+4	UST	Fourth place
+5	UP	Fifth place
+6	UE	Sixth place

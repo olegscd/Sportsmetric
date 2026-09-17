@@ -1,0 +1,11 @@
+# 1998-1999 | Basketball | Women's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	Notes
+1	FEU	10	2	
+2	UST	10	2	
+3	UP	7	5	
+4	AdU	7	5	
+5	DLSU	6	6	
+6	UE	1	11	
+7	ADMU	1	11	

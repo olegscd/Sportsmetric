@@ -1,0 +1,11 @@
+# 1999-2000 | Football | Men's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	PTS	Notes
+1	UST	10	2	1	Champion
+2	FEU	7	2	4	74
+3	UP	7	1	4	Third place
+4	DLSU	6	2	4	Fourth place
+5	ADMU	5	4	3	Fifth place
+6	UE	2	1	9	Sixth place
+7	AdU	0	0	12	Seventh place

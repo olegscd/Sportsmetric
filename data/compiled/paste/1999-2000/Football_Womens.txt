@@ -1,0 +1,9 @@
+# 1999-2000 | Football | Women's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	PTS	Notes
+1	DLSU	4	5	0	Champion
+2	UST	3	4	2	6
+3	FEU	3	3	2	Third place
+4	UP	2	5	1	Fourth place
+5	ADMU	0	1	7	Fifth place

@@ -1,0 +1,10 @@
+# 2000-2001 | Badminton | Men's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	Notes
+3	ADMU	
+3	DLSU	8:00
+3	FEU	
+3	NU	10:00
+3	UST	
+4	UE	

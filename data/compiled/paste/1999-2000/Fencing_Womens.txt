@@ -1,0 +1,10 @@
+# 1999-2000 | Fencing | Women's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	Notes
+1	UP	4		Champion
+2	ADMU	3		SARA Jaquelynne
+3	UE	4		Third place
+4	FEU	0		Fourth place
+5	DLSU	2		Fifth place
+6	UST	1		Sixth place

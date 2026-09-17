@@ -1,0 +1,11 @@
+# 1998-1999 | Tae Kwon Do | Women's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	Notes
+1	DLSU	6	0	Champion
+2	UST	5	1	5 - 2
+3	ADMU	3	3	Third place
+4	UP	3	3	Fourth place
+5	UE	2	4	Fifth place
+6	FEU	2	4	Sixth place
+7	AdU	0	7	Seventh place

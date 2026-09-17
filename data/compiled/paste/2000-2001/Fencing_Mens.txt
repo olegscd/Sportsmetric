@@ -1,0 +1,10 @@
+# 2000-2001 | Fencing | Men's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	Notes
+2	ADMU	0		LACHICA, EDWIN
+3	DLSU	4		TORRES, JULIO NICHOLAS
+4	FEU	1		RANESES, RANDY
+5	UE	2		ALBA, MARK EXEQUIEL
+6	UP	0		CABILLAN, DEO
+7	UST	0		DE LAZA, PAOLO

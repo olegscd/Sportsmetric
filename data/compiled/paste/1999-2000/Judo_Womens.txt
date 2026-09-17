@@ -1,0 +1,10 @@
+# 1999-2000 | Judo | Women's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	Notes
+1	UP	4		Champion
+1	UST	3		W
+3	DLSU	1		Third place
+4	ADMU	1		Fourth place
+5	UE	0		Fifth place
+6	FEU	0		Sixth place

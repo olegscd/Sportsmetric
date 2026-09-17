@@ -1,0 +1,12 @@
+# 2000-2001 | Chess | Men's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	PTS	Notes
+1	DLSU	39.5	Champion
+2	UP	38	Pascua, Cyrus Ian
+3	UST	31.5	Third place
+4	FEU	31.5	Fourth place
+5	UE	28.5	Fifth place
+6	AdU	25	Sixth place
+7	ADMU	23.5	Seventh place
+8	NU	19.5	

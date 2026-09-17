@@ -1,0 +1,10 @@
+# 2003-2004 | Badminton | Men's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	Notes
+1	FEU	Champion
+2	UST	Runner-up
+3	UP	Third place
+4	UE	Fourth place
+5	DLSU	Fifth place
+6	ADMU	Sixth place

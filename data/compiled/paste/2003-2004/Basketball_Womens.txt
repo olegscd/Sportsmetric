@@ -1,0 +1,11 @@
+# 2003-2004 | Basketball | Women's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	Notes
+1	AdU	11	1	0.917
+2	UP	8	4	0.667
+3	ADMU	7	5	0.583
+4	DLSU	7	5	0.583
+5	UST	5	7	0.417
+6	FEU	4	8	0.333
+7	UE	0	12	0.000

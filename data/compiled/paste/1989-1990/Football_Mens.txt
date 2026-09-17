@@ -1,0 +1,11 @@
+# 1989-1990 | Football | Men's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	Notes
+1	UP	9	12	21
+2	ADMU	9	10	19
+3	DLSU	10	7	17
+4	UST	6	10	16
+5	FEU	6	4	10
+6	UE	2	2	4
+7	AdU	0	1	1

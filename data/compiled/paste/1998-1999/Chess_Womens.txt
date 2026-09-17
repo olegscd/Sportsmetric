@@ -1,0 +1,8 @@
+# 1998-1999 | Chess | Women's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	Notes
+1	UE	38.5		Castro, Mary Grace
+3	UP			Quiachon, Donna
+4	AdU			Atencio, Ma. Criselda
+5	FEU			San Pedro, Jocelyn

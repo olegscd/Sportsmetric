@@ -1,0 +1,12 @@
+# 2000-2001 | Volleyball | Women's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	Notes
+1	FEU	12	2	Most Valuable Player:
+2	DLSU	11	3	Best Spiker :
+3	AdU	10	4	
+4	UST	10	4	
+5	UE	6	8	
+6	UP	5	9	
+7	NU	2	12	
+8	ADMU	0	14	

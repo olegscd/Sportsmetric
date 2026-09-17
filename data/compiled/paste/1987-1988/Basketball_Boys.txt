@@ -1,0 +1,12 @@
+# 1987-1988 | Basketball | Boys
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	Notes
+1	FEU	13	2	Champion
+2	AdU	12	3	Runner-Up
+3	ADMU	10	4	Third place
+4	UST	9	5	Fourth place
+5	DLSU	6	8	Fifth place
+6	NU	4	10	Sixth place
+7	UP	2	12	Seventh place
+8	UE	1	13	

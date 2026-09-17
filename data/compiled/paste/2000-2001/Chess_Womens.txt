@@ -1,0 +1,11 @@
+# 2000-2001 | Chess | Women's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	PTS	Notes
+1	UE	10	11	35	Champion
+3	AdU	8	10	28	Third place
+4	UST	10	12	27.5	Fourth place
+4	FEU	9	12	30.5	Andres, Sheryll
+5	UP			20.5	Fifth place
+6	DLSU			13.5	Sixth place
+7	ADMU	8	12	13	Seventh place

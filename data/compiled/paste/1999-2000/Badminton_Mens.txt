@@ -1,0 +1,12 @@
+# 1999-2000 | Badminton | Men's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	Notes
+1	UP	7	0	Champion
+2	FEU	6	1	Runner-up
+3	UE	5	2	
+4	ADMU	4	3	Fourth place
+5	UST	4	3	Fifth place
+6	DLSU	2	5	Sixth place
+7	NU	1	6	Seventh place
+8	AdU	0	7	Eighth place

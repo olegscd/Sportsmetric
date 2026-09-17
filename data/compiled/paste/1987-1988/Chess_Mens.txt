@@ -1,0 +1,10 @@
+# 1987-1988 | Chess | Men's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	PTS	Notes
+1	AdU	21	
+2	UST	19	
+3	DLSU	17	
+4	FEU	15	
+5	UE	11	
+6	ADMU	10	

@@ -1,0 +1,10 @@
+# 1999-2000 | Volleyball | Juniors
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	Notes
+1	DLSU	10	0	
+2	UST	8	2	
+3	UE	6	4	
+4	ADMU	4	6	
+5	UP	2	8	
+6	NU	0	10	

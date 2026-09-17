@@ -1,0 +1,10 @@
+# 1999-2000 | Lawn Tennis | Men's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	Notes
+1	UP	9	1	Champion
+2	ADMU	8	1	Runner-up
+3	UST	7	3	Third place
+4	DLSU	4	6	Fourth place
+5	AdU	1	9	Fifth place
+6	UE	1	9	Sixth place

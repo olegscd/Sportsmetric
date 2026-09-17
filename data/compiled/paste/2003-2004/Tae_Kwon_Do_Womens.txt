@@ -1,0 +1,10 @@
+# 2003-2004 | Tae Kwon Do | Women's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	Notes
+1	UP	4	1	Champion
+3	UST	5	0	Third place
+4	FEU	2	3	Fourth place
+4	ADMU	1	4	Fourth place
+5	DLSU	0	5	Fifth place
+6	UE	3	2	Sixth place

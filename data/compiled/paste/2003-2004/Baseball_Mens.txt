@@ -1,0 +1,10 @@
+# 2003-2004 | Baseball | Men's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	Notes
+1	UP	9	1	Champion
+2	UST	9	1	Runner-up
+3	AdU	4	6	Third place
+4	NU	4	6	Fourth place
+5	DLSU	3	7	Fifth place
+6	ADMU	1	9	Sixth place

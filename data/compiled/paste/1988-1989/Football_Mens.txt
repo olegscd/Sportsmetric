@@ -1,0 +1,10 @@
+# 1988-1989 | Football | Men's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	Notes
+1	UST	8	3	0
+2	DLSU	3	5	2
+3	ADMU	3	4	3
+4	FEU	3	4	3
+5	UP	3	3	4
+6	UE	1	0	9

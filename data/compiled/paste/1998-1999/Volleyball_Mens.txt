@@ -1,0 +1,12 @@
+# 1998-1999 | Volleyball | Men's
+# Paste into Admin → UAAP Archive → Bulk import
+
+Rank	School	W	L	Notes
+1	UST	13	1	
+2	FEU	11	3	
+3	DLSU	11	3	
+4	NU	8	6	
+5	AdU	5	9	
+6	UP	4	10	
+7	UE	4	10	
+8	ADMU	0	14	
