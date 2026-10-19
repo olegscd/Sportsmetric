@@ -65,7 +65,9 @@ export function StandingsView() {
       ? userSelectedSeasonId
       : activeCurrent;
 
-  useSportsScope(`league=${league}&season=${encodeURIComponent(seasonId)}`);
+  const { isPending: isSeasonPending } = useSportsScope(
+    `league=${league}&season=${encodeURIComponent(seasonId)}`
+  );
 
   function handleLeagueChange(newLeague: League) {
     setLeague(newLeague);
@@ -113,7 +115,7 @@ export function StandingsView() {
 
       {error && teams.length === 0 ? (
         <ErrorNotice message={error} onRetry={() => void refreshData()} />
-      ) : loading && teams.length === 0 ? (
+      ) : isSeasonPending || (loading && teams.length === 0) ? (
         <SkeletonRows count={8} />
       ) : (
         <div className="grid grid-cols-1 gap-6 xl:grid-cols-[minmax(0,1fr)_21rem]">

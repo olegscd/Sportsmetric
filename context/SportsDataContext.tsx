@@ -50,6 +50,8 @@ interface SportsDataContextType {
   setSeasonAsCurrent: (id: string) => Promise<void>;
   reorderSeasons: (newSeasonsOrder: Season[]) => Promise<void>;
   loading: boolean;
+  /** Query whose data is currently in the store. Null until the first load. */
+  loadedScopeQuery: string | null;
   error: string | null;
   clearError: () => void;
   isHydrated: boolean;
@@ -106,6 +108,9 @@ export function SportsDataProvider({ children, initialData, initialQuery = "meta
     ?? initialData?.seasons[0]?.id ?? "2025-26"
   );
   const [loading, setLoading] = useState<boolean>(!initialData && !initialError);
+  const [loadedScopeQuery, setLoadedScopeQuery] = useState<string | null>(
+    initialData ? initialQuery : null
+  );
   const [error, setError] = useState<string | null>(initialError ?? null);
 
   const pathname = usePathname();
@@ -120,11 +125,12 @@ export function SportsDataProvider({ children, initialData, initialQuery = "meta
 
   const loadDataFromSupabase = useCallback(async (silent = false) => {
     const generation = ++loadGeneration.current;
+    const requestedQuery = scopeQuery;
     // Keep a previous load error visible while retrying. The database client
     // can back off for several seconds; hiding it would leave only a spinner.
     if (!silent) setLoading(true);
     try {
-      const response = await fetch(`/api/sports?${scopeQuery}`, { cache: "no-store" });
+      const response = await fetch(`/api/sports?${requestedQuery}`, { cache: "no-store" });
       if (!response.ok) throw new Error("Could not load sports data.");
       const data: SupabaseDataResult = await response.json();
       if (generation !== loadGeneration.current) return;
@@ -132,6 +138,7 @@ export function SportsDataProvider({ children, initialData, initialQuery = "meta
       setTeams(data.teams);
       setPlayers(data.players);
       setGames(data.games);
+      setLoadedScopeQuery(requestedQuery);
       setCurrentSeasonId(prev => {
         if (data.seasons.some(s => s.id === prev)) return prev;
         return data.seasons.find(s => s.league === "UAAP" && s.isCurrent)?.id ?? data.seasons[0]?.id ?? prev;
@@ -696,6 +703,7 @@ export function SportsDataProvider({ children, initialData, initialQuery = "meta
       setSeasonAsCurrent,
       reorderSeasons,
       loading,
+      loadedScopeQuery,
       error,
       clearError,
       isHydrated,
@@ -721,7 +729,7 @@ export function SportsDataProvider({ children, initialData, initialQuery = "meta
       getPlayerAverages: getPlayerAveragesHandler,
     }),
     [
-      requestScope, seasons, teams, players, games, currentSeasonId, loading, error, clearError, isHydrated,
+      requestScope, seasons, teams, players, games, currentSeasonId, loading, loadedScopeQuery, error, clearError, isHydrated,
       loadDataFromSupabase, resetToDefaults,
       saveGame, deleteGame, updateGameScore, updateGameBoxScore,
       saveTeam, deleteTeam, savePlayer, deletePlayer, deleteAllPlayers, batchSavePlayers,
@@ -747,7 +755,11 @@ export function useSportsData(): SportsDataContextType {
 }
 
 /** Ask for one server-side scope; each page owns its selection. */
-export function useSportsScope(query: string): void {
-  const { requestScope } = useSportsData();
+export function useSportsScope(query: string): { isPending: boolean } {
+  const { requestScope, loadedScopeQuery, error } = useSportsData();
   useEffect(() => { requestScope(query); }, [requestScope, query]);
+  // The page's selection can change before the scope effect commits. Compare
+  // against the query that actually populated the store so the first render
+  // after a season switch is a loading state, not a false empty state.
+  return { isPending: !error && loadedScopeQuery !== query };
 }

@@ -45,7 +45,9 @@ export function TeamDirectory() {
   }
 
   const leagues: League[] = league === "ALL" ? ["UAAP", "PBA", "PVL"] : [league];
-  useSportsScope(league === "ALL" ? "league=ALL" : `league=${league}&season=${encodeURIComponent(seasonId)}`);
+  const { isPending: isSeasonPending } = useSportsScope(
+    league === "ALL" ? "league=ALL" : `league=${league}&season=${encodeURIComponent(seasonId)}`
+  );
 
   const standings = leagues.flatMap((l) => getStandings(l, league === "ALL" ? seasons.find(s => s.league === l && s.isCurrent)?.id : seasonId));
 
@@ -74,7 +76,7 @@ export function TeamDirectory() {
     if (error && teams.length === 0) {
       return <ErrorNotice message={error} onRetry={() => void refreshData()} />;
     }
-    if (loading && teams.length === 0) {
+    if (isSeasonPending || (loading && teams.length === 0)) {
       return <SkeletonCardGrid count={6} height="h-20" />;
     }
     if (standings.length === 0) {
@@ -164,7 +166,7 @@ export function TeamDirectory() {
         <ErrorNotice message={error} onRetry={() => void refreshData()} />
       ) : null}
 
-      {!loading && <p className="text-2xs font-medium text-muted" aria-live="polite">{filteredStandings.length} of {standings.length} teams</p>}
+      {!isSeasonPending && !loading && <p className="text-2xs font-medium text-muted" aria-live="polite">{filteredStandings.length} of {standings.length} teams</p>}
 
       {renderBody()}
     </div>

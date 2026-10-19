@@ -38,7 +38,9 @@ export function PlayerDirectory() {
     ? userSelectedSeasonId
     : activeCurrent;
 
-  useSportsScope(league === "ALL" ? "league=ALL" : `league=${league}&season=${encodeURIComponent(seasonId)}`);
+  const { isPending: isSeasonPending } = useSportsScope(
+    league === "ALL" ? "league=ALL" : `league=${league}&season=${encodeURIComponent(seasonId)}`
+  );
 
   function handleLeagueChange(newLeague: League | "ALL") {
     setLeague(newLeague);
@@ -83,7 +85,7 @@ export function PlayerDirectory() {
     if (error && players.length === 0) {
       return <ErrorNotice message={error} onRetry={() => void refreshData()} />;
     }
-    if (loading && players.length === 0) {
+    if (isSeasonPending || (loading && players.length === 0)) {
       return <SkeletonCardGrid count={6} height="h-24" />;
     }
     if (seasonPlayers.length === 0) {
@@ -157,7 +159,7 @@ export function PlayerDirectory() {
         <ErrorNotice message={error} onRetry={() => void refreshData()} />
       ) : null}
 
-      {!loading && seasonPlayers.length > 0 ? (
+      {!isSeasonPending && !loading && seasonPlayers.length > 0 ? (
         <p className="text-2xs font-medium text-muted" aria-live="polite">
           {filteredPlayers.length} of {seasonPlayers.length} players
         </p>

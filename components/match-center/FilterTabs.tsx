@@ -71,7 +71,9 @@ export function FilterTabs() {
     ? userSelectedSeasonId
     : activeCurrent;
 
-  useSportsScope(`league=${league}&season=${encodeURIComponent(seasonId)}`);
+  const { isPending: isSeasonPending } = useSportsScope(
+    `league=${league}&season=${encodeURIComponent(seasonId)}`
+  );
 
   const selectedSeason = seasons.find((s) => s.id === seasonId);
   const isOldSeason = selectedSeason ? !selectedSeason.isCurrent : seasonId !== currentSeasonId;
@@ -97,6 +99,7 @@ export function FilterTabs() {
 
   const counts = { LIVE: 0, UPCOMING: 0, FINAL: 0 };
   for (const game of seasonGames) counts[getEffectiveGameStatus(game)]++;
+  const countsPending = isSeasonPending || loading;
 
   const availableTeams = useMemo(() => {
     const teamsInSeason = isLifetimeSeason(seasonId)
@@ -190,7 +193,7 @@ export function FilterTabs() {
     if (error && games.length === 0) {
       return <ErrorNotice message={error} onRetry={() => void refreshData()} />;
     }
-    if (loading && games.length === 0) {
+    if (isSeasonPending || (loading && games.length === 0)) {
       return <SkeletonCardGrid count={6} />;
     }
     if (showPvlLivePlaceholder) {
@@ -290,7 +293,7 @@ export function FilterTabs() {
                 <span
                   className={`text-2xl font-extrabold tabular-nums ${isLive ? "text-live" : "text-foreground"}`}
                 >
-                  {loading ? "–" : counts[value]}
+                  {countsPending ? "–" : counts[value]}
                 </span>
                 <span className="text-2xs text-muted md:text-xs">{label}</span>
               </div>
@@ -332,10 +335,10 @@ export function FilterTabs() {
             <SegmentedControl
               options={
                 isOldSeason
-                  ? [{ value: "FINAL", label: `Final · ${counts.FINAL}` }]
+                  ? [{ value: "FINAL", label: `Final · ${countsPending ? "–" : counts.FINAL}` }]
                   : STATUS_TABS.map((option) => ({
                       ...option,
-                      label: `${option.label} · ${counts[option.value]}`,
+                      label: `${option.label} · ${countsPending ? "–" : counts[option.value]}`,
                     }))
               }
               value={activeStatus}
@@ -400,7 +403,7 @@ export function FilterTabs() {
 
       <div className="flex min-h-7 flex-wrap items-center justify-between gap-3">
         <h2 className="text-xs font-semibold text-muted" aria-live="polite">
-          {loading
+          {countsPending
             ? "Loading matches…"
             : `${filteredGames.length} ${filteredGames.length === 1 ? "match" : "matches"}`}{" "}
           <span className="text-muted/60">/</span> {league} ·{" "}
