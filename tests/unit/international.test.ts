@@ -7,6 +7,7 @@ import {
   type IntlAthlete, type IntlCompetition, type IntlResult,
 } from "../../lib/international";
 import { normalizeIntlAthlete, normalizeIntlResult } from "../../lib/international-validation";
+import { BUNDLED_ATHLETE_PHOTOS, withBundledAthletePhoto } from "../../lib/international-photos";
 
 const baseResult: IntlResult = {
   id: "r1", athleteId: "ej-obiena", competitionId: "wc-2023", event: "Men's pole vault", representation: "national_team",
@@ -66,6 +67,26 @@ test("top performers rank by weighted medals, then golds and podiums", () => {
   assert.equal(top[2].bestResult?.id, "p1");
   assert.equal(top[2].latestResult?.id, "p2");
   assert.equal(rest[2].results.length, 0);
+});
+
+test("bundled athlete portraits are local and fully attributed", () => {
+  for (const [id, photo] of Object.entries(BUNDLED_ATHLETE_PHOTOS)) {
+    assert.match(id, /^[a-z0-9-]+$/);
+    assert.match(photo.photoUrl, /^\/athletes\/[a-z0-9-]+\.jpg$/);
+    assert.ok(photo.photoCredit.trim(), id);
+    assert.ok(photo.photoLicense.trim(), id);
+    assert.match(photo.photoSourceUrl, /^https:\/\/commons\.wikimedia\.org\/wiki\/File:/);
+  }
+  const athlete: IntlAthlete = {
+    id: "carlos-yulo", name: "Carlos Yulo", sports: ["Artistic Gymnastics"], filipinoConnection: "citizen",
+    connectionNote: null, connectionSourceUrl: "https://example.org/bio", personId: null, photoUrl: null,
+    photoCredit: null, photoLicense: null, photoSourceUrl: null, bio: null, coverageNote: null, published: true, reviewedAt: null,
+  };
+  assert.equal(withBundledAthletePhoto(athlete).photoUrl, "/athletes/carlos-yulo.jpg");
+  const databasePhoto = withBundledAthletePhoto({ ...athlete, photoUrl: "/athletes/custom.jpg", photoCredit: "Editor",
+    photoLicense: "Permission", photoSourceUrl: "https://example.org/photo" });
+  assert.equal(databasePhoto.photoUrl, "/athletes/custom.jpg");
+  assert.equal(databasePhoto.photoCredit, "Editor");
 });
 
 test("validation requires sources and type-specific fields", () => {

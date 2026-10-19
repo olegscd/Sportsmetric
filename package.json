@@ -11,6 +11,7 @@
     "check": "npm run lint && npm run typecheck && npm run archive:check",
     "archive:check": "tsx scripts/check-uaap-archive.ts",
     "seed:supabase": "tsx scripts/seed-supabase.ts",
+    "seed:intl-photos": "tsx scripts/seed-intl-photos.ts",
     "games:sync": "tsx scripts/sync-games.ts",
     "test": "tsx --test tests/unit/*.test.ts",
     "test:e2e": "playwright test",

@@ -3,6 +3,7 @@ import {
   EMPTY_INTERNATIONAL, athleteFromRow, athleteToRow, competitionFromRow, competitionToRow, resultFromRow, resultToRow,
   type IntlAthlete, type IntlCompetition, type IntlResult, type InternationalData,
 } from "@/lib/international";
+import { withBundledAthletePhoto } from "@/lib/international-photos";
 import { supabase } from "@/lib/supabase";
 import { getServiceSupabase } from "@/lib/supabase-admin";
 import type { SupabaseClient } from "@supabase/supabase-js";
@@ -40,7 +41,7 @@ export async function getPublicInternationalData(): Promise<InternationalData> {
   if (!supabase) return EMPTY_INTERNATIONAL;
   try {
     const athletes = (check(await supabase.from("intl_athletes").select("*").eq("published", true).order("name"), "athletes") as Record<string, unknown>[])
-      .map(athleteFromRow).filter(a => a.published);
+      .map(athleteFromRow).filter(a => a.published).map(withBundledAthletePhoto);
     const ids = new Set(athletes.map(a => a.id));
     const results = (check(await supabase.from("intl_results").select("*").eq("published", true), "results") as Record<string, unknown>[])
       .map(resultFromRow).filter(r => r.published && ids.has(r.athleteId));
@@ -65,7 +66,7 @@ export async function getPublicAthleteProfile(id: string): Promise<AthleteProfil
   try {
     const row = check(await supabase.from("intl_athletes").select("*").eq("id", id).eq("published", true).maybeSingle(), "athlete") as Record<string, unknown> | null;
     if (!row || Array.isArray(row)) return null;
-    const athlete = athleteFromRow(row);
+    const athlete = withBundledAthletePhoto(athleteFromRow(row));
     if (!athlete.published) return null;
     const results = (check(await supabase.from("intl_results").select("*").eq("athlete_id", id).eq("published", true), "athlete results") as Record<string, unknown>[])
       .map(resultFromRow).filter(r => r.published && r.athleteId === id);

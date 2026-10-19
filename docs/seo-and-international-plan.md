@@ -151,7 +151,11 @@ Built 20 October 2026, intentionally unlaunched.
   athletes) and `/athletes/<slug>` (connection, medal summary, results by year,
   sources, coverage notes, optional link to the Philippine league profile via
   `person_id`). Photo credit, license and source appear under any top-performer card
-  that displays a portrait.
+  that displays a portrait. Five Commons portraits ship in `public/athletes/` with
+  their attribution; until the photo-credit migration is applied, the public reads
+  fill them in from `lib/international-photos.ts`. After applying the migration,
+  `npm run seed:intl-photos` copies the same credit, license and source into the
+  athlete rows, which always take precedence over the bundled defaults.
 - Admin: Workspace → International. Writes go through `/api/admin/mutate`
   (`intl.*` operations); drafts load from the authenticated `/api/admin/international`.
 - Launch switch: `INTERNATIONAL_LAUNCHED` in `lib/international.ts`. While false the

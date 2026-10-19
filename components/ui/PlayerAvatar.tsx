@@ -10,7 +10,10 @@ const SIZE_CLASSES = {
   sm: "h-7 w-7 text-3xs",
   md: "h-10 w-10 text-xs",
   lg: "h-16 w-16 text-base",
+  xl: "h-24 w-24 text-lg",
 } as const;
+
+const SIZE_PX = { sm: 28, md: 40, lg: 64, xl: 96 } as const;
 
 function initialsOf(name: string): string {
   return name
@@ -39,9 +42,9 @@ export function PlayerAvatar({ player, accentColor, size = "md", className }: Pl
   if (photoSrc && !imageFailed) {
     return (
       <Image
-        width={64}
-        height={64}
-        sizes="64px"
+        width={SIZE_PX[size]}
+        height={SIZE_PX[size]}
+        sizes={`${SIZE_PX[size]}px`}
         src={photoSrc}
         alt={player.name}
         onError={() => setFailedUrl(photoSrc)}

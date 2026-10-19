@@ -8,6 +8,8 @@ import { StatTile } from "@/components/ui/StatTile";
 import { Notice } from "@/components/ui/Notice";
 import { TableShell, Td, Th } from "@/components/ui/Table";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { PlayerAvatar } from "@/components/ui/PlayerAvatar";
+import { PhotoAttribution } from "@/components/international/PhotoAttribution";
 import { CompetitionLine, LevelBadge, ResultHeadline, SourceLink } from "@/components/international/ResultParts";
 import { getPublicAthleteProfile } from "@/lib/international-data";
 import {
@@ -46,6 +48,7 @@ export default async function AthletePage({ params }: Props) {
   const sorted = sortResultsNewestFirst(results, competitions);
   const medals = medalCount(results);
   const path = athletePath(athlete.id);
+  const hasPhoto = Boolean(athlete.photoUrl && athlete.photoCredit && athlete.photoLicense);
 
   // Group by year so long careers stay scannable.
   const byYear = new Map<string, typeof sorted>();
@@ -56,14 +59,23 @@ export default async function AthletePage({ params }: Props) {
 
   return <div className={PAGE_FRAME}>
     <JsonLd data={{ "@context": "https://schema.org", "@type": "Person", name: athlete.name, url: absoluteUrl(path),
-      ...(athlete.sports.length ? { knowsAbout: athlete.sports } : {}) }} />
+      ...(athlete.sports.length ? { knowsAbout: athlete.sports } : {}),
+      ...(hasPhoto && athlete.photoUrl ? { image: absoluteUrl(athlete.photoUrl) } : {}) }} />
     <JsonLd data={breadcrumbJsonLd([{ name: "International", path: "/international" }, { name: athlete.name, path }])} />
 
     <nav aria-label="Breadcrumb" className="text-xs text-muted">
       <Link href="/international" className="font-semibold text-primary hover:underline">International</Link> / {athlete.name}
     </nav>
-    <PageHeading eyebrow={athlete.sports.join(" · ") || "International"} title={athlete.name}
-      description={athlete.bio ?? `International results for ${athlete.name}, each linked to its public source.`} />
+    <div className="flex flex-col gap-4 sm:flex-row sm:items-start">
+      {hasPhoto && <div className="shrink-0 pt-2 md:pt-5">
+        <PlayerAvatar player={athlete} accentColor="var(--color-archive)" size="xl" />
+      </div>}
+      <div className="min-w-0 flex-1">
+        <PageHeading eyebrow={athlete.sports.join(" · ") || "International"} title={athlete.name}
+          description={athlete.bio ?? `International results for ${athlete.name}, each linked to its public source.`} />
+        {hasPhoto && <PhotoAttribution athlete={athlete} className="pb-2" />}
+      </div>
+    </div>
 
     {!INTERNATIONAL_LAUNCHED && <Notice tone="info" className="px-4 py-3 text-xs">Preview: this profile is not yet listed in search results.</Notice>}
 
