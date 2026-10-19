@@ -3,7 +3,7 @@ import { readFile, readdir } from "node:fs/promises";
 import { test } from "node:test";
 import { PGlite } from "@electric-sql/pglite";
 import { planObservation } from "@/lib/game-sync/plan";
-import { parseBasketballGame, parseBasketballIndex, parsePbaSchedule, parsePvlCards, sourceDay, sourceTime } from "@/lib/game-sync/sources";
+import { collectObservations, parseBasketballGame, parseBasketballIndex, parsePbaSchedule, parsePvlCards, sourceDay, sourceTime } from "@/lib/game-sync/sources";
 import type { Observation, StoredGame, SyncLink, SyncSource, SyncTeam } from "@/lib/game-sync/types";
 
 const source: SyncSource = { id: "uaap-s89-men", league: "UAAP", season_id: "uaap-s89-men", label: "UAAP Season 89 Men's Basketball", tournament_url: "https://uaap.livestats.ph/tournaments/uaap-season-89-men-s-basketball", year: 2026, starts_on: "2026-09-01", ends_on: "2027-02-28", conference_id: null, enabled: true };
@@ -79,6 +79,27 @@ test("Philippine date grouping, year rollover, TBA and conditional fixtures", ()
   assert.equal(pbaCards.length, 2); assert.equal(pbaCards[1].day, "2026-10-21");
 });
 
+test("PBA uses the scheduler's official cache when the app host cannot access schedules", async () => {
+  const pbaSource = { ...source, league: "PBA" as const, tournament_url: "https://pba-api01.actech2.com/tournaments/pba-50th-season-governors-cup" };
+  const html = basketballHtml().replaceAll("LA SALLE", "GIN").replaceAll("ADU", "PHX").replace("UAAP Season 89 MEN'S BASKETBALL", "PBA 50th Season Governors' Cup");
+  const schedule = '<div class="schedule-day"><h2>Wed, Oct 21</h2><div><div class="schedule-time-venue"><p>05:15 PM</p><p>Arena</p></div><div class="schedule-teams"><div class="schedule-team"><p>SAN MIGUEL BEERMEN</p></div><div class="schedule-team"><p>NLEX ROAD WARRIORS</p></div></div></div></div>';
+  const original = globalThis.fetch;
+  const urls: string[] = [];
+  globalThis.fetch = async input => {
+    const url = String(input); urls.push(url);
+    if (url === "https://www.pba.ph/schedule") return new Response("Denied", { status: 403 });
+    return new Response(html);
+  };
+  try {
+    const cached = await collectObservations(pbaSource, [], new Date("2026-10-20"), undefined, async () => schedule);
+    assert.equal(cached.items.length, 2); assert.deepEqual(cached.warnings, []);
+    assert.ok(!urls.includes("https://www.pba.ph/schedule"));
+    const unavailable = await collectObservations(pbaSource, [], new Date("2026-10-20"), undefined, async () => null);
+    assert.equal(unavailable.items.length, 1);
+    assert.match(unavailable.warnings[0], /403/);
+  } finally { globalThis.fetch = original; }
+});
+
 test("database sync: private state, leases, atomic manual-edit protection and retained box scores", async () => {
   const db = new PGlite();
   try {
@@ -86,6 +107,9 @@ test("database sync: private state, leases, atomic manual-edit protection and re
     for (const file of (await readdir("supabase/migrations")).sort()) {
       if (file.endsWith(".sql")) await db.exec(await readFile("supabase/migrations/" + file, "utf8"));
     }
+    // The original production schema stores start_time as text. Both layouts
+    // must support the same atomic updater without a disruptive type migration.
+    await db.exec("ALTER TABLE games ALTER COLUMN start_time DROP DEFAULT; ALTER TABLE games ALTER COLUMN start_time TYPE text USING start_time::text;");
     await db.exec("INSERT INTO seasons(id,label,league,is_current) VALUES ('uaap-s89-men','UAAP','UAAP',true); INSERT INTO teams(id,name,short_name,league,season_id) VALUES ('home','Home','H','UAAP','uaap-s89-men'),('away','Away','A','UAAP','uaap-s89-men');");
     await db.query("INSERT INTO game_sync_sources(id,league,season_id,label,tournament_url,year,starts_on,ends_on) VALUES ($1,'UAAP',$1,'UAAP',$2,2026,'2026-09-01','2027-02-28')", [source.id, source.tournament_url]);
     await db.query("INSERT INTO games(id,league,season_id,home_team_id,away_team_id,status,start_time,venue,stage,is_playoff,box_score) VALUES ('existing','UAAP','uaap-s89-men','home','away','UPCOMING',$1,'Old venue','ELIMINATION',false,$2)", [fixture.start_time, { home: [{ pts: 10, playerId: "keep" }], away: [] }]);

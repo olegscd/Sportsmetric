@@ -12,6 +12,25 @@ UPDATE public.game_sync_settings SET
 WHERE id;
 
 -- Repeating setup replaces this named schedule rather than adding duplicates.
+-- PBA currently allows Supabase's network while rejecting the app host. Fetch
+-- two minutes before the updater and collect the response one minute later.
+SELECT cron.schedule('sportsmetric-pba-schedule-fetch','13,28,43,58 * * * *',$job$
+  INSERT INTO public.game_sync_fetch_cache(source_id,request_id,requested_at)
+  SELECT s.id,net.http_get(url:='https://www.pba.ph/schedule',
+    headers:=jsonb_build_object('User-Agent','Sportsmetric/1.0 (sportsmetric.ph)'),timeout_milliseconds:=10000),now()
+  FROM public.game_sync_sources s JOIN public.seasons season ON season.id=s.season_id AND season.is_current
+  CROSS JOIN public.game_sync_settings c
+  WHERE c.id AND c.enabled AND s.enabled AND s.league='PBA'
+  ON CONFLICT(source_id) DO UPDATE SET request_id=EXCLUDED.request_id,requested_at=EXCLUDED.requested_at;
+$job$);
+
+SELECT cron.schedule('sportsmetric-pba-schedule-cache','14,29,44,59 * * * *',$job$
+  UPDATE public.game_sync_fetch_cache cache SET content=response.content,fetched_at=response.created
+  FROM net._http_response response WHERE response.id=cache.request_id
+    AND response.status_code=200 AND NOT response.timed_out AND response.error_msg IS NULL
+    AND length(response.content) BETWEEN 1 AND 4194304;
+$job$);
+
 SELECT cron.schedule('sportsmetric-game-sync','*/15 * * * *',$job$
   SELECT net.http_post(
     url := (SELECT base_url FROM public.game_sync_settings WHERE id AND enabled) || '/api/cron/game-sync',
@@ -34,4 +53,4 @@ SELECT cron.schedule('sportsmetric-game-sync-health','7,22,37,52 * * * *',$job$
   AND EXISTS (SELECT 1 FROM public.game_sync_settings WHERE id AND last_started_at>=now()-interval '45 minutes');
 $job$);
 
-SELECT jobname,schedule,active FROM cron.job WHERE jobname IN ('sportsmetric-game-sync','sportsmetric-game-sync-health');
+SELECT jobname,schedule,active FROM cron.job WHERE jobname IN ('sportsmetric-game-sync','sportsmetric-game-sync-health','sportsmetric-pba-schedule-fetch','sportsmetric-pba-schedule-cache');

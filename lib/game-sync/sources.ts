@@ -156,7 +156,7 @@ export function parsePvlCards(html: string, source: SyncSource, final: boolean):
   return items;
 }
 
-export async function collectObservations(source: SyncSource, links: SyncLink[], now: Date, signal?: AbortSignal): Promise<{ items: Observation[]; warnings: string[] }> {
+export async function collectObservations(source: SyncSource, links: SyncLink[], now: Date, signal?: AbortSignal, cachedPba?: () => Promise<string | null>): Promise<{ items: Observation[]; warnings: string[] }> {
   const read = (url: string, init: RequestInit = {}) => fetchSource(url, { ...init, signal });
   const warnings: string[] = [];
   if (source.league === "PVL") {
@@ -191,7 +191,10 @@ export async function collectObservations(source: SyncSource, links: SyncLink[],
     } catch (error) { warnings.push(ref.key + ": " + (error instanceof Error ? error.message : String(error))); }
   }
   if (source.league === "PBA") {
-    try { observations.push(...parsePbaSchedule(await read("https://www.pba.ph/schedule"), source)); }
+    try {
+      const cached = await cachedPba?.();
+      observations.push(...parsePbaSchedule(cached ?? await read("https://www.pba.ph/schedule"), source));
+    }
     catch (error) { warnings.push("PBA schedule: " + (error instanceof Error ? error.message : String(error))); }
   }
   return { items: observations, warnings };

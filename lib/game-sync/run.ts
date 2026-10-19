@@ -53,7 +53,12 @@ export async function runGameSync({ preview = false, db = getServiceSupabase(), 
     // Independent league fetches share a deadline; one unavailable source does
     // not stop the other leagues or extend a serverless request indefinitely.
     const deadline = AbortSignal.timeout(35000);
-    const results = await Promise.allSettled(sources.map(source => collectObservations(source, links, now, deadline)));
+    const results = await Promise.allSettled(sources.map(source => collectObservations(source, links, now, deadline, async () => {
+      const cache = await db!.from("game_sync_fetch_cache").select("content,fetched_at").eq("source_id", source.id).maybeSingle();
+      if (cache.error) throw new Error("Official schedule cache unavailable: " + cache.error.message);
+      if (!cache.data?.content || !cache.data.fetched_at || Date.parse(cache.data.fetched_at) < now.getTime() - 30 * 60000) return null;
+      return cache.data.content as string;
+    })));
     for (let index = 0; index < sources.length; index++) {
       const source = sources[index];
       const result = results[index];
@@ -102,6 +107,7 @@ export async function runGameSync({ preview = false, db = getServiceSupabase(), 
     // Flag overdue unfinished fixtures independently of scraper success.
     for (const game of games) {
       const source = sources.find(s => s.season_id === game.season_id && s.league === game.league);
+      if (links.some(l => l.game_id === game.id && l.paused)) continue;
       if (!source || game.status === "FINAL" || Date.parse(game.start_time) > now.getTime() - 8 * 3600000 || Date.parse(game.start_time) < now.getTime() - 7 * 86400000) continue;
       await recordIssue({ source_id: source.id, source_key: "overdue:" + game.id, game_id: game.id, message: "This fixture is overdue without a confirmed final result. Check the official source or a postponement." });
     }

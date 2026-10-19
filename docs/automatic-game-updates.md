@@ -23,15 +23,17 @@ result needs valid final set scores and a linked official report.
 
 ## Deployment
 
-1. Apply `supabase/migrations/20261020010000_game_sync.sql` after the earlier
-   application migrations. It creates service-role-only state and atomic writes.
+1. Apply the three `20261020010*` game-sync migrations after the earlier
+   application migrations. They create private state, atomic writes, compatibility
+   with legacy text dates, and the official schedule fetch cache.
 2. Deploy the app. No new environment secrets are needed; it reuses the existing
    server-only Supabase service-role configuration.
 3. Run `supabase/repairs/enable_game_sync.sql` in the project's SQL editor.
    This generates a private internal scheduler token, installs one 15-minute
-   job and a separate freshness check, and enables updates. Repeat safely.
-4. Run a preview in `/admin/updater`, then Check now. Verify the run and the two
-   named jobs in Supabase Integrations → Cron. A healthy cron dispatch alone
+   job, a separate freshness check, and two PBA schedule fetch/cache jobs,
+   and enables updates. Repeat safely.
+4. Run a preview in `/admin/updater`, then Check now. Verify the run and all four
+   updater and fetch jobs in Supabase Integrations → Cron. A healthy cron dispatch alone
    is not proof of an application run: verify `game_sync_runs` as well.
 
 Local preview: `npx tsx scripts/sync-games.ts` (no writes). Add `--write` only
@@ -57,6 +59,12 @@ The admin shows overdue games after eight hours, source failures and missing
 scheduler runs after 45 minutes. The independent health job creates review
 items even if the deployed app stops running. These are in-app review notices;
 no email or push notification provider is configured.
+
+PBA's public schedule currently rejects the app host but is accessible from
+Supabase. Two small jobs fetch that exact official page before the updater and
+cache successful HTTP 200 responses privately. The app accepts cache content for
+at most 30 minutes, then attempts the direct source and flags any failure. A
+failed fetch cannot replace a good cache with an error page.
 
 Use Keep manual control on a linked game to pause it. Resume automatic updates
 accepts its current values as the baseline. Published final-score corrections

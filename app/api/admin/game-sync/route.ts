@@ -47,7 +47,7 @@ export async function POST(request: Request) {
         const issues = await db.from("game_sync_issues").select("source_id,source_key").eq("game_id", body.id);
         if (issues.error) throw new Error(issues.error.message);
         if (!issues.data.length) throw new Error("No official source match is associated with this game.");
-        const linked = await db.from("game_sync_links").upsert(issues.data.filter(i => !i.source_key.startsWith("overdue:")).map(i => ({ ...i, game_id: body.id, paused: true, snapshot: game.data })));
+        const linked = await db.from("game_sync_links").upsert(issues.data.map(i => ({ ...i, source_key: i.source_key.startsWith("overdue:") ? "manual:" + body.id : i.source_key, game_id: body.id, paused: true, snapshot: game.data })));
         if (linked.error) throw new Error(linked.error.message);
       }
       if (body.paused) {
