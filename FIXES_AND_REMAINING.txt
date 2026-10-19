@@ -105,7 +105,7 @@ VERIFICATION
 - npm run check: PASS (lint and TypeScript).
 - npm test: PASS (18 unit/database tests).
 - npm run build: PASS (production compile, typecheck and route generation).
-- npm run test:e2e: PASS (4 Chromium tests against the production build).
+- npm run test:e2e: PASS (5 Chromium tests against the production build).
 - Database tests and browser fixtures are local. They do not apply migrations
   or write test content to the live Supabase project.
 
@@ -135,3 +135,16 @@ Operational limits:
 - Database migrations were verified locally, not applied to the live project.
 - No postponed/overdue status or full server-computed statistics model was added;
   the existing product policy and stat derivations are preserved.
+
+RENDER-FAILURE FOLLOW-UP
+------------------------
+The live schema lacks games.venue (and other optional metadata columns). The
+new public projection requested those columns explicitly and threw in the root
+server shell. The loader now retries without missing optional columns and uses
+legacy metadata inside box_score. The public live-data loader was verified
+successfully (22 seasons, 10 active-season teams, 108 players, 8 games).
+Initial database failures now keep the app shell/navigation and show a retry
+message instead of reaching the global render-error screen. Browser fixtures
+now model the legacy schema; an outage/recovery test verifies retry behavior.
+The local production homepage and sports API both returned HTTP 200 using the
+existing public database; the global render-error screen was absent.

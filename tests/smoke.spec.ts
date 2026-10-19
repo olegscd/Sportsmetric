@@ -65,3 +65,17 @@ test("login creates a revocable session; a copied cookie stops working after log
   await expect(page.getByText("Admin Access", { exact: true })).toBeVisible();
   expect((await request.get("/api/sports?admin=1", { headers })).status()).toBe(401);
 });
+
+test("database outages keep navigation and a working retry instead of crashing the root layout", async ({ page, request }) => {
+  await request.post("http://127.0.0.1:54329/_test/database?fail=1");
+  try {
+    await page.goto("/");
+    await expect(page.locator("main")).toBeVisible();
+    await expect(page.getByRole("button", { name: "Try again", exact: true })).toBeVisible();
+    await expect(page.getByText("Sportsmetric hit an error", { exact: true })).not.toBeVisible();
+  } finally {
+    await request.post("http://127.0.0.1:54329/_test/database?fail=0");
+  }
+  await page.getByRole("button", { name: "Try again", exact: true }).click();
+  await expect(page.getByRole("button", { name: "View details for AWY at HOM" })).toBeVisible();
+});

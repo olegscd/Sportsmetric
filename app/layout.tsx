@@ -10,7 +10,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Suspense } from "react";
 import { headers } from "next/headers";
-import { fetchSportsData, type SportsDataScope } from "@/lib/supabase-data";
+import { fetchSportsData, type SportsDataScope, type SupabaseDataResult } from "@/lib/supabase-data";
 import { isAdminAuthenticated } from "@/lib/admin-auth";
 
 // Every HTML response must be rendered with the request's CSP nonce.
@@ -70,13 +70,20 @@ async function SportsShell({ children }: { children: React.ReactNode }) {
     scope = { metadata: true };
     query = "metadata=1";
   }
-  const data = await fetchSportsData(scope);
-  if (query === "league=UAAP") {
+  let data: SupabaseDataResult | undefined;
+  let loadError: string | undefined;
+  try {
+    data = await fetchSportsData(scope);
+  } catch (err) {
+    console.error("[Sports shell] Initial data load failed:", err);
+    loadError = "Sports data is temporarily unavailable. Please try again.";
+  }
+  if (data && query === "league=UAAP") {
     const seasonId = data.seasons.find(s => s.league === "UAAP" && s.isCurrent)?.id ?? data.seasons.find(s => s.league === "UAAP")?.id;
     if (seasonId) query += `&season=${encodeURIComponent(seasonId)}`;
   }
   return (
-    <SportsDataProvider initialData={data} initialQuery={query}>
+    <SportsDataProvider initialData={data} initialQuery={query} initialError={loadError}>
       <GameModalProvider>
         <div className="flex min-h-screen w-full flex-col">
           <DesktopTopBar />

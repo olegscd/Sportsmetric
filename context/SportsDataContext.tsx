@@ -92,8 +92,8 @@ interface SportsDataContextType {
 
 const SportsDataContext = createContext<SportsDataContextType | undefined>(undefined);
 
-export function SportsDataProvider({ children, initialData, initialQuery = "metadata=1" }: {
-  children: React.ReactNode; initialData?: SupabaseDataResult; initialQuery?: string;
+export function SportsDataProvider({ children, initialData, initialQuery = "metadata=1", initialError }: {
+  children: React.ReactNode; initialData?: SupabaseDataResult; initialQuery?: string; initialError?: string;
 }) {
   const isHydrated = useSyncExternalStore(emptySubscribe, () => true, () => false);
   const [seasons, setSeasons] = useState<Season[]>(initialData?.seasons ?? []);
@@ -105,8 +105,8 @@ export function SportsDataProvider({ children, initialData, initialQuery = "meta
     ?? initialData?.seasons.find(s => s.isCurrent)?.id
     ?? initialData?.seasons[0]?.id ?? "2025-26"
   );
-  const [loading, setLoading] = useState<boolean>(!initialData);
-  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(!initialData && !initialError);
+  const [error, setError] = useState<string | null>(initialError ?? null);
 
   const pathname = usePathname();
   const [scope, setScope] = useState({ path: pathname, query: initialQuery });
@@ -120,7 +120,9 @@ export function SportsDataProvider({ children, initialData, initialQuery = "meta
 
   const loadDataFromSupabase = useCallback(async (silent = false) => {
     const generation = ++loadGeneration.current;
-    if (!silent) { setLoading(true); setError(null); }
+    // Keep a previous load error visible while retrying. The database client
+    // can back off for several seconds; hiding it would leave only a spinner.
+    if (!silent) setLoading(true);
     try {
       const response = await fetch(`/api/sports?${scopeQuery}`, { cache: "no-store" });
       if (!response.ok) throw new Error("Could not load sports data.");

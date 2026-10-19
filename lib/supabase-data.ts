@@ -373,6 +373,16 @@ async function fetchPaginatedTable<T>(
     query = query.order("id", { ascending: true });
     const { data, error } = await query.range(from, from + pageSize - 1);
     if (error) {
+      // Older deployments store these fields inside box_score and have not
+      // added the dedicated columns yet. Keep the lightweight projection, but
+      // retry without only the optional column that Postgres says is missing.
+      const missing = error.code === "42703"
+        ? error.message.match(/column (?:\w+\.)?"?(venue|stage|is_playoff)"? does not exist/i)?.[1]
+        : undefined;
+      if (table === "games" && missing && columns.split(",").includes(missing)) {
+        columns = columns.split(",").filter(column => column !== missing).join(",");
+        continue;
+      }
       // Returning a partial dataset would silently produce wrong standings.
       // Let the caller surface the failure instead.
       throw new Error(`Failed to load ${table} (offset ${from}): ${error.message}`);

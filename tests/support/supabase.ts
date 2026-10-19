@@ -18,7 +18,8 @@ const games = seasons.map(s => ({ id: `${s.id}-g1`, league: s.league, season_id:
   home_team_id: `${s.id}-home`, away_team_id: `${s.id}-away`, home_score: 80, away_score: 70,
   status: "FINAL", start_time: "2026-10-18T10:00:00Z", stage: "ELIMINATION", is_playoff: false,
   venue: "Test Arena", quarter_or_set: 4, time_remaining: null,
-  box_score: { home: [{ playerId: `${s.id}-home-player`, min: "30:00", pts: 20, reb: 5, ast: 3,
+  box_score: { venue: "Test Arena", stage: "ELIMINATION", isPlayoff: false,
+    home: [{ playerId: `${s.id}-home-player`, min: "30:00", pts: 20, reb: 5, ast: 3,
     stl: 1, blk: 0, fgM: 8, fgA: 16, threeM: 2, threeA: 8, ftM: 2, ftA: 2 }], away: [] },
   play_by_play: [],
 }));
@@ -26,9 +27,18 @@ const tables: Record<string, Record<string, unknown>[]> = {
   seasons, teams, players, games, admin_sessions: [], uaap_overrides: [], uaap_division_overrides: [],
 };
 
+let databaseUnavailable = false;
 createServer(async (request, response) => {
   const url = new URL(request.url ?? "/", "http://127.0.0.1:54329");
   if (url.pathname === "/health") { response.end("ok"); return; }
+  if (url.pathname === "/_test/database") {
+    databaseUnavailable = url.searchParams.get("fail") === "1";
+    response.end("ok"); return;
+  }
+  if (databaseUnavailable) {
+    response.writeHead(503, { "Content-Type": "application/json" });
+    response.end(JSON.stringify({ message: "Test database unavailable" })); return;
+  }
   const table = url.pathname.split("/").at(-1)!;
   let rows = tables[table] ?? [];
   const matches = (row: Record<string, unknown>) => [...url.searchParams].every(([key, value]) => {
@@ -50,6 +60,15 @@ createServer(async (request, response) => {
   }
   rows = rows.filter(matches);
   const select = url.searchParams.get("select");
+  // Model the live legacy schema: metadata exists only inside box_score.
+  if (table === "games") {
+    const missing = ["venue", "stage", "is_playoff"].find(column => select?.split(",").includes(column));
+    if (missing) {
+      response.writeHead(400, { "Content-Type": "application/json" });
+      response.end(JSON.stringify({ code: "42703", message: `column games.${missing} does not exist` })); return;
+    }
+    rows = rows.map(row => Object.fromEntries(Object.entries(row).filter(([key]) => !["venue", "stage", "is_playoff"].includes(key))));
+  }
   if (select && select !== "*") rows = rows.map(row => Object.fromEntries(select.split(",").map(key => [key, row[key]])));
   const rangeFrom = Number(url.searchParams.get("offset") ?? 0);
   const rangeSize = Number(url.searchParams.get("limit") ?? 1000);
