@@ -60,8 +60,9 @@ const PBA_TOURNAMENTS = [
 ];
 
 const UAAP_TOURNAMENTS = [
-  "uaap-season-87-men-s-basketball",
+  "uaap-season-89-men-s-basketball",
   "uaap-season-88-men-s-basketball",
+  "uaap-season-87-men-s-basketball",
   "uaap-season-86-men-s-basketball",
 ];
 
@@ -192,24 +193,27 @@ function parseNumber(value?: string | null): number | null {
 function parseIsoDate(rawDate?: string): string {
   if (!rawDate) return new Date().toISOString();
   try {
-    const parts = rawDate.split(/\s+/);
-    if (parts.length >= 1 && parts[0].includes("/")) {
-      const dParts = parts[0].split("/").map(Number);
-      if (dParts.length === 3) {
-        const month = dParts[0];
-        const day = dParts[1];
-        let year = dParts[2];
-        if (year < 100) year += 2000;
-        let hour = 16;
-        let minute = 0;
-        if (parts.length >= 2 && parts[1].includes(":")) {
-          const tParts = parts[1].split(":").map(Number);
-          hour = tParts[0] || 0;
-          minute = tParts[1] || 0;
-        }
-        return new Date(Date.UTC(year, month - 1, day, hour, minute)).toISOString();
-      }
+    // Source pages report Philippine time, e.g. "09/13/26 12:00 PM".
+    const match = rawDate
+      .trim()
+      .match(/^(\d{1,2})\/(\d{1,2})\/(\d{2,4})(?:\s+(\d{1,2}):(\d{2})(?:\s*([AP])\.?M\.?)?)?/i);
+    if (match) {
+      const month = Number(match[1]);
+      const day = Number(match[2]);
+      let year = Number(match[3]);
+      if (year < 100) year += 2000;
+      let hour = match[4] === undefined ? 16 : Number(match[4]);
+      const minute = match[5] === undefined ? 0 : Number(match[5]);
+      const meridiem = match[6]?.toUpperCase();
 
+      if (month < 1 || month > 12 || day < 1 || day > 31 || hour > 23 || minute > 59) {
+        return new Date().toISOString();
+      }
+      if (meridiem === "A" && hour === 12) hour = 0;
+      if (meridiem === "P" && hour < 12) hour += 12;
+
+      const phTime = Date.UTC(year, month - 1, day, hour, minute);
+      return new Date(phTime - 8 * 60 * 60 * 1000).toISOString();
     }
   } catch {
     // Fall back to current date
