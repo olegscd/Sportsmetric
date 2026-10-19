@@ -8,7 +8,8 @@ import { useGameModal } from "@/lib/game-modal-context";
 import { getEffectiveGameStatus, isPlayoffGame } from "@/lib/derivations";
 import { cn, formatGameDate, formatRecord, formatStartTime } from "@/lib/utils";
 import type { Game, Team } from "@/types/sports";
-import { ChevronRight } from "lucide-react";
+import { gameActions, type GameAction } from "@/lib/watch-links";
+import { ChevronRight, PlayCircle, Ticket, Tv } from "lucide-react";
 import Link from "next/link";
 import { memo, useMemo } from "react";
 import { LeagueBadge } from "./LeagueBadge";
@@ -59,6 +60,43 @@ function StatusPill({ game }: { game: Game }) {
         {formatStartTime(game.startTime)}
       </Badge>
     </span>
+  );
+}
+
+const ACTION_ICONS = { tickets: Ticket, watch: Tv, replay: PlayCircle } as const;
+const ACTION_TEXT = { tickets: "Tickets", watch: "Watch", replay: "Replay" } as const;
+
+/** Slim official links along the bottom of the card. */
+function CardActions({ actions }: { actions: GameAction[] }) {
+  if (!actions.length) return null;
+  return (
+    <div className={cn("mt-2.5 grid gap-2 border-t border-border/60 pt-2.5", actions.length > 1 ? "grid-cols-2" : "grid-cols-1")}>
+      {actions.map((action) => {
+        const Icon = ACTION_ICONS[action.kind];
+        return (
+          <a
+            key={action.kind}
+            href={action.url}
+            target="_blank"
+            rel="nofollow noopener noreferrer"
+            title={`${ACTION_TEXT[action.kind]}${action.label ? ` on ${action.label}` : ""}${action.detail ? ` (${action.detail})` : ""}`}
+            className={cn(
+              "pointer-events-auto relative z-10 flex min-h-9 min-w-0 items-center justify-center gap-1.5 rounded-control border px-2.5 text-xs font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
+              action.kind === "tickets"
+                ? "border-primary/40 bg-primary/10 text-foreground hover:bg-primary/20"
+                : "border-border bg-surface-2 text-foreground hover:border-border-strong"
+            )}
+          >
+            <Icon size={14} aria-hidden="true" className="shrink-0 text-primary" />
+            <span className="truncate">
+              {ACTION_TEXT[action.kind]}
+              {action.label ? <span className="font-normal text-muted"> · {action.label}</span> : null}
+            </span>
+            <span className="sr-only">(opens in a new tab)</span>
+          </a>
+        );
+      })}
+    </div>
   );
 }
 
@@ -113,7 +151,7 @@ function TeamRow({
 
 export const GameCard = memo(function GameCard({ game }: { game: Game }) {
   const { openGame } = useGameModal();
-  const { getStandings } = useSportsData();
+  const { getStandings, seasons } = useSportsData();
   const effectiveStatus = getEffectiveGameStatus(game);
   const showScore = effectiveStatus !== "UPCOMING";
 
@@ -134,6 +172,9 @@ export const GameCard = memo(function GameCard({ game }: { game: Game }) {
 
   const homeRecord = homeStandings ? { wins: homeStandings.wins, losses: homeStandings.losses } : game.homeTeam.record;
   const awayRecord = awayStandings ? { wins: awayStandings.wins, losses: awayStandings.losses } : game.awayTeam.record;
+
+  const season = seasons.find((s) => s.id === game.seasonId);
+  const actions = gameActions({ links: game.links, status: effectiveStatus }, season);
 
   const hasWinner =
     effectiveStatus === "FINAL" && game.homeScore !== game.awayScore;
@@ -200,6 +241,8 @@ export const GameCard = memo(function GameCard({ game }: { game: Game }) {
             </span>
           </div>
         ) : null}
+
+        <CardActions actions={actions} />
       </div>
     </article>
   );
