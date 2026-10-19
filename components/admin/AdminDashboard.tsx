@@ -210,6 +210,7 @@ export function AdminDashboard() {
             <h1 className="page-heading">{TAB_HELP[tab].title}</h1>
             <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted">{TAB_HELP[tab].description}</p>
           </div>
+          <Link href="/admin/updater" className={buttonClasses({ variant: "outline", size: "sm" })}>Game updater</Link>
         </div>
         <div className="mb-6 grid grid-cols-2 gap-2 sm:grid-cols-4">
           {([{ label: "Seasons", value: seasons.length, target: "seasons" }, { label: "Teams", value: teams.length, target: "teams" }, { label: "Players", value: players.length, target: "players" }, { label: "Matches", value: games.length, target: "games" }] as const).map(item => (

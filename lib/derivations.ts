@@ -8,32 +8,16 @@ export function isLifetimeSeason(seasonId: string): boolean {
 }
 
 /**
- * Automatically determines if a game is LIVE, UPCOMING, or FINAL.
- * If a game was scheduled as UPCOMING and its start_time has arrived (within active match window),
- * it dynamically updates to LIVE in real-time.
+ * Only stored, confirmed status determines whether a game is live or final.
+ * A scheduled start cannot establish that a game actually began.
  */
 export function getEffectiveGameStatus(
   game: Pick<Game, "status" | "startTime"> & { league?: League },
   currentTime = Date.now()
 ): "LIVE" | "UPCOMING" | "FINAL" {
-  if (game.status === "FINAL") return "FINAL";
-  if (game.status === "LIVE") return "LIVE";
-
-  // For PVL, matches do NOT auto-transition to LIVE based on time (official stats come via PDF post-match)
-  if (game.league === "PVL") {
-    return "UPCOMING";
-  }
-
-  const startMs = new Date(game.startTime).getTime();
-  if (Number.isFinite(startMs) && currentTime >= startMs) {
-    const elapsedHours = (currentTime - startMs) / (1000 * 60 * 60);
-    // Active match window (up to 4.5 hours after tip-off)
-    if (elapsedHours >= 0 && elapsedHours < 4.5) {
-      return "LIVE";
-    }
-  }
-
-  return "UPCOMING";
+  // Keep the clock argument compatible with existing callers.
+  void currentTime;
+  return game.status;
 }
 
 /**

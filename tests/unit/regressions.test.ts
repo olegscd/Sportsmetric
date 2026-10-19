@@ -23,16 +23,16 @@ const game = (changes: Partial<Game> = {}): Game => ({ id: "pba-g1", league: "PB
   startTime: "2026-10-19T00:00:00Z", quarterOrSet: 4, timeRemaining: null,
   boxScore: { home: [], away: [] }, playByPlay: [], stage: "ELIMINATION", isPlayoff: false, ...changes });
 
-test("PVL never auto-goes live; elapsed unconfirmed fixtures never become final", () => {
+test("elapsed fixtures never become live or final without confirmation", () => {
   const startTime = "2026-10-19T00:00:00Z";
   const now = Date.parse(startTime) + 3600000;
   assert.equal(getEffectiveGameStatus({ status: "UPCOMING", startTime, league: "PVL" }, now), "UPCOMING");
-  assert.equal(getEffectiveGameStatus({ status: "UPCOMING", startTime, league: "PBA" }, now), "LIVE");
+  assert.equal(getEffectiveGameStatus({ status: "UPCOMING", startTime, league: "PBA" }, now), "UPCOMING");
   assert.equal(getEffectiveGameStatus({ status: "UPCOMING", startTime, league: "PBA" }, now + 24 * 3600000), "UPCOMING");
   assert.equal(getEffectiveGameStatus({ status: "FINAL", startTime, league: "PVL" }, now), "FINAL");
 });
 
-test("navigation live count uses effective status and skips PVL", () => {
+test("navigation live count includes only confirmed live status", () => {
   const startTime = "2026-10-19T00:00:00Z";
   const now = Date.parse(startTime) + 3600000;
   assert.equal(countLiveGames([
@@ -40,7 +40,7 @@ test("navigation live count uses effective status and skips PVL", () => {
     { status: "UPCOMING", startTime, league: "PBA" },
     { status: "FINAL", startTime, league: "PBA" },
     { status: "UPCOMING", startTime, league: "PVL" },
-  ], now), 2);
+  ], now), 1);
 });
 
 test("standings exclude playoffs and unfinished games", () => {

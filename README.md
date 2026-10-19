@@ -139,6 +139,14 @@ and the future athlete profile structure. The production sitemap is `/sitemap.xm
 league pages live at `/leagues/uaap`, `/leagues/pba` and `/leagues/pvl`.
 International navigation will launch when verified athlete profiles are ready.
 
+## Automatic game updates
+
+The [game updater](docs/automatic-game-updates.md) checks official schedules and
+confirmed final scores through Supabase Cron every 15 minutes. Open
+`/admin/updater` for source health, previews, held changes, and pause controls.
+It preserves player box scores and requires the game-sync migration and scheduler
+setup described in the guide. `npm run games:sync` is a read-only local preview.
+
 ## News
 
 `/news` lists published stories with search and league/category filters. Each
