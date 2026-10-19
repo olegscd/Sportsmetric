@@ -1,3 +1,4 @@
+import type { IntlAthlete, IntlCompetition, IntlResult } from "@/lib/international";
 import type { Game, Player, Season, Team } from "@/types/sports";
 
 /**
@@ -16,7 +17,13 @@ export type AdminMutation =
   | { op: "player.delete"; id: string }
   | { op: "player.deleteAll"; seasonId: string }
   | { op: "season.batchUpsert"; seasons: Season[] }
-  | { op: "season.delete"; id: string };
+  | { op: "season.delete"; id: string }
+  | { op: "intl.athlete.upsert"; athlete: IntlAthlete }
+  | { op: "intl.athlete.delete"; id: string }
+  | { op: "intl.competition.upsert"; competition: IntlCompetition }
+  | { op: "intl.competition.delete"; id: string }
+  | { op: "intl.result.upsert"; result: IntlResult }
+  | { op: "intl.result.delete"; id: string };
 
 export type AdminMutationOp = AdminMutation["op"];
 

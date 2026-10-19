@@ -12,6 +12,7 @@ const MOBILE_LABELS: Record<string, string> = {
   "/news": "News",
   "/standings": "Standings",
   "/uaap": "UAAP",
+  "/international": "Intl",
   "/teams": "Teams",
   "/players": "Players",
 };

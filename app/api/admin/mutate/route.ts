@@ -22,6 +22,19 @@ import {
   upsertPlayerInSupabase,
   upsertTeamInSupabase,
 } from "@/lib/supabase-data";
+import {
+  deleteIntlAthlete,
+  deleteIntlCompetition,
+  deleteIntlResult,
+  upsertIntlAthlete,
+  upsertIntlCompetition,
+  upsertIntlResult,
+} from "@/lib/international-data";
+import {
+  normalizeIntlAthlete,
+  normalizeIntlCompetition,
+  normalizeIntlResult,
+} from "@/lib/international-validation";
 import { NextResponse } from "next/server";
 
 /**
@@ -51,6 +64,13 @@ const HANDLERS: Record<string, OpHandler> = {
   "season.batchUpsert": (p) =>
     batchUpsertSeasonsInSupabase(normalizeBatch(p.seasons, "seasons", normalizeSeason)),
   "season.delete": (p) => deleteSeasonInSupabase(requireId(p.id, "id")),
+
+  "intl.athlete.upsert": (p) => upsertIntlAthlete(normalizeIntlAthlete(p.athlete)),
+  "intl.athlete.delete": (p) => deleteIntlAthlete(requireId(p.id, "id")),
+  "intl.competition.upsert": (p) => upsertIntlCompetition(normalizeIntlCompetition(p.competition)),
+  "intl.competition.delete": (p) => deleteIntlCompetition(requireId(p.id, "id")),
+  "intl.result.upsert": (p) => upsertIntlResult(normalizeIntlResult(p.result)),
+  "intl.result.delete": (p) => deleteIntlResult(requireId(p.id, "id")),
 };
 
 export async function POST(request: Request) {

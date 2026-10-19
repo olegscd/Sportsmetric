@@ -1,4 +1,5 @@
-import { Award, Newspaper, Radio, Shield, Trophy, Users } from "lucide-react";
+import { Award, Globe2, Newspaper, Radio, Shield, Trophy, Users } from "lucide-react";
+import { INTERNATIONAL_LAUNCHED } from "@/lib/international";
 import type { ComponentType } from "react";
 
 export interface NavItem {
@@ -33,6 +34,13 @@ export const NAV_ITEMS: NavItem[] = [
     icon: Award,
     isActive: (path) => path.startsWith("/uaap"),
   },
+  // Hidden until verified profiles are published (see lib/international.ts).
+  ...(INTERNATIONAL_LAUNCHED ? [{
+    href: "/international",
+    label: "International",
+    icon: Globe2,
+    isActive: (path: string) => path.startsWith("/international") || path.startsWith("/athletes"),
+  }] : []),
   {
     href: "/teams",
     label: "Teams",

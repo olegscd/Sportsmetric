@@ -132,3 +132,28 @@ Primary references: [Google's SEO starter guide](https://developers.google.com/s
 [sitemaps](https://developers.google.com/search/docs/crawling-indexing/sitemaps/build-sitemap),
 [helpful content](https://developers.google.com/search/docs/fundamentals/creating-helpful-content)
 and [article structured data](https://developers.google.com/search/docs/appearance/structured-data/article).
+
+## International section: implementation (preview)
+
+Built 20 October 2026, intentionally unlaunched.
+
+- Schema: `supabase/migrations/20261020000000_international.sql` adds `intl_athletes`,
+  `intl_competitions` and `intl_results`, separate from the league tables. Athletes
+  record the Filipino connection type with a required https source; each result has
+  its own source, representation (country/club) and a typed figure: placement,
+  mark + unit, ranking, stat line or award. RLS exposes only published athletes and
+  published results of published athletes. Competitions with results cannot be
+  deleted; deleting an athlete removes their results.
+- Public pages: `/international` (latest results, sport/level filters, athletes) and
+  `/athletes/<slug>` (connection, medal summary, results by year, sources, coverage
+  notes, optional link to the Philippine league profile via `person_id`).
+- Admin: Workspace → International. Writes go through `/api/admin/mutate`
+  (`intl.*` operations); drafts load from the authenticated `/api/admin/international`.
+- Launch switch: `INTERNATIONAL_LAUNCHED` in `lib/international.ts`. While false the
+  pages render with noindex and a preview notice, and are excluded from navigation
+  and the sitemap. When true they join the nav and sitemap; athlete pages index only
+  if they have at least one published result.
+
+To launch: apply the migration, enter and publish verified profiles, set the switch
+to true, update the About page wording and the sitemap browser test (which currently
+asserts no `/international` URLs), then request indexing in Search Console.

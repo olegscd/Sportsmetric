@@ -13,6 +13,7 @@ import {
   CalendarDays,
   ChevronLeft,
   ClipboardList,
+  Globe2,
   Loader2,
   LogOut,
   Shield,
@@ -25,6 +26,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useRef, useState, type ComponentType } from "react";
 import { GameImporterTab } from "./GameImporterTab";
 import { GamesManager } from "./GamesManager";
+import { InternationalManager } from "./InternationalManager";
 import { PlayersManager } from "./PlayersManager";
 import { ScheduleManagerTab } from "./ScheduleManagerTab";
 import { SeasonsManager } from "./SeasonsManager";
@@ -32,7 +34,7 @@ import { TeamsManager } from "./TeamsManager";
 import { UAAPArchiveManager } from "./UAAPArchiveManager";
 import { Toast, type ToastState } from "./Toast";
 
-type AdminTab = "importer" | "schedule" | "games" | "players" | "teams" | "seasons" | "uaap";
+type AdminTab = "importer" | "schedule" | "games" | "players" | "teams" | "seasons" | "uaap" | "international";
 
 const TABS: { value: AdminTab; label: string; icon: ComponentType<{ size?: number }> }[] = [
   { value: "importer", label: "Importer", icon: Sparkles },
@@ -42,6 +44,7 @@ const TABS: { value: AdminTab; label: string; icon: ComponentType<{ size?: numbe
   { value: "teams", label: "Teams", icon: Shield },
   { value: "seasons", label: "Seasons", icon: CalendarDays },
   { value: "uaap", label: "UAAP Archive", icon: Archive },
+  { value: "international", label: "International", icon: Globe2 },
 ];
 
 const TAB_VALUES = new Set<string>(TABS.map((tab) => tab.value));
@@ -54,6 +57,7 @@ const TAB_HELP: Record<AdminTab, { title: string; description: string }> = {
   teams: { title: "Make every team at home.", description: "Manage team identities, branding, and records for each competition." },
   seasons: { title: "Set the season in motion.", description: "Create competitions and choose the current season shown to fans in each league." },
   uaap: { title: "Preserve the full story.", description: "Maintain historical standings, awards, and results across the UAAP archive." },
+  international: { title: "Follow Filipinos abroad.", description: "Record source-backed international results. Add the athlete and competition, then each result with its public source." },
 };
 
 export function AdminDashboard() {
@@ -223,6 +227,7 @@ export function AdminDashboard() {
         {tab === "teams" ? <TeamsManager onToast={showToast} /> : null}
         {tab === "seasons" ? <SeasonsManager onToast={showToast} /> : null}
         {tab === "uaap" ? <UAAPArchiveManager onToast={showToast} /> : null}
+        {tab === "international" ? <InternationalManager onToast={showToast} /> : null}
         </div>
       </div>
       </div>
