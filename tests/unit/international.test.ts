@@ -2,7 +2,10 @@ import { PGlite } from "@electric-sql/pglite";
 import assert from "node:assert/strict";
 import { readFile, readdir } from "node:fs/promises";
 import { test } from "node:test";
-import { formatResultHeadline, ordinal, parseStats, slugify, sortResultsNewestFirst, type IntlCompetition, type IntlResult } from "../../lib/international";
+import {
+  formatResultHeadline, ordinal, parseStats, selectTopPerformers, slugify, sortResultsNewestFirst,
+  type IntlAthlete, type IntlCompetition, type IntlResult,
+} from "../../lib/international";
 import { normalizeIntlAthlete, normalizeIntlResult } from "../../lib/international-validation";
 
 const baseResult: IntlResult = {
@@ -31,6 +34,37 @@ test("results sort newest first using competition dates when the result has none
   ]);
   const sorted = sortResultsNewestFirst([{ ...baseResult, id: "old", resultDate: "2023-01-01" }, { ...baseResult, id: "new", competitionId: "a", resultDate: null }], comps);
   assert.deepEqual(sorted.map(r => r.id), ["new", "old"]);
+});
+
+test("top performers rank by weighted medals, then golds and podiums", () => {
+  const athlete = (id: string, name: string): IntlAthlete => ({
+    id, name, sports: ["Sport"], filipinoConnection: "citizen", connectionNote: null,
+    connectionSourceUrl: "https://example.org/bio", personId: null, photoUrl: null, bio: null,
+    coverageNote: null, published: true, reviewedAt: null,
+  });
+  const medal = (id: string, athleteId: string, color: IntlResult["medal"], date: string, placement = 1): IntlResult =>
+    ({ ...baseResult, id, athleteId, medal: color, placement, resultDate: date });
+  const athletes = [
+    athlete("yulo", "Carlos Yulo"), athlete("diaz", "Hidilyn Diaz"), athlete("petecio", "Nesthy Petecio"),
+    athlete("obiena", "EJ Obiena"), athlete("villegas", "Aira Villegas"), athlete("rookie", "New Athlete"),
+  ];
+  const results = [
+    medal("y1", "yulo", "gold", "2024-08-03"), medal("y2", "yulo", "gold", "2024-08-04"),
+    medal("d1", "diaz", "gold", "2021-07-26"),
+    medal("p1", "petecio", "silver", "2021-08-03", 2), medal("p2", "petecio", "bronze", "2024-08-07", 3),
+    medal("o1", "obiena", "silver", "2023-08-26", 2), medal("v1", "villegas", "bronze", "2024-08-06", 3),
+  ];
+
+  const { top, rest } = selectTopPerformers(athletes, results, 3);
+  assert.deepEqual(top.map(p => p.athlete.id), ["yulo", "diaz", "petecio"]);
+  assert.deepEqual(rest.map(p => p.athlete.id), ["obiena", "villegas", "rookie"]);
+  assert.equal(top[0].medalPoints, 6);
+  assert.equal(top[0].medals.gold, 2);
+  assert.equal(top[2].medalPoints, 3);
+  assert.equal(top[2].medals.gold, 0);
+  assert.equal(top[2].bestResult?.id, "p1");
+  assert.equal(top[2].latestResult?.id, "p2");
+  assert.equal(rest[2].results.length, 0);
 });
 
 test("validation requires sources and type-specific fields", () => {

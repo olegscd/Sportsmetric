@@ -201,7 +201,7 @@ export function ordinal(n: number): string {
   return `${n}${({ 1: "st", 2: "nd", 3: "rd" } as Record<number, string>)[n % 10] ?? "th"}`;
 }
 
-const MEDAL_LABELS: Record<Medal, string> = { gold: "Gold", silver: "Silver", bronze: "Bronze" };
+export const MEDAL_LABELS: Record<Medal, string> = { gold: "Gold", silver: "Silver", bronze: "Bronze" };
 
 function formatNumber(value: number): string {
   return Number.isInteger(value) ? value.toLocaleString("en-PH") : String(value);
@@ -252,6 +252,80 @@ export function medalCount(results: IntlResult[]): Record<Medal, number> {
   const counts: Record<Medal, number> = { gold: 0, silver: 0, bronze: 0 };
   for (const r of results) if (r.medal) counts[r.medal] += 1;
   return counts;
+}
+
+/** Weighted medal score for the public top-performers leaderboard. */
+export const MEDAL_POINTS: Record<Medal, number> = { gold: 3, silver: 2, bronze: 1 };
+
+export interface AthletePerformance {
+  athlete: IntlAthlete;
+  results: IntlResult[];
+  medals: Record<Medal, number>;
+  medalPoints: number;
+  /** Finishes inside the top three, including events that do not award medals. */
+  podiums: number;
+  /** Strongest result by medal, then finishing position, then recency. */
+  bestResult: IntlResult | null;
+  latestResult: IntlResult | null;
+  /** Sort key for latestResult, including competition dates when known. */
+  latestDate: string;
+}
+
+const NO_PLACEMENT = Number.MAX_SAFE_INTEGER;
+const medalRank = (result: IntlResult) => result.medal ? MEDALS.indexOf(result.medal) : MEDALS.length;
+
+export function summarizeAthletePerformances(
+  athletes: IntlAthlete[],
+  results: IntlResult[],
+  competitions: Map<string, IntlCompetition> = new Map(),
+): AthletePerformance[] {
+  const byAthlete = new Map<string, IntlResult[]>();
+  for (const result of results) {
+    byAthlete.set(result.athleteId, [...(byAthlete.get(result.athleteId) ?? []), result]);
+  }
+
+  return athletes.map(athlete => {
+    const own = byAthlete.get(athlete.id) ?? [];
+    const medals = medalCount(own);
+    const bestResult = [...own].sort((a, b) =>
+      medalRank(a) - medalRank(b) ||
+      (a.placement ?? NO_PLACEMENT) - (b.placement ?? NO_PLACEMENT) ||
+      (b.resultDate ?? "").localeCompare(a.resultDate ?? ""))[0] ?? null;
+    const latestResult = sortResultsNewestFirst(own, competitions)[0] ?? null;
+    return {
+      athlete, results: own, medals,
+      medalPoints: medals.gold * MEDAL_POINTS.gold + medals.silver * MEDAL_POINTS.silver + medals.bronze * MEDAL_POINTS.bronze,
+      podiums: own.filter(result => result.medal || (result.placement !== null && result.placement <= 3)).length,
+      bestResult, latestResult,
+      latestDate: latestResult ? resultSortKey(latestResult, competitions.get(latestResult.competitionId)) : "",
+    };
+  });
+}
+
+export function compareAthletePerformances(a: AthletePerformance, b: AthletePerformance): number {
+  return b.medalPoints - a.medalPoints
+    || b.medals.gold - a.medals.gold
+    || b.medals.silver - a.medals.silver
+    || b.medals.bronze - a.medals.bronze
+    || b.podiums - a.podiums
+    || (a.bestResult?.placement ?? NO_PLACEMENT) - (b.bestResult?.placement ?? NO_PLACEMENT)
+    || b.latestDate.localeCompare(a.latestDate)
+    || a.athlete.name.localeCompare(b.athlete.name);
+}
+
+/** The top N performers, plus everyone else for a compact directory. */
+export function selectTopPerformers(
+  athletes: IntlAthlete[],
+  results: IntlResult[],
+  limit = 10,
+  competitions: Map<string, IntlCompetition> = new Map(),
+): { top: AthletePerformance[]; rest: AthletePerformance[] } {
+  const summaries = summarizeAthletePerformances(athletes, results, competitions);
+  const ranked = summaries.filter(summary => summary.results.length > 0).sort(compareAthletePerformances);
+  const unranked = summaries.filter(summary => summary.results.length === 0)
+    .sort((a, b) => a.athlete.name.localeCompare(b.athlete.name));
+  const capped = Math.max(0, limit);
+  return { top: ranked.slice(0, capped), rest: [...ranked.slice(capped), ...unranked] };
 }
 
 export function athletePath(id: string): string {

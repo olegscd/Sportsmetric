@@ -1,16 +1,16 @@
 import Link from "next/link";
-import { Globe2, Medal as MedalIcon } from "lucide-react";
+import { ChevronDown, Globe2 } from "lucide-react";
 import { PAGE_FRAME } from "@/components/layout/page-shell";
 import { PageHeading } from "@/components/ui/PageHeading";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { Notice } from "@/components/ui/Notice";
-import { Badge } from "@/components/ui/Badge";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { CompetitionLine, LevelBadge, ResultHeadline, SourceLink } from "@/components/international/ResultParts";
+import { AthleteDirectoryRow, AthleteSpotlightCard } from "@/components/international/AthleteSpotlight";
+import { PlacementFeed } from "@/components/international/PlacementFeed";
 import { getPublicInternationalData } from "@/lib/international-data";
 import {
-  CONNECTION_LABELS, COMPETITION_LEVELS, INTERNATIONAL_LAUNCHED, LEVEL_LABELS, REPRESENTATION_LABELS,
-  athletePath, medalCount, sortResultsNewestFirst, type CompetitionLevel,
+  COMPETITION_LEVELS, INTERNATIONAL_LAUNCHED, LEVEL_LABELS, MEDAL_POINTS,
+  selectTopPerformers, sortResultsNewestFirst, type CompetitionLevel,
 } from "@/lib/international";
 import { breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
 import { cn } from "@/lib/utils";
@@ -21,6 +21,7 @@ type Props = { searchParams: Promise<Record<string, string | string[] | undefine
 
 const TITLE = "Filipino Athletes Abroad & International Results";
 const DESCRIPTION = "Source-backed international results of Filipino athletes: Olympic and world championship placements, regional games, world rankings and stats from foreign leagues.";
+const RECENT_LIMIT = 12;
 
 export function generateMetadata() {
   return pageMetadata(TITLE, DESCRIPTION, "/international", INTERNATIONAL_LAUNCHED);
@@ -59,8 +60,8 @@ export default async function InternationalPage({ searchParams }: Props) {
     const c = competitions.get(r.competitionId);
     return c && (!sport || c.sport === sport) && (!level || c.level === level);
   }), competitions);
-  const visibleAthleteIds = new Set(results.map(r => r.athleteId));
-  const athleteList = data.athletes.filter(a => (!sport && !level) || visibleAthleteIds.has(a.id) || (!level && a.sports.includes(sport)));
+  const recent = results.slice(0, RECENT_LIMIT);
+  const { top, rest } = selectTopPerformers(data.athletes, data.results, 10, competitions);
 
   return <div className={PAGE_FRAME}>
     <JsonLd data={breadcrumbJsonLd([{ name: "International", path: "/international" }])} />
@@ -73,63 +74,65 @@ export default async function InternationalPage({ searchParams }: Props) {
 
     {!data.athletes.length ? <EmptyState icon={<Globe2 size={20} aria-hidden="true" />} title="No verified profiles published yet"
       description="Athlete profiles appear here once their Filipino connection and results have been checked against public sources." /> : <>
-      {(sports.length > 1 || levels.length > 1) && <nav aria-label="Filter international results" className="space-y-2">
-        {sports.length > 1 && <div className="h-scroll flex gap-2 overflow-x-auto pb-1">
-          <Chip href={filterHref("", level)} selected={!sport}>All sports</Chip>
-          {sports.map(s => <Chip key={s} href={filterHref(s, level)} selected={sport === s}>{s}</Chip>)}
-        </div>}
-        {levels.length > 1 && <div className="h-scroll flex gap-2 overflow-x-auto pb-1">
-          <Chip href={filterHref(sport, "")} selected={!level}>All levels</Chip>
-          {levels.map(l => <Chip key={l} href={filterHref(sport, l)} selected={level === l}>{LEVEL_LABELS[l]}</Chip>)}
-        </div>}
-      </nav>}
+      <section className="space-y-3" aria-labelledby="intl-top">
+        <div className="flex flex-wrap items-end justify-between gap-x-4 gap-y-1">
+          <div className="min-w-0">
+            <h2 id="intl-top" className="text-lg font-bold text-foreground">Top performers</h2>
+            <p className="text-xs leading-relaxed text-muted">
+              Ranked by major-medal points — gold {MEDAL_POINTS.gold}, silver {MEDAL_POINTS.silver}, bronze {MEDAL_POINTS.bronze}. Ties break on golds, then podiums.
+            </p>
+          </div>
+          <span className="text-2xs font-semibold uppercase tracking-wide text-muted">
+            {top.length} of {data.athletes.length} athletes
+          </span>
+        </div>
 
-      <section className="space-y-3" aria-labelledby="intl-results">
-        <h2 id="intl-results" className="text-lg font-bold text-foreground">Latest results</h2>
-        {!results.length ? <EmptyState title="No results for this filter" description="Try another sport or competition level." /> :
-          <ul className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
-            {results.slice(0, 30).map(r => {
-              const c = competitions.get(r.competitionId)!;
-              const a = athletes.get(r.athleteId)!;
-              return <li key={r.id} className="flex min-w-0 flex-col gap-2 rounded-card border border-border/80 bg-surface p-4 shadow-card">
-                <div className="flex items-start justify-between gap-2">
-                  <Link href={athletePath(a.id)} className="min-w-0 truncate text-sm font-bold text-foreground hover:text-primary">{a.name}</Link>
-                  <LevelBadge competition={c} />
-                </div>
-                <p className="text-sm text-foreground"><ResultHeadline result={r} className="text-base" /></p>
-                <p className="text-xs leading-relaxed text-muted">
-                  <span className="font-semibold text-foreground">{r.event}</span>{r.scope ? ` · ${r.scope}` : ""}<br />
-                  {c.name}{c.season ? ` (${c.season})` : ""}<br />
-                  <CompetitionLine competition={c} />
-                </p>
-                <div className="mt-auto flex flex-wrap items-center justify-between gap-2 border-t border-border/60 pt-2">
-                  <span className="text-2xs text-muted">{REPRESENTATION_LABELS[r.representation]}: {r.represented}</span>
-                  <SourceLink url={r.sourceUrl} publisher={r.sourcePublisher} />
-                </div>
-              </li>;
-            })}
-          </ul>}
+        {top.length ? <ul className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+          {top.map((performance, index) => <AthleteSpotlightCard key={performance.athlete.id}
+            performance={performance} rank={index + 1} competitions={competitions} />)}
+        </ul> : <EmptyState title="No ranked performances yet"
+          description="Profiles appear in this ranking once they have a published international result." />}
+
+        {rest.length > 0 && <details className="group rounded-card border border-border/70 bg-surface/60">
+          <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 px-4 py-3 text-sm font-semibold text-foreground [&::-webkit-details-marker]:hidden">
+            <span className="flex items-center gap-2">
+              <ChevronDown size={14} aria-hidden="true" className="text-muted transition-transform group-open:rotate-180" />
+              More athletes
+            </span>
+            <span className="text-2xs font-medium text-muted">{rest.length} profile{rest.length === 1 ? "" : "s"}</span>
+          </summary>
+          <ul className="grid gap-2 border-t border-border/60 p-3 sm:grid-cols-2 lg:grid-cols-3">
+            {rest.map(performance => <AthleteDirectoryRow key={performance.athlete.id} performance={performance} />)}
+          </ul>
+        </details>}
       </section>
 
-      <section className="space-y-3" aria-labelledby="intl-athletes">
-        <h2 id="intl-athletes" className="text-lg font-bold text-foreground">Athletes</h2>
-        <ul className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
-          {athleteList.map(a => {
-            const own = data.results.filter(r => r.athleteId === a.id);
-            const medals = medalCount(own);
-            const medalTotal = medals.gold + medals.silver + medals.bronze;
-            return <li key={a.id}>
-              <Link href={athletePath(a.id)} className="flex min-h-16 flex-col gap-1 rounded-control border border-border bg-surface px-4 py-3 hover:border-primary/40">
-                <span className="text-sm font-bold text-foreground">{a.name}</span>
-                <span className="flex flex-wrap items-center gap-1.5 text-2xs text-muted">
-                  {a.sports.join(", ") || "—"} · {CONNECTION_LABELS[a.filipinoConnection]}
-                  {medalTotal > 0 && <Badge tone="archive" icon={<MedalIcon size={10} aria-hidden="true" />}>{medalTotal} medal{medalTotal === 1 ? "" : "s"}</Badge>}
-                  <span>{own.length} result{own.length === 1 ? "" : "s"}</span>
-                </span>
-              </Link>
-            </li>;
-          })}
-        </ul>
+      <section className="space-y-3" aria-labelledby="intl-results">
+        <div className="flex flex-wrap items-end justify-between gap-x-4 gap-y-1">
+          <div className="min-w-0">
+            <h2 id="intl-results" className="text-lg font-bold text-foreground">Recent placements &amp; updates</h2>
+            <p className="text-xs leading-relaxed text-muted">Newest source-verified results first. Filters apply to this feed.</p>
+          </div>
+          {results.length > 0 && <span className="text-2xs font-semibold uppercase tracking-wide text-muted">
+            Showing {recent.length} of {results.length}
+          </span>}
+        </div>
+
+        {(sports.length > 1 || levels.length > 1) && <nav aria-label="Filter recent placements" className="space-y-2">
+          {sports.length > 1 && <div className="h-scroll flex gap-2 overflow-x-auto pb-1">
+            <Chip href={filterHref("", level)} selected={!sport}>All sports</Chip>
+            {sports.map(s => <Chip key={s} href={filterHref(s, level)} selected={sport === s}>{s}</Chip>)}
+          </div>}
+          {levels.length > 1 && <div className="h-scroll flex gap-2 overflow-x-auto pb-1">
+            <Chip href={filterHref(sport, "")} selected={!level}>All levels</Chip>
+            {levels.map(l => <Chip key={l} href={filterHref(sport, l)} selected={level === l}>{LEVEL_LABELS[l]}</Chip>)}
+          </div>}
+        </nav>}
+
+        {!recent.length ? <EmptyState
+          title={sport || level ? "No results for this filter" : "No published placements yet"}
+          description={sport || level ? "Try another sport or competition level." : "Placements appear here once they have been checked against a public source."} /> :
+          <PlacementFeed results={recent} competitions={competitions} athletes={athletes} />}
       </section>
     </>}
 
