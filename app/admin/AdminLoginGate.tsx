@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useEffect } from "react";
+import { useActionState, useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, Lock } from "lucide-react";
 import { loginAdmin } from "./actions";
@@ -9,6 +9,7 @@ import { Field, Input } from "@/components/ui/Field";
 import { Notice } from "@/components/ui/Notice";
 
 export function AdminLoginGate() {
+  const [showPassword, setShowPassword] = useState(false);
   const [state, formAction, isPending] = useActionState(loginAdmin, {
     error: null,
     success: false,
@@ -30,7 +31,7 @@ export function AdminLoginGate() {
             </div>
             <p className="text-lg font-bold text-foreground">Admin Access</p>
             <p className="mt-1 text-xs text-muted">
-              Enter the admin password to continue.
+              Enter the Sportsmetric admin password to continue.
             </p>
           </div>
 
@@ -38,13 +39,19 @@ export function AdminLoginGate() {
             <Field label="Password">
               <Input
                 name="password"
-                type="password"
+                type={showPassword ? "text" : "password"}
                 autoFocus
                 required
+                maxLength={1024}
                 autoComplete="current-password"
                 placeholder="Password"
               />
             </Field>
+
+            <label className="flex min-h-11 items-center gap-2 text-xs text-muted">
+              <input type="checkbox" checked={showPassword} onChange={event => setShowPassword(event.target.checked)} />
+              Show password
+            </label>
 
             {state.error && (
               <Notice tone="error">

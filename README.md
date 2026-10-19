@@ -62,6 +62,11 @@ in a deployment platform's secret settings.
 
 ## Database
 
+If `/admin` rejects a password or cannot create a session, follow the
+[admin sign-in recovery guide](docs/admin-login-recovery.md). A missing private
+session table can be installed with the repeatable session-only repair, without
+applying unrelated data migrations.
+
 Apply the SQL files in [`supabase/migrations`](supabase/migrations) in filename
 order. They create the baseline schema, indexes, RLS policies, the UAAP overrides
 tables, foreign keys, and the realtime publication. A bootstrap migration now

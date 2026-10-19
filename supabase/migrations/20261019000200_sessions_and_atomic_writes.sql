@@ -1,14 +1,14 @@
 BEGIN;
 
-CREATE TABLE public.admin_sessions (
+CREATE TABLE IF NOT EXISTS public.admin_sessions (
   id text PRIMARY KEY CHECK (id ~ '^[a-f0-9]{64}$'),
   created_at timestamptz NOT NULL DEFAULT now(),
   expires_at timestamptz NOT NULL
 );
 ALTER TABLE public.admin_sessions ENABLE ROW LEVEL SECURITY;
-REVOKE ALL ON public.admin_sessions FROM anon, authenticated;
+REVOKE ALL ON public.admin_sessions FROM PUBLIC, anon, authenticated;
 GRANT ALL ON public.admin_sessions TO service_role;
-CREATE INDEX admin_sessions_expiry_idx ON public.admin_sessions(expires_at);
+CREATE INDEX IF NOT EXISTS admin_sessions_expiry_idx ON public.admin_sessions(expires_at);
 
 -- Backfill with the same prefix convention as inferLeague(). Resolve existing
 -- duplicate currents deterministically before enforcing the invariant.

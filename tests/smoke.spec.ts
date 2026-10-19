@@ -54,6 +54,15 @@ test("login creates a revocable session; a copied cookie stops working after log
   expect((await request.get("/api/sports?admin=1")).status()).toBe(401);
   expect((await request.post("/api/admin/mutate", { data: {} })).status()).toBe(401);
   await page.goto("/admin");
+  const passwordInput = page.getByPlaceholder("Password", { exact: true });
+  await expect(passwordInput).toHaveAttribute("type", "password");
+  await page.getByLabel("Show password", { exact: true }).check();
+  await expect(passwordInput).toHaveAttribute("type", "text");
+  await page.getByLabel("Show password", { exact: true }).uncheck();
+  await passwordInput.fill("incorrect-test-password");
+  await page.getByRole("button", { name: "Enter Admin Panel" }).click();
+  await expect(page.getByText("Incorrect password. Use the admin password configured for this site.", { exact: true })).toBeVisible();
+  expect((await page.context().cookies()).find(cookie => cookie.name === "sportsmetric_admin")).toBeUndefined();
   await page.getByPlaceholder("Password", { exact: true }).fill("smoke-test-password");
   await page.getByRole("button", { name: "Enter Admin Panel" }).click();
   await expect(page.getByText("Admin Dashboard", { exact: true })).toBeVisible();

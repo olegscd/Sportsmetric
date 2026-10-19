@@ -17,6 +17,21 @@ test("migrations, atomic mutations, archive concurrency and session privacy", as
       deleted_divisions: ["2025|Chess|Women's"],
       extras_overrides: { awards: { "Basketball|2025": { "Men's": { mvp: { player: "Original" } } } } },
     })]);
+    await t.test("session repair is repeatable, preserves data and supports the later full migration", async () => {
+      const repair = await readFile("supabase/repairs/admin_sessions.sql", "utf8");
+      await db.exec(repair);
+      await db.exec("SET ROLE service_role");
+      try { await db.query("INSERT INTO admin_sessions(id,expires_at) VALUES ($1, now()+interval '1 day')", ["a".repeat(64)]); }
+      finally { await db.exec("RESET ROLE"); }
+      await db.exec("GRANT SELECT ON admin_sessions TO PUBLIC");
+      await db.exec(repair);
+      assert.equal((await db.query("SELECT id FROM admin_sessions")).rows.length, 1);
+      assert.equal((await db.query("SELECT id FROM seasons")).rows.length, 2);
+      assert.equal((await db.query("SELECT id FROM uaap_overrides")).rows.length, 1);
+      await db.exec("SET ROLE anon");
+      try { await assert.rejects(db.query("SELECT * FROM admin_sessions"), /permission denied/); }
+      finally { await db.exec("RESET ROLE"); }
+    });
     await migrate("20261019000200_sessions_and_atomic_writes.sql");
     await migrate("20261019000300_division_overrides.sql");
 

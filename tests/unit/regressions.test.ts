@@ -6,6 +6,7 @@ import { normalizeGame, normalizeTeam, ValidationError } from "@/lib/admin-valid
 import { parseBoxScoreText } from "@/lib/box-score-parser";
 import { assertAllowedSourceUrl, fetchAllowedSource } from "@/lib/game-extractor";
 import { passwordMatches } from "@/lib/admin-token";
+import { adminSessionError } from "@/lib/admin-session-errors";
 import { buildContentSecurityPolicy } from "@/lib/content-security-policy";
 import { safeImageSource } from "@/lib/image-policy";
 import { createEmptyTable, makeDivisionKey, resolveCellValue, WIN_PCT_COLUMN } from "@/lib/uaap-schema";
@@ -103,6 +104,14 @@ test("scrypt password hashes work and malformed hashes fail closed", async () =>
   assert.equal(await passwordMatches("correct-password", encoded), true);
   assert.equal(await passwordMatches("wrong", encoded), false);
   assert.equal(await passwordMatches("anything", "scrypt$broken"), false);
+});
+
+test("sign-in distinguishes missing session setup, denied database access and temporary failures", () => {
+  assert.match(adminSessionError("PGRST205", 404), /not set up/);
+  assert.match(adminSessionError("42P01"), /not set up/);
+  assert.match(adminSessionError("42501", 403), /service key/);
+  assert.match(adminSessionError(undefined, 401), /service key/);
+  assert.match(adminSessionError("upstream-private-message", 503), /temporarily unavailable/);
 });
 
 test("production CSP uses a nonce and does not allow inline script execution", () => {

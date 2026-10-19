@@ -53,7 +53,7 @@ export async function loginAdmin(
 
   if (typeof password !== "string" || !(await passwordMatches(password, secret))) {
     recordFailedLogin(clientKey);
-    return { error: "Incorrect password." };
+    return { error: "Incorrect password. Use the admin password configured for this site." };
   }
 
   clearLoginAttempts(clientKey);

@@ -1,16 +1,17 @@
 import crypto from "node:crypto";
 import { ADMIN_COOKIE_MAX_AGE, hashSessionToken } from "@/lib/admin-token";
 import { getServiceSupabase } from "@/lib/supabase-admin";
+import { adminSessionError } from "@/lib/admin-session-errors";
 
 export async function createAdminSession(): Promise<string> {
   const db = getServiceSupabase();
   if (!db) throw new Error("Admin session storage is not configured.");
   const token = crypto.randomBytes(32).toString("hex");
-  const { error } = await db.from("admin_sessions").insert({
+  const { error, status } = await db.from("admin_sessions").insert({
     id: hashSessionToken(token),
     expires_at: new Date(Date.now() + ADMIN_COOKIE_MAX_AGE * 1000).toISOString(),
   });
-  if (error) throw new Error("Could not create an admin session. Apply the session migration.");
+  if (error) throw new Error(adminSessionError(error.code, status));
   return token;
 }
 
