@@ -43,7 +43,7 @@ Validation: 45 unit tests and 21 production-build browser checks passed,
 including visible league records with JavaScript disabled, canonical URLs,
 profile/article markup, nonce safety, sitemap exclusions and the share image.
 Application lint and type checking passed, including the full `npm run check`.
-Google's first fetch exposed unescaped query
+During initial Search Console validation, we found unescaped query
 ampersands in this Next version's sitemap serializer; the route now generates
 escaped XML explicitly, with an additional strict regression check.
 
@@ -61,6 +61,27 @@ escaped XML explicitly, with an additional strict regression check.
 | Filipino athletes overseas / international results | Future `/international` and `/athletes/<stable-slug>` | Verified athlete profiles and substantial competition-specific results |
 
 ## Search Console and release procedure
+
+Release status (20 October 2026): the production URL-prefix property is verified
+in the owner's approved Google account using the published HTML verification file
+`public/googleeba863a372e019b7.html`. Keep that file available to retain verification.
+The homepage was already indexed; its updated live test passed and Google accepted
+a fresh indexing request into its priority crawl queue.
+
+The corrected sitemap returned HTTP 200 directly, with `application/xml`, no
+redirect or authentication requirement, and 3,802 public URLs at the final local
+validation. Strict XML parsing passed; all URLs use the production origin and none
+point to admin/API routes. URL inventory changes with published data. Google
+accepted the resubmission, and its own live inspection reported **Crawl allowed:
+Yes; Page fetch: Successful** at 02:01 Philippine time. The separate Sitemaps
+report still showed **Unknown / Couldn't fetch**, no last-read date and zero
+discovered pages at the last check. Successful sitemap processing is therefore
+**not yet confirmed**. Recheck that report after Google's next processing attempt;
+do not equate a submission receipt or a successful live fetch with sitemap parsing
+or indexing of every URL. If the fetch error persists, use Google's documented
+[sitemap fetch diagnostics](https://support.google.com/webmasters/answer/7451001#fetch_errors).
+
+For future releases:
 
 1. Verify the production property in Google Search Console in the owner's account.
    Ownership confirmation is a separate account action. If using an HTML meta tag,
