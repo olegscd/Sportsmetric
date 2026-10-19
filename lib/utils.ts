@@ -45,7 +45,7 @@ const LEAGUE_LABELS: Record<string, string> = {
 };
 
 export function leagueLabel(league: string): string {
-  return LEAGUE_LABELS[league] ?? league;
+  return Object.hasOwn(LEAGUE_LABELS, league) ? LEAGUE_LABELS[league] : league;
 }
 
 /**
@@ -94,6 +94,44 @@ export function formatFullDayHeader(iso: string): string {
     year: "numeric",
     timeZone: "Asia/Manila",
   }).format(date);
+}
+
+// ---------------------------------------------------------------------------
+// Philippine time helpers
+//
+// PHT is a fixed UTC+08:00 with no daylight saving, so offset arithmetic is
+// exact and avoids relying on the browser's timezone (which is wrong for an
+// admin working from abroad).
+// ---------------------------------------------------------------------------
+
+const PHT_OFFSET_MS = 8 * 60 * 60 * 1000;
+
+function pad2(value: number): string {
+  return String(value).padStart(2, "0");
+}
+
+/** Formats an ISO timestamp as a PHT `datetime-local` input value. */
+export function isoToPhtInput(iso: string): string {
+  if (!iso) return "";
+  const date = new Date(iso);
+  if (Number.isNaN(date.getTime())) return "";
+  const pht = new Date(date.getTime() + PHT_OFFSET_MS);
+  return `${pht.getUTCFullYear()}-${pad2(pht.getUTCMonth() + 1)}-${pad2(
+    pht.getUTCDate()
+  )}T${pad2(pht.getUTCHours())}:${pad2(pht.getUTCMinutes())}`;
+}
+
+/** Converts a PHT `datetime-local` input value into an ISO timestamp. */
+export function phtInputToIso(value: string): string {
+  if (!value) return new Date().toISOString();
+  const withSeconds = value.length === 16 ? `${value}:00` : value;
+  const date = new Date(`${withSeconds}+08:00`);
+  return Number.isNaN(date.getTime()) ? new Date().toISOString() : date.toISOString();
+}
+
+/** Today's date in PHT as `YYYY-MM-DD`. */
+export function phtTodayInputDate(): string {
+  return isoToPhtInput(new Date().toISOString()).slice(0, 10);
 }
 
 

@@ -66,10 +66,14 @@ export function BulkImportPanel({
   const fileRef = useRef<HTMLInputElement>(null);
   const seeded = useRef(false);
 
+  /* eslint-disable react-hooks/set-state-in-effect -- the editable column
+     buffer intentionally mirrors the `columns` prop when the parent replaces
+     the selected division. */
   useEffect(() => {
     setActiveColumns(columns);
     setDetectedPreset(null);
   }, [columns]);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   const enterableColumns = useMemo(
     () => activeColumns.filter((c) => !c.derived),
@@ -154,6 +158,8 @@ export function BulkImportPanel({
     setExtractNote(note || parsed.delimiterLabel);
   };
 
+  /* eslint-disable react-hooks/set-state-in-effect -- one-time hydration of
+     the paste buffer from the `initialText` prop. */
   useEffect(() => {
     if (seeded.current) return;
     if (!initialText?.trim()) return;
@@ -162,6 +168,7 @@ export function BulkImportPanel({
     runParse(initialText);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialText]);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   const previewRows = useMemo(() => {
     if (!grid) return [];
@@ -384,14 +391,14 @@ export function BulkImportPanel({
               <table className="w-full text-left text-xs border-collapse">
                 <thead className="sticky top-0 bg-elevated">
                   <tr className="text-[10px] font-bold uppercase tracking-wider text-muted">
-                    <th className="py-1.5 px-2 w-12 text-center">Rank</th>
-                    <th className="py-1.5 px-2">School</th>
+                    <th scope="col" className="py-1.5 px-2 w-12 text-center">Rank</th>
+                    <th scope="col" className="py-1.5 px-2">School</th>
                     {enterableColumns.map((col) => (
                       <th key={col.key} className="py-1.5 px-2 text-center">
                         {col.label}
                       </th>
                     ))}
-                    <th className="py-1.5 px-2">Notes</th>
+                    <th scope="col" className="py-1.5 px-2">Notes</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-border/60">

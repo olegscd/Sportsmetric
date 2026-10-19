@@ -58,11 +58,29 @@ export interface LegacyStandingRecord {
   source_page: string;
 }
 
+/**
+ * Historical extras are loosely-shaped JSON (arrays in older exports, maps in
+ * newer ones). Keep the values as `unknown` and narrow at the point of use.
+ */
 export interface UAAPArchiveExtras {
-  awards?: Record<string, Record<string, any>>;
-  chess_medalists?: Record<string, Record<string, any>>;
-  games?: Record<string, any>;
-  leaderboards?: Record<string, any>;
+  awards?: Record<string, Record<string, unknown>>;
+  chess_medalists?: Record<string, Record<string, unknown>>;
+  games?: Record<string, unknown>;
+  leaderboards?: Record<string, Record<string, unknown>>;
+}
+
+/** Shape of the admin-curated awards payload for one season/division. */
+export interface UAAPAwardPerson {
+  player?: string;
+  name?: string;
+  school?: string;
+  position?: string;
+}
+
+export interface UAAPDivisionAwards {
+  mvp?: { player: string; school: string } | null;
+  rookie_of_the_year?: { player: string; school: string } | null;
+  mythical_five?: Array<string | UAAPAwardPerson> | null;
 }
 
 export interface MergedUAAPData {
@@ -379,7 +397,7 @@ export function normalizeChessMedalists(
 
   if (Array.isArray(raw)) {
     const list = raw
-      .filter((m): m is Record<string, any> => !!m && typeof m === "object")
+      .filter((m): m is Record<string, unknown> => !!m && typeof m === "object")
       .map((m, idx) => ({
         medal: (m.medal as ChessMedalist["medal"]) ?? null,
         player: String(m.player ?? m.name ?? ""),
@@ -399,7 +417,7 @@ export function normalizeChessMedalists(
   for (const [board, value] of Object.entries(raw as Record<string, unknown>)) {
     if (!Array.isArray(value)) continue;
     result[board] = value
-      .filter((m): m is Record<string, any> => !!m && typeof m === "object")
+      .filter((m): m is Record<string, unknown> => !!m && typeof m === "object")
       .map((m) => ({
         medal: (m.medal as ChessMedalist["medal"]) ?? null,
         player: String(m.player ?? m.name ?? ""),

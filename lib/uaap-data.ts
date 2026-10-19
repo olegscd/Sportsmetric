@@ -1,5 +1,6 @@
 import fs from "fs/promises";
-import path from "path";
+import baseStandingsData from "@/data/uaap_standings.json";
+import baseExtrasData from "@/data/uaap_archive_extras.json";
 import { supabase } from "@/lib/supabase";
 import { getServiceSupabase } from "@/lib/supabase-admin";
 import {
@@ -64,13 +65,13 @@ const OVERRIDES_ROW_ID = "default";
  */
 const LEGACY_OVERRIDES_TEAM_ROW_ID = "__uaap_archive_overrides__";
 
-function getDataPaths() {
-  return {
-    standingsPath: path.join(process.cwd(), "data", "uaap_standings.json"),
-    extrasPath: path.join(process.cwd(), "data", "uaap_archive_extras.json"),
-    overridesPath: path.join(process.cwd(), "data", "uaap_admin_overrides.json"),
-  };
-}
+/**
+ * Local-disk fallback for development. In production Supabase is the source of
+ * truth and this path is read-only, so writes are skipped by `safeWriteFile`.
+ * A plain relative path (instead of path.join(process.cwd(), ...)) keeps the
+ * bundler from tracing the whole project root.
+ */
+const OVERRIDES_PATH = "data/uaap_admin_overrides.json";
 
 /**
  * Vercel serves the deployment bundle from a read-only /var/task, so disk
@@ -144,9 +145,8 @@ export async function readAdminOverrides(): Promise<UAAPAdminOverrides> {
     }
   }
 
-  const { overridesPath } = getDataPaths();
   try {
-    return coerceOverrides(JSON.parse(await fs.readFile(overridesPath, "utf-8")));
+    return coerceOverrides(JSON.parse(await fs.readFile(OVERRIDES_PATH, "utf-8")));
   } catch {
     return emptyOverrides();
   }
@@ -181,29 +181,17 @@ async function persistOverrides(overrides: UAAPAdminOverrides): Promise<string |
       "Supabase service role is not configured (missing SUPABASE_SERVICE_ROLE_KEY). Archive saves will not persist in production.";
   }
 
-  const { overridesPath } = getDataPaths();
-  await safeWriteFile(overridesPath, JSON.stringify(overrides, null, 2));
+  await safeWriteFile(OVERRIDES_PATH, JSON.stringify(overrides, null, 2));
 
   return supabaseError;
 }
 
 export async function readBaseStandings(): Promise<LegacyStandingRecord[]> {
-  const { standingsPath } = getDataPaths();
-  try {
-    const parsed = JSON.parse(await fs.readFile(standingsPath, "utf-8"));
-    return Array.isArray(parsed) ? parsed : [];
-  } catch {
-    return [];
-  }
+  return baseStandingsData as unknown as LegacyStandingRecord[];
 }
 
 export async function readBaseExtras(): Promise<UAAPArchiveExtras> {
-  const { extrasPath } = getDataPaths();
-  try {
-    return JSON.parse(await fs.readFile(extrasPath, "utf-8"));
-  } catch {
-    return { awards: {}, games: {}, chess_medalists: {}, leaderboards: {} };
-  }
+  return baseExtrasData as unknown as UAAPArchiveExtras;
 }
 
 /**
@@ -322,6 +310,22 @@ function sanitizeTable(input: UAAPTable): UAAPTable {
   };
 }
 
+/**
+ * Serializes read-modify-write cycles within one process. Multiple serverless
+ * instances can still race because the whole overrides document is stored as
+ * one row; the durable fix is one row per division (see FIXES_AND_REMAINING.txt).
+ */
+let overridesWriteQueue: Promise<unknown> = Promise.resolve();
+
+function withOverridesWriteLock<T>(work: () => Promise<T>): Promise<T> {
+  const run = overridesWriteQueue.then(work, work);
+  overridesWriteQueue = run.then(
+    () => undefined,
+    () => undefined
+  );
+  return run;
+}
+
 export async function saveUAAPAdminOverride(payload: UAAPSavePayload): Promise<{
   success: boolean;
   error?: string;
@@ -336,52 +340,71 @@ export async function saveUAAPAdminOverride(payload: UAAPSavePayload): Promise<{
   }
 
   try {
-    const clean = sanitizeTable(table);
-    const divisionKey = makeDivisionKey(clean.season, clean.sport, clean.division);
-    const overrides = await readAdminOverrides();
+    const result = await withOverridesWriteLock(async () => {
+      const clean = sanitizeTable(table);
+      const divisionKey = makeDivisionKey(clean.season, clean.sport, clean.division);
+      const overrides = await readAdminOverrides();
 
-    overrides.updated_at = new Date().toISOString();
-    overrides.tables_overrides[divisionKey] = clean;
-    // The table override supersedes any pre-flexible-column entry for this key.
-    delete overrides.standings_overrides[divisionKey];
-    overrides.deleted_divisions = overrides.deleted_divisions.filter(
-      (k) => k.toLowerCase() !== divisionKey.toLowerCase()
-    );
+      overrides.updated_at = new Date().toISOString();
+      overrides.tables_overrides[divisionKey] = clean;
+      // The table override supersedes any pre-flexible-column entry for this key.
+      delete overrides.standings_overrides[divisionKey];
+      overrides.deleted_divisions = overrides.deleted_divisions.filter(
+        (k) => k.toLowerCase() !== divisionKey.toLowerCase()
+      );
 
-    const extrasKey = makeExtrasKey(clean.sport, clean.season);
-    if (awards !== undefined) {
-      overrides.extras_overrides.awards ||= {};
-      overrides.extras_overrides.awards[extrasKey] ||= {};
-      if (awards === null) {
-        delete overrides.extras_overrides.awards[extrasKey][clean.division];
-      } else {
-        overrides.extras_overrides.awards[extrasKey][clean.division] = awards;
+      const extrasKey = makeExtrasKey(clean.sport, clean.season);
+      if (awards !== undefined) {
+        overrides.extras_overrides.awards ||= {};
+        overrides.extras_overrides.awards[extrasKey] ||= {};
+        if (awards === null) {
+          delete overrides.extras_overrides.awards[extrasKey][clean.division];
+        } else {
+          overrides.extras_overrides.awards[extrasKey][clean.division] = awards;
+        }
       }
-    }
-    if (chess_medalists !== undefined) {
-      overrides.extras_overrides.chess_medalists ||= {};
-      overrides.extras_overrides.chess_medalists[extrasKey] ||= {};
-      if (chess_medalists === null || Object.keys(chess_medalists).length === 0) {
-        delete overrides.extras_overrides.chess_medalists[extrasKey][clean.division];
-      } else {
-        overrides.extras_overrides.chess_medalists[extrasKey][clean.division] = chess_medalists;
+      if (chess_medalists !== undefined) {
+        overrides.extras_overrides.chess_medalists ||= {};
+        overrides.extras_overrides.chess_medalists[extrasKey] ||= {};
+        if (chess_medalists === null || Object.keys(chess_medalists).length === 0) {
+          delete overrides.extras_overrides.chess_medalists[extrasKey][clean.division];
+        } else {
+          overrides.extras_overrides.chess_medalists[extrasKey][clean.division] = chess_medalists;
+        }
       }
-    }
 
-    const supabaseError = await persistOverrides(overrides);
+      const persistenceError = await persistOverrides(overrides);
+      return { clean, persistenceError };
+    });
+
     const data = await getMergedUAAPData();
+
+    // In production the local write is a no-op (read-only filesystem), so a
+    // Supabase rejection means the save did not persist at all. Report it as a
+    // failure instead of a success with a warning.
+    if (result.persistenceError && process.env.NODE_ENV === "production") {
+      return {
+        success: false,
+        error: `Could not persist the archive changes: ${result.persistenceError}`,
+      };
+    }
 
     return {
       success: true,
-      count: clean.rows.length,
+      count: result.clean.rows.length,
       data,
-      ...(supabaseError
-        ? { warning: `Saved locally but the database rejected the write: ${supabaseError}` }
+      ...(result.persistenceError
+        ? {
+            warning: `Saved only to local disk; the database rejected the write: ${result.persistenceError}`,
+          }
         : {}),
     };
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error("[saveUAAPAdminOverride] error:", err);
-    return { success: false, error: err?.message || "Failed to save archive data." };
+    return {
+      success: false,
+      error: err instanceof Error ? err.message : "Failed to save archive data.",
+    };
   }
 }
 
@@ -391,29 +414,48 @@ export async function deleteUAAPAdminDivision(
   division: string
 ): Promise<{ success: boolean; error?: string; warning?: string; data?: MergedUAAPData }> {
   try {
-    const divisionKey = makeDivisionKey(season, sport, division);
-    const overrides = await readAdminOverrides();
+    const persistenceError = await withOverridesWriteLock(async () => {
+      const divisionKey = makeDivisionKey(season, sport, division);
+      const overrides = await readAdminOverrides();
 
-    overrides.updated_at = new Date().toISOString();
-    delete overrides.tables_overrides[divisionKey];
-    delete overrides.standings_overrides[divisionKey];
+      overrides.updated_at = new Date().toISOString();
+      delete overrides.tables_overrides[divisionKey];
+      delete overrides.standings_overrides[divisionKey];
 
-    if (!overrides.deleted_divisions.some((k) => k.toLowerCase() === divisionKey.toLowerCase())) {
-      overrides.deleted_divisions.push(divisionKey);
-    }
+      if (
+        !overrides.deleted_divisions.some(
+          (k) => k.toLowerCase() === divisionKey.toLowerCase()
+        )
+      ) {
+        overrides.deleted_divisions.push(divisionKey);
+      }
 
-    const supabaseError = await persistOverrides(overrides);
+      return persistOverrides(overrides);
+    });
+
     const data = await getMergedUAAPData();
+
+    if (persistenceError && process.env.NODE_ENV === "production") {
+      return {
+        success: false,
+        error: `Could not persist the archive deletion: ${persistenceError}`,
+      };
+    }
 
     return {
       success: true,
       data,
-      ...(supabaseError
-        ? { warning: `Deleted locally but the database rejected the write: ${supabaseError}` }
+      ...(persistenceError
+        ? {
+            warning: `Deleted only from local disk; the database rejected the write: ${persistenceError}`,
+          }
         : {}),
     };
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error("[deleteUAAPAdminDivision] error:", err);
-    return { success: false, error: err?.message || "Failed to delete division." };
+    return {
+      success: false,
+      error: err instanceof Error ? err.message : "Failed to delete division.",
+    };
   }
 }

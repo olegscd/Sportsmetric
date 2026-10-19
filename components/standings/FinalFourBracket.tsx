@@ -70,8 +70,16 @@ export function FinalFourBracket({ standings, playoffGames }: FinalFourBracketPr
       if (winnerId === sf2Winner.id) sf2FinalsWins++;
     }
   }
-  const champion: Team =
-    sf2FinalsWins > sf1FinalsWins ? sf2Winner : sf1Winner;
+  // UAAP finals are best-of-three: only declare a champion once a side has
+  // actually won two games. Previously a 0-0 or 1-0 series defaulted to the
+  // first finalist, showing a champion before the series was decided.
+  const FINALS_WINS_NEEDED = 2;
+  const champion: Team | null =
+    sf2FinalsWins >= FINALS_WINS_NEEDED
+      ? sf2Winner
+      : sf1FinalsWins >= FINALS_WINS_NEEDED
+        ? sf1Winner
+        : null;
 
   return (
     <div className="flex flex-col gap-4 rounded-3xl border border-amber-500/20 bg-surface/50 p-4 sm:p-6 shadow-xl">
@@ -240,9 +248,11 @@ export function FinalFourBracket({ standings, playoffGames }: FinalFourBracketPr
             href={`/teams/${sf1Winner.id}`}
             className={cn(
               "flex items-center gap-2.5 rounded-xl p-2.5 transition-colors border",
-              champion.id === sf1Winner.id
+              champion?.id === sf1Winner.id
                 ? "bg-emerald-500/20 border-emerald-500/40 text-foreground font-bold shadow-sm"
-                : "bg-rose-500/15 border-rose-500/30 text-foreground/80 font-medium opacity-75"
+                : champion
+                  ? "bg-rose-500/15 border-rose-500/30 text-foreground/80 font-medium opacity-75"
+                  : "bg-elevated border-border text-foreground/80 font-medium"
             )}
           >
             <TeamBadge team={sf1Winner} size="sm" />
@@ -258,9 +268,11 @@ export function FinalFourBracket({ standings, playoffGames }: FinalFourBracketPr
             href={`/teams/${sf2Winner.id}`}
             className={cn(
               "flex items-center gap-2.5 rounded-xl p-2.5 transition-colors border",
-              champion.id === sf2Winner.id
+              champion?.id === sf2Winner.id
                 ? "bg-emerald-500/20 border-emerald-500/40 text-foreground font-bold shadow-sm"
-                : "bg-rose-500/15 border-rose-500/30 text-foreground/80 font-medium opacity-75"
+                : champion
+                  ? "bg-rose-500/15 border-rose-500/30 text-foreground/80 font-medium opacity-75"
+                  : "bg-elevated border-border text-foreground/80 font-medium"
             )}
           >
             <TeamBadge team={sf2Winner} size="sm" />
@@ -286,22 +298,33 @@ export function FinalFourBracket({ standings, playoffGames }: FinalFourBracketPr
       </div>
 
       {/* Bracket Level 3: Champion / Winner */}
-      <div className="flex flex-col items-center justify-center gap-3 rounded-2xl border-2 border-emerald-400 bg-emerald-500/20 p-5 text-center shadow-lg max-w-md mx-auto w-full">
-        <div className="flex items-center gap-1.5 rounded-full bg-emerald-400/20 px-3 py-1 text-emerald-400 text-xs font-black uppercase tracking-wider">
-          <Trophy size={16} />
-          <span>Season Champion</span>
-        </div>
+      {champion ? (
+        <div className="flex flex-col items-center justify-center gap-3 rounded-2xl border-2 border-emerald-400 bg-emerald-500/20 p-5 text-center shadow-lg max-w-md mx-auto w-full">
+          <div className="flex items-center gap-1.5 rounded-full bg-emerald-400/20 px-3 py-1 text-emerald-400 text-xs font-black uppercase tracking-wider">
+            <Trophy size={16} />
+            <span>Season Champion</span>
+          </div>
 
-        <Link
-          href={`/teams/${champion.id}`}
-          className="flex flex-col items-center gap-2 group cursor-pointer"
-        >
-          <TeamBadge team={champion} size="lg" className="ring-4 ring-emerald-400/40 group-hover:scale-105 transition-transform" />
-          <span className="text-base sm:text-lg font-black text-foreground group-hover:text-emerald-400 transition-colors">
-            {champion.name}
+          <Link
+            href={`/teams/${champion.id}`}
+            className="flex flex-col items-center gap-2 group cursor-pointer"
+          >
+            <TeamBadge team={champion} size="lg" className="ring-4 ring-emerald-400/40 group-hover:scale-105 transition-transform" />
+            <span className="text-base sm:text-lg font-black text-foreground group-hover:text-emerald-400 transition-colors">
+              {champion.name}
+            </span>
+          </Link>
+        </div>
+      ) : (
+        <div className="flex flex-col items-center gap-1.5 rounded-2xl border border-dashed border-border bg-surface/60 p-5 text-center max-w-md mx-auto w-full">
+          <span className="text-xs font-bold uppercase tracking-wider text-muted">
+            Finals in progress
           </span>
-        </Link>
-      </div>
+          <p className="text-[11px] text-muted">
+            The champion appears once a finalist wins {FINALS_WINS_NEEDED} games.
+          </p>
+        </div>
+      )}
     </div>
   );
 }

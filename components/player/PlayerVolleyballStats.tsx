@@ -47,6 +47,7 @@ export function PlayerVolleyballStats({
   const fallbackStats = useMemo(() => {
     let totPts = 0;
     let totMatches = 0;
+    let totSets = 0;
     let totAtk = 0;
     let totBlk = 0;
     let totSrv = 0;
@@ -55,15 +56,19 @@ export function PlayerVolleyballStats({
       const m = a.matchesPlayed ?? 0;
       totPts += a.totalPts ?? (m > 0 ? Math.round(a.ppg * m) : 0);
       totMatches += m;
+      // Use the recorded set count when the dataset has it; older rows only
+      // carry matches, so fall back to a 3-set estimate.
+      totSets += a.setsPlayed ?? m * 3;
       totAtk += a.ptsAtk ?? a.attackPts ?? 0;
       totBlk += a.ptsBlk ?? a.blockPts ?? 0;
       totSrv += a.ptsAce ?? a.servePts ?? 0;
     }
     const m = Math.max(1, totMatches);
+    const sets = Math.max(1, totSets);
     return {
-      setsPlayed: totMatches * 3,
+      setsPlayed: totSets,
       totalPoints: totPts,
-      avgPerSet: Math.round((totPts / Math.max(1, totMatches * 3)) * 100) / 100,
+      avgPerSet: Math.round((totPts / sets) * 100) / 100,
       ptsAtk: totAtk,
       ptsBlk: totBlk,
       ptsAce: totSrv,

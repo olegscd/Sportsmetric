@@ -299,7 +299,7 @@ function extractFromSeason(season: string, markdown: string): DivisionExtract[] 
   };
 
   for (const page of pages) {
-    const pageSport = inferSport(page.text) || currentSport;
+    const pageSport: string | null = inferSport(page.text) || currentSport;
     if (pageSport) currentSport = pageSport;
     if (!currentSport) continue;
     if (looksLikeGameResults(page.text) || looksLikePlayerStatsPage(page.text)) continue;
@@ -640,7 +640,11 @@ function writeCsv(filePath: string, rows: StandingRow[]) {
   ];
   const lines = [headers.join(",")];
   for (const row of rows) {
-    lines.push(headers.map((key) => csvEscape((row as Record<string, unknown>)[key])).join(","));
+    lines.push(
+      headers
+        .map((key) => csvEscape((row as unknown as Record<string, unknown>)[key]))
+        .join(",")
+    );
   }
   fs.writeFileSync(filePath, lines.join("\n"), "utf-8");
 }
@@ -731,7 +735,7 @@ function main() {
     }
   }
 
-  let existing = new Set(extracts.map((e) => `${e.season}|${e.sport}|${e.division}`));
+  const existing = new Set(extracts.map((e) => `${e.season}|${e.sport}|${e.division}`));
   for (const [key, rows] of csvByKey) {
     if (existing.has(key)) continue;
     const [season, sport, division] = key.split("|");

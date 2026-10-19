@@ -1,5 +1,6 @@
 import { isAdminAuthenticated } from "@/lib/admin-auth";
 import { generateId } from "@/lib/data";
+import { buildGameId } from "@/lib/game-id";
 import {
   extractGameFromUrl,
   type ExtractedBoxRow,
@@ -97,7 +98,9 @@ function findBestTeamMatch(extracted: { name: string; shortName: string }, teams
   if (byName) return byName;
 
   // 3. Known code alias match
-  const aliases = TEAM_CODE_ALIASES[shortTarget] || [];
+  const aliases = Object.hasOwn(TEAM_CODE_ALIASES, shortTarget)
+    ? TEAM_CODE_ALIASES[shortTarget]
+    : [];
   for (const alias of aliases) {
     const matched = teams.find((t) => {
       const tNorm = normalizeStr(t.name);
@@ -216,6 +219,8 @@ export async function POST(req: NextRequest) {
     stage?: TournamentStage;
     status?: "FINAL" | "LIVE" | "UPCOMING";
     previewOnly?: boolean;
+    /** Preview payload returned by an earlier previewOnly call. */
+    parsedPayload?: ExtractedGamePayload;
   };
 
   try {
@@ -234,18 +239,35 @@ export async function POST(req: NextRequest) {
   }
 
   let parsedPayload: ExtractedGamePayload;
-  try {
-    parsedPayload = await extractGameFromUrl(url.trim(), league, stage, status);
-  } catch (err: unknown) {
-    const errorMsg = err instanceof Error ? err.message : String(err);
-    console.error("[Extraction Error]:", errorMsg);
-    return NextResponse.json(
-      {
-        error: "Failed to extract game data from URL.",
-        details: errorMsg,
-      },
-      { status: 500 }
-    );
+  if (body.parsedPayload) {
+    // The admin UI sends back the payload it already previewed, so saving does
+    // not re-fetch the source (and cannot save a different match than the one
+    // that was reviewed).
+    const candidate = body.parsedPayload;
+    if (
+      !candidate.homeTeam ||
+      !candidate.awayTeam ||
+      !candidate.boxScore?.home ||
+      !candidate.boxScore?.away ||
+      !candidate.startTime
+    ) {
+      return NextResponse.json({ error: "Invalid preview payload." }, { status: 400 });
+    }
+    parsedPayload = candidate;
+  } else {
+    try {
+      parsedPayload = await extractGameFromUrl(url.trim(), league, stage, status);
+    } catch (err: unknown) {
+      const errorMsg = err instanceof Error ? err.message : String(err);
+      console.error("[Extraction Error]:", errorMsg);
+      return NextResponse.json(
+        {
+          error: "Failed to extract game data from URL.",
+          details: errorMsg,
+        },
+        { status: 500 }
+      );
+    }
   }
 
 
@@ -254,9 +276,13 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Database client is not available." }, { status: 500 });
   }
 
-  const [teamsRes, playersRes] = await Promise.all([
+  const [teamsRes, playersRes, gamesRes] = await Promise.all([
     supabase.from("teams").select("*").eq("season_id", seasonId),
     supabase.from("players").select("*").eq("season_id", seasonId),
+    supabase
+      .from("games")
+      .select("id, home_team_id, away_team_id, start_time")
+      .eq("season_id", seasonId),
   ]);
 
   if (teamsRes.error) {
@@ -265,6 +291,16 @@ export async function POST(req: NextRequest) {
   if (playersRes.error) {
     return NextResponse.json({ error: `Failed to fetch players: ${playersRes.error.message}` }, { status: 500 });
   }
+  if (gamesRes.error) {
+    return NextResponse.json({ error: `Failed to fetch games: ${gamesRes.error.message}` }, { status: 500 });
+  }
+
+  const existingGames = (gamesRes.data ?? []) as Array<{
+    id: string;
+    home_team_id: string;
+    away_team_id: string;
+    start_time: string;
+  }>;
 
   const seasonTeams: Team[] = (teamsRes.data ?? []).map((t) => ({
     id: t.id,
@@ -321,33 +357,39 @@ export async function POST(req: NextRequest) {
     const result: BoxScoreItem[] = [];
 
     for (const row of rows) {
-      let matchedPlayer = findBestPlayerMatch(row, roster);
+      const personSlug = row.playerName
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-|-$/g, "");
+      let matchedPlayer =
+        findBestPlayerMatch(row, roster) ??
+        roster.find((p) => p.personId === personSlug);
 
       if (!matchedPlayer && !previewOnly) {
-        // Create new player record if not found in roster
-        const newPlayerId = generateId();
-        const personSlug = row.playerName.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+        // A deterministic id makes re-running an import idempotent: the same
+        // athlete upserts instead of creating a duplicate row every time.
+        const newPlayerId = `${team.id}-${personSlug}`.slice(0, 200);
         const newPlayer: Player = {
           id: newPlayerId,
           personId: personSlug,
           name: row.playerName,
           jerseyNumber: row.jersey ?? 0,
-          position: "SG",
+          position: league === "PVL" ? "OH" : "SG",
           teamId: team.id,
-          height: `6'0"`,
+          height: "",
           photoUrl: null,
           seasonId: team.seasonId,
+          // Let derivePlayerAverages compute the real season line from box
+          // scores; a single-game snapshot here would be misleading.
           seasonAverages: {
-            ppg: row.pts,
-            rpg: row.reb,
-            apg: row.ast,
-            spg: row.stl,
-            bpg: row.blk,
-            fgPct: row.fgA > 0 ? Math.round((row.fgM / row.fgA) * 1000) / 10 : 0,
-            threePtPct: row.threeA && row.threeA > 0 && row.threeM ? Math.round((row.threeM / row.threeA) * 1000) / 10 : 0,
-            ftPct: row.ftA && row.ftA > 0 && row.ftM ? Math.round((row.ftM / row.ftA) * 1000) / 10 : 0,
-            matchesPlayed: 1,
-            totalPts: row.pts,
+            ppg: 0,
+            rpg: 0,
+            apg: 0,
+            spg: 0,
+            bpg: 0,
+            fgPct: 0,
+            threePtPct: 0,
+            ftPct: 0,
           },
           rankBadges: [],
         };
@@ -389,8 +431,25 @@ export async function POST(req: NextRequest) {
   const mappedHomeBox = await resolveBoxRows(parsedPayload.boxScore.home, homeTeamMatch, homeRoster);
   const mappedAwayBox = await resolveBoxRows(parsedPayload.boxScore.away, awayTeamMatch, awayRoster);
 
-  const dateSlug = parsedPayload.startTime.slice(0, 10);
-  const gameId = `${league.toLowerCase()}-${seasonId}-${homeTeamMatch.shortName.toLowerCase()}-vs-${awayTeamMatch.shortName.toLowerCase()}-${dateSlug}`;
+  // Re-use the existing fixture id when the same teams meet at the same time,
+  // so re-importing updates it instead of creating a duplicate. Otherwise
+  // fall back to the shared collision-safe id builder.
+  const existingFixture = existingGames.find(
+    (g) =>
+      new Date(g.start_time).getTime() === new Date(parsedPayload.startTime).getTime() &&
+      ((g.home_team_id === homeTeamMatch.id && g.away_team_id === awayTeamMatch.id) ||
+        (g.home_team_id === awayTeamMatch.id && g.away_team_id === homeTeamMatch.id))
+  );
+  const gameId =
+    existingFixture?.id ??
+    buildGameId({
+      league,
+      seasonId,
+      homeShort: homeTeamMatch.shortName,
+      awayShort: awayTeamMatch.shortName,
+      startTimeIso: parsedPayload.startTime,
+      claimedIds: new Set(existingGames.map((g) => g.id)),
+    });
 
   const game: Game = {
     id: gameId,

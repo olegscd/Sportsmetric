@@ -6,7 +6,7 @@ import { useSportsData } from "@/context/SportsDataContext";
 import { generateId } from "@/lib/data";
 import { buildGameId } from "@/lib/game-id";
 import { inferLeague } from "@/lib/league-utils";
-import { cn, formatFullDayHeader, formatGameDate, formatStartTime } from "@/lib/utils";
+import { cn, formatFullDayHeader, formatGameDate, formatStartTime, phtInputToIso, phtTodayInputDate } from "@/lib/utils";
 import type { Game, League, TournamentStage } from "@/types/sports";
 
 import {
@@ -18,7 +18,7 @@ import {
   Radio,
   Trash2,
 } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import {
   Field,
   inputClass,
@@ -96,25 +96,26 @@ export function ScheduleManagerTab({ onToast }: { onToast: ToastFn }) {
 
   const [selectedSeasonId, setSelectedSeasonId] = useState<string>(defaultSeasonId);
 
-  useEffect(() => {
-    if (!leagueSeasons.some((s) => s.id === selectedSeasonId)) {
-      setSelectedSeasonId(defaultSeasonId);
-    }
-  }, [leagueSeasons, selectedSeasonId, defaultSeasonId]);
+  // Derive the effective season during render rather than syncing it in an
+  // effect; this keeps the select from briefly showing a season that does not
+  // belong to the selected league.
+  const effectiveSeasonId = leagueSeasons.some((s) => s.id === selectedSeasonId)
+    ? selectedSeasonId
+    : defaultSeasonId;
 
   // Active season teams
   const seasonTeams = useMemo(
-    () => teams.filter((t) => t.seasonId === selectedSeasonId),
-    [teams, selectedSeasonId]
+    () => teams.filter((t) => t.seasonId === effectiveSeasonId),
+    [teams, effectiveSeasonId]
   );
 
   // Active season upcoming games
   const upcomingGames = useMemo(
     () =>
       games
-        .filter((g) => g.seasonId === selectedSeasonId && g.status === "UPCOMING")
+        .filter((g) => g.seasonId === effectiveSeasonId && g.status === "UPCOMING")
         .sort((a, b) => new Date(a.startTime).getTime() - new Date(b.startTime).getTime()),
-    [games, selectedSeasonId]
+    [games, effectiveSeasonId]
   );
 
   // Group upcoming matches by date
@@ -142,13 +143,13 @@ export function ScheduleManagerTab({ onToast }: { onToast: ToastFn }) {
 
     () =>
       games
-        .filter((g) => g.seasonId === selectedSeasonId && g.status === "LIVE")
+        .filter((g) => g.seasonId === effectiveSeasonId && g.status === "LIVE")
         .sort((a, b) => new Date(a.startTime).getTime() - new Date(b.startTime).getTime()),
-    [games, selectedSeasonId]
+    [games, effectiveSeasonId]
   );
 
   // Draft Fixtures Form State
-  const todayStr = useMemo(() => new Date().toISOString().split("T")[0], []);
+  const todayStr = useMemo(() => phtTodayInputDate(), []);
   const defaultVenue = POPULAR_VENUES[selectedLeague]?.[0] || "PhilSports Arena";
 
   const [drafts, setDrafts] = useState<DraftFixture[]>([
@@ -222,13 +223,12 @@ export function ScheduleManagerTab({ onToast }: { onToast: ToastFn }) {
         if (!homeTeam || !awayTeam) continue;
 
         // Fixtures are entered in Philippine time, which is a fixed UTC+08:00
-        // with no daylight saving. Encoding the offset in the string keeps the
-        // conversion explicit instead of doing arithmetic on the hour.
-        const startTime = new Date(`${d.date}T${d.time}:00+08:00`).toISOString();
+        // with no daylight saving, so the same helper is used everywhere.
+        const startTime = phtInputToIso(`${d.date}T${d.time}`);
 
         const gameId = buildGameId({
           league: selectedLeague,
-          seasonId: selectedSeasonId,
+          seasonId: effectiveSeasonId,
           homeShort: homeTeam.shortName,
           awayShort: awayTeam.shortName,
           startTimeIso: startTime,
@@ -239,7 +239,7 @@ export function ScheduleManagerTab({ onToast }: { onToast: ToastFn }) {
         const newUpcomingGame: Game = {
           id: gameId,
           league: selectedLeague,
-          seasonId: selectedSeasonId,
+          seasonId: effectiveSeasonId,
           homeTeam,
           awayTeam,
           homeScore: 0,
@@ -329,7 +329,7 @@ export function ScheduleManagerTab({ onToast }: { onToast: ToastFn }) {
 
           <Field label="Season / Tournament">
             <select
-              value={selectedSeasonId}
+              value={effectiveSeasonId}
               onChange={(e) => setSelectedSeasonId(e.target.value)}
               className={selectClass}
             >

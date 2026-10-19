@@ -5,6 +5,7 @@ import { FilterChip } from "@/components/ui/FilterChip";
 import { useSportsData } from "@/context/SportsDataContext";
 import { generateId } from "@/lib/data";
 import { buildGameId } from "@/lib/game-id";
+import { isoToPhtInput, phtInputToIso } from "@/lib/utils";
 import type { Game, GameStatus, PlayByPlayEvent, PlayByPlayEventType } from "@/types/sports";
 import { Loader2 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
@@ -46,15 +47,11 @@ function periodInputDefault(game: Game): string {
 }
 
 function isoToLocalInput(iso: string): string {
-  const d = new Date(iso);
-  if (Number.isNaN(d.getTime())) return "";
-  const pad = (n: number) => String(n).padStart(2, "0");
-  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+  return isoToPhtInput(iso);
 }
 
 function localInputToIso(value: string): string {
-  const d = new Date(value);
-  return Number.isNaN(d.getTime()) ? new Date().toISOString() : d.toISOString();
+  return phtInputToIso(value);
 }
 
 function GameQuickRow({

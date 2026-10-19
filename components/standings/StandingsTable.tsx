@@ -52,15 +52,15 @@ export function StandingsTable({
       <table className="w-full text-left text-sm">
         <thead>
           <tr className="border-b border-border text-[11px] font-bold text-muted bg-elevated">
-            <th className="py-2.5 pl-3 font-bold">#</th>
-            <th className="py-2.5 font-bold">Team</th>
-            <th className="py-2.5 pr-3 text-right font-bold">W</th>
-            <th className="py-2.5 pr-3 text-right font-bold">L</th>
-            <th className="py-2.5 pr-3 text-right font-bold">PCT</th>
+            <th scope="col" className="py-2.5 pl-3 font-bold">#</th>
+            <th scope="col" className="py-2.5 font-bold">Team</th>
+            <th scope="col" className="py-2.5 pr-3 text-right font-bold">W</th>
+            <th scope="col" className="py-2.5 pr-3 text-right font-bold">L</th>
+            <th scope="col" className="py-2.5 pr-3 text-right font-bold">PCT</th>
             {showDiffAndStreak && (
               <>
-                <th className="py-2.5 pr-3 text-right font-bold">DIFF</th>
-                <th className="py-2.5 pr-3 text-right font-bold">STRK</th>
+                <th scope="col" className="py-2.5 pr-3 text-right font-bold">DIFF</th>
+                <th scope="col" className="py-2.5 pr-3 text-right font-bold">STRK</th>
               </>
             )}
           </tr>

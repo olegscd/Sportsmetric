@@ -1,4 +1,4 @@
-import { isAdminAuthenticated } from "@/app/admin/actions";
+import { isAdminAuthenticated } from "@/lib/admin-auth";
 import { getMergedUAAPData, saveUAAPAdminOverride, type UAAPSavePayload } from "@/lib/uaap-data";
 import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
@@ -14,10 +14,10 @@ export async function GET() {
         "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
       },
     });
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error("[/api/uaap/data GET] error:", err);
     return NextResponse.json(
-      { error: err.message || "Failed to fetch UAAP data" },
+      { error: err instanceof Error ? err.message : "Failed to fetch UAAP data" },
       { status: 500 }
     );
   }
@@ -44,10 +44,10 @@ export async function POST(req: NextRequest) {
     }
 
     return NextResponse.json(result, { status: 400 });
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error("[/api/uaap/data POST] error:", err);
     return NextResponse.json(
-      { error: err.message || "Failed to save UAAP archive data" },
+      { error: err instanceof Error ? err.message : "Failed to save UAAP archive data" },
       { status: 500 }
     );
   }

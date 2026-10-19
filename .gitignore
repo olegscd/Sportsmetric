@@ -56,5 +56,12 @@ data/sample_pages/
 data/seasons/**/*.pdf
 data/seasons/**/*.html
 
+# Generated compiled book (rebuild with scripts/build_book_pdf_and_viewer.py)
+data/compiled/UAAP_Complete_Digital_Book.html
+data/compiled/UAAP_Complete_Digital_Book.md
+
+# Local npm cache used by sandboxed installs
+.npm-cache/
+
 __pycache__/
 *.pyc

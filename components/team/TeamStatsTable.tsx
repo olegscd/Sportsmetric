@@ -18,19 +18,19 @@ export function TeamStatsTable({ players, league }: { players: Player[]; league:
       <table className="w-full min-w-[420px] text-left text-xs">
         <thead>
           <tr className="text-muted">
-            <th className="py-2 pr-2 pl-3 font-medium">Player</th>
+            <th scope="col" className="py-2 pr-2 pl-3 font-medium">Player</th>
             {volleyball ? (
               <>
-                <th className="px-2 font-medium">Kills/Set</th>
-                <th className="px-2 font-medium">Digs/Set</th>
-                <th className="px-2 pr-3 font-medium">Blocks/Set</th>
+                <th scope="col" className="px-2 font-medium">Kills/Set</th>
+                <th scope="col" className="px-2 font-medium">Digs/Set</th>
+                <th scope="col" className="px-2 pr-3 font-medium">Blocks/Set</th>
               </>
             ) : (
               <>
-                <th className="px-2 font-medium">PPG</th>
-                <th className="px-2 font-medium">RPG</th>
-                <th className="px-2 font-medium">APG</th>
-                <th className="px-2 pr-3 font-medium">3P%</th>
+                <th scope="col" className="px-2 font-medium">PPG</th>
+                <th scope="col" className="px-2 font-medium">RPG</th>
+                <th scope="col" className="px-2 font-medium">APG</th>
+                <th scope="col" className="px-2 pr-3 font-medium">3P%</th>
               </>
             )}
           </tr>

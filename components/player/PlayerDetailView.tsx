@@ -99,42 +99,82 @@ function PlayerDetailContent({ player, team }: { player: Player; team: Team }) {
     });
   }, [seasonLines, player, getPlayerGameLog]);
 
-  const careerAverages = useMemo(() => {
+  const careerAverages = useMemo<SeasonAverages>(() => {
     const lines = seasonLines.length > 0 ? seasonLines : [player];
-    if (lines.length === 0) {
-      return { ppg: 0, rpg: 0, apg: 0, spg: 0, bpg: 0, fgPct: 0, threePtPct: 0, ftPct: 0 };
-    }
-    if (lines.length === 1) {
-      return getPlayerAverages(lines[0]);
+    const round1 = (value: number) => Math.round(value * 10) / 10;
+
+    // Volleyball game logs do not carry sets played, so weight each season by
+    // matches played. This is still far more accurate than treating a 1-game
+    // season the same as a 20-game season.
+    const isVolleyballCareer = lines.some((line) =>
+      isVolleyballAverages(line.seasonAverages)
+    );
+
+    if (isVolleyballCareer) {
+      const totals = new Map<string, number>();
+      let totalWeight = 0;
+
+      for (const line of lines) {
+        const avg = getPlayerAverages(line);
+        const weight = Math.max(1, avg.matchesPlayed ?? line.seasonAverages.matchesPlayed ?? 1);
+        totalWeight += weight;
+        for (const [key, value] of Object.entries(avg)) {
+          if (typeof value === "number" && Number.isFinite(value)) {
+            totals.set(key, (totals.get(key) ?? 0) + value * weight);
+          }
+        }
+      }
+
+      const weighted: Record<string, number> = {};
+      for (const [key, value] of totals) {
+        weighted[key] = round1(value / totalWeight);
+      }
+      return weighted as unknown as SeasonAverages;
     }
 
-    let totPpg = 0, totRpg = 0, totApg = 0, totSpg = 0, totBpg = 0;
-    let totFg = 0, tot3p = 0, totFt = 0;
-    const count = lines.length;
+    // Basketball: aggregate the actual box-score lines so career percentages
+    // are weighted by attempts rather than averaged across seasons.
+    let gamesPlayed = 0;
+    let pts = 0, reb = 0, ast = 0, stl = 0, blk = 0;
+    let fgM = 0, fgA = 0, threeM = 0, threeA = 0, ftM = 0, ftA = 0;
+    const seenGames = new Set<string>();
 
     for (const line of lines) {
-      const avg = getPlayerAverages(line);
-      totPpg += avg.ppg;
-      totRpg += avg.rpg;
-      totApg += avg.apg;
-      totSpg += avg.spg;
-      totBpg += avg.bpg;
-      totFg += avg.fgPct;
-      tot3p += avg.threePtPct;
-      totFt += avg.ftPct;
+      for (const entry of getPlayerGameLog(line.id)) {
+        if (seenGames.has(entry.game.id)) continue;
+        seenGames.add(entry.game.id);
+        gamesPlayed += 1;
+        pts += entry.stat.pts ?? 0;
+        reb += entry.stat.reb ?? 0;
+        ast += entry.stat.ast ?? 0;
+        stl += entry.stat.stl ?? 0;
+        blk += entry.stat.blk ?? 0;
+        fgM += entry.stat.fgM ?? 0;
+        fgA += entry.stat.fgA ?? 0;
+        threeM += entry.stat.threeM ?? 0;
+        threeA += entry.stat.threeA ?? 0;
+        ftM += entry.stat.ftM ?? 0;
+        ftA += entry.stat.ftA ?? 0;
+      }
+    }
+
+    if (gamesPlayed === 0) {
+      return player.seasonAverages;
     }
 
     return {
-      ppg: Math.round((totPpg / count) * 10) / 10,
-      rpg: Math.round((totRpg / count) * 10) / 10,
-      apg: Math.round((totApg / count) * 10) / 10,
-      spg: Math.round((totSpg / count) * 10) / 10,
-      bpg: Math.round((totBpg / count) * 10) / 10,
-      fgPct: Math.round((totFg / count) * 10) / 10,
-      threePtPct: Math.round((tot3p / count) * 10) / 10,
-      ftPct: Math.round((totFt / count) * 10) / 10,
+      ppg: round1(pts / gamesPlayed),
+      rpg: round1(reb / gamesPlayed),
+      apg: round1(ast / gamesPlayed),
+      spg: round1(stl / gamesPlayed),
+      bpg: round1(blk / gamesPlayed),
+      fgPct: fgA > 0 ? round1((fgM / fgA) * 100) : 0,
+      threePtPct: threeA > 0 ? round1((threeM / threeA) * 100) : 0,
+      ftPct: ftA > 0 ? round1((ftM / ftA) * 100) : 0,
+      totalPts: pts,
+      matchesPlayed: gamesPlayed,
     };
-  }, [seasonLines, player, getPlayerAverages]);
+  }, [seasonLines, player, getPlayerGameLog, getPlayerAverages]);
 
   // Find the last active season line for this player (most recent season line with recorded stats)
   const lastActiveLine = useMemo(() => {

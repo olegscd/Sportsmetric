@@ -8,12 +8,22 @@ import crypto from "crypto";
 export const ADMIN_COOKIE_NAME = "sportsmetric_admin";
 export const ADMIN_COOKIE_MAX_AGE = 60 * 60 * 24 * 7; // 7 days, in seconds
 
+let warnedAboutWeakSecret = false;
+
 export function getAdminSecret(): string {
   const secret = process.env.ADMIN_PASSWORD;
   if (!secret) {
     console.error("[Admin Auth] ADMIN_PASSWORD is not defined in environment variables.");
+    return "";
   }
-  return secret || "";
+  if (!warnedAboutWeakSecret && secret.length < 12) {
+    warnedAboutWeakSecret = true;
+    console.warn(
+      "[Admin Auth] ADMIN_PASSWORD is shorter than 12 characters. " +
+        "Use a long random value; it also signs the admin session cookie."
+    );
+  }
+  return secret;
 }
 
 export function generateAuthToken(secret: string): string {

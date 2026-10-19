@@ -84,9 +84,9 @@ export function BoxScoreTable({
         <table className="w-full min-w-[300px] text-left text-xs">
           <thead>
             <tr className="border-b border-border text-muted font-semibold uppercase tracking-wider">
-              <th className="w-10 py-2.5 px-2 text-center font-bold text-foreground">#</th>
-              <th className="py-2.5 px-2 font-bold text-foreground">Player</th>
-              <th className="w-16 py-2.5 px-2 text-right font-bold text-foreground">PTS</th>
+              <th scope="col" className="w-10 py-2.5 px-2 text-center font-bold text-foreground">#</th>
+              <th scope="col" className="py-2.5 px-2 font-bold text-foreground">Player</th>
+              <th scope="col" className="w-16 py-2.5 px-2 text-right font-bold text-foreground">PTS</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-border/40">
@@ -165,16 +165,16 @@ export function BoxScoreTable({
       <table className="w-full min-w-[500px] text-left text-xs">
         <thead>
           <tr className="text-muted border-b border-border">
-            <th className="py-2 pr-2 font-medium">Player</th>
-            <th className="px-1.5 py-2 text-right font-medium">MIN</th>
-            <th className="px-1.5 py-2 text-right font-medium">PTS</th>
-            <th className="px-1.5 py-2 text-right font-medium">REB</th>
-            <th className="px-1.5 py-2 text-right font-medium">AST</th>
-            <th className="px-1.5 py-2 text-right font-medium">STL</th>
-            <th className="px-1.5 py-2 text-right font-medium">BLK</th>
-            <th className="px-1.5 py-2 text-right font-medium">TO</th>
-            <th className="px-1.5 py-2 text-right font-medium">PF</th>
-            <th className="px-1.5 py-2 text-right font-medium">FG</th>
+            <th scope="col" className="py-2 pr-2 font-medium">Player</th>
+            <th scope="col" className="px-1.5 py-2 text-right font-medium">MIN</th>
+            <th scope="col" className="px-1.5 py-2 text-right font-medium">PTS</th>
+            <th scope="col" className="px-1.5 py-2 text-right font-medium">REB</th>
+            <th scope="col" className="px-1.5 py-2 text-right font-medium">AST</th>
+            <th scope="col" className="px-1.5 py-2 text-right font-medium">STL</th>
+            <th scope="col" className="px-1.5 py-2 text-right font-medium">BLK</th>
+            <th scope="col" className="px-1.5 py-2 text-right font-medium">TO</th>
+            <th scope="col" className="px-1.5 py-2 text-right font-medium">PF</th>
+            <th scope="col" className="px-1.5 py-2 text-right font-medium">FG</th>
           </tr>
         </thead>
         <tbody>

@@ -39,15 +39,14 @@ export function SegmentedControl<T extends string>({
   onChange: (value: T) => void;
 }) {
   return (
-    <div role="tablist" className="flex items-center gap-1 rounded-full bg-surface p-1">
+    <div role="group" className="flex items-center gap-1 rounded-full bg-surface p-1">
       {options.map((option) => {
         const selected = value === option.value;
         return (
           <button
             key={option.value}
             type="button"
-            role="tab"
-            aria-selected={selected}
+            aria-pressed={selected}
             onClick={() => onChange(option.value)}
             className={cn(
               "flex-1 rounded-full py-1.5 text-xs font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",

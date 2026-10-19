@@ -20,7 +20,7 @@ import {
   Trash2,
 } from "lucide-react";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Field, primaryButtonClass, SectionCard, selectClass } from "./formPrimitives";
 
 const LEAGUES: League[] = ["UAAP", "PBA", "PVL"];
@@ -62,11 +62,12 @@ export function GameImporterTab({ onToast }: { onToast: ToastFn }) {
 
   const [seasonId, setSeasonId] = useState<string>("");
 
-  useEffect(() => {
-    if (leagueSeasons.some((s) => s.id === seasonId)) return;
-    const next = leagueSeasons.find((s) => s.isCurrent)?.id ?? leagueSeasons[0]?.id ?? "";
-    setSeasonId(next);
-  }, [leagueSeasons, seasonId]);
+  // Derive the effective season during render instead of syncing it in an
+  // effect. When the league changes, the previously selected season is no
+  // longer in leagueSeasons, so fall back to that league's current season.
+  const effectiveSeasonId = leagueSeasons.some((s) => s.id === seasonId)
+    ? seasonId
+    : leagueSeasons.find((s) => s.isCurrent)?.id ?? leagueSeasons[0]?.id ?? "";
 
   const [batchItems, setBatchItems] = useState<BatchItem[]>([]);
   const [isExtractingAll, setIsExtractingAll] = useState(false);
@@ -93,7 +94,7 @@ export function GameImporterTab({ onToast }: { onToast: ToastFn }) {
       onToast("Please enter at least one game URL or match ID.", "error");
       return;
     }
-    if (!seasonId) {
+    if (!effectiveSeasonId) {
       onToast("Please select a target season.", "error");
       return;
     }
@@ -120,7 +121,7 @@ export function GameImporterTab({ onToast }: { onToast: ToastFn }) {
           body: JSON.stringify({
             url: item.rawUrl,
             league,
-            seasonId,
+            seasonId: effectiveSeasonId,
             stage,
             status,
             previewOnly: true,
@@ -188,10 +189,13 @@ export function GameImporterTab({ onToast }: { onToast: ToastFn }) {
           body: JSON.stringify({
             url: item.rawUrl,
             league,
-            seasonId,
+            seasonId: effectiveSeasonId,
             stage,
             status,
             previewOnly: false,
+            // Save exactly what was previewed; otherwise the server would
+            // fetch and parse the source a second time.
+            parsedPayload: item.parsedPayload,
           }),
         });
 
@@ -276,7 +280,7 @@ export function GameImporterTab({ onToast }: { onToast: ToastFn }) {
             <Field label="Target Season">
               <select
                 className={selectClass}
-                value={seasonId}
+                value={effectiveSeasonId}
                 onChange={(e) => setSeasonId(e.target.value)}
                 disabled={isExtractingAll || isIngestingAll}
               >
@@ -611,9 +615,9 @@ function PreviewBoxTable({
           <table className="w-full min-w-[300px] text-left text-[11px]">
             <thead>
               <tr className="border-b border-border text-muted font-semibold uppercase tracking-wider">
-                <th className="w-10 py-1.5 px-2 text-center font-bold text-foreground">#</th>
-                <th className="py-1.5 px-2 font-bold text-foreground">Player</th>
-                <th className="w-16 py-1.5 px-2 text-right font-bold text-foreground">PTS</th>
+                <th scope="col" className="w-10 py-1.5 px-2 text-center font-bold text-foreground">#</th>
+                <th scope="col" className="py-1.5 px-2 font-bold text-foreground">Player</th>
+                <th scope="col" className="w-16 py-1.5 px-2 text-right font-bold text-foreground">PTS</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border/40">
@@ -684,16 +688,16 @@ function PreviewBoxTable({
         <table className="w-full min-w-[480px] text-left text-[11px]">
           <thead>
             <tr className="text-muted border-b border-border">
-              <th className="py-1.5 font-medium">Player</th>
-              <th className="px-1 py-1.5 text-right font-medium">MIN</th>
-              <th className="px-1 py-1.5 text-right font-medium">PTS</th>
-              <th className="px-1 py-1.5 text-right font-medium">REB</th>
-              <th className="px-1 py-1.5 text-right font-medium">AST</th>
-              <th className="px-1 py-1.5 text-right font-medium">STL</th>
-              <th className="px-1 py-1.5 text-right font-medium">BLK</th>
-              <th className="px-1 py-1.5 text-right font-medium">TO</th>
-              <th className="px-1 py-1.5 text-right font-medium">PF</th>
-              <th className="px-1 py-1.5 text-right font-medium">FG</th>
+              <th scope="col" className="py-1.5 font-medium">Player</th>
+              <th scope="col" className="px-1 py-1.5 text-right font-medium">MIN</th>
+              <th scope="col" className="px-1 py-1.5 text-right font-medium">PTS</th>
+              <th scope="col" className="px-1 py-1.5 text-right font-medium">REB</th>
+              <th scope="col" className="px-1 py-1.5 text-right font-medium">AST</th>
+              <th scope="col" className="px-1 py-1.5 text-right font-medium">STL</th>
+              <th scope="col" className="px-1 py-1.5 text-right font-medium">BLK</th>
+              <th scope="col" className="px-1 py-1.5 text-right font-medium">TO</th>
+              <th scope="col" className="px-1 py-1.5 text-right font-medium">PF</th>
+              <th scope="col" className="px-1 py-1.5 text-right font-medium">FG</th>
             </tr>
           </thead>
           <tbody>

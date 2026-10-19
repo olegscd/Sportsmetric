@@ -120,6 +120,50 @@ const SKIP_PLAYER_NAMES = new Set([
   "did not play",
 ]);
 
+/**
+ * The importer runs server-side and fetches a user-supplied URL, so it is an
+ * SSRF sink unless the host is restricted. Only the three official data
+ * sources (and their subdomains) are accepted.
+ */
+const ALLOWED_SOURCE_HOSTS = new Set([
+  "uaap.livestats.ph",
+  "pba-api01.actech2.com",
+  "pba.ph",
+  "www.pba.ph",
+  "dashboard.pvl.ph",
+  "pvl.ph",
+  "www.pvl.ph",
+]);
+
+const PRIVATE_HOST = /^(localhost|127\.|10\.|192\.168\.|169\.254\.|0\.0\.0\.0|\[::1\]|\[fc|\[fd)/i;
+
+export function assertAllowedSourceUrl(raw: string): string {
+  let url: URL;
+  try {
+    url = new URL(raw);
+  } catch {
+    throw new Error("Enter a full http(s) URL or a numeric match ID.");
+  }
+
+  if (url.protocol !== "http:" && url.protocol !== "https:") {
+    throw new Error("Only http(s) URLs are supported.");
+  }
+
+  const host = url.hostname.toLowerCase();
+  const allowed =
+    ALLOWED_SOURCE_HOSTS.has(host) ||
+    host.endsWith(".pba.ph") ||
+    host.endsWith(".livestats.ph");
+
+  if (!allowed || PRIVATE_HOST.test(host)) {
+    throw new Error(
+      `Unsupported source host "${host}". Use a UAAP LiveStats, PBA, or PVL URL.`
+    );
+  }
+
+  return url.toString();
+}
+
 function parseNumber(value?: string | null): number | null {
   if (!value) return null;
   const cleaned = value.replace(/,/g, "").replace(/%/g, "").trim();
@@ -492,7 +536,8 @@ export async function extractGameFromUrl(
 ): Promise<ExtractedGamePayload> {
   if (league === "PVL" || rawInput.toLowerCase().endsWith(".pdf") || rawInput.includes("dashboard.pvl.ph")) {
     if (rawInput.startsWith("http://") || rawInput.startsWith("https://")) {
-      const res = await fetch(rawInput, {
+      const safeUrl = assertAllowedSourceUrl(rawInput);
+      const res = await fetch(safeUrl, {
         headers: {
           "User-Agent":
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
@@ -518,7 +563,8 @@ export async function extractGameFromUrl(
 
   for (const targetUrl of candidates) {
     try {
-      const res = await fetch(targetUrl, {
+      const safeUrl = assertAllowedSourceUrl(targetUrl);
+      const res = await fetch(safeUrl, {
         headers: {
           "User-Agent":
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",

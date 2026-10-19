@@ -140,14 +140,19 @@ export async function getUAAPAnnualReportSnippet(
   }
 
   try {
-    const files = await fs.readdir(seasonDir);
+    const files = await fs.readdir(/* turbopackIgnore: true */ seasonDir);
     const reportFile = files.find((f) => f.endsWith(".md") && !f.startsWith("IMG_"));
 
     if (!reportFile) {
       return { content: `No report found for season ${season}.` };
     }
 
-    const text = await fs.readFile(path.join(seasonDir, reportFile), "utf-8");
+    // turbopackIgnore keeps the build from tracing (and copying) every photo
+    // and PDF under data/seasons just because this path is dynamic.
+    const text = await fs.readFile(
+      path.join(/* turbopackIgnore: true */ seasonDir, reportFile),
+      "utf-8"
+    );
 
     if (!sport || sport === "All") {
       return { content: text.slice(0, 15000), sourceFile: reportFile };

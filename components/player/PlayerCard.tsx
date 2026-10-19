@@ -7,6 +7,7 @@ import { useSportsData } from "@/context/SportsDataContext";
 import { formatAvg, formatPct } from "@/lib/utils";
 import type { Player, SeasonAverages, Team } from "@/types/sports";
 import Link from "next/link";
+import { memo } from "react";
 import { RankBadge } from "./RankBadge";
 
 function isVolleyballPlayer(player: Player, avg: SeasonAverages): boolean {
@@ -159,7 +160,7 @@ interface PlayerCardProps {
   customAverages?: SeasonAverages;
 }
 
-export function PlayerCard({
+export const PlayerCard = memo(function PlayerCard({
   player,
   team,
   variant = "compact",
@@ -244,4 +245,4 @@ export function PlayerCard({
       <StatGrid player={player} averages={customAverages} />
     </div>
   );
-}
+});

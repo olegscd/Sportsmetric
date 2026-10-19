@@ -17,28 +17,33 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams, useRouter } from "next/navigation";
-import { useMemo, useState, useEffect } from "react";
+import { useMemo, useState } from "react";
 import {
   formatCellValue,
-  legacyRecordsToTables,
   makeExtrasKey,
   normalizeChessMedalists,
   normalizeDivision,
   pickPreferredDivision,
   sortDivisions,
-  type LegacyStandingRecord,
-  type UAAPArchiveExtras,
-  type UAAPTable,
+  type MergedUAAPData,
+  type UAAPDivisionAwards,
 } from "@/lib/uaap-schema";
 import { getSchoolTheme } from "@/lib/uaap-schools";
 import { PAGE_SHELL } from "@/components/layout/page-shell";
 import { SPORTS_META, findSportMeta, formatSeasonLabel } from "@/components/uaap/sports-meta";
-import standingsData from "@/data/uaap_standings.json";
-import archiveExtrasData from "@/data/uaap_archive_extras.json";
 
 export { formatSeasonLabel };
 
 type TabId = "standings" | "awards" | "leaders";
+
+interface UAAPLeaderEntry {
+  rank?: number;
+  player?: string;
+  school?: string;
+  [key: string]: unknown;
+}
+
+type UAAPLeaderboards = Record<string, Record<string, UAAPLeaderEntry[]>>;
 
 function isChampionRow(details: string | null, rank: number): boolean {
   if (rank !== 1) return false;
@@ -92,37 +97,23 @@ function SchoolCell({ team }: { team: string }) {
   );
 }
 
-export function UAAPArchiveView() {
+export function UAAPArchiveView({ initialData }: { initialData: MergedUAAPData }) {
   const searchParams = useSearchParams();
   const router = useRouter();
 
   const sportParam = searchParams.get("sport");
   const seasonParam = searchParams.get("season");
   const divisionParam = searchParams.get("division");
-  const tabParam = (searchParams.get("tab") as TabId) || "standings";
+  const rawTab = searchParams.get("tab");
+  const tabParam: TabId =
+    rawTab === "awards" || rawTab === "leaders" || rawTab === "standings"
+      ? rawTab
+      : "standings";
 
-  const [tables, setTables] = useState<UAAPTable[]>(() =>
-    legacyRecordsToTables(standingsData as LegacyStandingRecord[])
-  );
-  const [extras, setExtras] = useState<UAAPArchiveExtras>(archiveExtrasData as UAAPArchiveExtras);
+  // The server component supplies the merged dataset; this view is read-only.
+  const tables = initialData.tables;
+  const extras = initialData.extras;
   const [sportQuery, setSportQuery] = useState("");
-
-  useEffect(() => {
-    let active = true;
-    fetch("/api/uaap/data", { cache: "no-store" })
-      .then((res) => (res.ok ? res.json() : null))
-      .then((json) => {
-        if (!active || !json) return;
-        if (Array.isArray(json.tables)) setTables(json.tables);
-        if (json.extras) setExtras(json.extras);
-      })
-      .catch((err) => {
-        console.warn("[UAAPArchiveView] Live fetch failed, using bundled data:", err);
-      });
-    return () => {
-      active = false;
-    };
-  }, []);
 
   const sportMeta = useMemo(() => findSportMeta(sportParam), [sportParam]);
 
@@ -186,10 +177,10 @@ export function UAAPArchiveView() {
     const forSeason = extras.awards?.[extrasKey];
     if (!forSeason) return null;
     return (
-      forSeason[currentDivision] ??
-      forSeason[normalizeDivision(currentDivision)] ??
-      forSeason[currentDivision.replace("'s", "")] ??
-      null
+      (forSeason[currentDivision] ??
+        forSeason[normalizeDivision(currentDivision)] ??
+        forSeason[currentDivision.replace("'s", "")] ??
+        null) as UAAPDivisionAwards | null
     );
   }, [extras, extrasKey, currentDivision]);
 
@@ -207,7 +198,7 @@ export function UAAPArchiveView() {
   const leaderboards = useMemo(() => {
     if (!extrasKey) return null;
     const raw = extras.leaderboards?.[extrasKey];
-    return raw && typeof raw === "object" ? (raw as Record<string, any>) : null;
+    return raw && typeof raw === "object" ? (raw as UAAPLeaderboards) : null;
   }, [extras, extrasKey]);
 
   const seasonCountBySport = useMemo(() => {
@@ -616,14 +607,14 @@ export function UAAPArchiveView() {
               <table className="w-full min-w-[36rem] text-left text-sm border-collapse">
                 <thead>
                   <tr className="border-b border-border bg-elevated/40 text-[11px] font-bold uppercase tracking-wider text-muted">
-                    <th className="py-3 px-4 w-14 text-center">Rank</th>
-                    <th className="py-3 px-4">School</th>
+                    <th scope="col" className="py-3 px-4 w-14 text-center">Rank</th>
+                    <th scope="col" className="py-3 px-4">School</th>
                     {activeTable?.columns.map((col) => (
                       <th key={col.key} className="py-3 px-4 text-center whitespace-nowrap">
                         {col.label}
                       </th>
                     ))}
-                    <th className="py-3 px-4">Result / Notes</th>
+                    <th scope="col" className="py-3 px-4">Result / Notes</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-border/60 font-medium">
@@ -722,7 +713,7 @@ export function UAAPArchiveView() {
                       </h4>
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                      {divisionAwards.mythical_five.map((player: any, idx: number) => {
+                      {divisionAwards.mythical_five.map((player, idx) => {
                         const name =
                           typeof player === "string" ? player : player.name || player.player;
                         const school = typeof player === "object" ? player.school : null;
@@ -832,7 +823,7 @@ export function UAAPArchiveView() {
                 {divisionKey.replace(/_/g, " ")}
               </h4>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                {Object.entries(categories as Record<string, any>).map(([category, leaders]) => (
+                {Object.entries(categories as Record<string, UAAPLeaderEntry[]>).map(([category, leaders]) => (
                   <div
                     key={category}
                     className="p-4 rounded-2xl bg-surface border border-border shadow-sm"
@@ -842,7 +833,7 @@ export function UAAPArchiveView() {
                     </h5>
                     <div className="space-y-1.5">
                       {(Array.isArray(leaders) ? leaders : []).slice(0, 10).map(
-                        (leader: any, idx: number) => {
+                        (leader, idx) => {
                           const theme = getSchoolTheme(leader.school || "");
                           return (
                             <div
@@ -869,7 +860,7 @@ export function UAAPArchiveView() {
                                 )}
                               </span>
                               <span className="font-mono font-bold text-amber-400 shrink-0">
-                                {leader.value}
+                                {String(leader.value ?? "—")}
                               </span>
                             </div>
                           );

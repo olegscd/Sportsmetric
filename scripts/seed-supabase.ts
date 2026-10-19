@@ -19,10 +19,14 @@ if (fs.existsSync(envPath)) {
 }
 
 const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+// Writes need the service-role key: the anon key is read-only under RLS.
+const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 if (!url || !key) {
-  console.error("Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY");
+  console.error(
+    "Missing NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY. " +
+      "The seed script deletes and inserts rows, which RLS blocks for the anon key."
+  );
   process.exit(1);
 }
 

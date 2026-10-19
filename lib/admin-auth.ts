@@ -31,6 +31,8 @@ export async function isAdminAuthenticated(): Promise<boolean> {
 const MAX_ATTEMPTS = 5;
 const WINDOW_MS = 15 * 60 * 1000;
 const LOCKOUT_MS = 15 * 60 * 1000;
+/** Bound the in-memory map so a spray of unique IPs cannot grow it forever. */
+const MAX_TRACKED_KEYS = 5000;
 
 type AttemptRecord = { count: number; firstAttemptAt: number; lockedUntil: number };
 
@@ -59,7 +61,18 @@ export function recordFailedLogin(key: string): void {
   const now = Date.now();
   const record = attempts.get(key);
 
-  if (!record || now - record.firstAttemptAt > WINDOW_MS) {
+  if (!record) {
+    if (attempts.size >= MAX_TRACKED_KEYS) {
+      pruneExpired(now);
+      // Still full after pruning: evict the oldest insertion.
+      const oldest = attempts.keys().next();
+      if (!oldest.done) attempts.delete(oldest.value);
+    }
+    attempts.set(key, { count: 1, firstAttemptAt: now, lockedUntil: 0 });
+    return;
+  }
+
+  if (now - record.firstAttemptAt > WINDOW_MS) {
     attempts.set(key, { count: 1, firstAttemptAt: now, lockedUntil: 0 });
     return;
   }

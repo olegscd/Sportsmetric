@@ -308,11 +308,26 @@ export function deriveStandings(
  * Dynamically computes Player Season Averages directly from aggregated box scores in games.
  * For UAAP, strictly counts regular season games up to Game ID 56.
  */
-export function derivePlayerAverages(player: Player, games: Game[], teams?: Team[]): SeasonAverages {
+export function derivePlayerAverages(
+  player: Player,
+  games: Game[],
+  teams?: Team[],
+  players?: Player[]
+): SeasonAverages {
   const playerTeam = teams?.find((t) => t.id === player.teamId);
   const league = playerTeam?.league ?? "UAAP";
 
   const relevantGames = getRegularSeasonGames(games, league, player.seasonId);
+
+  // A lifetime row is a collapsed view of one person across seasons, so match
+  // every season id that shares the career identity. Without this, lifetime
+  // averages only counted the latest season.
+  const playerIds = new Set<string>([player.id]);
+  if (players && isLifetimeSeason(player.seasonId)) {
+    for (const candidate of players) {
+      if (candidate.personId === player.personId) playerIds.add(candidate.id);
+    }
+  }
 
   let pts = 0;
   let reb = 0;
@@ -329,7 +344,7 @@ export function derivePlayerAverages(player: Player, games: Game[], teams?: Team
 
   for (const game of relevantGames) {
     const allBoxItems = [...(game.boxScore?.home ?? []), ...(game.boxScore?.away ?? [])];
-    const boxItem = allBoxItems.find((b) => b.playerId === player.id);
+    const boxItem = allBoxItems.find((b) => playerIds.has(b.playerId));
 
     if (boxItem) {
       gp++;
@@ -410,7 +425,7 @@ export function deriveStatLeaders(
 
   return relevantPlayers
     .map((player) => {
-      const averages = derivePlayerAverages(player, games, teams);
+      const averages = derivePlayerAverages(player, games, teams, players);
       const team = teamsById.get(player.teamId);
       const value = averages[statKey];
       return team && typeof value === "number"
@@ -446,7 +461,7 @@ export function derivePlayerStatRank(
 
   const averagesCache = new Map<string, SeasonAverages>();
   for (const p of leaguePlayers) {
-    averagesCache.set(p.id, derivePlayerAverages(p, games, teams));
+    averagesCache.set(p.id, derivePlayerAverages(p, games, teams, players));
   }
 
   const playerAvg = averagesCache.get(playerId);
@@ -480,11 +495,22 @@ export function derivePlayerGameLog(
 
   const teamsById = new Map(teams.map((t) => [t.id, t]));
 
+  // Lifetime rows collapse one person into their latest season row; include
+  // every season id so their history is not truncated to the latest year.
+  const playerIds = new Set<string>([playerId]);
+  if (isLifetimeSeason(player.seasonId)) {
+    for (const candidate of players) {
+      if (candidate.personId === player.personId) playerIds.add(candidate.id);
+    }
+  }
+
   return games
-    .filter((g) => g.seasonId === player.seasonId)
+    .filter((g) => isLifetimeSeason(player.seasonId) || g.seasonId === player.seasonId)
     .flatMap((game) => {
-      const inHome = game.boxScore?.home?.find((item) => item.playerId === playerId);
-      const inAway = inHome ? undefined : game.boxScore?.away?.find((item) => item.playerId === playerId);
+      const inHome = game.boxScore?.home?.find((item) => playerIds.has(item.playerId));
+      const inAway = inHome
+        ? undefined
+        : game.boxScore?.away?.find((item) => playerIds.has(item.playerId));
       if (!inHome && !inAway) return [];
 
       const isHome = Boolean(inHome);

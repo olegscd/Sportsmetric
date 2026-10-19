@@ -102,6 +102,9 @@ export function SportsDataProvider({ children }: { children: React.ReactNode }) 
 
   // Debounce ref for realtime updates
   const realtimeDebounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // Realtime events can arrive faster than a full reload completes. Skip a
+  // reload while one is already in flight instead of stacking requests.
+  const reloadingRef = useRef(false);
 
   const loadDataFromSupabase = useCallback(async (silent = false) => {
     if (!silent) {
@@ -131,58 +134,36 @@ export function SportsDataProvider({ children }: { children: React.ReactNode }) 
   }, []);
 
   useEffect(() => {
-    let isMounted = true;
+    // Single load path for both the initial fetch and manual refreshes. This
+    // is external-system synchronization (Supabase -> store) on mount.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    void loadDataFromSupabase();
 
-    fetchAllSupabaseData()
-      .then((data) => {
-        if (!isMounted) return;
-        if (data) {
-          setSeasons(data.seasons);
-          setTeams(data.teams);
-          setPlayers(data.players);
-          setGames(data.games);
-          setCurrentSeasonId((prev) => {
-            if (prev && data.seasons.some((s) => s.id === prev)) return prev;
-            const uaapCurr = data.seasons.find((s) => inferLeague(s.id, s.league) === "UAAP" && s.isCurrent)?.id;
-            return uaapCurr ?? data.seasons.find((s) => s.isCurrent)?.id ?? data.seasons[0]?.id ?? prev;
-          });
-        }
-        setLoading(false);
-      })
-      .catch((err) => {
-        if (!isMounted) return;
-        console.warn("[SportsDataContext] Initial load error:", err);
-        setError("Failed to load data from Supabase.");
-        setLoading(false);
-      });
+    if (!supabase) return;
+    const client = supabase;
 
-    if (!supabase) {
-      return () => {
-        isMounted = false;
-      };
-    }
-
-    const channel = supabase
+    const channel = client
       .channel("sportsmetric-realtime")
       .on(
         "postgres_changes",
         { event: "*", schema: "public" },
         () => {
-          // Debounce rapid successive changes to avoid N full reloads
+          // Debounce rapid successive changes to avoid N full reloads.
           if (realtimeDebounceRef.current) clearTimeout(realtimeDebounceRef.current);
           realtimeDebounceRef.current = setTimeout(() => {
-            void loadDataFromSupabase(true);
-          }, 500);
+            if (reloadingRef.current) return;
+            reloadingRef.current = true;
+            void loadDataFromSupabase(true).finally(() => {
+              reloadingRef.current = false;
+            });
+          }, 1200);
         }
       )
       .subscribe();
 
     return () => {
-      isMounted = false;
       if (realtimeDebounceRef.current) clearTimeout(realtimeDebounceRef.current);
-      if (supabase) {
-        void supabase.removeChannel(channel);
-      }
+      void client.removeChannel(channel);
     };
   }, [loadDataFromSupabase]);
 
@@ -425,81 +406,65 @@ export function SportsDataProvider({ children }: { children: React.ReactNode }) 
 
   const saveSeason = useCallback(async (season: Season) => {
     const sLeague = inferLeague(season.id, season.league);
-    let previousState: Season[] = [];
-    let nextSeasons: Season[] = [];
+    const previousState = seasons;
 
-    setSeasons((prev) => {
-      previousState = prev;
-      const idx = prev.findIndex((s) => s.id === season.id);
-      let updatedList = [...prev];
-      if (idx >= 0) {
-        updatedList[idx] = season;
-      } else {
-        updatedList = [...prev, season];
-      }
+    const idx = seasons.findIndex((s) => s.id === season.id);
+    let nextSeasons =
+      idx >= 0
+        ? seasons.map((s, i) => (i === idx ? season : s))
+        : [...seasons, season];
 
-      if (season.isCurrent) {
-        updatedList = updatedList.map((s) => {
-          const l = inferLeague(s.id, s.league);
-          if (l === sLeague) {
-            return { ...s, isCurrent: s.id === season.id };
-          }
-          return s;
-        });
-      }
-      nextSeasons = updatedList;
-      return updatedList;
-    });
+    if (season.isCurrent) {
+      nextSeasons = nextSeasons.map((s) => {
+        const l = inferLeague(s.id, s.league);
+        return l === sLeague ? { ...s, isCurrent: s.id === season.id } : s;
+      });
+    }
+
+    setSeasons(nextSeasons);
 
     await commit(
       { op: "season.batchUpsert", seasons: nextSeasons },
       () => setSeasons(previousState),
       `Could not save season ${season.label}.`
     );
-  }, [commit]);
+  }, [commit, seasons]);
 
   const deleteSeason = useCallback(async (id: string) => {
-    let previousSeasons: Season[] = [];
-    let previousTeams: Team[] = [];
-    let previousPlayers: Player[] = [];
-    let previousGames: Game[] = [];
-    let prevSeasonId = "";
-    let nextSeasons: Season[] = [];
+    const previousSeasons = seasons;
+    const previousTeams = teams;
+    const previousPlayers = players;
+    const previousGames = games;
+    const prevSeasonId = currentSeasonId;
 
-    setSeasons((prev) => {
-      previousSeasons = prev;
-      const deletedSeason = prev.find((s) => s.id === id);
-      const remaining = prev.filter((s) => s.id !== id);
+    const deletedSeason = seasons.find((s) => s.id === id);
+    const remaining = seasons.filter((s) => s.id !== id);
 
-      if (deletedSeason?.isCurrent) {
-        const dLeague = inferLeague(id, deletedSeason.league);
-        const remainingInLeague = remaining.filter(
-          (s) => inferLeague(s.id, s.league) === dLeague
+    let nextSeasons = remaining;
+    if (deletedSeason?.isCurrent) {
+      const dLeague = inferLeague(id, deletedSeason.league);
+      const replacement = remaining.find(
+        (s) => inferLeague(s.id, s.league) === dLeague
+      );
+      if (replacement) {
+        nextSeasons = remaining.map((s) =>
+          s.id === replacement.id ? { ...s, isCurrent: true } : s
         );
-        if (remainingInLeague.length > 0) {
-          remainingInLeague[0] = { ...remainingInLeague[0], isCurrent: true };
-          // Update in the remaining array too
-          const idx = remaining.findIndex((s) => s.id === remainingInLeague[0].id);
-          if (idx >= 0) remaining[idx] = remainingInLeague[0];
-        }
       }
-      nextSeasons = remaining;
-      return remaining;
-    });
+    }
 
+    let nextCurrentSeasonId = currentSeasonId;
+    if (currentSeasonId === id && nextSeasons.length > 0) {
+      nextCurrentSeasonId =
+        nextSeasons.find((s) => s.isCurrent)?.id ?? nextSeasons[0]?.id ?? currentSeasonId;
+    }
+
+    setSeasons(nextSeasons);
     // The server cascades the delete, so drop the season's rows locally too.
-    setTeams((prev) => { previousTeams = prev; return prev.filter((t) => t.seasonId !== id); });
-    setPlayers((prev) => { previousPlayers = prev; return prev.filter((p) => p.seasonId !== id); });
-    setGames((prev) => { previousGames = prev; return prev.filter((g) => g.seasonId !== id); });
-
-    setCurrentSeasonId((prev) => {
-      prevSeasonId = prev;
-      if (prev === id && nextSeasons.length > 0) {
-        const replacement = nextSeasons.find((s) => s.isCurrent);
-        return replacement?.id ?? nextSeasons[0]?.id ?? prev;
-      }
-      return prev;
-    });
+    setTeams(teams.filter((t) => t.seasonId !== id));
+    setPlayers(players.filter((p) => p.seasonId !== id));
+    setGames(games.filter((g) => g.seasonId !== id));
+    setCurrentSeasonId(nextCurrentSeasonId);
 
     await commit({ op: "season.delete", id }, () => {
       setSeasons(previousSeasons);
@@ -514,33 +479,24 @@ export function SportsDataProvider({ children }: { children: React.ReactNode }) 
         console.error("[SportsDataContext] Failed to persist season list after delete:", err);
       });
     }
-  }, [commit]);
+  }, [commit, seasons, teams, players, games, currentSeasonId]);
 
   const setSeasonAsCurrent = useCallback(async (targetId: string) => {
-    let previousState: Season[] = [];
-    let prevSeasonId = "";
-    let updatedSeasons: Season[] = [];
+    const previousState = seasons;
+    const prevSeasonId = currentSeasonId;
+    const targetSeason = seasons.find((s) => s.id === targetId);
+    const targetLeague = inferLeague(targetId, targetSeason?.league);
 
-    setCurrentSeasonId((prev) => {
-      prevSeasonId = prev;
-      return targetId;
+    const updatedSeasons = seasons.map((s) => {
+      const sLeague = inferLeague(s.id, s.league);
+      if (sLeague === targetLeague) {
+        return { ...s, isCurrent: s.id === targetId };
+      }
+      return s;
     });
 
-    setSeasons((prev) => {
-      previousState = prev;
-      const targetSeason = prev.find((s) => s.id === targetId);
-      const targetLeague = inferLeague(targetId, targetSeason?.league);
-
-      updatedSeasons = prev.map((s) => {
-        const sLeague = inferLeague(s.id, s.league);
-        if (sLeague === targetLeague) {
-          return { ...s, isCurrent: s.id === targetId };
-        }
-        return s;
-      });
-
-      return updatedSeasons;
-    });
+    setSeasons(updatedSeasons);
+    setCurrentSeasonId(targetId);
 
     await commit(
       { op: "season.batchUpsert", seasons: updatedSeasons },
@@ -550,7 +506,7 @@ export function SportsDataProvider({ children }: { children: React.ReactNode }) 
       },
       `Could not set season ${targetId} as current.`
     );
-  }, [commit]);
+  }, [commit, seasons, currentSeasonId]);
 
   const reorderSeasons = useCallback(async (newSeasonsOrder: Season[]) => {
     // Stamp the new positions so the order survives a reload; reads sort by
@@ -591,23 +547,87 @@ export function SportsDataProvider({ children }: { children: React.ReactNode }) 
 
 
   // Selectors — memoized with useCallback
+  // Derived selectors are not cheap: standings scan every game, and player
+  // averages scan every box score. Game cards, stat-leader cards, and the
+  // player directory all request the same derivations repeatedly, so memoize
+  // by input key and invalidate on a data-reference change.
+  const standingsCacheRef = useRef(
+    new Map<string, { teams: Team[]; games: Game[]; value: DerivedTeamStandings[] }>()
+  );
+  const statLeadersCacheRef = useRef(
+    new Map<
+      string,
+      { players: Player[]; teams: Team[]; games: Game[]; value: StatLeaderEntry[] }
+    >()
+  );
+  const statRankCacheRef = useRef(
+    new Map<
+      string,
+      { players: Player[]; teams: Team[]; games: Game[]; value: number | undefined }
+    >()
+  );
+  const playerAveragesCacheRef = useRef(
+    new Map<string, { games: Game[]; teams: Team[]; players: Player[]; value: SeasonAverages }>()
+  );
+
+  // Drop cached derivations when the underlying data is replaced. The keys
+  // also compare references, but clearing prevents stale entries from keeping
+  // old game/team arrays alive across many realtime reloads.
+  useEffect(() => {
+    standingsCacheRef.current.clear();
+    statLeadersCacheRef.current.clear();
+    statRankCacheRef.current.clear();
+    playerAveragesCacheRef.current.clear();
+  }, [teams, games, players]);
+
   const getStandingsHandler = useCallback(
     (league: League, seasonId = currentSeasonId) => {
-      return deriveStandings(teams, games, league, seasonId);
+      const key = `${league}|${seasonId}`;
+      const cached = standingsCacheRef.current.get(key);
+      if (cached && cached.teams === teams && cached.games === games) {
+        return cached.value;
+      }
+      const value = deriveStandings(teams, games, league, seasonId);
+      standingsCacheRef.current.set(key, { teams, games, value });
+      return value;
     },
     [teams, games, currentSeasonId]
   );
 
   const getStatLeadersHandler = useCallback(
     (league: League, statKey: keyof SeasonAverages, limit = 5, seasonId = currentSeasonId) => {
-      return deriveStatLeaders(players, teams, games, league, statKey, seasonId, limit);
+      const key = `${league}|${seasonId}|${String(statKey)}|${limit}`;
+      const cached = statLeadersCacheRef.current.get(key);
+      if (
+        cached &&
+        cached.players === players &&
+        cached.teams === teams &&
+        cached.games === games
+      ) {
+        return cached.value;
+      }
+      const value = deriveStatLeaders(players, teams, games, league, statKey, seasonId, limit);
+      statLeadersCacheRef.current.set(key, { players, teams, games, value });
+      return value;
     },
     [players, teams, games, currentSeasonId]
   );
 
   const getPlayerStatRankHandler = useCallback(
     (playerId: string, statKey: keyof SeasonAverages) => {
-      return derivePlayerStatRank(playerId, statKey, players, teams, games);
+      const key = `${playerId}|${String(statKey)}`;
+      const cached = statRankCacheRef.current.get(key);
+      if (
+        cached &&
+        cached.players === players &&
+        cached.teams === teams &&
+        cached.games === games
+      ) {
+        return cached.value;
+      }
+      const value = derivePlayerStatRank(playerId, statKey, players, teams, games);
+      statRankCacheRef.current.set(key, { players, teams, games, value });
+      return value;
     },
     [players, teams, games]
   );
@@ -621,9 +641,21 @@ export function SportsDataProvider({ children }: { children: React.ReactNode }) 
 
   const getPlayerAveragesHandler = useCallback(
     (player: Player) => {
-      return derivePlayerAverages(player, games, teams);
+      const key = `${player.id}|${player.seasonId}`;
+      const cached = playerAveragesCacheRef.current.get(key);
+      if (
+        cached &&
+        cached.games === games &&
+        cached.teams === teams &&
+        cached.players === players
+      ) {
+        return cached.value;
+      }
+      const value = derivePlayerAverages(player, games, teams, players);
+      playerAveragesCacheRef.current.set(key, { games, teams, players, value });
+      return value;
     },
-    [games, teams]
+    [games, teams, players]
   );
 
   // Memoize the entire context value to prevent unnecessary re-renders

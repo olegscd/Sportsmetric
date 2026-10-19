@@ -9,7 +9,7 @@ import { cn, formatGameDate } from "@/lib/utils";
 import { X } from "lucide-react";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BoxScoreTable } from "./BoxScoreTable";
 import { MomentumBar } from "./MomentumBar";
 import { PlayByPlayFeed } from "./PlayByPlayFeed";
@@ -27,28 +27,67 @@ export function GameDetailModal() {
   const { games } = useSportsData();
   const [tab, setTab] = useState<DetailTab>("overview");
   const [side, setSide] = useState<"away" | "home">("away");
+  const [loadedGameId, setLoadedGameId] = useState<string | null>(activeGameId);
 
-  const game = games.find((g) => g.id === activeGameId);
-
-  useEffect(() => {
+  // Reset the tab/mobile-side selection when a different game is opened.
+  // Adjusting state during render (rather than in an effect) avoids a frame
+  // where the previous game's tab is shown for the new game.
+  if (loadedGameId !== activeGameId) {
+    setLoadedGameId(activeGameId);
     setTab("overview");
     setSide("away");
-  }, [activeGameId]);
+  }
+
+  const game = games.find((g) => g.id === activeGameId);
+  const dialogRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    function handleKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") closeGame();
-    }
-
     if (!activeGameId) return;
 
+    const previouslyFocused = document.activeElement as HTMLElement | null;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+
+    const frame = requestAnimationFrame(() => dialogRef.current?.focus());
+
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        closeGame();
+        return;
+      }
+      if (event.key !== "Tab" || !dialogRef.current) return;
+
+      // Keep keyboard focus inside the modal while it is open.
+      const focusable = Array.from(
+        dialogRef.current.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
+        )
+      ).filter((el) => el.getClientRects().length > 0);
+
+      if (focusable.length === 0) {
+        event.preventDefault();
+        return;
+      }
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    }
+
     document.addEventListener("keydown", handleKeyDown);
 
     return () => {
+      cancelAnimationFrame(frame);
       document.body.style.overflow = previousOverflow;
       document.removeEventListener("keydown", handleKeyDown);
+      previouslyFocused?.focus?.();
     };
   }, [activeGameId, closeGame]);
 
@@ -66,7 +105,9 @@ export function GameDetailModal() {
       onClick={closeGame}
     >
       <div
-        className="relative flex max-h-[90vh] w-full max-w-2xl flex-col overflow-hidden rounded-3xl border border-border bg-bg shadow-2xl"
+        ref={dialogRef}
+        tabIndex={-1}
+        className="relative flex max-h-[90vh] w-full max-w-2xl flex-col overflow-hidden rounded-3xl border border-border bg-bg shadow-2xl focus:outline-none"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between border-b border-border px-6 pb-3 pt-5">

@@ -68,6 +68,11 @@ export async function POST(request: Request) {
     );
   }
 
+  const contentLength = Number(request.headers.get("content-length") ?? "0");
+  if (Number.isFinite(contentLength) && contentLength > 8_000_000) {
+    return NextResponse.json({ error: "Request body is too large." }, { status: 413 });
+  }
+
   let body: unknown;
   try {
     body = await request.json();
@@ -81,11 +86,13 @@ export async function POST(request: Request) {
 
   const payload = body as Record<string, unknown>;
   const op = typeof payload.op === "string" ? payload.op : "";
-  const handler = HANDLERS[op];
 
-  if (!handler) {
+  // hasOwn avoids resolving inherited properties such as "constructor" or
+  // "__proto__" as if they were registered operations.
+  if (!Object.hasOwn(HANDLERS, op)) {
     return NextResponse.json({ error: `Unknown operation "${op}".` }, { status: 400 });
   }
+  const handler = HANDLERS[op];
 
   try {
     const ok = await handler(payload);

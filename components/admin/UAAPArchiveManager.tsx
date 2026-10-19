@@ -26,6 +26,7 @@ import {
   type LegacyStandingRecord,
   type UAAPArchiveExtras,
   type UAAPColumn,
+  type UAAPDivisionAwards,
   type UAAPRow,
   type UAAPTable,
 } from "@/lib/uaap-schema";
@@ -137,6 +138,10 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
   }, []);
 
   useEffect(() => {
+    // One-shot hydration of the admin editor from the live archive. This is a
+    // synchronization effect (external data -> editor state), not derived
+    // render state, so the setState-in-effect rule does not apply cleanly.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchLive();
   }, [fetchLive]);
 
@@ -205,13 +210,25 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
     setBaseline(JSON.stringify(cloned));
 
     const extrasKey = makeExtrasKey(sport, season);
-    const awards = extras.awards?.[extrasKey]?.[normalizeDivision(division)];
+    const awards = extras.awards?.[extrasKey]?.[normalizeDivision(division)] as
+      | UAAPDivisionAwards
+      | undefined;
     const nextMvp = { player: awards?.mvp?.player || "", school: awards?.mvp?.school || "FEU" };
     const nextRoy = {
       player: awards?.rookie_of_the_year?.player || "",
       school: awards?.rookie_of_the_year?.school || "FEU",
     };
-    const nextMythical = Array.isArray(awards?.mythical_five) ? awards.mythical_five : [];
+    const nextMythical = Array.isArray(awards?.mythical_five)
+      ? awards.mythical_five.map((entry) =>
+          typeof entry === "string"
+            ? { player: entry, school: "" }
+            : {
+                player: entry.player ?? entry.name ?? "",
+                school: entry.school ?? "",
+                ...(entry.position ? { position: entry.position } : {}),
+              }
+        )
+      : [];
     setMvp(nextMvp);
     setRoy(nextRoy);
     setMythical(nextMythical);
@@ -234,6 +251,9 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
   }, [season, sport, division, tables, extras]);
 
   useEffect(() => {
+    // The draft is an editable copy of the selected division, so it has to be
+    // re-seeded whenever the selection or the underlying archive data changes.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     loadDivision();
   }, [loadDivision]);
 
@@ -515,13 +535,8 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
   const [showReport, setShowReport] = useState(false);
   const [report, setReport] = useState({ content: "", sourceFile: "", loading: false });
 
-  useEffect(() => {
-    if (!showReport) return;
-    setReport((r) => ({ ...r, loading: true }));
-    getUAAPAnnualReportSnippet(season, sport).then((res) => {
-      setReport({ content: res.content, sourceFile: res.sourceFile || "", loading: false });
-    });
-  }, [showReport, season, sport]);
+  // The report is fetched by openImportFromScan (the only action that opens
+  // the drawer), so no separate effect is needed here.
 
   const openImportFromScan = async () => {
     setShowReport(true);
@@ -890,15 +905,15 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
           <table className="w-full text-left text-xs border-collapse">
             <thead>
               <tr className="border-b border-border bg-elevated/40 text-[10px] font-bold uppercase tracking-wider text-muted">
-                <th className="py-2.5 px-3 w-14 text-center">Rank</th>
-                <th className="py-2.5 px-3 w-48">School</th>
+                <th scope="col" className="py-2.5 px-3 w-14 text-center">Rank</th>
+                <th scope="col" className="py-2.5 px-3 w-48">School</th>
                 {draft.columns.map((col) => (
                   <th key={col.key} className="py-2.5 px-3 w-24 text-center">
                     {col.label}
                   </th>
                 ))}
-                <th className="py-2.5 px-3">Result / Notes</th>
-                <th className="py-2.5 px-3 w-24 text-center">Row</th>
+                <th scope="col" className="py-2.5 px-3">Result / Notes</th>
+                <th scope="col" className="py-2.5 px-3 w-24 text-center">Row</th>
               </tr>
             </thead>
             <tbody ref={gridRef} className="divide-y divide-border/60 font-medium">

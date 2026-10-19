@@ -6,8 +6,9 @@ import { useGameModal } from "@/lib/game-modal-context";
 import { getEffectiveGameStatus, isPlayoffGame } from "@/lib/derivations";
 import { formatGameDate, formatRecord, formatStartTime } from "@/lib/utils";
 import type { Game, Team } from "@/types/sports";
+import { ChevronRight } from "lucide-react";
 import Link from "next/link";
-import { useMemo } from "react";
+import { memo, useMemo } from "react";
 import { LeagueBadge } from "./LeagueBadge";
 
 function StatusPill({ game }: { game: Game }) {
@@ -93,7 +94,7 @@ function TeamRow({
   );
 }
 
-export function GameCard({ game }: { game: Game }) {
+export const GameCard = memo(function GameCard({ game }: { game: Game }) {
   const { openGame } = useGameModal();
   const { getStandings } = useSportsData();
   const effectiveStatus = getEffectiveGameStatus(game);
@@ -119,16 +120,8 @@ export function GameCard({ game }: { game: Game }) {
 
   return (
     <div
-      role="button"
-      tabIndex={0}
       onClick={() => openGame(game.id)}
-      onKeyDown={(event) => {
-        if (event.key === "Enter" || event.key === " ") {
-          event.preventDefault();
-          openGame(game.id);
-        }
-      }}
-      className="w-full cursor-pointer rounded-2xl border border-border bg-surface p-4 text-left shadow-sm transition-all hover:border-primary/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary active:scale-[0.99]"
+      className="w-full cursor-pointer rounded-2xl border border-border bg-surface p-4 text-left shadow-sm transition-all hover:border-primary/50 active:scale-[0.99]"
     >
       <div className="flex items-center justify-between gap-2 border-b border-border/40 pb-2.5">
         <div className="flex items-center gap-1.5">
@@ -139,7 +132,22 @@ export function GameCard({ game }: { game: Game }) {
             </span>
           ) : null}
         </div>
-        <StatusPill game={game} />
+        <div className="flex items-center gap-1.5">
+          <StatusPill game={game} />
+          {/* The card body is mouse-clickable; this button is the keyboard
+              entry point, avoiding a role="button" wrapper around real links. */}
+          <button
+            type="button"
+            onClick={(event) => {
+              event.stopPropagation();
+              openGame(game.id);
+            }}
+            aria-label={`View details for ${game.awayTeam.shortName} at ${game.homeTeam.shortName}`}
+            className="rounded-full p-1 text-muted transition-colors hover:bg-elevated hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+          >
+            <ChevronRight size={16} aria-hidden="true" />
+          </button>
+        </div>
       </div>
 
       <div className="flex flex-col gap-3 py-3">
@@ -166,4 +174,4 @@ export function GameCard({ game }: { game: Game }) {
       )}
     </div>
   );
-}
+});

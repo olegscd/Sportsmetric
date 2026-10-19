@@ -59,11 +59,12 @@ export function CoveragePanel({
         <table className="text-left text-xs border-collapse">
           <thead>
             <tr>
-              <th className="sticky left-0 bg-surface py-1.5 pr-3 text-[10px] font-bold uppercase tracking-wider text-muted">
+              <th scope="col" className="sticky left-0 bg-surface py-1.5 pr-3 text-[10px] font-bold uppercase tracking-wider text-muted">
                 Season
               </th>
               {sports.map((sport) => (
                 <th
+                  scope="col"
                   key={sport}
                   className="px-1 pb-1.5 text-[10px] font-semibold text-muted align-bottom"
                 >
