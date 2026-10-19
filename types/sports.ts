@@ -161,6 +161,8 @@ export interface Season {
   league?: League;
   /** Admin-controlled display order; lower sorts first. */
   sortOrder?: number;
+  /** Where to watch / buy tickets. Absent when not loaded or not set. */
+  links?: SeasonLinks;
 }
 
 export interface PlayByPlayEvent {
@@ -242,5 +244,30 @@ export interface Game {
   playByPlay: PlayByPlayEvent[];
   /** Which Season this game belongs to. */
   seasonId: string;
+  /** Watch/ticket overrides and replay. Absent when not loaded or not set. */
+  links?: GameLinks;
 }
 
+
+/** Official "where to watch" and ticketing defaults for a season. */
+export interface SeasonLinks {
+  watchUrl: string | null;
+  /** Broadcaster or platform name, e.g. "Cignal Play" */
+  watchLabel: string | null;
+  /** Short qualifier, e.g. "Free in PH" or "Subscription" */
+  watchNote: string | null;
+  ticketsUrl: string | null;
+  ticketsLabel: string | null;
+}
+
+export type ReplayKind = "full" | "highlights" | "condensed";
+
+/** Per-game overrides plus the replay for finished games. */
+export interface GameLinks {
+  watchUrl: string | null;
+  ticketsUrl: string | null;
+  replayUrl: string | null;
+  replayKind: ReplayKind | null;
+  /** Channel name, e.g. "One Sports" */
+  replayLabel: string | null;
+}

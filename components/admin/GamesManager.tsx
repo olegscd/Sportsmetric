@@ -10,6 +10,7 @@ import { isoToPhtInput, phtInputToIso } from "@/lib/utils";
 import type { Game, GameStatus, PlayByPlayEvent, PlayByPlayEventType } from "@/types/sports";
 import { Loader2 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
+import { GameLinksCard } from "./LinksEditors";
 import {
   dangerButtonClass,
   Field,
@@ -623,6 +624,8 @@ export function GamesManager({ onToast }: { onToast: ToastFn }) {
           </button>
         </form>
       </SectionCard>
+
+      {editingGame && <GameLinksCard key={editingGame.id} game={editingGame} onToast={onToast} />}
 
       {editingGame && (
         <SectionCard title={`Add Play-by-Play Event (${editingGame.awayTeam.shortName} @ ${editingGame.homeTeam.shortName})`}>

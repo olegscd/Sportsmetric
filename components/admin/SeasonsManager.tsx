@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import type { League, Season } from "@/types/sports";
 import { ArrowDown, ArrowUp } from "lucide-react";
 import { useState, type FormEvent } from "react";
+import { SeasonLinksCard } from "./LinksEditors";
 import { useConfirm } from "@/components/ui/ConfirmDialog";
 import {
   dangerButtonClass,
@@ -365,6 +366,8 @@ export function SeasonsManager({ onToast }: { onToast: ToastFn }) {
           })
         )}
       </div>
+
+      <SeasonLinksCard seasons={filteredSeasons} onToast={onToast} />
 
       <form onSubmit={handleCreate}>
         <SectionCard>

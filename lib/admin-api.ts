@@ -1,5 +1,5 @@
 import type { IntlAthlete, IntlCompetition, IntlResult } from "@/lib/international";
-import type { Game, Player, Season, Team } from "@/types/sports";
+import type { Game, GameLinks, Player, Season, SeasonLinks, Team } from "@/types/sports";
 
 /**
  * Every write to the live sports tables goes through `/api/admin/mutate`.
@@ -18,6 +18,8 @@ export type AdminMutation =
   | { op: "player.deleteAll"; seasonId: string }
   | { op: "season.batchUpsert"; seasons: Season[] }
   | { op: "season.delete"; id: string }
+  | { op: "season.links"; id: string; links: SeasonLinks }
+  | { op: "game.links"; id: string; links: GameLinks }
   | { op: "intl.athlete.upsert"; athlete: IntlAthlete }
   | { op: "intl.athlete.delete"; id: string }
   | { op: "intl.competition.upsert"; competition: IntlCompetition }

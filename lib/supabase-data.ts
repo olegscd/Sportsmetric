@@ -2,8 +2,9 @@ import { ValidationError } from "@/lib/admin-validation";
 import { getEffectiveGameStatus } from "@/lib/derivations";
 import { inferLeague } from "@/lib/league-utils";
 import { supabase } from "@/lib/supabase";
+import { gameLinksFromRow, gameLinksToRow, seasonLinksFromRow, seasonLinksToRow } from "@/lib/watch-links";
 import { getServiceSupabase } from "@/lib/supabase-admin";
-import type { Game, GameStatus, League, Player, Season, Team } from "@/types/sports";
+import type { Game, GameLinks, GameStatus, League, Player, Season, SeasonLinks, Team } from "@/types/sports";
 
 
 function logSupabaseError(context: string, error: { message: string } | null): boolean {
@@ -140,6 +141,7 @@ export function mapSeasonRows(
       isCurrent,
       league,
       sortOrder: s.sort_order ?? undefined,
+      links: seasonLinksFromRow(s as unknown as Record<string, unknown>),
     };
   });
 
@@ -291,6 +293,7 @@ export function mapGameRows(
         away: boxScoreObj?.away ?? [],
       },
       playByPlay: g.play_by_play ?? [],
+      links: gameLinksFromRow(g as unknown as Record<string, unknown>),
     };
   });
 }
@@ -377,7 +380,7 @@ async function fetchPaginatedTable<T>(
       // added the dedicated columns yet. Keep the lightweight projection, but
       // retry without only the optional column that Postgres says is missing.
       const missing = error.code === "42703"
-        ? error.message.match(/column (?:\w+\.)?"?(venue|stage|is_playoff)"? does not exist/i)?.[1]
+        ? error.message.match(/column (?:\w+\.)?"?(venue|stage|is_playoff|watch_url|tickets_url|replay_url|replay_kind|replay_label)"? does not exist/i)?.[1]
         : undefined;
       if (table === "games" && missing && columns.split(",").includes(missing)) {
         columns = columns.split(",").filter(column => column !== missing).join(",");
@@ -450,7 +453,7 @@ export async function fetchSportsData(scope: SportsDataScope): Promise<SupabaseD
     .filter(s => (currentPerLeague ? s.isCurrent : seasonId === "lifetime" || s.id === seasonId) && (!careerSeasons || careerSeasons.has(s.id))).map(s => s.id);
   if (seasonIds?.length === 0) return { seasons, teams: [], players: [], games: [] };
   const gameColumns = scope.admin ? "*" :
-    "id,league,season_id,home_team_id,away_team_id,home_score,away_score,status,start_time,venue,stage,is_playoff,quarter_or_set,time_remaining,box_score";
+    "id,league,season_id,home_team_id,away_team_id,home_score,away_score,status,start_time,venue,stage,is_playoff,quarter_or_set,time_remaining,box_score,watch_url,tickets_url,replay_url,replay_kind,replay_label";
   const [teamRows, playerRows, gameRows] = await Promise.all([
     fetchPaginatedTable<TeamDbRow>("teams", undefined, false, seasonIds),
     fetchPaginatedTable<PlayerDbRow>("players", undefined, false, seasonIds),
@@ -471,6 +474,42 @@ export async function upsertGameInSupabase(game: Game): Promise<boolean> {
     return true;
   } catch (err) {
     console.error("[Sportsmetric DB] Unexpected error during upsertGame:", err);
+    return false;
+  }
+}
+
+/**
+ * Links are written separately from the game/season records so imports,
+ * schedule syncs and season reorders can never overwrite them.
+ */
+export async function updateSeasonLinksInSupabase(id: string, links: SeasonLinks): Promise<boolean> {
+  const db = getWriteClient();
+  if (!db) return false;
+  try {
+    const { data, error } = await db.from("seasons").update(seasonLinksToRow(links)).eq("id", id).select("id");
+    if (error?.code === "23514") throw new ValidationError(`Rejected by the database: ${error.message}`);
+    if (logSupabaseError("update season links", error)) return false;
+    if (!data?.length) throw new ValidationError("That season no longer exists. Reload and try again.");
+    return true;
+  } catch (err) {
+    if (err instanceof ValidationError) throw err;
+    console.error("[Sportsmetric DB] Unexpected error during updateSeasonLinks:", err);
+    return false;
+  }
+}
+
+export async function updateGameLinksInSupabase(id: string, links: GameLinks): Promise<boolean> {
+  const db = getWriteClient();
+  if (!db) return false;
+  try {
+    const { data, error } = await db.from("games").update(gameLinksToRow(links)).eq("id", id).select("id");
+    if (error?.code === "23514") throw new ValidationError(`Rejected by the database: ${error.message}`);
+    if (logSupabaseError("update game links", error)) return false;
+    if (!data?.length) throw new ValidationError("That game no longer exists. Reload and try again.");
+    return true;
+  } catch (err) {
+    if (err instanceof ValidationError) throw err;
+    console.error("[Sportsmetric DB] Unexpected error during updateGameLinks:", err);
     return false;
   }
 }

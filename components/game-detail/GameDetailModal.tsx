@@ -16,6 +16,7 @@ import { useEffect, useRef, useState } from "react";
 import { BoxScoreTable } from "./BoxScoreTable";
 import { MomentumBar } from "./MomentumBar";
 import { PlayByPlayFeed } from "./PlayByPlayFeed";
+import { GameActions } from "./GameActions";
 import type { PlayByPlayEvent } from "@/types/sports";
 
 type DetailTab = "overview" | "boxscore" | "pbp";
@@ -28,7 +29,7 @@ const TABS: { value: DetailTab; label: string }[] = [
 
 export function GameDetailModal() {
   const { activeGameId, closeGame } = useGameModal();
-  const { games } = useSportsData();
+  const { games, seasons } = useSportsData();
   const [tab, setTab] = useState<DetailTab>("overview");
   const [side, setSide] = useState<"away" | "home">("away");
   const [loadedGameId, setLoadedGameId] = useState<string | null>(activeGameId);
@@ -190,6 +191,10 @@ export function GameDetailModal() {
               {game.homeTeam.shortName}
             </span>
           </Link>
+        </div>
+
+        <div className="px-4 pt-3 sm:px-6 empty:hidden">
+          <GameActions game={game} status={effectiveStatus} season={seasons.find(s => s.id === game.seasonId)} />
         </div>
 
         <div className="px-4 pt-3 sm:px-6">

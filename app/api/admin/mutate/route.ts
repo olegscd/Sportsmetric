@@ -21,7 +21,10 @@ import {
   upsertGameInSupabase,
   upsertPlayerInSupabase,
   upsertTeamInSupabase,
+  updateGameLinksInSupabase,
+  updateSeasonLinksInSupabase,
 } from "@/lib/supabase-data";
+import { normalizeGameLinks, normalizeSeasonLinks } from "@/lib/watch-links";
 import {
   deleteIntlAthlete,
   deleteIntlCompetition,
@@ -64,6 +67,8 @@ const HANDLERS: Record<string, OpHandler> = {
   "season.batchUpsert": (p) =>
     batchUpsertSeasonsInSupabase(normalizeBatch(p.seasons, "seasons", normalizeSeason)),
   "season.delete": (p) => deleteSeasonInSupabase(requireId(p.id, "id")),
+  "season.links": (p) => updateSeasonLinksInSupabase(requireId(p.id, "id"), normalizeSeasonLinks(p.links)),
+  "game.links": (p) => updateGameLinksInSupabase(requireId(p.id, "id"), normalizeGameLinks(p.links)),
 
   "intl.athlete.upsert": (p) => upsertIntlAthlete(normalizeIntlAthlete(p.athlete)),
   "intl.athlete.delete": (p) => deleteIntlAthlete(requireId(p.id, "id")),
