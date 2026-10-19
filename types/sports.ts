@@ -264,6 +264,7 @@ export type ReplayKind = "full" | "highlights" | "condensed";
 
 /** Per-game overrides plus the replay for finished games. */
 export interface GameLinks {
+  /** Direct livestream for this game. Live games never use the season default. */
   watchUrl: string | null;
   ticketsUrl: string | null;
   replayUrl: string | null;

@@ -9,12 +9,18 @@ const season = { links: { watchUrl: "https://watch.example/live", watchLabel: "C
   ticketsUrl: "https://tickets.example/uaap", ticketsLabel: "TicketNet" } satisfies SeasonLinks };
 const none: GameLinks = { watchUrl: null, ticketsUrl: null, replayUrl: null, replayKind: null, replayLabel: null };
 
-test("upcoming shows tickets then watch; live shows watch; final shows only a replay", () => {
+test("upcoming uses season defaults; live and final require game-specific links", () => {
   assert.deepEqual(gameActions({ status: "UPCOMING" }, season).map(a => [a.kind, a.label]), [["tickets", "TicketNet"], ["watch", "Cignal Play"]]);
-  assert.deepEqual(gameActions({ status: "LIVE" }, season).map(a => a.kind), ["watch"]);
+  assert.deepEqual(gameActions({ status: "LIVE" }, season), []);
   assert.deepEqual(gameActions({ status: "FINAL" }, season), []);
-  const final = gameActions({ status: "FINAL", links: { ...none, replayUrl: "https://www.youtube.com/watch?v=x", replayKind: "highlights", replayLabel: "One Sports" } }, season);
+  const links: GameLinks = { ...none, watchUrl: "https://watch.example/current-game", ticketsUrl: "https://tickets.example/game",
+    replayUrl: "https://www.youtube.com/watch?v=x", replayKind: "highlights", replayLabel: "One Sports" };
+  const final = gameActions({ status: "FINAL", links }, season);
   assert.deepEqual(final.map(a => [a.kind, a.label, a.detail]), [["replay", "One Sports", "Highlights"]]);
+  assert.equal(final[0].url, links.replayUrl);
+  assert.deepEqual(gameActions({ status: "LIVE", links }, season).map(a => [a.kind, a.url]), [["watch", links.watchUrl]]);
+  assert.deepEqual(gameActions({ status: "LIVE", links: { ...links, watchUrl: null } }, season), []);
+  assert.deepEqual(gameActions({ status: "FINAL", links: { ...links, replayUrl: null } }, season), []);
 });
 
 test("game overrides replace season links without borrowing the season broadcaster name", () => {

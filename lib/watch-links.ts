@@ -88,11 +88,19 @@ function host(url: string) {
 }
 
 /**
- * Upcoming: tickets first, then where to watch. Live: where to watch.
- * Final: the replay, if one has been added. Game links override season links.
+ * Upcoming: tickets first, then where to watch, using season defaults.
+ * Live: only this game's livestream. Final: only this game's replay.
  */
 export function gameActions(game: Pick<Game, "links"> & { status: GameStatus }, season: Pick<Season, "links"> | undefined): GameAction[] {
   const g = game.links; const s = season?.links;
+  if (game.status === "FINAL") {
+    return g?.replayUrl ? [{ kind: "replay", url: g.replayUrl, label: g.replayLabel ?? host(g.replayUrl),
+      detail: g.replayKind ? REPLAY_KIND_LABELS[g.replayKind] : null }] : [];
+  }
+  if (game.status === "LIVE") {
+    return g?.watchUrl ? [{ kind: "watch", url: g.watchUrl, label: host(g.watchUrl), detail: null }] : [];
+  }
+
   const watchUrl = g?.watchUrl ?? s?.watchUrl ?? null;
   const ticketsUrl = g?.ticketsUrl ?? s?.ticketsUrl ?? null;
   // A per-game watch link may point to another broadcaster, so only reuse
@@ -101,11 +109,6 @@ export function gameActions(game: Pick<Game, "links"> & { status: GameStatus }, 
   const watch: GameAction | null = watchUrl
     ? { kind: "watch", url: watchUrl, label: watchLabel, detail: g?.watchUrl ? null : s?.watchNote ?? null } : null;
 
-  if (game.status === "FINAL") {
-    return g?.replayUrl ? [{ kind: "replay", url: g.replayUrl, label: g.replayLabel ?? host(g.replayUrl),
-      detail: g.replayKind ? REPLAY_KIND_LABELS[g.replayKind] : null }] : [];
-  }
-  if (game.status === "LIVE") return watch ? [watch] : [];
   const tickets: GameAction | null = ticketsUrl
     ? { kind: "tickets", url: ticketsUrl, label: g?.ticketsUrl ? host(g.ticketsUrl) : s?.ticketsLabel ?? host(ticketsUrl), detail: null } : null;
   return [tickets, watch].filter((a): a is GameAction => a !== null);

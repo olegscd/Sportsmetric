@@ -34,7 +34,7 @@ export function SeasonLinksCard({ seasons, onToast }: { seasons: Season[]; onToa
   const [seasonId, setSeasonId] = useState("");
   const season = seasons.find(s => s.id === seasonId);
   return <SectionCard title="Where to watch & tickets">
-    <p className="text-2xs leading-relaxed text-muted">Season defaults shown on every game. Upcoming games show tickets and where to watch; live games show where to watch. Only use official broadcasters and ticket sellers.</p>
+    <p className="text-2xs leading-relaxed text-muted">Season defaults for upcoming games: tickets and where to watch. Live games use the livestream saved on that game; finals use its replay. Only use official broadcasters and ticket sellers.</p>
     <Field label="Season">
       <Select value={seasonId} onChange={e => setSeasonId(e.target.value)}>
         <option value="">Choose a season…</option>
@@ -84,9 +84,9 @@ export function GameLinksCard({ game, onToast }: { game: Game; onToast: ToastFn 
   }
   return <SectionCard title={`Watch, tickets & replay (${game.awayTeam.shortName} @ ${game.homeTeam.shortName})`}>
     <form onSubmit={submit} className="flex flex-col gap-3">
-      <p className="text-2xs leading-relaxed text-muted">Leave watch and tickets blank to use the season defaults. The replay shows once the game is final. Use the official channel&apos;s upload only.</p>
+      <p className="text-2xs leading-relaxed text-muted">Paste links for this specific game here, including older games. Upcoming games can use season defaults. Live games show only this game&apos;s livestream; finals show only its replay. If the relevant link is blank, no link appears. Use the official channel&apos;s upload only.</p>
       <div className="grid gap-3 sm:grid-cols-2">
-        <Field label="Watch link override"><Input type="url" value={form.watchUrl} onChange={on("watchUrl")} placeholder="https://" /></Field>
+        <Field label="Game livestream link" hint="Direct link to this game's stream; required to show a link when live"><Input type="url" value={form.watchUrl} onChange={on("watchUrl")} placeholder="https://" /></Field>
         <Field label="Tickets link override"><Input type="url" value={form.ticketsUrl} onChange={on("ticketsUrl")} placeholder="https://" /></Field>
       </div>
       <Field label="Replay link" hint="e.g. the official YouTube upload"><Input type="url" value={form.replayUrl} onChange={on("replayUrl")} placeholder="https://" /></Field>

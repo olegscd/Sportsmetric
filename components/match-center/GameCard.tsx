@@ -67,29 +67,32 @@ const ACTION_ICONS = { tickets: Ticket, watch: Tv, replay: PlayCircle } as const
 const ACTION_TEXT = { tickets: "Tickets", watch: "Watch", replay: "Replay" } as const;
 
 /** Slim official links along the bottom of the card. */
-function CardActions({ actions }: { actions: GameAction[] }) {
+function CardActions({ actions, status }: { actions: GameAction[]; status: Game["status"] }) {
   if (!actions.length) return null;
   return (
-    <div className={cn("mt-2.5 grid gap-2 border-t border-border/60 pt-2.5", actions.length > 1 ? "grid-cols-2" : "grid-cols-1")}>
+    <div className={cn("mt-2 grid gap-2 border-t border-border/60 pt-2", actions.length > 1 ? "grid-cols-2" : "grid-cols-1")}>
       {actions.map((action) => {
         const Icon = ACTION_ICONS[action.kind];
+        const label = status === "LIVE" ? "Livestream" : ACTION_TEXT[action.kind];
         return (
           <a
             key={action.kind}
             href={action.url}
             target="_blank"
             rel="nofollow noopener noreferrer"
-            title={`${ACTION_TEXT[action.kind]}${action.label ? ` on ${action.label}` : ""}${action.detail ? ` (${action.detail})` : ""}`}
+            title={`${label}${action.label ? ` on ${action.label}` : ""}${action.detail ? ` (${action.detail})` : ""}`}
             className={cn(
-              "pointer-events-auto relative z-10 flex min-h-9 min-w-0 items-center justify-center gap-1.5 rounded-control border px-2.5 text-xs font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
-              action.kind === "tickets"
-                ? "border-primary/40 bg-primary/10 text-foreground hover:bg-primary/20"
-                : "border-border bg-surface-2 text-foreground hover:border-border-strong"
+              "pointer-events-auto relative z-10 flex min-w-0 items-center justify-center gap-1.5 rounded-control px-2.5 text-xs font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
+              status !== "UPCOMING"
+                ? "min-h-7 text-muted hover:bg-surface-2 hover:text-foreground"
+                : action.kind === "tickets"
+                  ? "min-h-9 border border-primary/40 bg-primary/10 text-foreground hover:bg-primary/20"
+                  : "min-h-9 border border-border bg-surface-2 text-foreground hover:border-border-strong"
             )}
           >
             <Icon size={14} aria-hidden="true" className="shrink-0 text-primary" />
             <span className="truncate">
-              {ACTION_TEXT[action.kind]}
+              {label}
               {action.label ? <span className="font-normal text-muted"> · {action.label}</span> : null}
             </span>
             <span className="sr-only">(opens in a new tab)</span>
@@ -242,7 +245,7 @@ export const GameCard = memo(function GameCard({ game }: { game: Game }) {
           </div>
         ) : null}
 
-        <CardActions actions={actions} />
+        <CardActions actions={actions} status={effectiveStatus} />
       </div>
     </article>
   );
