@@ -61,6 +61,12 @@ data/seasons/**/*.html
 data/compiled/UAAP_Complete_Digital_Book.html
 data/compiled/UAAP_Complete_Digital_Book.md
 
+# Generated historical standings compendium
+UAAP_Historical_Standings_Compendium.html
+UAAP_Historical_Standings_Compendium.pdf
+data/compiled/UAAP_Historical_Standings_Compendium.html
+data/compiled/UAAP_Historical_Standings_Compendium.pdf
+
 # Local npm cache used by sandboxed installs
 .npm-cache/
 
