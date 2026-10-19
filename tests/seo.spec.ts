@@ -10,7 +10,9 @@ test("crawl endpoints expose public canonical URLs and exclude private, future a
   expect(await robots.text()).toContain(`Sitemap: ${origin}/sitemap.xml`);
   const response = await request.get("/sitemap.xml");
   expect(response.status()).toBe(200);
-  const xml = load(await response.text(), { xmlMode: true });
+  const xmlText = await response.text();
+  expect(xmlText).not.toMatch(/&(?!amp;|lt;|gt;|quot;|apos;|#x[0-9a-f]+;|#\d+;)/i);
+  const xml = load(xmlText, { xmlMode: true });
   const urls = xml("loc").map((_, node) => xml(node).text()).get();
   expect(urls).toContain(`${origin}/leagues/pba`);
   expect(urls).toContain(`${origin}/players/pba-2026-home-player`);

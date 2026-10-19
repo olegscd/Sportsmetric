@@ -5,8 +5,19 @@ import { pageMetadata, serializeJsonLd } from "../../lib/seo";
 import { archivePath, archiveSeo, indexableArchivePaths } from "../../lib/uaap-seo";
 import { preparePublicUAAPData } from "../../lib/uaap-publication";
 import type { UAAPArchiveExtras, UAAPTable } from "../../lib/uaap-schema";
+import { sitemapXml } from "../../lib/sitemap-xml";
+import { load } from "cheerio";
 
 const data = preparePublicUAAPData({ tables: archive.tables as unknown as UAAPTable[], extras: archive.extras as UAAPArchiveExtras, seasons: [] });
+
+test("sitemap query URLs are XML escaped and round-trip to the exact canonical URL", () => {
+  const url = "https://www.sportsmetric.ph/uaap?sport=Basketball&season=1998-1999&division=Men%27s&tab=standings";
+  const xml = sitemapXml([{ url, lastModified: new Date("2026-10-19T04:00:00Z") }]);
+  assert.doesNotMatch(xml, /&(?!amp;|lt;|gt;|quot;|apos;|#x[0-9a-f]+;|#\d+;)/i);
+  const parsed = load(xml, { xmlMode: true });
+  assert.equal(parsed("loc").text(), url);
+  assert.equal(parsed("lastmod").text(), "2026-10-19T04:00:00.000Z");
+});
 
 test("archive canonical URLs preserve competition identity while dropping tracking and resolving aliases", () => {
   const selected = archiveSeo(data, { sport: "basketball", season: "1998-1999", division: "Men", tab: "standings", utm_source: "social" });

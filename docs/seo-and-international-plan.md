@@ -39,11 +39,13 @@ dates are used when a real date exists. Private and draft pages, unreviewed arch
 details, nonexistent profiles and planned International URLs are excluded. Preview
 deployments use noindex.
 
-Validation: 44 unit tests and 21 production-build browser checks passed,
+Validation: 45 unit tests and 21 production-build browser checks passed,
 including visible league records with JavaScript disabled, canonical URLs,
 profile/article markup, nonce safety, sitemap exclusions and the share image.
-Application lint and type checking passed. Untracked scratch tools were excluded
-from the lint command; their existing lint errors and files were left untouched.
+Application lint and type checking passed, including the full `npm run check`.
+Google's first fetch exposed unescaped query
+ampersands in this Next version's sitemap serializer; the route now generates
+escaped XML explicitly, with an additional strict regression check.
 
 ## Search intent and useful pages
 
