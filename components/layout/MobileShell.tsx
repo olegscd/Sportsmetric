@@ -10,7 +10,7 @@ export function MobileShell({ children }: { children: ReactNode }) {
   return (
     <div
       className={`relative flex min-h-dvh w-full min-w-0 flex-col bg-bg ${
-        isAdmin ? "" : "pb-16 md:pb-0"
+        isAdmin ? "" : "pb-[calc(4rem+env(safe-area-inset-bottom))] md:pb-0"
       }`}
     >
       {children}

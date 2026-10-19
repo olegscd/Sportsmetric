@@ -20,6 +20,28 @@ npm run dev
 
 Open http://localhost:3000. The admin dashboard is at http://localhost:3000/admin.
 
+## Everyday workflows
+
+- The match center includes season totals, team/venue search, a Philippine-time
+  date filter, chronological sorting, and manual refresh. Upcoming matches show
+  the next fixture first; completed matches show the latest result first.
+- “All Leagues” in Teams and Players shows each league's current season together.
+  Select a single league to browse a specific season or lifetime records.
+- Admin sections are available from the Workspace link. The desktop sidebar and
+  mobile section strip support arrow keys, Home, and End.
+- The schedule builder keeps a separate unpublished draft per league and season
+  in the current browser. Drafts survive section changes and reloads. Review the
+  fixtures before publishing; the batch is saved with one database upsert.
+  Team/date conflicts are checked against loaded fixtures before saving. Drafts
+  stay available after failed saves. They are local to this browser, not synced
+  between devices; unavailable browser storage is shown explicitly.
+- Roster paste accepts jersey/name/position/height columns or lines such as
+  `#7 Full Name PG 6-2`. Row errors, duplicate names, and jersey conflicts must be
+  resolved before importing. Jersey 0 can represent an unknown number. Quick
+  entry retains the team and returns focus to the name field after saving.
+- Official report imports remove duplicate input lines and lock competition
+  settings to the preview. Clear the queue to start a new import.
+
 ## Environment
 
 | Variable | Required | Purpose |

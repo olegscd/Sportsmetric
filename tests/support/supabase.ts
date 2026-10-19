@@ -26,11 +26,17 @@ const games = seasons.map(s => ({ id: `${s.id}-g1`, league: s.league, season_id:
 const tables: Record<string, Record<string, unknown>[]> = {
   seasons, teams, players, games, admin_sessions: [], uaap_overrides: [], uaap_division_overrides: [],
 };
+const baseline = structuredClone(tables);
 
 let databaseUnavailable = false;
 createServer(async (request, response) => {
   const url = new URL(request.url ?? "/", "http://127.0.0.1:54329");
   if (url.pathname === "/health") { response.end("ok"); return; }
+  if (url.pathname === "/_test/reset") {
+    for (const [name, rows] of Object.entries(baseline)) tables[name] = structuredClone(rows);
+    databaseUnavailable = false;
+    response.end("ok"); return;
+  }
   if (url.pathname === "/_test/database") {
     databaseUnavailable = url.searchParams.get("fail") === "1";
     response.end("ok"); return;
@@ -51,7 +57,12 @@ createServer(async (request, response) => {
     let body = "";
     for await (const chunk of request) body += chunk;
     const value = JSON.parse(body);
-    rows.push(...(Array.isArray(value) ? value : [value]));
+    const incoming = Array.isArray(value) ? value : [value];
+    for (const record of incoming) {
+      const existing = rows.findIndex(row => row.id !== undefined && row.id === record.id);
+      if (existing >= 0) rows[existing] = { ...rows[existing], ...record };
+      else rows.push(record);
+    }
     response.writeHead(201); response.end(); return;
   }
   if (request.method === "DELETE") {

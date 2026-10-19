@@ -4,7 +4,7 @@ import type { ToastFn } from "@/components/admin/Toast";
 import { useSportsData } from "@/context/SportsDataContext";
 import type { ExtractedBoxRow, ExtractedGamePayload } from "@/lib/game-extractor";
 import { inferLeague } from "@/lib/league-utils";
-import { cn } from "@/lib/utils";
+import { cn, formatGameDate } from "@/lib/utils";
 import type { Game, League, TournamentStage } from "@/types/sports";
 import {
   AlertCircle,
@@ -72,13 +72,14 @@ export function GameImporterTab({ onToast }: { onToast: ToastFn }) {
   const [batchItems, setBatchItems] = useState<BatchItem[]>([]);
   const [isExtractingAll, setIsExtractingAll] = useState(false);
   const [isIngestingAll, setIsIngestingAll] = useState(false);
+  const contextLocked = isExtractingAll || isIngestingAll || batchItems.length > 0;
 
   // Parse lines from textarea into candidate URLs/IDs
   const parsedUrls = useMemo(() => {
-    return urlInput
-      .split(/[\n,]+/)
+    return [...new Set(urlInput
+      .split(/\r?\n/)
       .map((s) => s.trim())
-      .filter((s) => s.length > 0);
+      .filter((s) => s.length > 0))];
   }, [urlInput]);
 
   function handleLeagueChange(newLeague: League) {
@@ -90,6 +91,8 @@ export function GameImporterTab({ onToast }: { onToast: ToastFn }) {
   }
 
   async function handleBatchExtract() {
+    if (contextLocked) return;
+    if (parsedUrls.length > 50) { onToast("Preview up to 50 matches at a time.", "error"); return; }
     if (parsedUrls.length === 0) {
       onToast("Please enter at least one game URL or match ID.", "error");
       return;
@@ -163,6 +166,7 @@ export function GameImporterTab({ onToast }: { onToast: ToastFn }) {
   }
 
   async function handleIngestAllReady() {
+    if (isExtractingAll || isIngestingAll) return;
     const readyItems = batchItems.filter((item) => item.status === "ready");
     if (readyItems.length === 0) {
       onToast("No matches are ready for ingestion.", "error");
@@ -236,6 +240,7 @@ export function GameImporterTab({ onToast }: { onToast: ToastFn }) {
   }
 
   function removeItem(id: string) {
+    if (isExtractingAll || isIngestingAll) return;
     setBatchItems((prev) => prev.filter((item) => item.id !== id));
   }
 
@@ -245,7 +250,7 @@ export function GameImporterTab({ onToast }: { onToast: ToastFn }) {
   return (
     <div className="flex flex-col gap-5">
       <SectionCard
-        title="Multi-Game LiveStats & Match Ingestion Engine"
+        title="Import official match reports"
         action={
           <span className="flex items-center gap-1 text-[11px] font-semibold text-primary">
             <Sparkles size={13} />
@@ -255,7 +260,7 @@ export function GameImporterTab({ onToast }: { onToast: ToastFn }) {
       >
         <p className="text-xs text-muted">
           Paste one or more LiveStats links, <code className="text-primary font-mono text-[11px]">pba.ph/recap?match=...</code> URLs,
-          or raw match IDs (one per line). All matches will be scraped, verified, and saved to the database.
+          or raw match IDs (one per line, up to 50). Preview the extracted results, then confirm the matches you want to publish. Duplicate lines are automatically removed.
         </p>
 
         <div className="mt-4 flex flex-col gap-4">
@@ -266,8 +271,10 @@ export function GameImporterTab({ onToast }: { onToast: ToastFn }) {
                 key={l}
                 type="button"
                 onClick={() => handleLeagueChange(l)}
+                disabled={contextLocked}
+                aria-pressed={league === l}
                 className={cn(
-                  "flex-1 rounded-full py-1.5 text-xs font-semibold transition-colors",
+                  "min-h-10 flex-1 rounded-full py-1.5 text-xs font-semibold transition-colors disabled:opacity-60",
                   league === l ? "bg-primary text-primary-foreground" : "text-muted hover:text-foreground"
                 )}
               >
@@ -282,7 +289,7 @@ export function GameImporterTab({ onToast }: { onToast: ToastFn }) {
                 className={selectClass}
                 value={effectiveSeasonId}
                 onChange={(e) => setSeasonId(e.target.value)}
-                disabled={isExtractingAll || isIngestingAll}
+                disabled={contextLocked}
               >
                 {leagueSeasons.map((s) => (
                   <option key={s.id} value={s.id}>
@@ -297,7 +304,7 @@ export function GameImporterTab({ onToast }: { onToast: ToastFn }) {
                 className={selectClass}
                 value={stage}
                 onChange={(e) => setStage(e.target.value as TournamentStage)}
-                disabled={isExtractingAll || isIngestingAll}
+                disabled={contextLocked}
               >
                 {STAGES.map((st) => (
                   <option key={st.value} value={st.value}>
@@ -312,7 +319,7 @@ export function GameImporterTab({ onToast }: { onToast: ToastFn }) {
                 className={selectClass}
                 value={status}
                 onChange={(e) => setStatus(e.target.value as "FINAL" | "LIVE" | "UPCOMING")}
-                disabled={isExtractingAll || isIngestingAll}
+                disabled={contextLocked}
               >
                 {STATUSES.map((st) => (
                   <option key={st.value} value={st.value}>
@@ -338,7 +345,7 @@ export function GameImporterTab({ onToast }: { onToast: ToastFn }) {
                 }
                 value={urlInput}
                 onChange={(e) => setUrlInput(e.target.value)}
-                disabled={isExtractingAll || isIngestingAll}
+                disabled={contextLocked}
               />
             </div>
           </Field>
@@ -348,7 +355,7 @@ export function GameImporterTab({ onToast }: { onToast: ToastFn }) {
             <button
               type="button"
               onClick={handleBatchExtract}
-              disabled={isExtractingAll || isIngestingAll || parsedUrls.length === 0}
+              disabled={contextLocked || parsedUrls.length === 0 || parsedUrls.length > 50 || !effectiveSeasonId}
               className={cn(
                 primaryButtonClass,
                 "gap-2 px-5",
@@ -386,7 +393,7 @@ export function GameImporterTab({ onToast }: { onToast: ToastFn }) {
                 ) : (
                   <>
                     <CheckCircle2 size={14} />
-                    Confirm & Ingest All ({readyCount}) Ready Matches
+                    Publish {readyCount} ready match{readyCount === 1 ? "" : "es"}
                   </>
                 )}
               </button>
@@ -395,11 +402,12 @@ export function GameImporterTab({ onToast }: { onToast: ToastFn }) {
             {savedCount > 0 && (
               <span className="flex items-center gap-1.5 text-xs font-semibold text-emerald-400">
                 <CheckCircle2 size={14} />
-                {savedCount} Game{savedCount > 1 ? "s" : ""} saved in Supabase
+                {savedCount} match{savedCount > 1 ? "es" : ""} published
               </span>
             )}
           </div>
         </div>
+        {batchItems.length > 0 && <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-border bg-bg/50 p-3 text-xs text-muted"><p>Competition settings are locked to the preview. Clear the queue to start another import.</p><button type="button" disabled={isExtractingAll || isIngestingAll} onClick={() => { setBatchItems([]); setUrlInput(""); }} className="shrink-0 rounded-lg border border-border px-3 py-2 font-semibold text-foreground hover:bg-elevated disabled:opacity-50">Clear queue</button></div>}
       </SectionCard>
 
       {/* Extracted Matches Preview List */}
@@ -474,11 +482,7 @@ export function GameImporterTab({ onToast }: { onToast: ToastFn }) {
                           <div className="flex flex-wrap items-center gap-3 text-[11px] text-muted">
                             <span className="flex items-center gap-1">
                               <Calendar size={11} />
-                              {new Date(game.startTime).toLocaleDateString("en-US", {
-                                month: "short",
-                                day: "numeric",
-                                year: "numeric",
-                              })}
+                              {formatGameDate(game.startTime)}
                             </span>
                             {game.venue && (
                               <span className="flex items-center gap-1">
@@ -535,7 +539,7 @@ export function GameImporterTab({ onToast }: { onToast: ToastFn }) {
                       <button
                         type="button"
                         onClick={() => removeItem(item.id)}
-                        disabled={item.status === "ingesting"}
+                        disabled={isExtractingAll || isIngestingAll}
                         className="rounded-lg p-1 text-muted hover:bg-rose-500/10 hover:text-rose-400 transition-colors"
                         title="Remove from queue"
                       >

@@ -6,6 +6,7 @@ import { useSportsData } from "@/context/SportsDataContext";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { ArrowUpRight, Settings2 } from "lucide-react";
 
 export function DesktopTopBar() {
   const pathname = usePathname();
@@ -16,24 +17,19 @@ export function DesktopTopBar() {
   if (isAdmin) return null;
 
   return (
-    <header className="sticky top-0 z-40 hidden min-w-0 md:block">
-      <div className="border-b border-border bg-surface">
-        <div className={`${PAGE_SHELL} flex h-14 items-center`}>
+    <header className="sticky top-0 z-40 hidden min-w-0 border-b border-border bg-bg/95 backdrop-blur-xl md:block">
+        <div className={`${PAGE_SHELL} flex h-20 items-center gap-8`}>
           <Link href="/" className="flex shrink-0 items-center">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/sportsmetric-wordmark.png"
               alt="Sportsmetric"
-              className="h-7 w-auto object-contain"
+              className="h-7 w-auto object-contain lg:h-8"
             />
           </Link>
-        </div>
-      </div>
-
-      <div className="min-w-0 border-t border-border bg-elevated shadow-sm">
         <nav
           aria-label="Main"
-          className={`${PAGE_SHELL} flex items-stretch gap-0 overflow-x-auto`}
+          className="flex min-w-0 flex-1 items-center gap-1 overflow-x-auto"
         >
           {NAV_ITEMS.map(({ href, label, isActive }) => {
             const active = isActive(pathname);
@@ -45,8 +41,8 @@ export function DesktopTopBar() {
                 href={href}
                 aria-current={active ? "page" : undefined}
                 className={cn(
-                  "relative flex shrink-0 items-center gap-2 px-4 py-3.5 text-sm font-semibold text-foreground/80 transition-colors hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-primary",
-                  active && "text-foreground"
+                  "relative flex shrink-0 items-center gap-2 rounded-lg px-3 py-2.5 text-xs font-semibold text-muted transition-colors hover:bg-surface hover:text-foreground lg:text-sm",
+                  active && "bg-elevated text-foreground"
                 )}
               >
                 {label}
@@ -58,13 +54,18 @@ export function DesktopTopBar() {
                 {active ? (
                   <span
                     aria-hidden
-                    className="absolute inset-x-2 bottom-0 h-0.5 rounded-full bg-primary"
+                    className="absolute inset-x-3 -bottom-1 h-0.5 rounded-full bg-primary"
                   />
                 ) : null}
               </Link>
             );
           })}
         </nav>
+        <Link href="/admin" className="flex shrink-0 items-center gap-2 rounded-lg border border-border px-3 py-2 text-xs font-semibold text-muted transition-colors hover:border-primary/50 hover:text-foreground">
+          <Settings2 size={14} aria-hidden="true" />
+          <span className="hidden lg:inline">Workspace</span>
+          <ArrowUpRight size={12} aria-hidden="true" />
+        </Link>
       </div>
     </header>
   );

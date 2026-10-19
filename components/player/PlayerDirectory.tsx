@@ -14,6 +14,7 @@ import { Users } from "lucide-react";
 import { useMemo, useState } from "react";
 
 import { PlayerCard } from "./PlayerCard";
+import { PageHeading } from "@/components/ui/PageHeading";
 
 const LEAGUE_CHIPS: { value: League | "ALL"; label: string }[] = [
   { value: "UAAP", label: "UAAP" },
@@ -35,7 +36,7 @@ export function PlayerDirectory() {
     ? userSelectedSeasonId
     : activeCurrent;
 
-  useSportsScope(`league=${league}&season=${encodeURIComponent(seasonId)}`);
+  useSportsScope(league === "ALL" ? "league=ALL" : `league=${league}&season=${encodeURIComponent(seasonId)}`);
 
   function handleLeagueChange(newLeague: League | "ALL") {
     setLeague(newLeague);
@@ -50,10 +51,12 @@ export function PlayerDirectory() {
         const team = teamsById.get(player.teamId);
         if (!team) return false;
         const matchesLeague = league === "ALL" || team.league === league;
-        const matchesSeason = isLifetimeSeason(seasonId) || player.seasonId === seasonId;
+        const matchesSeason = league === "ALL"
+          ? seasons.some(season => season.id === player.seasonId && season.isCurrent)
+          : isLifetimeSeason(seasonId) || player.seasonId === seasonId;
         return matchesLeague && matchesSeason;
       }),
-    [players, teamsById, league, seasonId]
+    [players, teamsById, league, seasonId, seasons]
   );
 
   const normalizedQuery = query.trim().toLowerCase();
@@ -120,12 +123,9 @@ export function PlayerDirectory() {
 
   return (
     <div className="mx-auto flex w-full max-w-7xl min-w-0 flex-col gap-4 px-4 py-4 md:px-6">
-      <div className="hidden md:block">
-        <h1 className="text-lg font-extrabold tracking-tight text-foreground">Players</h1>
-        <p className="text-xs text-muted">Search rosters across UAAP, PBA, and PVL</p>
-      </div>
+      <PageHeading title="The players behind the numbers." description="Explore rosters, compare season statistics, and follow every athlete’s career." />
 
-      <div className="flex items-center justify-between gap-2">
+      <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex gap-2 overflow-x-auto pb-0.5">
           {LEAGUE_CHIPS.map((chip) => (
             <FilterChip
@@ -137,11 +137,11 @@ export function PlayerDirectory() {
             </FilterChip>
           ))}
         </div>
-        <SeasonPicker
+        {league === "ALL" ? <span className="text-xs text-muted">Current season in each league</span> : <SeasonPicker
           value={seasonId}
           onChange={setUserSelectedSeasonId}
           league={activeLeague}
-        />
+        />}
       </div>
 
       <SearchInput

@@ -4,7 +4,8 @@ import type { ToastFn } from "@/components/admin/Toast";
 import { useSportsData } from "@/context/SportsDataContext";
 import { generateId } from "@/lib/data";
 import type { Player, Position, RankBadge } from "@/types/sports";
-import { useState, type FormEvent } from "react";
+import { useRef, useState, type FormEvent } from "react";
+import { BASKETBALL_POSITIONS, VOLLEYBALL_POSITIONS, parseRosterEntry, rosterConflicts } from "@/lib/roster-entry";
 import {
   dangerButtonClass,
   Field,
@@ -14,8 +15,6 @@ import {
   SectionCard,
   selectClass,
 } from "./formPrimitives";
-
-const POSITIONS: Position[] = ["PG", "SG", "SF", "PF", "C", "OH", "OP", "MB", "S", "L"];
 
 interface PlayerFormState {
   id: string | null;
@@ -99,69 +98,6 @@ function toNumber(value: string): number {
   return Number.isFinite(n) ? n : 0;
 }
 
-interface ParsedPlayerRow {
-  jerseyNumber: number;
-  name: string;
-  position: Position;
-  height: string;
-}
-
-function parseBulkRosterText(text: string): ParsedPlayerRow[] {
-  const lines = text.split("\n").map((l) => l.trim()).filter(Boolean);
-  const results: ParsedPlayerRow[] = [];
-  const posList: Position[] = ["PG", "SG", "SF", "PF", "C", "OH", "OP", "MB", "S", "L"];
-
-  for (const line of lines) {
-    const parts = line.split(/[|,\t]+/).map((p) => p.trim()).filter(Boolean);
-    let jerseyNumber = 0;
-    let name = "";
-    let position: Position = "PG";
-    let height = "";
-
-    if (parts.length >= 2) {
-      const maybeNum = parseInt(parts[0].replace("#", ""), 10);
-      if (!isNaN(maybeNum)) {
-        jerseyNumber = maybeNum;
-        name = parts[1];
-        if (parts[2]) {
-          const foundPos = posList.find((p) => p.toLowerCase() === parts[2].toLowerCase());
-          if (foundPos) position = foundPos;
-        }
-        if (parts[3]) height = parts[3];
-      } else {
-        name = parts[0];
-        const foundPos = posList.find((p) => p.toLowerCase() === parts[1].toLowerCase());
-        if (foundPos) position = foundPos;
-        if (parts[2]) height = parts[2];
-      }
-    } else {
-      const tokens = line.split(/\s+/);
-      const maybeNum = parseInt(tokens[0].replace("#", ""), 10);
-      if (!isNaN(maybeNum)) {
-        jerseyNumber = maybeNum;
-        name = tokens.slice(1).join(" ");
-      } else {
-        name = line;
-      }
-      const lastToken = tokens[tokens.length - 1]?.toUpperCase() as Position;
-      if (posList.includes(lastToken)) {
-        position = lastToken;
-        if (!isNaN(maybeNum)) {
-          name = tokens.slice(1, -1).join(" ");
-        } else {
-          name = tokens.slice(0, -1).join(" ");
-        }
-      }
-    }
-
-    if (name) {
-      results.push({ jerseyNumber, name, position, height });
-    }
-  }
-
-  return results;
-}
-
 export function PlayersManager({ onToast }: { onToast: ToastFn }) {
   const {
     players: allPlayers,
@@ -192,13 +128,19 @@ export function PlayersManager({ onToast }: { onToast: ToastFn }) {
 
   const [showBulkPaste, setShowBulkPaste] = useState(false);
   const [bulkText, setBulkText] = useState("");
+  const [saving, setSaving] = useState(false);
+  const quickNameRef = useRef<HTMLInputElement>(null);
 
   const teamsInListSeason = allTeams.filter((t) => t.seasonId === seasonFilter);
   const teamsInFormSeason = allTeams.filter((t) => t.seasonId === form.seasonId);
   const players = allPlayers.filter((p) => p.seasonId === seasonFilter);
 
-  const activeQuickTeamId = quickTeamId || teamsInListSeason[0]?.id || "";
+  const activeQuickTeamId = teamsInListSeason.some(team => team.id === quickTeamId) ? quickTeamId : teamsInListSeason[0]?.id || "";
   const isVolleyball = allTeams.find((t) => t.id === (form.teamId || activeQuickTeamId))?.league === "PVL";
+  const quickVolleyball = allTeams.find(t => t.id === activeQuickTeamId)?.league === "PVL";
+  const quickPositions = quickVolleyball ? VOLLEYBALL_POSITIONS : BASKETBALL_POSITIONS;
+  const formPositions = isVolleyball ? VOLLEYBALL_POSITIONS : BASKETBALL_POSITIONS;
+  const activeQuickPosition = quickPositions.includes(quickPos) ? quickPos : quickPositions[0];
 
   const filteredPlayers = players.filter((player) => {
     const matchesSearch = player.name.toLowerCase().includes(search.trim().toLowerCase());
@@ -224,6 +166,7 @@ export function PlayersManager({ onToast }: { onToast: ToastFn }) {
 
   async function handleQuickRowAdd(event: FormEvent) {
     event.preventDefault();
+    if (saving) return;
     if (!quickName.trim()) {
       onToast("Player name is required.", "error");
       return;
@@ -240,7 +183,7 @@ export function PlayersManager({ onToast }: { onToast: ToastFn }) {
       personId: id,
       name: quickName.trim(),
       jerseyNumber: parseInt(quickJersey, 10) || 0,
-      position: quickPos,
+      position: activeQuickPosition,
       teamId,
       height: quickHeight.trim(),
       photoUrl: null,
@@ -253,25 +196,32 @@ export function PlayersManager({ onToast }: { onToast: ToastFn }) {
         fgPct: 0,
         threePtPct: 0,
         ftPct: 0,
-        ...(isVolleyball ? { killsPerSet: 0, digsPerSet: 0, blocksPerSet: 0 } : {}),
+        ...(quickVolleyball ? { killsPerSet: 0, digsPerSet: 0, blocksPerSet: 0 } : {}),
       },
       rankBadges: [],
       seasonId: seasonFilter,
     };
 
+    const conflicts = rosterConflicts([player], players.filter(p => p.teamId === teamId));
+    if (conflicts.length) { onToast(conflicts[0], "error"); return; }
     try {
+      setSaving(true);
       await savePlayer(player);
       onToast(`Added ${player.name} to roster!`);
       setQuickName("");
       const nextJersey = (parseInt(quickJersey, 10) || 0) + 1;
-      setQuickJersey(nextJersey > 0 ? String(nextJersey) : "");
+      setQuickJersey(nextJersey > 0 && nextJersey <= 99 ? String(nextJersey) : "");
     } catch {
       onToast(`Failed to add ${player.name} to database.`, "error");
+    } finally {
+      setSaving(false);
+      requestAnimationFrame(() => quickNameRef.current?.focus());
     }
   }
 
   async function handleBulkImport() {
-    const parsed = parseBulkRosterText(bulkText);
+    if (saving || bulkIssues.length > 0) return;
+    const parsed = bulkParsedPreview;
     if (parsed.length === 0) {
       onToast("No valid player rows found in text.", "error");
       return;
@@ -284,6 +234,7 @@ export function PlayersManager({ onToast }: { onToast: ToastFn }) {
 
     let count = 0;
     try {
+      setSaving(true);
       const playersToSave: Player[] = parsed.map((item) => {
         const id = generateId();
         return {
@@ -304,7 +255,7 @@ export function PlayersManager({ onToast }: { onToast: ToastFn }) {
             fgPct: 0,
             threePtPct: 0,
             ftPct: 0,
-            ...(isVolleyball ? { killsPerSet: 0, digsPerSet: 0, blocksPerSet: 0 } : {}),
+            ...(quickVolleyball ? { killsPerSet: 0, digsPerSet: 0, blocksPerSet: 0 } : {}),
           },
           rankBadges: [],
           seasonId: seasonFilter,
@@ -317,12 +268,15 @@ export function PlayersManager({ onToast }: { onToast: ToastFn }) {
       setBulkText("");
       setShowBulkPaste(false);
     } catch {
-      onToast(`Bulk import failed after preparing ${count} players.`, "error");
+      onToast("The roster could not be saved. Your pasted rows have been kept.", "error");
+    } finally {
+      setSaving(false);
     }
   }
 
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
+    if (saving) return;
     if (!form.name.trim() || !form.teamId) {
       onToast("Player name and team are required.", "error");
       return;
@@ -340,7 +294,7 @@ export function PlayersManager({ onToast }: { onToast: ToastFn }) {
       personId: form.personId.trim() || id,
       name: form.name.trim(),
       jerseyNumber: parseInt(form.jerseyNumber, 10) || 0,
-      position: form.position,
+      position: formPositions.includes(form.position) ? form.position : formPositions[0],
       teamId: form.teamId,
       height: form.height.trim(),
       photoUrl: form.photoUrl.trim() || null,
@@ -365,12 +319,17 @@ export function PlayersManager({ onToast }: { onToast: ToastFn }) {
       seasonId: form.seasonId,
     };
 
+    const conflicts = rosterConflicts([player], allPlayers.filter(p => p.teamId === player.teamId && p.id !== player.id));
+    if (conflicts.length) { onToast(conflicts[0], "error"); return; }
     try {
+      setSaving(true);
       await savePlayer(player);
       onToast(form.id ? "Player updated successfully!" : "Player created successfully!");
       setForm(playerToForm(player));
     } catch {
       onToast("Failed to save player to database.", "error");
+    } finally {
+      setSaving(false);
     }
   }
 
@@ -411,10 +370,13 @@ export function PlayersManager({ onToast }: { onToast: ToastFn }) {
   }
 
 
-  const bulkParsedPreview = parseBulkRosterText(bulkText);
+  const bulkResult = parseRosterEntry(bulkText, quickVolleyball);
+  const bulkParsedPreview = bulkResult.rows;
+  const bulkIssues = [...bulkResult.issues, ...rosterConflicts(bulkParsedPreview, players.filter(p => p.teamId === activeQuickTeamId))];
 
   return (
-    <div className="flex flex-col gap-5">
+    <fieldset disabled={saving} className="flex min-w-0 flex-col gap-5">
+      {saving && <p role="status" className="text-sm text-muted">Saving roster…</p>}
       <div className="flex items-end justify-between gap-2">
         <div className="flex-1">
           <Field label="Viewing Season">
@@ -463,8 +425,9 @@ export function PlayersManager({ onToast }: { onToast: ToastFn }) {
         </div>
 
         <div className="mt-3 flex items-center gap-2">
-          <label className="text-xs font-semibold text-muted">Target Team:</label>
+          <label htmlFor="roster-target-team" className="text-xs font-semibold text-muted">Target Team:</label>
           <select
+            id="roster-target-team"
             value={activeQuickTeamId}
             onChange={(e) => setQuickTeamId(e.target.value)}
             className="flex-1 rounded-lg border border-border bg-background px-2.5 py-1.5 text-xs font-bold text-foreground"
@@ -479,15 +442,17 @@ export function PlayersManager({ onToast }: { onToast: ToastFn }) {
 
         {showBulkPaste ? (
           <div className="mt-3 flex flex-col gap-3">
-            <Field label="Paste Raw Roster Text (e.g. '#7 Kevin Quiambao F 6-6' or tab/CSV rows)">
+            <Field label="Paste roster (jersey, name, position, height)">
               <textarea
                 rows={5}
                 value={bulkText}
                 onChange={(e) => setBulkText(e.target.value)}
-                placeholder={"#7 Kevin Quiambao F 6-6\n#10 JD Cagulangan PG 5-9\n12 Mike Phillips C 6-8"}
+                placeholder={quickVolleyball ? "7, Full Name, OH, 5-9\n10, Another Player, S, 5-7" : "#7 Kevin Quiambao SF 6-6\n#10 JD Cagulangan PG 5-9\n12 Mike Phillips C 6-8"}
                 className={`${inputClass} font-mono text-xs`}
               />
             </Field>
+            <p className="text-xs leading-relaxed text-muted">Paste four columns from a spreadsheet, or enter one player per line. Use 0 when a jersey number is unknown. Valid positions: {quickPositions.join(", ")}.</p>
+            {bulkIssues.length > 0 && <div role="alert" className="rounded-xl border border-live/30 bg-live/5 p-3 text-xs text-live"><p className="mb-2 font-semibold">Resolve these rows before importing:</p><ul className="max-h-40 list-inside list-disc space-y-1 overflow-y-auto">{bulkIssues.map((issue, index) => <li key={index}>{issue}</li>)}</ul></div>}
 
             {bulkParsedPreview.length > 0 && (
               <div className="rounded-lg border border-border bg-background p-2 text-xs">
@@ -507,6 +472,7 @@ export function PlayersManager({ onToast }: { onToast: ToastFn }) {
             <button
               type="button"
               onClick={handleBulkImport}
+              disabled={!activeQuickTeamId || !bulkParsedPreview.length || bulkIssues.length > 0 || saving}
               className={`${primaryButtonClass} w-full`}
             >
               Import {bulkParsedPreview.length} Players
@@ -515,13 +481,19 @@ export function PlayersManager({ onToast }: { onToast: ToastFn }) {
         ) : (
           <form onSubmit={handleQuickRowAdd} className="mt-3 flex flex-wrap items-center gap-2">
             <input
+              aria-label="Quick jersey number"
               type="number"
+              min={0}
+              max={99}
               placeholder="#"
               value={quickJersey}
               onChange={(e) => setQuickJersey(e.target.value)}
               className={`${inputClass} w-14 text-center`}
             />
             <input
+              ref={quickNameRef}
+              aria-label="Quick player name"
+              required
               type="text"
               placeholder="Player Full Name"
               value={quickName}
@@ -529,24 +501,26 @@ export function PlayersManager({ onToast }: { onToast: ToastFn }) {
               className={`${inputClass} min-w-[140px] flex-1`}
             />
             <select
-              value={quickPos}
+              aria-label="Quick position"
+              value={activeQuickPosition}
               onChange={(e) => setQuickPos(e.target.value as Position)}
               className={`${selectClass} w-20`}
             >
-              {POSITIONS.map((p) => (
+              {quickPositions.map((p) => (
                 <option key={p} value={p}>
                   {p}
                 </option>
               ))}
             </select>
             <input
+              aria-label="Quick height"
               type="text"
               placeholder="Ht"
               value={quickHeight}
               onChange={(e) => setQuickHeight(e.target.value)}
               className={`${inputClass} w-16 text-center`}
             />
-            <button type="submit" className={primaryButtonClass}>
+            <button type="submit" disabled={!activeQuickTeamId || saving} className={primaryButtonClass}>
               + Add Row
             </button>
           </form>
@@ -629,12 +603,12 @@ export function PlayersManager({ onToast }: { onToast: ToastFn }) {
             <Field label="Position">
               <select
                 className={selectClass}
-                value={form.position}
+                value={formPositions.includes(form.position) ? form.position : formPositions[0]}
                 onChange={(event) =>
                   setForm({ ...form, position: event.target.value as Position })
                 }
               >
-                {POSITIONS.map((p) => (
+                {formPositions.map((p) => (
                   <option key={p} value={p}>
                     {p}
                   </option>
@@ -821,6 +795,6 @@ export function PlayersManager({ onToast }: { onToast: ToastFn }) {
           )}
         </div>
       </SectionCard>
-    </div>
+    </fieldset>
   );
 }

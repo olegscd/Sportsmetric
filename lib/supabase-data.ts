@@ -429,11 +429,12 @@ export async function fetchSportsData(scope: SportsDataScope): Promise<SupabaseD
     }
   }
   const matching = seasons.filter(s => league === "ALL" || s.league === league);
+  const currentPerLeague = league === "ALL" && !seasonId;
   if (!seasonId || !seasons.some(s => s.id === seasonId)) {
     if (seasonId !== "lifetime") seasonId = matching.find(s => s.isCurrent)?.id ?? matching[0]?.id;
   }
   const seasonIds = scope.admin ? undefined : matching
-    .filter(s => (seasonId === "lifetime" || s.id === seasonId) && (!careerSeasons || careerSeasons.has(s.id))).map(s => s.id);
+    .filter(s => (currentPerLeague ? s.isCurrent : seasonId === "lifetime" || s.id === seasonId) && (!careerSeasons || careerSeasons.has(s.id))).map(s => s.id);
   if (seasonIds?.length === 0) return { seasons, teams: [], players: [], games: [] };
   const gameColumns = scope.admin ? "*" :
     "id,league,season_id,home_team_id,away_team_id,home_score,away_score,status,start_time,venue,stage,is_playoff,quarter_or_set,time_remaining,box_score";

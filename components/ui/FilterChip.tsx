@@ -18,9 +18,9 @@ export function FilterChip({
       onClick={onClick}
       aria-pressed={selected}
       className={cn(
-        "shrink-0 rounded-full border px-3 py-1 text-xs font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
+        "min-h-9 shrink-0 rounded-lg border px-3.5 py-1.5 text-xs font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
         selected
-          ? "border-primary bg-primary/10 text-primary"
+          ? "border-primary/60 bg-primary/15 text-foreground"
           : "border-border text-muted hover:border-primary/40 hover:text-foreground"
       )}
     >
@@ -39,7 +39,7 @@ export function SegmentedControl<T extends string>({
   onChange: (value: T) => void;
 }) {
   return (
-    <div role="group" className="flex items-center gap-1 rounded-full bg-surface p-1">
+    <div role="group" className="flex items-center gap-1 rounded-xl border border-border bg-surface p-1">
       {options.map((option) => {
         const selected = value === option.value;
         return (
@@ -49,7 +49,7 @@ export function SegmentedControl<T extends string>({
             aria-pressed={selected}
             onClick={() => onChange(option.value)}
             className={cn(
-              "flex-1 rounded-full py-1.5 text-xs font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
+              "min-h-9 flex-1 rounded-lg px-3 py-2 text-xs font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
               selected
                 ? "bg-primary text-primary-foreground shadow-sm"
                 : "text-muted hover:text-foreground"

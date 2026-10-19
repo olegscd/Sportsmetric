@@ -1,5 +1,7 @@
 "use client";
 
+import { PageHeading } from "@/components/ui/PageHeading";
+
 import { EmptyState } from "@/components/ui/EmptyState";
 import { ErrorNotice } from "@/components/ui/ErrorNotice";
 import { SegmentedControl } from "@/components/ui/FilterChip";
@@ -80,18 +82,12 @@ export function StandingsView() {
 
   return (
     <div className="mx-auto flex w-full max-w-7xl min-w-0 flex-col gap-4 px-4 py-4 md:px-6">
-      <div className="flex items-end justify-between gap-3">
-        <div className="hidden md:block">
-          <h1 className="text-lg font-extrabold tracking-tight text-foreground">Standings</h1>
-          <p className="text-xs text-muted">Records and league leaders</p>
-        </div>
-        <SeasonPicker
+      <PageHeading title="The race to the top." description="Follow the standings, find the league leaders, and track the postseason." action={<SeasonPicker
           value={seasonId}
           onChange={setUserSelectedSeasonId}
           league={league}
           includeLifetime={false}
-        />
-      </div>
+        />} />
 
       <SegmentedControl options={LEAGUES} value={league} onChange={handleLeagueChange} />
 

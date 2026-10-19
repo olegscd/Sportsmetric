@@ -43,6 +43,7 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-bg">
+        <a href="#main-content" className="skip-link">Skip to content</a>
         <Suspense fallback={<p className="p-6" role="status">Loading Sportsmetric…</p>}>
           <SportsShell>{children}</SportsShell>
         </Suspense>
@@ -89,7 +90,7 @@ async function SportsShell({ children }: { children: React.ReactNode }) {
           <DesktopTopBar />
           <MobileShell>
             <Header />
-            <main className="flex-1">{children}</main>
+            <main id="main-content" tabIndex={-1} className="flex-1 focus:outline-none">{children}</main>
             <BottomNav />
           </MobileShell>
         </div>

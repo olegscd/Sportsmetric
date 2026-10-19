@@ -48,11 +48,11 @@ export function TeamBadge({ team, size = "md", className }: TeamBadgeProps) {
   return (
     <div
       className={cn(
-        "flex shrink-0 items-center justify-center rounded-full border-2 bg-surface font-bold tracking-tight",
+        "flex shrink-0 items-center justify-center rounded-full border-2 bg-elevated font-bold tracking-tight text-foreground",
         SIZE_CLASSES[size],
         className
       )}
-      style={{ borderColor: team.accentColor, color: team.accentColor }}
+      style={{ borderColor: team.accentColor }}
     >
       {team.shortName}
     </div>

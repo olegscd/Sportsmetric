@@ -1,16 +1,16 @@
 @import "tailwindcss";
 
-/* Sportsmetric — ESPN Red */
+/* Sportsmetric: a quiet scoreboard with a clear red accent. */
 @theme {
-  --color-bg: #121212;
-  --color-surface: #1e1e1e;
-  --color-elevated: #2a2a2a;
-  --color-border: #3d3d3d;
-  --color-foreground: #ffffff;
-  --color-muted: #999999;
-  --color-primary: #cc0000;
+  --color-bg: #0d1118;
+  --color-surface: #151b25;
+  --color-elevated: #1d2633;
+  --color-border: #2e3949;
+  --color-foreground: #f4f6fa;
+  --color-muted: #a0aec0;
+  --color-primary: #ef4444;
   --color-primary-foreground: #ffffff;
-  --color-live: #cc0000;
+  --color-live: #fb7185;
   --color-success: #2ecc71;
   --color-league-uaap: #cc0000;
   --color-league-pba: #f7941d;
@@ -28,6 +28,66 @@ html {
 html,
 body {
   overflow-x: clip;
+}
+
+button, a, input, select, textarea {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:not(:disabled), select {
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+}
+
+::selection {
+  background: #ef444447;
+  color: white;
+}
+
+.page-heading {
+  font-size: clamp(1.6rem, 3vw, 2.25rem);
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  line-height: 1.15;
+}
+
+.scoreboard-hero {
+  background: radial-gradient(ellipse at top right, #ef444414, transparent 65%), var(--color-surface);
+}
+
+.skip-link {
+  position: fixed;
+  top: 12px;
+  left: 16px;
+  z-index: 100;
+  clip-path: inset(50%);
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  border-radius: 8px;
+  padding: 0;
+  background: var(--color-primary);
+  color: white;
+}
+
+.skip-link:focus-visible {
+  clip-path: none;
+  height: auto;
+  width: auto;
+  padding: 12px 20px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 body {

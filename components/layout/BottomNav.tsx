@@ -22,7 +22,7 @@ export function BottomNav() {
   const liveCount = games.filter((g) => g.status === "LIVE").length;
 
   return (
-    <nav className={cn("fixed bottom-0 left-0 right-0 z-30 mx-auto flex max-w-md shrink-0 items-stretch border-t border-border bg-surface/95 shadow-lg backdrop-blur-md md:hidden", isAdmin && "hidden")}>
+    <nav aria-label="Main" className={cn("fixed bottom-0 left-0 right-0 z-30 flex shrink-0 items-stretch border-t border-border bg-surface/95 pb-[env(safe-area-inset-bottom)] shadow-lg backdrop-blur-md md:hidden", isAdmin && "hidden")}>
       {NAV_ITEMS.map(({ href, label, icon: Icon, isActive }) => {
         const active = isActive(pathname);
         const badgeCount = href === "/" ? liveCount : 0;

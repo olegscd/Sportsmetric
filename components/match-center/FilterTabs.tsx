@@ -4,13 +4,14 @@ import { EmptyState } from "@/components/ui/EmptyState";
 import { ErrorNotice } from "@/components/ui/ErrorNotice";
 import { FilterChip, SegmentedControl } from "@/components/ui/FilterChip";
 import { SeasonPicker } from "@/components/ui/SeasonPicker";
+import { SearchInput } from "@/components/ui/SearchInput";
 import { SkeletonCardGrid } from "@/components/ui/Skeleton";
 import { useSportsData, useSportsScope } from "@/context/SportsDataContext";
 import { getEffectiveGameStatus, isLifetimeSeason } from "@/lib/derivations";
 import { inferLeague } from "@/lib/league-utils";
-import { formatFullDayHeader, formatGameDate } from "@/lib/utils";
+import { formatFullDayHeader, formatGameDate, isoToPhtInput } from "@/lib/utils";
 import type { Game, League } from "@/types/sports";
-import { Radio } from "lucide-react";
+import { CalendarDays, CheckCheck, Radio, RefreshCw, SlidersHorizontal } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { GameCard } from "./GameCard";
 
@@ -67,6 +68,9 @@ export function FilterTabs() {
 
   const [status, setStatus] = useState<GameStatusTab>("FINAL");
   const [teamId, setTeamId] = useState<string>("ALL");
+  const [query, setQuery] = useState("");
+  const [date, setDate] = useState("");
+  const [sort, setSort] = useState<"default" | "oldest" | "newest">("default");
   const statusTouched = useRef(false);
 
   const activeStatus = isOldSeason ? "FINAL" : status;
@@ -78,8 +82,11 @@ export function FilterTabs() {
 
   const seasonGames = useMemo(() => {
     if (!seasonId || isLifetimeSeason(seasonId)) return games;
-    return games.filter((g) => g.seasonId === seasonId);
-  }, [games, seasonId]);
+    return games.filter((g) => g.seasonId === seasonId && g.league === league);
+  }, [games, seasonId, league]);
+
+  const counts = { LIVE: 0, UPCOMING: 0, FINAL: 0 };
+  for (const game of seasonGames) counts[getEffectiveGameStatus(game)]++;
 
   const availableTeams = useMemo(() => {
     const teamsInSeason = isLifetimeSeason(seasonId)
@@ -92,16 +99,22 @@ export function FilterTabs() {
     () =>
       seasonGames.filter((game) => {
         const effectiveStatus = getEffectiveGameStatus(game);
+        const searchText = `${game.homeTeam.name} ${game.homeTeam.shortName} ${game.awayTeam.name} ${game.awayTeam.shortName} ${game.venue ?? ""}`.toLowerCase();
         return (
           effectiveStatus === activeStatus &&
           game.league === league &&
-          (teamId === "ALL" || game.homeTeam.id === teamId || game.awayTeam.id === teamId)
+          (teamId === "ALL" || game.homeTeam.id === teamId || game.awayTeam.id === teamId) &&
+          (!date || isoToPhtInput(game.startTime).slice(0, 10) === date) &&
+          (!query.trim() || searchText.includes(query.trim().toLowerCase()))
         );
+      }).sort((a, b) => {
+        const direction = sort === "oldest" || (sort === "default" && activeStatus === "UPCOMING") ? 1 : -1;
+        return direction * (new Date(a.startTime).getTime() - new Date(b.startTime).getTime()) || a.id.localeCompare(b.id);
       }),
-    [seasonGames, activeStatus, league, teamId]
+    [seasonGames, activeStatus, league, teamId, query, date, sort]
   );
 
-  const pageKey = `${league}|${seasonId}|${activeStatus}|${teamId}`;
+  const pageKey = `${league}|${seasonId}|${activeStatus}|${teamId}|${query}|${date}|${sort}`;
   const [page, setPage] = useState({ key: pageKey, limit: 36 });
   const limit = page.key === pageKey ? page.limit : 36;
   const visibleGames = useMemo(() => filteredGames.slice(0, limit), [filteredGames, limit]);
@@ -109,14 +122,11 @@ export function FilterTabs() {
   const upcomingGrouped = useMemo(() => {
     if (activeStatus !== "UPCOMING") return null;
 
-    const sorted = [...visibleGames].sort(
-      (a, b) => new Date(a.startTime).getTime() - new Date(b.startTime).getTime()
-    );
 
     const groups: { dateKey: string; dateLabel: string; games: Game[] }[] = [];
     const groupMap = new Map<string, { dateKey: string; dateLabel: string; games: Game[] }>();
 
-    for (const game of sorted) {
+    for (const game of visibleGames) {
       const dateKey = formatGameDate(game.startTime, true);
       const dateLabel = formatFullDayHeader(game.startTime) || dateKey;
 
@@ -135,6 +145,7 @@ export function FilterTabs() {
   function handleSeasonChange(newSeasonId: string) {
     setUserSelectedSeasonId(newSeasonId);
     setTeamId("ALL");
+    setDate("");
     const targetSeason = seasons.find((s) => s.id === newSeasonId);
     const isOld = targetSeason ? !targetSeason.isCurrent : false;
     statusTouched.current = false;
@@ -144,6 +155,7 @@ export function FilterTabs() {
   function handleLeagueChange(newLeague: League) {
     setLeague(newLeague);
     setTeamId("ALL");
+    setDate("");
     setUserSelectedSeasonId(null);
 
     const effSeasons = seasons.filter((s) => inferLeague(s) === newLeague);
@@ -156,6 +168,14 @@ export function FilterTabs() {
 
   const showPvlLivePlaceholder =
     league === "PVL" && activeStatus === "LIVE" && filteredGames.length === 0;
+
+  const hasFilters = teamId !== "ALL" || !!query || !!date || sort !== "default";
+  function resetFilters() {
+    setTeamId("ALL");
+    setQuery("");
+    setDate("");
+    setSort("default");
+  }
 
   function renderBody() {
     if (error && games.length === 0) {
@@ -218,38 +238,29 @@ export function FilterTabs() {
   }
 
   return (
-    <div className="mx-auto flex w-full min-w-0 max-w-7xl flex-col gap-4 px-4 py-4 md:px-6">
-      <div className="flex items-end justify-between gap-3">
-        <div className="hidden md:block">
-          <h1 className="text-lg font-extrabold tracking-tight text-foreground">Match Center</h1>
-          <p className="text-xs text-muted">Live scores and upcoming fixtures</p>
+    <div className="mx-auto flex w-full min-w-0 max-w-7xl flex-col gap-5 px-4 py-5 md:px-6 md:py-8">
+      <section className="scoreboard-hero overflow-hidden rounded-2xl border border-border p-5 md:p-7" aria-label="Season overview">
+        <div className="flex flex-wrap items-start justify-between gap-5">
+          <div>
+            <p className="mb-3 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-muted"><span className="h-1.5 w-1.5 rounded-full bg-primary" />Philippine sports, in focus</p>
+            <h1 className="page-heading">Every game. Every number.</h1>
+            <p className="mt-3 text-sm text-muted">Your match center for UAAP, PBA, and PVL.</p>
+          </div>
+          <SeasonPicker value={seasonId} onChange={handleSeasonChange} league={league} includeLifetime={false} />
         </div>
-        <SeasonPicker
-          value={seasonId}
-          onChange={handleSeasonChange}
-          league={league}
-          includeLifetime={false}
-        />
-      </div>
+        <div className="mt-6 grid grid-cols-3 divide-x divide-border border-t border-border pt-5">
+          {([{ value: "LIVE", label: "Live now", icon: Radio }, { value: "UPCOMING", label: "Upcoming", icon: CalendarDays }, { value: "FINAL", label: "Completed", icon: CheckCheck }] as const).map(({ value, label, icon: Icon }) => (
+            <div key={value} className="flex flex-col gap-1 px-3 first:pl-0 md:flex-row md:items-center md:gap-3 md:px-6">
+              <Icon size={17} aria-hidden="true" className={value === "LIVE" && counts.LIVE > 0 ? "text-live" : "text-muted"} />
+              <span className="text-2xl font-extrabold tabular-nums">{loading ? "–" : counts[value]}</span>
+              <span className="text-[11px] text-muted md:text-xs">{label}</span>
+            </div>
+          ))}
+        </div>
+      </section>
 
-      {isOldSeason ? (
-        <SegmentedControl
-          options={[{ value: "FINAL", label: "Final" }]}
-          value="FINAL"
-          onChange={() => undefined}
-        />
-      ) : (
-        <SegmentedControl
-          options={STATUS_TABS}
-          value={activeStatus}
-          onChange={(value) => {
-            statusTouched.current = true;
-            setStatus(value);
-          }}
-        />
-      )}
-
-      <div className="flex gap-2 overflow-x-auto pb-0.5">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div className="flex gap-2">
         {LEAGUE_CHIPS.map((chip) => (
           <FilterChip
             key={chip.value}
@@ -259,17 +270,31 @@ export function FilterTabs() {
             {chip.label}
           </FilterChip>
         ))}
+        </div>
+        <button type="button" onClick={() => void refreshData()} disabled={loading} className="flex min-h-9 items-center gap-2 rounded-lg px-3 text-xs font-semibold text-muted hover:bg-elevated hover:text-foreground disabled:opacity-50">
+          <RefreshCw size={13} aria-hidden="true" className={loading ? "animate-spin" : ""} />{loading ? "Updating…" : "Refresh scores"}
+        </button>
       </div>
 
-      <div className="flex items-center gap-2">
-        <label htmlFor="team-filter" className="text-xs font-medium text-muted">
-          Team:
-        </label>
-        <select
+      <div className="grid gap-4 rounded-2xl border border-border bg-surface p-4">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div className="w-full sm:w-auto sm:min-w-80">
+            <SegmentedControl
+              options={isOldSeason ? [{ value: "FINAL", label: `Final · ${counts.FINAL}` }] : STATUS_TABS.map(option => ({ ...option, label: `${option.label} · ${counts[option.value]}` }))}
+              value={activeStatus}
+              onChange={(value) => { statusTouched.current = true; setStatus(value); }}
+            />
+          </div>
+          <span className="flex items-center gap-1.5 text-[11px] text-muted"><SlidersHorizontal size={13} aria-hidden="true" />All times Philippine time (UTC+8)</span>
+        </div>
+        <div className="grid grid-cols-2 items-end gap-3 lg:grid-cols-[1.6fr_1fr_1fr_1fr]">
+          <SearchInput value={query} onChange={setQuery} label="Search matches" placeholder="Search teams or venues" className="col-span-2 lg:col-span-1" />
+          <label className="grid gap-1.5 text-[11px] font-semibold text-muted">Team
+            <select
           id="team-filter"
           value={teamId}
           onChange={(e) => setTeamId(e.target.value)}
-          className="flex-1 rounded-xl border border-border bg-surface px-3 py-1.5 text-xs font-semibold text-foreground focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+          className="min-h-10 w-full min-w-0 rounded-xl border border-border bg-elevated px-3 text-xs text-foreground"
         >
           <option value="ALL">All Teams</option>
           {availableTeams.map((team) => (
@@ -277,7 +302,24 @@ export function FilterTabs() {
               {team.name} ({team.shortName})
             </option>
           ))}
-        </select>
+            </select>
+          </label>
+          <label className="grid gap-1.5 text-[11px] font-semibold text-muted">Match date (PHT)
+            <input type="date" value={date} onChange={e => setDate(e.target.value)} className="min-h-10 w-full min-w-0 rounded-xl border border-border bg-elevated px-3 text-xs text-foreground" />
+          </label>
+          <label className="col-span-2 grid gap-1.5 text-[11px] font-semibold text-muted lg:col-span-1">Sort by
+            <select value={sort} onChange={e => setSort(e.target.value as typeof sort)} className="min-h-10 rounded-xl border border-border bg-elevated px-3 text-xs text-foreground">
+              <option value="default">{activeStatus === "UPCOMING" ? "Next match first" : "Latest first"}</option>
+              <option value="newest">Newest first</option>
+              <option value="oldest">Oldest first</option>
+            </select>
+          </label>
+        </div>
+      </div>
+
+      <div className="flex min-h-7 items-center justify-between gap-3">
+        <h2 className="text-xs font-semibold text-muted" aria-live="polite">{loading ? "Loading matches…" : `${filteredGames.length} ${filteredGames.length === 1 ? "match" : "matches"}`} <span className="text-border">/</span> {league} · {selectedSeason?.label ?? "Season"}</h2>
+        {hasFilters && <button type="button" onClick={resetFilters} className="text-xs font-semibold text-primary hover:underline">Reset filters</button>}
       </div>
 
       {renderBody()}

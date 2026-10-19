@@ -8,6 +8,8 @@ import { buildGameId } from "@/lib/game-id";
 import { inferLeague } from "@/lib/league-utils";
 import { cn, formatFullDayHeader, formatGameDate, formatStartTime, phtInputToIso, phtTodayInputDate } from "@/lib/utils";
 import type { Game, League, TournamentStage } from "@/types/sports";
+import { hasFixtureContent, MAX_FIXTURES, validateFixtures, type DraftFixture } from "@/lib/schedule-builder";
+import { useScheduleDrafts } from "./useScheduleDrafts";
 
 import {
   Calendar,
@@ -17,8 +19,11 @@ import {
   Plus,
   Radio,
   Trash2,
+  Copy,
+  ArrowLeft,
+  AlertTriangle,
 } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useEffect, useId, useMemo, useState } from "react";
 import {
   Field,
   inputClass,
@@ -57,16 +62,6 @@ const POPULAR_VENUES: Record<League, string[]> = {
 
 const COMMON_TIMES = ["14:00", "16:00", "18:30", "19:30"];
 
-interface DraftFixture {
-  id: string;
-  date: string; // YYYY-MM-DD
-  time: string; // HH:mm (24h)
-  homeTeamId: string;
-  awayTeamId: string;
-  venue: string;
-  stage: TournamentStage;
-}
-
 function createEmptyDraft(defaultDate: string, defaultVenue: string): DraftFixture {
   return {
     id: generateId(),
@@ -80,7 +75,7 @@ function createEmptyDraft(defaultDate: string, defaultVenue: string): DraftFixtu
 }
 
 export function ScheduleManagerTab({ onToast }: { onToast: ToastFn }) {
-  const { games, teams, seasons, currentSeasonId, saveGame, deleteGame } = useSportsData();
+  const { games, teams, seasons, currentSeasonId, saveGame, importBoxScoreBatch, deleteGame } = useSportsData();
 
   // League & Season Selector
   const [selectedLeague, setSelectedLeague] = useState<League>("UAAP");
@@ -105,8 +100,8 @@ export function ScheduleManagerTab({ onToast }: { onToast: ToastFn }) {
 
   // Active season teams
   const seasonTeams = useMemo(
-    () => teams.filter((t) => t.seasonId === effectiveSeasonId),
-    [teams, effectiveSeasonId]
+    () => teams.filter((t) => t.seasonId === effectiveSeasonId && t.league === selectedLeague),
+    [teams, effectiveSeasonId, selectedLeague]
   );
 
   // Active season upcoming games
@@ -152,14 +147,29 @@ export function ScheduleManagerTab({ onToast }: { onToast: ToastFn }) {
   const todayStr = useMemo(() => phtTodayInputDate(), []);
   const defaultVenue = POPULAR_VENUES[selectedLeague]?.[0] || "PhilSports Arena";
 
-  const [drafts, setDrafts] = useState<DraftFixture[]>([
-    createEmptyDraft(todayStr, defaultVenue),
-  ]);
+  const draftKey = `sportsmetric:schedule:v1:${selectedLeague}:${effectiveSeasonId}`;
+  const initialDraftId = useId();
+  const initialDraft = useMemo(() => ({ ...createEmptyDraft(todayStr, defaultVenue), id: `draft-${initialDraftId}` }), [todayStr, defaultVenue, initialDraftId]);
+  const { drafts, setDrafts, storageStatus, ready } = useScheduleDrafts(draftKey, initialDraft);
+  const [reviewKey, setReviewKey] = useState<string | null>(null);
+  const reviewSignature = JSON.stringify([draftKey, drafts]);
+  const isReviewing = reviewKey === reviewSignature;
+  const [showValidation, setShowValidation] = useState(false);
+  const issues = validateFixtures(drafts, seasonTeams, games.filter(game => game.seasonId === effectiveSeasonId));
+  const [saveError, setSaveError] = useState<string | null>(null);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  useEffect(() => {
+    if (storageStatus !== "unavailable" || !hasFixtureContent(drafts)) return;
+    const warn = (event: BeforeUnloadEvent) => { event.preventDefault(); };
+    window.addEventListener("beforeunload", warn);
+    return () => window.removeEventListener("beforeunload", warn);
+  }, [storageStatus, drafts]);
+
   // Handlers for drafts
   function addDraftRow() {
+    if (drafts.length >= MAX_FIXTURES) return;
     const lastDraft = drafts[drafts.length - 1];
     setDrafts([
       ...drafts,
@@ -179,6 +189,24 @@ export function ScheduleManagerTab({ onToast }: { onToast: ToastFn }) {
     setDrafts(drafts.map((d) => (d.id === id ? { ...d, ...updates } : d)));
   }
 
+  function resetDrafts() {
+    if (hasFixtureContent(drafts) && !window.confirm("Clear the unpublished fixtures for this competition?")) return;
+    setDrafts([createEmptyDraft(todayStr, defaultVenue)]);
+    setReviewKey(null);
+    setShowValidation(false);
+    setSaveError(null);
+  }
+
+  function reviewDrafts() {
+    setShowValidation(true);
+    setSaveError(null);
+    if (issues.length) {
+      document.getElementById(`fixture-${issues[0].draftId}`)?.focus();
+      return;
+    }
+    setReviewKey(reviewSignature);
+  }
+
   // Quick Time helper
   function setQuickTime(id: string, time: string) {
     updateDraft(id, { time });
@@ -191,25 +219,10 @@ export function ScheduleManagerTab({ onToast }: { onToast: ToastFn }) {
 
   // Commit upcoming matches to database
   async function handleSaveAllDrafts() {
-    // Validate drafts
-    for (let i = 0; i < drafts.length; i++) {
-      const d = drafts[i];
-      if (!d.homeTeamId || !d.awayTeamId) {
-        onToast(`Match #${i + 1}: Please select both Home and Away teams.`, "error");
-        return;
-      }
-      if (d.homeTeamId === d.awayTeamId) {
-        onToast(`Match #${i + 1}: Home and Away teams must be different.`, "error");
-        return;
-      }
-      if (!d.date || !d.time) {
-        onToast(`Match #${i + 1}: Please specify match date and time.`, "error");
-        return;
-      }
-    }
+    if (isSubmitting || !isReviewing || issues.length || !ready) return;
 
     setIsSubmitting(true);
-    let savedCount = 0;
+    setSaveError(null);
 
     // Two fixtures with the same teams on the same day previously produced the
     // same id, so the second silently overwrote the first. Track ids claimed in
@@ -217,10 +230,9 @@ export function ScheduleManagerTab({ onToast }: { onToast: ToastFn }) {
     const claimedIds = new Set(games.map((g) => g.id));
 
     try {
-      for (const d of drafts) {
-        const homeTeam = seasonTeams.find((t) => t.id === d.homeTeamId);
-        const awayTeam = seasonTeams.find((t) => t.id === d.awayTeamId);
-        if (!homeTeam || !awayTeam) continue;
+      const newGames = drafts.map(d => {
+        const homeTeam = seasonTeams.find((t) => t.id === d.homeTeamId)!;
+        const awayTeam = seasonTeams.find((t) => t.id === d.awayTeamId)!;
 
         // Fixtures are entered in Philippine time, which is a fixed UTC+08:00
         // with no daylight saving, so the same helper is used everywhere.
@@ -255,19 +267,17 @@ export function ScheduleManagerTab({ onToast }: { onToast: ToastFn }) {
           playByPlay: [],
         };
 
-        await saveGame(newUpcomingGame);
-        savedCount++;
-      }
-
-      if (savedCount > 0) {
-        onToast(`Successfully scheduled ${savedCount} upcoming match${savedCount > 1 ? "es" : ""}!`, "success");
-        setDrafts([createEmptyDraft(todayStr, defaultVenue)]);
-      } else {
-        onToast("Failed to save matches to database.", "error");
-      }
+        return newUpcomingGame;
+      });
+      await importBoxScoreBatch(newGames);
+      onToast(`Scheduled ${newGames.length} match${newGames.length === 1 ? "" : "es"}.`);
+      setDrafts([createEmptyDraft(todayStr, defaultVenue)]);
+      setReviewKey(null);
+      setShowValidation(false);
     } catch (err) {
       console.error(err);
-      onToast("An error occurred while saving fixtures.", "error");
+      setSaveError("The fixtures could not be published. Your draft is still here; try again.");
+      onToast("Could not publish fixtures. Your draft has been kept.", "error");
     } finally {
       setIsSubmitting(false);
     }
@@ -311,6 +321,7 @@ export function ScheduleManagerTab({ onToast }: { onToast: ToastFn }) {
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <Field label="League">
             <select
+              disabled={isSubmitting}
               value={selectedLeague}
               onChange={(e) => {
                 const nextLeague = e.target.value as League;
@@ -329,6 +340,7 @@ export function ScheduleManagerTab({ onToast }: { onToast: ToastFn }) {
 
           <Field label="Season / Tournament">
             <select
+              disabled={isSubmitting}
               value={effectiveSeasonId}
               onChange={(e) => setSelectedSeasonId(e.target.value)}
               className={selectClass}
@@ -343,17 +355,37 @@ export function ScheduleManagerTab({ onToast }: { onToast: ToastFn }) {
         </div>
       </SectionCard>
 
+      <div className="flex flex-wrap items-center justify-between gap-3 text-xs text-muted">
+        <p role="status">{storageStatus === "unavailable" ? "Browser storage unavailable. Keep this editor open to retain your draft." : storageStatus === "loading" ? "Loading draft…" : "Draft saved in this browser · Only published fixtures appear on the site"}</p>
+        <button type="button" onClick={resetDrafts} disabled={isSubmitting || !ready} className="rounded-lg border border-border px-3 py-2 hover:bg-elevated disabled:opacity-50">Clear draft</button>
+      </div>
+
+      {seasonTeams.length < 2 && <p role="alert" className="rounded-xl border border-amber-400/30 bg-amber-400/10 p-4 text-sm text-amber-200">Add at least two teams to this competition in the Teams section before scheduling matches.</p>}
+      {saveError && <p role="alert" className="rounded-xl border border-live/30 bg-live/10 p-4 text-sm text-live">{saveError}</p>}
+      {showValidation && issues.length > 0 && <div role="alert" className="rounded-xl border border-live/30 bg-live/5 p-4 text-sm"><p className="mb-2 flex items-center gap-2 font-semibold text-live"><AlertTriangle size={16} />Check these fixtures before continuing</p><ul className="list-inside list-disc space-y-1 text-muted">{issues.map((issue, index) => <li key={index}><a className="underline underline-offset-2 hover:text-foreground" href={`#fixture-${issue.draftId}`}>{issue.message}</a></li>)}</ul></div>}
+
+      {isReviewing && <SectionCard title="Review fixtures before publishing">
+        <p className="text-sm text-muted">{selectedLeague} · {leagueSeasons.find(s => s.id === effectiveSeasonId)?.label} · All times PHT (UTC+8)</p>
+        <div className="divide-y divide-border">{drafts.map((draft, index) => <div key={draft.id} className="flex flex-wrap items-center justify-between gap-2 py-3 text-sm"><div><span className="mr-3 text-muted">{index + 1}.</span><strong>{seasonTeams.find(t => t.id === draft.homeTeamId)?.shortName} vs {seasonTeams.find(t => t.id === draft.awayTeamId)?.shortName}</strong><p className="mt-1 text-xs text-muted">{draft.venue} · {draft.stage.replaceAll("_", " ")}</p></div><span className="text-xs text-muted">{formatGameDate(phtInputToIso(`${draft.date}T${draft.time}`))} · {draft.time} PHT</span></div>)}</div>
+        <div className="flex flex-wrap justify-between gap-3"><button type="button" disabled={isSubmitting} onClick={() => setReviewKey(null)} className="flex items-center gap-2 text-sm text-muted"><ArrowLeft size={15} />Back to editing</button><button type="button" disabled={isSubmitting || issues.length > 0} onClick={handleSaveAllDrafts} className={primaryButtonClass}>{isSubmitting ? "Publishing…" : `Publish ${drafts.length} fixture${drafts.length === 1 ? "" : "s"}`}</button></div>
+      </SectionCard>}
+
 
       {/* Multi-Match Batch Creator */}
-      <SectionCard title={`Batch Schedule Builder (${drafts.length} Match${drafts.length > 1 ? "es" : ""})`}>
+      {!isReviewing && <SectionCard title={`Batch Schedule Builder (${drafts.length} Match${drafts.length > 1 ? "es" : ""})`}>
         <div className="flex flex-col gap-5">
 
           {drafts.map((draft, index) => (
-            <div
+            <fieldset
               key={draft.id}
-              className="relative flex flex-col gap-4 rounded-2xl border border-border bg-surface/50 p-4 transition-all hover:border-primary/30"
+              id={`fixture-${draft.id}`}
+              tabIndex={-1}
+              disabled={isSubmitting || !ready}
+              aria-label={`Match ${index + 1}`}
+              aria-describedby={showValidation && issues.some(issue => issue.draftId === draft.id) ? `fixture-error-${draft.id}` : undefined}
+              className={cn("relative flex min-w-0 scroll-mt-28 flex-col gap-4 rounded-xl border bg-bg/40 p-4", showValidation && issues.some(issue => issue.draftId === draft.id) ? "border-live/60" : "border-border")}
             >
-              <div className="flex items-center justify-between border-b border-border/40 pb-2.5">
+              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border/40 pb-2.5">
                 <span className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-foreground">
                   <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary/20 text-[10px] text-primary">
                     {index + 1}
@@ -361,6 +393,8 @@ export function ScheduleManagerTab({ onToast }: { onToast: ToastFn }) {
                   Match #{index + 1} Fixture
                 </span>
 
+                <div className="flex items-center gap-2">
+                  <button type="button" onClick={() => { if (drafts.length < MAX_FIXTURES) setDrafts([...drafts, { ...draft, id: generateId() }]); }} disabled={drafts.length >= MAX_FIXTURES} className="flex min-h-9 items-center gap-1.5 rounded-lg px-2 text-xs text-muted hover:bg-elevated disabled:opacity-40"><Copy size={13} />Duplicate</button>
                 {drafts.length > 1 && (
                   <button
                     type="button"
@@ -371,6 +405,7 @@ export function ScheduleManagerTab({ onToast }: { onToast: ToastFn }) {
                     <span>Remove</span>
                   </button>
                 )}
+                </div>
               </div>
 
               {/* Match Date, Time, and Presets */}
@@ -429,7 +464,7 @@ export function ScheduleManagerTab({ onToast }: { onToast: ToastFn }) {
                   >
                     <option value="">-- Select Home Team --</option>
                     {seasonTeams.map((t) => (
-                      <option key={t.id} value={t.id}>
+                      <option key={t.id} value={t.id} disabled={t.id === draft.awayTeamId}>
                         {t.name} ({t.shortName})
                       </option>
                     ))}
@@ -444,7 +479,7 @@ export function ScheduleManagerTab({ onToast }: { onToast: ToastFn }) {
                   >
                     <option value="">-- Select Away Team --</option>
                     {seasonTeams.map((t) => (
-                      <option key={t.id} value={t.id}>
+                      <option key={t.id} value={t.id} disabled={t.id === draft.homeTeamId}>
                         {t.name} ({t.shortName})
                       </option>
                     ))}
@@ -502,7 +537,8 @@ export function ScheduleManagerTab({ onToast }: { onToast: ToastFn }) {
                   ))}
                 </div>
               </div>
-            </div>
+              {showValidation && issues.some(issue => issue.draftId === draft.id) && <p id={`fixture-error-${draft.id}`} className="text-xs text-live">{issues.filter(issue => issue.draftId === draft.id).map(issue => issue.message).join(" ")}</p>}
+            </fieldset>
           ))}
 
           {/* Action Bar */}
@@ -510,6 +546,7 @@ export function ScheduleManagerTab({ onToast }: { onToast: ToastFn }) {
             <button
               type="button"
               onClick={addDraftRow}
+              disabled={drafts.length >= MAX_FIXTURES || !ready}
               className="flex items-center gap-1.5 rounded-xl border border-dashed border-border px-4 py-2.5 text-xs font-semibold text-foreground hover:border-primary/60 hover:bg-primary/5 transition-colors"
             >
               <Plus size={14} />
@@ -518,8 +555,8 @@ export function ScheduleManagerTab({ onToast }: { onToast: ToastFn }) {
 
             <button
               type="button"
-              onClick={handleSaveAllDrafts}
-              disabled={isSubmitting}
+              onClick={reviewDrafts}
+              disabled={isSubmitting || !ready || seasonTeams.length < 2}
               className={cn(primaryButtonClass, "px-6 py-2.5 text-xs font-bold shadow-lg shadow-primary/20")}
             >
               {isSubmitting ? (
@@ -527,13 +564,13 @@ export function ScheduleManagerTab({ onToast }: { onToast: ToastFn }) {
               ) : (
                 <>
                   <CheckCircle2 size={14} />
-                  Save {drafts.length} Upcoming Fixture{drafts.length > 1 ? "s" : ""} to Database
+                  Review {drafts.length} fixture{drafts.length > 1 ? "s" : ""}
                 </>
               )}
             </button>
           </div>
         </div>
-      </SectionCard>
+      </SectionCard>}
 
       {/* Active Live Games Section (if any) */}
       {liveGames.length > 0 && (

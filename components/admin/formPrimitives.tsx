@@ -1,12 +1,12 @@
 import type { ReactNode } from "react";
 
 export const inputClass =
-  "w-full rounded-lg border border-border bg-elevated px-3 py-2 text-sm text-foreground placeholder:text-muted focus:border-primary focus:outline-none";
+  "min-h-11 w-full min-w-0 rounded-xl border border-border bg-bg/70 px-3 py-2.5 text-sm text-foreground placeholder:text-muted/70 transition-colors focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/15 disabled:cursor-not-allowed disabled:opacity-60 aria-[invalid=true]:border-live";
 
-export const selectClass = `${inputClass} appearance-none`;
+export const selectClass = inputClass;
 
 export const labelClass =
-  "mb-1 block text-[11px] font-semibold uppercase tracking-wide text-muted";
+  "mb-1.5 block text-xs font-medium text-muted";
 
 export function Field({ label, children }: { label: string; children: ReactNode }) {
   return (
@@ -27,15 +27,15 @@ export function SectionCard({
   children: ReactNode;
 }) {
   return (
-    <div className="flex flex-col gap-3 rounded-2xl border border-border bg-surface p-4">
+    <section className="flex min-w-0 flex-col gap-4 rounded-2xl border border-border bg-surface p-4 md:p-5">
       {(title || action) && (
         <div className="flex items-center justify-between gap-2 border-b border-border/50 pb-2">
-          {title ? <p className="text-sm font-bold text-foreground">{title}</p> : <div />}
+          {title ? <h3 className="text-sm font-bold text-foreground">{title}</h3> : <div />}
           {action}
         </div>
       )}
       {children}
-    </div>
+    </section>
   );
 }
 

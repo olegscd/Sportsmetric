@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, Settings2 } from "lucide-react";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -63,6 +63,7 @@ export function Header() {
       <span className={`truncate text-base font-bold text-foreground ${isNested ? "" : "ml-auto text-sm text-muted"}`}>
         {label}
       </span>
+      <Link href="/admin" aria-label="Admin workspace" className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-border text-muted hover:text-foreground"><Settings2 size={16} /></Link>
     </header>
   );
 }

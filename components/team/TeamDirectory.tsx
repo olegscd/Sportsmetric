@@ -14,6 +14,7 @@ import type { League } from "@/types/sports";
 import { Shield } from "lucide-react";
 import Link from "next/link";
 import { useMemo, useState } from "react";
+import { PageHeading } from "@/components/ui/PageHeading";
 
 const LEAGUE_CHIPS: { value: League | "ALL"; label: string }[] = [
   { value: "UAAP", label: "UAAP" },
@@ -42,9 +43,9 @@ export function TeamDirectory() {
   }
 
   const leagues: League[] = league === "ALL" ? ["UAAP", "PBA", "PVL"] : [league];
-  useSportsScope(`league=${league}&season=${encodeURIComponent(seasonId)}`);
+  useSportsScope(league === "ALL" ? "league=ALL" : `league=${league}&season=${encodeURIComponent(seasonId)}`);
 
-  const standings = leagues.flatMap((l) => getStandings(l, seasonId));
+  const standings = leagues.flatMap((l) => getStandings(l, league === "ALL" ? seasons.find(s => s.league === l && s.isCurrent)?.id : seasonId));
 
   const normalizedQuery = query.trim().toLowerCase();
   const filteredStandings = useMemo(() => {
@@ -117,12 +118,9 @@ export function TeamDirectory() {
 
   return (
     <div className="mx-auto flex w-full max-w-7xl min-w-0 flex-col gap-4 px-4 py-4 md:px-6">
-      <div className="hidden md:block">
-        <h1 className="text-lg font-extrabold tracking-tight text-foreground">Teams</h1>
-        <p className="text-xs text-muted">Directory and records by league</p>
-      </div>
+      <PageHeading title="Find your side." description="Team records, season rosters, and the stories the standings tell." />
 
-      <div className="flex items-center justify-between gap-2">
+      <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex gap-2 overflow-x-auto pb-0.5">
           {LEAGUE_CHIPS.map((chip) => (
             <FilterChip
@@ -134,11 +132,11 @@ export function TeamDirectory() {
             </FilterChip>
           ))}
         </div>
-        <SeasonPicker
+        {league === "ALL" ? <span className="text-xs text-muted">Current season in each league</span> : <SeasonPicker
           value={seasonId}
           onChange={setUserSelectedSeasonId}
           league={activeLeague}
-        />
+        />}
       </div>
 
       <SearchInput
@@ -147,6 +145,8 @@ export function TeamDirectory() {
         label="Search teams"
         placeholder="Search teams"
       />
+
+      {!loading && <p className="text-xs text-muted" aria-live="polite">{filteredStandings.length} of {standings.length} teams</p>}
 
       {renderBody()}
     </div>
