@@ -1,7 +1,7 @@
 "use client";
 
 import { logoutAdmin } from "@/app/admin/actions";
-import { useSportsData } from "@/context/SportsDataContext";
+import { useSportsData, useSportsScope } from "@/context/SportsDataContext";
 import { cn } from "@/lib/utils";
 
 import {
@@ -43,6 +43,7 @@ const TABS: { value: AdminTab; label: string; icon: ComponentType<{ size?: numbe
 const TAB_VALUES = new Set<string>(TABS.map((tab) => tab.value));
 
 export function AdminDashboard() {
+  useSportsScope("admin=1");
   const { loading, error, clearError, refreshData } = useSportsData();
   const [tab, setTab] = useState<AdminTab>("importer");
   const [toast, setToast] = useState<ToastState | null>(null);
@@ -70,8 +71,12 @@ export function AdminDashboard() {
   }
 
   async function handleLogout() {
-    await logoutAdmin();
-    window.location.assign("/admin");
+    try {
+      await logoutAdmin();
+      window.location.assign("/admin");
+    } catch (err) {
+      showToast(err instanceof Error ? err.message : "Could not sign out. Please try again.", "error");
+    }
   }
 
   return (

@@ -12,6 +12,7 @@ import type {
   Team,
   TournamentStage,
 } from "@/types/sports";
+import { safeImageSource } from "@/lib/image-policy";
 
 /**
  * Normalizers for anything arriving over the wire. They rebuild each entity
@@ -71,6 +72,14 @@ function optionalText(value: unknown, max = MAX_TEXT_LENGTH): string | null {
   if (typeof value !== "string") return null;
   const trimmed = value.trim();
   return trimmed ? trimmed.slice(0, max) : null;
+}
+
+function imageUrl(value: unknown): string | null {
+  const raw = optionalText(value, 2000);
+  if (!raw) return null;
+  const source = safeImageSource(raw);
+  if (!source) throw new ValidationError("Use a local image path or an approved HTTPS image host (NEXT_PUBLIC_IMAGE_HOSTS).");
+  return source;
 }
 
 function num(value: unknown, fallback = 0): number {
@@ -139,7 +148,7 @@ export function normalizeTeam(input: unknown): Team {
     id: requireId(raw.id, "team.id"),
     name: requireText(raw.name, "team.name"),
     shortName: requireText(raw.shortName, "team.shortName", 24),
-    logo: optionalText(raw.logo, 500),
+    logo: imageUrl(raw.logo),
     league: oneOf(raw.league, LEAGUES, "team.league"),
     accentColor,
     seasonId: requireId(raw.seasonId, "team.seasonId"),
@@ -187,7 +196,7 @@ export function normalizePlayer(input: unknown): Player {
     position: oneOfOr(raw.position, POSITIONS, "SG"),
     teamId: requireId(raw.teamId, "player.teamId"),
     height: optionalText(raw.height, 24) ?? "",
-    photoUrl: optionalText(raw.photoUrl, 500),
+    photoUrl: imageUrl(raw.photoUrl),
     seasonId: requireId(raw.seasonId, "player.seasonId"),
     seasonAverages: normalizeSeasonAverages(raw.seasonAverages),
     rankBadges: rankBadges.map((badge) => {

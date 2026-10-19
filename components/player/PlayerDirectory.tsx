@@ -6,7 +6,7 @@ import { ErrorNotice } from "@/components/ui/ErrorNotice";
 import { SearchInput } from "@/components/ui/SearchInput";
 import { SeasonPicker } from "@/components/ui/SeasonPicker";
 import { SkeletonCardGrid } from "@/components/ui/Skeleton";
-import { useSportsData } from "@/context/SportsDataContext";
+import { useSportsData, useSportsScope } from "@/context/SportsDataContext";
 import { isLifetimeSeason } from "@/lib/derivations";
 import { inferLeague } from "@/lib/league-utils";
 import type { League } from "@/types/sports";
@@ -34,6 +34,8 @@ export function PlayerDirectory() {
   const seasonId = userSelectedSeasonId && targetSeasons.some((s) => s.id === userSelectedSeasonId)
     ? userSelectedSeasonId
     : activeCurrent;
+
+  useSportsScope(`league=${league}&season=${encodeURIComponent(seasonId)}`);
 
   function handleLeagueChange(newLeague: League | "ALL") {
     setLeague(newLeague);
@@ -68,6 +70,10 @@ export function PlayerDirectory() {
     });
   }, [seasonPlayers, teamsById, normalizedQuery]);
 
+  const pageKey = `${league}|${seasonId}|${normalizedQuery}`;
+  const [page, setPage] = useState({ key: pageKey, limit: 36 });
+  const limit = page.key === pageKey ? page.limit : 36;
+
   function renderBody() {
     if (error && players.length === 0) {
       return <ErrorNotice message={error} onRetry={() => void refreshData()} />;
@@ -95,7 +101,7 @@ export function PlayerDirectory() {
     }
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-        {filteredPlayers.map((player) => {
+        {filteredPlayers.slice(0, limit).map((player) => {
           const team = teamsById.get(player.teamId);
           if (!team) return null;
           return (
@@ -152,6 +158,10 @@ export function PlayerDirectory() {
       ) : null}
 
       {renderBody()}
+      {filteredPlayers.length > limit && (
+        <button type="button" className="rounded-xl border border-border p-3 text-sm font-semibold"
+          onClick={() => setPage({ key: pageKey, limit: limit + 36 })}>Show more players</button>
+      )}
     </div>
   );
 }

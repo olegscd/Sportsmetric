@@ -84,6 +84,7 @@ export interface UAAPDivisionAwards {
 }
 
 export interface MergedUAAPData {
+  divisionVersions?: Record<string, number>;
   tables: UAAPTable[];
   extras: UAAPArchiveExtras;
   seasons: string[];

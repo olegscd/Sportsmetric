@@ -10,12 +10,12 @@ import {
   ADMIN_COOKIE_NAME,
   checkLoginThrottle,
   clearLoginAttempts,
-  generateAuthToken,
   getAdminSecret,
   isAdminAuthenticated as isAdminAuthenticatedInternal,
   passwordMatches,
   recordFailedLogin,
 } from "@/lib/admin-auth";
+import { createAdminSession, revokeAdminSession } from "@/lib/admin-session";
 import {
   saveUAAPAdminOverride,
   deleteUAAPAdminDivision as deleteUAAPAdminDivisionHelper,
@@ -41,7 +41,7 @@ export async function loginAdmin(
   const secret = getAdminSecret();
 
   if (!secret) {
-    return { error: "Server authentication is misconfigured (missing ADMIN_PASSWORD)." };
+    return { error: "Server authentication is misconfigured (missing ADMIN_PASSWORD_HASH or ADMIN_PASSWORD)." };
   }
 
   const clientKey = await getClientKey();
@@ -51,7 +51,7 @@ export async function loginAdmin(
     return { error: `Too many failed attempts. Try again in ${minutes} minute(s).` };
   }
 
-  if (typeof password !== "string" || !passwordMatches(password, secret)) {
+  if (typeof password !== "string" || !(await passwordMatches(password, secret))) {
     recordFailedLogin(clientKey);
     return { error: "Incorrect password." };
   }
@@ -59,7 +59,13 @@ export async function loginAdmin(
   clearLoginAttempts(clientKey);
 
   const cookieStore = await cookies();
-  cookieStore.set(ADMIN_COOKIE_NAME, generateAuthToken(secret), {
+  let token: string;
+  try {
+    token = await createAdminSession();
+  } catch (err) {
+    return { error: err instanceof Error ? err.message : "Could not create session." };
+  }
+  cookieStore.set(ADMIN_COOKIE_NAME, token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
@@ -72,6 +78,7 @@ export async function loginAdmin(
 
 export async function logoutAdmin(): Promise<void> {
   const cookieStore = await cookies();
+  await revokeAdminSession(cookieStore.get(ADMIN_COOKIE_NAME)?.value);
   cookieStore.delete(ADMIN_COOKIE_NAME);
 }
 
@@ -101,13 +108,14 @@ export async function saveUAAPArchiveData(payload: UAAPSavePayload): Promise<{
 export async function deleteUAAPArchiveDivision(
   season: string,
   sport: string,
-  division: string
+  division: string,
+  expectedVersion: number
 ): Promise<{ success: boolean; error?: string; warning?: string; data?: MergedUAAPData }> {
   if (!(await isAdminAuthenticatedInternal())) {
     return { success: false, error: "Unauthorized." };
   }
 
-  const res = await deleteUAAPAdminDivisionHelper(season, sport, division);
+  const res = await deleteUAAPAdminDivisionHelper(season, sport, division, expectedVersion);
   if (res.success) {
     revalidatePath("/uaap");
     revalidatePath("/admin");

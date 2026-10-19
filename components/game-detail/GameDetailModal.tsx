@@ -13,6 +13,7 @@ import { useEffect, useRef, useState } from "react";
 import { BoxScoreTable } from "./BoxScoreTable";
 import { MomentumBar } from "./MomentumBar";
 import { PlayByPlayFeed } from "./PlayByPlayFeed";
+import type { PlayByPlayEvent } from "@/types/sports";
 
 type DetailTab = "overview" | "boxscore" | "pbp";
 
@@ -28,6 +29,22 @@ export function GameDetailModal() {
   const [tab, setTab] = useState<DetailTab>("overview");
   const [side, setSide] = useState<"away" | "home">("away");
   const [loadedGameId, setLoadedGameId] = useState<string | null>(activeGameId);
+  const [details, setDetails] = useState<{ id: string; events?: PlayByPlayEvent[]; error?: string } | null>(null);
+  const [retryDetails, setRetryDetails] = useState(0);
+
+  useEffect(() => {
+    if (!activeGameId || tab !== "pbp") return;
+    const controller = new AbortController();
+    fetch(`/api/games/${encodeURIComponent(activeGameId)}`, { signal: controller.signal, cache: "no-store" })
+      .then(async response => {
+        if (!response.ok) throw new Error("Could not load play-by-play.");
+        const data = await response.json();
+        if (!controller.signal.aborted) setDetails({ id: activeGameId, events: data.play_by_play ?? [] });
+      }).catch(error => {
+        if (!controller.signal.aborted) setDetails({ id: activeGameId, error: error.message });
+      });
+    return () => controller.abort();
+  }, [activeGameId, tab, retryDetails]);
 
   // Reset the tab/mobile-side selection when a different game is opened.
   // Adjusting state during render (rather than in an effect) avoids a frame
@@ -214,8 +231,11 @@ export function GameDetailModal() {
           ) : null}
 
           {tab === "pbp" ? (
+            details?.id !== game.id ? <p role="status">Loading play-by-play…</p> : details.error ? (
+              <div role="alert">{details.error} <button onClick={() => setRetryDetails(value => value + 1)}>Retry</button></div>
+            ) :
             <PlayByPlayFeed
-              events={game.playByPlay}
+              events={details.events ?? []}
               homeTeam={game.homeTeam}
               awayTeam={game.awayTeam}
               league={game.league}

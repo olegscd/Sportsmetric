@@ -1,6 +1,6 @@
 "use client";
 
-import { useSportsData } from "@/context/SportsDataContext";
+import { useSportsData, useSportsScope } from "@/context/SportsDataContext";
 import { formatAvg, formatPct } from "@/lib/utils";
 import type { Player, SeasonAverages, Team } from "@/types/sports";
 
@@ -54,12 +54,15 @@ function CareerStatGrid({ averages }: { averages: SeasonAverages }) {
 }
 
 export function PlayerDetailView({ id }: { id: string }) {
-  const { players, teams } = useSportsData();
+  useSportsScope(`player=${encodeURIComponent(id)}`);
+  const { players, teams, loading, error, refreshData } = useSportsData();
 
   const player = players.find((p) => p.id === id);
   const team = player ? teams.find((t) => t.id === player.teamId) : undefined;
 
   if (!player || !team) {
+    if (loading) return <p className="p-6" role="status">Loading player…</p>;
+    if (error) return <p className="p-6" role="alert">{error} <button onClick={() => void refreshData()}>Retry</button></p>;
     return (
       <div className="flex flex-col items-center gap-1.5 px-6 py-20 text-center">
         <p className="text-sm font-semibold text-foreground">Player not found</p>

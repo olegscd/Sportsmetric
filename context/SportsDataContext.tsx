@@ -13,7 +13,8 @@ import {
 import { inferLeague } from "@/lib/league-utils";
 import { supabase } from "@/lib/supabase";
 import { adminMutate, type AdminMutation } from "@/lib/admin-api";
-import { fetchAllSupabaseData } from "@/lib/supabase-data";
+import type { SupabaseDataResult } from "@/lib/supabase-data";
+import { usePathname } from "next/navigation";
 import type {
   BoxScoreItem,
   Game,
@@ -39,6 +40,7 @@ import React, {
 const emptySubscribe = () => () => {};
 
 interface SportsDataContextType {
+  requestScope: (query: string) => void;
   seasons: Season[];
   teams: Team[];
   players: Player[];
@@ -90,82 +92,103 @@ interface SportsDataContextType {
 
 const SportsDataContext = createContext<SportsDataContextType | undefined>(undefined);
 
-export function SportsDataProvider({ children }: { children: React.ReactNode }) {
+export function SportsDataProvider({ children, initialData, initialQuery = "metadata=1" }: {
+  children: React.ReactNode; initialData?: SupabaseDataResult; initialQuery?: string;
+}) {
   const isHydrated = useSyncExternalStore(emptySubscribe, () => true, () => false);
-  const [seasons, setSeasons] = useState<Season[]>([]);
-  const [teams, setTeams] = useState<Team[]>([]);
-  const [players, setPlayers] = useState<Player[]>([]);
-  const [games, setGames] = useState<Game[]>([]);
-  const [currentSeasonId, setCurrentSeasonId] = useState<string>("2025-26");
-  const [loading, setLoading] = useState<boolean>(true);
+  const [seasons, setSeasons] = useState<Season[]>(initialData?.seasons ?? []);
+  const [teams, setTeams] = useState<Team[]>(initialData?.teams ?? []);
+  const [players, setPlayers] = useState<Player[]>(initialData?.players ?? []);
+  const [games, setGames] = useState<Game[]>(initialData?.games ?? []);
+  const [currentSeasonId, setCurrentSeasonId] = useState<string>(() =>
+    initialData?.seasons.find(s => s.league === "UAAP" && s.isCurrent)?.id
+    ?? initialData?.seasons.find(s => s.isCurrent)?.id
+    ?? initialData?.seasons[0]?.id ?? "2025-26"
+  );
+  const [loading, setLoading] = useState<boolean>(!initialData);
   const [error, setError] = useState<string | null>(null);
 
-  // Debounce ref for realtime updates
+  const pathname = usePathname();
+  const [scope, setScope] = useState({ path: pathname, query: initialQuery });
+  const scopeQuery = scope.path === pathname ? scope.query : "metadata=1";
+  const requestScope = useCallback((query: string) => {
+    setScope(prev => prev.path === pathname && prev.query === query ? prev : { path: pathname, query });
+  }, [pathname]);
+  const loadGeneration = useRef(0);
   const realtimeDebounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  // Realtime events can arrive faster than a full reload completes. Skip a
-  // reload while one is already in flight instead of stacking requests.
-  const reloadingRef = useRef(false);
+  const serverDataUsed = useRef(false);
 
   const loadDataFromSupabase = useCallback(async (silent = false) => {
-    if (!silent) {
-      setLoading(true);
-      setError(null);
-    }
+    const generation = ++loadGeneration.current;
+    if (!silent) { setLoading(true); setError(null); }
     try {
-      const data = await fetchAllSupabaseData();
-      if (data) {
-        setSeasons(data.seasons);
-        setTeams(data.teams);
-        setPlayers(data.players);
-        setGames(data.games);
-        setCurrentSeasonId((prev) => {
-          if (prev && data.seasons.some((s) => s.id === prev)) return prev;
-          const uaapCurr = data.seasons.find((s) => inferLeague(s.id, s.league) === "UAAP" && s.isCurrent)?.id;
-          return uaapCurr ?? data.seasons.find((s) => s.isCurrent)?.id ?? data.seasons[0]?.id ?? prev;
-        });
-        setError(null);
-      }
+      const response = await fetch(`/api/sports?${scopeQuery}`, { cache: "no-store" });
+      if (!response.ok) throw new Error("Could not load sports data.");
+      const data: SupabaseDataResult = await response.json();
+      if (generation !== loadGeneration.current) return;
+      setSeasons(data.seasons);
+      setTeams(data.teams);
+      setPlayers(data.players);
+      setGames(data.games);
+      setCurrentSeasonId(prev => {
+        if (data.seasons.some(s => s.id === prev)) return prev;
+        return data.seasons.find(s => s.league === "UAAP" && s.isCurrent)?.id ?? data.seasons[0]?.id ?? prev;
+      });
+      setError(null);
     } catch (err) {
-      console.warn("[SportsDataContext] Load error:", err);
-      if (!silent) setError("Failed to load data from Supabase.");
+      if (generation === loadGeneration.current) {
+        setError(err instanceof Error ? err.message : "Failed to load data.");
+      }
     } finally {
-      setLoading(false);
+      if (generation === loadGeneration.current) setLoading(false);
     }
-  }, []);
+  }, [scopeQuery]);
 
   useEffect(() => {
-    // Single load path for both the initial fetch and manual refreshes. This
-    // is external-system synchronization (Supabase -> store) on mount.
-    // eslint-disable-next-line react-hooks/set-state-in-effect
+    if (!serverDataUsed.current && initialData && scopeQuery === initialQuery) {
+      serverDataUsed.current = true;
+      return;
+    }
+    // Synchronize the selected server query with the client store.
     void loadDataFromSupabase();
+    const generationRef = loadGeneration;
+    return () => { generationRef.current++; };
+  }, [loadDataFromSupabase, initialData, initialQuery, scopeQuery]);
 
-    if (!supabase) return;
+  const realtimeSeason = new URLSearchParams(scopeQuery).get("season");
+  useEffect(() => {
+    if (!supabase || scopeQuery === "metadata=1") return;
     const client = supabase;
-
-    const channel = client
-      .channel("sportsmetric-realtime")
-      .on(
-        "postgres_changes",
-        { event: "*", schema: "public" },
-        () => {
-          // Debounce rapid successive changes to avoid N full reloads.
-          if (realtimeDebounceRef.current) clearTimeout(realtimeDebounceRef.current);
-          realtimeDebounceRef.current = setTimeout(() => {
-            if (reloadingRef.current) return;
-            reloadingRef.current = true;
-            void loadDataFromSupabase(true).finally(() => {
-              reloadingRef.current = false;
-            });
-          }, 1200);
-        }
-      )
-      .subscribe();
-
+    let disposed = false;
+    let running = false;
+    let pending = false;
+    const reload = async () => {
+      if (running) { pending = true; return; }
+      running = true;
+      do {
+        pending = false;
+        await loadDataFromSupabase(true);
+      } while (pending && !disposed);
+      running = false;
+    };
+    let channel = client.channel(`sportsmetric:${scopeQuery}`);
+    for (const table of ["seasons", "teams", "players", "games"]) {
+      channel = channel.on("postgres_changes", {
+        event: "*", schema: "public", table,
+        ...(table !== "seasons" && realtimeSeason && realtimeSeason !== "lifetime"
+          ? { filter: `season_id=eq.${realtimeSeason}` } : {}),
+      }, () => {
+        if (realtimeDebounceRef.current) clearTimeout(realtimeDebounceRef.current);
+        realtimeDebounceRef.current = setTimeout(() => { void reload(); }, 1200);
+      });
+    }
+    channel.subscribe();
     return () => {
+      disposed = true;
       if (realtimeDebounceRef.current) clearTimeout(realtimeDebounceRef.current);
       void client.removeChannel(channel);
     };
-  }, [loadDataFromSupabase]);
+  }, [loadDataFromSupabase, scopeQuery, realtimeSeason]);
 
 
   // Refresh data from Supabase
@@ -661,6 +684,7 @@ export function SportsDataProvider({ children }: { children: React.ReactNode }) 
   // Memoize the entire context value to prevent unnecessary re-renders
   const value = useMemo<SportsDataContextType>(
     () => ({
+      requestScope,
       seasons,
       teams,
       players,
@@ -695,7 +719,7 @@ export function SportsDataProvider({ children }: { children: React.ReactNode }) 
       getPlayerAverages: getPlayerAveragesHandler,
     }),
     [
-      seasons, teams, players, games, currentSeasonId, loading, error, clearError, isHydrated,
+      requestScope, seasons, teams, players, games, currentSeasonId, loading, error, clearError, isHydrated,
       loadDataFromSupabase, resetToDefaults,
       saveGame, deleteGame, updateGameScore, updateGameBoxScore,
       saveTeam, deleteTeam, savePlayer, deletePlayer, deleteAllPlayers, batchSavePlayers,
@@ -718,4 +742,10 @@ export function useSportsData(): SportsDataContextType {
     throw new Error("useSportsData must be used within a SportsDataProvider");
   }
   return context;
+}
+
+/** Ask for one server-side scope; each page owns its selection. */
+export function useSportsScope(query: string): void {
+  const { requestScope } = useSportsData();
+  useEffect(() => { requestScope(query); }, [requestScope, query]);
 }

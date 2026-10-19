@@ -7,7 +7,7 @@ import { SearchInput } from "@/components/ui/SearchInput";
 import { SeasonPicker } from "@/components/ui/SeasonPicker";
 import { SkeletonCardGrid } from "@/components/ui/Skeleton";
 import { TeamBadge } from "@/components/ui/TeamBadge";
-import { useSportsData } from "@/context/SportsDataContext";
+import { useSportsData, useSportsScope } from "@/context/SportsDataContext";
 import { inferLeague } from "@/lib/league-utils";
 import { formatRecord } from "@/lib/utils";
 import type { League } from "@/types/sports";
@@ -42,6 +42,8 @@ export function TeamDirectory() {
   }
 
   const leagues: League[] = league === "ALL" ? ["UAAP", "PBA", "PVL"] : [league];
+  useSportsScope(`league=${league}&season=${encodeURIComponent(seasonId)}`);
+
   const standings = leagues.flatMap((l) => getStandings(l, seasonId));
 
   const normalizedQuery = query.trim().toLowerCase();

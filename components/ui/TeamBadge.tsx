@@ -3,6 +3,8 @@
 import { cn } from "@/lib/utils";
 import type { Team } from "@/types/sports";
 import { useState } from "react";
+import Image from "next/image";
+import { safeImageSource } from "@/lib/image-policy";
 
 const SIZE_CLASSES = {
   sm: "h-7 w-7 text-[10px]",
@@ -19,29 +21,16 @@ interface TeamBadgeProps {
 export function TeamBadge({ team, size = "md", className }: TeamBadgeProps) {
   const [failedUrl, setFailedUrl] = useState<string | null>(null);
 
-  const rawLogo = team.logo?.trim();
-  let logoSrc: string | null = null;
-  if (rawLogo) {
-    if (
-      rawLogo.startsWith("http://") ||
-      rawLogo.startsWith("https://") ||
-      rawLogo.startsWith("/") ||
-      rawLogo.startsWith("data:")
-    ) {
-      logoSrc = rawLogo;
-    } else if (rawLogo.includes(".")) {
-      logoSrc = `https://${rawLogo}`;
-    } else {
-      logoSrc = `/${rawLogo}`;
-    }
-  }
+  const logoSrc = safeImageSource(team.logo);
 
   const imageFailed = Boolean(logoSrc && failedUrl === logoSrc);
 
   if (logoSrc && !imageFailed) {
     return (
-      // eslint-disable-next-line @next/next/no-img-element
-      <img
+      <Image
+        width={64}
+        height={64}
+        sizes="64px"
         src={logoSrc}
         alt={team.shortName}
         onError={() => setFailedUrl(logoSrc)}

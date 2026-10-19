@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { getImageHosts } from "./lib/image-policy";
 
 /**
  * Only the small markdown/JSON archive files are needed at runtime. Without
@@ -7,6 +8,11 @@ import type { NextConfig } from "next";
  */
 const nextConfig: NextConfig = {
   allowedDevOrigins: ["127.0.0.1"],
+  images: {
+    remotePatterns: getImageHosts().map(hostname => ({ protocol: "https" as const, hostname, port: "", pathname: "/**" })),
+    maximumRedirects: 0,
+    dangerouslyAllowLocalIP: false,
+  },
 
   outputFileTracingIncludes: {
     "/admin": ["./data/seasons/**/*.md"],
@@ -25,31 +31,6 @@ const nextConfig: NextConfig = {
   },
 
   async headers() {
-    const isDev = process.env.NODE_ENV !== "production";
-    const connectSources = [
-      "'self'",
-      // Supabase REST + Realtime, and the admin-entered photo hosts that
-      // StatCardExport fetches before rasterizing the share card.
-      "https:",
-      "data:",
-      "blob:",
-      "wss://*.supabase.co",
-      ...(isDev ? ["ws://localhost:*", "ws://127.0.0.1:*"] : []),
-    ].join(" ");
-
-    const contentSecurityPolicy = [
-      "default-src 'self'",
-      `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""}`,
-      "style-src 'self' 'unsafe-inline'",
-      "img-src 'self' data: blob: https:",
-      "font-src 'self' data:",
-      `connect-src ${connectSources}`,
-      "frame-ancestors 'none'",
-      "base-uri 'self'",
-      "form-action 'self'",
-      "object-src 'none'",
-    ].join("; ");
-
     return [
       {
         source: "/(.*)",
@@ -58,7 +39,6 @@ const nextConfig: NextConfig = {
           { key: "X-Frame-Options", value: "DENY" },
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
           { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
-          { key: "Content-Security-Policy", value: contentSecurityPolicy },
         ],
       },
     ];

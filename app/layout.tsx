@@ -8,6 +8,13 @@ import { GameModalProvider } from "@/lib/game-modal-context";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Suspense } from "react";
+import { headers } from "next/headers";
+import { fetchSportsData, type SportsDataScope } from "@/lib/supabase-data";
+import { isAdminAuthenticated } from "@/lib/admin-auth";
+
+// Every HTML response must be rendered with the request's CSP nonce.
+export const dynamic = "force-dynamic";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,20 +43,51 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-bg">
-        <SportsDataProvider>
-          <GameModalProvider>
-            <div className="flex min-h-screen w-full flex-col">
-              <DesktopTopBar />
-              <MobileShell>
-                <Header />
-                <main className="flex-1">{children}</main>
-                <BottomNav />
-              </MobileShell>
-            </div>
-            <GameDetailModal />
-          </GameModalProvider>
-        </SportsDataProvider>
+        <Suspense fallback={<p className="p-6" role="status">Loading Sportsmetric…</p>}>
+          <SportsShell>{children}</SportsShell>
+        </Suspense>
       </body>
     </html>
+  );
+}
+
+async function SportsShell({ children }: { children: React.ReactNode }) {
+  const pathname = (await headers()).get("x-sports-path") ?? "/";
+  let scope: SportsDataScope = { league: "UAAP" };
+  let query = "league=UAAP";
+  if (pathname.startsWith("/players/")) {
+    const id = decodeURIComponent(pathname.slice("/players/".length));
+    scope = { playerId: id };
+    query = `player=${encodeURIComponent(id)}`;
+  } else if (pathname.startsWith("/teams/")) {
+    const id = decodeURIComponent(pathname.slice("/teams/".length));
+    scope = { teamId: id };
+    query = `team=${encodeURIComponent(id)}`;
+  } else if (pathname === "/admin" && await isAdminAuthenticated()) {
+    scope = { admin: true };
+    query = "admin=1";
+  } else if (pathname === "/admin" || pathname === "/uaap") {
+    scope = { metadata: true };
+    query = "metadata=1";
+  }
+  const data = await fetchSportsData(scope);
+  if (query === "league=UAAP") {
+    const seasonId = data.seasons.find(s => s.league === "UAAP" && s.isCurrent)?.id ?? data.seasons.find(s => s.league === "UAAP")?.id;
+    if (seasonId) query += `&season=${encodeURIComponent(seasonId)}`;
+  }
+  return (
+    <SportsDataProvider initialData={data} initialQuery={query}>
+      <GameModalProvider>
+        <div className="flex min-h-screen w-full flex-col">
+          <DesktopTopBar />
+          <MobileShell>
+            <Header />
+            <main className="flex-1">{children}</main>
+            <BottomNav />
+          </MobileShell>
+        </div>
+        <GameDetailModal />
+      </GameModalProvider>
+    </SportsDataProvider>
   );
 }

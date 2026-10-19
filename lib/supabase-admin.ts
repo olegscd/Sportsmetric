@@ -18,7 +18,7 @@ export function getServiceSupabase(): SupabaseClient | null {
   if (!url || !serviceRoleKey) {
     if (!serviceRoleKey) {
       console.warn(
-        "[Sportsmetric DB] SUPABASE_SERVICE_ROLE_KEY is not set. Admin writes will fall back to the anon key and will be rejected by RLS."
+        "[Sportsmetric DB] SUPABASE_SERVICE_ROLE_KEY is not set. Admin writes and sessions are unavailable."
       );
     }
     cached = null;

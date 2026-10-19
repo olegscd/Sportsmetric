@@ -1,305 +1,137 @@
-SPORTSMETRIC - IMPLEMENTED FIXES AND REMAINING WORK
-===================================================
-Date: 2026-10-19
-Scope: full codebase review follow-up (P0 -> P3)
+SPORTSMETRIC - FIXES AND DEPLOYMENT STATUS
+========================================
+Updated: 2026-10-19
+
+The initial review fixes are in commit ccd9b43. This follow-up addresses the
+unfinished A-J items from those notes and provides the missing CI template.
+
+FOLLOW-UP IMPLEMENTED
+---------------------
+A. Scoped data loading
+   - The root server shell streams initial data with Suspense; public pages
+     start with the active season instead of downloading every league/year.
+   - League/season selections call a scoped server endpoint. Player profiles
+     load their career seasons; team profiles load their own season.
+   - Public game queries omit play_by_play. Opening the play-by-play tab fetches
+     it separately, with loading/error/retry states and request cancellation.
+   - Realtime listens only to seasons/teams/players/games, with season filters
+     where a single season is selected. Events during a reload queue a follow-up
+     rather than being lost. Out-of-order responses cannot overwrite new scopes.
+   - Player and match grids render 36 cards initially and expand on request.
+   - Removed the admin archive's duplicate bundled JSON fallback; it loads the
+     live archive once and reports a load failure.
+   Design boundary: season box scores are still loaded for correct standings,
+   averages and ranks. Card pagination limits rendering, not the season query.
+   The authenticated admin workspace intentionally retains its full dataset.
+
+B. Revocable sessions and password hashes
+   - Cookies contain random 256-bit tokens; only SHA-256 digests are stored in
+     a private RLS-protected admin_sessions table, with a seven-day expiry.
+   - API proxy and server actions check the database session. Logout deletes
+     the row before clearing the cookie; a copied cookie then fails validation.
+   - ADMIN_PASSWORD_HASH supports salted scrypt and takes precedence over the
+     legacy ADMIN_PASSWORD fallback. Passwords no longer sign cookies.
+   - Added a stdin-based password-hash command and logout failure feedback.
+
+C. Concurrent archive saves
+   - One row per (season, sport, division), including deletion tombstones.
+   - The migration copies legacy table/standing/award/chess overrides once.
+   - A version-checked RPC saves only the selected division. Stale versions
+     fail with an explicit reload message, including concurrent first inserts.
+   - Editors pass the loaded version on save/delete. Awards can be explicitly
+     cleared. Legacy blob/disk sources remain read fallbacks only.
+
+D. Transactional deletion
+   - Season deletion is one database RPC; an error rolls back every deletion.
+   - Team deletion locks its row before checking scheduled games and deleting
+     its players, preventing a check/delete race with new game references.
+
+E. Auto-live policy retained and tested
+   - PVL fixtures stay UPCOMING until official status changes.
+   - Other leagues auto-show LIVE for the existing 4.5-hour active window.
+   - An unconfirmed older fixture stays UPCOMING. Time alone never fabricates
+     a final score/result. No new postponed/overdue product state was introduced.
+
+F. Concurrent team-record updates
+   - Game triggers lock affected teams before a game change, then recompute
+     records in the same transaction. Old and new opponents are included.
+   - Removed application-side read/recompute/upsert cycles, including batches.
+   - Regular-season FINAL games count; playoff games do not.
+   - PostgreSQL may abort a conflicting/deadlocked write rather than commit
+     stale records; the existing admin error/rollback flow reports that failure.
+
+G. Regression tests and CI
+   - Added unit coverage for status policy (including PVL), standings, lifetime
+     identity/weighted shooting, admin validation, pasted box scores, archive
+     helpers, scrypt hashes, image policy, and source URL/redirect validation.
+   - PGlite executes every migration from a fresh schema, checks current-season
+     uniqueness, legacy archive migration, version conflicts, game-record
+     triggers, session/RPC permissions and deletion rollback on mid-write errors.
+   - Browser tests build the production app against isolated local fixture data
+     and cover main pages, direct profile links, modal focus/close/lazy details,
+     league scoping, protected APIs, login, logout and copied-cookie revocation.
+   - Added docs/ci-workflow.yml, the CI workflow template missing from the
+     earlier commit. GitHub rejected installing it under .github/workflows
+     because the configured token lacks workflow permission. Activation awaits
+     credentials that can create workflows.
+   - Added the missing bootstrap schema before old ALTER TABLE migrations.
+
+H. CSP nonces
+   - Proxy generates a per-request nonce and forwards the CSP to Next rendering.
+   - All HTML routes render dynamically, so framework scripts receive the nonce.
+   - Removed script unsafe-inline; unsafe-eval is development-only. Inline
+     styles remain allowed for the existing UI styles and export components.
+
+I. Images
+   - Avatars/logos use next/image optimization and caching with exact HTTPS
+     hostnames. Private-IP fetching and redirects are disabled.
+   - The same policy validates new admin-entered URLs. Legacy unapproved URLs
+     show initials. Stat-card export uses the same optimized image URL.
+   - Add extra hosts through NEXT_PUBLIC_IMAGE_HOSTS and rebuild.
+
+J. Current season database invariant
+   - Migration backfills league and deterministically demotes duplicate currents.
+   - A partial unique index enforces one current season per league.
+   - Season upserts/switches/reorders use one serialized transaction, demoting
+     current flags before upsert so index enforcement is independent of row order.
+
+Additional security fix:
+   The earlier source allowlist checked only the initial URL. Import fetches now
+   validate every redirect, reject credentials/custom ports, cap redirects and
+   have a timeout. A regression test verifies private-host redirects are blocked.
 
 VERIFICATION
 ------------
-- `npx tsc --noEmit --incremental false`  -> PASS (0 errors)
-- `npx eslint .`                          -> PASS (0 errors, 0 warnings)
-- `npm run build`                         -> Turbopack compile PASS; tracing warning removed.
-  The session sandbox blocks Next's typecheck subprocess (`spawn EPERM`), so the
-  final "Running TypeScript" step cannot complete here. `tsc` itself passes, so
-  run `npm run build` in a normal terminal/CI to finish the build.
-- `npm run dev` in this sandbox also fails at `spawn EPERM` (Next forks a child
-  process). Runtime smoke tests must be run outside this sandbox.
+- npm run check: PASS (lint and TypeScript).
+- npm test: PASS (18 unit/database tests).
+- npm run build: PASS (production compile, typecheck and route generation).
+- npm run test:e2e: PASS (4 Chromium tests against the production build).
+- Database tests and browser fixtures are local. They do not apply migrations
+  or write test content to the live Supabase project.
 
-WHAT WAS IMPLEMENTED
---------------------
+DEPLOYMENT ACTIONS STILL REQUIRED
+---------------------------------
+1. Apply all unapplied Supabase migrations in filename order, especially:
+   - 20260730000000_initial_schema.sql (fresh-database bootstrap; safe IF NOT EXISTS)
+   - 20261019000000_restrict_admin_writes.sql (from the earlier review)
+   - 20261019000100_add_foreign_keys.sql (from the earlier review)
+   - 20261019000200_sessions_and_atomic_writes.sql
+   - 20261019000300_division_overrides.sql
+   The session, archive-write and atomic-mutation changes require these DB
+   objects. Public archive reads retain a legacy fallback before migration.
+2. Configure the public Supabase URL/key and server-only service-role key.
+3. Prefer ADMIN_PASSWORD_HASH (npm run hash:admin-password, password on stdin).
+   ADMIN_PASSWORD remains supported during migration. Old cookies require login.
+4. Add any extra image hostnames to NEXT_PUBLIC_IMAGE_HOSTS before building.
+5. Deploy after migrations; smoke-test against the actual production data.
+6. Activate CI by copying docs/ci-workflow.yml to .github/workflows/ci.yml using
+   credentials with workflow permission. Code pushes work with the current token.
+7. Validate the earlier NOT VALID foreign keys after cleaning any legacy orphans.
+   Optionally schedule cleanup of expired admin_sessions rows. Changing the
+   admin password does not revoke existing sessions: delete session rows to do so.
 
-1. RELEASE BLOCKERS
-   1.1 TypeScript compile errors fixed in scripts/compile-uaap-archive-master.ts
-       - annotated `pageSport: string | null`
-       - cast via `unknown` for the CSV record lookup
-       - changed `let existing` to `const existing`
-   1.2 All 23 ESLint errors fixed
-       - removed explicit `any` from the UAAP archive API and view
-       - replaced unsafe `any` extras with typed `Record<string, unknown>` and
-         `UAAPDivisionAwards` in lib/uaap-schema.ts
-       - replaced setState-in-effect patterns with render-time derived values
-         (GameImporterTab, ScheduleManagerTab, GameDetailModal)
-       - removed a redundant report-fetch effect in UAAPArchiveManager
-       - added narrow, documented eslint-disables only where the effect is a
-         deliberate editor-state synchronization (UAAPArchiveManager,
-         BulkImportPanel, initial SportsDataContext load)
-   1.3 Build tracing / over-bundling fixed
-       - `data/uaap_standings.json` and `data/uaap_archive_extras.json` are now
-         imported at module scope instead of read with dynamic fs paths
-       - local overrides fallback uses a literal relative path
-       - added `outputFileTracingIncludes` / `outputFileTracingExcludes` in
-         next.config.ts (only markdown/JSON, never photos/PDFs/compiled books)
-       - `/api/uaap/data` now imports `isAdminAuthenticated` from lib/admin-auth
-         instead of the `"use server"` actions module
-       - result: the previous "12,264 files matched" warning is gone
-
-2. DATA CORRECTNESS
-   2.1 PVL status bug
-       - lib/supabase-data.ts mapGameRows now passes `league` to
-         getEffectiveGameStatus, so PVL fixtures no longer flip to LIVE when
-         their scheduled time passes
-   2.2 Season mutation races
-       - saveSeason / deleteSeason / setSeasonAsCurrent in
-         context/SportsDataContext.tsx now compute the next array synchronously
-         from current state before calling setState and commit; no more payload
-         read from inside a state updater
-   2.3 Career averages
-       - components/player/PlayerDetailView.tsx now aggregates actual game-log
-         box scores for basketball (percentages weighted by attempts) and
-         weights volleyball seasons by matches played, instead of averaging
-         per-season averages equally
-   2.4 Lifetime stats
-       - derivePlayerAverages accepts the full players list and matches every
-         player id sharing a personId for lifetime rows
-       - derivePlayerGameLog does the same and includes all seasons for lifetime
-       - context passes the players list through the averages/rank/leader paths
-   2.5 Final Four bracket
-       - champion is only declared after one finalist wins 2 games; otherwise a
-         "Finals in progress" placeholder is shown
-       - finalist styling is neutral until the series is decided
-   2.6 Volleyball fallback stats
-       - uses recorded `setsPlayed` when available; only estimates 3 sets when
-         the dataset has no set count
-   2.7 Team records
-       - recomputeTeamRecords now excludes playoff games (matching the UI)
-       - upsertGameInSupabase also recomputes the replaced team(s) when a game's
-         home/away side changes
-   2.8 Game import idempotency
-       - ingest-game reuses the existing fixture id when teams + start time
-         match, otherwise uses the collision-safe buildGameId
-       - unmatched players get deterministic ids (`teamId-personSlug`) instead
-         of a new random UUID per import
-       - new players default to OH for PVL and no fake height; season averages
-         are left to the derivation layer instead of a misleading one-game line
-       - personId is also used as a fallback roster match
-
-3. SECURITY / RELIABILITY
-   3.1 SSRF hardening
-       - added assertAllowedSourceUrl in lib/game-extractor.ts
-       - only UAAP LiveStats, PBA, and PVL hosts (and their subdomains) may be
-         fetched; non-http(s) and private hosts are rejected
-       - both the PVL/PDF fetch and the generic candidate loop use it
-   3.2 Ingest preview/save consistency
-       - the admin UI sends the already-previewed payload back on save
-       - the API skips a second fetch/parse when `parsedPayload` is present
-   3.3 Error handling
-       - fetchPaginatedTable throws instead of returning a partial dataset
-       - fetchAllSupabaseData no longer catches-and-returns-null
-       - the provider surfaces the error through its existing error banner
-       - pagination now has a stable `id` tiebreaker
-   3.4 Batch write robustness
-       - empty batches are a successful no-op instead of a 500
-       - batch player upsert detects duplicate jerseys in the batch and against
-         the DB, returning a clear 400 via ValidationError
-       - deleteAllPlayersInSupabase now requires a seasonId (no table-wide
-         delete footgun)
-   3.5 Admin auth
-       - warns (once) when ADMIN_PASSWORD is shorter than 12 chars
-       - bounded the in-process login throttle map (MAX_TRACKED_KEYS)
-       - new migration drops the unused `authenticated` write policies; admin
-         writes remain service-role only
-   3.6 API hardening
-       - /api/admin/mutate uses Object.hasOwn for op lookup
-       - rejects request bodies over 8 MB
-       - ingest team-alias lookup uses Object.hasOwn
-       - route error handlers use `unknown` instead of `any`
-   3.7 UAAP overrides
-       - read-modify-write is serialized within the process via a promise queue
-       - in production, a Supabase persistence failure now returns failure
-         instead of a success-with-warning
-       - local-disk fallback remains for development only
-   3.8 Database integrity
-       - new migration 20261019000100_add_foreign_keys.sql adds NOT VALID FKs
-         (teams/players/games -> seasons/teams, ON DELETE CASCADE)
-       - new migration 20261019000000_restrict_admin_writes.sql removes the
-         unnecessary authenticated-role write policies
-
-4. PERFORMANCE
-   4.1 Selector caching in SportsDataContext
-       - standings, stat leaders, player stat ranks, and player averages are
-         memoized by input key and invalidated when the data references change
-       - this removes repeated full-game scans from every GameCard and
-         StatLeaderCard render
-   4.2 Realtime reload control
-       - debounce increased to 1.2 s
-       - a reload is skipped while another is in flight
-       - the initial load now uses the same loadDataFromSupabase path (no
-         duplicated fetch logic)
-   4.3 Component memoization
-       - GameCard and PlayerCard are wrapped in React.memo
-   4.4 UAAP archive payload
-       - the /uaap page now loads merged data in a server component and passes
-         it to the client view
-       - the client no longer statically imports both JSON files AND fetches
-         /api/uaap/data on mount
-       - the page is force-dynamic so admin saves remain visible
-
-5. UX / ACCESSIBILITY
-   5.1 GameCard no longer nests links inside `role="button"`; a dedicated
-       keyboard-accessible details button was added
-   5.2 GameDetailModal now moves focus into the dialog, traps Tab, restores the
-       previously focused element, and keeps Escape-to-close
-   5.3 SegmentedControl uses a `group` of `aria-pressed` buttons instead of an
-       incomplete tablist implementation
-   5.4 Added `scope="col"` to public and admin table headers
-   5.5 Invalid `?tab=` values in the UAAP archive now fall back to standings
-   5.6 GamesManager uses the same PHT conversion as ScheduleManagerTab
-   5.7 ScheduleManagerTab "today" is now the PHT date, not the UTC date
-   5.8 Theme tokens are defined once in `@theme` (no self-referential
-       `--color-*: var(--color-*)` chain)
-   5.9 Removed `html { zoom: 1.2 }` (it compounded browser zoom and could break
-       fixed/sticky layouts). Restore this block in app/globals.css if the
-       desktop design depends on it.
-
-6. TOOLING / DOCS / HYGIENE
-   6.1 Added npm scripts: `typecheck`, `check`
-   6.2 Added .github/workflows/ci.yml (lint + typecheck + build)
-   6.3 Removed unused dependencies `pdf-parse` and `@types/pdf-parse`; lockfile
-       updated
-   6.4 README replaced with real setup/env/migrations/scripts documentation
-   6.5 Added security headers + CSP in next.config.ts (Supabase realtime and
-       arbitrary https image hosts are allowed; script-src still needs
-       'unsafe-inline' because the app does not use nonce-based CSP yet)
-   6.6 .gitignore now excludes the generated digital book and local npm cache
-   6.7 Untracked the two generated 3.8 MB book files (kept on disk):
-       data/compiled/UAAP_Complete_Digital_Book.html
-       data/compiled/UAAP_Complete_Digital_Book.md
-
-FILES ADDED
------------
-- .github/workflows/ci.yml
-- supabase/migrations/20261019000000_restrict_admin_writes.sql
-- supabase/migrations/20261019000100_add_foreign_keys.sql
-- FIXES_AND_REMAINING.txt (this file)
-
-REMAINING / DIFFICULT ITEMS
----------------------------
-
-A. DATA-LOADING ARCHITECTURE (largest remaining item)
-   Current: the browser still calls fetchAllSupabaseData(), which downloads all
-   seasons/teams/players/games (including box scores and play-by-play) and
-   reloads everything when any public-schema row changes.
-   Note: the public /uaap page now loads its archive data on the server. The
-   admin UAAPArchiveManager still bundles the base JSON as an offline fallback
-   and also calls /api/uaap/data; that admin-only double payload remains.
-   Why not done here: moving to per-route server components changes every page
-   and the admin optimistic-update flow; too risky to do in one pass.
-   Recommended plan:
-     1. Add server queries scoped by league + season (select only needed
-        columns; games without play_by_play unless the modal is opened).
-     2. Make Match Center, Standings, Players, Teams, and detail pages server
-        components with Suspense; keep a small client cache for optimistic
-        admin writes only.
-     3. Replace the schema-wide realtime subscription with per-table filters,
-        or use `revalidateTag("sports")` after admin writes instead of full
-        client reloads.
-     4. Add pagination/lazy loading for players and game lists.
-
-B. REVOCABLE ADMIN SESSIONS
-   Current: a stateless HMAC token (timestamp + HMAC of ADMIN_PASSWORD) is valid
-   for 7 days; logout only deletes the cookie, so a copied cookie stays valid.
-   Recommended:
-     1. Generate a random session id and store it in a `admin_sessions` table
-        (id, created_at, expires_at, revoked_at).
-     2. Put the session id in the cookie; verify it against the DB in
-        lib/admin-auth.ts/proxy.ts.
-     3. Hash the admin password (Argon2id/scrypt) and store the hash in env or a
-        secrets table; stop using the raw password as the HMAC key.
-     4. Delete the session row on logout.
-
-C. UAAP OVERRIDES: ONE ROW PER DIVISION
-   Current: the whole overrides document is one JSON row. We added an in-process
-   write queue and production failure semantics, but two serverless instances
-   can still lose an update.
-   Recommended:
-     1. New table `uaap_division_overrides` keyed by
-        (season, sport, division) with a `version`/`updated_at` column.
-     2. Save only the affected division; use optimistic concurrency
-        (`WHERE updated_at = expected`).
-     3. Migrate the existing blob once, then keep the blob only as a read
-        fallback.
-
-D. TRANSACTIONAL SEASON/TEAM DELETION
-   deleteSeasonInSupabase performs 4 sequential deletes with no transaction; a
-   mid-way failure leaves partial data. Recommended: a Postgres function/RPC
-   that deletes games, players, teams, and the season atomically, then call it
-   from the app.
-
-E. PLAYOFF/AUTO-LIVE STATUS POLICY
-   getEffectiveGameStatus still returns UPCOMING for a game more than 4.5 hours
-   past tip-off that was never marked FINAL. This is a product decision:
-   - keep UPCOMING (current), or
-   - add an OVERDUE/POSTPONED state (requires a type/UI change), or
-   - mark FINAL only when a score was recorded.
-   The PVL league-omission bug is fixed; the policy itself was left unchanged.
-
-F. CONCURRENT TEAM-RECORD RECOMPUTES
-   team records are recomputed in application code after game writes. Two
-   concurrent admins can still produce a stale last-write-wins record.
-   Recommended: move the win/loss recompute into a Postgres trigger or a
-   transaction that locks the affected team rows, or derive records purely at
-   read time and drop the denormalized column.
-
-G. TESTS
-   There are still no unit or E2E tests; playwright.config.ts points at a
-   `tests/` directory that does not exist. Recommended:
-     - Vitest for lib/derivations.ts, lib/admin-validation.ts,
-       lib/box-score-parser.ts, lib/game-extractor.ts URL allowlist, and
-       lib/uaap-schema.ts
-     - Playwright smoke tests for `/`, `/standings`, `/uaap`, `/admin` login,
-       and the game modal
-     - a test that asserts a PVL fixture past tip-off stays UPCOMING
-
-H. CSP NONCES
-   The new CSP allows `'unsafe-inline'` for scripts because Next is not wired
-   for nonces. To strengthen it, add a per-request nonce in proxy.ts and pass it
-   to Next's script tags; then remove 'unsafe-inline'.
-
-I. IMAGE HANDLING
-   Team logos and player photos are rendered with plain <img> from arbitrary
-   admin-entered hosts. This avoids next/image domain config but loses
-   optimization and lets any https host be loaded. Consider proxying/caching
-   images through an allowlisted loader.
-
-J. UNIQUE CURRENT SEASON PER LEAGUE
-   The app enforces one `isCurrent` season per league in memory; the DB has no
-   constraint. Add a partial unique index on `(league)` where `is_current` (after
-   backfilling null leagues) if this invariant must be guaranteed.
-
-DEPLOYMENT CHECKLIST
---------------------
-1. Apply Supabase migrations in order:
-   - 20261019000000_restrict_admin_writes.sql
-   - 20261019000100_add_foreign_keys.sql
-   (The FK migration uses NOT VALID; run VALIDATE CONSTRAINT after cleaning any
-   legacy orphan rows.)
-2. Set NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY,
-   SUPABASE_SERVICE_ROLE_KEY, and a strong ADMIN_PASSWORD.
-3. Run `npm ci`.
-4. Run `npm run check` (lint + typecheck) and `npm run build` outside the
-   sandbox used for this session.
-5. Seed only if needed: `npm run seed:supabase` (now requires the service-role
-   key).
-6. Smoke test: Match Center, standings (UAAP/PBA/PVL), a game modal, a player
-   profile, /uaap, /admin login, an ingest preview followed by save, and a UAAP
-   archive save.
-7. Verify a PVL fixture whose start time has passed remains UPCOMING (not LIVE)
-   in the admin schedule and public Match Center.
-
-ROLLBACK NOTES
---------------
-- The `.gitignore` change and `git rm --cached` only stop tracking the generated
-  book; the files are still on disk.
-- Removing `html { zoom: 1.2 }` is a visual change; re-add that media query in
-  app/globals.css to restore the previous desktop scale.
-- If the CSP breaks an integration, remove the `Content-Security-Policy` header
-  from next.config.ts first and keep the other security headers.
+Operational limits:
+- Login throttling is still per-process, as documented in lib/admin-auth.ts.
+- Database migrations were verified locally, not applied to the live project.
+- No postponed/overdue status or full server-computed statistics model was added;
+  the existing product policy and stat derivations are preserved.

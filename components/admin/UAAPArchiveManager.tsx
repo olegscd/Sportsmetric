@@ -15,7 +15,6 @@ import {
   COLUMN_PRESETS,
   createEmptyTable,
   formatCellValue,
-  legacyRecordsToTables,
   makeDivisionKey,
   makeExtrasKey,
   normalizeChessMedalists,
@@ -23,7 +22,6 @@ import {
   normalizeSeasonLabel,
   resolveCellValue,
   toNumberOrNull,
-  type LegacyStandingRecord,
   type UAAPArchiveExtras,
   type UAAPColumn,
   type UAAPDivisionAwards,
@@ -32,8 +30,6 @@ import {
 } from "@/lib/uaap-schema";
 import { extractStandingsFromReport } from "@/lib/uaap-import";
 import { UAAP_SCHOOLS, getSchoolCode, getSchoolName, getSchoolTheme, matchSchoolCode } from "@/lib/uaap-schools";
-import standingsData from "@/data/uaap_standings.json";
-import archiveExtrasData from "@/data/uaap_archive_extras.json";
 import {
   Award,
   BookOpen,
@@ -119,23 +115,25 @@ function Section({
 }
 
 export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
-  const [tables, setTables] = useState<UAAPTable[]>(() =>
-    legacyRecordsToTables(standingsData as LegacyStandingRecord[])
-  );
-  const [extras, setExtras] = useState<UAAPArchiveExtras>(archiveExtrasData as UAAPArchiveExtras);
+  const [tables, setTables] = useState<UAAPTable[]>([]);
+  const [extras, setExtras] = useState<UAAPArchiveExtras>({});
+  const [divisionVersions, setDivisionVersions] = useState<Record<string, number>>({});
+  const [archiveLoaded, setArchiveLoaded] = useState(false);
   const [customSeasons, setCustomSeasons] = useState<string[]>([]);
 
   const fetchLive = useCallback(async () => {
     try {
       const res = await fetch("/api/uaap/data", { cache: "no-store" });
-      if (!res.ok) return;
+      if (!res.ok) throw new Error("Could not load archive data.");
       const json = await res.json();
       if (Array.isArray(json.tables)) setTables(json.tables);
       if (json.extras) setExtras(json.extras);
+      setDivisionVersions(json.divisionVersions ?? {});
+      setArchiveLoaded(true);
     } catch (err) {
-      console.warn("[UAAPArchiveManager] Live fetch failed, using bundled data:", err);
+      onToast(err instanceof Error ? err.message : "Archive load failed.", "error");
     }
-  }, []);
+  }, [onToast]);
 
   useEffect(() => {
     // One-shot hydration of the admin editor from the live archive. This is a
@@ -418,6 +416,7 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
   const [importSeed, setImportSeed] = useState<string | undefined>(undefined);
 
   const handleSave = useCallback(async () => {
+    if (!archiveLoaded || isSaving) return;
     if (draft.rows.length === 0) {
       onToast("Nothing to save — add at least one row.", "error");
       return;
@@ -448,6 +447,7 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
 
     const res = await saveUAAPArchiveData({
       table: normalizedDraft,
+      expectedVersion: divisionVersions[makeDivisionKey(draft.season, draft.sport, draft.division)] ?? 0,
       awards: {
         mvp: mvp.player.trim()
           ? { player: mvp.player.trim(), school: normalizeSchoolVal(mvp.school) }
@@ -473,6 +473,7 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
     }
 
     if (res.data) {
+      setDivisionVersions(res.data.divisionVersions ?? {});
       setTables(res.data.tables);
       setExtras(res.data.extras);
     } else {
@@ -489,17 +490,19 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
         "success"
       );
     }
-  }, [draft, mvp, roy, mythical, chessBoards, sport, season, division, onToast, fetchLive]);
+  }, [draft, mvp, roy, mythical, chessBoards, sport, season, division, onToast, fetchLive, archiveLoaded, isSaving, divisionVersions]);
 
   const handleDelete = async () => {
+    if (!archiveLoaded || isSaving) return;
     if (!confirm(`Delete all recorded standings for ${season} ${sport} (${division})?`)) return;
 
-    const res = await deleteUAAPArchiveDivision(season, sport, division);
+    const res = await deleteUAAPArchiveDivision(season, sport, division, divisionVersions[makeDivisionKey(season, sport, division)] ?? 0);
     if (!res.success) {
       onToast(`Delete failed: ${res.error}`, "error");
       return;
     }
     if (res.data) {
+      setDivisionVersions(res.data.divisionVersions ?? {});
       setTables(res.data.tables);
       setExtras(res.data.extras);
     }

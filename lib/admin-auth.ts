@@ -1,21 +1,18 @@
 import { cookies } from "next/headers";
 
-import { ADMIN_COOKIE_NAME, getAdminSecret, verifyAuthToken } from "@/lib/admin-token";
+import { ADMIN_COOKIE_NAME } from "@/lib/admin-token";
+import { verifyAdminSession } from "@/lib/admin-session";
 
 export {
   ADMIN_COOKIE_MAX_AGE,
   ADMIN_COOKIE_NAME,
-  generateAuthToken,
   getAdminSecret,
   passwordMatches,
-  verifyAuthToken,
 } from "@/lib/admin-token";
 
 export async function isAdminAuthenticated(): Promise<boolean> {
-  const secret = getAdminSecret();
-  if (!secret) return false;
   const cookieStore = await cookies();
-  return verifyAuthToken(cookieStore.get(ADMIN_COOKIE_NAME)?.value, secret);
+  return verifyAdminSession(cookieStore.get(ADMIN_COOKIE_NAME)?.value);
 }
 
 // ---------------------------------------------------------------------------

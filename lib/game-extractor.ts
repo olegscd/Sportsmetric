@@ -145,7 +145,7 @@ export function assertAllowedSourceUrl(raw: string): string {
     throw new Error("Enter a full http(s) URL or a numeric match ID.");
   }
 
-  if (url.protocol !== "http:" && url.protocol !== "https:") {
+  if ((url.protocol !== "http:" && url.protocol !== "https:") || url.username || url.password || url.port) {
     throw new Error("Only http(s) URLs are supported.");
   }
 
@@ -162,6 +162,23 @@ export function assertAllowedSourceUrl(raw: string): string {
   }
 
   return url.toString();
+}
+
+/** Validate every redirect, not just the initial URL. */
+export async function fetchAllowedSource(raw: string): Promise<Response> {
+  let target = assertAllowedSourceUrl(raw);
+  for (let redirects = 0; redirects <= 5; redirects++) {
+    const response = await fetch(target, {
+      redirect: "manual", signal: AbortSignal.timeout(20_000),
+      headers: { "User-Agent": "Mozilla/5.0 Sportsmetric" },
+    });
+    if (![301, 302, 303, 307, 308].includes(response.status)) return response;
+    const location = response.headers.get("location");
+    await response.body?.cancel();
+    if (!location) throw new Error("Source returned a redirect without a location.");
+    target = assertAllowedSourceUrl(new URL(location, target).toString());
+  }
+  throw new Error("Source returned too many redirects.");
 }
 
 function parseNumber(value?: string | null): number | null {
@@ -536,13 +553,7 @@ export async function extractGameFromUrl(
 ): Promise<ExtractedGamePayload> {
   if (league === "PVL" || rawInput.toLowerCase().endsWith(".pdf") || rawInput.includes("dashboard.pvl.ph")) {
     if (rawInput.startsWith("http://") || rawInput.startsWith("https://")) {
-      const safeUrl = assertAllowedSourceUrl(rawInput);
-      const res = await fetch(safeUrl, {
-        headers: {
-          "User-Agent":
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-        },
-      });
+      const res = await fetchAllowedSource(rawInput);
       if (!res.ok) {
         throw new Error(`Failed to download PVL match PDF: HTTP ${res.status}`);
       }
@@ -563,13 +574,7 @@ export async function extractGameFromUrl(
 
   for (const targetUrl of candidates) {
     try {
-      const safeUrl = assertAllowedSourceUrl(targetUrl);
-      const res = await fetch(safeUrl, {
-        headers: {
-          "User-Agent":
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-        },
-      });
+      const res = await fetchAllowedSource(targetUrl);
 
       if (res.ok) {
         const text = await res.text();

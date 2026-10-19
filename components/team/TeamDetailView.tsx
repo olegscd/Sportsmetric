@@ -4,16 +4,19 @@ import { EmptyState } from "@/components/ui/EmptyState";
 import { LeagueBadge } from "@/components/match-center/LeagueBadge";
 import { StandingsTable } from "@/components/standings/StandingsTable";
 import { TeamBadge } from "@/components/ui/TeamBadge";
-import { useSportsData } from "@/context/SportsDataContext";
+import { useSportsData, useSportsScope } from "@/context/SportsDataContext";
 import { formatOrdinal, formatRecord } from "@/lib/utils";
 import { TeamRoster } from "./TeamRoster";
 import { TeamStatsTable } from "./TeamStatsTable";
 
 export function TeamDetailView({ id }: { id: string }) {
-  const { teams, players, seasons, currentSeasonId, getStandings } = useSportsData();
+  useSportsScope(`team=${encodeURIComponent(id)}`);
+  const { teams, players, seasons, currentSeasonId, getStandings, loading, error, refreshData } = useSportsData();
   const team = teams.find((t) => t.id === id);
 
   if (!team) {
+    if (loading) return <p className="p-6" role="status">Loading team…</p>;
+    if (error) return <p className="p-6" role="alert">{error} <button onClick={() => void refreshData()}>Retry</button></p>;
     return (
       <div className="px-4 py-8">
         <EmptyState

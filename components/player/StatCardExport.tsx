@@ -1,4 +1,6 @@
 "use client";
+import { getImageProps } from "next/image";
+import { safeImageSource } from "@/lib/image-policy";
 
 import { LeagueBadge } from "@/components/match-center/LeagueBadge";
 import { formatAvg, formatPct } from "@/lib/utils";
@@ -82,11 +84,12 @@ export function StatCardExport({ player, team }: { player: Player; team: Team })
   // fails for any reason, we just fall back to the team-color placeholder
   // below instead of breaking the whole export.
   useEffect(() => {
-    const photoUrl = player.photoUrl;
+    const photoUrl = safeImageSource(player.photoUrl);
     if (!photoUrl) return;
     let cancelled = false;
 
-    fetch(photoUrl)
+    const { props } = getImageProps({ src: photoUrl, alt: player.name, width: 320, height: 320 });
+    fetch(props.src)
       .then((res) => {
         if (!res.ok) throw new Error(`Photo fetch failed: ${res.status}`);
         return res.blob();
@@ -110,7 +113,7 @@ export function StatCardExport({ player, team }: { player: Player; team: Team })
     return () => {
       cancelled = true;
     };
-  }, [player.photoUrl]);
+  }, [player.photoUrl, player.name]);
 
   const handleExport = async () => {
     if (!captureRef.current || status === "exporting") return;

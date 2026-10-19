@@ -1,67 +1,31 @@
-import crypto from "crypto";
-
-/**
- * Pure token/secret helpers with no Next.js request-scope dependencies, so
- * both `proxy.ts` and server components can share them.
- */
+import crypto from "node:crypto";
+import { promisify } from "node:util";
 
 export const ADMIN_COOKIE_NAME = "sportsmetric_admin";
-export const ADMIN_COOKIE_MAX_AGE = 60 * 60 * 24 * 7; // 7 days, in seconds
+export const ADMIN_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
+const scrypt = promisify(crypto.scrypt);
 
-let warnedAboutWeakSecret = false;
-
+/** Prefer a salted scrypt hash; ADMIN_PASSWORD remains a migration fallback. */
 export function getAdminSecret(): string {
-  const secret = process.env.ADMIN_PASSWORD;
-  if (!secret) {
-    console.error("[Admin Auth] ADMIN_PASSWORD is not defined in environment variables.");
-    return "";
-  }
-  if (!warnedAboutWeakSecret && secret.length < 12) {
-    warnedAboutWeakSecret = true;
-    console.warn(
-      "[Admin Auth] ADMIN_PASSWORD is shorter than 12 characters. " +
-        "Use a long random value; it also signs the admin session cookie."
-    );
-  }
-  return secret;
+  const hash = process.env.ADMIN_PASSWORD_HASH;
+  if (hash) return /^scrypt\$[^$]{1,128}\$[a-f0-9]{128}$/i.test(hash) ? hash : "";
+  return process.env.ADMIN_PASSWORD || "";
 }
 
-export function generateAuthToken(secret: string): string {
-  const timestamp = Date.now().toString();
-  const hmac = crypto.createHmac("sha256", secret).update(`admin:${timestamp}`).digest("hex");
-  return `${timestamp}.${hmac}`;
-}
-
-export function verifyAuthToken(token: string | undefined, secret: string): boolean {
-  if (!token || !secret) return false;
-  const parts = token.split(".");
-  if (parts.length !== 2) return false;
-
-  const [timestampStr, providedHmac] = parts;
-  const timestamp = parseInt(timestampStr, 10);
-  if (Number.isNaN(timestamp)) return false;
-
-  const ageMs = Date.now() - timestamp;
-  if (ageMs < 0 || ageMs > ADMIN_COOKIE_MAX_AGE * 1000) return false;
-
-  const expectedHmac = crypto
-    .createHmac("sha256", secret)
-    .update(`admin:${timestampStr}`)
-    .digest("hex");
-
-  try {
-    const bufProvided = Buffer.from(providedHmac, "hex");
-    const bufExpected = Buffer.from(expectedHmac, "hex");
-    if (bufProvided.length !== bufExpected.length) return false;
-    return crypto.timingSafeEqual(bufProvided, bufExpected);
-  } catch {
-    return false;
+export async function passwordMatches(candidate: string, secret: string): Promise<boolean> {
+  if (!secret || candidate.length > 1024) return false;
+  if (secret.startsWith("scrypt$")) {
+    const [, salt, hash, extra] = secret.split("$");
+    if (extra || !salt || !/^[a-f0-9]{128}$/i.test(hash ?? "")) return false;
+    const actual = await scrypt(candidate, salt, 64) as Buffer;
+    return crypto.timingSafeEqual(actual, Buffer.from(hash, "hex"));
   }
+  return crypto.timingSafeEqual(
+    crypto.createHash("sha256").update(candidate).digest(),
+    crypto.createHash("sha256").update(secret).digest(),
+  );
 }
 
-/** Constant-time password comparison so response timing can't leak the secret. */
-export function passwordMatches(candidate: string, secret: string): boolean {
-  const a = crypto.createHash("sha256").update(candidate).digest();
-  const b = crypto.createHash("sha256").update(secret).digest();
-  return crypto.timingSafeEqual(a, b);
+export function hashSessionToken(token: string): string {
+  return crypto.createHash("sha256").update(token).digest("hex");
 }

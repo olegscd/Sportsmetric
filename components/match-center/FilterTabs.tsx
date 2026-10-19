@@ -5,7 +5,7 @@ import { ErrorNotice } from "@/components/ui/ErrorNotice";
 import { FilterChip, SegmentedControl } from "@/components/ui/FilterChip";
 import { SeasonPicker } from "@/components/ui/SeasonPicker";
 import { SkeletonCardGrid } from "@/components/ui/Skeleton";
-import { useSportsData } from "@/context/SportsDataContext";
+import { useSportsData, useSportsScope } from "@/context/SportsDataContext";
 import { getEffectiveGameStatus, isLifetimeSeason } from "@/lib/derivations";
 import { inferLeague } from "@/lib/league-utils";
 import { formatFullDayHeader, formatGameDate } from "@/lib/utils";
@@ -60,6 +60,8 @@ export function FilterTabs() {
     ? userSelectedSeasonId
     : activeCurrent;
 
+  useSportsScope(`league=${league}&season=${encodeURIComponent(seasonId)}`);
+
   const selectedSeason = seasons.find((s) => s.id === seasonId);
   const isOldSeason = selectedSeason ? !selectedSeason.isCurrent : seasonId !== currentSeasonId;
 
@@ -99,10 +101,15 @@ export function FilterTabs() {
     [seasonGames, activeStatus, league, teamId]
   );
 
+  const pageKey = `${league}|${seasonId}|${activeStatus}|${teamId}`;
+  const [page, setPage] = useState({ key: pageKey, limit: 36 });
+  const limit = page.key === pageKey ? page.limit : 36;
+  const visibleGames = useMemo(() => filteredGames.slice(0, limit), [filteredGames, limit]);
+
   const upcomingGrouped = useMemo(() => {
     if (activeStatus !== "UPCOMING") return null;
 
-    const sorted = [...filteredGames].sort(
+    const sorted = [...visibleGames].sort(
       (a, b) => new Date(a.startTime).getTime() - new Date(b.startTime).getTime()
     );
 
@@ -123,7 +130,7 @@ export function FilterTabs() {
     }
 
     return groups;
-  }, [filteredGames, activeStatus]);
+  }, [visibleGames, activeStatus]);
 
   function handleSeasonChange(newSeasonId: string) {
     setUserSelectedSeasonId(newSeasonId);
@@ -203,7 +210,7 @@ export function FilterTabs() {
     }
     return (
       <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
-        {filteredGames.map((game) => (
+        {visibleGames.map((game) => (
           <GameCard key={game.id} game={game} />
         ))}
       </div>
@@ -274,6 +281,10 @@ export function FilterTabs() {
       </div>
 
       {renderBody()}
+      {filteredGames.length > limit && (
+        <button type="button" className="rounded-xl border border-border p-3 text-sm font-semibold"
+          onClick={() => setPage({ key: pageKey, limit: limit + 36 })}>Show more games</button>
+      )}
     </div>
   );
 }

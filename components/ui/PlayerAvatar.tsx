@@ -3,6 +3,8 @@
 import { cn } from "@/lib/utils";
 import type { Player } from "@/types/sports";
 import { useState } from "react";
+import Image from "next/image";
+import { safeImageSource } from "@/lib/image-policy";
 
 const SIZE_CLASSES = {
   sm: "h-7 w-7 text-[10px]",
@@ -30,29 +32,16 @@ interface PlayerAvatarProps {
 export function PlayerAvatar({ player, accentColor, size = "md", className }: PlayerAvatarProps) {
   const [failedUrl, setFailedUrl] = useState<string | null>(null);
 
-  const rawPhoto = player.photoUrl?.trim();
-  let photoSrc: string | null = null;
-  if (rawPhoto) {
-    if (
-      rawPhoto.startsWith("http://") ||
-      rawPhoto.startsWith("https://") ||
-      rawPhoto.startsWith("/") ||
-      rawPhoto.startsWith("data:")
-    ) {
-      photoSrc = rawPhoto;
-    } else if (rawPhoto.includes(".")) {
-      photoSrc = `https://${rawPhoto}`;
-    } else {
-      photoSrc = `/${rawPhoto}`;
-    }
-  }
+  const photoSrc = safeImageSource(player.photoUrl);
 
   const imageFailed = Boolean(photoSrc && failedUrl === photoSrc);
 
   if (photoSrc && !imageFailed) {
     return (
-      // eslint-disable-next-line @next/next/no-img-element
-      <img
+      <Image
+        width={64}
+        height={64}
+        sizes="64px"
         src={photoSrc}
         alt={player.name}
         onError={() => setFailedUrl(photoSrc)}

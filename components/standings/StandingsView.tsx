@@ -5,7 +5,7 @@ import { ErrorNotice } from "@/components/ui/ErrorNotice";
 import { SegmentedControl } from "@/components/ui/FilterChip";
 import { SeasonPicker } from "@/components/ui/SeasonPicker";
 import { SkeletonRows } from "@/components/ui/Skeleton";
-import { useSportsData } from "@/context/SportsDataContext";
+import { useSportsData, useSportsScope } from "@/context/SportsDataContext";
 import { getUAAPGamePartition } from "@/lib/derivations";
 import { inferLeague } from "@/lib/league-utils";
 import { formatAvg } from "@/lib/utils";
@@ -61,6 +61,8 @@ export function StandingsView() {
     userSelectedSeasonId && targetSeasons.some((s) => s.id === userSelectedSeasonId)
       ? userSelectedSeasonId
       : activeCurrent;
+
+  useSportsScope(`league=${league}&season=${encodeURIComponent(seasonId)}`);
 
   function handleLeagueChange(newLeague: League) {
     setLeague(newLeague);
