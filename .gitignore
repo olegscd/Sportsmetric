@@ -67,9 +67,6 @@ UAAP_Historical_Standings_Compendium.pdf
 data/compiled/UAAP_Historical_Standings_Compendium.html
 data/compiled/UAAP_Historical_Standings_Compendium.pdf
 
-# Supabase CLI temp files
-supabase/.temp/
-
 # Local npm cache used by sandboxed installs
 .npm-cache/
 
