@@ -12,11 +12,32 @@
 
 export type UAAPColumnType = "number" | "decimal" | "text";
 
+export interface UAAPSource {
+  season: string;
+  sport: string;
+  division: string;
+  image: string;
+  section: string;
+  /** SHA-256 of the original photo, not of its OCR transcription. */
+  sha256: string;
+}
+
+export interface UAAPReview {
+  status: "needs_review" | "verified" | "blocked";
+  reason: string;
+  reviewer?: string;
+  reviewed_at?: string;
+  /** Binds the review to the exact data block; edits invalidate it. */
+  content_hash?: string;
+  sources?: UAAPSource[];
+}
+
 export interface UAAPColumn {
   /** Stable identifier used as the key in `UAAPRow.values`. */
   key: string;
   label: string;
   type: UAAPColumnType;
+  decimals?: number;
   /**
    * Marks a column as calculated rather than entered. Derived columns are
    * read-only in the admin editor and recomputed on every render.
@@ -40,6 +61,10 @@ export interface UAAPTable {
   rows: UAAPRow[];
   note: string | null;
   source_page: string;
+  review?: UAAPReview;
+  coverage?: "complete" | "partial" | "champion_only";
+  /** W/L can describe a different phase from final placement. */
+  record_scope?: string;
 }
 
 /** Flat record shape used by the original data/uaap_standings.json dataset. */
@@ -67,6 +92,7 @@ export interface UAAPArchiveExtras {
   chess_medalists?: Record<string, Record<string, unknown>>;
   games?: Record<string, unknown>;
   leaderboards?: Record<string, Record<string, unknown>>;
+  reviews?: Record<string, UAAPReview>;
 }
 
 /** Shape of the admin-curated awards payload for one season/division. */
@@ -225,6 +251,43 @@ export function makeExtrasKey(sport: string, season: string): string {
   return `${sport.trim()}|${season.trim()}`;
 }
 
+export function makeReviewKey(kind: "awards" | "chess_medalists" | "leaderboards", season: string,
+  sport: string, division: string, category?: string): string {
+  return `${kind}|${makeDivisionKey(season, sport, division)}${category ? `|${category}` : ""}`;
+}
+
+export interface UAAPLeaderEntry {
+  rank?: number;
+  player?: string;
+  school?: string;
+  value?: string | number;
+  [key: string]: unknown;
+}
+
+export interface UAAPLeaderCategory {
+  label: string;
+  unit: string;
+  scope: string;
+  qualification: string;
+  entries: UAAPLeaderEntry[];
+}
+
+/** Published order is authoritative. Include everyone tied at the cutoff. */
+export function leadersWithTies(entries: UAAPLeaderEntry[], limit = 10): UAAPLeaderEntry[] {
+  if (limit <= 0) return [];
+  if (entries.length <= limit) return entries;
+  const cutoff = entries[limit - 1]?.rank;
+  let end = limit;
+  if (cutoff !== undefined) while (end < entries.length && entries[end].rank === cutoff) end++;
+  return entries.slice(0, end);
+}
+
+export function divisionExtra<T>(data: Record<string, unknown> | undefined, division: string | null): T | null {
+  if (!data || !division) return null;
+  const entry = Object.entries(data).find(([key]) => normalizeDivision(key) === normalizeDivision(division));
+  return (entry?.[1] as T | null | undefined) ?? null;
+}
+
 /** Turns a column label into a safe, unique `values` key. */
 export function slugifyColumnKey(label: string, taken: string[] = []): string {
   const base =
@@ -245,7 +308,8 @@ export function slugifyColumnKey(label: string, taken: string[] = []): string {
 // ---------------------------------------------------------------------------
 
 export function toNumberOrNull(value: unknown): number | null {
-  if (value === null || value === undefined || value === "") return null;
+  if (value === null || value === undefined || (typeof value === "string" && value.trim() === "")) return null;
+  if (typeof value !== "number" && typeof value !== "string") return null;
   const n = typeof value === "number" ? value : Number(String(value).trim());
   return Number.isFinite(n) ? n : null;
 }
@@ -261,7 +325,7 @@ export function resolveCellValue(
   if (column.derived?.kind === "winPct") {
     const w = toNumberOrNull(row.values[column.derived.wins]);
     const l = toNumberOrNull(row.values[column.derived.losses]);
-    if (w === null || l === null || w + l === 0) return null;
+    if (w === null || l === null || w < 0 || l < 0 || w + l === 0 || Number(row.values.draws) > 0) return null;
     return Number((w / (w + l)).toFixed(3));
   }
   const raw = row.values[column.key];
@@ -276,7 +340,7 @@ export function formatCellValue(
   const value = resolveCellValue(row, column);
   if (value === null || value === "") return "—";
   if (column.type === "decimal" && typeof value === "number") {
-    return value.toFixed(3);
+    return value.toFixed(column.decimals ?? 3);
   }
   return String(value);
 }
@@ -386,6 +450,10 @@ export interface ChessMedalist {
   school: string;
 }
 
+function sourceMedal(value: unknown): ChessMedalist["medal"] {
+  return value === "gold" || value === "silver" || value === "bronze" ? value : null;
+}
+
 /**
  * The base dataset stores chess medalists as a flat list per division while the
  * admin panel writes a board-keyed map. Normalises both into board -> medalists
@@ -399,11 +467,12 @@ export function normalizeChessMedalists(
   if (Array.isArray(raw)) {
     const list = raw
       .filter((m): m is Record<string, unknown> => !!m && typeof m === "object")
-      .map((m, idx) => ({
-        medal: (m.medal as ChessMedalist["medal"]) ?? null,
+      .filter((m) => /^[1-9]\d*$/.test(String(m.board ?? "")))
+      .map((m) => ({
+        medal: sourceMedal(m.medal),
         player: String(m.player ?? m.name ?? ""),
         school: String(m.school ?? ""),
-        board: m.board ? String(m.board) : String(idx + 1),
+        board: String(m.board),
       }));
 
     const grouped: Record<string, ChessMedalist[]> = {};
@@ -416,11 +485,11 @@ export function normalizeChessMedalists(
 
   const result: Record<string, ChessMedalist[]> = {};
   for (const [board, value] of Object.entries(raw as Record<string, unknown>)) {
-    if (!Array.isArray(value)) continue;
+    if (!/^[1-9]\d*$/.test(board) || !Array.isArray(value) || value.length === 0) continue;
     result[board] = value
       .filter((m): m is Record<string, unknown> => !!m && typeof m === "object")
       .map((m) => ({
-        medal: (m.medal as ChessMedalist["medal"]) ?? null,
+        medal: sourceMedal(m.medal),
         player: String(m.player ?? m.name ?? ""),
         school: String(m.school ?? ""),
       }));

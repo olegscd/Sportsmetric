@@ -1,9 +1,12 @@
 """
-Compile all structured UAAP statistics into unified datasets for the web application.
+Compile structured UAAP statistics into UNREVIEWED extraction candidates.
 
 Generates:
-1. data/uaap_standings.json: Complete historical standings across all 7 seasons and 14 sports + General Championship.
-2. data/uaap_archive_extras.json: Awards, match games, board medalists, and player stats keyed by sport and season.
+1. data/candidates/uaap_standings.json
+2. data/candidates/uaap_archive_extras.json
+
+These files do not publish data. The runtime uses data/uaap_archive_master.json;
+apply the source-review protocol before promoting any candidate block.
 """
 
 import json
@@ -162,14 +165,16 @@ def compile_extras() -> dict[str, Any]:
 
 
 def main():
-    print("Compiling UAAP structured data for the web UI...")
+    print("Compiling UNREVIEWED UAAP extraction candidates (not public data)...")
+    candidate_dir = DATA_DIR / "candidates"
+    candidate_dir.mkdir(parents=True, exist_ok=True)
     standings = compile_standings()
-    out_standings = DATA_DIR / "uaap_standings.json"
+    out_standings = candidate_dir / "uaap_standings.json"
     out_standings.write_text(json.dumps(standings, indent=2, ensure_ascii=False), encoding="utf-8")
     print(f"Saved {len(standings)} standing records to {out_standings.resolve()}")
 
     extras = compile_extras()
-    out_extras = DATA_DIR / "uaap_archive_extras.json"
+    out_extras = candidate_dir / "uaap_archive_extras.json"
     out_extras.write_text(json.dumps(extras, indent=2, ensure_ascii=False), encoding="utf-8")
     print(f"Saved extras to {out_extras.resolve()}:")
     print(f"  Awards: {len(extras['awards'])} sport-seasons")

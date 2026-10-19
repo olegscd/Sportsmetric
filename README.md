@@ -132,8 +132,19 @@ The script CSP uses a fresh nonce on dynamically rendered HTML responses.
   seasons and known extraction issues. Follow the
   [statistics selection protocol](docs/uaap-archive-statistics-protocol.md) when
   choosing source-backed standings, awards, and leaders for the archive.
-- `data/uaap_standings.json` and `data/uaap_archive_extras.json` are the base
-  UAAP archive dataset. Admin edits are stored in Supabase and layered on top.
+- `data/uaap_archive_master.json` is the canonical UAAP archive dataset.
+  Supabase admin edits are layered on top, then publication gates run against
+  the effective data. The earlier `uaap_standings.json`,
+  `uaap_archive_extras.json`, structured files, and compiled tables are retained
+  as historical extraction candidates; they are not served independently.
+- [Review validation and implemented corrections](docs/uaap-archive-review-validation.md)
+  describes the source-checked fixes and remaining review work. Run
+  `npm run archive:check` for the integrity gate, or add `-- --require-photos`
+  when the original photo collection is available. `npm run check` includes it.
+- In the archive editor, ordinary saves reset table verification. To record a
+  source check, select the review checkbox and supply a reviewer name, original
+  page IDs and section heading. The save binds that review to the exact data;
+  changed or unreviewed awards and leaders are withheld from public results.
 - `data/seasons/**/*.md` are the season-book transcriptions. The admin report
   viewer reads these; the build only traces the markdown files.
 - Photos, PDFs, and generated books are not needed at runtime and are excluded

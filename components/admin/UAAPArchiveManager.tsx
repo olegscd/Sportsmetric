@@ -32,6 +32,7 @@ import {
   type UAAPTable,
 } from "@/lib/uaap-schema";
 import { extractStandingsFromReport } from "@/lib/uaap-import";
+import { SPORTS_META } from "@/components/uaap/sports-meta";
 import { UAAP_SCHOOLS, getSchoolCode, getSchoolName, getSchoolTheme, matchSchoolCode } from "@/lib/uaap-schools";
 import {
   ArrowDown,
@@ -53,21 +54,7 @@ import {
   Trash2,
 } from "lucide-react";
 
-const ALL_SPORTS = [
-  "General Championship",
-  "Basketball",
-  "Volleyball",
-  "Badminton",
-  "Table Tennis",
-  "Tae Kwon Do",
-  "Judo",
-  "Baseball",
-  "Softball",
-  "Football",
-  "Fencing",
-  "Chess",
-  "Lawn Tennis",
-];
+const ALL_SPORTS = SPORTS_META.map(s => s.name);
 
 const BASE_DIVISIONS = ["Men's", "Women's", "Juniors"];
 
@@ -130,7 +117,7 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
 
   const fetchLive = useCallback(async () => {
     try {
-      const res = await fetch("/api/uaap/data", { cache: "no-store" });
+      const res = await fetch("/api/uaap/data?admin=1", { cache: "no-store" });
       if (!res.ok) throw new Error("Could not load archive data.");
       const json = await res.json();
       if (Array.isArray(json.tables)) setTables(json.tables);
@@ -180,6 +167,10 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
   );
   const [baseline, setBaseline] = useState<string>("");
   const [extrasBaseline, setExtrasBaseline] = useState("");
+  const [confirmSourceReview, setConfirmSourceReview] = useState(false);
+  const [sourceReviewer, setSourceReviewer] = useState("");
+  const [sourceImages, setSourceImages] = useState("");
+  const [sourceSection, setSourceSection] = useState("");
 
   const [mvp, setMvp] = useState({ player: "", school: "FEU" });
   const [roy, setRoy] = useState({ player: "", school: "FEU" });
@@ -213,6 +204,10 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
       team: getSchoolName(r.team),
     }));
     setDraft(cloned);
+    setConfirmSourceReview(false);
+    setSourceReviewer("");
+    setSourceImages(table.review?.sources?.map(s => s.image).join(", ") ?? "");
+    setSourceSection(table.review?.sources?.[0]?.section ?? "");
     setBaseline(JSON.stringify(cloned));
 
     const extrasKey = makeExtrasKey(sport, season);
@@ -246,7 +241,7 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
       ? (Object.fromEntries(
           Object.entries(medalists).map(([board, list]) => [
             board,
-            list.map((m) => ({ medal: m.medal ?? "gold", player: m.player, school: m.school })),
+            list.filter(m => m.medal !== null).map((m) => ({ medal: m.medal!, player: m.player, school: m.school })),
           ])
         ) as typeof chessBoards)
       : { "1": [], "2": [], "3": [], "4": [], "5": [], "6": [] };
@@ -264,7 +259,7 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
   }, [loadDivision]);
 
   const isDirty =
-    (baseline !== "" && JSON.stringify(draft) !== baseline) ||
+    confirmSourceReview || (baseline !== "" && JSON.stringify(draft) !== baseline) ||
     (extrasBaseline !== "" &&
       JSON.stringify({ mvp, roy, mythical, chessBoards }) !== extrasBaseline);
 
@@ -455,6 +450,11 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
 
     const res = await saveUAAPArchiveData({
       table: normalizedDraft,
+      ...(confirmSourceReview ? { sourceReview: {
+        reviewer: sourceReviewer,
+        images: sourceImages.split(/[\s,;]+/).filter(Boolean).map(s => s.toUpperCase().replace(/\.JPG$/, "")),
+        section: sourceSection,
+      } } : {}),
       expectedVersion: divisionVersions[makeDivisionKey(draft.season, draft.sport, draft.division)] ?? 0,
       awards: {
         mvp: mvp.player.trim()
@@ -498,7 +498,8 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
         "success"
       );
     }
-  }, [draft, mvp, roy, mythical, chessBoards, sport, season, division, onToast, fetchLive, archiveLoaded, isSaving, divisionVersions]);
+  }, [draft, mvp, roy, mythical, chessBoards, sport, season, division, onToast, fetchLive, archiveLoaded, isSaving, divisionVersions,
+    confirmSourceReview, sourceReviewer, sourceImages, sourceSection]);
 
   const handleDelete = async () => {
     if (!archiveLoaded || isSaving) return;
@@ -1142,6 +1143,25 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
 
       {/* Notes */}
       <div className="space-y-3 rounded-card border border-border bg-surface p-5 shadow-card">
+        <p className="text-xs text-muted">
+          Source review: {isDirty ? "pending changes" : draft.review?.status === "verified" ? "checked against the original report" : draft.review?.status === "blocked" ? "held for review" : "pending"}.
+          {" "}Saving edits marks the table as unreviewed unless you record a new source check below.
+        </p>
+        <label className="flex items-start gap-2 text-sm text-foreground">
+          <input type="checkbox" checked={confirmSourceReview} onChange={e => setConfirmSourceReview(e.target.checked)} className="mt-1" />
+          I checked every table value and award against the original source pages.
+        </label>
+        {confirmSourceReview && <div className="grid gap-3 sm:grid-cols-3">
+          {[
+            { label: "Reviewer name", value: sourceReviewer, set: setSourceReviewer, placeholder: "Your name" },
+            { label: "Original source page IDs", value: sourceImages, set: setSourceImages, placeholder: "IMG_1312" },
+            { label: "Source section heading", value: sourceSection, set: setSourceSection, placeholder: "Men's Basketball final results and awards" },
+          ].map(field => <label key={field.label} className="space-y-1 text-xs text-muted">
+            <span>{field.label}</span>
+            <input value={field.value} onChange={e => field.set(e.target.value)} placeholder={field.placeholder}
+              className="min-h-11 w-full rounded-control border border-border bg-surface-2 px-3 text-sm text-foreground" />
+          </label>)}
+        </div>}
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div>
             <label htmlFor="uaap-stage" className="mb-1.5 block text-2xs font-bold uppercase tracking-wider text-muted">

@@ -1,6 +1,8 @@
 import fs from "fs/promises";
-import baseStandingsData from "@/data/uaap_standings.json";
-import baseExtrasData from "@/data/uaap_archive_extras.json";
+import archiveMaster from "@/data/uaap_archive_master.json";
+import { tableIntegrityIssues } from "@/lib/uaap-integrity";
+import { awardIntegrityIssues, chessIntegrityIssues, preparePublicUAAPData } from "@/lib/uaap-publication";
+import { recordSourceReview, type UAAPSourceReviewInput } from "@/lib/uaap-source-review";
 import { supabase } from "@/lib/supabase";
 import { getServiceSupabase } from "@/lib/supabase-admin";
 import {
@@ -32,6 +34,7 @@ export type {
 export interface UAAPSavePayload {
   expectedVersion: number;
   table: UAAPTable;
+  sourceReview?: UAAPSourceReviewInput;
   awards?: {
     mvp?: { player: string; school: string } | null;
     rookie_of_the_year?: { player: string; school: string } | null;
@@ -185,12 +188,12 @@ async function persistDivision(season: string, sport: string, division: string,
   if (error) throw new Error(error.message);
 }
 
-export async function readBaseStandings(): Promise<LegacyStandingRecord[]> {
-  return baseStandingsData as unknown as LegacyStandingRecord[];
+export async function readBaseTables(): Promise<UAAPTable[]> {
+  return archiveMaster.tables as unknown as UAAPTable[];
 }
 
 export async function readBaseExtras(): Promise<UAAPArchiveExtras> {
-  return baseExtrasData as unknown as UAAPArchiveExtras;
+  return archiveMaster.extras as unknown as UAAPArchiveExtras;
 }
 
 /**
@@ -199,13 +202,15 @@ export async function readBaseExtras(): Promise<UAAPArchiveExtras> {
  * table overrides. Deleted divisions win over everything.
  */
 export function mergeUAAPData(
-  baseStandings: LegacyStandingRecord[],
+  baseStandings: LegacyStandingRecord[] | UAAPTable[],
   baseExtras: UAAPArchiveExtras,
   overrides: UAAPAdminOverrides
 ): MergedUAAPData {
   const byKey = new Map<string, UAAPTable>();
 
-  for (const table of legacyRecordsToTables(baseStandings)) {
+  const baseTables = baseStandings[0] && "columns" in baseStandings[0]
+    ? baseStandings as UAAPTable[] : legacyRecordsToTables(baseStandings as LegacyStandingRecord[]);
+  for (const table of baseTables) {
     byKey.set(makeDivisionKey(table.season, table.sport, table.division), table);
   }
 
@@ -254,6 +259,18 @@ export function mergeUAAPData(
     };
   }
 
+  // A deletion tombstone applies to the whole division, including its extras.
+  // Absence of a standings table alone must not suppress awards-only coverage.
+  for (const key of overrides.deleted_divisions || []) {
+    const [season, sport, division] = key.split("|");
+    const extrasKey = makeExtrasKey(sport, season);
+    for (const kind of ["awards", "chess_medalists", "leaderboards"] as const) {
+      const values = mergedExtras[kind]?.[extrasKey];
+      if (values) mergedExtras[kind]![extrasKey] = Object.fromEntries(Object.entries(values)
+        .filter(([label]) => normalizeDivision(label) !== normalizeDivision(division)));
+    }
+  }
+
   const seasons = Array.from(new Set(tables.map((t) => t.season).filter(Boolean)))
     .sort()
     .reverse();
@@ -263,11 +280,15 @@ export function mergeUAAPData(
 
 export async function getMergedUAAPData(): Promise<MergedUAAPData> {
   const [baseStandings, baseExtras, overrides] = await Promise.all([
-    readBaseStandings(),
+    readBaseTables(),
     readBaseExtras(),
     readAdminOverrides(),
   ]);
   return mergeUAAPData(baseStandings, baseExtras, overrides);
+}
+
+export async function getPublicUAAPData(): Promise<MergedUAAPData> {
+  return preparePublicUAAPData(await getMergedUAAPData());
 }
 
 function sanitizeTable(input: UAAPTable): UAAPTable {
@@ -275,6 +296,7 @@ function sanitizeTable(input: UAAPTable): UAAPTable {
     key: col.key,
     label: col.label,
     type: col.type,
+    ...(col.decimals !== undefined ? { decimals: col.decimals } : {}),
     ...(col.derived ? { derived: col.derived } : {}),
   }));
 
@@ -306,6 +328,10 @@ function sanitizeTable(input: UAAPTable): UAAPTable {
     rows,
     note: (input.note || "").trim() || null,
     source_page: (input.source_page || "").trim() || MANUAL_SOURCE,
+    ...(input.record_scope ? { record_scope: input.record_scope.trim() } : {}),
+    ...(input.coverage ? { coverage: input.coverage } : {}),
+    // A copied approval must never survive edits in the ordinary admin editor.
+    review: { status: "needs_review", reason: "Admin edit; original-source review is required before verification." },
   };
 }
 
@@ -317,9 +343,32 @@ export async function saveUAAPAdminOverride(payload: UAAPSavePayload): Promise<{
       throw new Error("Season, sport, and division are all required.");
     }
     const clean = sanitizeTable(payload.table);
+    const issues = tableIntegrityIssues(clean);
+    if (issues.length) throw new Error(issues.join(" "));
+    if (payload.sourceReview) {
+      if (!clean.rows.length) throw new Error("Add a result before verifying this table.");
+      clean.review = recordSourceReview(clean, clean, payload.sourceReview);
+    }
     const changes: Record<string, unknown> = { table: clean, standings: null, deleted: false };
-    if (payload.awards !== undefined) changes.awards = payload.awards;
-    if (payload.chess_medalists !== undefined) changes.chess_medalists = payload.chess_medalists;
+    if (payload.awards !== undefined) {
+      const awards = payload.awards;
+      const populated = awards && (awards.mvp || awards.rookie_of_the_year || awards.mythical_five?.length);
+      if (populated && payload.sourceReview) {
+        const problems = awardIntegrityIssues(awards);
+        if (problems.length) throw new Error(problems.join(" "));
+        changes.awards = { ...awards, review: recordSourceReview(awards, clean, payload.sourceReview) };
+      } else changes.awards = populated ? awards : null;
+    }
+    if (payload.chess_medalists !== undefined) {
+      const boards = payload.chess_medalists;
+      const populated = boards && Object.values(boards).some(list => list.length);
+      if (populated && payload.sourceReview) {
+        const problems = chessIntegrityIssues(boards);
+        if (problems.length) throw new Error(problems.join(" "));
+      }
+      changes.chess_medalists = populated && payload.sourceReview
+        ? { ...boards, review: recordSourceReview(boards, clean, payload.sourceReview) } : populated ? boards : null;
+    }
     await persistDivision(clean.season, clean.sport, clean.division, changes, payload.expectedVersion);
     return { success: true, count: clean.rows.length, data: await getMergedUAAPData() };
   } catch (err) {

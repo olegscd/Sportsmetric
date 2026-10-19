@@ -24,12 +24,16 @@ import { TableShell, Td, Th } from "@/components/ui/Table";
 import {
   formatCellValue,
   makeExtrasKey,
+  makeReviewKey,
+  divisionExtra,
+  leadersWithTies,
   normalizeChessMedalists,
   normalizeDivision,
   pickPreferredDivision,
   sortDivisions,
   type MergedUAAPData,
   type UAAPDivisionAwards,
+  type UAAPLeaderCategory,
 } from "@/lib/uaap-schema";
 import { getSchoolTheme } from "@/lib/uaap-schools";
 import { PAGE_SHELL } from "@/components/layout/page-shell";
@@ -39,14 +43,12 @@ export { formatSeasonLabel };
 
 type TabId = "standings" | "awards" | "leaders";
 
-interface UAAPLeaderEntry {
-  rank?: number;
-  player?: string;
-  school?: string;
-  [key: string]: unknown;
-}
+type UAAPLeaderboards = Record<string, UAAPLeaderCategory>;
 
-type UAAPLeaderboards = Record<string, Record<string, UAAPLeaderEntry[]>>;
+function ArchiveReviewNotice() {
+  return <Notice tone="info">Archive under review. Source-checked entries are labeled;
+    other transcriptions remain unverified. Disputed records are withheld.</Notice>;
+}
 
 function isChampionRow(details: string | null, rank: number): boolean {
   if (rank !== 1) return false;
@@ -113,6 +115,16 @@ export function UAAPArchiveView({ initialData }: { initialData: MergedUAAPData }
   // The server component supplies the merged dataset; this view is read-only.
   const tables = initialData.tables;
   const extras = initialData.extras;
+  const scopes = useMemo(() => {
+    const result = tables.map(({ season, sport, division }) => ({ season, sport, division }));
+    for (const kind of ["awards", "chess_medalists", "leaderboards"] as const) {
+      for (const [key, divisions] of Object.entries(extras[kind] ?? {})) {
+        const [sport, season] = key.split("|");
+        for (const division of Object.keys(divisions)) result.push({ season, sport, division: normalizeDivision(division) });
+      }
+    }
+    return result;
+  }, [tables, extras]);
   const [sportQuery, setSportQuery] = useState("");
 
   const sportMeta = useMemo(() => findSportMeta(sportParam), [sportParam]);
@@ -123,8 +135,8 @@ export function UAAPArchiveView({ initialData }: { initialData: MergedUAAPData }
   }, [tables, sportMeta]);
 
   const availableSeasons = useMemo(
-    () => Array.from(new Set(tablesForSport.map((t) => t.season))).sort().reverse(),
-    [tablesForSport]
+    () => Array.from(new Set(scopes.filter(t => t.sport === sportMeta?.name).map(t => t.season))).sort().reverse(),
+    [scopes, sportMeta]
   );
 
   const currentSeason = useMemo(() => {
@@ -147,8 +159,8 @@ export function UAAPArchiveView({ initialData }: { initialData: MergedUAAPData }
   );
 
   const availableDivisions = useMemo(
-    () => sortDivisions(tablesForSeason.map((t) => t.division)),
-    [tablesForSeason]
+    () => sortDivisions(scopes.filter(t => t.sport === sportMeta?.name && t.season === currentSeason).map(t => t.division)),
+    [scopes, sportMeta, currentSeason]
   );
 
   const currentDivision = useMemo(() => {
@@ -176,41 +188,34 @@ export function UAAPArchiveView({ initialData }: { initialData: MergedUAAPData }
     if (!extrasKey || !currentDivision) return null;
     const forSeason = extras.awards?.[extrasKey];
     if (!forSeason) return null;
-    return (
-      (forSeason[currentDivision] ??
-        forSeason[normalizeDivision(currentDivision)] ??
-        forSeason[currentDivision.replace("'s", "")] ??
-        null) as UAAPDivisionAwards | null
-    );
+    return divisionExtra<UAAPDivisionAwards>(forSeason, currentDivision);
   }, [extras, extrasKey, currentDivision]);
 
   const chessMedalists = useMemo(() => {
     if (!extrasKey || !currentDivision) return null;
     const forSeason = extras.chess_medalists?.[extrasKey];
     if (!forSeason) return null;
-    const raw =
-      forSeason[currentDivision] ??
-      forSeason[normalizeDivision(currentDivision)] ??
-      forSeason[currentDivision.replace("'s", "")];
+    const raw = divisionExtra(forSeason, currentDivision);
     return normalizeChessMedalists(raw);
   }, [extras, extrasKey, currentDivision]);
 
   const leaderboards = useMemo(() => {
-    if (!extrasKey) return null;
-    const raw = extras.leaderboards?.[extrasKey];
-    return raw && typeof raw === "object" ? (raw as UAAPLeaderboards) : null;
-  }, [extras, extrasKey]);
+    if (!extrasKey || !currentDivision) return null;
+    const raw = divisionExtra<UAAPLeaderboards>(extras.leaderboards?.[extrasKey], currentDivision);
+    const categories = Object.fromEntries(Object.entries(raw ?? {}).filter(([, c]) => Array.isArray(c.entries) && c.entries.length));
+    return Object.keys(categories).length ? categories : null;
+  }, [extras, extrasKey, currentDivision]);
 
   const seasonCountBySport = useMemo(() => {
     const counts = new Map<string, number>();
     for (const meta of SPORTS_META) {
       const seasons = new Set(
-        tables.filter((t) => t.sport.toLowerCase() === meta.name.toLowerCase()).map((t) => t.season)
+        scopes.filter((t) => t.sport.toLowerCase() === meta.name.toLowerCase()).map((t) => t.season)
       );
       counts.set(meta.slug, seasons.size);
     }
     return counts;
-  }, [tables]);
+  }, [scopes]);
 
   // ---------------------------------------------------------------------------
   // Navigation — build hrefs, render with <Link>. Using Link (not router.push)
@@ -228,17 +233,17 @@ export function UAAPArchiveView({ initialData }: { initialData: MergedUAAPData }
 
   const seasonHref = (season: string): string => {
     if (!sportMeta) return "/uaap";
-    const seasonDivisions = tablesForSport
-      .filter((t) => t.season === season)
+    const seasonDivisions = scopes
+      .filter((t) => t.sport === sportMeta.name && t.season === season)
       .map((t) => t.division);
     const firstDivision = pickPreferredDivision(seasonDivisions);
     return hrefFor({ sport: sportMeta.name, season, division: firstDivision ?? undefined, tab: "standings" });
   };
 
   const availableTabs = useMemo(() => {
-    const tabs: Array<{ id: TabId; label: string; icon: React.ReactNode; count?: number }> = [
-      { id: "standings", label: "Standings", icon: <Trophy size={14} />, count: activeTable?.rows.length },
-    ];
+    const tabs: Array<{ id: TabId; label: string; icon: React.ReactNode; count?: number }> = activeTable ? [
+      { id: "standings", label: "Standings", icon: <Trophy size={14} />, count: activeTable.rows.length },
+    ] : [];
     if (divisionAwards || chessMedalists) {
       tabs.push({ id: "awards", label: "Awards", icon: <Award size={14} /> });
     }
@@ -248,7 +253,13 @@ export function UAAPArchiveView({ initialData }: { initialData: MergedUAAPData }
     return tabs;
   }, [activeTable, divisionAwards, chessMedalists, leaderboards]);
 
-  const activeTab: TabId = availableTabs.some((t) => t.id === tabParam) ? tabParam : "standings";
+  const activeTab: TabId = availableTabs.some((t) => t.id === tabParam) ? tabParam : availableTabs[0]?.id ?? "standings";
+
+  const extraSource = (kind: "awards" | "chess_medalists" | "leaderboards", category?: string) => {
+    if (!currentSeason || !currentDivision || !sportMeta) return "";
+    return extras.reviews?.[makeReviewKey(kind, currentSeason, sportMeta.name, currentDivision, category)]
+      ?.sources?.map(s => `${s.image}: ${s.section}`).join("; ") ?? "";
+  };
 
   // ---------------------------------------------------------------------------
   // View 1: sport picker
@@ -263,6 +274,7 @@ export function UAAPArchiveView({ initialData }: { initialData: MergedUAAPData }
 
     return (
       <div className={`${PAGE_SHELL} space-y-6 pb-20 pt-4 md:pt-6`}>
+        <ArchiveReviewNotice />
         {featured && (
           <Link
             href={hrefFor({ sport: featured.name })}
@@ -376,6 +388,7 @@ export function UAAPArchiveView({ initialData }: { initialData: MergedUAAPData }
   if (!currentSeason) {
     return (
       <div className={`${PAGE_SHELL} space-y-6 pb-20 pt-4 md:pt-6`}>
+        <ArchiveReviewNotice />
         <div className="flex flex-wrap items-center justify-between gap-4 border-b border-border/60 pb-4">
           <div className="flex flex-wrap items-center gap-3">
             <Link
@@ -418,11 +431,13 @@ export function UAAPArchiveView({ initialData }: { initialData: MergedUAAPData }
               const info = formatSeasonLabel(season);
               const seasonTables = tablesForSport.filter((t) => t.season === season);
               const rowCount = seasonTables.reduce((sum, t) => sum + t.rows.length, 0);
+              const divisionCount = sortDivisions(scopes.filter(t => t.sport === sportMeta.name && t.season === season).map(t => t.division)).length;
               const champion = sortDivisions(seasonTables.map((t) => t.division))
                 .map((division) => {
                   const table = seasonTables.find((t) => t.division === division);
-                  const row = table?.rows.find((r) => isChampionRow(r.details, r.rank));
-                  return row ? { row, division } : null;
+                  const rows = table?.review?.status === "verified" && table.stage !== "Exhibition"
+                    ? table.rows.filter((r) => isChampionRow(r.details, r.rank)) : [];
+                  return rows.length ? { rows, division } : null;
                 })
                 .find(Boolean);
               const hasAwards = !!extras.awards?.[makeExtrasKey(sportMeta.name, season)];
@@ -452,7 +467,7 @@ export function UAAPArchiveView({ initialData }: { initialData: MergedUAAPData }
                     <div className="mt-3 inline-flex items-center gap-1.5 text-xs font-medium text-muted">
                       <Trophy size={13} aria-hidden="true" className="shrink-0 text-archive" />
                       <span className="truncate">
-                        Champion: <strong className="text-foreground">{champion.row.team}</strong> (
+                        {champion.rows.length > 1 ? "Co-champions: " : "Champion: "}<strong className="text-foreground">{champion.rows.map(r => r.team).join(" & ")}</strong> (
                         {champion.division})
                       </span>
                     </div>
@@ -462,8 +477,8 @@ export function UAAPArchiveView({ initialData }: { initialData: MergedUAAPData }
                     <span className="flex items-center gap-2 truncate">
                       <span className="flex items-center gap-1">
                         <Layers size={12} aria-hidden="true" className="text-archive" />
-                        {seasonTables.length}{" "}
-                        {seasonTables.length === 1 ? "division" : "divisions"}
+                        {divisionCount}{" "}
+                        {divisionCount === 1 ? "division" : "divisions"}
                       </span>
                       {hasAwards && (
                         <Badge tone="archive" size="sm">
@@ -499,6 +514,7 @@ export function UAAPArchiveView({ initialData }: { initialData: MergedUAAPData }
 
   return (
     <div className={`${PAGE_SHELL} space-y-6 pb-20 pt-4 md:pt-6`}>
+      <ArchiveReviewNotice />
       <div className="flex flex-col gap-4 border-b border-border/60 pb-4 lg:flex-row lg:items-center lg:justify-between">
         <div className="flex min-w-0 flex-wrap items-center gap-3">
           <Link
@@ -600,6 +616,14 @@ export function UAAPArchiveView({ initialData }: { initialData: MergedUAAPData }
 
       {activeTab === "standings" && (
         <div className="space-y-3">
+          {activeTable?.review?.status === "verified" ? (
+            <Badge tone="archive">Source checked{activeTable.coverage === "champion_only" ? " · Champion-only coverage" : ""}</Badge>
+          ) : (
+            <Notice tone="info">
+              <strong>{activeTable?.review?.status === "blocked" ? "Withheld for source review. " : "Unreviewed transcription. "}</strong>
+              {activeTable?.review?.reason ?? "Original-source verification is pending."}
+            </Notice>
+          )}
           {activeTable?.note && (
             <Notice tone="info" className="border-archive/25 bg-archive/10 text-archive">
               <span className="flex items-start gap-2">
@@ -632,14 +656,14 @@ export function UAAPArchiveView({ initialData }: { initialData: MergedUAAPData }
                       colSpan={(activeTable?.columns.length ?? 0) + 3}
                       className="py-12 text-center text-muted"
                     >
-                      No standings recorded for this division.
+                      {activeTable?.review?.status === "blocked" ? "These standings are withheld while the source conflict is resolved." : "No standings recorded for this division."}
                     </Td>
                   </tr>
                 ) : (
                   activeTable.rows.map((row, idx) => (
                     <tr key={`${row.team}-${idx}`} className="transition-colors hover:bg-elevated/40">
                       <Td sticky className="w-14 px-3 text-center font-bold">
-                        <RankBadge rank={row.rank} details={row.details} />
+                        {activeTable.review?.status === "verified" ? <RankBadge rank={row.rank} details={row.details} /> : row.rank}
                       </Td>
                       <Td className="sticky left-14 z-10 bg-surface px-3">
                         <SchoolCell team={row.team} />
@@ -687,6 +711,7 @@ export function UAAPArchiveView({ initialData }: { initialData: MergedUAAPData }
 
       {activeTab === "awards" && (
         <div className="space-y-6">
+          <p className="text-xs text-muted">Source checked · {extraSource(divisionAwards ? "awards" : "chess_medalists")}</p>
           {divisionAwards && (
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
               {divisionAwards.mvp && (
@@ -765,6 +790,7 @@ export function UAAPArchiveView({ initialData }: { initialData: MergedUAAPData }
                   Individual board medalists ({currentDivision})
                 </h4>
               </div>
+              <p className="mb-3 text-xs text-muted">Source: {extraSource("chess_medalists")}</p>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {Object.entries(chessMedalists).map(([board, medalists]) => (
                   <div
@@ -834,22 +860,19 @@ export function UAAPArchiveView({ initialData }: { initialData: MergedUAAPData }
 
       {activeTab === "leaders" && leaderboards && (
         <div className="space-y-5">
-          {Object.entries(leaderboards).map(([divisionKey, categories]) => (
-            <div key={divisionKey} className="space-y-3">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-muted capitalize">
-                {divisionKey.replace(/_/g, " ")}
-              </h4>
+          <p className="text-xs text-muted">Source-checked published leaders · {currentDivision}</p>
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
-                {Object.entries(categories as Record<string, UAAPLeaderEntry[]>).map(([category, leaders]) => (
+                {Object.entries(leaderboards).map(([category, leaders]) => (
                   <div
                     key={category}
                     className="rounded-card border border-border bg-surface p-4 shadow-card"
                   >
                     <h5 className="mb-2.5 text-xs font-bold uppercase capitalize tracking-wider text-foreground">
-                      {category.replace(/_/g, " ")}
+                      {leaders.label} ({leaders.unit})
                     </h5>
+                    <p className="mb-2 text-xs text-muted">{leaders.scope} {leaders.qualification}</p>
                     <div className="space-y-1.5">
-                      {(Array.isArray(leaders) ? leaders : []).slice(0, 10).map(
+                      {leadersWithTies(leaders.entries).map(
                         (leader, idx) => {
                           const theme = getSchoolTheme(leader.school || "");
                           return (
@@ -877,18 +900,17 @@ export function UAAPArchiveView({ initialData }: { initialData: MergedUAAPData }
                                 )}
                               </span>
                               <span className="shrink-0 font-mono font-bold text-archive">
-                                {String(leader.value ?? "—")}
+                                {String(leader.value ?? "—")}{leaders.unit === "%" ? "%" : ""}
                               </span>
                             </div>
                           );
                         }
                       )}
                     </div>
+                    <p className="mt-3 text-2xs text-muted">Source: {extraSource("leaderboards", category)}</p>
                   </div>
                 ))}
               </div>
-            </div>
-          ))}
         </div>
       )}
     </div>

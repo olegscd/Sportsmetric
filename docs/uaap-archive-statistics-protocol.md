@@ -2,6 +2,11 @@
 
 Version 1.0 - 19 October 2026
 
+Implementation status: the [review validation](uaap-archive-review-validation.md)
+documents the canonical dataset, source checks, publication gates and editor
+review workflow now implementing this protocol. The original inventory remains
+a snapshot of the files before those corrections.
+
 The archive should first answer **who finished where**, then **how the result
 was achieved**, then **which athletes earned distinctions or led a statistic**.
 Choose statistics separately for each season, sport, division, and competition

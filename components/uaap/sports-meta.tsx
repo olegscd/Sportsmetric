@@ -1,4 +1,4 @@
-import { Crown, Swords, Volleyball as VolleyballIcon } from "lucide-react";
+import { Crown, Swords, Timer, Waves, Volleyball as VolleyballIcon } from "lucide-react";
 
 type IconProps = { className?: string };
 
@@ -184,6 +184,20 @@ export const SPORTS_META: SportMeta[] = [
     name: "Lawn Tennis",
     slug: "lawn-tennis",
     icon: TennisIcon,
+    color: "text-positive",
+    bgGlow: "group-hover:border-positive/50 group-hover:bg-positive/5",
+  },
+  {
+    name: "Swimming",
+    slug: "swimming",
+    icon: Waves,
+    color: "text-info",
+    bgGlow: "group-hover:border-info/50 group-hover:bg-info/5",
+  },
+  {
+    name: "Track and Field",
+    slug: "track-and-field",
+    icon: Timer,
     color: "text-positive",
     bgGlow: "group-hover:border-positive/50 group-hover:bg-positive/5",
   },

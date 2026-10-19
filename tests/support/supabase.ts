@@ -45,6 +45,29 @@ createServer(async (request, response) => {
     response.writeHead(503, { "Content-Type": "application/json" });
     response.end(JSON.stringify({ message: "Test database unavailable" })); return;
   }
+  // Match the real versioned RPC instead of acknowledging a write that never
+  // reaches uaap_division_overrides. Database tests also exercise the SQL RPC.
+  if (request.method === "POST" && url.pathname.endsWith("/rpc/save_uaap_division")) {
+    let body = "";
+    for await (const chunk of request) body += chunk;
+    const value = JSON.parse(body) as { target_season: string; target_sport: string; target_division: string;
+      expected_version: number; changes: Record<string, unknown> };
+    const rows = tables.uaap_division_overrides;
+    const existing = rows.find(row => row.season === value.target_season && row.sport === value.target_sport && row.division === value.target_division);
+    response.setHeader("Content-Type", "application/json");
+    if ((existing && existing.version !== value.expected_version) || (!existing && value.expected_version !== 0)) {
+      response.writeHead(409);
+      response.end(JSON.stringify({ code: "40001", message: "This division was changed by another editor. Reload the archive before saving." }));
+      return;
+    }
+    const version = Number(existing?.version ?? 0) + 1;
+    const row = { season: value.target_season, sport: value.target_sport, division: value.target_division,
+      version, payload: { ...(existing?.payload as object ?? {}), ...value.changes } };
+    if (existing) Object.assign(existing, row);
+    else rows.push(row);
+    response.end(JSON.stringify(version));
+    return;
+  }
   const table = url.pathname.split("/").at(-1)!;
   let rows = tables[table] ?? [];
   const matches = (row: Record<string, unknown>) => [...url.searchParams].every(([key, value]) => {

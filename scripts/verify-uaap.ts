@@ -131,7 +131,7 @@ check("header-matched stat columns fill", csvRows[0]?.values.wins === 14, csvRow
 
 console.log("\n7. Chess medalists normalisation");
 const flatShape = normalizeChessMedalists(extras.chess_medalists["Chess|1987-1988"]["Juniors"]);
-check("flat base list becomes board-keyed", !!flatShape && Object.keys(flatShape)[0] === "1", flatShape && Object.keys(flatShape));
+check("legacy names without source board numbers are withheld", flatShape === null);
 const boardShape = normalizeChessMedalists({ "1": [{ medal: "gold", player: "A", school: "UST" }] });
 check("admin board map passes through", boardShape?.["1"]?.[0]?.medal === "gold", boardShape);
 

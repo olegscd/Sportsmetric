@@ -1,14 +1,18 @@
 import { isAdminAuthenticated } from "@/lib/admin-auth";
-import { getMergedUAAPData, saveUAAPAdminOverride, type UAAPSavePayload } from "@/lib/uaap-data";
+import { getMergedUAAPData, getPublicUAAPData, saveUAAPAdminOverride, type UAAPSavePayload } from "@/lib/uaap-data";
 import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
-    const data = await getMergedUAAPData();
+    const admin = req.nextUrl.searchParams.get("admin") === "1";
+    if (admin && !(await isAdminAuthenticated())) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+    const data = await (admin ? getMergedUAAPData() : getPublicUAAPData());
     return NextResponse.json(data, {
       headers: {
         "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",

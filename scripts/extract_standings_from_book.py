@@ -496,8 +496,10 @@ def run_extraction(season: str, model_name: str):
         print("Check the errors above and re-run.\n")
         return deduped
     
-    # JSON (for the UI)
-    out_json = out_dir / "uaap_standings.json"
+    # Unreviewed candidates cannot overwrite the canonical archive.
+    candidate_dir = out_dir / "candidates"
+    candidate_dir.mkdir(parents=True, exist_ok=True)
+    out_json = candidate_dir / "uaap_standings.json"
     with open(out_json, "w", encoding="utf-8") as f:
         json.dump(deduped, f, indent=2, ensure_ascii=False)
     print(f"\n-> Saved JSON: {out_json.resolve()}")

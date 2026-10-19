@@ -1,5 +1,9 @@
 # UAAP archive data audit
 
+This is the pre-correction snapshot. See the
+[review validation and implemented repairs](uaap-archive-review-validation.md)
+for the current canonical dataset and publication gates.
+
 Inspected 19 October 2026. Scope: the local `data/` folder and archive-loading
 code. Live Supabase overrides were not fetched, so the counts below describe
 local files rather than a certified snapshot of the deployed page.
