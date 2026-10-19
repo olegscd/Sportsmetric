@@ -126,6 +126,20 @@ The script CSP uses a fresh nonce on dynamically rendered HTML responses.
 | `scripts/` | One-off seeding, import, verification, and archive-extraction tools |
 | `data/` | Curated datasets, season transcripts, and generated archive output |
 
+## News
+
+`/news` lists published stories with search and league/category filters. Each
+story has its own `/news/<slug>` page and article metadata. News appears in the
+desktop and mobile navigation.
+
+Edit `data/news.json` to add stories, using unique URL-safe slugs, a title,
+summary, category, optional league, byline, an ISO publication time with timezone,
+and plain-text `paragraphs`. Set `status` to `draft` until ready; only published
+stories whose publication time has arrived are shown, including at direct URLs.
+Optional `sources` and `relatedLink` fields provide links below the article.
+Content changes ship with the app; this section does not use an external feed or
+an admin editor. The first story is a labeled site update about the archive.
+
 ## Data and archive assets
 
 - The [UAAP data audit](docs/uaap-archive-data-audit.md) inventories the stored

@@ -1,4 +1,4 @@
-import { Award, Radio, Shield, Trophy, Users } from "lucide-react";
+import { Award, Newspaper, Radio, Shield, Trophy, Users } from "lucide-react";
 import type { ComponentType } from "react";
 
 export interface NavItem {
@@ -14,6 +14,12 @@ export const NAV_ITEMS: NavItem[] = [
     label: "Match Center",
     icon: Radio,
     isActive: (path) => path === "/",
+  },
+  {
+    href: "/news",
+    label: "News",
+    icon: Newspaper,
+    isActive: (path) => path === "/news" || path.startsWith("/news/"),
   },
   {
     href: "/standings",

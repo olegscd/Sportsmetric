@@ -9,6 +9,7 @@ import { usePathname } from "next/navigation";
 
 const MOBILE_LABELS: Record<string, string> = {
   "/": "Matches",
+  "/news": "News",
   "/standings": "Standings",
   "/uaap": "UAAP",
   "/teams": "Teams",

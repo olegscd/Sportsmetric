@@ -8,6 +8,7 @@ import { usePathname } from "next/navigation";
 
 const ROUTE_TITLES: Record<string, string> = {
   "/": "Match Center",
+  "/news": "News",
   "/standings": "Standings",
   "/teams": "Teams",
   "/players": "Players",
@@ -15,12 +16,14 @@ const ROUTE_TITLES: Record<string, string> = {
 };
 
 function parentPath(pathname: string): string {
+  if (pathname.startsWith("/news/")) return "/news";
   if (pathname.startsWith("/players/")) return "/players";
   if (pathname.startsWith("/teams/")) return "/teams";
   return "/";
 }
 
 function nestedTitle(pathname: string): string {
+  if (pathname.startsWith("/news/")) return "News";
   if (pathname.startsWith("/players/")) return "Player";
   if (pathname.startsWith("/teams/")) return "Team";
   return "";

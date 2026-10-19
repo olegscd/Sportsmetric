@@ -87,7 +87,7 @@ async function SportsShell({ children }: { children: React.ReactNode }) {
   } else if (pathname === "/admin" && await isAdminAuthenticated()) {
     scope = { admin: true };
     query = "admin=1";
-  } else if (pathname === "/admin" || pathname === "/uaap") {
+  } else if (pathname === "/admin" || pathname === "/uaap" || pathname === "/news" || pathname.startsWith("/news/")) {
     scope = { metadata: true };
     query = "metadata=1";
   }

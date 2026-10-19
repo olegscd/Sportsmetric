@@ -1,0 +1,22 @@
+[
+  {
+    "slug": "uaap-archive-source-checked-records",
+    "title": "UAAP archive now identifies source-checked records",
+    "summary": "Historical standings and athlete distinctions now carry clearer review labels, with corrected records checked against the original report photos.",
+    "category": "Site updates",
+    "league": "UAAP",
+    "author": "Sportsmetric",
+    "publishedAt": "2026-10-19T12:00:00+08:00",
+    "status": "published",
+    "paragraphs": [
+      "Sportsmetric's UAAP archive now distinguishes records checked against original report photos from transcriptions still awaiting review. The update covers historical material from seven digitized seasons between 1987–1988 and 2003–2004.",
+      "The canonical archive includes 28 source-checked standings tables and 16 checked blocks of awards, board distinctions or statistical leaders. Corrections include basketball final orders, volleyball division assignments and records, and awards affected by text showing through from another page.",
+      "Another 94 standings tables remain labeled unreviewed, while five disputed tables are withheld. These counts describe the archive base at the time of this update; later editorial changes can affect what is displayed. The update does not certify the entire collection.",
+      "Readers can browse each season, sport and division, see source references, and distinguish champion-only coverage from full standings. Awards and statistical leaders appear only for the selected division when a matching source review is available."
+    ],
+    "relatedLink": {
+      "label": "Explore the UAAP archive",
+      "href": "/uaap"
+    }
+  }
+]
