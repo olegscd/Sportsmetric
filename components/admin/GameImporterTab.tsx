@@ -21,6 +21,9 @@ import {
 } from "lucide-react";
 
 import { useMemo, useState } from "react";
+import { Badge } from "@/components/ui/Badge";
+import { Notice } from "@/components/ui/Notice";
+import { TableShell } from "@/components/ui/Table";
 import { Field, primaryButtonClass, SectionCard, selectClass } from "./formPrimitives";
 
 const LEAGUES: League[] = ["UAAP", "PBA", "PVL"];
@@ -252,20 +255,19 @@ export function GameImporterTab({ onToast }: { onToast: ToastFn }) {
       <SectionCard
         title="Import official match reports"
         action={
-          <span className="flex items-center gap-1 text-[11px] font-semibold text-primary">
-            <Sparkles size={13} />
+          <Badge tone="primary" icon={<Sparkles size={12} aria-hidden="true" />}>
             Batch Importer
-          </span>
+          </Badge>
         }
       >
         <p className="text-xs text-muted">
-          Paste one or more LiveStats links, <code className="text-primary font-mono text-[11px]">pba.ph/recap?match=...</code> URLs,
+          Paste one or more LiveStats links, <code className="font-mono text-2xs text-primary">pba.ph/recap?match=...</code> URLs,
           or raw match IDs (one per line, up to 50). Preview the extracted results, then confirm the matches you want to publish. Duplicate lines are automatically removed.
         </p>
 
         <div className="mt-4 flex flex-col gap-4">
           {/* League Selector */}
-          <div className="flex items-center gap-1 rounded-full bg-surface p-1">
+          <div className="flex items-center gap-1 rounded-control border border-border bg-surface-2 p-1">
             {LEAGUES.map((l) => (
               <button
                 key={l}
@@ -274,7 +276,7 @@ export function GameImporterTab({ onToast }: { onToast: ToastFn }) {
                 disabled={contextLocked}
                 aria-pressed={league === l}
                 className={cn(
-                  "min-h-10 flex-1 rounded-full py-1.5 text-xs font-semibold transition-colors disabled:opacity-60",
+                  "min-h-10 flex-1 rounded-control text-xs font-semibold transition-colors disabled:opacity-60",
                   league === l ? "bg-primary text-primary-foreground" : "text-muted hover:text-foreground"
                 )}
               >
@@ -337,7 +339,7 @@ export function GameImporterTab({ onToast }: { onToast: ToastFn }) {
             <div className="relative">
 
               <textarea
-                className="w-full rounded-xl border border-border bg-surface px-3 py-2.5 font-mono text-xs text-foreground placeholder:text-muted/50 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary min-h-[100px] leading-relaxed"
+                className="min-h-28 w-full rounded-control border border-border bg-surface-2 px-3 py-2.5 font-mono text-xs leading-relaxed text-foreground placeholder:text-muted/50 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/40"
                 placeholder={
                   league === "PBA"
                     ? "https://pba.ph/recap?match=553\nhttps://pba.ph/recap?match=554\n555"
@@ -359,18 +361,18 @@ export function GameImporterTab({ onToast }: { onToast: ToastFn }) {
               className={cn(
                 primaryButtonClass,
                 "gap-2 px-5",
-                (isExtractingAll || parsedUrls.length === 0) && "opacity-60 cursor-not-allowed"
+                (isExtractingAll || parsedUrls.length === 0) && "cursor-not-allowed opacity-60"
               )}
             >
               {isExtractingAll ? (
                 <>
-                  <Loader2 size={14} className="animate-spin" />
+                  <Loader2 size={14} className="animate-spin" aria-hidden="true" />
                   Extracting Matches...
                 </>
               ) : (
                 <>
-                  <ListPlus size={14} />
-                  Fetch & Preview {parsedUrls.length > 0 ? `(${parsedUrls.length}) Matches` : "Matches"}
+                  <ListPlus size={14} aria-hidden="true" />
+                  Fetch &amp; Preview {parsedUrls.length > 0 ? `(${parsedUrls.length}) Matches` : "Matches"}
                 </>
               )}
             </button>
@@ -381,18 +383,18 @@ export function GameImporterTab({ onToast }: { onToast: ToastFn }) {
                 onClick={handleIngestAllReady}
                 disabled={isIngestingAll || isExtractingAll}
                 className={cn(
-                  "flex items-center gap-2 rounded-xl bg-emerald-600 px-5 py-2.5 text-xs font-bold text-white shadow-lg shadow-emerald-600/20 hover:bg-emerald-500 transition-all",
-                  isIngestingAll && "opacity-60 cursor-not-allowed"
+                  "inline-flex min-h-11 items-center gap-2 rounded-control bg-positive px-5 text-xs font-bold text-bg shadow-raised transition-colors hover:bg-positive/90",
+                  isIngestingAll && "cursor-not-allowed opacity-60"
                 )}
               >
                 {isIngestingAll ? (
                   <>
-                    <Loader2 size={14} className="animate-spin" />
+                    <Loader2 size={14} className="animate-spin" aria-hidden="true" />
                     Saving {readyCount} Game{readyCount > 1 ? "s" : ""} to Database...
                   </>
                 ) : (
                   <>
-                    <CheckCircle2 size={14} />
+                    <CheckCircle2 size={14} aria-hidden="true" />
                     Publish {readyCount} ready match{readyCount === 1 ? "" : "es"}
                   </>
                 )}
@@ -400,25 +402,47 @@ export function GameImporterTab({ onToast }: { onToast: ToastFn }) {
             )}
 
             {savedCount > 0 && (
-              <span className="flex items-center gap-1.5 text-xs font-semibold text-emerald-400">
-                <CheckCircle2 size={14} />
+              <span className="flex items-center gap-1.5 text-xs font-semibold text-positive">
+                <CheckCircle2 size={14} aria-hidden="true" />
                 {savedCount} match{savedCount > 1 ? "es" : ""} published
               </span>
             )}
           </div>
         </div>
-        {batchItems.length > 0 && <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-border bg-bg/50 p-3 text-xs text-muted"><p>Competition settings are locked to the preview. Clear the queue to start another import.</p><button type="button" disabled={isExtractingAll || isIngestingAll} onClick={() => { setBatchItems([]); setUrlInput(""); }} className="shrink-0 rounded-lg border border-border px-3 py-2 font-semibold text-foreground hover:bg-elevated disabled:opacity-50">Clear queue</button></div>}
+        {batchItems.length > 0 && (
+          <Notice
+            tone="info"
+            className="mt-1"
+            action={
+              <button
+                type="button"
+                disabled={isExtractingAll || isIngestingAll}
+                onClick={() => {
+                  setBatchItems([]);
+                  setUrlInput("");
+                }}
+                className="inline-flex min-h-10 shrink-0 items-center rounded-control border border-border bg-surface-2 px-3 font-semibold text-foreground transition-colors hover:bg-elevated disabled:opacity-50"
+              >
+                Clear queue
+              </button>
+            }
+          >
+            <p className="text-xs">
+              Competition settings are locked to the preview. Clear the queue to start another import.
+            </p>
+          </Notice>
+        )}
       </SectionCard>
 
       {/* Extracted Matches Preview List */}
       {batchItems.length > 0 && (
         <div className="flex flex-col gap-3">
-          <div className="flex items-center justify-between px-1">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-muted flex items-center gap-2">
-              <Layers size={14} />
+          <div className="flex flex-wrap items-center justify-between gap-2 px-1">
+            <h3 className="flex items-center gap-2 text-2xs font-bold uppercase tracking-wider text-muted">
+              <Layers size={14} aria-hidden="true" />
               Extracted Match Queue ({batchItems.length})
             </h3>
-            <span className="text-[11px] text-muted">
+            <span className="text-2xs text-muted">
               {readyCount} ready • {savedCount} saved
             </span>
           </div>
@@ -432,105 +456,104 @@ export function GameImporterTab({ onToast }: { onToast: ToastFn }) {
                 <div
                   key={item.id}
                   className={cn(
-                    "rounded-2xl border bg-surface/70 backdrop-blur-sm p-4 transition-all",
+                    "rounded-card border p-4 transition-colors",
                     item.status === "saved"
-                      ? "border-emerald-500/40 bg-emerald-950/10"
+                      ? "border-positive/40 bg-positive/5"
                       : item.status === "error"
-                        ? "border-rose-500/40 bg-rose-950/10"
+                        ? "border-negative/40 bg-negative/5"
                         : item.status === "ready"
-                          ? "border-border hover:border-primary/40"
-                          : "border-border opacity-70"
+                          ? "border-border bg-surface hover:border-primary/40"
+                          : "border-border bg-surface opacity-70"
                   )}
                 >
                   <div className="flex flex-wrap items-center justify-between gap-3">
                     {/* Match Headline */}
-                    <div className="flex items-center gap-3">
-                      <span className="flex h-6 w-6 items-center justify-center rounded-full bg-muted/20 text-[11px] font-bold text-muted">
+                    <div className="flex min-w-0 items-center gap-3">
+                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-surface-2 text-2xs font-bold text-muted">
                         #{index + 1}
                       </span>
 
                       {item.status === "extracting" && (
                         <div className="flex items-center gap-2 text-xs text-muted">
-                          <Loader2 size={13} className="animate-spin text-primary" />
-                          <span>Extracting from: <code className="font-mono text-foreground">{item.rawUrl}</code></span>
+                          <Loader2 size={14} className="animate-spin text-primary" aria-hidden="true" />
+                          <span className="min-w-0 break-all">Extracting from: <code className="font-mono text-foreground">{item.rawUrl}</code></span>
                         </div>
                       )}
 
                       {item.status === "error" && (
-                        <div className="flex items-center gap-2 text-xs text-rose-400">
-                          <AlertCircle size={14} />
-                          <span>
+                        <div className="flex min-w-0 items-center gap-2 text-xs text-negative">
+                          <AlertCircle size={14} aria-hidden="true" />
+                          <span className="min-w-0 break-words">
                             <strong className="font-mono">{item.rawUrl}</strong>: {item.error}
                           </span>
                         </div>
                       )}
 
                       {(item.status === "ready" || item.status === "ingesting" || item.status === "saved") && game && (
-                        <div className="flex flex-col gap-0.5">
-                          <div className="flex items-center gap-2">
+                        <div className="flex min-w-0 flex-col gap-0.5">
+                          <div className="flex flex-wrap items-center gap-2">
                             <span className="text-sm font-black text-foreground">
                               {game.homeTeam.shortName}{" "}
-                              <span className="text-muted font-normal text-xs">({game.homeScore})</span>
+                              <span className="text-xs font-normal text-muted">({game.homeScore})</span>
                             </span>
                             <span className="text-xs font-bold text-muted">vs</span>
                             <span className="text-sm font-black text-foreground">
                               {game.awayTeam.shortName}{" "}
-                              <span className="text-muted font-normal text-xs">({game.awayScore})</span>
+                              <span className="text-xs font-normal text-muted">({game.awayScore})</span>
                             </span>
                           </div>
 
-                          <div className="flex flex-wrap items-center gap-3 text-[11px] text-muted">
+                          <div className="flex flex-wrap items-center gap-3 text-2xs text-muted">
                             <span className="flex items-center gap-1">
-                              <Calendar size={11} />
+                              <Calendar size={12} aria-hidden="true" />
                               {formatGameDate(game.startTime)}
                             </span>
                             {game.venue && (
                               <span className="flex items-center gap-1">
-                                <MapPin size={11} />
+                                <MapPin size={12} aria-hidden="true" />
                                 {game.venue}
                               </span>
                             )}
-                            <span className="rounded bg-muted/15 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-muted">
-                              {game.stage}
-                            </span>
+                            <Badge tone="neutral">{game.stage}</Badge>
                           </div>
                         </div>
                       )}
                     </div>
 
                     {/* Status Badge & Controls */}
-                    <div className="flex items-center gap-2">
+                    <div className="flex flex-wrap items-center gap-2">
                       {item.status === "ingesting" && (
-                        <span className="flex items-center gap-1 rounded-full bg-amber-500/10 px-2.5 py-1 text-[10px] font-bold text-amber-400">
-                          <Loader2 size={11} className="animate-spin" /> Saving...
-                        </span>
+                        <Badge tone="archive" dot>
+                          Saving...
+                        </Badge>
                       )}
 
                       {item.status === "saved" && (
-                        <span className="flex items-center gap-1 rounded-full bg-emerald-500/10 px-2.5 py-1 text-[10px] font-bold text-emerald-400">
-                          <CheckCircle2 size={11} /> Saved to Database
-                        </span>
+                        <Badge tone="success" icon={<CheckCircle2 size={11} aria-hidden="true" />}>
+                          Saved to Database
+                        </Badge>
                       )}
 
                       {item.status === "ready" && (
-                        <span className="flex items-center gap-1 rounded-full bg-primary/10 px-2.5 py-1 text-[10px] font-bold text-primary">
-                          <CheckCircle2 size={11} /> Ready to Ingest
-                        </span>
+                        <Badge tone="primary" icon={<CheckCircle2 size={11} aria-hidden="true" />}>
+                          Ready to Ingest
+                        </Badge>
                       )}
 
                       {game && (
                         <button
                           type="button"
                           onClick={() => toggleExpand(item.id)}
-                          className="flex items-center gap-1 rounded-lg border border-border/80 bg-surface px-2 py-1 text-[11px] font-semibold text-muted hover:text-foreground transition-colors"
+                          aria-expanded={Boolean(item.expanded)}
+                          className="inline-flex min-h-10 items-center gap-1 rounded-control border border-border bg-surface-2 px-3 text-2xs font-semibold text-muted transition-colors hover:text-foreground"
                         >
                           {item.expanded ? (
                             <>
-                              Hide Box Score <ChevronUp size={12} />
+                              Hide Box Score <ChevronUp size={13} aria-hidden="true" />
                             </>
                           ) : (
                             <>
-                              View Box Score <ChevronDown size={12} />
+                              View Box Score <ChevronDown size={13} aria-hidden="true" />
                             </>
                           )}
                         </button>
@@ -540,10 +563,11 @@ export function GameImporterTab({ onToast }: { onToast: ToastFn }) {
                         type="button"
                         onClick={() => removeItem(item.id)}
                         disabled={isExtractingAll || isIngestingAll}
-                        className="rounded-lg p-1 text-muted hover:bg-rose-500/10 hover:text-rose-400 transition-colors"
+                        className="inline-flex h-10 w-10 items-center justify-center rounded-control text-muted transition-colors hover:bg-negative/10 hover:text-negative disabled:opacity-40"
                         title="Remove from queue"
+                        aria-label="Remove from queue"
                       >
-                        <Trash2 size={13} />
+                        <Trash2 size={14} aria-hidden="true" />
                       </button>
                     </div>
                   </div>
@@ -604,24 +628,20 @@ function PreviewBoxTable({
   isVolleyball?: boolean;
 }) {
   if (isVolleyball) {
-    const sumPlayerPts = items.reduce((acc, item) => acc + (item.pts || 0), 0);
-    const oppErrors = Math.max(10, Math.round(sumPlayerPts * 0.22));
-    const teamTotalPts = sumPlayerPts + oppErrors;
-
     return (
-      <div className="flex flex-col gap-2 rounded-xl border border-border bg-surface p-3">
-        <p className="text-xs font-bold text-foreground flex items-center gap-2">
-          <span className="h-2 w-2 rounded-full" style={{ backgroundColor: accentColor }} />
+      <div className="flex flex-col gap-2 rounded-card border border-border bg-surface-2/60 p-3">
+        <p className="flex items-center gap-2 text-xs font-bold text-foreground">
+          <span className="h-2 w-2 rounded-full" style={{ backgroundColor: accentColor }} aria-hidden="true" />
           {title}
         </p>
 
-        <div className="overflow-x-auto">
-          <table className="w-full min-w-[300px] text-left text-[11px]">
+        <TableShell className="shadow-none">
+          <table className="w-full min-w-[300px] border-collapse text-left text-2xs">
             <thead>
-              <tr className="border-b border-border text-muted font-semibold uppercase tracking-wider">
-                <th scope="col" className="w-10 py-1.5 px-2 text-center font-bold text-foreground">#</th>
-                <th scope="col" className="py-1.5 px-2 font-bold text-foreground">Player</th>
-                <th scope="col" className="w-16 py-1.5 px-2 text-right font-bold text-foreground">PTS</th>
+              <tr>
+                <th scope="col" className="w-10 border-b border-border bg-surface-2 px-2 py-2 text-center font-bold text-foreground">#</th>
+                <th scope="col" className="border-b border-border bg-surface-2 px-2 py-2 font-bold text-foreground">Player</th>
+                <th scope="col" className="w-16 border-b border-border bg-surface-2 px-2 py-2 text-right font-bold text-foreground">PTS</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border/40">
@@ -636,72 +656,48 @@ function PreviewBoxTable({
                 const isLibero = "is_libero" in row && Boolean(row.is_libero);
 
                 return (
-                  <tr key={idx} className="hover:bg-elevated/50 transition-colors">
-                    <td className="w-10 py-1.5 px-2 text-center tabular-nums text-muted font-medium">
+                  <tr key={idx} className="transition-colors hover:bg-elevated/50">
+                    <td className="w-10 px-2 py-1.5 text-center font-medium tabular-nums text-muted">
                       {jersey !== null ? jersey : "—"}
                     </td>
-                    <td className="py-1.5 px-2 font-semibold text-foreground flex items-center gap-1.5">
+                    <td className="flex items-center gap-1.5 px-2 py-1.5 font-semibold text-foreground">
                       <span>{displayName}</span>
-                      {isLibero && (
-                        <span className="rounded bg-amber-500/20 px-1 py-0.5 text-[9px] font-bold text-amber-400">
-                          L
-                        </span>
-                      )}
+                      {isLibero && <Badge tone="archive">L</Badge>}
                     </td>
-                    <td className="w-16 py-1.5 px-2 text-right tabular-nums font-bold text-foreground">
+                    <td className="w-16 px-2 py-1.5 text-right font-bold tabular-nums text-foreground">
                       {row.pts}
                     </td>
                   </tr>
                 );
               })}
-
-              {/* Opponent Errors */}
-              <tr className="bg-surface/30 italic text-muted text-[10px]">
-                <td className="w-10 py-1.5 px-2 text-center font-medium">—</td>
-                <td className="py-1.5 px-2 font-medium">Opponent Errors</td>
-                <td className="w-16 py-1.5 px-2 text-right tabular-nums font-semibold">
-                  {oppErrors}
-                </td>
-              </tr>
-
-              {/* Team Total */}
-              <tr className="border-t border-border font-bold bg-surface/50 text-foreground">
-                <td className="w-10 py-2 px-2 text-center font-bold">—</td>
-                <td className="py-2 px-2 font-bold uppercase tracking-wider text-[10px]">
-                  TEAM TOTALS
-                </td>
-                <td className="w-16 py-2 px-2 text-right tabular-nums font-extrabold text-primary text-xs">
-                  {teamTotalPts}
-                </td>
-              </tr>
             </tbody>
           </table>
-        </div>
+        </TableShell>
       </div>
     );
   }
 
   return (
-    <div className="flex flex-col gap-2 rounded-xl border border-border bg-surface p-3">
-      <p className="text-xs font-bold text-foreground flex items-center gap-2">
-        <span className="h-2 w-2 rounded-full" style={{ backgroundColor: accentColor }} />
+    <div className="flex flex-col gap-2 rounded-card border border-border bg-surface-2/60 p-3">
+      <p className="flex items-center gap-2 text-xs font-bold text-foreground">
+        <span className="h-2 w-2 rounded-full" style={{ backgroundColor: accentColor }} aria-hidden="true" />
         {title}
       </p>
 
-      <div className="overflow-x-auto">
-        <table className="w-full min-w-[480px] text-left text-[11px]">
+      <TableShell className="shadow-none">
+        <table className="w-full min-w-[480px] border-collapse text-left text-2xs">
           <thead>
-            <tr className="text-muted border-b border-border">
-              <th scope="col" className="py-1.5 font-medium">Player</th>
-              <th scope="col" className="px-1 py-1.5 text-right font-medium">MIN</th>
-              <th scope="col" className="px-1 py-1.5 text-right font-medium">PTS</th>
-              <th scope="col" className="px-1 py-1.5 text-right font-medium">REB</th>
-              <th scope="col" className="px-1 py-1.5 text-right font-medium">AST</th>
-              <th scope="col" className="px-1 py-1.5 text-right font-medium">STL</th>
-              <th scope="col" className="px-1 py-1.5 text-right font-medium">BLK</th>
-              <th scope="col" className="px-1 py-1.5 text-right font-medium">TO</th>
-              <th scope="col" className="px-1 py-1.5 text-right font-medium">PF</th>
-              <th scope="col" className="px-1 py-1.5 text-right font-medium">FG</th>
+            <tr>
+              <th scope="col" className="border-b border-border bg-surface-2 py-2 font-medium text-muted">Player</th>
+              <th scope="col" className="border-b border-border bg-surface-2 px-1 py-2 text-right font-medium text-muted">MIN</th>
+              <th scope="col" className="border-b border-border bg-surface-2 px-1 py-2 text-right font-medium text-muted">PTS</th>
+              <th scope="col" className="border-b border-border bg-surface-2 px-1 py-2 text-right font-medium text-muted">REB</th>
+              <th scope="col" className="border-b border-border bg-surface-2 px-1 py-2 text-right font-medium text-muted">AST</th>
+              <th scope="col" className="border-b border-border bg-surface-2 px-1 py-2 text-right font-medium text-muted">STL</th>
+              <th scope="col" className="border-b border-border bg-surface-2 px-1 py-2 text-right font-medium text-muted">BLK</th>
+              <th scope="col" className="border-b border-border bg-surface-2 px-1 py-2 text-right font-medium text-muted">TO</th>
+              <th scope="col" className="border-b border-border bg-surface-2 px-1 py-2 text-right font-medium text-muted">PF</th>
+              <th scope="col" className="border-b border-border bg-surface-2 px-1 py-2 text-right font-medium text-muted">FG</th>
             </tr>
           </thead>
           <tbody>
@@ -715,17 +711,17 @@ function PreviewBoxTable({
               const jersey = "jersey" in row && row.jersey !== null && row.jersey !== undefined ? row.jersey : null;
 
               return (
-                <tr key={idx} className="border-t border-border/40 hover:bg-elevated/50 transition-colors">
+                <tr key={idx} className="border-t border-border/40 transition-colors hover:bg-elevated/50">
                   <td className="max-w-[150px] truncate py-1.5 font-semibold text-foreground">
                     <span>{displayName}</span>
                     {jersey !== null && (
-                      <span className="ml-1.5 rounded bg-muted/20 px-1 py-0.5 text-[9px] font-mono text-muted">
+                      <span className="ml-1.5 rounded bg-surface-2 px-1 py-0.5 font-mono text-3xs text-muted">
                         #{jersey}
                       </span>
                     )}
                   </td>
                   <td className="px-1 py-1.5 text-right tabular-nums text-muted">{row.min}</td>
-                  <td className="px-1 py-1.5 text-right tabular-nums font-bold text-foreground">{row.pts}</td>
+                  <td className="px-1 py-1.5 text-right font-bold tabular-nums text-foreground">{row.pts}</td>
                   <td className="px-1 py-1.5 text-right tabular-nums text-muted">{row.reb}</td>
                   <td className="px-1 py-1.5 text-right tabular-nums text-muted">{row.ast}</td>
                   <td className="px-1 py-1.5 text-right tabular-nums text-muted">{row.stl}</td>
@@ -740,7 +736,7 @@ function PreviewBoxTable({
             })}
           </tbody>
         </table>
-      </div>
+      </TableShell>
     </div>
   );
 }

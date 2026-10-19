@@ -1,6 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import { TableShell } from "@/components/ui/Table";
 import type { UAAPTable } from "@/lib/uaap-schema";
 
 /**
@@ -43,32 +44,32 @@ export function CoveragePanel({
           <strong className="text-foreground">{filled}</strong> of {totalPossible} season and sport
           combinations have at least one division recorded.
         </p>
-        <div className="flex items-center gap-3 text-[10px] text-muted">
+        <div className="flex items-center gap-3 text-3xs text-muted">
           <span className="inline-flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-sm bg-amber-500/70" />
+            <span className="h-2.5 w-2.5 rounded-sm bg-archive/70" />
             Recorded
           </span>
           <span className="inline-flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-sm bg-elevated border border-border" />
+            <span className="h-2.5 w-2.5 rounded-sm border border-border bg-surface-2" />
             Empty
           </span>
         </div>
       </div>
 
-      <div className="overflow-x-auto">
-        <table className="text-left text-xs border-collapse">
+      <TableShell>
+        <table className="border-collapse text-left text-xs">
           <thead>
             <tr>
-              <th scope="col" className="sticky left-0 bg-surface py-1.5 pr-3 text-[10px] font-bold uppercase tracking-wider text-muted">
+              <th scope="col" className="sticky left-0 z-20 bg-surface-2 py-1.5 pl-3 pr-3 text-3xs font-bold uppercase tracking-wider text-muted">
                 Season
               </th>
               {sports.map((sport) => (
                 <th
                   scope="col"
                   key={sport}
-                  className="px-1 pb-1.5 text-[10px] font-semibold text-muted align-bottom"
+                  className="px-1 pb-1.5 text-3xs font-semibold text-muted align-bottom"
                 >
-                  <span className="block w-7 truncate" title={sport}>
+                  <span className="block w-10 truncate" title={sport}>
                     {sport.slice(0, 3)}
                   </span>
                 </th>
@@ -78,7 +79,7 @@ export function CoveragePanel({
           <tbody>
             {seasons.map((season) => (
               <tr key={season}>
-                <td className="sticky left-0 bg-surface py-0.5 pr-3 font-mono text-[11px] text-foreground whitespace-nowrap">
+                <td className="sticky left-0 z-10 whitespace-nowrap bg-surface py-0.5 pl-3 pr-3 font-mono text-2xs text-foreground">
                   {season}
                 </td>
                 {sports.map((sport) => {
@@ -98,11 +99,11 @@ export function CoveragePanel({
                             : `${season} ${sport}: nothing recorded yet`
                         }
                         className={cn(
-                          "w-7 h-6 rounded-sm text-[10px] font-bold transition-all cursor-pointer",
+                          "h-10 w-10 cursor-pointer rounded-control text-2xs font-bold transition-colors",
                           count > 0
-                            ? "bg-amber-500/70 text-slate-950 hover:bg-amber-400"
-                            : "bg-elevated border border-border text-muted hover:border-amber-500/50",
-                          isActive && "ring-2 ring-amber-400 ring-offset-1 ring-offset-surface"
+                            ? "bg-archive/70 text-bg hover:bg-archive"
+                            : "border border-border bg-surface-2 text-muted hover:border-archive/50",
+                          isActive && "ring-2 ring-archive ring-offset-1 ring-offset-surface"
                         )}
                       >
                         {count > 0 ? count : ""}
@@ -114,7 +115,7 @@ export function CoveragePanel({
             ))}
           </tbody>
         </table>
-      </div>
+      </TableShell>
     </div>
   );
 }

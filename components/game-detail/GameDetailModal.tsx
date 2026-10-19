@@ -1,6 +1,9 @@
 "use client";
 
+import { Button } from "@/components/ui/Button";
 import { SegmentedControl } from "@/components/ui/FilterChip";
+import { Notice } from "@/components/ui/Notice";
+import { SkeletonRows } from "@/components/ui/Skeleton";
 import { TeamBadge } from "@/components/ui/TeamBadge";
 import { useSportsData } from "@/context/SportsDataContext";
 import { getEffectiveGameStatus } from "@/lib/derivations";
@@ -118,55 +121,58 @@ export function GameDetailModal() {
       role="dialog"
       aria-modal="true"
       aria-labelledby="game-detail-title"
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-end justify-center bg-black/60 backdrop-blur-sm sm:items-center sm:p-4"
       onClick={closeGame}
     >
       <div
         ref={dialogRef}
         tabIndex={-1}
-        className="relative flex max-h-[90vh] w-full max-w-2xl flex-col overflow-hidden rounded-3xl border border-border bg-bg shadow-2xl focus:outline-none"
+        className="relative flex max-h-[92dvh] w-full max-w-3xl flex-col overflow-hidden rounded-t-panel border border-border bg-bg shadow-modal focus:outline-none sm:max-h-[90vh] sm:rounded-panel"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-center justify-between border-b border-border px-6 pb-3 pt-5">
-          <div className="flex flex-col">
-            <span id="game-detail-title" className="text-xs font-bold uppercase tracking-wider text-muted">
-              {game.league} {dateStr ? `\u2022 ${dateStr}` : ""} &middot; {effectiveStatus}
+        <div aria-hidden="true" className="mx-auto mt-2 h-1 w-10 shrink-0 rounded-full bg-border sm:hidden" />
+
+        <div className="flex items-start justify-between gap-3 border-b border-border px-4 pb-3 pt-3 sm:px-6 sm:pt-5">
+          <div className="min-w-0">
+            <span id="game-detail-title" className="block truncate text-2xs font-bold uppercase tracking-wider text-muted">
+              {game.league} {dateStr ? `• ${dateStr}` : ""} &middot; {effectiveStatus}
             </span>
             {game.venue && (
-              <span className="max-w-[280px] truncate text-[11px] text-muted">
+              <span className="block max-w-[280px] truncate text-2xs text-muted">
                 {game.venue}
               </span>
             )}
           </div>
-          <button
-            type="button"
+          <Button
+            variant="ghost"
+            size="icon-lg"
             onClick={closeGame}
             aria-label="Close game details"
-            className="rounded-full p-1.5 text-muted transition-colors hover:bg-surface hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+            className="-mr-2 -mt-1 shrink-0"
           >
-            <X size={18} />
-          </button>
+            <X size={18} aria-hidden="true" />
+          </Button>
         </div>
 
-        <div className="flex items-center justify-between bg-surface/40 px-6 py-4">
+        <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-2 bg-surface/40 px-3 py-4 sm:gap-4 sm:px-6">
           <Link
             href={`/teams/${game.awayTeam.id}`}
             onClick={closeGame}
-            className="flex flex-1 flex-col items-center gap-2 rounded-xl p-1 transition-colors hover:bg-elevated/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+            className="flex min-w-0 flex-col items-center gap-2 rounded-control p-1 transition-colors hover:bg-elevated/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
           >
             <TeamBadge team={game.awayTeam} size="lg" />
-            <span className="text-sm font-semibold text-foreground">
+            <span className="max-w-full truncate text-sm font-semibold text-foreground">
               {game.awayTeam.shortName}
             </span>
           </Link>
           <div className="flex flex-col items-center gap-1">
-            <span className="text-2xl font-bold tabular-nums text-foreground">
+            <span className="whitespace-nowrap text-xl font-bold tabular-nums text-foreground sm:text-2xl">
               {game.awayScore} - {game.homeScore}
             </span>
-            <span className="text-[11px] text-muted">
+            <span className="text-2xs text-muted">
               {effectiveStatus === "LIVE"
                 ? game.timeRemaining
-                  ? `Q${game.quarterOrSet} \u2022 ${game.timeRemaining}`
+                  ? `Q${game.quarterOrSet} • ${game.timeRemaining}`
                   : `Set ${game.quarterOrSet}`
                 : effectiveStatus === "FINAL"
                   ? "Final"
@@ -177,20 +183,20 @@ export function GameDetailModal() {
           <Link
             href={`/teams/${game.homeTeam.id}`}
             onClick={closeGame}
-            className="flex flex-1 flex-col items-center gap-2 rounded-xl p-1 transition-colors hover:bg-elevated/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+            className="flex min-w-0 flex-col items-center gap-2 rounded-control p-1 transition-colors hover:bg-elevated/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
           >
             <TeamBadge team={game.homeTeam} size="lg" />
-            <span className="text-sm font-semibold text-foreground">
+            <span className="max-w-full truncate text-sm font-semibold text-foreground">
               {game.homeTeam.shortName}
             </span>
           </Link>
         </div>
 
-        <div className="mx-4">
+        <div className="px-4 pt-3 sm:px-6">
           <SegmentedControl options={TABS} value={tab} onChange={setTab} />
         </div>
 
-        <div className="flex-1 overflow-y-auto px-4 py-4">
+        <div className="flex-1 overflow-y-auto px-4 pb-[calc(1rem+env(safe-area-inset-bottom))] pt-4 sm:px-6 sm:pb-4">
           {tab === "overview" ? <MomentumBar game={game} /> : null}
 
           {tab === "boxscore" ? (
@@ -200,7 +206,7 @@ export function GameDetailModal() {
                   type="button"
                   onClick={() => setSide("away")}
                   className={cn(
-                    "rounded-full border px-3 py-1 text-xs font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
+                    "min-h-10 rounded-control border px-3 py-1 text-xs font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
                     side === "away"
                       ? "border-primary bg-primary/10 text-primary"
                       : "border-border text-muted hover:text-foreground"
@@ -212,7 +218,7 @@ export function GameDetailModal() {
                   type="button"
                   onClick={() => setSide("home")}
                   className={cn(
-                    "rounded-full border px-3 py-1 text-xs font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
+                    "min-h-10 rounded-control border px-3 py-1 text-xs font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
                     side === "home"
                       ? "border-primary bg-primary/10 text-primary"
                       : "border-border text-muted hover:text-foreground"
@@ -231,15 +237,32 @@ export function GameDetailModal() {
           ) : null}
 
           {tab === "pbp" ? (
-            details?.id !== game.id ? <p role="status">Loading play-by-play…</p> : details.error ? (
-              <div role="alert">{details.error} <button onClick={() => setRetryDetails(value => value + 1)}>Retry</button></div>
-            ) :
-            <PlayByPlayFeed
-              events={details.events ?? []}
-              homeTeam={game.homeTeam}
-              awayTeam={game.awayTeam}
-              league={game.league}
-            />
+            details?.id !== game.id ? (
+              <SkeletonRows count={5} />
+            ) : details.error ? (
+              <Notice
+                tone="error"
+                title="Couldn't load play-by-play"
+                action={
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setRetryDetails((value) => value + 1)}
+                  >
+                    Retry
+                  </Button>
+                }
+              >
+                {details.error}
+              </Notice>
+            ) : (
+              <PlayByPlayFeed
+                events={details.events ?? []}
+                homeTeam={game.homeTeam}
+                awayTeam={game.awayTeam}
+                league={game.league}
+              />
+            )
           ) : null}
         </div>
       </div>

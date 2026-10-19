@@ -1,8 +1,11 @@
 "use client";
 
+import { PAGE_FRAME } from "@/components/layout/page-shell";
+import { cardClasses } from "@/components/ui/Card";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { ErrorNotice } from "@/components/ui/ErrorNotice";
 import { FilterChip } from "@/components/ui/FilterChip";
+import { PageHeading } from "@/components/ui/PageHeading";
 import { SearchInput } from "@/components/ui/SearchInput";
 import { SeasonPicker } from "@/components/ui/SeasonPicker";
 import { SkeletonCardGrid } from "@/components/ui/Skeleton";
@@ -14,7 +17,6 @@ import type { League } from "@/types/sports";
 import { Shield } from "lucide-react";
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { PageHeading } from "@/components/ui/PageHeading";
 
 const LEAGUE_CHIPS: { value: League | "ALL"; label: string }[] = [
   { value: "UAAP", label: "UAAP" },
@@ -46,6 +48,15 @@ export function TeamDirectory() {
   useSportsScope(league === "ALL" ? "league=ALL" : `league=${league}&season=${encodeURIComponent(seasonId)}`);
 
   const standings = leagues.flatMap((l) => getStandings(l, league === "ALL" ? seasons.find(s => s.league === l && s.isCurrent)?.id : seasonId));
+
+  // Rank within each team's own league. In "All Leagues" mode the rows are
+  // concatenated, so a single findIndex would show a global position instead.
+  const rankByTeamId = new Map<string, number>();
+  const leagueCounters: Record<League, number> = { UAAP: 0, PBA: 0, PVL: 0 };
+  for (const row of standings) {
+    leagueCounters[row.team.league] += 1;
+    rankByTeamId.set(row.team.id, leagueCounters[row.team.league]);
+  }
 
   const normalizedQuery = query.trim().toLowerCase();
   const filteredStandings = useMemo(() => {
@@ -94,19 +105,22 @@ export function TeamDirectory() {
             <Link
               key={team.id}
               href={`/teams/${team.id}`}
-              className="flex items-center gap-3 rounded-2xl border border-border bg-surface p-3 shadow-sm transition-all hover:border-primary/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary active:scale-[0.99]"
+              className={cardClasses({
+                interactive: true,
+                className: "flex min-h-16 items-center gap-3 p-3",
+              })}
             >
-              <span className="w-4 shrink-0 text-center text-xs font-extrabold text-muted">
-                {standings.findIndex((row) => row.team.id === team.id) + 1}
+              <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-control bg-surface-2 text-xs font-extrabold tabular-nums text-muted">
+                {rankByTeamId.get(team.id) ?? "–"}
               </span>
               <TeamBadge team={team} size="md" />
-              <div className="min-w-0 flex-1">
-                <p className="truncate text-sm font-bold text-foreground">{team.name}</p>
-                <p className="truncate text-xs font-semibold text-muted">
+              <span className="min-w-0 flex-1">
+                <span className="block truncate text-sm font-bold text-foreground">{team.name}</span>
+                <span className="block truncate text-xs font-semibold text-muted">
                   {team.league} &middot; {formatRecord(record)}
-                </p>
-              </div>
-              <span className="shrink-0 text-xs font-bold tabular-nums text-foreground">
+                </span>
+              </span>
+              <span className="shrink-0 font-mono text-xs font-bold tabular-nums text-foreground">
                 {pctStr}
               </span>
             </Link>
@@ -117,11 +131,11 @@ export function TeamDirectory() {
   }
 
   return (
-    <div className="mx-auto flex w-full max-w-7xl min-w-0 flex-col gap-4 px-4 py-4 md:px-6">
+    <div className={PAGE_FRAME}>
       <PageHeading title="Find your side." description="Team records, season rosters, and the stories the standings tell." />
 
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <div className="flex gap-2 overflow-x-auto pb-0.5">
+        <div className="h-scroll flex gap-2 overflow-x-auto">
           {LEAGUE_CHIPS.map((chip) => (
             <FilterChip
               key={chip.value}
@@ -146,7 +160,11 @@ export function TeamDirectory() {
         placeholder="Search teams"
       />
 
-      {!loading && <p className="text-xs text-muted" aria-live="polite">{filteredStandings.length} of {standings.length} teams</p>}
+      {error && teams.length > 0 ? (
+        <ErrorNotice message={error} onRetry={() => void refreshData()} />
+      ) : null}
+
+      {!loading && <p className="text-2xs font-medium text-muted" aria-live="polite">{filteredStandings.length} of {standings.length} teams</p>}
 
       {renderBody()}
     </div>

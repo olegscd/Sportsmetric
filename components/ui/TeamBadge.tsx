@@ -7,7 +7,7 @@ import Image from "next/image";
 import { safeImageSource } from "@/lib/image-policy";
 
 const SIZE_CLASSES = {
-  sm: "h-7 w-7 text-[10px]",
+  sm: "h-7 w-7 text-3xs",
   md: "h-10 w-10 text-xs",
   lg: "h-16 w-16 text-base",
 } as const;

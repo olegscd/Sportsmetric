@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { scryptSync } from "node:crypto";
-import { derivePlayerAverages, derivePlayerGameLog, deriveStandings, getEffectiveGameStatus } from "@/lib/derivations";
+import { countLiveGames, derivePlayerAverages, derivePlayerGameLog, deriveStandings, getEffectiveGameStatus } from "@/lib/derivations";
 import { normalizeGame, normalizeTeam, ValidationError } from "@/lib/admin-validation";
 import { parseBoxScoreText } from "@/lib/box-score-parser";
 import { assertAllowedSourceUrl, fetchAllowedSource } from "@/lib/game-extractor";
@@ -29,6 +29,17 @@ test("PVL never auto-goes live; elapsed unconfirmed fixtures never become final"
   assert.equal(getEffectiveGameStatus({ status: "UPCOMING", startTime, league: "PBA" }, now), "LIVE");
   assert.equal(getEffectiveGameStatus({ status: "UPCOMING", startTime, league: "PBA" }, now + 24 * 3600000), "UPCOMING");
   assert.equal(getEffectiveGameStatus({ status: "FINAL", startTime, league: "PVL" }, now), "FINAL");
+});
+
+test("navigation live count uses effective status and skips PVL", () => {
+  const startTime = "2026-10-19T00:00:00Z";
+  const now = Date.parse(startTime) + 3600000;
+  assert.equal(countLiveGames([
+    { status: "LIVE", startTime, league: "PBA" },
+    { status: "UPCOMING", startTime, league: "PBA" },
+    { status: "FINAL", startTime, league: "PBA" },
+    { status: "UPCOMING", startTime, league: "PVL" },
+  ], now), 2);
 });
 
 test("standings exclude playoffs and unfinished games", () => {

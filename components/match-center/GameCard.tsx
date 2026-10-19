@@ -1,10 +1,12 @@
 "use client";
 
+import { Badge } from "@/components/ui/Badge";
+import { cardClasses } from "@/components/ui/Card";
 import { TeamBadge } from "@/components/ui/TeamBadge";
 import { useSportsData } from "@/context/SportsDataContext";
 import { useGameModal } from "@/lib/game-modal-context";
 import { getEffectiveGameStatus, isPlayoffGame } from "@/lib/derivations";
-import { formatGameDate, formatRecord, formatStartTime } from "@/lib/utils";
+import { cn, formatGameDate, formatRecord, formatStartTime } from "@/lib/utils";
 import type { Game, Team } from "@/types/sports";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
@@ -20,38 +22,43 @@ function StatusPill({ game }: { game: Game }) {
     const label = isVolleyball
       ? `Set ${game.quarterOrSet}`
       : game.timeRemaining
-        ? `Q${game.quarterOrSet} \u2022 ${game.timeRemaining}`
+        ? `Q${game.quarterOrSet} • ${game.timeRemaining}`
         : `Q${game.quarterOrSet}`;
 
     return (
-      <div className="flex items-center gap-1.5 shrink-0">
-        {dateStr && <span className="text-[11px] font-semibold text-muted">{dateStr} &middot;</span>}
-        <span className="inline-flex items-center gap-1.5 rounded-full bg-live/20 px-2 py-0.5 text-[11px] font-bold text-live">
-          <span className="h-1.5 w-1.5 animate-live-pulse rounded-full bg-live" />
+      <span className="flex shrink-0 items-center gap-1.5">
+        {dateStr ? (
+          <span className="text-2xs font-medium text-muted">{dateStr}</span>
+        ) : null}
+        <Badge tone="live" size="sm" dot>
           LIVE {label}
-        </span>
-      </div>
+        </Badge>
+      </span>
     );
   }
 
   if (effectiveStatus === "FINAL") {
     return (
-      <div className="flex items-center gap-1.5 shrink-0">
-        {dateStr && <span className="text-[11px] font-semibold text-muted">{dateStr} &middot;</span>}
-        <span className="rounded-full bg-border px-2 py-0.5 text-[11px] font-bold text-foreground">
-          FINAL
-        </span>
-      </div>
+      <span className="flex shrink-0 items-center gap-1.5">
+        {dateStr ? (
+          <span className="text-2xs font-medium text-muted">{dateStr}</span>
+        ) : null}
+        <Badge tone="neutral" size="sm" className="border-border-strong text-foreground">
+          Final
+        </Badge>
+      </span>
     );
   }
 
   return (
-    <div className="flex items-center gap-1.5 shrink-0">
-      {dateStr && <span className="text-[11px] font-semibold text-muted">{dateStr} &middot;</span>}
-      <span className="rounded-full bg-border px-2 py-0.5 text-[11px] font-bold text-foreground">
+    <span className="flex shrink-0 items-center gap-1.5">
+      {dateStr ? (
+        <span className="text-2xs font-medium text-muted">{dateStr}</span>
+      ) : null}
+      <Badge tone="outline" size="sm" className="text-foreground">
         {formatStartTime(game.startTime)}
-      </span>
-    </div>
+      </Badge>
+    </span>
   );
 }
 
@@ -60,33 +67,43 @@ function TeamRow({
   record,
   score,
   showScore,
+  muted,
 }: {
   team: Team;
   record?: { wins: number; losses: number };
   score: number;
   showScore: boolean;
+  muted?: boolean;
 }) {
   const displayRecord = record ?? team.record;
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex items-center justify-between gap-3">
       <Link
         href={`/teams/${team.id}`}
-        onClick={(event) => event.stopPropagation()}
-        onKeyDown={(event) => event.stopPropagation()}
-        className="flex items-center gap-2.5"
+        className="pointer-events-auto relative z-10 -mx-1 flex min-h-11 min-w-0 items-center gap-2.5 rounded-control px-1 transition-colors hover:bg-elevated/50"
       >
         <TeamBadge team={team} size="sm" />
-        <div className="flex flex-col">
-          <span className="text-sm font-bold text-foreground">
+        <span className="flex min-w-0 flex-col">
+          <span
+            className={cn(
+              "truncate text-sm font-bold transition-colors",
+              muted ? "text-muted" : "text-foreground"
+            )}
+          >
             {team.shortName}
           </span>
-          <span className="text-[11px] font-medium text-muted">
+          <span className="truncate text-2xs font-medium text-muted">
             {formatRecord(displayRecord)}
           </span>
-        </div>
+        </span>
       </Link>
       {showScore ? (
-        <span className="text-lg font-black tabular-nums text-foreground">
+        <span
+          className={cn(
+            "text-xl font-black tabular-nums",
+            muted ? "text-muted" : "text-foreground"
+          )}
+        >
           {score}
         </span>
       ) : null}
@@ -118,60 +135,72 @@ export const GameCard = memo(function GameCard({ game }: { game: Game }) {
   const homeRecord = homeStandings ? { wins: homeStandings.wins, losses: homeStandings.losses } : game.homeTeam.record;
   const awayRecord = awayStandings ? { wins: awayStandings.wins, losses: awayStandings.losses } : game.awayTeam.record;
 
+  const hasWinner =
+    effectiveStatus === "FINAL" && game.homeScore !== game.awayScore;
+  const homeLost = hasWinner && game.homeScore < game.awayScore;
+  const awayLost = hasWinner && game.awayScore < game.homeScore;
+
   return (
-    <div
-      onClick={() => openGame(game.id)}
-      className="w-full cursor-pointer rounded-2xl border border-border bg-surface p-4 text-left shadow-sm transition-all hover:border-primary/50 active:scale-[0.99]"
+    <article
+      className={cardClasses({
+        className:
+          "group relative w-full overflow-hidden p-4 transition-colors duration-150 ease-standard hover:border-border-strong",
+      })}
     >
-      <div className="flex items-center justify-between gap-2 border-b border-border/40 pb-2.5">
-        <div className="flex items-center gap-1.5">
-          <LeagueBadge league={game.league} />
-          {isPlayoffGame(game) ? (
-            <span className="rounded-full bg-amber-500/15 px-2 py-0.5 text-[10px] font-bold text-amber-500 uppercase tracking-wide">
-              {game.stage && game.stage !== "ELIMINATION" ? game.stage : "Playoffs"}
+      {/* One full-card control keeps the whole surface keyboard-operable while
+          team links sit above it and stay independently focusable. */}
+      <button
+        type="button"
+        onClick={() => openGame(game.id)}
+        aria-label={`View details for ${game.awayTeam.shortName} at ${game.homeTeam.shortName}`}
+        className="absolute inset-0 z-0 rounded-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+      />
+
+      <div className="pointer-events-none relative z-10 flex flex-col">
+        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border/60 pb-2.5">
+          <div className="flex min-w-0 flex-wrap items-center gap-1.5">
+            <LeagueBadge league={game.league} />
+            {isPlayoffGame(game) ? (
+              <Badge tone="archive" size="sm">
+                {game.stage && game.stage !== "ELIMINATION" ? game.stage : "Playoffs"}
+              </Badge>
+            ) : null}
+          </div>
+          <div className="flex items-center gap-1">
+            <StatusPill game={game} />
+            <ChevronRight
+              size={15}
+              aria-hidden="true"
+              className="shrink-0 text-muted transition-transform duration-150 ease-standard group-hover:translate-x-0.5"
+            />
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-1 py-2">
+          <TeamRow
+            team={game.awayTeam}
+            record={awayRecord}
+            score={game.awayScore}
+            showScore={showScore}
+            muted={awayLost}
+          />
+          <TeamRow
+            team={game.homeTeam}
+            record={homeRecord}
+            score={game.homeScore}
+            showScore={showScore}
+            muted={homeLost}
+          />
+        </div>
+
+        {game.venue ? (
+          <div className="border-t border-border/60 pt-2">
+            <span className="block truncate text-2xs font-medium text-muted">
+              {game.venue}
             </span>
-          ) : null}
-        </div>
-        <div className="flex items-center gap-1.5">
-          <StatusPill game={game} />
-          {/* The card body is mouse-clickable; this button is the keyboard
-              entry point, avoiding a role="button" wrapper around real links. */}
-          <button
-            type="button"
-            onClick={(event) => {
-              event.stopPropagation();
-              openGame(game.id);
-            }}
-            aria-label={`View details for ${game.awayTeam.shortName} at ${game.homeTeam.shortName}`}
-            className="rounded-full p-1 text-muted transition-colors hover:bg-elevated hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-          >
-            <ChevronRight size={16} aria-hidden="true" />
-          </button>
-        </div>
+          </div>
+        ) : null}
       </div>
-
-      <div className="flex flex-col gap-3 py-3">
-        <TeamRow
-          team={game.awayTeam}
-          record={awayRecord}
-          score={game.awayScore}
-          showScore={showScore}
-        />
-        <TeamRow
-          team={game.homeTeam}
-          record={homeRecord}
-          score={game.homeScore}
-          showScore={showScore}
-        />
-      </div>
-
-      {game.venue && (
-        <div className="border-t border-border/30 pt-2">
-          <span className="text-[11px] font-medium text-muted line-clamp-1">
-            {game.venue}
-          </span>
-        </div>
-      )}
-    </div>
+    </article>
   );
 });

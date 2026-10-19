@@ -2,6 +2,7 @@
 
 import type { ToastFn } from "@/components/admin/Toast";
 import { FilterChip } from "@/components/ui/FilterChip";
+import { useConfirm } from "@/components/ui/ConfirmDialog";
 import { useSportsData } from "@/context/SportsDataContext";
 import { generateId } from "@/lib/data";
 import { buildGameId } from "@/lib/game-id";
@@ -140,13 +141,13 @@ function GameQuickRow({
 
 
   return (
-    <div className="flex flex-col gap-2 rounded-xl border border-border bg-surface p-3">
-      <div className="flex items-center justify-between gap-2">
+    <div className="flex flex-col gap-2 rounded-card border border-border bg-surface p-3">
+      <div className="flex flex-wrap items-center justify-between gap-2">
         <p className="truncate text-xs font-semibold text-foreground">
           {game.awayTeam.shortName} @ {game.homeTeam.shortName}
         </p>
         <div className="flex shrink-0 items-center gap-2">
-          <span className="text-[10px] uppercase text-muted">{game.league}</span>
+          <span className="text-2xs uppercase text-muted">{game.league}</span>
           <button
             type="button"
             onClick={() => onDelete(game.id)}
@@ -157,7 +158,7 @@ function GameQuickRow({
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-2">
+      <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
         <Field label={`${game.awayTeam.shortName} score`}>
           <input
             className={inputClass}
@@ -176,7 +177,7 @@ function GameQuickRow({
         </Field>
       </div>
 
-      <div className="grid grid-cols-2 gap-2">
+      <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
         <Field label="Status">
           <select
             className={selectClass}
@@ -200,7 +201,7 @@ function GameQuickRow({
         </Field>
       </div>
 
-      <div className="flex gap-2">
+      <div className="flex flex-wrap gap-2">
         <button type="button" onClick={handleSave} disabled={saving} className={primaryButtonClass}>
           {saving ? (
             <>
@@ -215,7 +216,7 @@ function GameQuickRow({
           <button
             type="button"
             onClick={() => onEdit(game)}
-            className="rounded-lg border border-border bg-surface px-3 py-1.5 text-xs font-semibold text-foreground transition-colors hover:bg-elevated"
+            className="inline-flex min-h-10 items-center rounded-control border border-border bg-surface px-3 text-xs font-semibold text-foreground transition-colors hover:bg-elevated"
           >
             Edit Details
           </button>
@@ -273,6 +274,7 @@ export function GamesManager({ onToast }: { onToast: ToastFn }) {
   } = useSportsData();
 
   const [seasonFilter, setSeasonFilter] = useState(() => currentSeasonId);
+  const confirm = useConfirm();
   const [statusFilter, setStatusFilter] = useState<"ALL" | GameStatus>("ALL");
   const [search, setSearch] = useState("");
   const [savingGame, setSavingGame] = useState(false);
@@ -410,7 +412,12 @@ export function GamesManager({ onToast }: { onToast: ToastFn }) {
   }
 
   async function handleDeleteGame(id: string) {
-    if (!window.confirm("Delete this game? This can't be undone.")) return;
+    const confirmed = await confirm({
+      title: "Delete this game?",
+      description: "This can't be undone.",
+      confirmLabel: "Delete game",
+    });
+    if (!confirmed) return;
     try {
       await deleteGame(id);
       if (fullForm.id === id) startCreateGame();
@@ -516,7 +523,7 @@ export function GamesManager({ onToast }: { onToast: ToastFn }) {
               <button
                 type="button"
                 onClick={() => setVisibleCount((count) => count + 20)}
-                className="rounded-xl border border-border px-3 py-2 text-xs font-semibold text-foreground transition-colors hover:bg-elevated"
+                className="min-h-10 rounded-control border border-border px-3 text-xs font-semibold text-foreground transition-colors hover:bg-elevated"
               >
                 Show more ({filteredGames.length - visibleCount} remaining)
               </button>
@@ -559,7 +566,7 @@ export function GamesManager({ onToast }: { onToast: ToastFn }) {
             </select>
           </Field>
 
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
             <Field label="Home Team">
               <select
                 className={selectClass}
@@ -620,7 +627,7 @@ export function GamesManager({ onToast }: { onToast: ToastFn }) {
       {editingGame && (
         <SectionCard title={`Add Play-by-Play Event (${editingGame.awayTeam.shortName} @ ${editingGame.homeTeam.shortName})`}>
           <div className="flex flex-col gap-3">
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
               <Field label="Period / Qtr / Set">
                 <input
                   className={inputClass}

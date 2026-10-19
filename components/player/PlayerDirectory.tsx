@@ -1,8 +1,11 @@
 "use client";
 
-import { FilterChip } from "@/components/ui/FilterChip";
+import { PAGE_FRAME } from "@/components/layout/page-shell";
+import { Button } from "@/components/ui/Button";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { ErrorNotice } from "@/components/ui/ErrorNotice";
+import { FilterChip } from "@/components/ui/FilterChip";
+import { PageHeading } from "@/components/ui/PageHeading";
 import { SearchInput } from "@/components/ui/SearchInput";
 import { SeasonPicker } from "@/components/ui/SeasonPicker";
 import { SkeletonCardGrid } from "@/components/ui/Skeleton";
@@ -14,7 +17,6 @@ import { Users } from "lucide-react";
 import { useMemo, useState } from "react";
 
 import { PlayerCard } from "./PlayerCard";
-import { PageHeading } from "@/components/ui/PageHeading";
 
 const LEAGUE_CHIPS: { value: League | "ALL"; label: string }[] = [
   { value: "UAAP", label: "UAAP" },
@@ -103,7 +105,7 @@ export function PlayerDirectory() {
       );
     }
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+      <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
         {filteredPlayers.slice(0, limit).map((player) => {
           const team = teamsById.get(player.teamId);
           if (!team) return null;
@@ -122,11 +124,11 @@ export function PlayerDirectory() {
   }
 
   return (
-    <div className="mx-auto flex w-full max-w-7xl min-w-0 flex-col gap-4 px-4 py-4 md:px-6">
+    <div className={PAGE_FRAME}>
       <PageHeading title="The players behind the numbers." description="Explore rosters, compare season statistics, and follow every athlete’s career." />
 
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <div className="flex gap-2 overflow-x-auto pb-0.5">
+        <div className="h-scroll flex gap-2 overflow-x-auto">
           {LEAGUE_CHIPS.map((chip) => (
             <FilterChip
               key={chip.value}
@@ -151,16 +153,26 @@ export function PlayerDirectory() {
         placeholder="Search players, teams, or jersey numbers"
       />
 
+      {error && players.length > 0 ? (
+        <ErrorNotice message={error} onRetry={() => void refreshData()} />
+      ) : null}
+
       {!loading && seasonPlayers.length > 0 ? (
-        <p className="text-[11px] font-semibold uppercase tracking-wide text-muted">
+        <p className="text-2xs font-medium text-muted" aria-live="polite">
           {filteredPlayers.length} of {seasonPlayers.length} players
         </p>
       ) : null}
 
       {renderBody()}
       {filteredPlayers.length > limit && (
-        <button type="button" className="rounded-xl border border-border p-3 text-sm font-semibold"
-          onClick={() => setPage({ key: pageKey, limit: limit + 36 })}>Show more players</button>
+        <Button
+          type="button"
+          variant="outline"
+          className="w-full"
+          onClick={() => setPage({ key: pageKey, limit: limit + 36 })}
+        >
+          Show more players
+        </Button>
       )}
     </div>
   );

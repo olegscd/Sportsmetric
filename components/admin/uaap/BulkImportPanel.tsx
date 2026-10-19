@@ -2,6 +2,8 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
+import { Notice } from "@/components/ui/Notice";
+import { TableShell } from "@/components/ui/Table";
 import { ArrowRight, FileUp, Sparkles, X } from "lucide-react";
 import {
   applyImport,
@@ -199,59 +201,65 @@ export function BulkImportPanel({
   };
 
   return (
-    <div className="p-5 rounded-2xl bg-surface border border-amber-500/30 shadow-md space-y-4">
-      <div className="flex items-center justify-between">
+    <div className="space-y-4 rounded-card border border-archive/30 bg-surface p-4 shadow-card sm:p-5">
+      <div className="flex items-center justify-between gap-2">
         <div className="flex items-center gap-2">
-          <FileUp size={16} className="text-amber-400" />
-          <h4 className="text-xs font-bold uppercase tracking-wider text-foreground">
+          <FileUp size={16} className="text-archive" aria-hidden="true" />
+          <h4 className="text-2xs font-bold uppercase tracking-wider text-foreground">
             Bulk import
           </h4>
         </div>
         <button
           type="button"
           onClick={onClose}
-          className="p-1 rounded-lg text-muted hover:text-foreground cursor-pointer"
+          className="inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-control text-muted transition-colors hover:bg-elevated hover:text-foreground"
           aria-label="Close bulk import"
         >
-          <X size={15} />
+          <X size={16} aria-hidden="true" />
         </button>
       </div>
 
-      <textarea
-        rows={6}
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-        onPaste={(e) => {
-          const pasted = e.clipboardData.getData("text");
-          if (!pasted.trim()) return;
-          requestAnimationFrame(() => runParse(pasted));
-        }}
-        onDrop={(e) => {
-          const file = e.dataTransfer.files?.[0];
-          if (!file) return;
-          e.preventDefault();
-          void handleFile(file);
-        }}
-        placeholder={PLACEHOLDER}
-        className="w-full p-3 rounded-xl text-xs font-mono bg-elevated border border-border text-foreground placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-amber-500/50"
-      />
+      <div className="space-y-1.5">
+        <label htmlFor="bulk-import-rows" className="sr-only">
+          Bulk import rows
+        </label>
+        <textarea
+          id="bulk-import-rows"
+          rows={6}
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          onPaste={(e) => {
+            const pasted = e.clipboardData.getData("text");
+            if (!pasted.trim()) return;
+            requestAnimationFrame(() => runParse(pasted));
+          }}
+          onDrop={(e) => {
+            const file = e.dataTransfer.files?.[0];
+            if (!file) return;
+            e.preventDefault();
+            void handleFile(file);
+          }}
+          placeholder={PLACEHOLDER}
+          className="w-full rounded-control border border-border bg-surface-2 p-3 font-mono text-xs text-foreground placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-archive/40"
+        />
+      </div>
 
       <div className="flex flex-wrap items-center gap-2">
         <button
           type="button"
           onClick={() => runParse(text)}
           disabled={!text.trim()}
-          className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-xl text-xs font-bold bg-amber-500 text-slate-950 hover:bg-amber-400 disabled:opacity-40 cursor-pointer"
+          className="inline-flex min-h-11 cursor-pointer items-center gap-1.5 rounded-control bg-archive px-4 text-xs font-bold text-bg transition-colors hover:bg-archive/90 disabled:opacity-40"
         >
-          <Sparkles size={14} />
+          <Sparkles size={14} aria-hidden="true" />
           <span>Parse</span>
         </button>
         <button
           type="button"
           onClick={() => fileRef.current?.click()}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-elevated border border-border text-foreground hover:bg-elevated/80 cursor-pointer"
+          className="inline-flex min-h-11 cursor-pointer items-center gap-1.5 rounded-control border border-border bg-surface-2 px-3 text-xs font-semibold text-foreground transition-colors hover:bg-elevated"
         >
-          <FileUp size={13} />
+          <FileUp size={14} aria-hidden="true" />
           <span>Upload CSV / MD</span>
         </button>
         <input
@@ -266,7 +274,7 @@ export function BulkImportPanel({
           }}
         />
         {grid && (
-          <span className="text-[11px] text-muted">
+          <span className="text-2xs text-muted">
             Read {grid.rows.length} {grid.rows.length === 1 ? "row" : "rows"}
             {extractNote ? ` · ${extractNote}` : ` · ${grid.delimiterLabel}`}
             {grid.headers ? " · header row detected" : ""}.
@@ -275,8 +283,19 @@ export function BulkImportPanel({
       </div>
 
       {extractedAwards && onExtractedAwards && (
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-3 rounded-xl bg-sky-500/10 border border-sky-500/30 text-xs">
-          <span className="text-sky-300">
+        <Notice
+          tone="info"
+          action={
+            <button
+              type="button"
+              onClick={() => onExtractedAwards(extractedAwards)}
+              className="inline-flex min-h-10 cursor-pointer items-center text-2xs font-bold text-info hover:underline"
+            >
+              Fill awards fields
+            </button>
+          }
+        >
+          <p className="text-xs">
             Found{" "}
             {[
               extractedAwards.mvp ? `MVP ${extractedAwards.mvp.player}` : null,
@@ -287,23 +306,16 @@ export function BulkImportPanel({
               .filter(Boolean)
               .join(" · ")}
             .
-          </span>
-          <button
-            type="button"
-            onClick={() => onExtractedAwards(extractedAwards)}
-            className="text-[11px] font-bold text-sky-300 hover:underline cursor-pointer shrink-0"
-          >
-            Fill awards fields
-          </button>
-        </div>
+          </p>
+        </Notice>
       )}
 
       {grid && (
         <>
           {detectedPreset && (
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 text-xs">
-              <div className="flex items-center gap-2 text-amber-400 font-medium">
-                <Sparkles size={15} className="shrink-0" />
+            <div className="flex flex-col justify-between gap-2 rounded-control border border-archive/30 bg-archive/10 p-3 text-xs sm:flex-row sm:items-center">
+              <div className="flex items-center gap-2 font-medium text-archive">
+                <Sparkles size={15} className="shrink-0" aria-hidden="true" />
                 <span>
                   Detected stats headers. Auto-applied <strong>{detectedPreset.label}</strong> columns
                   for this table.
@@ -316,7 +328,7 @@ export function BulkImportPanel({
                   setDetectedPreset(null);
                   if (grid) setTargets(guessTargets(grid, columns));
                 }}
-                className="text-[11px] underline text-muted hover:text-foreground cursor-pointer shrink-0"
+                className="inline-flex min-h-10 shrink-0 cursor-pointer items-center text-2xs text-muted underline hover:text-foreground"
               >
                 Revert to original columns
               </button>
@@ -324,23 +336,23 @@ export function BulkImportPanel({
           )}
 
           <div className="space-y-2">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-muted">
+            <span className="text-2xs font-bold uppercase tracking-wider text-muted">
               Confirm what each column is
             </span>
-            <div className="overflow-x-auto">
-              <table className="text-left text-xs border-collapse">
+            <div className="h-scroll overflow-x-auto">
+              <table className="border-collapse text-left text-xs">
                 <tbody>
                   <tr>
                     {targets.map((target, idx) => (
-                      <td key={idx} className="p-1 align-top">
+                      <td key={idx} className="align-top p-1">
                         <select
                           value={targetToValue(target)}
                           onChange={(e) => setTarget(idx, e.target.value)}
                           className={cn(
-                            "w-full min-w-[9rem] px-2 py-1 rounded-lg text-[11px] font-semibold border",
+                            "min-h-10 w-full min-w-36 rounded-control border px-2 text-2xs font-semibold",
                             target.kind === "ignore"
-                              ? "bg-elevated/40 border-border text-muted"
-                              : "bg-elevated border-amber-500/40 text-foreground"
+                              ? "border-border bg-surface-2/60 text-muted"
+                              : "border-archive/40 bg-surface-2 text-foreground"
                           )}
                           aria-label={`Mapping for column ${idx + 1}`}
                         >
@@ -354,18 +366,18 @@ export function BulkImportPanel({
                     ))}
                   </tr>
                   {grid.headers && (
-                    <tr className="text-[10px] uppercase tracking-wider text-muted">
+                    <tr className="text-3xs uppercase tracking-wider text-muted">
                       {grid.headers.map((header, idx) => (
-                        <td key={idx} className="px-2 py-1 truncate max-w-[10rem]">
+                        <td key={idx} className="max-w-40 truncate px-2 py-1">
                           {header}
                         </td>
                       ))}
                     </tr>
                   )}
                   {grid.rows.slice(0, 4).map((cells, rowIdx) => (
-                    <tr key={rowIdx} className="text-muted font-mono text-[11px]">
+                    <tr key={rowIdx} className="font-mono text-2xs text-muted">
                       {cells.map((cell, colIdx) => (
-                        <td key={colIdx} className="px-2 py-0.5 truncate max-w-[10rem]">
+                        <td key={colIdx} className="max-w-40 truncate px-2 py-0.5">
                           {cell || "—"}
                         </td>
                       ))}
@@ -377,63 +389,64 @@ export function BulkImportPanel({
           </div>
 
           <div className="space-y-2">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-muted">
+            <span className="text-2xs font-bold uppercase tracking-wider text-muted">
               Preview ({previewRows.length} {previewRows.length === 1 ? "row" : "rows"})
             </span>
             {unmatched.length > 0 && (
-              <p className="text-[11px] text-amber-400">
+              <p className="text-2xs text-archive">
                 Unrecognised school
                 {unmatched.length === 1 ? "" : "s"}: {unmatched.join(", ")}. Fix the mapping or the
                 name before saving.
               </p>
             )}
-            <div className="max-h-48 overflow-y-auto rounded-xl border border-border">
-              <table className="w-full text-left text-xs border-collapse">
-                <thead className="sticky top-0 bg-elevated">
-                  <tr className="text-[10px] font-bold uppercase tracking-wider text-muted">
-                    <th scope="col" className="py-1.5 px-2 w-12 text-center">Rank</th>
-                    <th scope="col" className="py-1.5 px-2">School</th>
+            <TableShell className="max-h-48 overflow-y-auto">
+              <table className="w-full border-collapse text-left text-xs">
+                <thead className="sticky top-0 z-10 bg-surface-2">
+                  <tr>
+                    <th scope="col" className="w-12 px-2 py-2 text-center text-2xs font-semibold uppercase tracking-wider text-muted">Rank</th>
+                    <th scope="col" className="px-2 py-2 text-2xs font-semibold uppercase tracking-wider text-muted">School</th>
                     {enterableColumns.map((col) => (
-                      <th key={col.key} className="py-1.5 px-2 text-center">
+                      <th key={col.key} scope="col" className="px-2 py-2 text-center text-2xs font-semibold uppercase tracking-wider text-muted">
                         {col.label}
                       </th>
                     ))}
-                    <th scope="col" className="py-1.5 px-2">Notes</th>
+                    <th scope="col" className="px-2 py-2 text-2xs font-semibold uppercase tracking-wider text-muted">Notes</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-border/60">
                   {previewRows.map((row, idx) => (
                     <tr key={idx}>
-                      <td className="py-1 px-2 text-center font-mono">{row.rank}</td>
-                      <td className="py-1 px-2 font-bold text-foreground">
+                      <td className="px-2 py-1.5 text-center font-mono">{row.rank}</td>
+                      <td className="px-2 py-1.5 font-bold text-foreground">
                         {getSchoolName(row.team) || "—"}
                       </td>
                       {enterableColumns.map((col) => (
-                        <td key={col.key} className="py-1 px-2 text-center font-mono">
+                        <td key={col.key} className="px-2 py-1.5 text-center font-mono">
                           {row.values[col.key] ?? "—"}
                         </td>
                       ))}
-                      <td className="py-1 px-2 text-muted truncate max-w-[12rem]">
+                      <td className="max-w-48 truncate px-2 py-1.5 text-muted">
                         {row.details || "—"}
                       </td>
                     </tr>
                   ))}
                 </tbody>
               </table>
-            </div>
+            </TableShell>
           </div>
 
-          <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-border/60">
-            <div className="flex items-center gap-1.5 p-1 rounded-xl bg-elevated border border-border">
+          <div className="flex flex-wrap items-center justify-between gap-3 border-t border-border/60 pt-2">
+            <div className="flex items-center gap-1.5 rounded-control border border-border bg-surface-2 p-1">
               {(["replace", "append"] as const).map((m) => (
                 <button
                   key={m}
                   type="button"
+                  aria-pressed={mode === m}
                   onClick={() => setMode(m)}
                   className={cn(
-                    "px-3 py-1 rounded-lg text-xs font-semibold transition-colors cursor-pointer",
+                    "min-h-10 cursor-pointer rounded-control px-3 text-xs font-semibold transition-colors",
                     mode === m
-                      ? "bg-amber-500 text-slate-950"
+                      ? "bg-archive text-bg"
                       : "text-muted hover:text-foreground"
                   )}
                 >
@@ -452,14 +465,14 @@ export function BulkImportPanel({
                 )
               }
               disabled={previewRows.length === 0}
-              className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-xl text-xs font-bold bg-amber-500 text-slate-950 hover:bg-amber-400 disabled:opacity-40 cursor-pointer"
+              className="inline-flex min-h-11 cursor-pointer items-center gap-1.5 rounded-control bg-archive px-4 text-xs font-bold text-bg transition-colors hover:bg-archive/90 disabled:opacity-40"
             >
               <span>Apply to editor</span>
-              <ArrowRight size={14} />
+              <ArrowRight size={14} aria-hidden="true" />
             </button>
           </div>
 
-          <p className="text-[11px] text-muted">
+          <p className="text-2xs text-muted">
             Nothing is saved yet — rows land in the editor below where you can correct them before
             saving.
           </p>

@@ -7,6 +7,7 @@ import { generateId } from "@/lib/data";
 import { cn, formatRecord } from "@/lib/utils";
 import type { League, Team } from "@/types/sports";
 import { useState, type FormEvent } from "react";
+import { useConfirm } from "@/components/ui/ConfirmDialog";
 import {
   dangerButtonClass,
   Field,
@@ -71,6 +72,7 @@ export function TeamsManager({ onToast }: { onToast: ToastFn }) {
   );
 
   const [selectedTeamId, setSelectedTeamId] = useState<string>("new");
+  const confirm = useConfirm();
 
   const currentTeam = leagueTeams.find((t) => t.id === selectedTeamId);
 
@@ -148,7 +150,12 @@ export function TeamsManager({ onToast }: { onToast: ToastFn }) {
   }
 
   async function handleDelete(id: string, name: string) {
-    if (!window.confirm(`Delete ${name}? This can't be undone.`)) return;
+    const confirmed = await confirm({
+      title: `Delete ${name}?`,
+      description: "This can't be undone.",
+      confirmLabel: "Delete team",
+    });
+    if (!confirmed) return;
     try {
       await deleteTeam(id);
       startCreateNew();
@@ -177,15 +184,18 @@ export function TeamsManager({ onToast }: { onToast: ToastFn }) {
         </select>
       </Field>
 
-      <div className="flex items-center gap-1 rounded-full bg-surface p-1">
+      <div className="flex items-center gap-1 rounded-control border border-border bg-surface-2 p-1">
         {LEAGUES.map((l) => (
           <button
             key={l}
             type="button"
+            aria-pressed={selectedLeague === l}
             onClick={() => handleLeagueChange(l)}
             className={cn(
-              "flex-1 rounded-full py-1.5 text-xs font-semibold transition-colors",
-              selectedLeague === l ? "bg-primary text-primary-foreground" : "text-muted"
+              "min-h-10 flex-1 rounded-control text-xs font-semibold transition-colors",
+              selectedLeague === l
+                ? "bg-primary text-primary-foreground"
+                : "text-muted hover:bg-elevated hover:text-foreground"
             )}
           >
             {l}
@@ -283,11 +293,13 @@ export function TeamsManager({ onToast }: { onToast: ToastFn }) {
             <div className="flex items-center gap-2">
               <input
                 type="color"
+                aria-label="Accent color picker"
                 value={isValidHex ? form.accentColor : "#ff6b35"}
                 onChange={(e) => setForm({ ...form, accentColor: e.target.value })}
-                className="h-9 w-12 cursor-pointer rounded-lg border border-border bg-surface p-1"
+                className="h-11 w-14 cursor-pointer rounded-control border border-border bg-surface p-1"
               />
               <input
+                aria-label="Accent color hex"
                 className={`${inputClass} flex-1 font-mono`}
                 value={form.accentColor}
                 onChange={(event) => setForm({ ...form, accentColor: event.target.value })}
@@ -339,7 +351,7 @@ export function TeamsManager({ onToast }: { onToast: ToastFn }) {
               <div
                 key={team.id}
                 className={cn(
-                  "flex items-center justify-between gap-2 rounded-xl border p-2.5 transition-colors",
+                  "flex flex-wrap items-center justify-between gap-2 rounded-control border p-2.5 transition-colors",
                   team.id === selectedTeamId
                     ? "border-primary bg-primary/10"
                     : "border-border bg-surface"
@@ -351,7 +363,7 @@ export function TeamsManager({ onToast }: { onToast: ToastFn }) {
                     <p className="truncate text-xs font-semibold text-foreground">
                       {team.name} ({team.shortName})
                     </p>
-                    <p className="truncate text-[10px] text-muted">
+                    <p className="truncate text-2xs text-muted">
                       Record: {formatRecord(team.record)} &middot; {team.league}
                     </p>
                   </div>

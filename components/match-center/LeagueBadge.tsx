@@ -10,7 +10,7 @@ const LEAGUE_COLOR_VAR: Record<League, string> = {
 export function LeagueBadge({ league }: { league: League }) {
   return (
     <span
-      className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide ${league === "PBA" ? "text-bg" : "text-white"}`}
+      className={`inline-flex items-center rounded-full px-2 py-0.5 text-3xs font-bold uppercase tracking-wide ${league === "PBA" ? "text-bg" : "text-white"}`}
       style={{ backgroundColor: LEAGUE_COLOR_VAR[league] }}
     >
       {leagueLabel(league)}

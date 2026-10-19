@@ -15,6 +15,31 @@
   --color-league-uaap: #cc0000;
   --color-league-pba: #f7941d;
   --color-league-pvl: #0066cc;
+
+  /* Refined scoreboard surfaces and semantics */
+  --color-surface-2: #10161f;
+  --color-border-strong: #3a4658;
+  --color-positive: #34d399;
+  --color-negative: #f87171;
+  --color-archive: #fbbf24;
+  --color-info: #38bdf8;
+
+  --radius-control: 0.625rem;
+  --radius-card: 1rem;
+  --radius-panel: 1.25rem;
+
+  --shadow-card: 0 1px 0 rgb(255 255 255 / 0.03), 0 12px 28px -24px rgb(0 0 0 / 0.9);
+  --shadow-raised: 0 18px 42px -24px rgb(0 0 0 / 0.85);
+  --shadow-modal: 0 40px 100px -20px rgb(0 0 0 / 0.92);
+
+  --text-2xs: 0.6875rem;
+  --text-2xs--line-height: 1rem;
+  --text-3xs: 0.625rem;
+  --text-3xs--line-height: 0.875rem;
+
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-emphasized: cubic-bezier(0.2, 0.8, 0.2, 1);
+
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -40,7 +65,7 @@ button:not(:disabled), select {
 
 :focus-visible {
   outline: 2px solid var(--color-primary);
-  outline-offset: 3px;
+  outline-offset: 2px;
 }
 
 ::selection {
@@ -49,14 +74,43 @@ button:not(:disabled), select {
 }
 
 .page-heading {
-  font-size: clamp(1.6rem, 3vw, 2.25rem);
+  font-size: clamp(1.75rem, 1.8vw + 1.1rem, 2.5rem);
   font-weight: 800;
-  letter-spacing: -0.045em;
-  line-height: 1.15;
+  letter-spacing: -0.035em;
+  line-height: 1.1;
+}
+
+.eyebrow {
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  line-height: 1;
+  text-transform: uppercase;
 }
 
 .scoreboard-hero {
-  background: radial-gradient(ellipse at top right, #ef444414, transparent 65%), var(--color-surface);
+  background:
+    radial-gradient(ellipse at top right, rgb(239 68 68 / 0.1), transparent 65%),
+    linear-gradient(160deg, var(--color-surface-2), var(--color-surface));
+}
+
+.h-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border-strong) transparent;
+  overscroll-behavior-x: contain;
+}
+
+.h-scroll::-webkit-scrollbar {
+  height: 8px;
+}
+
+.h-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.h-scroll::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: var(--color-border-strong);
 }
 
 .skip-link {

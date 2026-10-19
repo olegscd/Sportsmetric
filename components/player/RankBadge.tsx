@@ -1,23 +1,23 @@
-import { cn } from "@/lib/utils";
+import { Badge } from "@/components/ui/Badge";
 import type { RankBadge as RankBadgeType } from "@/types/sports";
 import { Award } from "lucide-react";
 
 export function RankBadge({
   badge,
+  index = 1,
   compact = false,
 }: {
   badge: RankBadgeType;
+  index?: number;
   compact?: boolean;
 }) {
   return (
-    <span
-      className={cn(
-        "inline-flex items-center gap-1 rounded-full border border-primary/40 bg-primary/10 font-semibold text-primary",
-        compact ? "px-1.5 py-0.5 text-[10px]" : "px-2.5 py-1 text-xs"
-      )}
+    <Badge
+      tone={index === 0 ? "archive" : "neutral"}
+      size={compact ? "sm" : "md"}
+      icon={<Award size={compact ? 10 : 12} aria-hidden="true" />}
     >
-      <Award size={compact ? 10 : 12} />
       {badge.label}
-    </span>
+    </Badge>
   );
 }

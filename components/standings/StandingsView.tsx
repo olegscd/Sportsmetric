@@ -1,11 +1,12 @@
 "use client";
 
-import { PageHeading } from "@/components/ui/PageHeading";
-
+import { PAGE_FRAME } from "@/components/layout/page-shell";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { ErrorNotice } from "@/components/ui/ErrorNotice";
 import { SegmentedControl } from "@/components/ui/FilterChip";
+import { PageHeading } from "@/components/ui/PageHeading";
 import { SeasonPicker } from "@/components/ui/SeasonPicker";
+import { SectionHeading } from "@/components/ui/SectionHeading";
 import { SkeletonRows } from "@/components/ui/Skeleton";
 import { useSportsData, useSportsScope } from "@/context/SportsDataContext";
 import { getUAAPGamePartition } from "@/lib/derivations";
@@ -80,33 +81,54 @@ export function StandingsView() {
   const { playoffGames } =
     league === "UAAP" ? getUAAPGamePartition(games, seasonId) : { playoffGames: [] };
 
-  return (
-    <div className="mx-auto flex w-full max-w-7xl min-w-0 flex-col gap-4 px-4 py-4 md:px-6">
-      <PageHeading title="The race to the top." description="Follow the standings, find the league leaders, and track the postseason." action={<SeasonPicker
-          value={seasonId}
-          onChange={setUserSelectedSeasonId}
-          league={league}
-          includeLifetime={false}
-        />} />
+  const standingsTitle =
+    league === "UAAP"
+      ? "Elimination Round Standings"
+      : league === "PVL"
+        ? "Elimination Round Standings (Regular Season)"
+        : "Standings";
 
-      <SegmentedControl options={LEAGUES} value={league} onChange={handleLeagueChange} />
+  return (
+    <div className={PAGE_FRAME}>
+      <PageHeading
+        title="The race to the top."
+        description="Follow the standings, find the league leaders, and track the postseason."
+        action={
+          <SeasonPicker
+            value={seasonId}
+            onChange={setUserSelectedSeasonId}
+            league={league}
+            includeLifetime={false}
+          />
+        }
+      />
+
+      <div className="w-full sm:max-w-md">
+        <SegmentedControl options={LEAGUES} value={league} onChange={handleLeagueChange} />
+      </div>
+
+      {error && teams.length > 0 ? (
+        <ErrorNotice message={error} onRetry={() => void refreshData()} />
+      ) : null}
 
       {error && teams.length === 0 ? (
         <ErrorNotice message={error} onRetry={() => void refreshData()} />
       ) : loading && teams.length === 0 ? (
         <SkeletonRows count={8} />
       ) : (
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-          <div className="lg:col-span-2">
-            <div className="mb-2 flex items-center justify-between">
-              <p className="text-[11px] font-semibold uppercase tracking-wide text-muted">
-                {league === "UAAP"
-                  ? "Elimination Round Standings"
-                  : league === "PVL"
-                    ? "Elimination Round Standings (Regular Season)"
-                    : "Standings"}
-              </p>
-            </div>
+        <div className="grid grid-cols-1 gap-6 xl:grid-cols-[minmax(0,1fr)_21rem]">
+          <div className="min-w-0">
+            <SectionHeading
+              level={2}
+              eyebrow={`${league} · ${selectedSeason?.label ?? "Season"}`}
+              title={standingsTitle}
+              description={
+                league === "PVL"
+                  ? "Regular-season records, with point differential and current streak."
+                  : undefined
+              }
+              className="mb-3"
+            />
             {standings.length === 0 ? (
               <EmptyState
                 icon={<Trophy size={22} aria-hidden="true" />}
@@ -118,16 +140,18 @@ export function StandingsView() {
             )}
 
             {league === "UAAP" && standings.length >= 4 && playoffGames.length > 0 && (
-              <div className="pt-4">
+              <div className="pt-5">
                 <FinalFourBracket standings={standings} playoffGames={playoffGames} />
               </div>
             )}
           </div>
 
-          <div className="lg:col-span-1">
-            <p className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-muted">
-              Stat Leaders (Regular Season)
-            </p>
+          <aside className="min-w-0 xl:sticky xl:top-24 xl:self-start">
+            <SectionHeading
+              level={2}
+              title="Stat Leaders (Regular Season)"
+              className="mb-3"
+            />
             <div className="flex flex-col gap-3">
               {leaderConfigs.map((config) => (
                 <StatLeaderCard
@@ -138,7 +162,7 @@ export function StandingsView() {
                 />
               ))}
             </div>
-          </div>
+          </aside>
         </div>
       )}
     </div>

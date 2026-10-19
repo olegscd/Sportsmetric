@@ -44,7 +44,27 @@ export default function RootLayout({
     >
       <body className="flex min-h-full flex-col bg-bg">
         <a href="#main-content" className="skip-link">Skip to content</a>
-        <Suspense fallback={<p className="p-6" role="status">Loading Sportsmetric…</p>}>
+        <Suspense
+          fallback={
+            <div
+              role="status"
+              className="flex min-h-dvh items-center justify-center bg-bg px-6"
+            >
+              <div className="flex flex-col items-center gap-3 text-center">
+                <span
+                  className="h-2.5 w-2.5 animate-live-pulse rounded-full bg-primary"
+                  aria-hidden="true"
+                />
+                <p className="text-sm font-semibold text-foreground">
+                  Loading Sportsmetric…
+                </p>
+                <p className="text-xs text-muted">
+                  Fetching the latest scores and standings.
+                </p>
+              </div>
+            </div>
+          }
+        >
           <SportsShell>{children}</SportsShell>
         </Suspense>
       </body>

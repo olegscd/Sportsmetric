@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import type { League, Season } from "@/types/sports";
 import { ArrowDown, ArrowUp } from "lucide-react";
 import { useState, type FormEvent } from "react";
+import { useConfirm } from "@/components/ui/ConfirmDialog";
 import {
   dangerButtonClass,
   Field,
@@ -78,6 +79,7 @@ export function SeasonsManager({ onToast }: { onToast: ToastFn }) {
   const [createLeague, setCreateLeague] = useState<League>("UAAP");
   const [editingSeasonId, setEditingSeasonId] = useState<string | null>(null);
   const [editingLabel, setEditingLabel] = useState("");
+  const confirm = useConfirm();
 
   const filteredSeasons = seasons.filter(
     (s) => selectedLeague === "ALL" || getSeasonLeague(s) === selectedLeague
@@ -199,7 +201,12 @@ export function SeasonsManager({ onToast }: { onToast: ToastFn }) {
       ? ` This season has ${teamCount} team(s), ${playerCount} player(s) and ${gameCount} game(s) attached.`
       : "";
 
-    if (!window.confirm(`Delete "${season.label}" (${getSeasonLeague(season)})?${warning} This can't be undone.`)) return;
+    const confirmed = await confirm({
+      title: `Delete "${season.label}" (${getSeasonLeague(season)})?`,
+      description: `${warning.trim()} This can't be undone.`.trim(),
+      confirmLabel: "Delete season",
+    });
+    if (!confirmed) return;
     try {
       await deleteSeason(season.id);
       onToast("Season deleted.");
@@ -211,18 +218,21 @@ export function SeasonsManager({ onToast }: { onToast: ToastFn }) {
 
   return (
     <div className="flex flex-col gap-5">
-      <div className="flex items-center gap-1 rounded-full bg-surface p-1">
+      <div className="h-scroll flex items-center gap-1 overflow-x-auto rounded-control border border-border bg-surface-2 p-1">
         {LEAGUES.map((l) => (
           <button
             key={l}
             type="button"
+            aria-pressed={selectedLeague === l}
             onClick={() => {
               setSelectedLeague(l);
               if (l !== "ALL") setCreateLeague(l);
             }}
             className={cn(
-              "flex-1 rounded-full py-1.5 text-xs font-semibold transition-colors",
-              selectedLeague === l ? "bg-primary text-primary-foreground" : "text-muted"
+              "min-h-10 flex-1 whitespace-nowrap rounded-control px-3 text-xs font-semibold transition-colors",
+              selectedLeague === l
+                ? "bg-primary text-primary-foreground"
+                : "text-muted hover:bg-elevated hover:text-foreground"
             )}
           >
             {l === "ALL" ? "All Leagues" : l}
@@ -245,27 +255,29 @@ export function SeasonsManager({ onToast }: { onToast: ToastFn }) {
             return (
               <div
                 key={season.id}
-                className="flex items-center justify-between gap-2 rounded-xl border border-border bg-surface px-3 py-2.5"
+                className="flex flex-wrap items-center justify-between gap-2 rounded-control border border-border bg-surface px-3 py-2.5"
               >
-                <div className="flex items-center gap-2 min-w-0 flex-1">
-                  <div className="flex flex-col gap-0.5 shrink-0">
+                <div className="flex min-w-0 flex-1 items-center gap-2">
+                  <div className="flex shrink-0 items-center gap-1">
                     <button
                       type="button"
                       disabled={index === 0}
                       onClick={() => handleMoveUp(index)}
                       title="Move season up"
-                      className="rounded p-0.5 text-muted hover:bg-elevated hover:text-foreground disabled:opacity-30"
+                      aria-label={`Move ${season.label} up`}
+                      className="inline-flex h-10 w-10 items-center justify-center rounded-control text-muted transition-colors hover:bg-elevated hover:text-foreground disabled:opacity-30"
                     >
-                      <ArrowUp size={12} />
+                      <ArrowUp size={14} />
                     </button>
                     <button
                       type="button"
                       disabled={index === filteredSeasons.length - 1}
                       onClick={() => handleMoveDown(index)}
                       title="Move season down"
-                      className="rounded p-0.5 text-muted hover:bg-elevated hover:text-foreground disabled:opacity-30"
+                      aria-label={`Move ${season.label} down`}
+                      className="inline-flex h-10 w-10 items-center justify-center rounded-control text-muted transition-colors hover:bg-elevated hover:text-foreground disabled:opacity-30"
                     >
-                      <ArrowDown size={12} />
+                      <ArrowDown size={14} />
                     </button>
                   </div>
 
@@ -275,7 +287,7 @@ export function SeasonsManager({ onToast }: { onToast: ToastFn }) {
                         type="text"
                         value={editingLabel}
                         onChange={(e) => setEditingLabel(e.target.value)}
-                        className="flex-1 rounded-lg border border-border bg-elevated px-2.5 py-1 text-xs font-semibold text-foreground focus:outline-none focus:ring-1 focus:ring-primary"
+                        className="min-h-10 flex-1 rounded-control border border-border bg-elevated px-2.5 text-xs font-semibold text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
                         autoFocus
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {
@@ -289,7 +301,7 @@ export function SeasonsManager({ onToast }: { onToast: ToastFn }) {
                       <button
                         type="button"
                         onClick={() => handleSaveEdit(season)}
-                        className="rounded-full bg-primary px-3 py-1 text-[11px] font-bold text-primary-foreground active:opacity-80 shrink-0 cursor-pointer"
+                        className="inline-flex min-h-10 shrink-0 items-center rounded-control bg-primary px-3 text-2xs font-bold text-primary-foreground active:opacity-80"
                       >
                         Save
                       </button>
@@ -305,16 +317,16 @@ export function SeasonsManager({ onToast }: { onToast: ToastFn }) {
                     <div className="min-w-0">
                       <div className="flex items-center gap-1.5">
                         <p className="truncate text-sm font-semibold text-foreground">{season.label}</p>
-                        <span className="shrink-0 rounded bg-muted/20 px-1.5 py-0.5 text-[9px] font-bold text-muted uppercase">
+                        <span className="shrink-0 rounded border border-border bg-elevated px-1.5 py-0.5 text-3xs font-bold uppercase text-muted">
                           {leagueLabel}
                         </span>
                         {season.isCurrent ? (
-                          <span className="shrink-0 rounded-full bg-primary/20 px-2 py-0.5 text-[10px] font-bold text-primary">
+                          <span className="shrink-0 rounded-full bg-primary/20 px-2 py-0.5 text-3xs font-bold text-primary">
                             CURRENT
                           </span>
                         ) : null}
                       </div>
-                      <p className="truncate text-[11px] text-muted">
+                      <p className="truncate text-2xs text-muted">
                         {teamCount} teams &middot; {playerCount} players &middot; {gameCount} games
                       </p>
                     </div>
@@ -322,7 +334,7 @@ export function SeasonsManager({ onToast }: { onToast: ToastFn }) {
                 </div>
 
                 {editingSeasonId !== season.id && (
-                  <div className="flex shrink-0 gap-1.5">
+                  <div className="flex shrink-0 flex-wrap gap-1.5">
                     <button
                       type="button"
                       onClick={() => handleStartEdit(season)}
@@ -381,7 +393,7 @@ export function SeasonsManager({ onToast }: { onToast: ToastFn }) {
           <button type="submit" className={`${primaryButtonClass} w-full`}>
             Create Season for {createLeague}
           </button>
-          <p className="text-[11px] text-muted">
+          <p className="text-2xs text-muted">
             New seasons start empty -- add teams, players and games to them from the other tabs.
             Seasons are automatically filtered by league when users browse Standings and Match Center.
           </p>

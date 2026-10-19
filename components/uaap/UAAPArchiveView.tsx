@@ -18,6 +18,9 @@ import {
 import Link from "next/link";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
+import { Badge } from "@/components/ui/Badge";
+import { Notice } from "@/components/ui/Notice";
+import { TableShell, Td, Th } from "@/components/ui/Table";
 import {
   formatCellValue,
   makeExtrasKey,
@@ -51,28 +54,25 @@ function isChampionRow(details: string | null, rank: number): boolean {
 }
 
 function RankBadge({ rank, details }: { rank: number; details: string | null }) {
-  if (isChampionRow(details, rank)) {
+  if (rank <= 3) {
+    const champion = isChampionRow(details, rank);
     return (
-      <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-amber-500/20 text-xs shadow-sm">
-        🥇
+      <span
+        aria-label={`Rank ${rank}`}
+        className={cn(
+          "inline-flex h-6 w-6 items-center justify-center rounded-full border",
+          champion
+            ? "border-archive/30 bg-archive/15 text-archive"
+            : rank === 2
+              ? "border-border-strong bg-elevated text-foreground"
+              : "border-border bg-surface-2 text-muted"
+        )}
+      >
+        <Medal size={13} aria-hidden="true" />
       </span>
     );
   }
-  if (rank === 2) {
-    return (
-      <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-slate-400/20 text-xs">
-        🥈
-      </span>
-    );
-  }
-  if (rank === 3) {
-    return (
-      <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-amber-700/20 text-xs">
-        🥉
-      </span>
-    );
-  }
-  return <span className="text-muted text-xs font-bold">{rank}</span>;
+  return <span className="text-xs font-bold text-muted">{rank}</span>;
 }
 
 function SchoolCell({ team }: { team: string }) {
@@ -81,7 +81,7 @@ function SchoolCell({ team }: { team: string }) {
     <div className="flex items-center gap-2.5">
       <span
         className={cn(
-          "px-2.5 py-1 rounded-md border text-xs font-bold shrink-0 shadow-sm",
+          "shrink-0 rounded-md border px-2.5 py-1 text-xs font-bold",
           theme.bg,
           theme.text
         )}
@@ -262,39 +262,37 @@ export function UAAPArchiveView({ initialData }: { initialData: MergedUAAPData }
     );
 
     return (
-      <div className={`${PAGE_SHELL} space-y-6 pb-20 pt-4 md:pt-6 animate-in fade-in duration-200`}>
+      <div className={`${PAGE_SHELL} space-y-6 pb-20 pt-4 md:pt-6`}>
         {featured && (
           <Link
             href={hrefFor({ sport: featured.name })}
-            className="w-full text-left p-5 md:p-6 rounded-3xl bg-gradient-to-r from-amber-500/10 via-amber-500/5 to-surface border border-amber-500/30 hover:border-amber-400/60 transition-all cursor-pointer group shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
+            className="scoreboard-hero group flex w-full flex-col items-start justify-between gap-4 rounded-panel border border-archive/25 p-5 text-left shadow-card transition-colors hover:border-archive/50 sm:flex-row sm:items-center md:p-6"
           >
             <div className="flex items-center gap-4">
-              <div className="p-3.5 rounded-2xl bg-amber-500/20 text-amber-400 border border-amber-500/30 group-hover:scale-110 transition-transform">
-                <Crown className="w-8 h-8" />
+              <div className="rounded-card border border-archive/25 bg-archive/10 p-3.5 text-archive">
+                <Crown className="h-8 w-8" aria-hidden="true" />
               </div>
               <div>
-                <div className="flex items-center gap-2 flex-wrap">
-                  <span className="text-xs font-extrabold uppercase tracking-wider text-amber-400">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="text-xs font-extrabold uppercase tracking-wider text-archive">
                     Perpetual Trophy
                   </span>
-                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                  <Badge tone="archive" size="sm">
                     {seasonCountBySport.get(featured.slug) ?? 0} seasons digitised
-                  </span>
+                  </Badge>
                 </div>
-                <h3 className="text-xl font-black text-foreground mt-0.5 group-hover:text-amber-400 transition-colors">
+                <h3 className="mt-0.5 text-xl font-black text-foreground transition-colors group-hover:text-archive">
                   General Championship Standings
                 </h3>
-                <p className="text-xs text-muted mt-1">
+                <p className="mt-1 text-xs text-muted">
                   Overall university points across every sport, for both Collegiate and Juniors.
                 </p>
               </div>
             </div>
-            <div className="flex items-center gap-2 shrink-0 self-end sm:self-auto">
-              <span className="text-xs font-bold text-amber-400 group-hover:translate-x-1 transition-transform">
-                View standings
-              </span>
-              <div className="p-2 rounded-xl bg-amber-500/20 text-amber-400">
-                <ChevronRight size={16} />
+            <div className="flex shrink-0 items-center gap-2 self-end sm:self-auto">
+              <span className="text-xs font-bold text-archive">View standings</span>
+              <div className="rounded-control bg-archive/10 p-2 text-archive">
+                <ChevronRight size={16} aria-hidden="true" />
               </div>
             </div>
           </Link>
@@ -306,13 +304,18 @@ export function UAAPArchiveView({ initialData }: { initialData: MergedUAAPData }
               Sports tournaments
             </h2>
             <div className="relative">
-              <Search size={13} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-muted" />
+              <Search
+                size={13}
+                aria-hidden="true"
+                className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted"
+              />
               <input
                 type="search"
                 value={sportQuery}
                 onChange={(e) => setSportQuery(e.target.value)}
                 placeholder="Filter sports"
-                className="pl-7 pr-3 py-1.5 rounded-xl text-xs bg-surface border border-border text-foreground placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-amber-500/40"
+                aria-label="Search sports"
+                className="min-h-10 rounded-control border border-border bg-surface-2 py-1.5 pl-8 pr-3 text-base text-foreground placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-archive/40 sm:text-xs"
               />
             </div>
           </div>
@@ -326,27 +329,27 @@ export function UAAPArchiveView({ initialData }: { initialData: MergedUAAPData }
                   key={sport.slug}
                   href={hrefFor({ sport: sport.name })}
                   className={cn(
-                    "aspect-square flex flex-col items-center justify-between p-4 rounded-2xl bg-surface border border-border transition-all duration-200 group text-center cursor-pointer",
-                    "hover:scale-[1.03] hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-amber-500/50",
+                    "group flex aspect-square flex-col items-center justify-between rounded-card border border-border bg-surface p-4 text-center shadow-card transition-colors",
+                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-archive/50",
                     sport.bgGlow
                   )}
                 >
                   <span
                     className={cn(
-                      "text-[10px] font-semibold px-2 py-0.5 rounded-md",
+                      "rounded-md px-2 py-0.5 text-3xs font-semibold",
                       count > 0 ? "bg-elevated text-muted" : "bg-elevated/50 text-muted/60"
                     )}
                   >
                     {count > 0 ? `${count} ${count === 1 ? "season" : "seasons"}` : "No data yet"}
                   </span>
 
-                  <div className="my-auto transition-transform group-hover:scale-110">
-                    <div className={cn("p-3 rounded-2xl bg-elevated/60 shadow-inner", sport.color)}>
-                      <Icon className="w-8 h-8 sm:w-9 sm:h-9" />
+                  <div className="my-auto">
+                    <div className={cn("rounded-card bg-elevated/60 p-3 shadow-inner", sport.color)}>
+                      <Icon className="h-8 w-8 sm:h-9 sm:w-9" />
                     </div>
                   </div>
 
-                  <span className="text-sm font-bold text-foreground group-hover:text-amber-400 transition-colors block truncate w-full">
+                  <span className="block w-full truncate text-sm font-bold text-foreground transition-colors group-hover:text-archive">
                     {sport.name}
                   </span>
                 </Link>
@@ -372,40 +375,40 @@ export function UAAPArchiveView({ initialData }: { initialData: MergedUAAPData }
 
   if (!currentSeason) {
     return (
-      <div className={`${PAGE_SHELL} space-y-6 pb-20 pt-4 md:pt-6 animate-in fade-in slide-in-from-bottom-2 duration-200`}>
+      <div className={`${PAGE_SHELL} space-y-6 pb-20 pt-4 md:pt-6`}>
         <div className="flex flex-wrap items-center justify-between gap-4 border-b border-border/60 pb-4">
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-3">
             <Link
               href={hrefFor({})}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-surface border border-border text-muted hover:text-foreground hover:bg-elevated transition-colors cursor-pointer"
+              className="inline-flex min-h-10 items-center gap-1.5 rounded-control border border-border bg-surface-2 px-3 text-xs font-semibold text-muted transition-colors hover:bg-elevated hover:text-foreground"
             >
-              <ArrowLeft size={14} />
+              <ArrowLeft size={14} aria-hidden="true" />
               <span>All sports</span>
             </Link>
             <div className="flex items-center gap-2.5">
-              <div className={cn("p-2 rounded-xl bg-elevated/70", sportMeta.color)}>
-                <SportIcon className="w-5 h-5" />
+              <div className={cn("rounded-control bg-elevated/70 p-2", sportMeta.color)}>
+                <SportIcon className="h-5 w-5" />
               </div>
               <h2 className="text-xl font-bold text-foreground">{sportMeta.name}</h2>
             </div>
           </div>
-          <span className="text-xs font-semibold text-muted bg-surface border border-border px-3 py-1 rounded-xl">
+          <Badge tone="neutral">
             {availableSeasons.length} {availableSeasons.length === 1 ? "season" : "seasons"}
-          </span>
+          </Badge>
         </div>
 
         {availableSeasons.length === 0 ? (
-          <div className="bg-surface border border-border rounded-2xl p-12 text-center">
-            <Calendar className="w-10 h-10 text-muted mx-auto mb-3 opacity-40" />
+          <div className="rounded-card border border-border bg-surface p-12 text-center shadow-card">
+            <Calendar className="mx-auto mb-3 h-10 w-10 text-muted opacity-40" aria-hidden="true" />
             <h4 className="text-sm font-bold text-foreground">Nothing digitised yet</h4>
-            <p className="text-xs text-muted mt-1 max-w-sm mx-auto">
+            <p className="mx-auto mt-1 max-w-sm text-xs text-muted">
               Historical records for {sportMeta.name} have not been added to the archive.
             </p>
             <Link
               href={hrefFor({})}
-              className="mt-4 inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-elevated hover:bg-elevated/80 border border-border text-foreground transition-all cursor-pointer"
+              className="mt-4 inline-flex min-h-10 items-center gap-1.5 rounded-control border border-border bg-elevated px-3.5 text-xs font-semibold text-foreground transition-colors hover:bg-elevated/80"
             >
-              <ArrowLeft size={14} />
+              <ArrowLeft size={14} aria-hidden="true" />
               <span>Back to all sports</span>
             </Link>
           </div>
@@ -428,26 +431,26 @@ export function UAAPArchiveView({ initialData }: { initialData: MergedUAAPData }
                 <Link
                   key={season}
                   href={seasonHref(season)}
-                  className="flex flex-col justify-between p-5 rounded-2xl bg-surface border border-border transition-all duration-200 text-left group cursor-pointer shadow-sm hover:border-amber-500/60 hover:bg-elevated/40 hover:scale-[1.02] hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-amber-500/50"
+                  className="group flex flex-col justify-between rounded-card border border-border bg-surface p-5 text-left shadow-card transition-colors hover:border-archive/40 hover:bg-elevated/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-archive/50"
                 >
-                  <div className="flex items-start justify-between w-full">
+                  <div className="flex w-full items-start justify-between">
                     <div>
-                      <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500/10 text-amber-400 border border-amber-500/20">
-                        <Trophy size={12} />
+                      <Badge tone="archive" size="sm">
+                        <Trophy size={12} aria-hidden="true" />
                         {info.seasonNumber}
-                      </span>
-                      <h4 className="text-xl font-bold text-foreground mt-2 group-hover:text-amber-400 transition-colors">
+                      </Badge>
+                      <h4 className="mt-2 text-xl font-bold text-foreground transition-colors group-hover:text-archive">
                         {info.year}
                       </h4>
                     </div>
-                    <span className="p-2 rounded-xl bg-elevated group-hover:bg-amber-500 group-hover:text-slate-950 text-muted transition-all">
-                      <ChevronRight size={16} />
+                    <span className="rounded-control bg-elevated p-2 text-muted transition-colors group-hover:bg-archive group-hover:text-bg">
+                      <ChevronRight size={16} aria-hidden="true" />
                     </span>
                   </div>
 
                   {champion && (
                     <div className="mt-3 inline-flex items-center gap-1.5 text-xs font-medium text-muted">
-                      <Trophy size={13} className="text-amber-400 shrink-0" />
+                      <Trophy size={13} aria-hidden="true" className="shrink-0 text-archive" />
                       <span className="truncate">
                         Champion: <strong className="text-foreground">{champion.row.team}</strong> (
                         {champion.division})
@@ -455,17 +458,17 @@ export function UAAPArchiveView({ initialData }: { initialData: MergedUAAPData }
                     </div>
                   )}
 
-                  <div className="mt-4 pt-3.5 border-t border-border/60 flex items-center justify-between text-xs text-muted w-full">
+                  <div className="mt-4 flex w-full items-center justify-between border-t border-border/60 pt-3.5 text-xs text-muted">
                     <span className="flex items-center gap-2 truncate">
                       <span className="flex items-center gap-1">
-                        <Layers size={12} className="text-amber-400" />
+                        <Layers size={12} aria-hidden="true" className="text-archive" />
                         {seasonTables.length}{" "}
                         {seasonTables.length === 1 ? "division" : "divisions"}
                       </span>
                       {hasAwards && (
-                        <span className="px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-400 font-semibold text-[10px]">
+                        <Badge tone="archive" size="sm">
                           Awards
-                        </span>
+                        </Badge>
                       )}
                     </span>
                     <span className="font-semibold text-foreground/80 shrink-0">
@@ -495,33 +498,33 @@ export function UAAPArchiveView({ initialData }: { initialData: MergedUAAPData }
     });
 
   return (
-    <div className={`${PAGE_SHELL} space-y-6 pb-20 pt-4 md:pt-6 animate-in fade-in slide-in-from-bottom-2 duration-200`}>
+    <div className={`${PAGE_SHELL} space-y-6 pb-20 pt-4 md:pt-6`}>
       <div className="flex flex-col gap-4 border-b border-border/60 pb-4 lg:flex-row lg:items-center lg:justify-between">
         <div className="flex min-w-0 flex-wrap items-center gap-3">
           <Link
             href={hrefFor({ sport: sportMeta.name })}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-surface border border-border text-muted hover:text-foreground hover:bg-elevated transition-colors cursor-pointer"
+            className="inline-flex min-h-10 items-center gap-1.5 rounded-control border border-border bg-surface-2 px-3 text-xs font-semibold text-muted transition-colors hover:bg-elevated hover:text-foreground"
           >
-            <ArrowLeft size={14} />
+            <ArrowLeft size={14} aria-hidden="true" />
             <span>Seasons</span>
           </Link>
           <Link
             href={hrefFor({})}
-            className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-medium text-muted hover:text-foreground hover:bg-elevated transition-colors cursor-pointer"
+            className="inline-flex min-h-10 items-center gap-1 rounded-control px-2.5 text-xs font-medium text-muted transition-colors hover:bg-elevated hover:text-foreground"
           >
             All sports
           </Link>
           <div className="flex items-center gap-2.5">
-            <div className={cn("p-2 rounded-xl bg-elevated/70", sportMeta.color)}>
-              <SportIcon className="w-5 h-5" />
+            <div className={cn("rounded-control bg-elevated/70 p-2", sportMeta.color)}>
+              <SportIcon className="h-5 w-5" />
             </div>
             <div>
               <div className="flex items-center gap-2">
                 <h2 className="text-xl font-bold text-foreground">{sportMeta.name}</h2>
                 {currentDivision && (
-                  <span className="text-xs font-bold px-2 py-0.5 rounded-md bg-amber-500/15 text-amber-400 border border-amber-500/25">
+                  <Badge tone="archive" size="sm">
                     {currentDivision}
-                  </span>
+                  </Badge>
                 )}
               </div>
               <span className="text-xs text-muted">{formatSeasonLabel(currentSeason).label}</span>
@@ -533,7 +536,7 @@ export function UAAPArchiveView({ initialData }: { initialData: MergedUAAPData }
           <select
             value={currentSeason}
             onChange={(e) => router.push(seasonHref(e.target.value))}
-            className="max-w-full rounded-xl border border-border bg-surface px-3 py-1.5 text-xs font-bold text-foreground focus:outline-none focus:ring-2 focus:ring-amber-500/40"
+            className="max-w-full min-h-10 rounded-control border border-border bg-surface-2 px-3 text-xs font-bold text-foreground focus:outline-none focus:ring-2 focus:ring-archive/40"
             aria-label="Season"
           >
             {seasonOptions.map((s) => (
@@ -544,16 +547,17 @@ export function UAAPArchiveView({ initialData }: { initialData: MergedUAAPData }
           </select>
 
           {availableDivisions.length > 1 ? (
-            <div className="flex items-center gap-1.5 rounded-xl border border-border bg-surface p-1">
+            <div className="flex items-center gap-1 rounded-control border border-border bg-surface-2 p-1">
               {availableDivisions.map((div) => (
                 <Link
                   key={div}
                   href={navHref({ division: div })}
+                  aria-current={currentDivision === div ? "page" : undefined}
                   className={cn(
-                    "rounded-lg px-3.5 py-1.5 text-xs font-semibold transition-all cursor-pointer",
+                    "inline-flex min-h-10 items-center rounded-control px-3.5 text-xs font-semibold transition-colors",
                     currentDivision === div
-                      ? "bg-primary text-primary-foreground font-bold shadow-sm"
-                      : "text-muted hover:text-foreground hover:bg-elevated"
+                      ? "bg-archive font-bold text-bg"
+                      : "text-muted hover:bg-elevated hover:text-foreground"
                   )}
                 >
                   {div}
@@ -561,7 +565,7 @@ export function UAAPArchiveView({ initialData }: { initialData: MergedUAAPData }
               ))}
             </div>
           ) : currentDivision ? (
-            <div className="flex items-center px-3 py-1.5 bg-surface border border-border rounded-xl text-xs font-bold text-muted">
+            <div className="flex min-h-10 items-center rounded-control border border-border bg-surface-2 px-3 text-xs font-bold text-muted">
               {currentDivision}
             </div>
           ) : null}
@@ -569,22 +573,23 @@ export function UAAPArchiveView({ initialData }: { initialData: MergedUAAPData }
       </div>
 
       {availableTabs.length > 1 && (
-        <div className="flex items-center gap-2 border-b border-border pb-1 overflow-x-auto">
+        <div className="h-scroll -mx-1 flex items-center gap-1.5 overflow-x-auto border-b border-border px-1 pb-1.5">
           {availableTabs.map((tab) => (
             <Link
               key={tab.id}
               href={navHref({ tab: tab.id })}
+              aria-current={activeTab === tab.id ? "page" : undefined}
               className={cn(
-                "inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer whitespace-nowrap",
+                "inline-flex min-h-10 items-center gap-2 whitespace-nowrap rounded-control px-4 text-xs font-bold transition-colors",
                 activeTab === tab.id
-                  ? "bg-amber-500 text-slate-950 shadow-sm"
-                  : "text-muted hover:text-foreground hover:bg-elevated"
+                  ? "bg-archive text-bg"
+                  : "text-muted hover:bg-elevated hover:text-foreground"
               )}
             >
-              {tab.icon}
+              <span aria-hidden="true">{tab.icon}</span>
               <span>{tab.label}</span>
               {tab.count !== undefined && (
-                <span className="text-[10px] px-1.5 rounded-full bg-black/15 font-semibold">
+                <span className="rounded-full bg-black/15 px-1.5 text-3xs font-semibold">
                   {tab.count}
                 </span>
               )}
@@ -596,84 +601,84 @@ export function UAAPArchiveView({ initialData }: { initialData: MergedUAAPData }
       {activeTab === "standings" && (
         <div className="space-y-3">
           {activeTable?.note && (
-            <div className="flex items-start gap-2 p-3 rounded-xl bg-amber-500/10 border border-amber-500/25 text-xs text-amber-200">
-              <Info size={14} className="shrink-0 mt-0.5 text-amber-400" />
-              <span>{activeTable.note}</span>
-            </div>
+            <Notice tone="info" className="border-archive/25 bg-archive/10 text-archive">
+              <span className="flex items-start gap-2">
+                <Info size={14} aria-hidden="true" className="mt-0.5 shrink-0" />
+                <span>{activeTable.note}</span>
+              </span>
+            </Notice>
           )}
 
-          <div className="min-w-0 overflow-hidden rounded-2xl border border-border bg-surface shadow-sm">
-            <div className="overflow-x-auto">
-              <table className="w-full min-w-[36rem] text-left text-sm border-collapse">
-                <thead>
-                  <tr className="border-b border-border bg-elevated/40 text-[11px] font-bold uppercase tracking-wider text-muted">
-                    <th scope="col" className="py-3 px-4 w-14 text-center">Rank</th>
-                    <th scope="col" className="py-3 px-4">School</th>
-                    {activeTable?.columns.map((col) => (
-                      <th key={col.key} className="py-3 px-4 text-center whitespace-nowrap">
-                        {col.label}
-                      </th>
-                    ))}
-                    <th scope="col" className="py-3 px-4">Result / Notes</th>
+          <TableShell>
+            <table className="w-full min-w-[36rem] border-collapse text-left text-sm">
+              <thead>
+                <tr>
+                  <Th sticky className="w-14 px-3 text-center">
+                    Rank
+                  </Th>
+                  <Th className="sticky left-14 z-20 min-w-40 px-3">School</Th>
+                  {activeTable?.columns.map((col) => (
+                    <Th key={col.key} numeric className="px-3">
+                      {col.label}
+                    </Th>
+                  ))}
+                  <Th className="px-3">Result / Notes</Th>
+                </tr>
+              </thead>
+              <tbody className="font-medium">
+                {!activeTable || activeTable.rows.length === 0 ? (
+                  <tr>
+                    <Td
+                      colSpan={(activeTable?.columns.length ?? 0) + 3}
+                      className="py-12 text-center text-muted"
+                    >
+                      No standings recorded for this division.
+                    </Td>
                   </tr>
-                </thead>
-                <tbody className="divide-y divide-border/60 font-medium">
-                  {!activeTable || activeTable.rows.length === 0 ? (
-                    <tr>
-                      <td
-                        colSpan={(activeTable?.columns.length ?? 0) + 3}
-                        className="py-12 text-center text-muted"
-                      >
-                        No standings recorded for this division.
-                      </td>
-                    </tr>
-                  ) : (
-                    activeTable.rows.map((row, idx) => (
-                      <tr
-                        key={`${row.team}-${idx}`}
-                        className="hover:bg-elevated/40 transition-colors"
-                      >
-                        <td className="py-3 px-4 text-center font-bold">
-                          <RankBadge rank={row.rank} details={row.details} />
-                        </td>
-                        <td className="py-3 px-4">
-                          <SchoolCell team={row.team} />
-                        </td>
-                        {activeTable.columns.map((col) => (
-                          <td
-                            key={col.key}
+                ) : (
+                  activeTable.rows.map((row, idx) => (
+                    <tr key={`${row.team}-${idx}`} className="transition-colors hover:bg-elevated/40">
+                      <Td sticky className="w-14 px-3 text-center font-bold">
+                        <RankBadge rank={row.rank} details={row.details} />
+                      </Td>
+                      <Td className="sticky left-14 z-10 bg-surface px-3">
+                        <SchoolCell team={row.team} />
+                      </Td>
+                      {activeTable.columns.map((col) => (
+                        <Td
+                          key={col.key}
+                          numeric
+                          className={cn(
+                            "px-3 font-mono text-xs font-semibold",
+                            col.derived ? "text-muted" : "text-foreground"
+                          )}
+                        >
+                          {formatCellValue(row, col)}
+                        </Td>
+                      ))}
+                      <Td className="px-3 text-xs">
+                        {row.details ? (
+                          <span
                             className={cn(
-                              "py-3 px-4 text-center font-mono text-xs font-semibold",
-                              col.derived ? "text-muted" : "text-foreground"
+                              "font-medium text-muted",
+                              isChampionRow(row.details, row.rank) && "font-bold text-archive"
                             )}
                           >
-                            {formatCellValue(row, col)}
-                          </td>
-                        ))}
-                        <td className="py-3 px-4 text-xs">
-                          {row.details ? (
-                            <span
-                              className={cn(
-                                "font-medium text-muted",
-                                isChampionRow(row.details, row.rank) && "text-amber-400 font-bold"
-                              )}
-                            >
-                              {row.details}
-                            </span>
-                          ) : (
-                            <span className="text-muted">—</span>
-                          )}
-                        </td>
-                      </tr>
-                    ))
-                  )}
-                </tbody>
-              </table>
-            </div>
-          </div>
+                            {row.details}
+                          </span>
+                        ) : (
+                          <span className="text-muted">—</span>
+                        )}
+                      </Td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </TableShell>
 
           {activeTable && (
-            <p className="text-[11px] text-muted px-1">
+            <p className="px-1 text-2xs text-muted">
               {activeTable.division} · {activeTable.stage} · Source: {activeTable.source_page}
             </p>
           )}
@@ -683,12 +688,12 @@ export function UAAPArchiveView({ initialData }: { initialData: MergedUAAPData }
       {activeTab === "awards" && (
         <div className="space-y-6">
           {divisionAwards && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
               {divisionAwards.mvp && (
                 <AwardCard
                   label="Most Valuable Player"
                   icon={<Crown size={24} />}
-                  tone="amber"
+                  tone="archive"
                   player={divisionAwards.mvp.player}
                   school={divisionAwards.mvp.school}
                 />
@@ -697,7 +702,7 @@ export function UAAPArchiveView({ initialData }: { initialData: MergedUAAPData }
                 <AwardCard
                   label="Rookie of the Year"
                   icon={<Sparkles size={24} />}
-                  tone="sky"
+                  tone="info"
                   player={divisionAwards.rookie_of_the_year.player}
                   school={divisionAwards.rookie_of_the_year.school}
                 />
@@ -705,14 +710,14 @@ export function UAAPArchiveView({ initialData }: { initialData: MergedUAAPData }
 
               {Array.isArray(divisionAwards.mythical_five) &&
                 divisionAwards.mythical_five.length > 0 && (
-                  <div className="p-5 rounded-2xl bg-surface border border-border shadow-sm md:col-span-2">
-                    <div className="flex items-center gap-2 mb-3">
-                      <Medal className="w-5 h-5 text-amber-400" />
-                      <h4 className="text-sm font-bold text-foreground uppercase tracking-wider">
+                  <div className="rounded-card border border-border bg-surface p-5 shadow-card md:col-span-2 lg:col-span-1">
+                    <div className="mb-3 flex items-center gap-2">
+                      <Medal className="h-5 w-5 text-archive" aria-hidden="true" />
+                      <h4 className="text-sm font-bold uppercase tracking-wider text-foreground">
                         Mythical selection
                       </h4>
                     </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                    <div className="grid grid-cols-1 gap-2.5">
                       {divisionAwards.mythical_five.map((player, idx) => {
                         const name =
                           typeof player === "string" ? player : player.name || player.player;
@@ -722,20 +727,20 @@ export function UAAPArchiveView({ initialData }: { initialData: MergedUAAPData }
                         return (
                           <div
                             key={idx}
-                            className="p-3 rounded-xl bg-elevated/60 border border-border flex items-center justify-between gap-2"
+                            className="flex min-h-11 items-center justify-between gap-2 rounded-control border border-border bg-elevated/60 px-3 py-2"
                           >
                             <div className="min-w-0">
-                              <span className="font-bold text-sm text-foreground block truncate">
+                              <span className="block truncate text-sm font-bold text-foreground">
                                 {name}
                               </span>
                               {position && (
-                                <span className="text-[11px] text-muted">{position}</span>
+                                <span className="text-2xs text-muted">{position}</span>
                               )}
                             </div>
                             {school && (
                               <span
                                 className={cn(
-                                  "px-2 py-0.5 rounded border text-[11px] font-bold shrink-0",
+                                  "shrink-0 rounded border px-2 py-0.5 text-2xs font-bold",
                                   theme.bg,
                                   theme.text
                                 )}
@@ -753,18 +758,18 @@ export function UAAPArchiveView({ initialData }: { initialData: MergedUAAPData }
           )}
 
           {chessMedalists && (
-            <div className="p-5 rounded-2xl bg-surface border border-border shadow-sm">
-              <div className="flex items-center gap-2 mb-4">
-                <Crown className="w-5 h-5 text-amber-400" />
+            <div className="rounded-card border border-border bg-surface p-5 shadow-card">
+              <div className="mb-4 flex items-center gap-2">
+                <Crown className="h-5 w-5 text-archive" aria-hidden="true" />
                 <h4 className="text-base font-bold text-foreground">
                   Individual board medalists ({currentDivision})
                 </h4>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {Object.entries(chessMedalists).map(([board, medalists]) => (
                   <div
                     key={board}
-                    className="p-4 rounded-xl bg-elevated/50 border border-border space-y-2.5"
+                    className="space-y-2.5 rounded-card border border-border bg-elevated/50 p-4"
                   >
                     <h5 className="text-xs font-bold uppercase tracking-wider text-muted">
                       Board {board}
@@ -772,24 +777,36 @@ export function UAAPArchiveView({ initialData }: { initialData: MergedUAAPData }
                     <div className="space-y-1.5 text-xs">
                       {medalists.map((m, idx) => {
                         const theme = getSchoolTheme(m.school);
-                        const emoji =
-                          m.medal === "gold"
-                            ? "🥇"
-                            : m.medal === "silver"
-                              ? "🥈"
-                              : m.medal === "bronze"
-                                ? "🥉"
-                                : "•";
+                        const medalRank =
+                          m.medal === "gold" ? 1 : m.medal === "silver" ? 2 : m.medal === "bronze" ? 3 : null;
                         return (
                           <div key={idx} className="flex items-center justify-between gap-2">
                             <span className="flex items-center gap-1.5 truncate">
-                              <span>{emoji}</span>
-                              <strong className="text-foreground truncate">{m.player}</strong>
+                              {medalRank ? (
+                                <span
+                                  aria-label={`${m.medal} medal`}
+                                  className={cn(
+                                    "inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full border",
+                                    medalRank === 1
+                                      ? "border-archive/30 bg-archive/15 text-archive"
+                                      : medalRank === 2
+                                        ? "border-border-strong bg-elevated text-foreground"
+                                        : "border-border bg-surface-2 text-muted"
+                                  )}
+                                >
+                                  <Medal size={11} aria-hidden="true" />
+                                </span>
+                              ) : (
+                                <span aria-hidden="true" className="text-muted">
+                                  •
+                                </span>
+                              )}
+                              <strong className="truncate text-foreground">{m.player}</strong>
                             </span>
                             {m.school && (
                               <span
                                 className={cn(
-                                  "px-1.5 py-0.5 rounded border text-[10px] font-bold shrink-0",
+                                  "shrink-0 rounded border px-1.5 py-0.5 text-3xs font-bold",
                                   theme.bg,
                                   theme.text
                                 )}
@@ -808,7 +825,7 @@ export function UAAPArchiveView({ initialData }: { initialData: MergedUAAPData }
           )}
 
           {!divisionAwards && !chessMedalists && (
-            <div className="p-12 text-center text-muted bg-surface border border-border rounded-2xl">
+            <div className="rounded-card border border-border bg-surface p-12 text-center text-muted shadow-card">
               No individual awards recorded for this division in {currentSeason}.
             </div>
           )}
@@ -822,13 +839,13 @@ export function UAAPArchiveView({ initialData }: { initialData: MergedUAAPData }
               <h4 className="text-xs font-bold uppercase tracking-wider text-muted capitalize">
                 {divisionKey.replace(/_/g, " ")}
               </h4>
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
                 {Object.entries(categories as Record<string, UAAPLeaderEntry[]>).map(([category, leaders]) => (
                   <div
                     key={category}
-                    className="p-4 rounded-2xl bg-surface border border-border shadow-sm"
+                    className="rounded-card border border-border bg-surface p-4 shadow-card"
                   >
-                    <h5 className="text-xs font-bold text-foreground uppercase tracking-wider mb-2.5 capitalize">
+                    <h5 className="mb-2.5 text-xs font-bold uppercase capitalize tracking-wider text-foreground">
                       {category.replace(/_/g, " ")}
                     </h5>
                     <div className="space-y-1.5">
@@ -838,19 +855,19 @@ export function UAAPArchiveView({ initialData }: { initialData: MergedUAAPData }
                           return (
                             <div
                               key={idx}
-                              className="flex items-center justify-between gap-2 text-xs"
+                              className="flex min-h-8 items-center justify-between gap-2 text-xs"
                             >
-                              <span className="flex items-center gap-2 min-w-0">
-                                <span className="w-4 text-right text-muted font-mono">
+                              <span className="flex min-w-0 items-center gap-2">
+                                <span className="w-4 text-right font-mono text-muted">
                                   {leader.rank ?? idx + 1}
                                 </span>
-                                <span className="font-semibold text-foreground truncate">
+                                <span className="truncate font-semibold text-foreground">
                                   {leader.player}
                                 </span>
                                 {leader.school && (
                                   <span
                                     className={cn(
-                                      "px-1.5 py-0.5 rounded border text-[10px] font-bold shrink-0",
+                                      "shrink-0 rounded border px-1.5 py-0.5 text-3xs font-bold",
                                       theme.bg,
                                       theme.text
                                     )}
@@ -859,7 +876,7 @@ export function UAAPArchiveView({ initialData }: { initialData: MergedUAAPData }
                                   </span>
                                 )}
                               </span>
-                              <span className="font-mono font-bold text-amber-400 shrink-0">
+                              <span className="shrink-0 font-mono font-bold text-archive">
                                 {String(leader.value ?? "—")}
                               </span>
                             </div>
@@ -887,7 +904,7 @@ function AwardCard({
 }: {
   label: string;
   icon: React.ReactNode;
-  tone: "amber" | "sky";
+  tone: "archive" | "info";
   player: string;
   school: string;
 }) {
@@ -895,33 +912,34 @@ function AwardCard({
   return (
     <div
       className={cn(
-        "p-5 rounded-2xl bg-surface border shadow-sm flex items-start gap-4",
-        tone === "amber" ? "border-amber-500/30" : "border-sky-500/30"
+        "flex items-start gap-4 rounded-card border bg-surface p-5 shadow-card",
+        tone === "archive" ? "border-archive/30" : "border-info/30"
       )}
     >
       <div
         className={cn(
-          "p-3 rounded-xl",
-          tone === "amber" ? "bg-amber-500/20 text-amber-400" : "bg-sky-500/20 text-sky-400"
+          "rounded-control p-3",
+          tone === "archive" ? "bg-archive/15 text-archive" : "bg-info/15 text-info"
         )}
+        aria-hidden="true"
       >
         {icon}
       </div>
-      <div className="flex-1 min-w-0">
+      <div className="min-w-0 flex-1">
         <span
           className={cn(
-            "text-[11px] font-bold uppercase tracking-wider block",
-            tone === "amber" ? "text-amber-400" : "text-sky-400"
+            "block text-2xs font-bold uppercase tracking-wider",
+            tone === "archive" ? "text-archive" : "text-info"
           )}
         >
           {label}
         </span>
-        <h3 className="text-lg font-black text-foreground mt-0.5">{player}</h3>
+        <h3 className="mt-0.5 text-lg font-black text-foreground">{player}</h3>
         {school && (
           <div className="mt-2 flex items-center gap-2">
             <span
               className={cn(
-                "px-2.5 py-0.5 rounded-md border text-xs font-bold",
+                "rounded-md border px-2.5 py-0.5 text-xs font-bold",
                 theme.bg,
                 theme.text
               )}

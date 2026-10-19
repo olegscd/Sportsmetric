@@ -1,9 +1,11 @@
+import { Badge } from "@/components/ui/Badge";
+import { TableShell, Td, Th } from "@/components/ui/Table";
 import { useSportsData } from "@/context/SportsDataContext";
 import type { BoxScoreItem, Game, Player } from "@/types/sports";
 
 function formatPvlPlayerName(playerObj?: Player, rawItemPlayerId?: string): string {
   let fullName = playerObj?.name;
-  
+
   if (!fullName && rawItemPlayerId) {
     const teamWords = new Set([
       "chery", "tiggo", "army", "black", "mamba", "f2", "logistics", "farm", "fresh",
@@ -73,23 +75,17 @@ export function BoxScoreTable({
     league === "PVL" || items.some((item) => item.atkPts !== undefined || item.digs !== undefined);
 
   if (isVolleyball) {
-    const sumPlayerPts = items.reduce((acc, item) => acc + (item.pts || 0), 0);
-
-    // Calculate Opponent Errors & Team Total Points
-    const oppErrors = Math.max(10, Math.round(sumPlayerPts * 0.22));
-    const teamTotalPts = sumPlayerPts + oppErrors;
-
     return (
-      <div className="overflow-x-auto">
+      <TableShell>
         <table className="w-full min-w-[300px] text-left text-xs">
           <thead>
-            <tr className="border-b border-border text-muted font-semibold uppercase tracking-wider">
-              <th scope="col" className="w-10 py-2.5 px-2 text-center font-bold text-foreground">#</th>
-              <th scope="col" className="py-2.5 px-2 font-bold text-foreground">Player</th>
-              <th scope="col" className="w-16 py-2.5 px-2 text-right font-bold text-foreground">PTS</th>
+            <tr>
+              <Th sticky className="w-10 px-2 text-center">#</Th>
+              <Th className="sticky left-10 z-20 px-2">Player</Th>
+              <Th numeric className="w-16 px-2">PTS</Th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-border/40">
+          <tbody>
             {items.map((item) => {
               const player =
                 players.find((p) => p.id === item.playerId) ||
@@ -112,69 +108,47 @@ export function BoxScoreTable({
               const isLibero = player?.position === "L" || Boolean(item.is_libero);
 
               return (
-                <tr
-                  key={item.playerId}
-                  className="hover:bg-surface/60 transition-colors"
-                >
-                  <td className="w-10 py-2 px-2 text-center tabular-nums text-muted font-medium">
+                <tr key={item.playerId} className="transition-colors hover:bg-elevated/50">
+                  <Td sticky className="w-10 px-2 text-center text-xs font-medium text-muted">
                     {jerseyNum}
-                  </td>
-                  <td className="py-2 px-2 font-semibold text-foreground flex items-center gap-1.5">
-                    <span>{displayName}</span>
-                    {isLibero && (
-                      <span className="rounded bg-amber-500/20 px-1 py-0.5 text-[9px] font-bold text-amber-400">
-                        L
-                      </span>
-                    )}
-                  </td>
-                  <td className="w-16 py-2 px-2 text-right tabular-nums font-bold text-foreground">
+                  </Td>
+                  <Td className="sticky left-10 z-10 bg-surface px-2 text-xs font-semibold">
+                    <span className="flex items-center gap-1.5">
+                      <span className="truncate">{displayName}</span>
+                      {isLibero && (
+                        <Badge tone="archive" size="sm">
+                          L
+                        </Badge>
+                      )}
+                    </span>
+                  </Td>
+                  <Td numeric className="w-16 px-2 text-xs font-bold">
                     {item.pts}
-                  </td>
+                  </Td>
                 </tr>
               );
             })}
-
-
-            {/* Summary Row 1: Opponent Errors */}
-            <tr className="bg-surface/30 italic text-muted">
-              <td className="w-10 py-2 px-2 text-center font-medium">—</td>
-              <td className="py-2 px-2 font-medium">Opponent Errors</td>
-              <td className="w-16 py-2 px-2 text-right tabular-nums font-semibold">
-                {oppErrors}
-              </td>
-            </tr>
-
-            {/* Summary Row 2: TEAM TOTALS */}
-            <tr className="border-t-2 border-border font-bold bg-surface/50 text-foreground">
-              <td className="w-10 py-2.5 px-2 text-center font-bold">—</td>
-              <td className="py-2.5 px-2 font-bold uppercase tracking-wider">
-                TEAM TOTALS
-              </td>
-              <td className="w-16 py-2.5 px-2 text-right tabular-nums font-extrabold text-primary text-sm">
-                {teamTotalPts}
-              </td>
-            </tr>
           </tbody>
         </table>
-      </div>
+      </TableShell>
     );
   }
 
   return (
-    <div className="overflow-x-auto">
+    <TableShell>
       <table className="w-full min-w-[500px] text-left text-xs">
         <thead>
-          <tr className="text-muted border-b border-border">
-            <th scope="col" className="py-2 pr-2 font-medium">Player</th>
-            <th scope="col" className="px-1.5 py-2 text-right font-medium">MIN</th>
-            <th scope="col" className="px-1.5 py-2 text-right font-medium">PTS</th>
-            <th scope="col" className="px-1.5 py-2 text-right font-medium">REB</th>
-            <th scope="col" className="px-1.5 py-2 text-right font-medium">AST</th>
-            <th scope="col" className="px-1.5 py-2 text-right font-medium">STL</th>
-            <th scope="col" className="px-1.5 py-2 text-right font-medium">BLK</th>
-            <th scope="col" className="px-1.5 py-2 text-right font-medium">TO</th>
-            <th scope="col" className="px-1.5 py-2 text-right font-medium">PF</th>
-            <th scope="col" className="px-1.5 py-2 text-right font-medium">FG</th>
+          <tr>
+            <Th sticky className="min-w-36">Player</Th>
+            <Th numeric className="px-1.5">MIN</Th>
+            <Th numeric className="px-1.5">PTS</Th>
+            <Th numeric className="px-1.5">REB</Th>
+            <Th numeric className="px-1.5">AST</Th>
+            <Th numeric className="px-1.5">STL</Th>
+            <Th numeric className="px-1.5">BLK</Th>
+            <Th numeric className="px-1.5">TO</Th>
+            <Th numeric className="px-1.5">PF</Th>
+            <Th numeric className="px-1.5">FG</Th>
           </tr>
         </thead>
         <tbody>
@@ -188,30 +162,27 @@ export function BoxScoreTable({
               ? `#${player.jerseyNumber} ${player.name}`
               : item.playerId || `Player #${idx + 1}`;
 
-
             return (
-              <tr key={itemKey} className="border-t border-border/50 hover:bg-surface/60 transition-colors">
-                <td className="max-w-[140px] truncate py-2 pr-2 font-semibold text-foreground">
+              <tr key={itemKey} className="transition-colors hover:bg-elevated/50">
+                <Td sticky className="max-w-36 truncate text-xs font-semibold">
                   {displayName}
-                </td>
-                <td className="px-1.5 py-2 text-right tabular-nums text-muted">{item.min}</td>
-                <td className="px-1.5 py-2 text-right tabular-nums font-bold text-foreground">
-                  {item.pts}
-                </td>
-                <td className="px-1.5 py-2 text-right tabular-nums text-muted">{item.reb}</td>
-                <td className="px-1.5 py-2 text-right tabular-nums text-muted">{item.ast}</td>
-                <td className="px-1.5 py-2 text-right tabular-nums text-muted">{item.stl ?? 0}</td>
-                <td className="px-1.5 py-2 text-right tabular-nums text-muted">{item.blk ?? 0}</td>
-                <td className="px-1.5 py-2 text-right tabular-nums text-muted">{item.to ?? 0}</td>
-                <td className="px-1.5 py-2 text-right tabular-nums text-muted">{item.pf ?? 0}</td>
-                <td className="px-1.5 py-2 text-right tabular-nums text-muted">
+                </Td>
+                <Td numeric className="px-1.5 text-xs text-muted">{item.min}</Td>
+                <Td numeric className="px-1.5 text-xs font-bold">{item.pts}</Td>
+                <Td numeric className="px-1.5 text-xs text-muted">{item.reb}</Td>
+                <Td numeric className="px-1.5 text-xs text-muted">{item.ast}</Td>
+                <Td numeric className="px-1.5 text-xs text-muted">{item.stl ?? 0}</Td>
+                <Td numeric className="px-1.5 text-xs text-muted">{item.blk ?? 0}</Td>
+                <Td numeric className="px-1.5 text-xs text-muted">{item.to ?? 0}</Td>
+                <Td numeric className="px-1.5 text-xs text-muted">{item.pf ?? 0}</Td>
+                <Td numeric className="px-1.5 text-xs text-muted">
                   {item.fgM}-{item.fgA}
-                </td>
+                </Td>
               </tr>
             );
           })}
         </tbody>
       </table>
-    </div>
+    </TableShell>
   );
 }

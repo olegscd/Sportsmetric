@@ -36,6 +36,22 @@ export function getEffectiveGameStatus(
   return "UPCOMING";
 }
 
+/**
+ * Counts games that are actually live right now, using the same effective
+ * status derivation as the match cards so navigation badges never disagree
+ * with the Match Center.
+ */
+export function countLiveGames(
+  games: (Pick<Game, "status" | "startTime"> & { league?: League })[],
+  currentTime = Date.now()
+): number {
+  return games.reduce(
+    (count, game) =>
+      count + (getEffectiveGameStatus(game, currentTime) === "LIVE" ? 1 : 0),
+    0
+  );
+}
+
 
 
 export interface DerivedTeamStandings {

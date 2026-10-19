@@ -11,6 +11,9 @@ import {
 import { ColumnEditor } from "@/components/admin/uaap/ColumnEditor";
 import { BulkImportPanel } from "@/components/admin/uaap/BulkImportPanel";
 import { CoveragePanel } from "@/components/admin/uaap/CoveragePanel";
+import { Badge } from "@/components/ui/Badge";
+import { useConfirm } from "@/components/ui/ConfirmDialog";
+import { TableShell, Td, Th } from "@/components/ui/Table";
 import {
   COLUMN_PRESETS,
   createEmptyTable,
@@ -31,6 +34,8 @@ import {
 import { extractStandingsFromReport } from "@/lib/uaap-import";
 import { UAAP_SCHOOLS, getSchoolCode, getSchoolName, getSchoolTheme, matchSchoolCode } from "@/lib/uaap-schools";
 import {
+  ArrowDown,
+  ArrowUp,
   Award,
   BookOpen,
   ChevronDown,
@@ -93,20 +98,22 @@ function Section({
 }) {
   const [open, setOpen] = useState(defaultOpen);
   return (
-    <div className="rounded-2xl bg-surface border border-border shadow-sm overflow-hidden">
+    <div className="overflow-hidden rounded-card border border-border bg-surface shadow-card">
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        className="w-full flex items-center justify-between gap-3 p-4 text-left cursor-pointer hover:bg-elevated/40 transition-colors"
+        aria-expanded={open}
+        className="flex min-h-12 w-full items-center justify-between gap-3 p-4 text-left transition-colors hover:bg-elevated/40"
       >
         <span className="flex items-center gap-2">
-          <span className="text-amber-400">{icon}</span>
+          <span className="text-archive" aria-hidden="true">{icon}</span>
           <span className="text-sm font-bold text-foreground">{title}</span>
-          {subtitle && <span className="text-xs text-muted hidden sm:inline">{subtitle}</span>}
+          {subtitle && <span className="hidden text-xs text-muted sm:inline">{subtitle}</span>}
         </span>
         <ChevronDown
           size={16}
-          className={cn("text-muted transition-transform shrink-0", open && "rotate-180")}
+          aria-hidden="true"
+          className={cn("shrink-0 text-muted transition-transform", open && "rotate-180")}
         />
       </button>
       {open && <div className="px-4 pb-4 border-t border-border/60 pt-4">{children}</div>}
@@ -155,6 +162,7 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
   const [season, setSeason] = useState<string>(FALLBACK_SEASONS[0]);
   const [sport, setSport] = useState<string>("Basketball");
   const [division, setDivision] = useState<string>("Men's");
+  const confirm = useConfirm();
 
   const divisions = useMemo(() => {
     const fromData = tables
@@ -494,7 +502,12 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
 
   const handleDelete = async () => {
     if (!archiveLoaded || isSaving) return;
-    if (!confirm(`Delete all recorded standings for ${season} ${sport} (${division})?`)) return;
+    const confirmed = await confirm({
+      title: `Delete all recorded standings for ${season} ${sport} (${division})?`,
+      description: "This can't be undone.",
+      confirmLabel: "Delete standings",
+    });
+    if (!confirmed) return;
 
     const res = await deleteUAAPArchiveDivision(season, sport, division, divisionVersions[makeDivisionKey(season, sport, division)] ?? 0);
     if (!res.success) {
@@ -524,8 +537,17 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
   // Navigation guard
   // -------------------------------------------------------------------------
 
-  const switchTo = (next: { season?: string; sport?: string; division?: string }) => {
-    if (isDirty && !confirm("You have unsaved changes. Discard them and switch?")) return;
+  const switchTo = async (next: { season?: string; sport?: string; division?: string }) => {
+    if (
+      isDirty &&
+      !(await confirm({
+        title: "You have unsaved changes.",
+        description: "Discard them and switch?",
+        confirmLabel: "Discard changes",
+      }))
+    ) {
+      return;
+    }
     if (next.season !== undefined) setSeason(next.season);
     if (next.sport !== undefined) setSport(next.sport);
     if (next.division !== undefined) setDivision(normalizeDivision(next.division));
@@ -579,25 +601,25 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
       </datalist>
 
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border pb-4">
+      <div className="flex flex-col justify-between gap-4 border-b border-border pb-4 sm:flex-row sm:items-center">
         <div>
-          <h2 className="text-xl font-black text-foreground flex items-center gap-2">
-            <span className="p-2 rounded-xl bg-amber-500/20 text-amber-400 border border-amber-500/30">
-              <LayoutGrid size={18} />
+          <h2 className="flex items-center gap-2 text-xl font-black text-foreground">
+            <span className="rounded-control border border-archive/30 bg-archive/15 p-2 text-archive">
+              <LayoutGrid size={18} aria-hidden="true" />
             </span>
             UAAP Historical Archive
           </h2>
-          <p className="text-xs text-muted mt-1">
+          <p className="mt-1 text-xs text-muted">
             Each division defines its own columns, so a 1988 placement list and a 2003 win-loss table
             can both be recorded accurately.
           </p>
         </div>
 
-        <div className="flex items-center gap-2.5">
+        <div className="flex flex-wrap items-center gap-2.5">
           {isDirty && (
-            <span className="text-[11px] font-bold text-amber-400 px-2 py-1 rounded-lg bg-amber-500/10 border border-amber-500/30">
+            <Badge tone="archive">
               Unsaved
-            </span>
+            </Badge>
           )}
           <a
             href={`/uaap?sport=${encodeURIComponent(sport)}&season=${encodeURIComponent(
@@ -605,34 +627,35 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
             )}&division=${encodeURIComponent(division)}`}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-surface border border-border text-muted hover:text-foreground hover:bg-elevated transition-colors"
+            className="inline-flex min-h-10 items-center gap-1.5 rounded-control border border-border bg-surface px-3 text-xs font-semibold text-muted transition-colors hover:bg-elevated hover:text-foreground"
           >
             <span>Preview</span>
-            <ExternalLink size={13} />
+            <ExternalLink size={13} aria-hidden="true" />
           </a>
           <button
             type="button"
             onClick={handleSave}
             disabled={isSaving}
-            className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-xl text-xs font-bold bg-amber-500 text-slate-950 hover:bg-amber-400 active:scale-95 transition-all shadow-sm cursor-pointer disabled:opacity-50"
+            className="inline-flex min-h-10 items-center gap-1.5 rounded-control bg-archive px-4 text-xs font-bold text-bg transition-colors hover:bg-archive/90 disabled:opacity-50"
           >
-            <Save size={14} />
+            <Save size={14} aria-hidden="true" />
             <span>{isSaving ? "Saving…" : "Save (Ctrl+S)"}</span>
           </button>
         </div>
       </div>
 
       {/* Selectors */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-5 rounded-2xl bg-surface border border-border shadow-sm">
+      <div className="grid grid-cols-1 gap-4 rounded-card border border-border bg-surface p-5 shadow-card md:grid-cols-3">
         <div>
-          <label className="text-[11px] font-bold uppercase tracking-wider text-muted block mb-1.5">
+          <label htmlFor="uaap-season" className="mb-1.5 block text-2xs font-bold uppercase tracking-wider text-muted">
             Season
           </label>
           <div className="flex items-center gap-2">
             <select
+              id="uaap-season"
               value={season}
-              onChange={(e) => switchTo({ season: e.target.value })}
-              className="flex-1 px-3 py-2 rounded-xl text-xs font-bold bg-elevated border border-border text-foreground focus:outline-none focus:ring-2 focus:ring-amber-500/50"
+              onChange={(e) => void switchTo({ season: e.target.value })}
+              className="min-h-11 flex-1 rounded-control border border-border bg-elevated px-3 text-xs font-bold text-foreground focus:outline-none focus:ring-2 focus:ring-archive/50"
             >
               {seasons.map((s) => (
                 <option key={s} value={s}>
@@ -641,13 +664,14 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
               ))}
             </select>
           </div>
-          <div className="flex items-center gap-1.5 mt-2">
+          <div className="mt-2 flex items-center gap-1.5">
             <input
               type="text"
               value={newSeason}
+              aria-label="New season"
               onChange={(e) => setNewSeason(e.target.value)}
               placeholder="Add season, e.g. 2004-2005"
-              className="flex-1 px-2.5 py-1 rounded-lg text-[11px] bg-elevated border border-border text-foreground placeholder:text-muted"
+              className="min-h-10 flex-1 rounded-control border border-border bg-elevated px-2.5 text-2xs text-foreground placeholder:text-muted"
             />
             <button
               type="button"
@@ -659,25 +683,26 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
                   return;
                 }
                 setCustomSeasons((prev) => Array.from(new Set([...prev, value])));
-                switchTo({ season: value });
+                void switchTo({ season: value });
                 setNewSeason("");
               }}
-              className="p-1.5 rounded-lg bg-elevated border border-border text-muted hover:text-foreground cursor-pointer"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-control border border-border bg-elevated text-muted hover:text-foreground"
               aria-label="Add season"
             >
-              <Plus size={13} />
+              <Plus size={14} aria-hidden="true" />
             </button>
           </div>
         </div>
 
         <div>
-          <label className="text-[11px] font-bold uppercase tracking-wider text-muted block mb-1.5">
+          <label htmlFor="uaap-sport" className="mb-1.5 block text-2xs font-bold uppercase tracking-wider text-muted">
             Sport
           </label>
           <select
+            id="uaap-sport"
             value={sport}
-            onChange={(e) => switchTo({ sport: e.target.value })}
-            className="w-full px-3 py-2 rounded-xl text-xs font-bold bg-elevated border border-border text-foreground focus:outline-none focus:ring-2 focus:ring-amber-500/50"
+            onChange={(e) => void switchTo({ sport: e.target.value })}
+            className="min-h-11 w-full rounded-control border border-border bg-elevated px-3 text-xs font-bold text-foreground focus:outline-none focus:ring-2 focus:ring-archive/50"
           >
             {ALL_SPORTS.map((s) => (
               <option key={s} value={s}>
@@ -688,46 +713,48 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
         </div>
 
         <div>
-          <label className="text-[11px] font-bold uppercase tracking-wider text-muted block mb-1.5">
+          <span id="uaap-division-label" className="mb-1.5 block text-2xs font-bold uppercase tracking-wider text-muted">
             Division
-          </label>
-          <div className="flex flex-wrap items-center gap-1.5">
+          </span>
+          <div role="group" aria-labelledby="uaap-division-label" className="flex flex-wrap items-center gap-1.5">
             {divisions.map((div) => (
               <button
                 key={div}
                 type="button"
-                onClick={() => switchTo({ division: div })}
+                aria-pressed={normalizeDivision(division) === normalizeDivision(div)}
+                onClick={() => void switchTo({ division: div })}
                 className={cn(
-                  "px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer",
+                  "min-h-10 rounded-control px-3 text-xs font-semibold transition-colors",
                   normalizeDivision(division) === normalizeDivision(div)
-                    ? "bg-amber-500 text-slate-950 font-bold shadow-sm"
-                    : "bg-elevated border border-border text-muted hover:text-foreground"
+                    ? "bg-archive font-bold text-bg"
+                    : "border border-border bg-elevated text-muted hover:text-foreground"
                 )}
               >
                 {div}
               </button>
             ))}
           </div>
-          <div className="flex items-center gap-1.5 mt-2">
+          <div className="mt-2 flex items-center gap-1.5">
             <input
               type="text"
               value={newDivision}
+              aria-label="New division"
               onChange={(e) => setNewDivision(e.target.value)}
               placeholder="Custom division"
-              className="flex-1 px-2.5 py-1 rounded-lg text-[11px] bg-elevated border border-border text-foreground placeholder:text-muted"
+              className="min-h-10 flex-1 rounded-control border border-border bg-elevated px-2.5 text-2xs text-foreground placeholder:text-muted"
             />
             <button
               type="button"
               onClick={() => {
                 const value = newDivision.trim();
                 if (!value) return;
-                switchTo({ division: value });
+                void switchTo({ division: value });
                 setNewDivision("");
               }}
-              className="p-1.5 rounded-lg bg-elevated border border-border text-muted hover:text-foreground cursor-pointer"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-control border border-border bg-elevated text-muted hover:text-foreground"
               aria-label="Add division"
             >
-              <Plus size={13} />
+              <Plus size={14} aria-hidden="true" />
             </button>
           </div>
         </div>
@@ -744,7 +771,7 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
           sports={ALL_SPORTS}
           activeSeason={season}
           activeSport={sport}
-          onSelect={(s, sp, div) => switchTo({ season: s, sport: sp, division: div ?? "Men's" })}
+          onSelect={(s, sp, div) => void switchTo({ season: s, sport: sp, division: div ?? "Men's" })}
         />
       </Section>
 
@@ -813,15 +840,15 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
       )}
 
       {/* Standings editor */}
-      <div className="p-5 rounded-3xl bg-surface border border-border shadow-sm space-y-4">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-border/60 pb-3">
-          <div className="flex items-center gap-2">
+      <div className="space-y-4 rounded-card border border-border bg-surface p-4 shadow-card sm:p-5">
+        <div className="flex flex-col justify-between gap-3 border-b border-border/60 pb-3 sm:flex-row sm:items-center">
+          <div className="flex flex-wrap items-center gap-2">
             <h3 className="text-sm font-bold text-foreground">
               Standings ({draft.rows.length} {draft.rows.length === 1 ? "row" : "rows"})
             </h3>
-            <span className="px-2 py-0.5 rounded-md text-[10px] font-bold bg-elevated text-muted">
+            <Badge tone="neutral">
               {season} · {sport} · {normalizeDivision(division)}
-            </span>
+            </Badge>
           </div>
 
           <div className="flex flex-wrap items-center gap-2">
@@ -831,64 +858,65 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
                 setImportSeed(undefined);
                 setShowImport((v) => !v);
               }}
-              className="px-2.5 py-1 rounded-lg text-xs font-medium bg-elevated border border-border text-foreground hover:bg-elevated/80 inline-flex items-center gap-1 cursor-pointer"
+              className="inline-flex min-h-10 cursor-pointer items-center gap-1.5 rounded-control border border-border bg-surface-2 px-3 text-2xs font-semibold text-foreground transition-colors hover:bg-elevated"
             >
-              <FileUp size={13} />
+              <FileUp size={14} aria-hidden="true" />
               <span>Bulk import</span>
             </button>
             <button
               type="button"
               onClick={() => void openImportFromScan()}
-              className="px-2.5 py-1 rounded-lg text-xs font-medium bg-amber-500/15 border border-amber-500/40 text-amber-400 hover:bg-amber-500/25 inline-flex items-center gap-1 cursor-pointer"
+              className="inline-flex min-h-10 cursor-pointer items-center gap-1.5 rounded-control border border-archive/30 bg-archive/15 px-3 text-2xs font-semibold text-archive transition-colors hover:bg-archive/20"
             >
-              <Sparkles size={13} />
+              <Sparkles size={14} aria-hidden="true" />
               <span>Import from scan</span>
             </button>
             <button
               type="button"
               onClick={prefillStandardEight}
-              className="px-2.5 py-1 rounded-lg text-xs font-medium bg-elevated border border-border text-foreground hover:bg-elevated/80 cursor-pointer"
+              className="inline-flex min-h-10 cursor-pointer items-center gap-1.5 rounded-control border border-border bg-surface-2 px-3 text-2xs font-semibold text-foreground transition-colors hover:bg-elevated"
             >
               + 8 standard schools
             </button>
             <button
               type="button"
               onClick={autoRank}
-              className="px-2.5 py-1 rounded-lg text-xs font-medium bg-elevated border border-border text-foreground hover:bg-elevated/80 inline-flex items-center gap-1 cursor-pointer"
+              className="inline-flex min-h-10 cursor-pointer items-center gap-1.5 rounded-control border border-border bg-surface-2 px-3 text-2xs font-semibold text-foreground transition-colors hover:bg-elevated"
             >
-              <RotateCcw size={12} />
+              <RotateCcw size={13} aria-hidden="true" />
               <span>Auto-rank</span>
             </button>
             <button
               type="button"
+              aria-pressed={showReport}
               onClick={() => setShowReport((v) => !v)}
               className={cn(
-                "px-2.5 py-1 rounded-lg text-xs font-medium border inline-flex items-center gap-1 cursor-pointer transition-colors",
+                "inline-flex min-h-10 cursor-pointer items-center gap-1.5 rounded-control border px-3 text-2xs font-semibold transition-colors",
                 showReport
-                  ? "bg-amber-500/20 text-amber-400 border-amber-500/40"
-                  : "bg-elevated border-border text-foreground hover:bg-elevated/80"
+                  ? "border-archive/40 bg-archive/15 text-archive"
+                  : "border-border bg-surface-2 text-foreground hover:bg-elevated"
               )}
             >
-              <BookOpen size={13} />
+              <BookOpen size={14} aria-hidden="true" />
               <span>Source scan</span>
             </button>
           </div>
         </div>
 
         {showReport && (
-          <div className="rounded-2xl bg-elevated/40 border border-border p-4 space-y-2">
-            <div className="flex items-center justify-between border-b border-border/60 pb-2 gap-2">
+          <div className="space-y-2 rounded-card border border-border bg-surface-2/60 p-4">
+            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border/60 pb-2">
               <span className="flex items-center gap-2 text-xs font-bold text-foreground">
-                <FileText size={14} className="text-amber-400" />
+                <FileText size={14} className="text-archive" aria-hidden="true" />
                 Annual report text — {season} {sport}
               </span>
               <div className="flex items-center gap-2">
-                <span className="text-[11px] font-mono text-muted">{report.sourceFile}</span>
+                <span className="font-mono text-2xs text-muted">{report.sourceFile}</span>
                 <button
                   type="button"
                   onClick={() => void openImportFromScan()}
                   disabled={report.loading || !report.content}
-                  className="px-2 py-1 rounded-lg text-[11px] font-bold bg-amber-500 text-slate-950 hover:bg-amber-400 disabled:opacity-40 cursor-pointer"
+                  className="min-h-10 cursor-pointer rounded-control bg-archive px-3 text-2xs font-bold text-bg transition-colors hover:bg-archive/90 disabled:opacity-40"
                 >
                   Extract table
                 </button>
@@ -897,32 +925,32 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
             {report.loading ? (
               <p className="py-6 text-center text-xs text-muted">Loading reference text…</p>
             ) : (
-              <div className="max-h-60 overflow-y-auto font-mono text-[11px] bg-surface p-3 rounded-xl text-muted leading-relaxed whitespace-pre-wrap">
+              <div className="max-h-60 overflow-y-auto whitespace-pre-wrap rounded-control bg-surface p-3 font-mono text-2xs leading-relaxed text-muted">
                 {report.content || "No matching section found in the annual report for this sport."}
               </div>
             )}
           </div>
         )}
 
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs border-collapse">
+        <TableShell>
+          <table className="w-full border-collapse text-left text-xs">
             <thead>
-              <tr className="border-b border-border bg-elevated/40 text-[10px] font-bold uppercase tracking-wider text-muted">
-                <th scope="col" className="py-2.5 px-3 w-14 text-center">Rank</th>
-                <th scope="col" className="py-2.5 px-3 w-48">School</th>
+              <tr>
+                <Th sticky className="w-14 px-2 text-center">Rank</Th>
+                <Th className="sticky left-14 z-20 min-w-48 px-3">School</Th>
                 {draft.columns.map((col) => (
-                  <th key={col.key} className="py-2.5 px-3 w-24 text-center">
+                  <Th key={col.key} className="w-24 px-3 text-center">
                     {col.label}
-                  </th>
+                  </Th>
                 ))}
-                <th scope="col" className="py-2.5 px-3">Result / Notes</th>
-                <th scope="col" className="py-2.5 px-3 w-24 text-center">Row</th>
+                <Th className="min-w-56 px-3">Result / Notes</Th>
+                <Th className="w-44 px-2 text-center">Row</Th>
               </tr>
             </thead>
-            <tbody ref={gridRef} className="divide-y divide-border/60 font-medium">
+            <tbody ref={gridRef} className="font-medium">
               {draft.rows.length === 0 ? (
                 <tr>
-                  <td
+                  <Td
                     colSpan={draft.columns.length + 4}
                     className="py-10 text-center text-muted"
                   >
@@ -931,7 +959,7 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
                       <button
                         type="button"
                         onClick={() => void openImportFromScan()}
-                        className="px-3 py-1.5 rounded-xl text-xs font-bold bg-amber-500 text-slate-950 hover:bg-amber-400 cursor-pointer"
+                        className="min-h-10 cursor-pointer rounded-control bg-archive px-3 text-xs font-bold text-bg transition-colors hover:bg-archive/90"
                       >
                         Import from annual report
                       </button>
@@ -941,44 +969,44 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
                           setImportSeed(undefined);
                           setShowImport(true);
                         }}
-                        className="px-3 py-1.5 rounded-xl text-xs font-semibold bg-elevated border border-border text-foreground cursor-pointer"
+                        className="min-h-10 cursor-pointer rounded-control border border-border bg-surface-2 px-3 text-xs font-semibold text-foreground transition-colors hover:bg-elevated"
                       >
                         Paste a table
                       </button>
                       <button
                         type="button"
                         onClick={prefillStandardEight}
-                        className="px-3 py-1.5 rounded-xl text-xs font-semibold bg-elevated border border-border text-foreground cursor-pointer"
+                        className="min-h-10 cursor-pointer rounded-control border border-border bg-surface-2 px-3 text-xs font-semibold text-foreground transition-colors hover:bg-elevated"
                       >
                         + 8 standard schools
                       </button>
                     </div>
-                  </td>
+                  </Td>
                 </tr>
               ) : (
                 draft.rows.map((row, idx) => {
                   const theme = getSchoolTheme(row.team);
                   const schoolCode = getSchoolCode(row.team);
                   return (
-                    <tr key={idx} className="hover:bg-elevated/40 transition-colors">
-                      <td className="py-2 px-3 text-center">
+                    <tr key={idx} className="group transition-colors hover:bg-elevated/40">
+                      <Td sticky className="w-14 bg-surface px-2 py-1.5 text-center">
                         <input
                           type="number"
                           value={row.rank}
                           onChange={(e) =>
                             updateRow(idx, { rank: parseInt(e.target.value, 10) || idx + 1 })
                           }
-                          className="w-12 text-center px-1 py-1 rounded bg-elevated border border-border text-foreground font-bold font-mono"
+                          className="min-h-10 w-12 rounded-control border border-border bg-surface-2 px-1 text-center font-mono font-bold text-foreground focus:outline-none focus:ring-2 focus:ring-archive/40"
                           aria-label={`Rank for row ${idx + 1}`}
                         />
-                      </td>
+                      </Td>
 
-                      <td className="py-2 px-3">
+                      <Td className="sticky left-14 z-10 min-w-48 bg-surface px-3 py-1.5">
                         <div className="flex items-center gap-2">
                           {schoolCode && (
                             <span
                               className={cn(
-                                "px-2 py-0.5 rounded border text-[11px] font-bold shrink-0",
+                                "shrink-0 rounded border px-2 py-0.5 text-2xs font-bold",
                                 theme.bg,
                                 theme.text
                               )}
@@ -986,7 +1014,7 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
                               {schoolCode}
                             </span>
                           )}
-                          <div className="flex-1 min-w-0">
+                          <div className="min-w-0 flex-1">
                             <input
                               type="text"
                               list={SCHOOL_DATALIST_ID}
@@ -1001,15 +1029,15 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
                               }}
                               onKeyDown={(e) => handleCellKeyDown(e, idx, "team")}
                               placeholder="School name (e.g. University of the Philippines)"
-                              className="w-full px-2.5 py-1 rounded bg-elevated border border-border text-foreground text-xs font-semibold"
+                              className="min-h-10 w-full rounded-control border border-border bg-surface-2 px-2.5 text-xs font-semibold text-foreground placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-archive/40"
                               aria-label={`School for row ${idx + 1}`}
                             />
                           </div>
                         </div>
-                      </td>
+                      </Td>
 
                       {draft.columns.map((col) => (
-                        <td key={col.key} className="py-2 px-3 text-center">
+                        <Td key={col.key} className="px-3 py-1.5 text-center">
                           {col.derived ? (
                             <span className="font-mono text-xs text-muted">
                               {formatCellValue(row, col)}
@@ -1022,14 +1050,14 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
                               data-cell={`${idx}:${col.key}`}
                               onChange={(e) => updateCell(idx, col.key, e.target.value)}
                               onKeyDown={(e) => handleCellKeyDown(e, idx, col.key)}
-                              className="w-16 text-center px-1 py-1 rounded bg-elevated border border-border text-foreground font-bold font-mono"
+                              className="min-h-10 w-16 rounded-control border border-border bg-surface-2 px-1 text-center font-mono font-bold text-foreground focus:outline-none focus:ring-2 focus:ring-archive/40"
                               aria-label={`${col.label} for row ${idx + 1}`}
                             />
                           )}
-                        </td>
+                        </Td>
                       ))}
 
-                      <td className="py-2 px-3">
+                      <Td className="min-w-56 px-3 py-1.5">
                         <input
                           type="text"
                           value={row.details || ""}
@@ -1037,74 +1065,74 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
                           onChange={(e) => updateRow(idx, { details: e.target.value })}
                           onKeyDown={(e) => handleCellKeyDown(e, idx, "details")}
                           placeholder="Champion, Runner-up, withdrew…"
-                          className="w-full px-2 py-1 rounded bg-elevated border border-border text-foreground text-xs"
+                          className="min-h-10 w-full rounded-control border border-border bg-surface-2 px-2 text-xs text-foreground placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-archive/40"
                           aria-label={`Notes for row ${idx + 1}`}
                         />
-                      </td>
+                      </Td>
 
-                      <td className="py-2 px-3">
+                      <Td className="w-44 px-2 py-1.5">
                         <div className="flex items-center justify-center gap-0.5">
                           <button
                             type="button"
                             onClick={() => moveRow(idx, -1)}
                             disabled={idx === 0}
-                            className="p-1 rounded text-muted hover:text-foreground disabled:opacity-30 cursor-pointer"
+                            className="inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-control text-muted transition-colors hover:bg-elevated hover:text-foreground disabled:opacity-30"
                             aria-label="Move row up"
                           >
-                            ↑
+                            <ArrowUp size={14} aria-hidden="true" />
                           </button>
                           <button
                             type="button"
                             onClick={() => moveRow(idx, 1)}
                             disabled={idx === draft.rows.length - 1}
-                            className="p-1 rounded text-muted hover:text-foreground disabled:opacity-30 cursor-pointer"
+                            className="inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-control text-muted transition-colors hover:bg-elevated hover:text-foreground disabled:opacity-30"
                             aria-label="Move row down"
                           >
-                            ↓
+                            <ArrowDown size={14} aria-hidden="true" />
                           </button>
                           <button
                             type="button"
                             onClick={() => duplicateRow(idx)}
-                            className="p-1 rounded text-muted hover:text-foreground cursor-pointer"
+                            className="inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-control text-muted transition-colors hover:bg-elevated hover:text-foreground"
                             aria-label="Duplicate row"
                           >
-                            <Copy size={12} />
+                            <Copy size={14} aria-hidden="true" />
                           </button>
                           <button
                             type="button"
                             onClick={() => deleteRow(idx)}
-                            className="p-1 rounded text-rose-400 hover:bg-rose-500/10 cursor-pointer"
+                            className="inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-control text-negative transition-colors hover:bg-negative/10"
                             aria-label="Delete row"
                           >
-                            <Trash2 size={12} />
+                            <Trash2 size={14} aria-hidden="true" />
                           </button>
                         </div>
-                      </td>
+                      </Td>
                     </tr>
                   );
                 })
               )}
             </tbody>
           </table>
-        </div>
+        </TableShell>
 
-        <div className="flex items-center justify-between pt-2 border-t border-border/60">
+        <div className="flex flex-wrap items-center justify-between gap-2 border-t border-border/60 pt-2">
           <button
             type="button"
             onClick={() => addRow()}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-elevated border border-border text-foreground hover:bg-elevated/80 cursor-pointer"
+            className="inline-flex min-h-10 cursor-pointer items-center gap-1.5 rounded-control border border-border bg-surface-2 px-3 text-xs font-bold text-foreground transition-colors hover:bg-elevated"
           >
-            <Plus size={14} />
+            <Plus size={14} aria-hidden="true" />
             <span>Add row</span>
           </button>
-          <span className="text-[11px] text-muted hidden sm:inline">
+          <span className="hidden text-2xs text-muted sm:inline">
             Press Enter to move down a column; Enter on the last row adds another.
           </span>
           {draft.rows.length > 0 && (
             <button
               type="button"
               onClick={handleDelete}
-              className="text-xs text-rose-400 hover:underline cursor-pointer"
+              className="inline-flex min-h-10 cursor-pointer items-center text-xs font-semibold text-negative hover:underline"
             >
               Delete this division
             </button>
@@ -1113,42 +1141,46 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
       </div>
 
       {/* Notes */}
-      <div className="p-5 rounded-2xl bg-surface border border-border shadow-sm space-y-3">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="space-y-3 rounded-card border border-border bg-surface p-5 shadow-card">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div>
-            <label className="text-[11px] font-bold uppercase tracking-wider text-muted block mb-1.5">
+            <label htmlFor="uaap-stage" className="mb-1.5 block text-2xs font-bold uppercase tracking-wider text-muted">
               Stage label
             </label>
             <input
+              id="uaap-stage"
               type="text"
               value={draft.stage}
               onChange={(e) => updateDraft({ stage: e.target.value })}
               placeholder="Final Standings"
-              className="w-full px-3 py-1.5 rounded-xl text-xs bg-elevated border border-border text-foreground"
+              className="min-h-11 w-full rounded-control border border-border bg-surface-2 px-3 text-xs text-foreground placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-archive/40"
             />
           </div>
           <div>
-            <label className="text-[11px] font-bold uppercase tracking-wider text-muted block mb-1.5">
+            <label htmlFor="uaap-source" className="mb-1.5 block text-2xs font-bold uppercase tracking-wider text-muted">
               Source
             </label>
             <input
+              id="uaap-source"
               type="text"
               value={draft.source_page}
               onChange={(e) => updateDraft({ source_page: e.target.value })}
-              className="w-full px-3 py-1.5 rounded-xl text-xs bg-elevated border border-border text-foreground"
+              placeholder="e.g. UAAP 2003 annual report, p. 42"
+              className="min-h-11 w-full rounded-control border border-border bg-surface-2 px-3 text-xs text-foreground placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-archive/40"
             />
           </div>
         </div>
         <div>
-          <label className="text-[11px] font-bold uppercase tracking-wider text-muted block mb-1.5">
+          <label htmlFor="uaap-note" className="mb-1.5 block text-2xs font-bold uppercase tracking-wider text-muted">
             Note shown above the public table
           </label>
           <input
+            id="uaap-note"
             type="text"
             value={draft.note || ""}
             onChange={(e) => updateDraft({ note: e.target.value })}
             placeholder="e.g. Only the top four placements were printed in this year's report."
-            className="w-full px-3 py-1.5 rounded-xl text-xs bg-elevated border border-border text-foreground placeholder:text-muted"
+            className="min-h-11 w-full rounded-control border border-border bg-surface-2 px-3 text-xs text-foreground placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-archive/40"
           />
         </div>
       </div>
@@ -1158,22 +1190,22 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
         <div className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {[
-              { label: "Most Valuable Player", state: mvp, setState: setMvp, icon: <Crown size={13} />, tone: "text-amber-400" },
-              { label: "Rookie of the Year", state: roy, setState: setRoy, icon: <Sparkles size={13} />, tone: "text-sky-400" },
+              { label: "Most Valuable Player", state: mvp, setState: setMvp, icon: <Crown size={13} aria-hidden="true" />, tone: "text-archive" },
+              { label: "Rookie of the Year", state: roy, setState: setRoy, icon: <Sparkles size={13} aria-hidden="true" />, tone: "text-info" },
             ].map((award) => (
               <div
                 key={award.label}
-                className="p-4 rounded-2xl bg-elevated/40 border border-border space-y-2"
+                className="space-y-2 rounded-card border border-border bg-surface-2/60 p-4"
               >
                 <span
                   className={cn(
-                    "text-[11px] font-bold uppercase tracking-wider flex items-center gap-1",
+                    "flex items-center gap-1 text-2xs font-bold uppercase tracking-wider",
                     award.tone
                   )}
                 >
                   {award.icon} {award.label}
                 </span>
-                <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center gap-2">
                   <input
                     type="text"
                     value={award.state.player}
@@ -1181,7 +1213,8 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
                       award.setState({ ...award.state, player: e.target.value })
                     }
                     placeholder="Player full name"
-                    className="flex-1 px-3 py-1.5 rounded-xl text-xs bg-surface border border-border text-foreground"
+                    aria-label={`${award.label} player`}
+                    className="min-h-11 flex-1 rounded-control border border-border bg-surface px-3 text-xs text-foreground placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-archive/40"
                   />
                   <input
                     type="text"
@@ -1190,7 +1223,7 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
                     onChange={(e) =>
                       award.setState({ ...award.state, school: e.target.value })
                     }
-                    className="w-24 px-2 py-1.5 rounded-xl text-xs font-bold bg-surface border border-border text-foreground"
+                    className="min-h-11 w-24 rounded-control border border-border bg-surface px-2 text-xs font-bold text-foreground focus:outline-none focus:ring-2 focus:ring-archive/40"
                     aria-label={`${award.label} school`}
                   />
                 </div>
@@ -1198,22 +1231,22 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
             ))}
           </div>
 
-          <div className="p-4 rounded-2xl bg-elevated/40 border border-border space-y-3">
-            <div className="flex items-center justify-between">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-foreground">
+          <div className="space-y-3 rounded-card border border-border bg-surface-2/60 p-4">
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <span className="text-2xs font-bold uppercase tracking-wider text-foreground">
                 Mythical selection ({mythical.length})
               </span>
               <button
                 type="button"
                 onClick={() => setMythical((prev) => [...prev, { player: "", school: "FEU" }])}
-                className="text-xs font-bold text-amber-400 hover:underline cursor-pointer"
+                className="inline-flex min-h-10 cursor-pointer items-center text-xs font-bold text-archive hover:underline"
               >
                 + Add player
               </button>
             </div>
             <div className="space-y-2">
               {mythical.map((p, i) => (
-                <div key={i} className="flex items-center gap-2">
+                <div key={i} className="flex flex-wrap items-center gap-2">
                   <input
                     type="text"
                     value={p.player}
@@ -1223,7 +1256,8 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
                       )
                     }
                     placeholder="Player name"
-                    className="flex-1 px-3 py-1.5 rounded-xl text-xs bg-surface border border-border text-foreground"
+                    aria-label={`Mythical selection player ${i + 1}`}
+                    className="min-h-11 min-w-0 flex-1 rounded-control border border-border bg-surface px-3 text-xs text-foreground placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-archive/40"
                   />
                   <input
                     type="text"
@@ -1234,16 +1268,16 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
                         prev.map((m, mi) => (mi === i ? { ...m, school: e.target.value } : m))
                       )
                     }
-                    className="w-24 px-2 py-1.5 rounded-xl text-xs font-bold bg-surface border border-border text-foreground"
-                    aria-label="Mythical selection school"
+                    className="min-h-11 w-24 rounded-control border border-border bg-surface px-2 text-xs font-bold text-foreground focus:outline-none focus:ring-2 focus:ring-archive/40"
+                    aria-label={`Mythical selection ${i + 1} school`}
                   />
                   <button
                     type="button"
                     onClick={() => setMythical((prev) => prev.filter((_, mi) => mi !== i))}
-                    className="p-1 rounded text-rose-400 hover:bg-rose-500/10 cursor-pointer"
+                    className="inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-control text-negative transition-colors hover:bg-negative/10"
                     aria-label="Remove player"
                   >
-                    <Trash2 size={13} />
+                    <Trash2 size={14} aria-hidden="true" />
                   </button>
                 </div>
               ))}
@@ -1251,20 +1285,25 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
           </div>
 
           {sport === "Chess" && (
-            <div className="p-4 rounded-2xl bg-elevated/40 border border-border space-y-3">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-amber-400">
+            <div className="space-y-3 rounded-card border border-border bg-surface-2/60 p-4">
+              <h4 className="text-2xs font-bold uppercase tracking-wider text-archive">
                 Board medalists
               </h4>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
                 {["1", "2", "3", "4", "5", "6"].map((board) => (
-                  <div key={board} className="p-3 rounded-xl bg-surface border border-border space-y-2">
+                  <div key={board} className="space-y-2 rounded-control border border-border bg-surface p-3">
                     <span className="text-xs font-bold text-foreground">Board {board}</span>
                     {(["gold", "silver", "bronze"] as const).map((medal) => {
                       const existing = (chessBoards[board] || []).find((m) => m.medal === medal);
-                      const emoji = medal === "gold" ? "🥇" : medal === "silver" ? "🥈" : "🥉";
                       return (
                         <div key={medal} className="flex items-center gap-1.5 text-xs">
-                          <span>{emoji}</span>
+                          <Badge
+                            tone={medal === "gold" ? "archive" : "neutral"}
+                            size="sm"
+                            className="w-12 justify-center"
+                          >
+                            {medal === "gold" ? "Gold" : medal === "silver" ? "Silver" : "Bronze"}
+                          </Badge>
                           <input
                             type="text"
                             value={existing?.player || ""}
@@ -1285,7 +1324,8 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
                               });
                             }}
                             placeholder={`${medal} medalist`}
-                            className="flex-1 min-w-0 px-2 py-1 rounded bg-elevated border border-border text-[11px]"
+                            aria-label={`${medal} medalist for board ${board}`}
+                            className="min-h-10 min-w-0 flex-1 rounded-control border border-border bg-surface-2 px-2 text-2xs text-foreground placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-archive/40"
                           />
                           <input
                             type="text"
@@ -1301,7 +1341,7 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
                               }));
                             }}
                             placeholder="School"
-                            className="w-16 px-1 py-1 rounded bg-elevated border border-border text-[10px] font-bold"
+                            className="min-h-10 w-16 rounded-control border border-border bg-surface-2 px-1 text-2xs font-bold text-foreground placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-archive/40"
                             aria-label={`${medal} medalist school for board ${board}`}
                           />
                         </div>
@@ -1316,16 +1356,16 @@ export function UAAPArchiveManager({ onToast }: { onToast: ToastFn }) {
       </Section>
 
       {isDirty && (
-        <div className="fixed bottom-4 inset-x-0 z-40 flex justify-center px-4 pointer-events-none">
-          <div className="pointer-events-auto flex items-center gap-3 px-4 py-2.5 rounded-2xl bg-surface border border-amber-500/40 shadow-lg">
-            <span className="text-xs font-bold text-amber-400">Unsaved changes</span>
+        <div className="pointer-events-none fixed inset-x-0 bottom-4 z-40 flex justify-center px-4">
+          <div className="pointer-events-auto flex items-center gap-3 rounded-panel border border-archive/40 bg-surface px-4 py-2.5 shadow-raised">
+            <span className="text-xs font-bold text-archive">Unsaved changes</span>
             <button
               type="button"
               onClick={() => void handleSave()}
               disabled={isSaving}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-amber-500 text-slate-950 hover:bg-amber-400 disabled:opacity-50 cursor-pointer"
+              className="inline-flex min-h-10 cursor-pointer items-center gap-1.5 rounded-control bg-archive px-3 text-xs font-bold text-bg transition-colors hover:bg-archive/90 disabled:opacity-50"
             >
-              <Save size={13} />
+              <Save size={13} aria-hidden="true" />
               {isSaving ? "Saving…" : "Save"}
             </button>
           </div>

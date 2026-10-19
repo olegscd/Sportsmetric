@@ -1,5 +1,8 @@
 "use client";
 
+import { Badge } from "@/components/ui/Badge";
+import { Card } from "@/components/ui/Card";
+import { StatTile, type StatTileTone } from "@/components/ui/StatTile";
 import { useSportsData } from "@/context/SportsDataContext";
 import { getOfficialPvlPlayerStats, type PvlOfficialPlayerStatItem } from "@/lib/pvl-official-stats-data";
 import { formatAvg, formatPct } from "@/lib/utils";
@@ -11,6 +14,12 @@ interface PlayerVolleyballStatsProps {
   player: Player;
   allPlayerSeasons: Player[];
 }
+
+type VolleyTile = {
+  label: string;
+  value: string | number;
+  tone?: StatTileTone;
+};
 
 export function PlayerVolleyballStats({
   player,
@@ -119,8 +128,6 @@ export function PlayerVolleyballStats({
 
   // Format dropdown options
   const dropdownOptions = useMemo(() => {
-
-
     if (officialRecord && officialRecord.conferences.length > 0) {
       return [
         { value: "career", label: "Career / Lifetime Stats" },
@@ -147,27 +154,98 @@ export function PlayerVolleyballStats({
     ? stat.exeSet + stat.exeDig + stat.ptsAce
     : stat.totalPoints;
 
+  let heroTiles: VolleyTile[];
+  if (isLibero) {
+    heroTiles = [
+      { label: "Exc. Digs", value: stat.exeDig },
+      { label: "Digs / Set", value: formatAvg(stat.avgDig), tone: "info" },
+      { label: "Rec. Success", value: formatPct(stat.successRec), tone: "positive" },
+    ];
+  } else if (isSetter) {
+    heroTiles = [
+      { label: "Exc. Sets", value: stat.exeSet },
+      { label: "Sets / Set", value: formatAvg(stat.avgSet), tone: "primary" },
+      { label: "Sets Played", value: stat.setsPlayed },
+    ];
+  } else if (isMB) {
+    heroTiles = [
+      { label: "Total Points", value: stat.totalPoints },
+      { label: "Kill Blocks", value: stat.ptsBlk, tone: "archive" },
+      { label: "Blocks / Set", value: formatAvg(stat.avgBlk), tone: "info" },
+    ];
+  } else {
+    heroTiles = [
+      { label: "Total Points", value: stat.totalPoints },
+      { label: "Avg / Set", value: formatAvg(stat.avgPerSet), tone: "info" },
+      { label: "Sets Played", value: stat.setsPlayed },
+    ];
+  }
+
+  let statTiles: VolleyTile[];
+  if (isLibero) {
+    statTiles = [
+      { label: "Dig Success", value: formatPct(stat.successDig), tone: "positive" },
+      { label: "Exc. Receptions", value: stat.exeRec },
+      { label: "Rec / Set", value: formatAvg(stat.avgRec), tone: "info" },
+      { label: "Rec Efficiency", value: formatPct(stat.efficiencyRec), tone: "positive" },
+      { label: "Total Digs", value: stat.totalDig },
+      { label: "Sets Played", value: stat.setsPlayed },
+    ];
+  } else if (isSetter) {
+    statTiles = [
+      { label: "Setting Success", value: formatPct(stat.successSet), tone: "positive" },
+      { label: "Digs / Set", value: formatAvg(stat.avgDig), tone: "info" },
+      { label: "Service Aces", value: stat.ptsAce, tone: "archive" },
+      { label: "Aces / Set", value: formatAvg(stat.avgAce), tone: "info" },
+      { label: "Dig Success", value: formatPct(stat.successDig), tone: "info" },
+      { label: "Total Points", value: stat.totalPoints },
+    ];
+  } else if (isMB) {
+    statTiles = [
+      { label: "Atk Efficiency", value: formatPct(stat.efficiencyAtk), tone: "positive" },
+      { label: "Block Success", value: formatPct(stat.successBlk), tone: "archive" },
+      { label: "Kills / Set", value: formatAvg(stat.avgAtk), tone: "positive" },
+      { label: "Aces / Set", value: formatAvg(stat.avgAce), tone: "info" },
+      { label: "Digs / Set", value: formatAvg(stat.avgDig), tone: "info" },
+      { label: "Sets Played", value: stat.setsPlayed },
+    ];
+  } else {
+    statTiles = [
+      { label: "Atk Efficiency", value: formatPct(stat.efficiencyAtk), tone: "positive" },
+      { label: "Kills / Set", value: formatAvg(stat.avgAtk), tone: "positive" },
+      {
+        label: isOP ? "Block Success" : "Rec Success",
+        value: formatPct(isOP ? stat.successBlk : stat.successRec),
+        tone: "info",
+      },
+      { label: "Digs / Set", value: formatAvg(stat.avgDig), tone: "info" },
+      { label: "Aces / Set", value: formatAvg(stat.avgAce), tone: "info" },
+      { label: "Blocks / Set", value: formatAvg(stat.avgBlk), tone: "archive" },
+    ];
+  }
+
   return (
-    <div className="flex flex-col gap-4 rounded-2xl border border-border bg-surface p-5 shadow-sm">
+    <Card className="flex flex-col gap-4 p-5">
       {/* Header & Season Selector */}
-      <div className="flex items-center justify-between gap-3 border-b border-border pb-3">
-        <div>
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border pb-3">
+        <div className="min-w-0">
           <div className="flex items-center gap-1.5">
-            <span className="rounded bg-primary/15 px-2 py-0.5 text-[10px] font-bold text-primary uppercase tracking-wider">
+            <Badge tone="primary" size="sm">
               {rawPos}
-            </span>
-            <p className="text-[11px] font-semibold uppercase tracking-wide text-muted">
+            </Badge>
+            <p className="text-2xs font-semibold uppercase tracking-wide text-muted">
               Official Stats
             </p>
           </div>
-          <p className="text-xs font-semibold text-foreground mt-0.5">{activeLabel}</p>
+          <p className="mt-0.5 truncate text-xs font-semibold text-foreground">{activeLabel}</p>
         </div>
 
-        <label className="relative shrink-0">
+        <div className="relative shrink-0">
           <select
+            aria-label="Season"
             value={selectedOption}
             onChange={(e) => setSelectedOption(e.target.value)}
-            className="appearance-none rounded-full border border-border bg-elevated py-1.5 pl-3 pr-7 text-xs font-semibold text-foreground focus:border-primary focus:outline-none"
+            className="min-h-10 appearance-none rounded-control border border-border bg-elevated py-1.5 pl-3 pr-8 text-xs font-semibold text-foreground transition-colors hover:border-border-strong focus:border-primary/70 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
           >
             {dropdownOptions.map((opt) => (
               <option key={opt.value} value={opt.value}>
@@ -177,151 +255,62 @@ export function PlayerVolleyballStats({
           </select>
           <ChevronDown
             size={12}
+            aria-hidden="true"
             className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-muted"
           />
-        </label>
+        </div>
       </div>
 
-      {/* 1. HERO CARDS (Top 3 Key Metrics per Position) */}
-      <div className="grid grid-cols-3 gap-2.5 text-center">
-        {isLibero ? (
-          <>
-            <div className="flex flex-col rounded-xl border border-border/60 bg-elevated py-3 px-2">
-              <span className="text-lg font-bold tabular-nums text-foreground">{stat.exeDig}</span>
-              <span className="text-[10px] font-semibold text-muted uppercase tracking-wide">
-                Exc. Digs
-              </span>
-            </div>
-            <div className="flex flex-col rounded-xl border border-border/60 bg-elevated py-3 px-2">
-              <span className="text-lg font-bold tabular-nums text-primary">
-                {formatAvg(stat.avgDig)}
-              </span>
-              <span className="text-[10px] font-semibold text-muted uppercase tracking-wide">
-                Digs / Set
-              </span>
-            </div>
-            <div className="flex flex-col rounded-xl border border-border/60 bg-elevated py-3 px-2">
-              <span className="text-lg font-bold tabular-nums text-emerald-500">
-                {formatPct(stat.successRec)}
-              </span>
-              <span className="text-[10px] font-semibold text-muted uppercase tracking-wide">
-                Rec. Success
-              </span>
-            </div>
-          </>
-        ) : isSetter ? (
-          <>
-            <div className="flex flex-col rounded-xl border border-border/60 bg-elevated py-3 px-2">
-              <span className="text-lg font-bold tabular-nums text-foreground">{stat.exeSet}</span>
-              <span className="text-[10px] font-semibold text-muted uppercase tracking-wide">
-                Exc. Sets
-              </span>
-            </div>
-            <div className="flex flex-col rounded-xl border border-border/60 bg-elevated py-3 px-2">
-              <span className="text-lg font-bold tabular-nums text-primary">
-                {formatAvg(stat.avgSet)}
-              </span>
-              <span className="text-[10px] font-semibold text-muted uppercase tracking-wide">
-                Sets / Set
-              </span>
-            </div>
-            <div className="flex flex-col rounded-xl border border-border/60 bg-elevated py-3 px-2">
-              <span className="text-lg font-bold tabular-nums text-foreground">
-                {stat.setsPlayed}
-              </span>
-              <span className="text-[10px] font-semibold text-muted uppercase tracking-wide">
-                Sets Played
-              </span>
-            </div>
-          </>
-        ) : isMB ? (
-          <>
-            <div className="flex flex-col rounded-xl border border-border/60 bg-elevated py-3 px-2">
-              <span className="text-lg font-bold tabular-nums text-foreground">
-                {stat.totalPoints}
-              </span>
-              <span className="text-[10px] font-semibold text-muted uppercase tracking-wide">
-                Total Points
-              </span>
-            </div>
-            <div className="flex flex-col rounded-xl border border-border/60 bg-elevated py-3 px-2">
-              <span className="text-lg font-bold tabular-nums text-amber-500">{stat.ptsBlk}</span>
-              <span className="text-[10px] font-semibold text-muted uppercase tracking-wide">
-                Kill Blocks
-              </span>
-            </div>
-            <div className="flex flex-col rounded-xl border border-border/60 bg-elevated py-3 px-2">
-              <span className="text-lg font-bold tabular-nums text-primary">
-                {formatAvg(stat.avgBlk)}
-              </span>
-              <span className="text-[10px] font-semibold text-muted uppercase tracking-wide">
-                Blocks / Set
-              </span>
-            </div>
-          </>
-        ) : (
-          /* OH & OP */
-          <>
-            <div className="flex flex-col rounded-xl border border-border/60 bg-elevated py-3 px-2">
-              <span className="text-lg font-bold tabular-nums text-foreground">
-                {stat.totalPoints}
-              </span>
-              <span className="text-[10px] font-semibold text-muted uppercase tracking-wide">
-                Total Points
-              </span>
-            </div>
-            <div className="flex flex-col rounded-xl border border-border/60 bg-elevated py-3 px-2">
-              <span className="text-lg font-bold tabular-nums text-primary">
-                {formatAvg(stat.avgPerSet)}
-              </span>
-              <span className="text-[10px] font-semibold text-muted uppercase tracking-wide">
-                Avg / Set
-              </span>
-            </div>
-            <div className="flex flex-col rounded-xl border border-border/60 bg-elevated py-3 px-2">
-              <span className="text-lg font-bold tabular-nums text-foreground">
-                {stat.setsPlayed}
-              </span>
-              <span className="text-[10px] font-semibold text-muted uppercase tracking-wide">
-                Sets Played
-              </span>
-            </div>
-          </>
-        )}
+      {/* 1. Hero tiles (top 3 key metrics per position) */}
+      <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3">
+        {heroTiles.map((tile, index) => (
+          <StatTile
+            key={tile.label}
+            label={tile.label}
+            value={tile.value}
+            tone={tile.tone}
+            size="lg"
+            className={
+              index === 2
+                ? "col-span-2 items-center text-center sm:col-span-1"
+                : "items-center text-center"
+            }
+          />
+        ))}
       </div>
 
-      {/* 2. SCORING BAR / PLAYMAKING BAR (Hidden for Libero; 0-value colors strictly omitted) */}
+      {/* 2. Scoring bar / playmaking bar (hidden for libero) */}
       {!isLibero && totalActions > 0 && (
-        <div className="flex flex-col gap-2 rounded-xl border border-border bg-elevated p-3.5">
-          <div className="flex items-center justify-between text-xs font-semibold text-foreground">
+        <div className="flex flex-col gap-2 rounded-card border border-border bg-elevated/60 p-3.5">
+          <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-semibold text-foreground">
             <span>{isSetter ? "Playmaking & Defense Breakdown" : "Scoring Breakdown"}</span>
-            <span className="text-[10px] font-medium text-muted">
+            <span className="text-2xs font-medium text-muted">
               {isSetter ? `${totalActions} Total Actions` : `${totalActions} Total Points`}
             </span>
           </div>
 
-          {/* Progress Bar (ONLY render segment if value > 0) */}
-          <div className="flex h-3 w-full overflow-hidden rounded-full bg-surface p-0.5 border border-border/40">
+          {/* Progress bar (only render a segment if its value is > 0) */}
+          <div className="flex h-3 w-full overflow-hidden rounded-full border border-border/40 bg-surface p-0.5">
             {isSetter ? (
               <>
                 {stat.exeSet > 0 && (
                   <div
                     style={{ width: `${(stat.exeSet / Math.max(1, totalActions)) * 100}%` }}
-                    className="bg-indigo-500 rounded-l-full transition-all"
+                    className="rounded-l-full bg-primary transition-all"
                     title={`Sets: ${stat.exeSet}`}
                   />
                 )}
                 {stat.exeDig > 0 && (
                   <div
                     style={{ width: `${(stat.exeDig / Math.max(1, totalActions)) * 100}%` }}
-                    className="bg-teal-500 transition-all"
+                    className="bg-info transition-all"
                     title={`Digs: ${stat.exeDig}`}
                   />
                 )}
                 {stat.ptsAce > 0 && (
                   <div
                     style={{ width: `${(stat.ptsAce / Math.max(1, totalActions)) * 100}%` }}
-                    className="bg-sky-500 rounded-r-full transition-all"
+                    className="rounded-r-full bg-archive transition-all"
                     title={`Aces: ${stat.ptsAce}`}
                   />
                 )}
@@ -331,21 +320,21 @@ export function PlayerVolleyballStats({
                 {stat.ptsAtk > 0 && (
                   <div
                     style={{ width: `${(stat.ptsAtk / Math.max(1, stat.totalPoints)) * 100}%` }}
-                    className="bg-emerald-500 rounded-l-full transition-all"
+                    className="rounded-l-full bg-positive transition-all"
                     title={`Spikes: ${stat.ptsAtk}`}
                   />
                 )}
                 {stat.ptsBlk > 0 && (
                   <div
                     style={{ width: `${(stat.ptsBlk / Math.max(1, stat.totalPoints)) * 100}%` }}
-                    className="bg-amber-500 transition-all"
+                    className="bg-archive transition-all"
                     title={`Blocks: ${stat.ptsBlk}`}
                   />
                 )}
                 {stat.ptsAce > 0 && (
                   <div
                     style={{ width: `${(stat.ptsAce / Math.max(1, stat.totalPoints)) * 100}%` }}
-                    className="bg-sky-500 rounded-r-full transition-all"
+                    className="rounded-r-full bg-info transition-all"
                     title={`Aces: ${stat.ptsAce}`}
                   />
                 )}
@@ -353,24 +342,24 @@ export function PlayerVolleyballStats({
             )}
           </div>
 
-          {/* Bar Legend */}
-          <div className="flex items-center justify-around text-[10px] font-medium text-muted pt-1">
+          {/* Bar legend */}
+          <div className="flex flex-wrap items-center justify-around gap-x-4 gap-y-1.5 pt-1 text-3xs font-medium text-muted">
             {isSetter ? (
               <>
                 <div className="flex items-center gap-1.5">
-                  <span className="h-2 w-2 rounded-full bg-indigo-500" />
+                  <span className="h-2 w-2 rounded-full bg-primary" aria-hidden="true" />
                   <span>
                     Sets: <strong className="text-foreground">{stat.exeSet}</strong>
                   </span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <span className="h-2 w-2 rounded-full bg-teal-500" />
+                  <span className="h-2 w-2 rounded-full bg-info" aria-hidden="true" />
                   <span>
                     Digs: <strong className="text-foreground">{stat.exeDig}</strong>
                   </span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <span className="h-2 w-2 rounded-full bg-sky-500" />
+                  <span className="h-2 w-2 rounded-full bg-archive" aria-hidden="true" />
                   <span>
                     Aces: <strong className="text-foreground">{stat.ptsAce}</strong>
                   </span>
@@ -379,19 +368,19 @@ export function PlayerVolleyballStats({
             ) : (
               <>
                 <div className="flex items-center gap-1.5">
-                  <span className="h-2 w-2 rounded-full bg-emerald-500" />
+                  <span className="h-2 w-2 rounded-full bg-positive" aria-hidden="true" />
                   <span>
                     Spikes: <strong className="text-foreground">{stat.ptsAtk}</strong>
                   </span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <span className="h-2 w-2 rounded-full bg-amber-500" />
+                  <span className="h-2 w-2 rounded-full bg-archive" aria-hidden="true" />
                   <span>
                     Blocks: <strong className="text-foreground">{stat.ptsBlk}</strong>
                   </span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <span className="h-2 w-2 rounded-full bg-sky-500" />
+                  <span className="h-2 w-2 rounded-full bg-info" aria-hidden="true" />
                   <span>
                     Aces: <strong className="text-foreground">{stat.ptsAce}</strong>
                   </span>
@@ -402,167 +391,18 @@ export function PlayerVolleyballStats({
         </div>
       )}
 
-      {/* 3. DISPLAY STATS GRID (6 Unique Metrics Per Position — Zero Metric Repetition) */}
+      {/* 3. Full stat grid (6 unique metrics per position) */}
       <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3">
-        {isLibero ? (
-          <>
-            <div className="flex flex-col gap-0.5 rounded-xl border border-border/50 bg-elevated p-3">
-              <span className="text-[10px] font-semibold text-muted uppercase">Dig Success</span>
-              <span className="text-base font-bold tabular-nums text-emerald-500">
-                {formatPct(stat.successDig)}
-              </span>
-            </div>
-            <div className="flex flex-col gap-0.5 rounded-xl border border-border/50 bg-elevated p-3">
-              <span className="text-[10px] font-semibold text-muted uppercase">Exc. Receptions</span>
-              <span className="text-base font-bold tabular-nums text-foreground">
-                {stat.exeRec}
-              </span>
-            </div>
-            <div className="flex flex-col gap-0.5 rounded-xl border border-border/50 bg-elevated p-3">
-              <span className="text-[10px] font-semibold text-muted uppercase">Rec / Set</span>
-              <span className="text-base font-bold tabular-nums text-sky-500">
-                {formatAvg(stat.avgRec)}
-              </span>
-            </div>
-            <div className="flex flex-col gap-0.5 rounded-xl border border-border/50 bg-elevated p-3">
-              <span className="text-[10px] font-semibold text-muted uppercase">Rec Efficiency</span>
-              <span className="text-base font-bold tabular-nums text-emerald-500">
-                {formatPct(stat.efficiencyRec)}
-              </span>
-            </div>
-            <div className="flex flex-col gap-0.5 rounded-xl border border-border/50 bg-elevated p-3">
-              <span className="text-[10px] font-semibold text-muted uppercase">Total Digs</span>
-              <span className="text-base font-bold tabular-nums text-foreground">
-                {stat.totalDig}
-              </span>
-            </div>
-            <div className="flex flex-col gap-0.5 rounded-xl border border-border/50 bg-elevated p-3">
-              <span className="text-[10px] font-semibold text-muted uppercase">Sets Played</span>
-              <span className="text-base font-bold tabular-nums text-foreground">
-                {stat.setsPlayed}
-              </span>
-            </div>
-          </>
-        ) : isSetter ? (
-          <>
-            <div className="flex flex-col gap-0.5 rounded-xl border border-border/50 bg-elevated p-3">
-              <span className="text-[10px] font-semibold text-muted uppercase">Setting Success</span>
-              <span className="text-base font-bold tabular-nums text-emerald-500">
-                {formatPct(stat.successSet)}
-              </span>
-            </div>
-            <div className="flex flex-col gap-0.5 rounded-xl border border-border/50 bg-elevated p-3">
-              <span className="text-[10px] font-semibold text-muted uppercase">Digs / Set</span>
-              <span className="text-base font-bold tabular-nums text-teal-500">
-                {formatAvg(stat.avgDig)}
-              </span>
-            </div>
-            <div className="flex flex-col gap-0.5 rounded-xl border border-border/50 bg-elevated p-3">
-              <span className="text-[10px] font-semibold text-muted uppercase">Service Aces</span>
-              <span className="text-base font-bold tabular-nums text-sky-500">{stat.ptsAce}</span>
-            </div>
-            <div className="flex flex-col gap-0.5 rounded-xl border border-border/50 bg-elevated p-3">
-              <span className="text-[10px] font-semibold text-muted uppercase">Aces / Set</span>
-              <span className="text-base font-bold tabular-nums text-sky-500">
-                {formatAvg(stat.avgAce)}
-              </span>
-            </div>
-            <div className="flex flex-col gap-0.5 rounded-xl border border-border/50 bg-elevated p-3">
-              <span className="text-[10px] font-semibold text-muted uppercase">Dig Success</span>
-              <span className="text-base font-bold tabular-nums text-teal-500">
-                {formatPct(stat.successDig)}
-              </span>
-            </div>
-            <div className="flex flex-col gap-0.5 rounded-xl border border-border/50 bg-elevated p-3">
-              <span className="text-[10px] font-semibold text-muted uppercase">Total Points</span>
-              <span className="text-base font-bold tabular-nums text-foreground">
-                {stat.totalPoints}
-              </span>
-            </div>
-          </>
-        ) : isMB ? (
-          <>
-            <div className="flex flex-col gap-0.5 rounded-xl border border-border/50 bg-elevated p-3">
-              <span className="text-[10px] font-semibold text-muted uppercase">Atk Efficiency</span>
-              <span className="text-base font-bold tabular-nums text-emerald-500">
-                {formatPct(stat.efficiencyAtk)}
-              </span>
-            </div>
-            <div className="flex flex-col gap-0.5 rounded-xl border border-border/50 bg-elevated p-3">
-              <span className="text-[10px] font-semibold text-muted uppercase">Block Success</span>
-              <span className="text-base font-bold tabular-nums text-amber-500">
-                {formatPct(stat.successBlk)}
-              </span>
-            </div>
-            <div className="flex flex-col gap-0.5 rounded-xl border border-border/50 bg-elevated p-3">
-              <span className="text-[10px] font-semibold text-muted uppercase">Kills / Set</span>
-              <span className="text-base font-bold tabular-nums text-emerald-500">
-                {formatAvg(stat.avgAtk)}
-              </span>
-            </div>
-            <div className="flex flex-col gap-0.5 rounded-xl border border-border/50 bg-elevated p-3">
-              <span className="text-[10px] font-semibold text-muted uppercase">Aces / Set</span>
-              <span className="text-base font-bold tabular-nums text-sky-500">
-                {formatAvg(stat.avgAce)}
-              </span>
-            </div>
-            <div className="flex flex-col gap-0.5 rounded-xl border border-border/50 bg-elevated p-3">
-              <span className="text-[10px] font-semibold text-muted uppercase">Digs / Set</span>
-              <span className="text-base font-bold tabular-nums text-teal-500">
-                {formatAvg(stat.avgDig)}
-              </span>
-            </div>
-            <div className="flex flex-col gap-0.5 rounded-xl border border-border/50 bg-elevated p-3">
-              <span className="text-[10px] font-semibold text-muted uppercase">Sets Played</span>
-              <span className="text-base font-bold tabular-nums text-foreground">
-                {stat.setsPlayed}
-              </span>
-            </div>
-          </>
-        ) : (
-          /* OH & OP */
-          <>
-            <div className="flex flex-col gap-0.5 rounded-xl border border-border/50 bg-elevated p-3">
-              <span className="text-[10px] font-semibold text-muted uppercase">Atk Efficiency</span>
-              <span className="text-base font-bold tabular-nums text-emerald-500">
-                {formatPct(stat.efficiencyAtk)}
-              </span>
-            </div>
-            <div className="flex flex-col gap-0.5 rounded-xl border border-border/50 bg-elevated p-3">
-              <span className="text-[10px] font-semibold text-muted uppercase">Kills / Set</span>
-              <span className="text-base font-bold tabular-nums text-emerald-500">
-                {formatAvg(stat.avgAtk)}
-              </span>
-            </div>
-            <div className="flex flex-col gap-0.5 rounded-xl border border-border/50 bg-elevated p-3">
-              <span className="text-[10px] font-semibold text-muted uppercase">
-                {isOP ? "Block Success" : "Rec Success"}
-              </span>
-              <span className="text-base font-bold tabular-nums text-sky-500">
-                {formatPct(isOP ? stat.successBlk : stat.successRec)}
-              </span>
-            </div>
-            <div className="flex flex-col gap-0.5 rounded-xl border border-border/50 bg-elevated p-3">
-              <span className="text-[10px] font-semibold text-muted uppercase">Digs / Set</span>
-              <span className="text-base font-bold tabular-nums text-teal-500">
-                {formatAvg(stat.avgDig)}
-              </span>
-            </div>
-            <div className="flex flex-col gap-0.5 rounded-xl border border-border/50 bg-elevated p-3">
-              <span className="text-[10px] font-semibold text-muted uppercase">Aces / Set</span>
-              <span className="text-base font-bold tabular-nums text-sky-500">
-                {formatAvg(stat.avgAce)}
-              </span>
-            </div>
-            <div className="flex flex-col gap-0.5 rounded-xl border border-border/50 bg-elevated p-3">
-              <span className="text-[10px] font-semibold text-muted uppercase">Blocks / Set</span>
-              <span className="text-base font-bold tabular-nums text-amber-500">
-                {formatAvg(stat.avgBlk)}
-              </span>
-            </div>
-          </>
-        )}
+        {statTiles.map((tile) => (
+          <StatTile
+            key={tile.label}
+            label={tile.label}
+            value={tile.value}
+            tone={tile.tone}
+            size="md"
+          />
+        ))}
       </div>
-    </div>
+    </Card>
   );
 }

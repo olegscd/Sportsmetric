@@ -1,11 +1,20 @@
 "use client";
 
+import { PAGE_FRAME } from "@/components/layout/page-shell";
+import { Card } from "@/components/ui/Card";
+import { EmptyState } from "@/components/ui/EmptyState";
+import { ErrorNotice } from "@/components/ui/ErrorNotice";
+import { Select } from "@/components/ui/Field";
+import { SectionHeading } from "@/components/ui/SectionHeading";
+import { SkeletonRows } from "@/components/ui/Skeleton";
+import { StatTile } from "@/components/ui/StatTile";
 import { useSportsData, useSportsScope } from "@/context/SportsDataContext";
 import { formatAvg, formatPct } from "@/lib/utils";
 import type { Player, SeasonAverages, Team } from "@/types/sports";
 
 import type { PlayerGameLogEntry } from "@/lib/derivations";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, ChevronLeft, UserX } from "lucide-react";
+import Link from "next/link";
 import { useCallback, useMemo, useState } from "react";
 
 import { PlayerVolleyballStats } from "./PlayerVolleyballStats";
@@ -37,17 +46,15 @@ function CareerStatGrid({ averages }: { averages: SeasonAverages }) {
       ];
 
   return (
-    <div className="grid grid-cols-3 gap-2">
+    <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
       {tiles.map((tile) => (
-        <div
+        <StatTile
           key={tile.label}
-          className="flex flex-col items-center rounded-xl border border-border bg-elevated py-2.5"
-        >
-          <span className="text-base font-bold tabular-nums text-foreground">{tile.value}</span>
-          <span className="text-[10px] font-medium uppercase tracking-wide text-muted">
-            {tile.label}
-          </span>
-        </div>
+          label={tile.label}
+          value={tile.value}
+          size="md"
+          className="items-center text-center"
+        />
       ))}
     </div>
   );
@@ -61,12 +68,27 @@ export function PlayerDetailView({ id }: { id: string }) {
   const team = player ? teams.find((t) => t.id === player.teamId) : undefined;
 
   if (!player || !team) {
-    if (loading) return <p className="p-6" role="status">Loading player…</p>;
-    if (error) return <p className="p-6" role="alert">{error} <button onClick={() => void refreshData()}>Retry</button></p>;
+    if (loading) {
+      return (
+        <div className={PAGE_FRAME} role="status" aria-label="Loading player">
+          <SkeletonRows count={6} />
+        </div>
+      );
+    }
+    if (error) {
+      return (
+        <div className={PAGE_FRAME}>
+          <ErrorNotice message={error} onRetry={() => void refreshData()} />
+        </div>
+      );
+    }
     return (
-      <div className="flex flex-col items-center gap-1.5 px-6 py-20 text-center">
-        <p className="text-sm font-semibold text-foreground">Player not found</p>
-        <p className="text-xs text-muted">This player may have been removed by an admin.</p>
+      <div className={PAGE_FRAME}>
+        <EmptyState
+          icon={<UserX size={22} aria-hidden="true" />}
+          title="Player not found"
+          description="This player may have been removed by an admin."
+        />
       </div>
     );
   }
@@ -254,7 +276,15 @@ function PlayerDetailContent({ player, team }: { player: Player; team: Team }) {
   const isVolleyball = team.league === "PVL" || isVolleyballAverages(careerAverages);
 
   return (
-    <div className="mx-auto flex w-full max-w-7xl min-w-0 flex-col gap-4 px-4 py-4 md:px-6">
+    <div className={PAGE_FRAME}>
+      <Link
+        href="/players"
+        className="-mb-2 -ml-2 inline-flex min-h-10 w-fit items-center gap-1 rounded-control px-2 text-xs font-semibold text-muted transition-colors hover:text-foreground"
+      >
+        <ChevronLeft size={15} aria-hidden="true" />
+        All players
+      </Link>
+
       <PlayerCard
         player={player}
         team={team}
@@ -271,38 +301,39 @@ function PlayerDetailContent({ player, team }: { player: Player; team: Team }) {
           allPlayerSeasons={seasonLines.length > 0 ? seasonLines : [player]}
         />
       ) : (
-        <div className="flex flex-col gap-3 rounded-2xl border border-border bg-surface p-5">
-          <div className="flex items-center justify-between gap-3 border-b border-border pb-3">
-            <div>
-              <p className="text-[11px] font-semibold uppercase tracking-wide text-muted">
-                Performance Overview
-              </p>
-              <p className="text-xs font-semibold text-foreground">
-                {selectedSeasonOption === "career"
-                  ? "Career / Lifetime Stats"
-                  : activeContextLabel || seasonLabel(player.seasonId)}
-              </p>
-            </div>
-
-            <label className="relative shrink-0">
-              <select
-                value={selectedSeasonOption}
-                onChange={(e) => setSelectedSeasonOption(e.target.value)}
-                className="appearance-none rounded-full border border-border bg-elevated py-1.5 pl-3 pr-7 text-xs font-semibold text-foreground focus:border-primary focus:outline-none"
-              >
-                <option value="career">Career / Lifetime Stats</option>
-                {seasonLines.map((line: Player) => (
-                  <option key={line.id} value={line.id}>
-                    {seasonLabel(line.seasonId)}
-                  </option>
-                ))}
-              </select>
-              <ChevronDown
-                size={12}
-                className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-muted"
-              />
-            </label>
-          </div>
+        <Card className="flex flex-col gap-3 p-5">
+          <SectionHeading
+            level={2}
+            title="Performance Overview"
+            description={
+              selectedSeasonOption === "career"
+                ? "Career / Lifetime Stats"
+                : activeContextLabel || seasonLabel(player.seasonId)
+            }
+            action={
+              <div className="relative shrink-0">
+                <Select
+                  aria-label="Season"
+                  value={selectedSeasonOption}
+                  onChange={(e) => setSelectedSeasonOption(e.target.value)}
+                  className="min-h-10 w-auto appearance-none pr-8 text-xs"
+                >
+                  <option value="career">Career / Lifetime Stats</option>
+                  {seasonLines.map((line: Player) => (
+                    <option key={line.id} value={line.id}>
+                      {seasonLabel(line.seasonId)}
+                    </option>
+                  ))}
+                </Select>
+                <ChevronDown
+                  size={12}
+                  aria-hidden="true"
+                  className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-muted"
+                />
+              </div>
+            }
+            className="border-b border-border pb-3"
+          />
 
           <CareerStatGrid averages={displayAverages} />
 
@@ -326,15 +357,13 @@ function PlayerDetailContent({ player, team }: { player: Player; team: Team }) {
               })}
             </ul>
           ) : null}
-        </div>
+        </Card>
       )}
 
-      <div>
-        <p className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-muted">
-          Match History
-        </p>
+      <section>
+        <SectionHeading level={2} title="Match History" className="mb-3" />
         <MatchHistory entries={gameLog} />
-      </div>
+      </section>
     </div>
   );
 }

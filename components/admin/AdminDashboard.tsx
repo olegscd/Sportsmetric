@@ -3,6 +3,9 @@
 import { logoutAdmin } from "@/app/admin/actions";
 import { useSportsData, useSportsScope } from "@/context/SportsDataContext";
 import { cn } from "@/lib/utils";
+import { Button, buttonClasses } from "@/components/ui/Button";
+import { ConfirmProvider } from "@/components/ui/ConfirmDialog";
+import { Notice } from "@/components/ui/Notice";
 
 import {
   AlertTriangle,
@@ -93,6 +96,7 @@ export function AdminDashboard() {
   }
 
   return (
+    <ConfirmProvider>
     <div className="flex min-h-dvh flex-col bg-bg">
       <Toast toast={toast} onDismiss={() => setToast(null)} />
 
@@ -100,7 +104,7 @@ export function AdminDashboard() {
         <div className="mx-auto flex max-w-[1440px] items-center justify-between gap-3 px-4 py-4 md:px-7">
         <div className="min-w-0">
           <p className="truncate text-sm font-bold text-foreground">Admin Dashboard</p>
-          <p className="flex items-center gap-1.5 truncate text-[11px] text-muted">
+          <p className="flex items-center gap-1.5 truncate text-2xs text-muted">
             {loading ? (
               <>
                 <Loader2 size={11} className="animate-spin" aria-hidden="true" />
@@ -112,18 +116,11 @@ export function AdminDashboard() {
           </p>
         </div>
         <div className="flex shrink-0 items-center gap-2">
-          <button
-            type="button"
-            onClick={handleLogout}
-            className="inline-flex items-center gap-1.5 rounded-full border border-border px-3 py-1.5 text-xs font-semibold text-muted transition-colors hover:bg-elevated hover:text-foreground"
-          >
+          <Button variant="outline" size="sm" onClick={handleLogout}>
             <LogOut size={14} aria-hidden="true" />
             Sign out
-          </button>
-          <Link
-            href="/"
-            className="inline-flex shrink-0 items-center gap-1 rounded-full border border-border px-3 py-1.5 text-xs font-semibold text-foreground transition-colors hover:bg-elevated"
-          >
+          </Button>
+          <Link href="/" className={buttonClasses({ variant: "outline", size: "sm" })}>
             <ChevronLeft size={14} aria-hidden="true" />
             View site
           </Link>
@@ -132,37 +129,39 @@ export function AdminDashboard() {
       </div>
 
       {error ? (
-        <div
-          role="alert"
-          className="flex items-start gap-2 border-b border-live/40 bg-live/10 px-4 py-2.5 text-xs text-foreground"
+        <Notice
+          tone="error"
+          className="m-3 px-4 py-2.5 md:mx-6"
+          action={
+            <div className="flex items-center gap-1">
+              <Button variant="outline" size="sm" onClick={() => void refreshData()}>
+                Retry
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={clearError}
+                aria-label="Dismiss error"
+              >
+                <X size={14} aria-hidden="true" />
+              </Button>
+            </div>
+          }
         >
-          <AlertTriangle size={14} className="mt-0.5 shrink-0 text-live" aria-hidden="true" />
-          <p className="flex-1 leading-relaxed">{error}</p>
-          <button
-            type="button"
-            onClick={() => void refreshData()}
-            className="shrink-0 rounded-md border border-border px-2 py-1 font-semibold transition-colors hover:bg-elevated"
-          >
-            Retry
-          </button>
-          <button
-            type="button"
-            onClick={clearError}
-            aria-label="Dismiss error"
-            className="shrink-0 rounded-md p-1 text-muted transition-colors hover:bg-elevated hover:text-foreground"
-          >
-            <X size={14} />
-          </button>
-        </div>
+          <p className="flex items-start gap-2 text-xs">
+            <AlertTriangle size={14} className="mt-0.5 shrink-0" aria-hidden="true" />
+            <span className="leading-relaxed">{error}</span>
+          </p>
+        </Notice>
       ) : null}
 
       <div className="mx-auto grid w-full max-w-[1440px] flex-1 lg:grid-cols-[220px_minmax(0,1fr)]">
       <aside className="min-w-0 border-b border-border bg-surface/30 lg:border-r lg:border-b-0">
-        <p className="hidden px-7 pb-3 pt-7 text-[10px] font-bold uppercase tracking-[0.2em] text-muted lg:block">Workspace</p>
+        <p className="hidden px-7 pb-3 pt-7 text-3xs font-bold uppercase tracking-[0.2em] text-muted lg:block">Workspace</p>
       <div
         role="tablist"
         aria-label="Admin sections"
-        className="flex gap-1 overflow-x-auto p-3 lg:sticky lg:top-24 lg:flex-col lg:px-4"
+        className="h-scroll flex gap-1 overflow-x-auto p-3 lg:sticky lg:top-24 lg:flex-col lg:overflow-visible lg:px-4"
       >
         {TABS.map((item) => {
           const Icon = item.icon;
@@ -188,7 +187,7 @@ export function AdminDashboard() {
               }}
               onClick={() => selectTab(item.value)}
               className={cn(
-                "flex min-h-11 shrink-0 items-center gap-2.5 rounded-xl px-3 py-2.5 text-xs font-semibold transition-colors lg:text-left",
+                "flex min-h-11 shrink-0 items-center gap-2.5 rounded-control px-3 py-2.5 text-xs font-semibold transition-colors lg:text-left",
                 selected ? "bg-primary/10 text-foreground ring-1 ring-primary/30" : "text-muted hover:bg-elevated hover:text-foreground"
               )}
             >
@@ -203,16 +202,16 @@ export function AdminDashboard() {
       <div className="min-w-0 px-4 py-6 md:px-7">
         <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
           <div>
-            <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.2em] text-primary">Manage / {TABS.find(t => t.value === tab)?.label}</p>
+            <p className="eyebrow mb-2 text-primary">Manage / {TABS.find(t => t.value === tab)?.label}</p>
             <h1 className="page-heading">{TAB_HELP[tab].title}</h1>
             <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted">{TAB_HELP[tab].description}</p>
           </div>
         </div>
         <div className="mb-6 grid grid-cols-2 gap-2 sm:grid-cols-4">
           {([{ label: "Seasons", value: seasons.length, target: "seasons" }, { label: "Teams", value: teams.length, target: "teams" }, { label: "Players", value: players.length, target: "players" }, { label: "Matches", value: games.length, target: "games" }] as const).map(item => (
-            <button type="button" key={item.label} onClick={() => selectTab(item.target)} className="group flex items-center justify-between rounded-xl border border-border bg-surface p-3 text-left transition-colors hover:border-primary/40">
-              <span><span className="block text-lg font-extrabold tabular-nums">{loading ? "–" : item.value.toLocaleString()}</span><span className="text-[11px] text-muted">{item.label}</span></span>
-              <ArrowRight size={14} className="text-muted transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+            <button type="button" key={item.label} onClick={() => selectTab(item.target)} className="group flex min-h-14 items-center justify-between rounded-card border border-border bg-surface p-3 text-left shadow-card transition-colors hover:border-primary/40">
+              <span><span className="block text-xl font-extrabold tabular-nums">{loading ? "–" : item.value.toLocaleString()}</span><span className="text-2xs text-muted">{item.label}</span></span>
+              <ArrowRight size={14} className="shrink-0 text-muted transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
             </button>
           ))}
         </div>
@@ -228,5 +227,6 @@ export function AdminDashboard() {
       </div>
       </div>
     </div>
+    </ConfirmProvider>
   );
 }

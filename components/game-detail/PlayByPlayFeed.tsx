@@ -80,7 +80,7 @@ export function PlayByPlayFeed({ events, homeTeam, awayTeam, league }: PlayByPla
         return (
           <div key={event.id}>
             {showPeriodHeader ? (
-              <p className="sticky top-0 -mx-4 bg-elevated px-4 py-1.5 text-[11px] font-bold uppercase tracking-wide text-muted">
+              <p className="sticky top-0 z-10 -mx-4 border-y border-border/60 bg-surface-2 px-4 py-1.5 text-2xs font-bold uppercase tracking-wide text-muted">
                 {periodLabel(event.period, league)}
               </p>
             ) : null}
@@ -88,10 +88,12 @@ export function PlayByPlayFeed({ events, homeTeam, awayTeam, league }: PlayByPla
               className="flex items-start gap-3 border-l-2 py-2.5 pl-3"
               style={{ borderColor: accentColor ?? "var(--color-border)" }}
             >
-              <Icon size={16} className="mt-0.5 shrink-0 text-muted" />
-              <div className="flex-1">
+              <span aria-hidden="true" className="mt-0.5 shrink-0 text-muted">
+                <Icon size={16} />
+              </span>
+              <div className="min-w-0 flex-1">
                 <p className="text-sm text-foreground">{event.description}</p>
-                <p className="mt-0.5 text-[11px] text-muted">{event.timestamp}</p>
+                <p className="mt-0.5 text-2xs text-muted">{event.timestamp}</p>
               </div>
               <p className="shrink-0 text-xs font-semibold tabular-nums text-muted">
                 {event.currentScore.away}-{event.currentScore.home}

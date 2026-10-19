@@ -2,6 +2,9 @@
 
 import type { ToastFn } from "@/components/admin/Toast";
 import { TeamBadge } from "@/components/ui/TeamBadge";
+import { Badge } from "@/components/ui/Badge";
+import { useConfirm } from "@/components/ui/ConfirmDialog";
+import { Notice } from "@/components/ui/Notice";
 import { useSportsData } from "@/context/SportsDataContext";
 import { generateId } from "@/lib/data";
 import { buildGameId } from "@/lib/game-id";
@@ -21,7 +24,6 @@ import {
   Trash2,
   Copy,
   ArrowLeft,
-  AlertTriangle,
 } from "lucide-react";
 import { useEffect, useId, useMemo, useState } from "react";
 import {
@@ -79,6 +81,7 @@ export function ScheduleManagerTab({ onToast }: { onToast: ToastFn }) {
 
   // League & Season Selector
   const [selectedLeague, setSelectedLeague] = useState<League>("UAAP");
+  const confirm = useConfirm();
   const leagueSeasons = useMemo(
     () => seasons.filter((s) => inferLeague(s) === selectedLeague),
     [seasons, selectedLeague]
@@ -189,8 +192,17 @@ export function ScheduleManagerTab({ onToast }: { onToast: ToastFn }) {
     setDrafts(drafts.map((d) => (d.id === id ? { ...d, ...updates } : d)));
   }
 
-  function resetDrafts() {
-    if (hasFixtureContent(drafts) && !window.confirm("Clear the unpublished fixtures for this competition?")) return;
+  async function resetDrafts() {
+    if (
+      hasFixtureContent(drafts) &&
+      !(await confirm({
+        title: "Clear the unpublished fixtures for this competition?",
+        description: "Published fixtures are not affected.",
+        confirmLabel: "Clear draft",
+      }))
+    ) {
+      return;
+    }
     setDrafts([createEmptyDraft(todayStr, defaultVenue)]);
     setReviewKey(null);
     setShowValidation(false);
@@ -293,7 +305,7 @@ export function ScheduleManagerTab({ onToast }: { onToast: ToastFn }) {
         timeRemaining: game.league === "PVL" ? null : "10:00",
       };
       await saveGame(updated);
-      onToast(`Match ${game.homeTeam.shortName} vs ${game.awayTeam.shortName} is now LIVE! 🔴`, "success");
+      onToast(`Match ${game.homeTeam.shortName} vs ${game.awayTeam.shortName} is now LIVE!`, "success");
     } catch (err) {
       console.error(err);
       onToast("Failed to start match.", "error");
@@ -302,9 +314,12 @@ export function ScheduleManagerTab({ onToast }: { onToast: ToastFn }) {
 
   // Quick Action: Delete fixture
   async function handleDeleteGame(game: Game) {
-    if (!confirm(`Are you sure you want to delete ${game.homeTeam.shortName} vs ${game.awayTeam.shortName} from the schedule?`)) {
-      return;
-    }
+    const confirmed = await confirm({
+      title: `Delete ${game.homeTeam.shortName} vs ${game.awayTeam.shortName}?`,
+      description: "This removes the fixture from the schedule. This can't be undone.",
+      confirmLabel: "Delete fixture",
+    });
+    if (!confirmed) return;
     try {
       await deleteGame(game.id);
       onToast("Match removed from schedule.", "success");
@@ -357,12 +372,12 @@ export function ScheduleManagerTab({ onToast }: { onToast: ToastFn }) {
 
       <div className="flex flex-wrap items-center justify-between gap-3 text-xs text-muted">
         <p role="status">{storageStatus === "unavailable" ? "Browser storage unavailable. Keep this editor open to retain your draft." : storageStatus === "loading" ? "Loading draft…" : "Draft saved in this browser · Only published fixtures appear on the site"}</p>
-        <button type="button" onClick={resetDrafts} disabled={isSubmitting || !ready} className="rounded-lg border border-border px-3 py-2 hover:bg-elevated disabled:opacity-50">Clear draft</button>
+        <button type="button" onClick={() => void resetDrafts()} disabled={isSubmitting || !ready} className="min-h-10 rounded-control border border-border px-3 text-xs font-semibold hover:bg-elevated disabled:opacity-50">Clear draft</button>
       </div>
 
-      {seasonTeams.length < 2 && <p role="alert" className="rounded-xl border border-amber-400/30 bg-amber-400/10 p-4 text-sm text-amber-200">Add at least two teams to this competition in the Teams section before scheduling matches.</p>}
-      {saveError && <p role="alert" className="rounded-xl border border-live/30 bg-live/10 p-4 text-sm text-live">{saveError}</p>}
-      {showValidation && issues.length > 0 && <div role="alert" className="rounded-xl border border-live/30 bg-live/5 p-4 text-sm"><p className="mb-2 flex items-center gap-2 font-semibold text-live"><AlertTriangle size={16} />Check these fixtures before continuing</p><ul className="list-inside list-disc space-y-1 text-muted">{issues.map((issue, index) => <li key={index}><a className="underline underline-offset-2 hover:text-foreground" href={`#fixture-${issue.draftId}`}>{issue.message}</a></li>)}</ul></div>}
+      {seasonTeams.length < 2 && <Notice tone="warning">Add at least two teams to this competition in the Teams section before scheduling matches.</Notice>}
+      {saveError && <Notice tone="error">{saveError}</Notice>}
+      {showValidation && issues.length > 0 && <Notice tone="error" title="Check these fixtures before continuing"><ul className="list-inside list-disc space-y-1 text-xs text-foreground/80">{issues.map((issue, index) => <li key={index}><a className="underline underline-offset-2 hover:text-foreground" href={`#fixture-${issue.draftId}`}>{issue.message}</a></li>)}</ul></Notice>}
 
       {isReviewing && <SectionCard title="Review fixtures before publishing">
         <p className="text-sm text-muted">{selectedLeague} · {leagueSeasons.find(s => s.id === effectiveSeasonId)?.label} · All times PHT (UTC+8)</p>
@@ -383,25 +398,25 @@ export function ScheduleManagerTab({ onToast }: { onToast: ToastFn }) {
               disabled={isSubmitting || !ready}
               aria-label={`Match ${index + 1}`}
               aria-describedby={showValidation && issues.some(issue => issue.draftId === draft.id) ? `fixture-error-${draft.id}` : undefined}
-              className={cn("relative flex min-w-0 scroll-mt-28 flex-col gap-4 rounded-xl border bg-bg/40 p-4", showValidation && issues.some(issue => issue.draftId === draft.id) ? "border-live/60" : "border-border")}
+              className={cn("relative flex min-w-0 scroll-mt-28 flex-col gap-4 rounded-card border bg-surface-2/60 p-4", showValidation && issues.some(issue => issue.draftId === draft.id) ? "border-live/60" : "border-border")}
             >
               <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border/40 pb-2.5">
                 <span className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-foreground">
-                  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary/20 text-[10px] text-primary">
+                  <span className="flex h-6 w-6 items-center justify-center rounded-full bg-primary/20 text-2xs text-primary">
                     {index + 1}
                   </span>
                   Match #{index + 1} Fixture
                 </span>
 
                 <div className="flex items-center gap-2">
-                  <button type="button" onClick={() => { if (drafts.length < MAX_FIXTURES) setDrafts([...drafts, { ...draft, id: generateId() }]); }} disabled={drafts.length >= MAX_FIXTURES} className="flex min-h-9 items-center gap-1.5 rounded-lg px-2 text-xs text-muted hover:bg-elevated disabled:opacity-40"><Copy size={13} />Duplicate</button>
+                  <button type="button" onClick={() => { if (drafts.length < MAX_FIXTURES) setDrafts([...drafts, { ...draft, id: generateId() }]); }} disabled={drafts.length >= MAX_FIXTURES} className="flex min-h-10 items-center gap-1.5 rounded-control px-2 text-xs text-muted hover:bg-elevated disabled:opacity-40"><Copy size={13} aria-hidden="true" />Duplicate</button>
                 {drafts.length > 1 && (
                   <button
                     type="button"
                     onClick={() => removeDraftRow(draft.id)}
-                    className="flex items-center gap-1 rounded-lg px-2 py-1 text-xs text-rose-400 hover:bg-rose-500/10 transition-colors"
+                    className="flex min-h-10 items-center gap-1 rounded-control px-2 text-xs text-negative transition-colors hover:bg-negative/10"
                   >
-                    <Trash2 size={13} />
+                    <Trash2 size={13} aria-hidden="true" />
                     <span>Remove</span>
                   </button>
                 )}
@@ -433,7 +448,7 @@ export function ScheduleManagerTab({ onToast }: { onToast: ToastFn }) {
                 </div>
 
                 <div className="sm:col-span-5 flex flex-col justify-end">
-                  <span className="mb-1.5 text-[11px] font-semibold text-muted">Quick Times</span>
+                  <span className="mb-1.5 text-2xs font-semibold uppercase tracking-wide text-muted">Quick Times</span>
                   <div className="flex flex-wrap gap-1.5">
                     {COMMON_TIMES.map((t) => (
                       <button
@@ -441,10 +456,10 @@ export function ScheduleManagerTab({ onToast }: { onToast: ToastFn }) {
                         type="button"
                         onClick={() => setQuickTime(draft.id, t)}
                         className={cn(
-                          "rounded-lg border px-2 py-1 text-xs font-medium transition-colors",
+                          "min-h-10 rounded-control border px-3 text-xs font-medium transition-colors",
                           draft.time === t
-                            ? "border-primary bg-primary/20 text-foreground font-bold"
-                            : "border-border bg-surface text-muted hover:border-border/80"
+                            ? "border-primary bg-primary/20 font-bold text-foreground"
+                            : "border-border bg-surface text-muted hover:border-border-strong"
                         )}
                       >
                         {t === "14:00" ? "2:00 PM" : t === "16:00" ? "4:00 PM" : t === "18:30" ? "6:30 PM" : "7:30 PM"}
@@ -517,8 +532,8 @@ export function ScheduleManagerTab({ onToast }: { onToast: ToastFn }) {
                 </div>
 
                 <div className="flex flex-wrap items-center gap-1.5 pt-1">
-                  <span className="text-[11px] font-semibold text-muted flex items-center gap-1">
-                    <MapPin size={11} /> Top Venues:
+                  <span className="flex items-center gap-1 text-2xs font-semibold text-muted">
+                    <MapPin size={11} aria-hidden="true" /> Top Venues:
                   </span>
                   {(POPULAR_VENUES[selectedLeague] || []).map((v) => (
                     <button
@@ -526,10 +541,10 @@ export function ScheduleManagerTab({ onToast }: { onToast: ToastFn }) {
                       type="button"
                       onClick={() => setQuickVenue(draft.id, v)}
                       className={cn(
-                        "rounded-full border px-2.5 py-0.5 text-[11px] transition-colors",
+                        "min-h-10 rounded-full border px-3 text-2xs transition-colors",
                         draft.venue === v
                           ? "border-primary bg-primary/20 font-bold text-foreground"
-                          : "border-border bg-surface text-muted hover:border-border/80"
+                          : "border-border bg-surface text-muted hover:border-border-strong"
                       )}
                     >
                       {v.split(",")[0]}
@@ -547,9 +562,9 @@ export function ScheduleManagerTab({ onToast }: { onToast: ToastFn }) {
               type="button"
               onClick={addDraftRow}
               disabled={drafts.length >= MAX_FIXTURES || !ready}
-              className="flex items-center gap-1.5 rounded-xl border border-dashed border-border px-4 py-2.5 text-xs font-semibold text-foreground hover:border-primary/60 hover:bg-primary/5 transition-colors"
+              className="flex min-h-11 items-center gap-1.5 rounded-control border border-dashed border-border px-4 text-xs font-semibold text-foreground transition-colors hover:border-primary/60 hover:bg-primary/5"
             >
-              <Plus size={14} />
+              <Plus size={14} aria-hidden="true" />
               <span>Add Another Match</span>
             </button>
 
@@ -557,7 +572,7 @@ export function ScheduleManagerTab({ onToast }: { onToast: ToastFn }) {
               type="button"
               onClick={reviewDrafts}
               disabled={isSubmitting || !ready || seasonTeams.length < 2}
-              className={cn(primaryButtonClass, "px-6 py-2.5 text-xs font-bold shadow-lg shadow-primary/20")}
+              className={cn(primaryButtonClass, "px-6 text-xs font-bold")}
             >
               {isSubmitting ? (
                 "Saving Fixtures..."
@@ -579,26 +594,25 @@ export function ScheduleManagerTab({ onToast }: { onToast: ToastFn }) {
             {liveGames.map((game) => (
               <div
                 key={game.id}
-                className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-rose-500/30 bg-rose-950/10 p-3.5"
+                className="flex flex-wrap items-center justify-between gap-3 rounded-card border border-live/30 bg-live/5 p-3.5"
               >
-                <div className="flex items-center gap-3">
-                  <span className="flex h-2.5 w-2.5 animate-ping rounded-full bg-rose-500" />
+                <div className="flex flex-wrap items-center gap-3">
+                  <Badge tone="live" dot>
+                    LIVE
+                  </Badge>
                   <div className="flex items-center gap-2">
                     <span className="text-xs font-black text-foreground">
-                      {game.homeTeam.shortName} <span className="text-muted font-normal text-[11px]">({game.homeScore})</span>
+                      {game.homeTeam.shortName} <span className="font-normal text-2xs text-muted">({game.homeScore})</span>
                     </span>
                     <span className="text-xs text-muted">vs</span>
                     <span className="text-xs font-black text-foreground">
-                      {game.awayTeam.shortName} <span className="text-muted font-normal text-[11px]">({game.awayScore})</span>
+                      {game.awayTeam.shortName} <span className="font-normal text-2xs text-muted">({game.awayScore})</span>
                     </span>
                   </div>
-                  <span className="rounded-full bg-rose-500/20 px-2 py-0.5 text-[10px] font-bold text-rose-400">
-                    LIVE
-                  </span>
                 </div>
 
                 <div className="flex items-center gap-2 text-xs text-muted">
-                  <MapPin size={12} />
+                  <MapPin size={12} aria-hidden="true" />
                   <span>{game.venue}</span>
                 </div>
               </div>
@@ -610,7 +624,7 @@ export function ScheduleManagerTab({ onToast }: { onToast: ToastFn }) {
       {/* Scheduled Upcoming Games List */}
       <SectionCard title={`Scheduled Upcoming Matches (${upcomingGames.length})`}>
         {upcomingGames.length === 0 ? (
-          <div className="rounded-xl border border-dashed border-border p-8 text-center text-xs text-muted">
+          <div className="rounded-card border border-dashed border-border p-8 text-center text-xs text-muted">
             No upcoming matches currently scheduled for this season. Use the Schedule Builder above to add upcoming fixtures.
           </div>
         ) : (
@@ -620,12 +634,12 @@ export function ScheduleManagerTab({ onToast }: { onToast: ToastFn }) {
                 {/* Date Header Badge */}
                 <div className="flex items-center justify-between px-1">
                   <div className="flex items-center gap-2">
-                    <span className="flex h-2 w-2 rounded-full bg-primary" />
+                    <span className="flex h-2 w-2 rounded-full bg-primary" aria-hidden="true" />
                     <h4 className="text-xs font-bold uppercase tracking-wider text-foreground">
                       {group.dateLabel}
                     </h4>
                   </div>
-                  <span className="rounded-full bg-surface px-2.5 py-0.5 text-[10px] font-bold text-muted border border-border/50">
+                  <span className="rounded-full border border-border/50 bg-surface px-2.5 py-0.5 text-3xs font-bold text-muted">
                     {group.games.length} {group.games.length === 1 ? "Match" : "Matches"}
                   </span>
                 </div>
@@ -635,20 +649,20 @@ export function ScheduleManagerTab({ onToast }: { onToast: ToastFn }) {
                   {group.games.map((game) => (
                     <div
                       key={game.id}
-                      className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-border bg-surface/60 p-4 transition-all hover:border-border/90"
+                      className="flex flex-wrap items-center justify-between gap-3 rounded-card border border-border bg-surface/60 p-4 transition-colors hover:border-border-strong"
                     >
                       {/* Matchup & Badges */}
                       <div className="flex items-center gap-3">
                         <div className="flex items-center gap-2">
                           <TeamBadge team={game.homeTeam} size="sm" />
                           <span className="text-xs font-bold text-foreground">{game.homeTeam.shortName}</span>
-                          <span className="text-[11px] font-medium text-muted">vs</span>
+                          <span className="text-2xs font-medium text-muted">vs</span>
                           <TeamBadge team={game.awayTeam} size="sm" />
                           <span className="text-xs font-bold text-foreground">{game.awayTeam.shortName}</span>
                         </div>
 
                         {game.stage && game.stage !== "ELIMINATION" && (
-                          <span className="rounded-md bg-primary/20 px-1.5 py-0.5 text-[9px] font-bold text-primary uppercase">
+                          <span className="rounded-md bg-primary/20 px-1.5 py-0.5 text-3xs font-bold uppercase text-primary">
                             {game.stage}
                           </span>
                         )}
@@ -675,20 +689,21 @@ export function ScheduleManagerTab({ onToast }: { onToast: ToastFn }) {
                         <button
                           type="button"
                           onClick={() => handleGoLive(game)}
-                          className="flex items-center gap-1 rounded-xl border border-rose-500/30 bg-rose-500/10 px-2.5 py-1 text-xs font-semibold text-rose-400 hover:bg-rose-500/20 transition-colors"
+                          className="flex min-h-10 items-center gap-1 rounded-control border border-live/30 bg-live/10 px-2.5 text-xs font-semibold text-live transition-colors hover:bg-live/20"
                           title="Start match now as LIVE"
                         >
-                          <Radio size={12} />
-                          <span>Start Match 🔴</span>
+                          <Radio size={12} aria-hidden="true" />
+                          <span>Start Match</span>
                         </button>
 
                         <button
                           type="button"
                           onClick={() => handleDeleteGame(game)}
-                          className="rounded-lg p-1.5 text-muted hover:bg-rose-500/10 hover:text-rose-400 transition-colors"
+                          aria-label={`Delete ${game.homeTeam.shortName} vs ${game.awayTeam.shortName}`}
+                          className="inline-flex h-10 w-10 items-center justify-center rounded-control text-muted transition-colors hover:bg-negative/10 hover:text-negative"
                           title="Delete fixture from schedule"
                         >
-                          <Trash2 size={14} />
+                          <Trash2 size={14} aria-hidden="true" />
                         </button>
                       </div>
                     </div>

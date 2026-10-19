@@ -1,3 +1,5 @@
+import { Badge } from "@/components/ui/Badge";
+import { TableShell, Td, Th } from "@/components/ui/Table";
 import { TeamBadge } from "@/components/ui/TeamBadge";
 import type { DerivedTeamStandings } from "@/lib/derivations";
 import { cn } from "@/lib/utils";
@@ -9,6 +11,18 @@ interface StandingsTableProps {
   teams?: Team[];
   highlightTeamId?: string;
   isOldSeason?: boolean;
+}
+
+function StreakBadge({ streak }: { streak?: string }) {
+  if (!streak || streak === "-") {
+    return <span className="text-xs text-muted">—</span>;
+  }
+  const isWin = streak.startsWith("W");
+  return (
+    <Badge tone={isWin ? "success" : "negative"} size="sm">
+      {streak}
+    </Badge>
+  );
 }
 
 export function StandingsTable({
@@ -48,69 +62,91 @@ export function StandingsTable({
   const showDiffAndStreak = standings && !isOldSeason;
 
   return (
-    <div className="overflow-x-auto rounded-2xl border border-border bg-surface shadow-sm">
-      <table className="w-full text-left text-sm">
+    <TableShell>
+      <table className="w-full min-w-[34rem] text-left text-sm">
         <thead>
-          <tr className="border-b border-border text-[11px] font-bold text-muted bg-elevated">
-            <th scope="col" className="py-2.5 pl-3 font-bold">#</th>
-            <th scope="col" className="py-2.5 font-bold">Team</th>
-            <th scope="col" className="py-2.5 pr-3 text-right font-bold">W</th>
-            <th scope="col" className="py-2.5 pr-3 text-right font-bold">L</th>
-            <th scope="col" className="py-2.5 pr-3 text-right font-bold">PCT</th>
+          <tr>
+            <Th sticky className="w-12 pl-3">#</Th>
+            <Th className="sticky left-12 z-20 min-w-36 px-2">Team</Th>
+            <Th numeric className="w-12 pl-2">W</Th>
+            <Th numeric className="w-12">L</Th>
+            <Th numeric className="w-16">PCT</Th>
             {showDiffAndStreak && (
               <>
-                <th scope="col" className="py-2.5 pr-3 text-right font-bold">DIFF</th>
-                <th scope="col" className="py-2.5 pr-3 text-right font-bold">STRK</th>
+                <Th numeric className="w-20">DIFF</Th>
+                <Th numeric className="w-20 pr-4">STRK</Th>
               </>
             )}
           </tr>
         </thead>
         <tbody>
-          {rows.map((row) => (
-            <tr
-              key={row.team.id}
-              className={cn(
-                "border-t border-border/50 transition-colors hover:bg-elevated/60",
-                row.team.id === highlightTeamId && "bg-primary/10"
-              )}
-            >
-              <td className="py-2.5 pl-3 font-semibold text-muted">{row.index}</td>
-              <td className="py-2.5">
-                <Link href={`/teams/${row.team.id}`} className="flex items-center gap-2">
-                  <TeamBadge team={row.team} size="sm" />
-                  <span className="font-bold text-foreground">{row.team.shortName}</span>
-                </Link>
-              </td>
-              <td className="py-2.5 pr-3 text-right tabular-nums font-bold text-foreground">
-                {row.wins}
-              </td>
-              <td className="py-2.5 pr-3 text-right tabular-nums font-bold text-foreground">
-                {row.losses}
-              </td>
-              <td className="py-2.5 pr-3 text-right tabular-nums font-medium text-muted">
-                {row.pct}
-              </td>
-              {showDiffAndStreak && (
-                <>
-                  <td
+          {rows.map((row) => {
+            const highlighted = row.team.id === highlightTeamId;
+            const diffPositive = typeof row.diff === "string" && row.diff.startsWith("+");
+            const diffNegative = typeof row.diff === "string" && row.diff.startsWith("-");
+            return (
+              <tr
+                key={row.team.id}
+                className={cn(
+                  "transition-colors hover:bg-elevated/50",
+                  highlighted && "bg-primary/10"
+                )}
+              >
+                <Td sticky className="w-12 pl-3 text-xs font-semibold text-muted">
+                  {row.index}
+                </Td>
+                <Td className="sticky left-12 z-10 bg-surface px-2">
+                  <span
+                    aria-hidden="true"
                     className={cn(
-                      "py-2.5 pr-3 text-right tabular-nums font-mono text-xs font-semibold",
-                      row.diff && row.diff.startsWith("+")
-                        ? "text-emerald-400"
-                        : "text-muted"
+                      "pointer-events-none absolute inset-0 z-0",
+                      highlighted && "bg-primary/10"
                     )}
+                  />
+                  <Link
+                    href={`/teams/${row.team.id}`}
+                    className="relative flex min-h-9 items-center gap-2 rounded-control hover:text-primary"
                   >
-                    {row.diff}
-                  </td>
-                  <td className="py-2.5 pr-3 text-right tabular-nums text-xs font-semibold text-foreground">
-                    {row.streak}
-                  </td>
-                </>
-              )}
-            </tr>
-          ))}
+                    <TeamBadge team={row.team} size="sm" />
+                    <span className="truncate font-bold text-foreground">
+                      {row.team.shortName}
+                    </span>
+                  </Link>
+                </Td>
+                <Td numeric className="w-12 pl-2 font-bold">
+                  {row.wins}
+                </Td>
+                <Td numeric className="w-12 font-bold">
+                  {row.losses}
+                </Td>
+                <Td numeric className="w-16 font-mono text-xs font-medium text-muted">
+                  {row.pct}
+                </Td>
+                {showDiffAndStreak && (
+                  <>
+                    <Td
+                      numeric
+                      className={cn(
+                        "w-20 font-mono text-xs font-semibold",
+                        diffPositive
+                          ? "text-positive"
+                          : diffNegative
+                            ? "text-negative"
+                            : "text-muted"
+                      )}
+                    >
+                      {row.diff}
+                    </Td>
+                    <Td numeric className="w-20 pr-4">
+                      <StreakBadge streak={row.streak} />
+                    </Td>
+                  </>
+                )}
+              </tr>
+            );
+          })}
         </tbody>
       </table>
-    </div>
+    </TableShell>
   );
 }

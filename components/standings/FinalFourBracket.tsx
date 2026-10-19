@@ -1,5 +1,6 @@
 "use client";
 
+import { Badge } from "@/components/ui/Badge";
 import { TeamBadge } from "@/components/ui/TeamBadge";
 import type { DerivedTeamStandings } from "@/lib/derivations";
 import type { Game, Team } from "@/types/sports";
@@ -81,250 +82,246 @@ export function FinalFourBracket({ standings, playoffGames }: FinalFourBracketPr
         ? sf1Winner
         : null;
 
+  function seedLinkClasses(isWinner: boolean) {
+    return cn(
+      "flex min-h-11 items-center gap-2 rounded-control border p-2.5 transition-colors",
+      isWinner
+        ? "border-positive/40 bg-positive/10 text-foreground"
+        : "border-border/70 bg-surface-2/60 text-muted hover:border-border-strong"
+    );
+  }
+
   return (
-    <div className="flex flex-col gap-4 rounded-3xl border border-amber-500/20 bg-surface/50 p-4 sm:p-6 shadow-xl">
-      <div className="flex items-center justify-between border-b border-border pb-3">
-        <div className="flex items-center gap-2">
-          <Trophy size={18} className="text-amber-400" />
-          <h3 className="text-sm font-bold text-foreground uppercase tracking-wider">
-            Final Four Bracket
-          </h3>
+    <div className="h-scroll overflow-x-auto rounded-panel border border-archive/20 bg-surface/50 shadow-card">
+      <div className="flex min-w-[20rem] flex-col gap-4 p-4 sm:p-6">
+        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border pb-3">
+          <div className="flex items-center gap-2">
+            <Trophy size={18} className="text-archive" aria-hidden="true" />
+            <h3 className="text-sm font-bold uppercase tracking-wider text-foreground">
+              Final Four Bracket
+            </h3>
+          </div>
+          <Badge tone="archive" size="md">
+            Playoffs
+          </Badge>
         </div>
-        <span className="rounded-full bg-amber-500/10 px-2.5 py-0.5 text-[10px] font-extrabold text-amber-500 border border-amber-500/20">
-          Playoffs
-        </span>
-      </div>
 
-      {/* Bracket Level 1: Semifinals */}
-      <div className="flex flex-col gap-3">
-        <p className="text-[10px] font-bold uppercase tracking-widest text-muted">
-          Semifinals
-        </p>
+        {/* Bracket Level 1: Semifinals */}
+        <div className="flex flex-col gap-3">
+          <p className="eyebrow text-muted">Semifinals</p>
 
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          {/* Matchup 1 */}
-          <div className="flex flex-col rounded-2xl border border-border bg-elevated p-3 gap-2">
-            <div className="text-[10px] font-bold text-muted uppercase tracking-wide">
-              Semifinal 1
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            {/* Matchup 1 */}
+            <div className="flex flex-col gap-2 rounded-card border border-border bg-elevated p-3">
+              <div className="text-2xs font-bold uppercase tracking-wide text-muted">
+                Semifinal 1
+              </div>
+
+              {/* Seed 1 */}
+              <Link href={`/teams/${seed1.id}`} className={seedLinkClasses(sf1Winner.id === seed1.id)}>
+                <span
+                  className={cn(
+                    "flex h-5 w-5 shrink-0 items-center justify-center rounded text-3xs font-black tabular-nums",
+                    sf1Winner.id === seed1.id
+                      ? "bg-positive/15 text-positive"
+                      : "bg-elevated text-muted"
+                  )}
+                >
+                  #1
+                </span>
+                <TeamBadge team={seed1} size="sm" />
+                <span
+                  className={cn(
+                    "truncate text-xs",
+                    sf1Winner.id === seed1.id ? "font-bold text-foreground" : "text-muted"
+                  )}
+                >
+                  {seed1.name}
+                </span>
+              </Link>
+
+              {/* Seed 4 */}
+              <Link href={`/teams/${seed4.id}`} className={seedLinkClasses(sf1Winner.id === seed4.id)}>
+                <span
+                  className={cn(
+                    "flex h-5 w-5 shrink-0 items-center justify-center rounded text-3xs font-black tabular-nums",
+                    sf1Winner.id === seed4.id
+                      ? "bg-positive/15 text-positive"
+                      : "bg-elevated text-muted"
+                  )}
+                >
+                  #4
+                </span>
+                <TeamBadge team={seed4} size="sm" />
+                <span
+                  className={cn(
+                    "truncate text-xs",
+                    sf1Winner.id === seed4.id ? "font-bold text-foreground" : "text-muted"
+                  )}
+                >
+                  {seed4.name}
+                </span>
+              </Link>
             </div>
 
-            {/* Seed 1 */}
-            <Link
-              href={`/teams/${seed1.id}`}
-              className={cn(
-                "flex items-center gap-2 rounded-xl p-2.5 transition-colors border",
-                sf1Winner.id === seed1.id
-                  ? "bg-emerald-500/20 border-emerald-500/40 text-foreground font-bold shadow-sm"
-                  : "bg-rose-500/15 border-rose-500/30 text-foreground/80 font-medium opacity-75"
-              )}
-            >
-              <span
-                className={cn(
-                  "flex h-5 w-5 shrink-0 items-center justify-center rounded text-[10px] font-black",
-                  sf1Winner.id === seed1.id
-                    ? "bg-emerald-500/30 text-emerald-400"
-                    : "bg-rose-500/20 text-rose-400"
-                )}
-              >
-                #1
-              </span>
-              <TeamBadge team={seed1} size="sm" />
-              <span className="truncate text-xs text-foreground">
-                {seed1.name}
-              </span>
-            </Link>
+            {/* Matchup 2 */}
+            <div className="flex flex-col gap-2 rounded-card border border-border bg-elevated p-3">
+              <div className="text-2xs font-bold uppercase tracking-wide text-muted">
+                Semifinal 2
+              </div>
 
-            {/* Seed 4 */}
-            <Link
-              href={`/teams/${seed4.id}`}
-              className={cn(
-                "flex items-center gap-2 rounded-xl p-2.5 transition-colors border",
-                sf1Winner.id === seed4.id
-                  ? "bg-emerald-500/20 border-emerald-500/40 text-foreground font-bold shadow-sm"
-                  : "bg-rose-500/15 border-rose-500/30 text-foreground/80 font-medium opacity-75"
-              )}
-            >
-              <span
-                className={cn(
-                  "flex h-5 w-5 shrink-0 items-center justify-center rounded text-[10px] font-black",
-                  sf1Winner.id === seed4.id
-                    ? "bg-emerald-500/30 text-emerald-400"
-                    : "bg-rose-500/20 text-rose-400"
-                )}
-              >
-                #4
-              </span>
-              <TeamBadge team={seed4} size="sm" />
-              <span className="truncate text-xs text-foreground">
-                {seed4.name}
-              </span>
-            </Link>
-          </div>
+              {/* Seed 2 */}
+              <Link href={`/teams/${seed2.id}`} className={seedLinkClasses(sf2Winner.id === seed2.id)}>
+                <span
+                  className={cn(
+                    "flex h-5 w-5 shrink-0 items-center justify-center rounded text-3xs font-black tabular-nums",
+                    sf2Winner.id === seed2.id
+                      ? "bg-positive/15 text-positive"
+                      : "bg-elevated text-muted"
+                  )}
+                >
+                  #2
+                </span>
+                <TeamBadge team={seed2} size="sm" />
+                <span
+                  className={cn(
+                    "truncate text-xs",
+                    sf2Winner.id === seed2.id ? "font-bold text-foreground" : "text-muted"
+                  )}
+                >
+                  {seed2.name}
+                </span>
+              </Link>
 
-          {/* Matchup 2 */}
-          <div className="flex flex-col rounded-2xl border border-border bg-elevated p-3 gap-2">
-            <div className="text-[10px] font-bold text-muted uppercase tracking-wide">
-              Semifinal 2
+              {/* Seed 3 */}
+              <Link href={`/teams/${seed3.id}`} className={seedLinkClasses(sf2Winner.id === seed3.id)}>
+                <span
+                  className={cn(
+                    "flex h-5 w-5 shrink-0 items-center justify-center rounded text-3xs font-black tabular-nums",
+                    sf2Winner.id === seed3.id
+                      ? "bg-positive/15 text-positive"
+                      : "bg-elevated text-muted"
+                  )}
+                >
+                  #3
+                </span>
+                <TeamBadge team={seed3} size="sm" />
+                <span
+                  className={cn(
+                    "truncate text-xs",
+                    sf2Winner.id === seed3.id ? "font-bold text-foreground" : "text-muted"
+                  )}
+                >
+                  {seed3.name}
+                </span>
+              </Link>
             </div>
-
-            {/* Seed 2 */}
-            <Link
-              href={`/teams/${seed2.id}`}
-              className={cn(
-                "flex items-center gap-2 rounded-xl p-2.5 transition-colors border",
-                sf2Winner.id === seed2.id
-                  ? "bg-emerald-500/20 border-emerald-500/40 text-foreground font-bold shadow-sm"
-                  : "bg-rose-500/15 border-rose-500/30 text-foreground/80 font-medium opacity-75"
-              )}
-            >
-              <span
-                className={cn(
-                  "flex h-5 w-5 shrink-0 items-center justify-center rounded text-[10px] font-black",
-                  sf2Winner.id === seed2.id
-                    ? "bg-emerald-500/30 text-emerald-400"
-                    : "bg-rose-500/20 text-rose-400"
-                )}
-              >
-                #2
-              </span>
-              <TeamBadge team={seed2} size="sm" />
-              <span className="truncate text-xs text-foreground">
-                {seed2.name}
-              </span>
-            </Link>
-
-            {/* Seed 3 */}
-            <Link
-              href={`/teams/${seed3.id}`}
-              className={cn(
-                "flex items-center gap-2 rounded-xl p-2.5 transition-colors border",
-                sf2Winner.id === seed3.id
-                  ? "bg-emerald-500/20 border-emerald-500/40 text-foreground font-bold shadow-sm"
-                  : "bg-rose-500/15 border-rose-500/30 text-foreground/80 font-medium opacity-75"
-              )}
-            >
-              <span
-                className={cn(
-                  "flex h-5 w-5 shrink-0 items-center justify-center rounded text-[10px] font-black",
-                  sf2Winner.id === seed3.id
-                    ? "bg-emerald-500/30 text-emerald-400"
-                    : "bg-rose-500/20 text-rose-400"
-                )}
-              >
-                #3
-              </span>
-              <TeamBadge team={seed3} size="sm" />
-              <span className="truncate text-xs text-foreground">
-                {seed3.name}
-              </span>
-            </Link>
           </div>
         </div>
-      </div>
 
-      {/* Bracket Line Connector: Semifinals -> Finals */}
-      <div className="flex justify-center my-1 text-amber-500/40">
-        <svg className="w-full max-w-[320px] h-10 overflow-visible" viewBox="0 0 200 40">
-          <path
-            d="M 40 0 L 40 18 L 160 18 L 160 0 M 100 18 L 100 40"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </div>
-
-      {/* Bracket Level 2: Finals */}
-      <div className="flex flex-col gap-2">
-        <p className="text-[10px] font-bold uppercase tracking-widest text-amber-500 text-center">
-          Finals Series
-        </p>
-
-        <div className="flex flex-col rounded-2xl border border-amber-500/30 bg-amber-500/5 p-3.5 gap-2 max-w-md mx-auto w-full">
-          {/* Finalist 1 */}
-          <Link
-            href={`/teams/${sf1Winner.id}`}
-            className={cn(
-              "flex items-center gap-2.5 rounded-xl p-2.5 transition-colors border",
-              champion?.id === sf1Winner.id
-                ? "bg-emerald-500/20 border-emerald-500/40 text-foreground font-bold shadow-sm"
-                : champion
-                  ? "bg-rose-500/15 border-rose-500/30 text-foreground/80 font-medium opacity-75"
-                  : "bg-elevated border-border text-foreground/80 font-medium"
-            )}
-          >
-            <TeamBadge team={sf1Winner} size="sm" />
-            <span className="truncate text-xs text-foreground">
-              {sf1Winner.name}
-            </span>
-          </Link>
-
-          <div className="text-center text-[10px] font-extrabold text-muted uppercase">vs</div>
-
-          {/* Finalist 2 */}
-          <Link
-            href={`/teams/${sf2Winner.id}`}
-            className={cn(
-              "flex items-center gap-2.5 rounded-xl p-2.5 transition-colors border",
-              champion?.id === sf2Winner.id
-                ? "bg-emerald-500/20 border-emerald-500/40 text-foreground font-bold shadow-sm"
-                : champion
-                  ? "bg-rose-500/15 border-rose-500/30 text-foreground/80 font-medium opacity-75"
-                  : "bg-elevated border-border text-foreground/80 font-medium"
-            )}
-          >
-            <TeamBadge team={sf2Winner} size="sm" />
-            <span className="truncate text-xs text-foreground">
-              {sf2Winner.name}
-            </span>
-          </Link>
+        {/* Bracket Line Connector: Semifinals -> Finals */}
+        <div className="my-1 flex justify-center text-border-strong">
+          <svg className="h-10 w-full max-w-[320px] overflow-visible" viewBox="0 0 200 40" aria-hidden="true">
+            <path
+              d="M 40 0 L 40 18 L 160 18 L 160 0 M 100 18 L 100 40"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
         </div>
-      </div>
 
-      {/* Bracket Line Connector: Finals -> Champion */}
-      <div className="flex justify-center my-1 text-amber-400">
-        <svg className="w-8 h-10 overflow-visible" viewBox="0 0 20 40">
-          <path
-            d="M 10 0 L 10 32"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="3"
-            strokeLinecap="round"
-          />
-          <polygon points="4,30 10,40 16,30" fill="currentColor" />
-        </svg>
-      </div>
-
-      {/* Bracket Level 3: Champion / Winner */}
-      {champion ? (
-        <div className="flex flex-col items-center justify-center gap-3 rounded-2xl border-2 border-emerald-400 bg-emerald-500/20 p-5 text-center shadow-lg max-w-md mx-auto w-full">
-          <div className="flex items-center gap-1.5 rounded-full bg-emerald-400/20 px-3 py-1 text-emerald-400 text-xs font-black uppercase tracking-wider">
-            <Trophy size={16} />
-            <span>Season Champion</span>
-          </div>
-
-          <Link
-            href={`/teams/${champion.id}`}
-            className="flex flex-col items-center gap-2 group cursor-pointer"
-          >
-            <TeamBadge team={champion} size="lg" className="ring-4 ring-emerald-400/40 group-hover:scale-105 transition-transform" />
-            <span className="text-base sm:text-lg font-black text-foreground group-hover:text-emerald-400 transition-colors">
-              {champion.name}
-            </span>
-          </Link>
-        </div>
-      ) : (
-        <div className="flex flex-col items-center gap-1.5 rounded-2xl border border-dashed border-border bg-surface/60 p-5 text-center max-w-md mx-auto w-full">
-          <span className="text-xs font-bold uppercase tracking-wider text-muted">
-            Finals in progress
-          </span>
-          <p className="text-[11px] text-muted">
-            The champion appears once a finalist wins {FINALS_WINS_NEEDED} games.
+        {/* Bracket Level 2: Finals */}
+        <div className="flex flex-col gap-2">
+          <p className="text-center text-2xs font-bold uppercase tracking-widest text-archive">
+            Finals Series
           </p>
+
+          <div className="mx-auto flex w-full max-w-md flex-col gap-2 rounded-card border border-archive/25 bg-archive/5 p-3.5">
+            {/* Finalist 1 */}
+            <Link
+              href={`/teams/${sf1Winner.id}`}
+              className={cn(
+                "flex min-h-11 items-center gap-2.5 rounded-control border p-2.5 transition-colors",
+                champion?.id === sf1Winner.id
+                  ? "border-positive/40 bg-positive/10 font-bold text-foreground"
+                  : champion
+                    ? "border-border/70 bg-surface-2/60 text-muted"
+                    : "border-border bg-elevated text-foreground"
+              )}
+            >
+              <TeamBadge team={sf1Winner} size="sm" />
+              <span className="truncate text-xs">{sf1Winner.name}</span>
+            </Link>
+
+            <div className="text-center text-2xs font-extrabold uppercase text-muted">vs</div>
+
+            {/* Finalist 2 */}
+            <Link
+              href={`/teams/${sf2Winner.id}`}
+              className={cn(
+                "flex min-h-11 items-center gap-2.5 rounded-control border p-2.5 transition-colors",
+                champion?.id === sf2Winner.id
+                  ? "border-positive/40 bg-positive/10 font-bold text-foreground"
+                  : champion
+                    ? "border-border/70 bg-surface-2/60 text-muted"
+                    : "border-border bg-elevated text-foreground"
+              )}
+            >
+              <TeamBadge team={sf2Winner} size="sm" />
+              <span className="truncate text-xs">{sf2Winner.name}</span>
+            </Link>
+          </div>
         </div>
-      )}
+
+        {/* Bracket Line Connector: Finals -> Champion */}
+        <div className="my-1 flex justify-center text-archive/50">
+          <svg className="h-10 w-8 overflow-visible" viewBox="0 0 20 40" aria-hidden="true">
+            <path
+              d="M 10 0 L 10 32"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="3"
+              strokeLinecap="round"
+            />
+            <polygon points="4,30 10,40 16,30" fill="currentColor" />
+          </svg>
+        </div>
+
+        {/* Bracket Level 3: Champion / Winner */}
+        {champion ? (
+          <div className="mx-auto flex w-full max-w-md flex-col items-center justify-center gap-3 rounded-card border-2 border-positive/50 bg-positive/10 p-5 text-center shadow-card">
+            <Badge tone="success" size="md" icon={<Trophy size={14} aria-hidden="true" />}>
+              Season Champion
+            </Badge>
+
+            <Link
+              href={`/teams/${champion.id}`}
+              className="group flex flex-col items-center gap-2"
+            >
+              <TeamBadge
+                team={champion}
+                size="lg"
+                className="ring-4 ring-positive/25 transition-colors group-hover:ring-positive/40"
+              />
+              <span className="text-base font-black text-foreground transition-colors group-hover:text-positive sm:text-lg">
+                {champion.name}
+              </span>
+            </Link>
+          </div>
+        ) : (
+          <div className="mx-auto flex w-full max-w-md flex-col items-center gap-1.5 rounded-card border border-dashed border-border bg-surface/60 p-5 text-center">
+            <span className="text-xs font-bold uppercase tracking-wider text-muted">
+              Finals in progress
+            </span>
+            <p className="text-2xs text-muted">
+              The champion appears once a finalist wins {FINALS_WINS_NEEDED} games.
+            </p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

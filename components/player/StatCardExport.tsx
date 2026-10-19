@@ -3,6 +3,8 @@ import { getImageProps } from "next/image";
 import { safeImageSource } from "@/lib/image-policy";
 
 import { LeagueBadge } from "@/components/match-center/LeagueBadge";
+import { Button } from "@/components/ui/Button";
+import { Notice } from "@/components/ui/Notice";
 import { formatAvg, formatPct } from "@/lib/utils";
 import type { Player, Team } from "@/types/sports";
 import { Share2 } from "lucide-react";
@@ -165,20 +167,25 @@ export function StatCardExport({ player, team }: { player: Player; team: Team })
 
   return (
     <div className="flex flex-col gap-2">
-      <button
+      <Button
         type="button"
         onClick={handleExport}
-        disabled={status === "exporting"}
-        className="flex items-center justify-center gap-2 rounded-full bg-primary py-3 text-sm font-semibold text-primary-foreground disabled:opacity-60"
+        loading={status === "exporting"}
+        className="w-full sm:w-auto sm:self-start"
       >
-        <Share2 size={16} />
+        <Share2 size={16} aria-hidden="true" />
         {status === "exporting" ? "Preparing image\u2026" : "Share Stat Card"}
-      </button>
-      {status === "error" ? (
-        <p className="text-center text-xs text-live">
-          Couldn&apos;t export the stat card. Please try again.
-        </p>
-      ) : null}
+      </Button>
+      <div aria-live="polite">
+        {status === "exporting" ? (
+          <span className="sr-only">Preparing image\u2026</span>
+        ) : null}
+        {status === "error" ? (
+          <Notice tone="error">
+            Couldn&apos;t export the stat card. Please try again.
+          </Notice>
+        ) : null}
+      </div>
 
       {/*
         Off-screen (not display:none, which would break capture), full-res
@@ -245,7 +252,7 @@ export function StatCardExport({ player, team }: { player: Player; team: Team })
               {tiles.map((tile) => (
                 <div
                   key={tile.label}
-                  className="flex flex-col items-center gap-2 rounded-3xl border border-border bg-surface py-8"
+                  className="flex flex-col items-center gap-2 rounded-panel border border-border bg-surface py-8"
                 >
                   <span className="text-6xl font-bold tabular-nums text-foreground">
                     {tile.value}

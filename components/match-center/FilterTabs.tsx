@@ -1,7 +1,11 @@
 "use client";
 
+import { PAGE_FRAME } from "@/components/layout/page-shell";
+import { Badge } from "@/components/ui/Badge";
+import { Button } from "@/components/ui/Button";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { ErrorNotice } from "@/components/ui/ErrorNotice";
+import { Field, Input, Select } from "@/components/ui/Field";
 import { FilterChip, SegmentedControl } from "@/components/ui/FilterChip";
 import { SeasonPicker } from "@/components/ui/SeasonPicker";
 import { SearchInput } from "@/components/ui/SearchInput";
@@ -11,7 +15,13 @@ import { getEffectiveGameStatus, isLifetimeSeason } from "@/lib/derivations";
 import { inferLeague } from "@/lib/league-utils";
 import { formatFullDayHeader, formatGameDate, isoToPhtInput } from "@/lib/utils";
 import type { Game, League } from "@/types/sports";
-import { CalendarDays, CheckCheck, Radio, RefreshCw, SlidersHorizontal } from "lucide-react";
+import {
+  CalendarDays,
+  CheckCheck,
+  Radio,
+  RefreshCw,
+  SlidersHorizontal,
+} from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { GameCard } from "./GameCard";
 
@@ -122,7 +132,6 @@ export function FilterTabs() {
   const upcomingGrouped = useMemo(() => {
     if (activeStatus !== "UPCOMING") return null;
 
-
     const groups: { dateKey: string; dateLabel: string; games: Game[] }[] = [];
     const groupMap = new Map<string, { dateKey: string; dateLabel: string; games: Game[] }>();
 
@@ -209,14 +218,14 @@ export function FilterTabs() {
             <div key={group.dateKey} className="flex flex-col gap-2.5">
               <div className="flex items-center justify-between px-1">
                 <div className="flex items-center gap-2">
-                  <span className="flex h-2 w-2 rounded-full bg-primary" />
+                  <span className="h-2 w-2 rounded-full bg-primary" aria-hidden="true" />
                   <h3 className="text-xs font-bold uppercase tracking-wider text-foreground">
                     {group.dateLabel}
                   </h3>
                 </div>
-                <span className="rounded-full border border-border/50 bg-surface px-2.5 py-0.5 text-[10px] font-bold text-muted">
+                <Badge tone="neutral" size="sm">
                   {group.games.length} {group.games.length === 1 ? "Match" : "Matches"}
-                </span>
+                </Badge>
               </div>
               <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
                 {group.games.map((game) => (
@@ -238,95 +247,187 @@ export function FilterTabs() {
   }
 
   return (
-    <div className="mx-auto flex w-full min-w-0 max-w-7xl flex-col gap-5 px-4 py-5 md:px-6 md:py-8">
-      <section className="scoreboard-hero overflow-hidden rounded-2xl border border-border p-5 md:p-7" aria-label="Season overview">
+    <div className={PAGE_FRAME}>
+      <section
+        className="scoreboard-hero overflow-hidden rounded-panel border border-border p-5 md:p-7"
+        aria-label="Season overview"
+      >
         <div className="flex flex-wrap items-start justify-between gap-5">
-          <div>
-            <p className="mb-3 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-muted"><span className="h-1.5 w-1.5 rounded-full bg-primary" />Philippine sports, in focus</p>
+          <div className="min-w-0">
+            <p className="eyebrow mb-3 flex items-center gap-2 text-muted">
+              <span className="h-1.5 w-1.5 rounded-full bg-primary" aria-hidden="true" />
+              Philippine sports, in focus
+            </p>
             <h1 className="page-heading">Every game. Every number.</h1>
-            <p className="mt-3 text-sm text-muted">Your match center for UAAP, PBA, and PVL.</p>
+            <p className="mt-3 text-sm text-muted">
+              Your match center for UAAP, PBA, and PVL.
+            </p>
           </div>
-          <SeasonPicker value={seasonId} onChange={handleSeasonChange} league={league} includeLifetime={false} />
+          <SeasonPicker
+            value={seasonId}
+            onChange={handleSeasonChange}
+            league={league}
+            includeLifetime={false}
+          />
         </div>
         <div className="mt-6 grid grid-cols-3 divide-x divide-border border-t border-border pt-5">
-          {([{ value: "LIVE", label: "Live now", icon: Radio }, { value: "UPCOMING", label: "Upcoming", icon: CalendarDays }, { value: "FINAL", label: "Completed", icon: CheckCheck }] as const).map(({ value, label, icon: Icon }) => (
-            <div key={value} className="flex flex-col gap-1 px-3 first:pl-0 md:flex-row md:items-center md:gap-3 md:px-6">
-              <Icon size={17} aria-hidden="true" className={value === "LIVE" && counts.LIVE > 0 ? "text-live" : "text-muted"} />
-              <span className="text-2xl font-extrabold tabular-nums">{loading ? "–" : counts[value]}</span>
-              <span className="text-[11px] text-muted md:text-xs">{label}</span>
-            </div>
-          ))}
+          {([
+            { value: "LIVE", label: "Live now", icon: Radio },
+            { value: "UPCOMING", label: "Upcoming", icon: CalendarDays },
+            { value: "FINAL", label: "Completed", icon: CheckCheck },
+          ] as const).map(({ value, label, icon: Icon }) => {
+            const isLive = value === "LIVE" && counts.LIVE > 0;
+            return (
+              <div
+                key={value}
+                className="flex min-w-0 flex-col gap-1 px-2 first:pl-0 md:flex-row md:items-center md:gap-3 md:px-6"
+              >
+                <Icon
+                  size={17}
+                  aria-hidden="true"
+                  className={isLive ? "text-live" : "text-muted"}
+                />
+                <span
+                  className={`text-2xl font-extrabold tabular-nums ${isLive ? "text-live" : "text-foreground"}`}
+                >
+                  {loading ? "–" : counts[value]}
+                </span>
+                <span className="text-2xs text-muted md:text-xs">{label}</span>
+              </div>
+            );
+          })}
         </div>
       </section>
 
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <div className="flex gap-2">
-        {LEAGUE_CHIPS.map((chip) => (
-          <FilterChip
-            key={chip.value}
-            selected={league === chip.value}
-            onClick={() => handleLeagueChange(chip.value)}
-          >
-            {chip.label}
-          </FilterChip>
-        ))}
+        <div className="h-scroll flex gap-2 overflow-x-auto">
+          {LEAGUE_CHIPS.map((chip) => (
+            <FilterChip
+              key={chip.value}
+              selected={league === chip.value}
+              onClick={() => handleLeagueChange(chip.value)}
+            >
+              {chip.label}
+            </FilterChip>
+          ))}
         </div>
-        <button type="button" onClick={() => void refreshData()} disabled={loading} className="flex min-h-9 items-center gap-2 rounded-lg px-3 text-xs font-semibold text-muted hover:bg-elevated hover:text-foreground disabled:opacity-50">
-          <RefreshCw size={13} aria-hidden="true" className={loading ? "animate-spin" : ""} />{loading ? "Updating…" : "Refresh scores"}
-        </button>
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => void refreshData()}
+          disabled={loading}
+        >
+          <RefreshCw
+            size={13}
+            aria-hidden="true"
+            className={loading ? "animate-spin" : ""}
+          />
+          {loading ? "Updating…" : "Refresh scores"}
+        </Button>
       </div>
 
-      <div className="grid gap-4 rounded-2xl border border-border bg-surface p-4">
+      <div className="grid gap-4 rounded-card border border-border bg-surface p-4 shadow-card">
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="w-full sm:w-auto sm:min-w-80">
+          <div className="w-full min-w-0 sm:w-auto sm:min-w-80">
             <SegmentedControl
-              options={isOldSeason ? [{ value: "FINAL", label: `Final · ${counts.FINAL}` }] : STATUS_TABS.map(option => ({ ...option, label: `${option.label} · ${counts[option.value]}` }))}
+              options={
+                isOldSeason
+                  ? [{ value: "FINAL", label: `Final · ${counts.FINAL}` }]
+                  : STATUS_TABS.map((option) => ({
+                      ...option,
+                      label: `${option.label} · ${counts[option.value]}`,
+                    }))
+              }
               value={activeStatus}
-              onChange={(value) => { statusTouched.current = true; setStatus(value); }}
+              onChange={(value) => {
+                statusTouched.current = true;
+                setStatus(value);
+              }}
             />
           </div>
-          <span className="flex items-center gap-1.5 text-[11px] text-muted"><SlidersHorizontal size={13} aria-hidden="true" />All times Philippine time (UTC+8)</span>
+          <span className="flex items-center gap-1.5 text-2xs text-muted">
+            <SlidersHorizontal size={13} aria-hidden="true" />
+            All times Philippine time (UTC+8)
+          </span>
         </div>
-        <div className="grid grid-cols-2 items-end gap-3 lg:grid-cols-[1.6fr_1fr_1fr_1fr]">
-          <SearchInput value={query} onChange={setQuery} label="Search matches" placeholder="Search teams or venues" className="col-span-2 lg:col-span-1" />
-          <label className="grid gap-1.5 text-[11px] font-semibold text-muted">Team
-            <select
-          id="team-filter"
-          value={teamId}
-          onChange={(e) => setTeamId(e.target.value)}
-          className="min-h-10 w-full min-w-0 rounded-xl border border-border bg-elevated px-3 text-xs text-foreground"
-        >
-          <option value="ALL">All Teams</option>
-          {availableTeams.map((team) => (
-            <option key={team.id} value={team.id}>
-              {team.name} ({team.shortName})
-            </option>
-          ))}
-            </select>
-          </label>
-          <label className="grid gap-1.5 text-[11px] font-semibold text-muted">Match date (PHT)
-            <input type="date" value={date} onChange={e => setDate(e.target.value)} className="min-h-10 w-full min-w-0 rounded-xl border border-border bg-elevated px-3 text-xs text-foreground" />
-          </label>
-          <label className="col-span-2 grid gap-1.5 text-[11px] font-semibold text-muted lg:col-span-1">Sort by
-            <select value={sort} onChange={e => setSort(e.target.value as typeof sort)} className="min-h-10 rounded-xl border border-border bg-elevated px-3 text-xs text-foreground">
-              <option value="default">{activeStatus === "UPCOMING" ? "Next match first" : "Latest first"}</option>
+        <div className="grid grid-cols-1 items-end gap-3 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1fr]">
+          <SearchInput
+            value={query}
+            onChange={setQuery}
+            label="Search matches"
+            placeholder="Search teams or venues"
+            className="sm:col-span-2 lg:col-span-1"
+          />
+          <Field label="Team">
+            <Select
+              id="team-filter"
+              value={teamId}
+              onChange={(event) => setTeamId(event.target.value)}
+            >
+              <option value="ALL">All Teams</option>
+              {availableTeams.map((team) => (
+                <option key={team.id} value={team.id}>
+                  {team.name} ({team.shortName})
+                </option>
+              ))}
+            </Select>
+          </Field>
+          <Field label="Match date (PHT)">
+            <Input
+              type="date"
+              value={date}
+              onChange={(event) => setDate(event.target.value)}
+            />
+          </Field>
+          <Field label="Sort by">
+            <Select
+              value={sort}
+              onChange={(event) => setSort(event.target.value as typeof sort)}
+            >
+              <option value="default">
+                {activeStatus === "UPCOMING" ? "Next match first" : "Latest first"}
+              </option>
               <option value="newest">Newest first</option>
               <option value="oldest">Oldest first</option>
-            </select>
-          </label>
+            </Select>
+          </Field>
         </div>
       </div>
 
-      <div className="flex min-h-7 items-center justify-between gap-3">
-        <h2 className="text-xs font-semibold text-muted" aria-live="polite">{loading ? "Loading matches…" : `${filteredGames.length} ${filteredGames.length === 1 ? "match" : "matches"}`} <span className="text-border">/</span> {league} · {selectedSeason?.label ?? "Season"}</h2>
-        {hasFilters && <button type="button" onClick={resetFilters} className="text-xs font-semibold text-primary hover:underline">Reset filters</button>}
+      {error && games.length > 0 ? (
+        <ErrorNotice message={error} onRetry={() => void refreshData()} />
+      ) : null}
+
+      <div className="flex min-h-7 flex-wrap items-center justify-between gap-3">
+        <h2 className="text-xs font-semibold text-muted" aria-live="polite">
+          {loading
+            ? "Loading matches…"
+            : `${filteredGames.length} ${filteredGames.length === 1 ? "match" : "matches"}`}{" "}
+          <span className="text-muted/60">/</span> {league} ·{" "}
+          {selectedSeason?.label ?? "Season"}
+        </h2>
+        {hasFilters ? (
+          <button
+            type="button"
+            onClick={resetFilters}
+            className="min-h-10 text-xs font-semibold text-primary hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+          >
+            Reset filters
+          </button>
+        ) : null}
       </div>
 
       {renderBody()}
-      {filteredGames.length > limit && (
-        <button type="button" className="rounded-xl border border-border p-3 text-sm font-semibold"
-          onClick={() => setPage({ key: pageKey, limit: limit + 36 })}>Show more games</button>
-      )}
+      {filteredGames.length > limit ? (
+        <Button
+          variant="outline"
+          size="md"
+          className="w-full"
+          onClick={() => setPage({ key: pageKey, limit: limit + 36 })}
+        >
+          Show more games
+        </Button>
+      ) : null}
     </div>
   );
 }

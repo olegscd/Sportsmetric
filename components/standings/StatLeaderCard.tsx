@@ -1,3 +1,5 @@
+import { Badge } from "@/components/ui/Badge";
+import { Card } from "@/components/ui/Card";
 import { TeamBadge } from "@/components/ui/TeamBadge";
 import type { StatLeaderEntry } from "@/lib/derivations";
 import Link from "next/link";
@@ -10,11 +12,11 @@ interface StatLeaderCardProps {
 
 export function StatLeaderCard({ title, entries, formatValue }: StatLeaderCardProps) {
   return (
-    <div className="w-full rounded-2xl border border-border bg-elevated p-3 shadow-sm">
-      <p className="mb-2 text-[11px] font-bold uppercase tracking-wide text-muted">
+    <Card className="w-full p-3.5">
+      <p className="mb-2 text-2xs font-bold uppercase tracking-wider text-muted">
         {title}
       </p>
-      <div className="flex flex-col gap-2.5">
+      <div className="flex flex-col gap-1">
         {entries.length === 0 ? (
           <p className="py-4 text-center text-xs font-medium text-muted">No data yet.</p>
         ) : (
@@ -22,16 +24,24 @@ export function StatLeaderCard({ title, entries, formatValue }: StatLeaderCardPr
             <Link
               key={entry.player.id}
               href={`/players/${entry.player.id}`}
-              className="flex items-center gap-2 rounded-xl p-1 -mx-1 active:scale-[0.99] transition-transform hover:bg-surface"
+              className="-mx-1 flex min-h-11 items-center gap-2 rounded-control px-1 transition-colors hover:bg-surface-2"
             >
-              <span className="w-3 text-xs font-extrabold text-muted">{index + 1}</span>
+              <Badge
+                tone={index === 0 ? "archive" : "neutral"}
+                size="sm"
+                className="w-6 justify-center tabular-nums"
+              >
+                {index + 1}
+              </Badge>
               <TeamBadge team={entry.team} size="sm" />
-              <div className="min-w-0 flex-1">
-                <p className="truncate text-xs font-bold text-foreground">
+              <span className="flex min-w-0 flex-1 flex-col">
+                <span className="truncate text-xs font-bold text-foreground">
                   {entry.player.name}
-                </p>
-                <p className="truncate text-[10px] font-semibold text-muted">{entry.team.shortName}</p>
-              </div>
+                </span>
+                <span className="truncate text-3xs font-semibold uppercase tracking-wide text-muted">
+                  {entry.team.shortName}
+                </span>
+              </span>
               <span className="shrink-0 text-sm font-black tabular-nums text-foreground">
                 {formatValue(entry.value)}
               </span>
@@ -39,6 +49,6 @@ export function StatLeaderCard({ title, entries, formatValue }: StatLeaderCardPr
           ))
         )}
       </div>
-    </div>
+    </Card>
   );
 }

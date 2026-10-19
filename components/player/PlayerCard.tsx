@@ -1,7 +1,10 @@
 "use client";
 
 import { LeagueBadge } from "@/components/match-center/LeagueBadge";
+import { Badge } from "@/components/ui/Badge";
+import { cardClasses } from "@/components/ui/Card";
 import { PlayerAvatar } from "@/components/ui/PlayerAvatar";
+import { StatTile } from "@/components/ui/StatTile";
 import { TeamBadge } from "@/components/ui/TeamBadge";
 import { useSportsData } from "@/context/SportsDataContext";
 import { formatAvg, formatPct } from "@/lib/utils";
@@ -18,30 +21,6 @@ function isVolleyballPlayer(player: Player, avg: SeasonAverages): boolean {
     player.position === "S" ||
     player.position === "L" ||
     player.position === "OP"
-  );
-}
-
-function StatTile({
-  label,
-  value,
-  rank,
-}: {
-  label: string;
-  value: string;
-  rank?: number;
-}) {
-  return (
-    <div className="flex flex-col items-center rounded-xl border border-border bg-elevated py-2.5">
-      <span className="text-base font-bold tabular-nums text-foreground">{value}</span>
-      <span className="text-[10px] font-medium uppercase tracking-wide text-muted">
-        {label}
-      </span>
-      {rank ? (
-        <span className="mt-1 rounded-full bg-primary/15 px-1.5 py-px text-[9px] font-bold tabular-nums text-primary">
-          #{rank}
-        </span>
-      ) : null}
-    </div>
   );
 }
 
@@ -138,14 +117,25 @@ function StatGrid({ player, averages }: { player: Player; averages?: SeasonAvera
 
   return (
     <div className="grid grid-cols-3 gap-2">
-      {tiles.map((tile) => (
-        <StatTile
-          key={tile.label}
-          label={tile.label}
-          value={tile.value}
-          rank={getPlayerStatRank(player.id, tile.statKey)}
-        />
-      ))}
+      {tiles.map((tile) => {
+        const rank = getPlayerStatRank(player.id, tile.statKey);
+        return (
+          <StatTile
+            key={tile.label}
+            label={tile.label}
+            value={tile.value}
+            size="sm"
+            className="items-center text-center"
+            badge={
+              rank ? (
+                <Badge tone="primary" size="sm" className="px-1.5 tabular-nums">
+                  #{rank}
+                </Badge>
+              ) : null
+            }
+          />
+        );
+      })}
     </div>
   );
 }
@@ -171,59 +161,62 @@ export const PlayerCard = memo(function PlayerCard({
 
   const { getPlayerAverages } = useSportsData();
   const stats = getPlayerAverages(player);
-  
+
   if (variant === "compact") {
     return (
       <Link
         href={`/players/${player.id}`}
-        className="flex items-center gap-3 rounded-2xl border border-border bg-surface p-3 shadow-sm hover:border-primary/50 transition-all active:scale-[0.99]"
+        className={cardClasses({
+          interactive: true,
+          className: "flex min-h-16 items-center gap-3 p-3",
+        })}
       >
         <PlayerAvatar player={player} accentColor={team.accentColor} size="md" />
-        <div className="min-w-0 flex-1">
-          <p className="truncate text-sm font-bold text-foreground">{player.name}</p>
-          <div className="mt-0.5 flex items-center gap-1.5 text-xs text-muted font-medium">
-            <span>
+        <span className="min-w-0 flex-1">
+          <span className="block truncate text-sm font-bold text-foreground">{player.name}</span>
+          <span className="mt-0.5 flex min-w-0 items-center gap-1.5 text-xs font-medium text-muted">
+            <span className="truncate">
               #{player.jerseyNumber} &middot; {player.position}
             </span>
-            <span>&middot;</span>
-            <div className="flex items-center gap-1.5">
+            <span aria-hidden="true">&middot;</span>
+            <span className="flex shrink-0 items-center gap-1.5">
               <TeamBadge team={team} size="sm" className="h-4 w-4 text-[8px]" />
               <span className="font-semibold text-foreground">{team.shortName}</span>
-            </div>
-          </div>
-        </div>
-        <div className="flex shrink-0 items-center gap-3">
-          <div className="text-right">
-            <p className="text-sm font-black tabular-nums text-foreground">
+            </span>
+          </span>
+        </span>
+        <span className="flex shrink-0 items-center gap-3">
+          <span className="text-right">
+            <span className="block text-sm font-black tabular-nums text-foreground">
               {formatAvg(stats.ppg || stats.avgPerSet || 0)}
-            </p>
-            <p className="text-[10px] font-bold uppercase tracking-wider text-muted">
+            </span>
+            <span className="block text-3xs font-bold uppercase tracking-wider text-muted">
               {stats.ppg !== undefined ? "PPG" : "PTS/S"}
-            </p>
-          </div>
-        </div>
+            </span>
+          </span>
+        </span>
       </Link>
     );
   }
 
   return (
-    <div className="flex flex-col gap-4 rounded-2xl border border-border bg-surface p-5 shadow-sm">
+    <div className={cardClasses({ className: "flex flex-col gap-4 p-5" })}>
       <div className="flex items-center gap-4">
         <PlayerAvatar player={player} accentColor={team.accentColor} size="lg" className="text-lg" />
         <div className="min-w-0 flex-1">
-          <div className="flex items-center gap-2 flex-wrap">
-            <p className="truncate text-lg font-extrabold text-foreground">{player.name}</p>
+          <div className="flex flex-wrap items-center gap-2">
+            <h1 className="truncate text-lg font-extrabold tracking-tight text-foreground">{player.name}</h1>
             {inactivePillTag ? (
-              <span className="rounded-full bg-amber-500/15 border border-amber-500/30 px-2.5 py-0.5 text-[10px] font-bold text-amber-500 shrink-0">
+              <Badge tone="archive" size="md">
                 {inactivePillTag}
-              </span>
+              </Badge>
             ) : activeContextLabel ? (
-              <span className="rounded-full bg-primary/15 border border-primary/30 px-2.5 py-0.5 text-[10px] font-bold text-primary shrink-0">
+              <Badge tone="primary" size="md">
                 {activeContextLabel}
-              </span>
+              </Badge>
             ) : null}
           </div>
-          <p className="text-sm font-semibold text-muted mt-0.5">
+          <p className="mt-0.5 text-sm font-semibold text-muted">
             #{player.jerseyNumber} &middot; {player.position} &middot; {player.height}
           </p>
           <Link href={`/teams/${team.id}`} className="mt-1.5 flex items-center gap-1.5">
@@ -236,8 +229,8 @@ export const PlayerCard = memo(function PlayerCard({
 
       {player.rankBadges.length > 0 ? (
         <div className="flex flex-wrap gap-1.5">
-          {player.rankBadges.map((badge) => (
-            <RankBadge key={badge.label} badge={badge} />
+          {player.rankBadges.map((badge, index) => (
+            <RankBadge key={badge.label} badge={badge} index={index} />
           ))}
         </div>
       ) : null}

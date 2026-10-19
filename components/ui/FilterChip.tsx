@@ -18,10 +18,10 @@ export function FilterChip({
       onClick={onClick}
       aria-pressed={selected}
       className={cn(
-        "min-h-9 shrink-0 rounded-lg border px-3.5 py-1.5 text-xs font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
+        "min-h-11 shrink-0 rounded-full border px-4 py-2 text-xs font-semibold transition-colors duration-150 ease-standard focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
         selected
-          ? "border-primary/60 bg-primary/15 text-foreground"
-          : "border-border text-muted hover:border-primary/40 hover:text-foreground"
+          ? "border-primary/60 bg-primary/15 text-foreground shadow-sm"
+          : "border-border bg-surface/40 text-muted hover:border-primary/40 hover:text-foreground"
       )}
     >
       {children}
@@ -33,13 +33,21 @@ export function SegmentedControl<T extends string>({
   options,
   value,
   onChange,
+  className,
 }: {
   options: readonly { value: T; label: string }[];
   value: T;
   onChange: (value: T) => void;
+  className?: string;
 }) {
   return (
-    <div role="group" className="flex items-center gap-1 rounded-xl border border-border bg-surface p-1">
+    <div
+      role="group"
+      className={cn(
+        "h-scroll flex items-center gap-1 overflow-x-auto rounded-control border border-border bg-surface-2 p-1",
+        className
+      )}
+    >
       {options.map((option) => {
         const selected = value === option.value;
         return (
@@ -49,9 +57,9 @@ export function SegmentedControl<T extends string>({
             aria-pressed={selected}
             onClick={() => onChange(option.value)}
             className={cn(
-              "min-h-9 flex-1 rounded-lg px-3 py-2 text-xs font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
+              "min-h-10 flex-1 whitespace-nowrap rounded-lg px-3 py-2 text-xs font-semibold transition-colors duration-150 ease-standard focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
               selected
-                ? "bg-primary text-primary-foreground shadow-sm"
+                ? "bg-elevated text-foreground shadow-sm ring-1 ring-border-strong"
                 : "text-muted hover:text-foreground"
             )}
           >

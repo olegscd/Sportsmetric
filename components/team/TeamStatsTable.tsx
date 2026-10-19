@@ -1,3 +1,4 @@
+import { TableShell, Td, Th } from "@/components/ui/Table";
 import { formatAvg, formatPct } from "@/lib/utils";
 import type { League, Player } from "@/types/sports";
 
@@ -14,23 +15,23 @@ export function TeamStatsTable({ players, league }: { players: Player[]; league:
   const volleyball = isVolleyballLeague(league);
 
   return (
-    <div className="overflow-x-auto rounded-2xl border border-border bg-surface">
-      <table className="w-full min-w-[420px] text-left text-xs">
+    <TableShell>
+      <table className="w-full min-w-[26rem] text-left text-xs">
         <thead>
-          <tr className="text-muted">
-            <th scope="col" className="py-2 pr-2 pl-3 font-medium">Player</th>
+          <tr>
+            <Th sticky className="min-w-36 pl-3">Player</Th>
             {volleyball ? (
               <>
-                <th scope="col" className="px-2 font-medium">Kills/Set</th>
-                <th scope="col" className="px-2 font-medium">Digs/Set</th>
-                <th scope="col" className="px-2 pr-3 font-medium">Blocks/Set</th>
+                <Th numeric className="px-2">Kills/Set</Th>
+                <Th numeric className="px-2">Digs/Set</Th>
+                <Th numeric className="px-2 pr-3">Blocks/Set</Th>
               </>
             ) : (
               <>
-                <th scope="col" className="px-2 font-medium">PPG</th>
-                <th scope="col" className="px-2 font-medium">RPG</th>
-                <th scope="col" className="px-2 font-medium">APG</th>
-                <th scope="col" className="px-2 pr-3 font-medium">3P%</th>
+                <Th numeric className="px-2">PPG</Th>
+                <Th numeric className="px-2">RPG</Th>
+                <Th numeric className="px-2">APG</Th>
+                <Th numeric className="px-2 pr-3">3P%</Th>
               </>
             )}
           </tr>
@@ -39,30 +40,22 @@ export function TeamStatsTable({ players, league }: { players: Player[]; league:
           {roster.map((player) => {
             const avg = player.seasonAverages;
             return (
-              <tr key={player.id} className="border-t border-border">
-                <td className="max-w-[140px] truncate py-2.5 pr-2 pl-3 font-semibold text-foreground">
+              <tr key={player.id} className="transition-colors hover:bg-elevated/50">
+                <Td sticky className="max-w-40 truncate pl-3 font-semibold">
                   #{player.jerseyNumber} {player.name}
-                </td>
+                </Td>
                 {volleyball ? (
                   <>
-                    <td className="px-2 tabular-nums text-foreground">
-                      {formatAvg(avg.killsPerSet ?? 0)}
-                    </td>
-                    <td className="px-2 tabular-nums text-foreground">
-                      {formatAvg(avg.digsPerSet ?? 0)}
-                    </td>
-                    <td className="px-2 pr-3 tabular-nums text-foreground">
-                      {formatAvg(avg.blocksPerSet ?? 0)}
-                    </td>
+                    <Td numeric className="px-2">{formatAvg(avg.killsPerSet ?? 0)}</Td>
+                    <Td numeric className="px-2">{formatAvg(avg.digsPerSet ?? 0)}</Td>
+                    <Td numeric className="px-2 pr-3">{formatAvg(avg.blocksPerSet ?? 0)}</Td>
                   </>
                 ) : (
                   <>
-                    <td className="px-2 tabular-nums text-foreground">{formatAvg(avg.ppg)}</td>
-                    <td className="px-2 tabular-nums text-foreground">{formatAvg(avg.rpg)}</td>
-                    <td className="px-2 tabular-nums text-foreground">{formatAvg(avg.apg)}</td>
-                    <td className="px-2 pr-3 tabular-nums text-foreground">
-                      {formatPct(avg.threePtPct)}
-                    </td>
+                    <Td numeric className="px-2">{formatAvg(avg.ppg)}</Td>
+                    <Td numeric className="px-2">{formatAvg(avg.rpg)}</Td>
+                    <Td numeric className="px-2">{formatAvg(avg.apg)}</Td>
+                    <Td numeric className="px-2 pr-3">{formatPct(avg.threePtPct)}</Td>
                   </>
                 )}
               </tr>
@@ -70,6 +63,6 @@ export function TeamStatsTable({ players, league }: { players: Player[]; league:
           })}
         </tbody>
       </table>
-    </div>
+    </TableShell>
   );
 }

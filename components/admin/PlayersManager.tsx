@@ -5,6 +5,9 @@ import { useSportsData } from "@/context/SportsDataContext";
 import { generateId } from "@/lib/data";
 import type { Player, Position, RankBadge } from "@/types/sports";
 import { useRef, useState, type FormEvent } from "react";
+import { ClipboardPaste, Zap } from "lucide-react";
+import { useConfirm } from "@/components/ui/ConfirmDialog";
+import { Notice } from "@/components/ui/Notice";
 import { BASKETBALL_POSITIONS, VOLLEYBALL_POSITIONS, parseRosterEntry, rosterConflicts } from "@/lib/roster-entry";
 import {
   dangerButtonClass,
@@ -130,6 +133,7 @@ export function PlayersManager({ onToast }: { onToast: ToastFn }) {
   const [bulkText, setBulkText] = useState("");
   const [saving, setSaving] = useState(false);
   const quickNameRef = useRef<HTMLInputElement>(null);
+  const confirm = useConfirm();
 
   const teamsInListSeason = allTeams.filter((t) => t.seasonId === seasonFilter);
   const teamsInFormSeason = allTeams.filter((t) => t.seasonId === form.seasonId);
@@ -334,7 +338,12 @@ export function PlayersManager({ onToast }: { onToast: ToastFn }) {
   }
 
   async function handleDelete(id: string, name: string) {
-    if (!window.confirm(`Delete ${name}? This can't be undone.`)) return;
+    const confirmed = await confirm({
+      title: `Delete ${name}?`,
+      description: "This can't be undone.",
+      confirmLabel: "Delete player",
+    });
+    if (!confirmed) return;
     try {
       await deletePlayer(id);
       if (form.id === id) startCreate();
@@ -353,13 +362,12 @@ export function PlayersManager({ onToast }: { onToast: ToastFn }) {
       onToast(`No players to delete in ${seasonLabel}.`, "error");
       return;
     }
-    if (
-      !window.confirm(
-        `Delete all ${count} player(s) in ${seasonLabel}? Other seasons are not affected. This cannot be undone.`
-      )
-    ) {
-      return;
-    }
+    const confirmed = await confirm({
+      title: `Delete all ${count} player(s) in ${seasonLabel}?`,
+      description: "Other seasons are not affected. This cannot be undone.",
+      confirmLabel: "Delete roster",
+    });
+    if (!confirmed) return;
     try {
       await deleteAllPlayers(seasonFilter);
       startCreate();
@@ -408,8 +416,8 @@ export function PlayersManager({ onToast }: { onToast: ToastFn }) {
       <SectionCard>
         <div className="flex items-center justify-between gap-2 border-b border-border pb-3">
           <div className="flex items-center gap-2">
-            <span className="flex h-6 w-6 items-center justify-center rounded-md bg-primary/20 text-xs font-bold text-primary">
-              ⚡
+            <span className="flex h-6 w-6 items-center justify-center rounded-md bg-primary/20 text-primary">
+              <Zap size={13} aria-hidden="true" />
             </span>
             <p className="text-sm font-bold text-foreground">Quick Roster Builder</p>
           </div>
@@ -417,9 +425,10 @@ export function PlayersManager({ onToast }: { onToast: ToastFn }) {
             <button
               type="button"
               onClick={() => setShowBulkPaste(!showBulkPaste)}
-              className="rounded-lg border border-border bg-surface px-2.5 py-1 text-xs font-semibold text-foreground transition-colors hover:bg-muted/20"
+              className="inline-flex min-h-10 items-center gap-1.5 rounded-control border border-border bg-surface px-2.5 text-xs font-semibold text-foreground transition-colors hover:bg-elevated"
             >
-              {showBulkPaste ? "Row Mode" : "📋 Paste Bulk Roster"}
+              <ClipboardPaste size={13} aria-hidden="true" />
+              {showBulkPaste ? "Row Mode" : "Paste Bulk Roster"}
             </button>
           </div>
         </div>
@@ -430,7 +439,7 @@ export function PlayersManager({ onToast }: { onToast: ToastFn }) {
             id="roster-target-team"
             value={activeQuickTeamId}
             onChange={(e) => setQuickTeamId(e.target.value)}
-            className="flex-1 rounded-lg border border-border bg-background px-2.5 py-1.5 text-xs font-bold text-foreground"
+            className="min-h-11 flex-1 rounded-control border border-border bg-surface-2 px-2.5 text-xs font-bold text-foreground focus:border-primary/70 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
           >
             {teamsInListSeason.map((t) => (
               <option key={t.id} value={t.id}>
@@ -452,14 +461,14 @@ export function PlayersManager({ onToast }: { onToast: ToastFn }) {
               />
             </Field>
             <p className="text-xs leading-relaxed text-muted">Paste four columns from a spreadsheet, or enter one player per line. Use 0 when a jersey number is unknown. Valid positions: {quickPositions.join(", ")}.</p>
-            {bulkIssues.length > 0 && <div role="alert" className="rounded-xl border border-live/30 bg-live/5 p-3 text-xs text-live"><p className="mb-2 font-semibold">Resolve these rows before importing:</p><ul className="max-h-40 list-inside list-disc space-y-1 overflow-y-auto">{bulkIssues.map((issue, index) => <li key={index}>{issue}</li>)}</ul></div>}
+            {bulkIssues.length > 0 && <Notice tone="error"><p className="mb-2 text-xs font-semibold">Resolve these rows before importing:</p><ul className="max-h-40 list-inside list-disc space-y-1 overflow-y-auto text-xs">{bulkIssues.map((issue, index) => <li key={index}>{issue}</li>)}</ul></Notice>}
 
             {bulkParsedPreview.length > 0 && (
-              <div className="rounded-lg border border-border bg-background p-2 text-xs">
+              <div className="rounded-control border border-border bg-surface-2 p-2 text-xs">
                 <p className="font-semibold text-foreground">
                   Detected {bulkParsedPreview.length} player(s):
                 </p>
-                <ul className="mt-1 max-h-24 overflow-y-auto font-mono text-[11px] text-muted">
+                <ul className="mt-1 max-h-24 overflow-y-auto font-mono text-2xs text-muted">
                   {bulkParsedPreview.map((p, i) => (
                     <li key={i}>
                       #{p.jerseyNumber} {p.name} ({p.position}) {p.height}
@@ -590,7 +599,7 @@ export function PlayersManager({ onToast }: { onToast: ToastFn }) {
             />
           </Field>
 
-          <div className="grid grid-cols-3 gap-2">
+          <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
             <Field label="Jersey #">
               <input
                 className={inputClass}
@@ -640,7 +649,7 @@ export function PlayersManager({ onToast }: { onToast: ToastFn }) {
               Base Season Averages ({isVolleyball ? "Volleyball" : "Basketball"})
             </p>
             {isVolleyball ? (
-              <div className="grid grid-cols-3 gap-2">
+              <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
                 <Field label="Kills/Set">
                   <input
                     className={inputClass}
@@ -670,7 +679,7 @@ export function PlayersManager({ onToast }: { onToast: ToastFn }) {
                 </Field>
               </div>
             ) : (
-              <div className="grid grid-cols-4 gap-2">
+              <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
                 <Field label="PPG">
                   <input
                     className={inputClass}
@@ -728,7 +737,7 @@ export function PlayersManager({ onToast }: { onToast: ToastFn }) {
 
       <SectionCard title={`Players Roster (${filteredPlayers.length})`}>
         <div className="flex flex-col gap-3">
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
             <Field label="Search">
               <input
                 className={inputClass}
@@ -762,13 +771,13 @@ export function PlayersManager({ onToast }: { onToast: ToastFn }) {
                 return (
                   <div
                     key={player.id}
-                    className="flex items-center justify-between gap-2 rounded-xl border border-border bg-surface p-2.5"
+                    className="flex flex-wrap items-center justify-between gap-2 rounded-control border border-border bg-surface p-2.5"
                   >
                     <div className="min-w-0 flex-1">
                       <p className="truncate text-xs font-semibold text-foreground">
                         #{player.jerseyNumber} {player.name}
                       </p>
-                      <p className="truncate text-[10px] text-muted">
+                      <p className="truncate text-2xs text-muted">
                         {player.position} &middot; {team?.shortName ?? "Unknown"}
                       </p>
                     </div>

@@ -30,7 +30,7 @@ export function SeasonPicker({
         aria-label="Season"
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        className="max-w-[min(70vw,22rem)] appearance-none rounded-xl border border-border bg-surface py-2.5 pl-3 pr-8 text-xs font-semibold text-foreground transition-colors hover:border-primary/50 focus:border-primary focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+        className="min-h-11 max-w-[min(70vw,22rem)] appearance-none rounded-control border border-border bg-elevated py-2.5 pl-3 pr-8 text-xs font-semibold text-foreground transition-colors duration-150 ease-standard hover:border-border-strong focus:border-primary/70 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
       >
         {includeLifetime && <option value={LIFETIME_SEASON_ID}>Lifetime</option>}
         {filteredSeasons.map((season) => (
@@ -41,6 +41,7 @@ export function SeasonPicker({
       </select>
       <ChevronDown
         size={12}
+        aria-hidden="true"
         className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-muted"
       />
     </label>

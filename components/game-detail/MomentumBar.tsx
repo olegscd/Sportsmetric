@@ -13,10 +13,17 @@ export function MomentumBar({ game }: { game: Game }) {
   return (
     <div className="flex flex-col gap-3">
       <div>
-        <p className="mb-1.5 text-[11px] font-semibold uppercase tracking-wide text-muted">
-          Momentum
-        </p>
-        <div className="flex h-2 overflow-hidden rounded-full bg-elevated">
+        <div className="mb-1.5 flex items-center justify-between gap-2">
+          <p className="text-2xs font-semibold uppercase tracking-wide text-muted">
+            Momentum
+          </p>
+          <p className="text-2xs text-muted">Scoring sequence</p>
+        </div>
+        <div
+          role="img"
+          aria-label={`Scoring sequence for ${game.awayTeam.shortName} at ${game.homeTeam.shortName}: ${scoringEvents.length} scoring events. ${leadText}.`}
+          className="flex h-2 overflow-hidden rounded-full bg-surface-2"
+        >
           {scoringEvents.length === 0 ? (
             <div className="h-full flex-1 bg-border" />
           ) : (
@@ -34,18 +41,18 @@ export function MomentumBar({ game }: { game: Game }) {
             ))
           )}
         </div>
-        <div className="mt-1.5 flex items-center justify-between text-[11px] text-muted">
-          <span>{game.awayTeam.shortName}</span>
-          <span className="font-semibold text-foreground">{leadText}</span>
-          <span>{game.homeTeam.shortName}</span>
+        <div className="mt-1.5 flex items-center justify-between gap-2 text-2xs text-muted">
+          <span className="truncate">{game.awayTeam.shortName}</span>
+          <span className="text-center font-semibold text-foreground">{leadText}</span>
+          <span className="truncate text-right">{game.homeTeam.shortName}</span>
         </div>
       </div>
 
       <div className="grid grid-cols-2 gap-3">
         {[game.awayTeam, game.homeTeam].map((team) => (
-          <div key={team.id} className="rounded-xl border border-border bg-surface p-3">
-            <p className="text-xs font-semibold text-foreground">{team.shortName}</p>
-            <p className="text-[11px] text-muted">{formatRecord(team.record)}</p>
+          <div key={team.id} className="rounded-card border border-border bg-surface p-3">
+            <p className="truncate text-xs font-semibold text-foreground">{team.shortName}</p>
+            <p className="text-2xs text-muted">{formatRecord(team.record)}</p>
           </div>
         ))}
       </div>
