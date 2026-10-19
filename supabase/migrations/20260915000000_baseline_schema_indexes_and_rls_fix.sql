@@ -129,9 +129,10 @@ CREATE INDEX IF NOT EXISTS idx_teams_league         ON public.teams (league);
 CREATE INDEX IF NOT EXISTS idx_seasons_league       ON public.seasons (league);
 CREATE INDEX IF NOT EXISTS idx_seasons_sort_order   ON public.seasons (sort_order);
 
--- One jersey number per team per season.
-CREATE UNIQUE INDEX IF NOT EXISTS uniq_players_team_season_jersey
-  ON public.players (team_id, season_id, jersey_number);
+-- One jersey number per team per season is deferred until the existing
+-- duplicate PVL rows are merged. Creating the unique index here would abort
+-- this whole migration on those duplicates. 20260915100000_partial_jersey_unique.sql
+-- owns the index and can be applied once the duplicates are resolved.
 
 -- ===========================================================================
 -- 3. Dedicated table for UAAP archive overrides
@@ -155,6 +156,21 @@ FROM public.teams t
 WHERE t.id = '__uaap_archive_overrides__' AND t.record IS NOT NULL
 ON CONFLICT (id) DO NOTHING;
 
+-- If the copy above did not land, deleting the legacy row would destroy the
+-- only remaining copy of the archive edits.
+DO $$
+BEGIN
+  IF EXISTS (
+    SELECT 1 FROM public.teams
+    WHERE id = '__uaap_archive_overrides__' AND record IS NOT NULL
+  ) AND NOT EXISTS (
+    SELECT 1 FROM public.uaap_overrides WHERE id = 'default'
+  ) THEN
+    RAISE EXCEPTION 'Refusing to delete the legacy overrides row: the copy to uaap_overrides did not succeed.';
+  END IF;
+END
+$$;
+
 DELETE FROM public.teams WHERE id = '__uaap_archive_overrides__';
 
 -- ===========================================================================
@@ -176,6 +192,10 @@ BEGIN
 
     EXECUTE format('DROP POLICY IF EXISTS "Allow public read access on %s" ON public.%I', tbl, tbl);
     EXECUTE format('DROP POLICY IF EXISTS "Block anon writes on %s" ON public.%I', tbl, tbl);
+    -- Supabase's "Allow all access" policy template uses this exact name.
+    -- Permissive policies are OR-ed, so leaving it in place would keep anon
+    -- writes enabled even after the read/write policies below are recreated.
+    EXECUTE format('DROP POLICY IF EXISTS "Public full access" ON public.%I', tbl);
     EXECUTE format('DROP POLICY IF EXISTS "%s_public_read" ON public.%I', tbl, tbl);
     EXECUTE format('DROP POLICY IF EXISTS "%s_authenticated_write" ON public.%I', tbl, tbl);
 
