@@ -66,3 +66,6 @@ data/compiled/UAAP_Complete_Digital_Book.md
 
 __pycache__/
 *.pyc
+
+# Claude Code local settings
+.claude/settings.local.json
