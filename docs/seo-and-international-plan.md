@@ -141,12 +141,17 @@ Built 20 October 2026, intentionally unlaunched.
   `intl_competitions` and `intl_results`, separate from the league tables. Athletes
   record the Filipino connection type with a required https source; each result has
   its own source, representation (country/club) and a typed figure: placement,
-  mark + unit, ranking, stat line or award. RLS exposes only published athletes and
-  published results of published athletes. Competitions with results cannot be
-  deleted; deleting an athlete removes their results.
-- Public pages: `/international` (latest results, sport/level filters, athletes) and
-  `/athletes/<slug>` (connection, medal summary, results by year, sources, coverage
-  notes, optional link to the Philippine league profile via `person_id`).
+  mark + unit, ranking, stat line or award. Photos are optional but require an
+  attributed credit, license/permission note and https source link
+  (`20261020010300_intl_photo_credits.sql`), enforced by validation and a database
+  CHECK constraint. RLS exposes only published athletes and published results of
+  published athletes. Competitions with results cannot be deleted; deleting an
+  athlete removes their results.
+- Public pages: `/international` (top performers, latest results, sport/level filters,
+  athletes) and `/athletes/<slug>` (connection, medal summary, results by year,
+  sources, coverage notes, optional link to the Philippine league profile via
+  `person_id`). Photo credit, license and source appear under any top-performer card
+  that displays a portrait.
 - Admin: Workspace → International. Writes go through `/api/admin/mutate`
   (`intl.*` operations); drafts load from the authenticated `/api/admin/international`.
 - Launch switch: `INTERNATIONAL_LAUNCHED` in `lib/international.ts`. While false the

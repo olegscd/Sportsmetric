@@ -25,17 +25,21 @@ export function AthleteSpotlightCard({
   const { athlete, medals, results, bestResult, medalPoints } = performance;
   const bestCompetition = bestResult ? competitions.get(bestResult.competitionId) : undefined;
   const resultLabel = `${results.length} result${results.length === 1 ? "" : "s"}`;
+  const photoAttribution = athlete.photoUrl && athlete.photoCredit && athlete.photoLicense
+    ? { credit: athlete.photoCredit, license: athlete.photoLicense, source: athlete.photoSourceUrl }
+    : null;
 
-  return <li className="min-w-0">
+  return <li className="flex min-w-0 flex-col gap-1.5">
     <Link href={athletePath(athlete.id)}
-      className={cn("group relative flex h-full min-w-0 flex-col gap-3 overflow-hidden rounded-card border bg-surface p-4 shadow-card transition-colors hover:bg-surface-2/40 hover:border-border-strong",
+      className={cn("group relative flex min-w-0 flex-1 flex-col gap-3 overflow-hidden rounded-card border bg-surface p-4 shadow-card transition-colors hover:bg-surface-2/40 hover:border-border-strong",
         RANK_BORDER[rank - 1] ?? "border-border/80")}>
       <ChevronRight size={16} aria-hidden="true"
         className="absolute right-4 top-4 text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-primary" />
 
       <div className="flex items-start gap-3 pr-6">
         <div className="relative shrink-0">
-          <PlayerAvatar player={athlete} size="lg" accentColor={RANK_ACCENT[rank - 1] ?? "var(--color-border-strong)"} />
+          <PlayerAvatar player={photoAttribution ? athlete : { name: athlete.name, photoUrl: null }}
+            size="lg" accentColor={RANK_ACCENT[rank - 1] ?? "var(--color-border-strong)"} />
           <span aria-hidden="true"
             className={cn("absolute -left-1.5 -top-1.5 flex h-5 min-w-5 items-center justify-center rounded-full border px-1 text-3xs font-black tabular-nums",
               RANK_BADGE[rank - 1] ?? "border-border bg-elevated text-foreground")}>
@@ -71,6 +75,11 @@ export function AthleteSpotlightCard({
         <span className="font-bold text-primary">View profile</span>
       </div>
     </Link>
+    {photoAttribution && <p className="px-1 text-3xs leading-relaxed text-muted">
+      Photo: {photoAttribution.credit} · {photoAttribution.license}
+      {photoAttribution.source ? <> · <a href={photoAttribution.source} target="_blank" rel="noopener noreferrer"
+        className="font-semibold text-primary hover:underline">source<span className="sr-only"> (opens in a new tab)</span></a></> : null}
+    </p>}
   </li>;
 }
 

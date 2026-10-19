@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { readFile, readdir } from "node:fs/promises";
 import { test } from "node:test";
 import {
-  formatResultHeadline, ordinal, parseStats, selectTopPerformers, slugify, sortResultsNewestFirst,
+  athleteFromRow, athleteToRow, formatResultHeadline, ordinal, parseStats, selectTopPerformers, slugify, sortResultsNewestFirst,
   type IntlAthlete, type IntlCompetition, type IntlResult,
 } from "../../lib/international";
 import { normalizeIntlAthlete, normalizeIntlResult } from "../../lib/international-validation";
@@ -39,7 +39,8 @@ test("results sort newest first using competition dates when the result has none
 test("top performers rank by weighted medals, then golds and podiums", () => {
   const athlete = (id: string, name: string): IntlAthlete => ({
     id, name, sports: ["Sport"], filipinoConnection: "citizen", connectionNote: null,
-    connectionSourceUrl: "https://example.org/bio", personId: null, photoUrl: null, bio: null,
+    connectionSourceUrl: "https://example.org/bio", personId: null, photoUrl: null,
+    photoCredit: null, photoLicense: null, photoSourceUrl: null, bio: null,
     coverageNote: null, published: true, reviewedAt: null,
   });
   const medal = (id: string, athleteId: string, color: IntlResult["medal"], date: string, placement = 1): IntlResult =>
@@ -74,6 +75,19 @@ test("validation requires sources and type-specific fields", () => {
   assert.throws(() => normalizeIntlAthlete({ ...athlete, connectionSourceUrl: "http://example.org" }), /https/);
   assert.throws(() => normalizeIntlAthlete({ ...athlete, id: "EJ Obiena" }), /lowercase/);
   assert.throws(() => normalizeIntlAthlete({ ...athlete, filipinoConnection: "surname" }), /Filipino connection/);
+  const photo = { ...athlete, photoUrl: "/images/athletes/ej-obiena.jpg" };
+  assert.throws(() => normalizeIntlAthlete(photo), /photo needs a credit/i);
+  assert.throws(() => normalizeIntlAthlete({ ...photo, photoCredit: "Jane Doe / Wikimedia Commons" }), /license/i);
+  assert.throws(() => normalizeIntlAthlete({ ...photo, photoCredit: "Jane Doe / Wikimedia Commons", photoLicense: "CC BY-SA 4.0" }), /source link/i);
+  assert.throws(() => normalizeIntlAthlete({ ...photo, photoCredit: "Jane Doe / Wikimedia Commons", photoLicense: "CC BY-SA 4.0",
+    photoSourceUrl: "http://commons.wikimedia.org/wiki/File:Example.jpg" }), /https/);
+  const withPhoto = normalizeIntlAthlete({ ...photo, photoCredit: "Jane Doe / Wikimedia Commons", photoLicense: "CC BY-SA 4.0",
+    photoSourceUrl: "https://commons.wikimedia.org/wiki/File:Example.jpg" });
+  assert.equal(withPhoto.photoUrl, "/images/athletes/ej-obiena.jpg");
+  assert.equal(withPhoto.photoCredit, "Jane Doe / Wikimedia Commons");
+  assert.equal(withPhoto.photoLicense, "CC BY-SA 4.0");
+  assert.equal(athleteFromRow(athleteToRow(withPhoto)).photoSourceUrl, "https://commons.wikimedia.org/wiki/File:Example.jpg");
+  assert.equal(normalizeIntlAthlete({ ...athlete, photoCredit: "Stale", photoLicense: "Stale", photoSourceUrl: "https://example.org/photo" }).photoCredit, null);
   assert.equal(normalizeIntlResult(baseResult).placement, 2);
   assert.throws(() => normalizeIntlResult({ ...baseResult, placement: null }), /finishing position/);
   assert.throws(() => normalizeIntlResult({ ...baseResult, resultType: "mark", markValue: 6 }), /unit/);
@@ -98,6 +112,9 @@ test("international migration hides drafts from the public and enforces sources"
         ('r-draft','pub','wc','Pole vault','national_team','Philippines','placement',4,'https://example.org/r',false),
         ('r-hidden-athlete','draft','wc','100m','national_team','Philippines','placement',5,'https://example.org/r',true);`);
     await assert.rejects(db.exec("INSERT INTO intl_athletes(id,name,filipino_connection,connection_source_url) VALUES ('x','X','citizen','http://insecure')"), /check constraint/);
+    await assert.rejects(db.exec("UPDATE intl_athletes SET photo_url='https://example.org/p.jpg' WHERE id='pub'"), /check constraint/);
+    await assert.rejects(db.exec("UPDATE intl_athletes SET photo_url='https://example.org/p.jpg', photo_credit='Jane Doe', photo_license='CC BY 4.0', photo_source_url='http://example.org/p' WHERE id='pub'"), /check constraint/);
+    await db.exec("UPDATE intl_athletes SET photo_url='https://example.org/p.jpg', photo_credit='Jane Doe', photo_license='CC BY 4.0', photo_source_url='https://example.org/p' WHERE id='pub'");
     await assert.rejects(db.exec("INSERT INTO intl_results(id,athlete_id,competition_id,event,representation,represented,result_type,source_url) VALUES ('bad','pub','wc','E','club','C','placement','https://e.org')"), /check constraint/);
     await assert.rejects(db.exec("DELETE FROM intl_competitions WHERE id='wc'"), /foreign key/);
 

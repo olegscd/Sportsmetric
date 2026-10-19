@@ -139,7 +139,25 @@ async function write(context: string, run: (db: SupabaseClient) => PromiseLike<{
   }
 }
 
-export const upsertIntlAthlete = (a: IntlAthlete) => write("upsert athlete", db => db.from("intl_athletes").upsert([athleteToRow(a)]));
+/**
+ * Keep athlete saves working before the photo-credit migration is applied.
+ * A missing column is only tolerated when no attribution is being written;
+ * setting a photo credit without the schema gets a readable error instead.
+ */
+export const upsertIntlAthlete = (a: IntlAthlete) => write("upsert athlete", async db => {
+  const full = await db.from("intl_athletes").upsert([athleteToRow(a)]);
+  const missingPhotoColumns = full.error?.code === "PGRST204"
+    && /photo_(credit|license|source_url)/.test(full.error.message);
+  if (!missingPhotoColumns) return full;
+  if (a.photoCredit || a.photoLicense || a.photoSourceUrl) {
+    throw new ValidationError("Photo attribution columns are missing. Apply migration 20261020010300_intl_photo_credits.sql first.");
+  }
+  const legacy = athleteToRow(a);
+  delete legacy.photo_credit;
+  delete legacy.photo_license;
+  delete legacy.photo_source_url;
+  return db.from("intl_athletes").upsert([legacy]);
+});
 export const deleteIntlAthlete = (id: string) => write("delete athlete", db => db.from("intl_athletes").delete().eq("id", id));
 export const upsertIntlCompetition = (c: IntlCompetition) => write("upsert competition", db => db.from("intl_competitions").upsert([competitionToRow(c)]));
 export const deleteIntlCompetition = (id: string) => write("delete competition", db => db.from("intl_competitions").delete().eq("id", id));

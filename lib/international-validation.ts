@@ -96,6 +96,12 @@ export function normalizeIntlAthlete(input: unknown): IntlAthlete {
   const photo = optText(raw.photoUrl, 2000);
   const photoUrl = photo ? safeImageSource(photo) : null;
   if (photo && !photoUrl) throw new ValidationError("Use a local image path or an approved HTTPS image host (NEXT_PUBLIC_IMAGE_HOSTS).");
+  const photoCredit = photoUrl ? optText(raw.photoCredit, 200) : null;
+  const photoLicense = photoUrl ? optText(raw.photoLicense, 120) : null;
+  const photoSource = photoUrl ? optText(raw.photoSourceUrl, 2000) : null;
+  if (photoUrl && !photoCredit) throw new ValidationError("A photo needs a credit naming its photographer or rights holder.");
+  if (photoUrl && !photoLicense) throw new ValidationError("A photo needs a license or permission note (e.g. CC BY-SA 4.0).");
+  if (photoUrl && !photoSource) throw new ValidationError("A photo needs a source link for its credit and license.");
   return {
     id: slug(raw.id, "Athlete slug", 120),
     name: text(raw.name, "Athlete name", 120),
@@ -105,6 +111,9 @@ export function normalizeIntlAthlete(input: unknown): IntlAthlete {
     connectionSourceUrl: httpsUrl(raw.connectionSourceUrl, "Connection source"),
     personId: optText(raw.personId, 200),
     photoUrl,
+    photoCredit,
+    photoLicense,
+    photoSourceUrl: photoSource ? httpsUrl(photoSource, "Photo source") : null,
     bio: optText(raw.bio, 2000),
     coverageNote: optText(raw.coverageNote, 500),
     published: Boolean(raw.published),

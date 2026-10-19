@@ -69,6 +69,12 @@ export interface IntlAthlete {
   connectionSourceUrl: string;
   personId: string | null;
   photoUrl: string | null;
+  /** Photographer or rights holder, shown with the photo. */
+  photoCredit: string | null;
+  /** License or permission note, e.g. "CC BY-SA 4.0" or "Editorial use by permission". */
+  photoLicense: string | null;
+  /** Page where the image and its license/permission are published. */
+  photoSourceUrl: string | null;
   bio: string | null;
   coverageNote: string | null;
   published: boolean;
@@ -140,7 +146,9 @@ export function athleteFromRow(row: Row): IntlAthlete {
     filipinoConnection: (FILIPINO_CONNECTIONS as readonly string[]).includes(String(row.filipino_connection))
       ? row.filipino_connection as FilipinoConnection : "citizen",
     connectionNote: str(row.connection_note), connectionSourceUrl: String(row.connection_source_url ?? ""),
-    personId: str(row.person_id), photoUrl: str(row.photo_url), bio: str(row.bio),
+    personId: str(row.person_id), photoUrl: str(row.photo_url),
+    photoCredit: str(row.photo_credit), photoLicense: str(row.photo_license), photoSourceUrl: str(row.photo_source_url),
+    bio: str(row.bio),
     coverageNote: str(row.coverage_note), published: Boolean(row.published), reviewedAt: str(row.reviewed_at),
   };
 }
@@ -148,7 +156,8 @@ export function athleteFromRow(row: Row): IntlAthlete {
 export function athleteToRow(a: IntlAthlete): Row {
   return { id: a.id, name: a.name, sports: a.sports, filipino_connection: a.filipinoConnection,
     connection_note: a.connectionNote, connection_source_url: a.connectionSourceUrl, person_id: a.personId,
-    photo_url: a.photoUrl, bio: a.bio, coverage_note: a.coverageNote, published: a.published,
+    photo_url: a.photoUrl, photo_credit: a.photoCredit, photo_license: a.photoLicense,
+    photo_source_url: a.photoSourceUrl, bio: a.bio, coverage_note: a.coverageNote, published: a.published,
     reviewed_at: a.reviewedAt, updated_at: new Date().toISOString() };
 }
 

@@ -30,7 +30,8 @@ const EMPTY: InternationalData = { athletes: [], competitions: [], results: [], 
 // Form state (everything as strings so inputs stay controlled)
 
 type AthleteForm = { isNew: boolean; id: string; name: string; sports: string; filipinoConnection: string; connectionSourceUrl: string;
-  connectionNote: string; personId: string; photoUrl: string; bio: string; coverageNote: string; reviewedAt: string; published: boolean };
+  connectionNote: string; personId: string; photoUrl: string; photoCredit: string; photoLicense: string; photoSourceUrl: string;
+  bio: string; coverageNote: string; reviewedAt: string; published: boolean };
 type CompetitionForm = { isNew: boolean; id: string; name: string; sport: string; level: string; hostCountry: string; season: string;
   startDate: string; endDate: string; sourceUrl: string };
 type ResultForm = { isNew: boolean; id: string; athleteId: string; competitionId: string; event: string; representation: string;
@@ -38,10 +39,12 @@ type ResultForm = { isNew: boolean; id: string; athleteId: string; competitionId
   stats: string; scope: string; resultDate: string; sourceUrl: string; sourcePublisher: string; reviewedAt: string; notes: string; published: boolean };
 
 const blankAthlete = (): AthleteForm => ({ isNew: true, id: "", name: "", sports: "", filipinoConnection: "citizen", connectionSourceUrl: "",
-  connectionNote: "", personId: "", photoUrl: "", bio: "", coverageNote: "", reviewedAt: "", published: false });
+  connectionNote: "", personId: "", photoUrl: "", photoCredit: "", photoLicense: "", photoSourceUrl: "", bio: "",
+  coverageNote: "", reviewedAt: "", published: false });
 const athleteForm = (a: IntlAthlete): AthleteForm => ({ isNew: false, id: a.id, name: a.name, sports: a.sports.join(", "),
   filipinoConnection: a.filipinoConnection, connectionSourceUrl: a.connectionSourceUrl, connectionNote: a.connectionNote ?? "",
-  personId: a.personId ?? "", photoUrl: a.photoUrl ?? "", bio: a.bio ?? "", coverageNote: a.coverageNote ?? "",
+  personId: a.personId ?? "", photoUrl: a.photoUrl ?? "", photoCredit: a.photoCredit ?? "", photoLicense: a.photoLicense ?? "",
+  photoSourceUrl: a.photoSourceUrl ?? "", bio: a.bio ?? "", coverageNote: a.coverageNote ?? "",
   reviewedAt: a.reviewedAt ?? "", published: a.published });
 
 const blankCompetition = (): CompetitionForm => ({ isNew: true, id: "", name: "", sport: "", level: "world_championship",
@@ -152,6 +155,7 @@ export function InternationalManager({ onToast }: { onToast: ToastFn }) {
     const payload: IntlAthlete = { id, name: athlete.name, sports: athlete.sports.split(",").map(s => s.trim()).filter(Boolean),
       filipinoConnection: athlete.filipinoConnection as IntlAthlete["filipinoConnection"], connectionSourceUrl: athlete.connectionSourceUrl,
       connectionNote: blankToNull(athlete.connectionNote), personId: blankToNull(athlete.personId), photoUrl: blankToNull(athlete.photoUrl),
+      photoCredit: blankToNull(athlete.photoCredit), photoLicense: blankToNull(athlete.photoLicense), photoSourceUrl: blankToNull(athlete.photoSourceUrl),
       bio: blankToNull(athlete.bio), coverageNote: blankToNull(athlete.coverageNote), reviewedAt: blankToNull(athlete.reviewedAt), published: athlete.published };
     if (await run({ op: "intl.athlete.upsert", athlete: payload }, `Saved ${payload.name}.`)) setAthlete({ ...athlete, isNew: false, id });
   }
@@ -213,6 +217,7 @@ export function InternationalManager({ onToast }: { onToast: ToastFn }) {
   const onResult = set<ResultForm>(setResult);
 
   const needsPlacement = result.resultType === "placement" || result.resultType === "ranking";
+  const hasPhoto = Boolean(athlete.photoUrl.trim());
 
   return <div className="flex flex-col gap-4">
     <div className="flex flex-wrap items-center justify-between gap-3">
@@ -262,7 +267,18 @@ export function InternationalManager({ onToast }: { onToast: ToastFn }) {
             <Field label="League person ID (optional)" hint="players.person_id to link their PBA/UAAP/PVL profile."><Input value={athlete.personId} onChange={onAthlete("personId")} /></Field>
             <Field label="Profile reviewed"><Input type="date" value={athlete.reviewedAt} onChange={onAthlete("reviewedAt")} /></Field>
           </Row>
-          <Field label="Photo URL (optional)" hint="Approved image host only."><Input value={athlete.photoUrl} onChange={onAthlete("photoUrl")} /></Field>
+          <Field label="Photo URL (optional)" hint="Approved image host only. A photo is saved only with a credit, license and source link.">
+            <Input value={athlete.photoUrl} onChange={onAthlete("photoUrl")} /></Field>
+          <Row>
+            <Field label="Photo credit" hint="Photographer or rights holder.">
+              <Input required={hasPhoto} value={athlete.photoCredit} onChange={onAthlete("photoCredit")}
+                placeholder="Jane Doe / Wikimedia Commons" /></Field>
+            <Field label="Photo license" hint="e.g. CC BY-SA 4.0, public domain, editorial use by permission.">
+              <Input required={hasPhoto} value={athlete.photoLicense} onChange={onAthlete("photoLicense")}
+                placeholder="CC BY-SA 4.0" /></Field>
+          </Row>
+          <Field label="Photo source / license link" hint="Public page where the image and its license or permission are recorded.">
+            <Input required={hasPhoto} type="url" value={athlete.photoSourceUrl} onChange={onAthlete("photoSourceUrl")} placeholder="https://" /></Field>
           <Checkbox checked={athlete.published} onChange={v => setAthlete(p => ({ ...p, published: v }))} label="Published" hint="Only published athletes are visible on the site." />
           <div className="flex flex-wrap items-center gap-2">
             <button type="submit" disabled={saving} className={primaryButtonClass}>{saving ? "Saving…" : "Save athlete"}</button>
