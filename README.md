@@ -128,6 +128,10 @@ The script CSP uses a fresh nonce on dynamically rendered HTML responses.
 
 ## Data and archive assets
 
+- The [UAAP data audit](docs/uaap-archive-data-audit.md) inventories the stored
+  seasons and known extraction issues. Follow the
+  [statistics selection protocol](docs/uaap-archive-statistics-protocol.md) when
+  choosing source-backed standings, awards, and leaders for the archive.
 - `data/uaap_standings.json` and `data/uaap_archive_extras.json` are the base
   UAAP archive dataset. Admin edits are stored in Supabase and layered on top.
 - `data/seasons/**/*.md` are the season-book transcriptions. The admin report

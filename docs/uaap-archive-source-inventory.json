@@ -1,0 +1,356 @@
+{
+  "audit_date": "2026-10-19",
+  "timezone": "Asia/Manila",
+  "scope": "Local data folder; live Supabase overrides not queried",
+  "review_status": "inventory_only_not_publication_approval",
+  "method": {
+    "pdf_text_extraction": "pypdf; every physical page of every PDF under data/",
+    "visual_checks": "Ten rendered PDF pages covering all seven seasons; three original source photos",
+    "raw_group_definition": "Literal season/sport/division labels before normalization and validation",
+    "source_image_extensions": [
+      ".jpg",
+      ".jpeg",
+      ".png",
+      ".heic"
+    ],
+    "limitations": [
+      "Photo/transcript pairing does not establish completeness of the original reports.",
+      "PDFs and compiled outputs derive from transcriptions and are not independent corroboration.",
+      "Every proposed public block still requires the selection protocol gates."
+    ]
+  },
+  "totals": {
+    "season_reports": 7,
+    "season_pdf_physical_pages": 1519,
+    "pdf_files_under_data": 8,
+    "pdf_physical_pages_under_data": 1601,
+    "source_images": 751,
+    "transcripts": 751,
+    "base_rows": 775,
+    "base_raw_groups": 114,
+    "compiled_rows": 1039,
+    "compiled_raw_groups": 163,
+    "structured_json_files": 124
+  },
+  "seasons": [
+    {
+      "season": "1987-1988",
+      "source_images": 41,
+      "transcripts": 41,
+      "images_without_transcripts": [],
+      "transcripts_without_images": [],
+      "base_rows": 98,
+      "base_raw_groups": 15,
+      "base_sports": [
+        "Baseball",
+        "Basketball",
+        "Chess",
+        "Football",
+        "General Championship",
+        "Lawn Tennis",
+        "Table Tennis",
+        "Tae Kwon Do",
+        "Volleyball"
+      ],
+      "structured_json_files": 9,
+      "compiled_rows": 125,
+      "compiled_raw_groups": 20
+    },
+    {
+      "season": "1988-1989",
+      "source_images": 71,
+      "transcripts": 71,
+      "images_without_transcripts": [],
+      "transcripts_without_images": [],
+      "base_rows": 82,
+      "base_raw_groups": 11,
+      "base_sports": [
+        "Basketball",
+        "Chess",
+        "Football",
+        "General Championship",
+        "Lawn Tennis",
+        "Table Tennis",
+        "Tae Kwon Do",
+        "Volleyball"
+      ],
+      "structured_json_files": 10,
+      "compiled_rows": 103,
+      "compiled_raw_groups": 16
+    },
+    {
+      "season": "1989-1990",
+      "source_images": 30,
+      "transcripts": 30,
+      "images_without_transcripts": [],
+      "transcripts_without_images": [],
+      "base_rows": 33,
+      "base_raw_groups": 5,
+      "base_sports": [
+        "Baseball",
+        "Basketball",
+        "General Championship",
+        "Table Tennis",
+        "Volleyball"
+      ],
+      "structured_json_files": 5,
+      "compiled_rows": 91,
+      "compiled_raw_groups": 14
+    },
+    {
+      "season": "1998-1999",
+      "source_images": 98,
+      "transcripts": 98,
+      "images_without_transcripts": [],
+      "transcripts_without_images": [],
+      "base_rows": 148,
+      "base_raw_groups": 23,
+      "base_sports": [
+        "Badminton",
+        "Baseball",
+        "Basketball",
+        "Chess",
+        "Fencing",
+        "Football",
+        "General Championship",
+        "Judo",
+        "Lawn Tennis",
+        "Softball",
+        "Table Tennis",
+        "Tae Kwon Do",
+        "Volleyball"
+      ],
+      "structured_json_files": 26,
+      "compiled_rows": 198,
+      "compiled_raw_groups": 31
+    },
+    {
+      "season": "1999-2000",
+      "source_images": 90,
+      "transcripts": 90,
+      "images_without_transcripts": [],
+      "transcripts_without_images": [],
+      "base_rows": 171,
+      "base_raw_groups": 22,
+      "base_sports": [
+        "Badminton",
+        "Baseball",
+        "Basketball",
+        "Chess",
+        "Football",
+        "General Championship",
+        "Judo",
+        "Lawn Tennis",
+        "Softball",
+        "Table Tennis",
+        "Tae Kwon Do",
+        "Volleyball"
+      ],
+      "structured_json_files": 25,
+      "compiled_rows": 176,
+      "compiled_raw_groups": 27
+    },
+    {
+      "season": "2000-2001",
+      "source_images": 220,
+      "transcripts": 220,
+      "images_without_transcripts": [],
+      "transcripts_without_images": [],
+      "base_rows": 120,
+      "base_raw_groups": 18,
+      "base_sports": [
+        "Badminton",
+        "Baseball",
+        "Basketball",
+        "Chess",
+        "Fencing",
+        "Football",
+        "Judo",
+        "Lawn Tennis",
+        "Softball",
+        "Table Tennis",
+        "Volleyball"
+      ],
+      "structured_json_files": 25,
+      "compiled_rows": 158,
+      "compiled_raw_groups": 25
+    },
+    {
+      "season": "2002-2003",
+      "source_images": 0,
+      "transcripts": 0,
+      "images_without_transcripts": [],
+      "transcripts_without_images": [],
+      "base_rows": 0,
+      "base_raw_groups": 0,
+      "base_sports": [],
+      "structured_json_files": 0,
+      "compiled_rows": 0,
+      "compiled_raw_groups": 0
+    },
+    {
+      "season": "2003-2004",
+      "source_images": 201,
+      "transcripts": 201,
+      "images_without_transcripts": [],
+      "transcripts_without_images": [],
+      "base_rows": 123,
+      "base_raw_groups": 20,
+      "base_sports": [
+        "Badminton",
+        "Baseball",
+        "Basketball",
+        "Chess",
+        "Fencing",
+        "Football",
+        "Judo",
+        "Lawn Tennis",
+        "Softball",
+        "Table Tennis",
+        "Volleyball"
+      ],
+      "structured_json_files": 24,
+      "compiled_rows": 188,
+      "compiled_raw_groups": 30
+    }
+  ],
+  "pdfs": [
+    {
+      "path": "data/compiled/UAAP_Historical_Standings_Compendium.pdf",
+      "pages": 82,
+      "text_pages": 82,
+      "sha256": "d83ddabb998907c7c60659fbce1c7ea35811b305288aae71e322d11d30ae417b"
+    },
+    {
+      "path": "data/seasons/1987-1988/UAAP_1987_1988_Annual_Report.pdf",
+      "pages": 97,
+      "text_pages": 97,
+      "sha256": "114d5233fca05d7837fc72884e4d33ec12517a56027dd7ab97c15af61f833460"
+    },
+    {
+      "path": "data/seasons/1988-1989/UAAP_1988_1989_Annual_Report.pdf",
+      "pages": 230,
+      "text_pages": 230,
+      "sha256": "080f3c525e658ecdaa47f1fea2ff4942b2fb12e76e441c3a4e0daf22a123d109"
+    },
+    {
+      "path": "data/seasons/1989-1990/UAAP_1989_1990_Annual_Report.pdf",
+      "pages": 60,
+      "text_pages": 60,
+      "sha256": "0624b30b5376287df0af9b54fe7a58f3adbce620a6733180d564b998270b4695"
+    },
+    {
+      "path": "data/seasons/1998-1999/UAAP_1998_1999_Annual_Report.pdf",
+      "pages": 177,
+      "text_pages": 177,
+      "sha256": "a9be190e9238f8549e34be134995ff9cc27ac049a1e014afc89bc2d4e22005f9"
+    },
+    {
+      "path": "data/seasons/1999-2000/UAAP_1999_2000_Annual_Report.pdf",
+      "pages": 163,
+      "text_pages": 163,
+      "sha256": "308d3f8dc7a1d30ba25132816065b5cf234226fba3d8660a1a9415fbd56abf51"
+    },
+    {
+      "path": "data/seasons/2000-2001/UAAP_2000_2001_Annual_Report.pdf",
+      "pages": 377,
+      "text_pages": 377,
+      "sha256": "119d2b9688fa597445407adb8eb020b814e119a95b04e28c84ee319d35f2b477"
+    },
+    {
+      "path": "data/seasons/2003-2004/UAAP_2003_2004_Annual_Report.pdf",
+      "pages": 415,
+      "text_pages": 415,
+      "sha256": "dba1ecf78aa07bc65b13d12ed39ac9bef8e735bde28af652a45197e31627294f"
+    }
+  ],
+  "dataset_fingerprints": [
+    {
+      "path": "data/uaap_standings.json",
+      "sha256": "9cfeb20904c7eed37760b0bb724fd1b3b56f6123ff34f5aca30bd9153283a1bf"
+    },
+    {
+      "path": "data/uaap_archive_extras.json",
+      "sha256": "c8e6ad9dae2ad5fae1531bc2c1f1622fc660b45dde4b507a3d4ec79d38d24cd7"
+    },
+    {
+      "path": "data/uaap_admin_overrides.json",
+      "sha256": "9fe3ee6d0461dd4478b2bf15c6a768a41c6655bfcadc4d8c2fb45fd795134334"
+    },
+    {
+      "path": "data/compiled/uaap_standings_master.csv",
+      "sha256": "e17e3845c9216895520310601eafca461054204065859afa9442b50b92400658"
+    }
+  ],
+  "structured_file_categories": {
+    "awards": 45,
+    "board_medalists": 6,
+    "leaderboards": 1,
+    "overall_standings": 5,
+    "player_stats": 4,
+    "standings": 63
+  },
+  "extras_sport_season_key_counts": {
+    "awards": 45,
+    "games": 0,
+    "chess_medalists": 6,
+    "leaderboards": 1
+  },
+  "visual_pdf_checks": [
+    {
+      "season": "1987-1988",
+      "source_image": "IMG_0896",
+      "physical_pdf_page": 6
+    },
+    {
+      "season": "1988-1989",
+      "source_image": "IMG_0794",
+      "physical_pdf_page": 7
+    },
+    {
+      "season": "1989-1990",
+      "source_image": "IMG_0889",
+      "physical_pdf_page": 59
+    },
+    {
+      "season": "1998-1999",
+      "source_image": "IMG_1311",
+      "physical_pdf_page": 33
+    },
+    {
+      "season": "1998-1999",
+      "source_image": "IMG_1312",
+      "physical_pdf_page": 35
+    },
+    {
+      "season": "1999-2000",
+      "source_image": "IMG_0966",
+      "physical_pdf_page": 12
+    },
+    {
+      "season": "2000-2001",
+      "source_image": "IMG_1145",
+      "physical_pdf_page": 103
+    },
+    {
+      "season": "2000-2001",
+      "source_image": "IMG_1224",
+      "physical_pdf_page": 249
+    },
+    {
+      "season": "2003-2004",
+      "source_image": "IMG_0601",
+      "physical_pdf_page": 67
+    },
+    {
+      "season": "2003-2004",
+      "source_image": "IMG_0681",
+      "physical_pdf_page": 220
+    }
+  ],
+  "original_photo_checks": [
+    "data/seasons/2003-2004/raw_photos/IMG_0601.JPG",
+    "data/seasons/1998-1999/raw_photos/IMG_1311.JPG",
+    "data/seasons/2003-2004/raw_photos/IMG_0681.JPG"
+  ]
+}
