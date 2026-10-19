@@ -131,6 +131,14 @@ The script CSP uses a fresh nonce on dynamically rendered HTML responses.
 | `scripts/` | One-off seeding, import, verification, and archive-extraction tools |
 | `data/` | Curated datasets, season transcripts, and generated archive output |
 
+## Search visibility and International
+
+See the [SEO and International plan](docs/seo-and-international-plan.md) for
+implemented crawl/indexing controls, Search Console setup, target search intents
+and the future athlete profile structure. The production sitemap is `/sitemap.xml`;
+league pages live at `/leagues/uaap`, `/leagues/pba` and `/leagues/pvl`.
+International navigation will launch when verified athlete profiles are ready.
+
 ## News
 
 `/news` lists published stories with search and league/category filters. Each

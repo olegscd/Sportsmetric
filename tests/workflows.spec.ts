@@ -15,7 +15,7 @@ test.beforeEach(async ({ request }) => {
 test("match search, Philippine dates, and reset work on a narrow phone", async ({ page }, testInfo) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/");
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("Every game");
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("Philippine sports scores and stats");
   await page.getByRole("searchbox", { name: "Search matches" }).fill("test arena");
   await expect(page.getByRole("button", { name: "View details for AWY at HOM" })).toBeVisible();
   await page.getByLabel("Match date (PHT)").fill("2026-10-17");

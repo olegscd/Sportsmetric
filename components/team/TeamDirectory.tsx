@@ -134,7 +134,7 @@ export function TeamDirectory() {
 
   return (
     <div className={PAGE_FRAME}>
-      <PageHeading title="Find your side." description="Team records, season rosters, and the stories the standings tell." />
+      <PageHeading title="Philippine sports teams and rosters." description="Explore UAAP, PBA and PVL team records, season rosters and statistics." />
 
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="h-scroll flex gap-2 overflow-x-auto">

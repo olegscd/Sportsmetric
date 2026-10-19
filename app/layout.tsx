@@ -8,10 +8,14 @@ import { GameModalProvider } from "@/lib/game-modal-context";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { Suspense } from "react";
 import { headers } from "next/headers";
 import { fetchSportsData, type SportsDataScope, type SupabaseDataResult } from "@/lib/supabase-data";
 import { isAdminAuthenticated } from "@/lib/admin-auth";
+import { pageMetadata, SITE_DESCRIPTION, SITE_TITLE, SITE_URL, siteJsonLd } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { SiteFooter } from "@/components/layout/SiteFooter";
+import { getLeaguePageData, getPlayerPageData, getTeamPageData } from "@/lib/public-page-data";
+import { findLeaguePage } from "@/lib/leagues";
 
 // Every HTML response must be rendered with the request's CSP nonce.
 export const dynamic = "force-dynamic";
@@ -27,16 +31,20 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Sportsmetric",
-  description:
-    "Live scores, athlete digital resumes, and shareable stat cards for UAAP, PBA, and PVL.",
+  ...pageMetadata(SITE_TITLE, SITE_DESCRIPTION, "/"),
+  metadataBase: new URL(SITE_URL),
+  applicationName: "Sportsmetric",
+  verification: { google: process.env.GOOGLE_SITE_VERIFICATION, other: process.env.BING_SITE_VERIFICATION ? { "msvalidate.01": process.env.BING_SITE_VERIFICATION } : undefined },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Resolve the shell before sending HTML. A streamed fallback around the whole
+  // site leaves non-JavaScript visitors looking at a loader instead of content.
+  const shell = await SportsShell({ children });
   return (
     <html
       lang="en"
@@ -44,29 +52,7 @@ export default function RootLayout({
     >
       <body className="flex min-h-full flex-col bg-bg">
         <a href="#main-content" className="skip-link">Skip to content</a>
-        <Suspense
-          fallback={
-            <div
-              role="status"
-              className="flex min-h-dvh items-center justify-center bg-bg px-6"
-            >
-              <div className="flex flex-col items-center gap-3 text-center">
-                <span
-                  className="h-2.5 w-2.5 animate-live-pulse rounded-full bg-primary"
-                  aria-hidden="true"
-                />
-                <p className="text-sm font-semibold text-foreground">
-                  Loading Sportsmetric…
-                </p>
-                <p className="text-xs text-muted">
-                  Fetching the latest scores and standings.
-                </p>
-              </div>
-            </div>
-          }
-        >
-          <SportsShell>{children}</SportsShell>
-        </Suspense>
+        {shell}
       </body>
     </html>
   );
@@ -76,14 +62,22 @@ async function SportsShell({ children }: { children: React.ReactNode }) {
   const pathname = (await headers()).get("x-sports-path") ?? "/";
   let scope: SportsDataScope = { league: "UAAP" };
   let query = "league=UAAP";
+  let pageData: ReturnType<typeof getPlayerPageData> | undefined;
   if (pathname.startsWith("/players/")) {
     const id = decodeURIComponent(pathname.slice("/players/".length));
     scope = { playerId: id };
     query = `player=${encodeURIComponent(id)}`;
+    pageData = getPlayerPageData(id);
   } else if (pathname.startsWith("/teams/")) {
     const id = decodeURIComponent(pathname.slice("/teams/".length));
     scope = { teamId: id };
     query = `team=${encodeURIComponent(id)}`;
+    pageData = getTeamPageData(id);
+  } else if (pathname.startsWith("/leagues/") && findLeaguePage(pathname.split("/")[2])) {
+    const league = findLeaguePage(pathname.split("/")[2])!.league;
+    scope = { league };
+    query = `league=${league}`;
+    pageData = getLeaguePageData(league);
   } else if (pathname === "/admin" && await isAdminAuthenticated()) {
     scope = { admin: true };
     query = "admin=1";
@@ -94,23 +88,26 @@ async function SportsShell({ children }: { children: React.ReactNode }) {
   let data: SupabaseDataResult | undefined;
   let loadError: string | undefined;
   try {
-    data = await fetchSportsData(scope);
+    data = await (pageData ?? fetchSportsData(scope));
   } catch (err) {
     console.error("[Sports shell] Initial data load failed:", err);
     loadError = "Sports data is temporarily unavailable. Please try again.";
   }
-  if (data && query === "league=UAAP") {
-    const seasonId = data.seasons.find(s => s.league === "UAAP" && s.isCurrent)?.id ?? data.seasons.find(s => s.league === "UAAP")?.id;
+  if (data && /^league=(UAAP|PBA|PVL)$/.test(query)) {
+    const league = query.slice("league=".length);
+    const seasonId = data.seasons.find(s => s.league === league && s.isCurrent)?.id ?? data.seasons.find(s => s.league === league)?.id;
     if (seasonId) query += `&season=${encodeURIComponent(seasonId)}`;
   }
   return (
     <SportsDataProvider initialData={data} initialQuery={query} initialError={loadError}>
       <GameModalProvider>
         <div className="flex min-h-screen w-full flex-col">
+          <JsonLd data={siteJsonLd} />
           <DesktopTopBar />
           <MobileShell>
             <Header />
             <main id="main-content" tabIndex={-1} className="flex-1 focus:outline-none">{children}</main>
+            {!pathname.startsWith("/admin") && <SiteFooter />}
             <BottomNav />
           </MobileShell>
         </div>

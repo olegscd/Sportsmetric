@@ -405,6 +405,19 @@ export interface SportsDataScope {
   metadata?: boolean;
 }
 
+/** Lightweight public index; never loads games, sessions or private admin data. */
+export async function fetchPublicProfileIndex() {
+  const [seasons, teams, players] = await Promise.all([
+    fetchPaginatedTable<{ id: string }>("seasons", undefined, true, undefined, "id"),
+    fetchPaginatedTable<{ id: string; name: string; season_id: string }>("teams", "id", true, undefined, "id,name,season_id"),
+    fetchPaginatedTable<{ id: string; name: string; team_id: string; season_id: string }>("players", "id", true, undefined, "id,name,team_id,season_id"),
+  ]);
+  const seasonIds = new Set(seasons.map(season => season.id));
+  const validTeams = teams.filter(team => team.name?.trim() && seasonIds.has(team.season_id));
+  const teamsById = new Map(validTeams.map(team => [team.id, team]));
+  return { teams: validTeams, players: players.filter(player => player.name?.trim() && teamsById.get(player.team_id)?.season_id === player.season_id) };
+}
+
 export async function fetchSportsData(scope: SportsDataScope): Promise<SupabaseDataResult> {
   const seasons = mapSeasonRows(await fetchPaginatedTable<SeasonDbRow>("seasons", "id"));
   if (!supabase || scope.metadata) return { seasons, teams: [], players: [], games: [] };

@@ -127,7 +127,7 @@ export function PlayerDirectory() {
 
   return (
     <div className={PAGE_FRAME}>
-      <PageHeading title="The players behind the numbers." description="Explore rosters, compare season statistics, and follow every athlete’s career." />
+      <PageHeading title="Player statistics and athlete profiles." description="Explore UAAP, PBA and PVL rosters, compare season statistics, and follow individual performance." />
 
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="h-scroll flex gap-2 overflow-x-auto">

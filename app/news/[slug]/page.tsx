@@ -6,16 +6,16 @@ import { PAGE_FRAME } from "@/components/layout/page-shell";
 import { Badge } from "@/components/ui/Badge";
 import { getNewsArticle } from "@/lib/news";
 import { formatNewsDate } from "@/lib/news-format";
+import { absoluteUrl, breadcrumbJsonLd, pageMetadata, SITE_URL } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/JsonLd";
 
 type Props = { params: Promise<{ slug: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const article = getNewsArticle((await params).slug);
   if (!article) return { title: "Story not found | Sportsmetric", robots: { index: false } };
-  return {
-    title: `${article.title} | Sportsmetric`, description: article.summary,
-    openGraph: { type: "article", title: article.title, description: article.summary, publishedTime: article.publishedAt, authors: [article.author] },
-  };
+  const metadata = pageMetadata(article.title, article.summary, `/news/${article.slug}`);
+  return { ...metadata, openGraph: { ...metadata.openGraph, type: "article", publishedTime: article.publishedAt, authors: [article.author] } };
 }
 
 export default async function NewsArticlePage({ params }: Props) {
@@ -24,6 +24,11 @@ export default async function NewsArticlePage({ params }: Props) {
 
   return (
     <div className={PAGE_FRAME}>
+      <JsonLd data={{ "@context": "https://schema.org", "@type": "Article", headline: article.title,
+        description: article.summary, datePublished: article.publishedAt, mainEntityOfPage: absoluteUrl(`/news/${article.slug}`),
+        author: { "@type": article.author === "Sportsmetric" ? "Organization" : "Person", name: article.author },
+        publisher: { "@id": `${SITE_URL}/#organization` }, articleSection: article.category }} />
+      <JsonLd data={breadcrumbJsonLd([{ name: "News", path: "/news" }, { name: article.title, path: `/news/${article.slug}` }])} />
       <Link href="/news" className="inline-flex min-h-11 w-fit items-center gap-2 text-sm font-semibold text-muted hover:text-foreground"><ArrowLeft size={16} aria-hidden="true" />Back to news</Link>
       <article className="mx-auto w-full max-w-3xl space-y-7 pb-6">
         <header className="space-y-5 border-b border-border pb-7">

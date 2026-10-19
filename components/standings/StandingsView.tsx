@@ -93,8 +93,8 @@ export function StandingsView() {
   return (
     <div className={PAGE_FRAME}>
       <PageHeading
-        title="The race to the top."
-        description="Follow the standings, find the league leaders, and track the postseason."
+        title="League standings and statistical leaders."
+        description="Follow UAAP, PBA and PVL standings, find the statistical leaders, and track the postseason."
         action={
           <SeasonPicker
             value={seasonId}

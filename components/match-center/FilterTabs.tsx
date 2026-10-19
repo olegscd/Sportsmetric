@@ -261,9 +261,9 @@ export function FilterTabs() {
               <span className="h-1.5 w-1.5 rounded-full bg-primary" aria-hidden="true" />
               Philippine sports, in focus
             </p>
-            <h1 className="page-heading">Every game. Every number.</h1>
+            <h1 className="page-heading">Philippine sports scores and stats.</h1>
             <p className="mt-3 text-sm text-muted">
-              Your match center for UAAP, PBA, and PVL.
+              UAAP basketball, PBA and PVL results, schedules and player statistics.
             </p>
           </div>
           <SeasonPicker
