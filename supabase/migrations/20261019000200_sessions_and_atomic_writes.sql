@@ -30,18 +30,21 @@ BEGIN
   -- Serialize switches/reorders across instances, and clear old flags before
   -- inserting new ones (one multi-row UPSERT can otherwise hit the index).
   PERFORM pg_advisory_xact_lock(192041, 1);
-  IF EXISTS (SELECT league FROM jsonb_populate_recordset(NULL::public.seasons, records)
+  IF EXISTS (SELECT league FROM jsonb_to_recordset(records) AS r(league text, is_current boolean)
              WHERE is_current GROUP BY league HAVING count(*) > 1) THEN
     RAISE EXCEPTION 'Only one current season is allowed per league';
   END IF;
   UPDATE public.seasons SET is_current = false WHERE league IN (
-    SELECT league FROM jsonb_populate_recordset(NULL::public.seasons, records) WHERE is_current
-  );
+    SELECT league FROM jsonb_to_recordset(records) AS r(league text, is_current boolean) WHERE is_current);
   -- Also demote input rows before UPSERT so swapping currents is order independent.
   UPDATE public.seasons SET is_current = false WHERE id IN (
-    SELECT id FROM jsonb_populate_recordset(NULL::public.seasons, records)
-  );
-  INSERT INTO public.seasons SELECT * FROM jsonb_populate_recordset(NULL::public.seasons, records)
+    SELECT id FROM jsonb_to_recordset(records) AS r(id text));
+  -- Explicit columns: a live seasons table may carry extra NOT NULL columns
+  -- (created_at) that a SELECT * from the JSON would set to NULL.
+  INSERT INTO public.seasons (id, label, year, is_current, league, sort_order)
+  SELECT id, label, coalesce(year, ''), coalesce(is_current, false), league, sort_order
+  FROM jsonb_to_recordset(records)
+    AS r(id text, label text, year text, is_current boolean, league text, sort_order integer)
   ON CONFLICT (id) DO UPDATE SET label = EXCLUDED.label, year = EXCLUDED.year,
     is_current = EXCLUDED.is_current, league = EXCLUDED.league, sort_order = EXCLUDED.sort_order;
 END;

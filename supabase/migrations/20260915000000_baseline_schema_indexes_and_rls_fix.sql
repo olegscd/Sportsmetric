@@ -196,6 +196,8 @@ BEGIN
     -- Permissive policies are OR-ed, so leaving it in place would keep anon
     -- writes enabled even after the read/write policies below are recreated.
     EXECUTE format('DROP POLICY IF EXISTS "Public full access" ON public.%I', tbl);
+    -- The live project names them per table ("Public full access teams").
+    EXECUTE format('DROP POLICY IF EXISTS "Public full access %s" ON public.%I', tbl, tbl);
     EXECUTE format('DROP POLICY IF EXISTS "%s_public_read" ON public.%I', tbl, tbl);
     EXECUTE format('DROP POLICY IF EXISTS "%s_authenticated_write" ON public.%I', tbl, tbl);
 
