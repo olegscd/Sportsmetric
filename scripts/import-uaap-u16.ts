@@ -162,6 +162,7 @@ async function main() {
     updatedMetadata: 0,
     unchanged: 0,
     skipped: 0,
+    completed: 0,
     boxScoreRows: 0,
     playersCreated: 0,
     warnings: [] as string[],
@@ -218,11 +219,56 @@ async function main() {
       const awayRows = flipped ? payload.boxScore.home : payload.boxScore.away;
 
       if (existing) {
-        if (existing.home_score !== obs.homeScore || existing.away_score !== obs.awayScore) {
+        const awaitingResult = existing.status !== "FINAL" && obs.status === "FINAL";
+
+        // Once a game is final its published result is never overwritten, but a
+        // pre-inserted UPCOMING fixture is filled in from the official box score.
+        if (!awaitingResult && existing.status === "FINAL" &&
+          (existing.home_score !== obs.homeScore || existing.away_score !== obs.awayScore)) {
           summary.warnings.push(`${ref.key} ${id}: stored score ${existing.home_score}-${existing.away_score} differs from the official ${obs.homeScore}-${obs.awayScore}; left unchanged.`);
           summary.skipped++;
           continue;
         }
+
+        if (awaitingResult) {
+          if (obs.homeScore === null || obs.awayScore === null) {
+            throw new Error("Official final score is missing.");
+          }
+          const homeBox = await resolveBoxRows(homeRows, home, roster, summary, plannedPlayers);
+          const awayBox = await resolveBoxRows(awayRows, away, roster, summary, plannedPlayers);
+          summary.boxScoreRows += homeBox.length + awayBox.length;
+          if (!homeBox.length || !awayBox.length) {
+            summary.warnings.push(`${ref.key} ${id}: official box score is missing one side.`);
+          }
+
+          const game: Game = {
+            id: existing.id as string,
+            league: "UAAP",
+            seasonId: SEASON_ID,
+            homeTeam: home,
+            awayTeam: away,
+            homeScore: obs.homeScore!,
+            awayScore: obs.awayScore!,
+            status: "FINAL",
+            quarterOrSet: 4,
+            timeRemaining: null,
+            startTime: obs.startTime,
+            venue: obs.venue ?? existing.venue,
+            stage: obs.stage ?? existing.stage ?? "ELIMINATION",
+            isPlayoff: false,
+            boxScore: { home: homeBox, away: awayBox },
+            playByPlay: [],
+          };
+
+          if (!DRY_RUN) {
+            const { error } = await db.from("games").upsert([gameToRecord(game)]);
+            if (error) throw new Error(`Could not complete ${game.id}: ${error.message}`);
+          }
+          summary.completed++;
+          console.log(`${DRY_RUN ? "would complete" : "completed"}  ${obs.day}  ${home.shortName} ${obs.homeScore}-${obs.awayScore} ${away.shortName}  (${homeBox.length}+${awayBox.length} box rows)`);
+          continue;
+        }
+
         const changes: Record<string, unknown> = {};
         if (new Date(existing.start_time).toISOString() !== obs.startTime) changes.start_time = obs.startTime;
         if (!existing.venue && obs.venue) changes.venue = obs.venue;
@@ -285,6 +331,7 @@ async function main() {
   console.log(`Source matches: ${summary.sourceGames}`);
   console.log(`New games: ${summary.inserted}`);
   console.log(`Existing games with corrected details: ${summary.updatedMetadata}`);
+  console.log(`Upcoming games completed: ${summary.completed}`);
   console.log(`Already up to date: ${summary.unchanged}`);
   console.log(`Skipped: ${summary.skipped}`);
   console.log(`Box score rows: ${summary.boxScoreRows}`);
