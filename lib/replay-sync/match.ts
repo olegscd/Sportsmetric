@@ -32,15 +32,21 @@ export const REPLAY_TEAM_ALIASES: Record<League, string[][]> = {
     ["NLX", "NLEX", "NLEX Road Warriors"], ["PHX", "Phoenix", "Phoenix Fuel Masters", "Phoenix Super LPG Fuel Masters"],
     ["BWB", "BLK", "Blackwater", "Blackwater Bossing"], ["CON", "CFX", "Converge", "Converge FiberXers"],
     ["TER", "TERRA", "Terrafirma", "Terrafirma Dyip"], ["TGR", "Titan Ultra", "Titan Ultra Giant Risers"],
-    ["MGP", "MBK", "Macau Giant Pandas", "Macau Black Bears"],
+    ["MGP", "Macau Giant Pandas"], ["MBK", "Macau Black Bears"],
   ],
   PVL: [
     ["CCS", "CREAM", "Creamline", "Creamline Cool Smashers"], ["HSH", "PLDT", "PLDT High Speed Hitters"],
     ["AKA", "Akari", "Akari Chargers", "Akari Power Chargers"], ["CAP", "CAP1", "Capital1", "Capital 1", "Capital1 Solar Spikers"],
     ["CMF", "Choco Mucho", "Choco Mucho Flying Titans"], ["FFF", "Farm Fresh", "Farm Fresh Foxies"],
     ["GTH", "Galeries", "Galeries Tower", "Galeries Tower Highrisers"], ["NXL", "Nxled", "Nxled Chameleons"],
-    ["ZUS", "Zus Coffee", "Zus Coffee Thunderbelles"], ["PET", "Petro Gazz", "Petro Gazz Angels"],
+    ["ZUS", "Zus Coffee", "Zus Coffee Thunderbelles"], ["PET", "PGA", "Petro Gazz", "Petro Gazz Angels"],
     ["CIG", "Cignal", "Cignal HD Spikers"], ["CHO", "Chery Tiggo", "Chery Tiggo Crossovers"],
+    ["F2", "F2 Logistics", "F2 Logistics Cargo Movers"], ["FOTON", "Foton Tornadoes"],
+    ["ARMY", "Army Black Mamba", "Army Black Mamba Lady Troopers"], ["SLR", "Sta Lucia", "Sta. Lucia Lady Realtors"],
+    ["BLP", "BaliPure", "BaliPure Purest Water Defenders"], ["PRL", "Perlas", "Perlas Spikers"],
+    ["KWT", "KingWhale", "KingWhale Taipei"], ["KUR", "Kurashiki", "Kurashiki Ablaze"],
+    ["GER", "Gerflor", "Quezon City Gerflor Defenders"], ["SGA", "Strong Group", "Strong Group Athletics"],
+    ["KOBE", "Kobe Shinwa", "Kobe Shinwa University"], ["EST", "EST Cola"],
   ],
 };
 const normalize = (s: string) => s.normalize("NFKD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
@@ -68,13 +74,16 @@ export function gameSnapshot(g: ReplayGame) {
 
 export function scoreReplay(game: ReplayGame, video: ReplayVideo, channel: ReplayChannel): ReplayMatch | null {
   if (!channel.enabled || channel.league !== game.league || video.channelId !== channel.channel_id ||
-    !video.public || !video.embeddable || video.live || video.durationSeconds <= 0 || game.status !== "FINAL") return null;
+    !video.public || !video.embeddable || video.live || video.durationSeconds <= 0 || game.status !== "FINAL" ||
+    game.home_score === game.away_score || game.home_score < 0 || game.away_score < 0) return null;
   // Interviews, previews and promotional clips are not game replays.
   if (/\b(preview|interview|reaction|practice|training|teaser|promo|press conference)\b/i.test(video.title)) return null;
   if (/\b(?:[1-5](?:st|nd|rd|th)?\s+(?:set|quarter)|(?:set|quarter)\s*[1-5]|q[1-4])\b.*\bhighlights?\b/i.test(video.title)) return null;
   const elapsed = Date.parse(video.publishedAt) - Date.parse(game.start_time);
   if (!Number.isFinite(elapsed) || elapsed < 0 || elapsed > 72 * 3600000) return null;
   const title = normalize(video.title), description = normalize(video.description);
+  if (/\bu\s?16\b|under.?16/i.test(game.season_label) && !/\bu\s?16\b|under.?16|junior high/i.test(video.title + " " + video.description)) return null;
+  if (/basketball/i.test(game.season_label) && /volleyball/i.test(video.title)) return null;
   const home = teamAliases(game.home, game.league), away = teamAliases(game.away, game.league);
   const homeTitle = home.some(a => contains(title, a)), awayTitle = away.some(a => contains(title, a));
   if (!home.some(a => contains(title, a) || contains(description, a)) || !away.some(a => contains(title, a) || contains(description, a))) return null;

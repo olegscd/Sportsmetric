@@ -17,7 +17,7 @@ export async function runReplaySync({ db = getServiceSupabase(), manual = false,
   const runId = requireReplayData(await db.rpc("begin_replay_sync", { manual, target_season: seasonId ?? null })) as string | null;
   if (!runId) return { skipped: true, reason: "Scheduled discovery is paused or another scan is running." };
   const summary = { candidates: 0, suggestions_created: 0, videos_checked: 0, links_checked: 0, units_used: 0,
-    continuation: false, channels_checked: 0, errors: [] as string[] };
+    approved: 0, historical: false, continuation: false, channels_checked: 0, errors: [] as string[] };
   const deadline = AbortSignal.timeout(45000);
   let status = "failed";
   const issue = async (id: string, code: string, message: string, gameId?: string, videoId?: string) => {
@@ -26,6 +26,10 @@ export async function runReplaySync({ db = getServiceSupabase(), manual = false,
   };
   try {
     if (!process.env.YOUTUBE_API_KEY) throw new Error("Set the server-only YOUTUBE_API_KEY on the app host, then redeploy.");
+    const config = requireReplayData(await db.from("replay_sync_settings").select("auto_approve,backfill_enabled").eq("id", true).single());
+    if (config?.auto_approve) summary.approved += requireReplayData(await db.rpc("auto_approve_replays", { run_id: runId })) as number;
+    const historical = !seasonId && !!config?.backfill_enabled;
+    summary.historical = historical;
     const youtube = youtubeClient({ key: process.env.YOUTUBE_API_KEY, signal: deadline, fetcher, reserve: async () => {
       const allowed = requireReplayData(await db.rpc("reserve_replay_unit", { run_id: runId })) === true;
       if (allowed) summary.units_used++;
@@ -34,7 +38,7 @@ export async function runReplaySync({ db = getServiceSupabase(), manual = false,
     const configured = requireReplayData(await db.from("replay_channels").select("*").eq("enabled", true)) as ReplayChannel[];
     const channels = configured.filter(c => !league || c.league === league);
     if (!channels.length) throw new Error("Add an official YouTube channel for this league in Replay suggestions before scanning.");
-    const games = requireReplayData(await db.rpc("replay_candidate_games", { target_season: seasonId ?? null, target_league: league ?? null })) as ReplayGame[];
+    const games = requireReplayData(await db.rpc("replay_candidate_games", { target_season: historical ? "*" : seasonId ?? null, target_league: league ?? null })) as ReplayGame[];
     summary.candidates = games.length;
     // Eligibility already excludes pending/approved games. Read all pair
     // exclusions for the remaining games, with pagination (no 1,000-row loss).
@@ -44,19 +48,21 @@ export async function runReplaySync({ db = getServiceSupabase(), manual = false,
       previous.push(...page);
       if (page.length < 500) break;
     }
-    const scope = `${seasonId ?? "recent"}:${league ?? "all"}`;
-    const cursors = requireReplayData(await db.from("replay_scan_cursors").select("channel_id,next_page_token,updated_at").eq("scope", scope)) ?? [];
+    const scope = historical ? "history:all" : `${seasonId ?? "recent"}:${league ?? "all"}`;
+    const cursors = requireReplayData(await db.from("replay_scan_cursors").select("channel_id,next_page_token,updated_at,completed_at").eq("scope", scope)) ?? [];
     const ids = [...new Set(channels.filter(c => games.some(g => g.league === c.league)).map(c => c.channel_id))]
       .sort((a, b) => (cursors.find(c => c.channel_id === a)?.updated_at ?? "").localeCompare(cursors.find(c => c.channel_id === b)?.updated_at ?? ""));
+    const pendingIds = ids.filter(id => !historical || !cursors.find(c => c.channel_id === id)?.completed_at);
     const playlists = new Map<string, string>();
-    for (let i = 0; i < ids.length; i += 50) {
-      for (const item of (await youtube.channels(ids.slice(i, i + 50))).items ?? []) {
+    for (let i = 0; i < pendingIds.length; i += 50) {
+      for (const item of (await youtube.channels(pendingIds.slice(i, i + 50))).items ?? []) {
         if (item.contentDetails?.relatedPlaylists?.uploads) playlists.set(item.id, item.contentDetails.relatedPlaylists.uploads);
       }
     }
     // Choose once per video against ALL eligible games, including other league
     // mappings of a shared broadcaster. Store only after ambiguity is checked.
-    for (const channelId of ids) {
+    const completed = new Set<string>();
+    for (const channelId of pendingIds) {
       if (deadline.aborted || summary.units_used >= 150) { summary.continuation = true; break; }
       const playlist = playlists.get(channelId);
       if (!playlist) { summary.errors.push(`Uploads playlist unavailable for ${channelId}.`); continue; }
@@ -65,7 +71,8 @@ export async function runReplaySync({ db = getServiceSupabase(), manual = false,
       const earliest = Math.min(...relevant.map(g => Date.parse(g.start_time)));
       let pageToken = cursors.find(c => c.channel_id === channelId)?.next_page_token ?? undefined;
       try {
-        for (let pageNumber = 0; pageNumber < 6; pageNumber++) {
+        const maxPages = historical ? 40 : 6;
+        for (let pageNumber = 0; pageNumber < maxPages; pageNumber++) {
           const page = await youtube.uploads(playlist, pageToken);
           const items = page.items ?? [];
           const videoIds = items.map(i => i.contentDetails?.videoId).filter((v): v is string => !!v && /^[A-Za-z0-9_-]{11}$/.test(v));
@@ -83,31 +90,36 @@ export async function runReplaySync({ db = getServiceSupabase(), manual = false,
           }
           // Persist checkpoints only after suggestions from this page have
           // been stored; a failed write must not skip unprocessed videos.
+          const selected: ReplayMatch[] = [];
           for (const [videoId, matches] of winners) {
             const chosen = chooseVideoMatch(matches);
             if (chosen.ambiguous) {
               await issue(`ambiguous:${videoId}`, "ambiguous", `Video matches multiple games equally: ${matches.map(m => m.game.id).join(", ")}. Review manually.`, undefined, videoId);
             } else if (chosen.match) {
-              const m = chosen.match;
-              if (canSuggestVideo(m.game.id, videoId, previous)) {
-                const stored = requireReplayData(await db.rpc("store_replay_suggestion", { run_id: runId, suggestion: {
-                  game_id: m.game.id, video_id: videoId, video_url: `https://www.youtube.com/watch?v=${videoId}`,
+              if (canSuggestVideo(chosen.match.game.id, videoId, previous)) selected.push(chosen.match);
+            }
+          }
+          // Prefer full matches when this page offers several videos of a game.
+          const rank = { full: 0, condensed: 1, highlights: 2 };
+          selected.sort((a, b) => rank[a.kind] - rank[b.kind] || b.score - a.score);
+          if (selected.length) {
+            const result = requireReplayData(await db.rpc("apply_replay_matches", { run_id: runId, suggestions: selected.map(m => ({
+                  game_id: m.game.id, video_id: m.video.id, video_url: `https://www.youtube.com/watch?v=${m.video.id}`,
                   title: m.video.title, channel_id: channelId, channel_title: m.video.channelTitle,
                   published_at: m.video.publishedAt, duration_seconds: m.video.durationSeconds, kind: m.kind,
                   inferred_kind_reason: m.kindReason, score: m.score, match_reasons: m.reasons, match_snapshot: gameSnapshot(m.game),
-                } }));
-                if (stored) { summary.suggestions_created++; previous.push({ game_id: m.game.id, video_id: videoId }); }
-              }
-              requireReplayData(await db.from("replay_issues").update({ resolved: true }).eq("id", `ambiguous:${videoId}`));
-            }
+                })) })) as { created: number; approved: number };
+            summary.suggestions_created += result.created;
+            summary.approved += result.approved;
+            previous.push(...selected.map(m => ({ game_id: m.game.id, video_id: m.video.id })));
           }
           const dates = items.map(i => Date.parse(i.contentDetails?.videoPublishedAt ?? "")).filter(Number.isFinite);
           const reachedStart = dates.length > 0 && Math.min(...dates) < earliest;
           pageToken = !reachedStart ? page.nextPageToken : undefined;
           requireReplayData(await db.from("replay_scan_cursors").upsert({ channel_id: channelId, scope,
-            next_page_token: pageToken ?? null, updated_at: now.toISOString() }));
-          if (!pageToken) break;
-          if (pageNumber === 5 || deadline.aborted) { summary.continuation = true; break; }
+            next_page_token: pageToken ?? null, updated_at: now.toISOString(), completed_at: !pageToken && historical ? now.toISOString() : null }));
+          if (!pageToken) { completed.add(channelId); break; }
+          if (pageNumber === maxPages - 1 || deadline.aborted || summary.units_used >= 150) { summary.continuation = true; break; }
         }
         summary.channels_checked++;
       } catch (error) {
@@ -117,6 +129,9 @@ export async function runReplaySync({ db = getServiceSupabase(), manual = false,
         continue;
       }
       requireReplayData(await db.from("replay_issues").update({ resolved: true }).eq("id", `channel:${channelId}`));
+    }
+    if (historical && pendingIds.every(id => completed.has(id)) && !summary.errors.length) {
+      requireReplayData(await db.from("replay_sync_settings").update({ backfill_enabled: false, backfill_finished_at: now.toISOString() }).eq("id", true));
     }
 
     // Weekly link audit resumes by game ID when there are more than 500 rows.

@@ -15,7 +15,7 @@ type Suggestion = {
   match_reasons: string[]; games: { league: League; season_id: string; home_team_id: string; away_team_id: string; start_time: string };
 };
 type Dashboard = {
-  settings: { enabled: boolean; schedule_configured: boolean; last_started_at: string | null; last_dead_check_at: string | null; lease_until: string | null };
+  settings: { enabled: boolean; schedule_configured: boolean; auto_approve: boolean; backfill_enabled: boolean; backfill_finished_at: string | null; last_started_at: string | null; last_dead_check_at: string | null; lease_until: string | null };
   channels: ReplayChannel[]; pending: Suggestion[];
   runs: { id: string; status: string; started_at: string; units_used: number; candidates: number; suggestions_created: number; errors: string[]; summary: { continuation?: boolean } }[];
   issues: { id: string; game_id: string | null; code: string; message: string; video_id: string | null }[];
@@ -53,8 +53,8 @@ export function ReplaySuggestionsPanel({ seasonId, onToast }: { seasonId: string
       if (!response.ok) throw new Error(result.error ?? "Could not save replay changes.");
       setData(await load()); setError("");
       if (body.action === "review" && body.approve) await refreshData();
-      onToast(result.skipped ? result.reason : body.action === "scan" || body.action === "backfill"
-        ? `Scan finished: ${result.candidates} games checked, ${result.suggestions_created} suggestions. ${result.continuation ? "More uploads remain; scan again to continue." : ""}${result.errors?.length ? " Check the run history for issues." : ""}` : message);
+      onToast(result.skipped ? result.reason : ["scan", "backfill", "backfillAll"].includes(String(body.action))
+        ? `Scan finished: ${result.candidates} games checked, ${result.suggestions_created} suggestions, ${result.approved ?? 0} approved. ${result.continuation ? "More uploads remain; scan again to continue." : ""}${result.errors?.length ? " Check the run history for issues." : ""}` : message);
     } catch (err) {
       onToast(err instanceof Error ? err.message : "Replay action failed.", "error");
       await load().then(setData).catch(() => {});
@@ -63,7 +63,7 @@ export function ReplaySuggestionsPanel({ seasonId, onToast }: { seasonId: string
   const teamName = (id: string) => teams.find(t => t.id === id)?.shortName ?? id;
 
   return <SectionCard title="Replay suggestions">
-    <p className="text-xs leading-relaxed text-muted">Official videos are found automatically. Review each suggestion, then approve it to show the replay on the game. Manual replay links keep working.</p>
+    <p className="text-xs leading-relaxed text-muted">Find official videos for finished games. Automatic approval can publish strong matches; other suggestions stay here for review. Manual replay links keep working.</p>
     <div aria-live="polite">
       {loading ? <p className="text-xs text-muted">Loading replay suggestions…</p> : error ? <p role="alert" className="text-xs text-negative">{error}</p> : null}
     </div>
@@ -72,6 +72,12 @@ export function ReplaySuggestionsPanel({ seasonId, onToast }: { seasonId: string
         <span className="text-xs font-semibold">Daily scans: {!data.settings.schedule_configured ? "Schedule not installed" : data.settings.enabled ? "On · 4:10 AM PHT" : "Paused"}</span>
         <button type="button" disabled={busy || !data.settings.schedule_configured} className={ghostButtonClass} onClick={() => void action({ action: "toggle", enabled: !data.settings.enabled }, "Daily discovery updated.")}>{data.settings.enabled ? "Pause daily scans" : "Enable daily scans"}</button>
         <button type="button" disabled={busy} className={ghostButtonClass} onClick={() => { setLoading(true); void load().then(result => { setData(result); setError(""); }).catch(err => setError(err.message)).finally(() => setLoading(false)); }}>Refresh suggestions</button>
+      </div>
+      <div className="flex flex-wrap items-center gap-2 text-xs">
+        <span>Automatic approval: <strong>{data.settings.auto_approve ? "On · matches of 90% or higher" : "Off"}</strong></span>
+        <button type="button" className={ghostButtonClass} disabled={busy} onClick={() => void action({ action: "autoApprove", enabled: !data.settings.auto_approve }, "Automatic approval updated.")}>{data.settings.auto_approve ? "Turn off automatic approval" : "Enable automatic approval"}</button>
+        <button type="button" className={ghostButtonClass} disabled={busy || !data.apiKeyConfigured} onClick={() => void action({ action: "backfillAll" }, "Historical scan started.")}>{data.settings.backfill_enabled ? "Continue all historical games" : "Fill all historical games"}</button>
+        <p className="w-full text-2xs text-muted">{data.settings.backfill_enabled ? "Historical scanning is active and resumes automatically on daily runs." : data.settings.backfill_finished_at ? "Historical scan completed. Games without a verified match keep their current links." : "Scan every season using saved upload checkpoints."} Existing links and rejected videos are protected.</p>
       </div>
       {!data.apiKeyConfigured && <p role="alert" className="text-xs text-negative">One-time setup needed: add YOUTUBE_API_KEY to the app host and redeploy. The key stays private on the server.</p>}
       {!data.settings.schedule_configured && <p className="text-xs text-muted">To install the daily schedule, run enable_replay_sync.sql in Supabase SQL Editor. You can test manual scans first.</p>}
@@ -82,7 +88,7 @@ export function ReplaySuggestionsPanel({ seasonId, onToast }: { seasonId: string
           <button type="button" className={primaryButtonClass} disabled={busy || !data.apiKeyConfigured || !season} onClick={() => void action({ action: "scan", league: season?.league }, "Scan complete.")}>{busy ? "Working…" : `Find recent ${season?.league ?? "game"} replays`}</button>
           <button type="button" className={ghostButtonClass} disabled={busy || !data.apiKeyConfigured || !season} onClick={() => void action({ action: "backfill", seasonId, league: season?.league }, "Season scan complete.")}>Scan older games in this season</button>
         </div>
-        <p className="text-2xs text-muted">Recent scans check finals from 6 hours to 21 days ago. Older-season scans continue where the last scan stopped. Neither publishes videos. Manual scans also work while daily scans are paused.</p>
+        <p className="text-2xs text-muted">Recent scans check finals from 6 hours to 21 days ago. While historical scanning is active, all older seasons are included. Strong matches publish when automatic approval is on. Manual scans also work while daily scans are paused.</p>
       </div>
       <details className="rounded-control border border-border p-3">
         <summary className="cursor-pointer text-xs font-semibold">Official channels · {data.channels.length} configured</summary>

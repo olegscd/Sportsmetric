@@ -42,6 +42,46 @@ test("UAAP and PBA aliases keep word boundaries and distinguish Ginebra from San
   assert.ok(scoreReplay(pba, { ...video, title: "Ginebra vs San Miguel | PBA Highlights | 98-100" }, { ...channel, league: "PBA" }));
   const up = { ...uaap, home: { id: "up", name: "University of the Philippines", short_name: "UP" } };
   assert.equal(scoreReplay(up, { ...video, title: "Super La Salle | UAAP Highlights" }, { ...channel, league: "UAAP" }), null);
+  assert.equal(scoreReplay({ ...uaap, season_label: "UAAP U16 Basketball" }, { ...video, title: "Santo Tomas vs La Salle UAAP Highlights 80-75" }, { ...channel, league: "UAAP" }), null);
+  assert.ok(scoreReplay({ ...uaap, season_label: "UAAP U16 Basketball" }, { ...video, title: "Santo Tomas vs La Salle UAAP U16 Highlights 80-75" }, { ...channel, league: "UAAP" }));
+  assert.ok(teamAliases({ id: "old", name: "BaliPure Purest Water Defenders", short_name: "BLP" }, "PVL").includes("balipure"));
+});
+
+test("historical backfill batches strong auto-approvals, retains weak matches and completes upload checkpoints", async () => {
+  const pg = new PGlite();
+  const previousKey = process.env.YOUTUBE_API_KEY;
+  process.env.YOUTUBE_API_KEY = "offline-test-key";
+  try {
+    await pg.exec("CREATE ROLE anon; CREATE ROLE authenticated; CREATE ROLE service_role BYPASSRLS; CREATE PUBLICATION supabase_realtime; CREATE SCHEMA auth; CREATE FUNCTION auth.role() RETURNS text LANGUAGE sql AS $$ SELECT current_user::text $$;");
+    for (const file of (await readdir("supabase/migrations")).sort()) if (file.endsWith(".sql")) await pg.exec(await readFile(`supabase/migrations/${file}`, "utf8"));
+    await pg.exec(`INSERT INTO seasons(id,label,league,is_current) VALUES ('old','Old PBA','PBA',false);
+      INSERT INTO teams(id,name,short_name,league,season_id) VALUES ('a','Alpha','ALP','PBA','old'),('b','Beta','BET','PBA','old');
+      INSERT INTO games(id,league,season_id,home_team_id,away_team_id,home_score,away_score,status,start_time) VALUES
+      ('strong','PBA','old','a','b',100,90,'FINAL',now()-interval '60 days'),('weak','PBA','old','a','b',101,91,'FINAL',now()-interval '90 days');
+      INSERT INTO replay_channels(league,channel_id,label,league_specific) VALUES ('PBA','UCabcdefghijklmnopqrstuv','Official',true);
+      UPDATE replay_sync_settings SET auto_approve=true,backfill_enabled=true,last_dead_check_at=now();`);
+    const games = (await pg.query<{ data: ReplayGame[] }>("SELECT replay_candidate_games('*') data")).rows[0].data;
+    assert.equal(games.length, 2);
+    let uploads = 0;
+    const fetcher: typeof fetch = async input => {
+      const url = new URL(String(input));
+      if (url.pathname.endsWith("/channels")) return Response.json({ items: [{ id: channel.channel_id, contentDetails: { relatedPlaylists: { uploads: "uploads" } } }] });
+      if (url.pathname.endsWith("/playlistItems")) { uploads++; return Response.json({ items: ["abcdefghijk", "weakgame123"].map(id => ({ contentDetails: { videoId: id } })) }); }
+      return Response.json({ items: games.map(g => ({ id: g.id === "strong" ? "abcdefghijk" : "weakgame123",
+        snippet: { title: g.id === "strong" ? "Alpha vs Beta PBA Highlights 100-90" : "PBA Match Highlights", description: "Alpha vs Beta",
+          channelId: channel.channel_id, channelTitle: "Official", publishedAt: new Date(Date.parse(g.start_time) + 4 * 3600000).toISOString(), liveBroadcastContent: "none" },
+        contentDetails: { duration: "PT10M" }, status: { privacyStatus: "public", embeddable: true, uploadStatus: "processed" } })) });
+    };
+    const result = await runReplaySync({ db: replayTestClient(pg), manual: true, fetcher });
+    assert.ok("approved" in result); assert.equal(result.approved, 1); assert.equal(result.suggestions_created, 2);
+    const rows = (await pg.query<{ game_id: string; status: string }>("SELECT game_id,status FROM replay_suggestions ORDER BY game_id")).rows;
+    assert.deepEqual(rows, [{ game_id: "strong", status: "approved" }, { game_id: "weak", status: "pending" }]);
+    assert.equal((await pg.query<{ backfill_enabled: boolean }>("SELECT backfill_enabled FROM replay_sync_settings")).rows[0].backfill_enabled, false);
+    assert.ok((await pg.query<{ completed_at: string }>("SELECT completed_at FROM replay_scan_cursors WHERE scope='history:all'")).rows[0].completed_at);
+    await pg.exec("UPDATE replay_sync_settings SET backfill_enabled=true");
+    await runReplaySync({ db: replayTestClient(pg), manual: true, fetcher });
+    assert.equal(uploads, 1);
+  } finally { if (previousKey === undefined) delete process.env.YOUTUBE_API_KEY; else process.env.YOUTUBE_API_KEY = previousKey; await pg.close(); }
 });
 
 test("kind inference, rejection history and tied game matching", () => {

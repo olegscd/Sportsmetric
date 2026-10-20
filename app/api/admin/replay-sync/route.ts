@@ -17,7 +17,7 @@ export async function GET(request: Request) {
     .eq("status", "pending").order("score", { ascending: false }).order("created_at").limit(100);
   if (seasonId) suggestions = suggestions.eq("games.season_id", seasonId);
   const results = await Promise.all([
-    db.from("replay_sync_settings").select("enabled,schedule_configured,last_started_at,lease_until,last_dead_check_at").eq("id", true).single(),
+    db.from("replay_sync_settings").select("enabled,schedule_configured,auto_approve,backfill_enabled,backfill_finished_at,last_started_at,lease_until,last_dead_check_at").eq("id", true).single(),
     db.from("replay_channels").select("*").order("league").order("label"), suggestions,
     db.from("replay_sync_runs").select("*").order("started_at", { ascending: false }).limit(10),
     db.from("replay_issues").select("*").eq("resolved", false).order("last_seen_at", { ascending: false }).limit(100),
@@ -36,6 +36,18 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
     if (typeof body !== "object" || !body || Array.isArray(body)) throw new Error("Invalid replay action.");
+    if (body.action === "autoApprove" && typeof body.enabled === "boolean") {
+      requireReplayData(await db.from("replay_sync_settings").update({ auto_approve: body.enabled }).eq("id", true));
+      return Response.json({ success: true }, { headers });
+    }
+    if (body.action === "backfillAll") {
+      const settings = requireReplayData(await db.from("replay_sync_settings").select("backfill_enabled").eq("id", true).single());
+      if (!settings?.backfill_enabled) {
+        requireReplayData(await db.from("replay_scan_cursors").update({ completed_at: null, next_page_token: null }).eq("scope", "history:all"));
+        requireReplayData(await db.from("replay_sync_settings").update({ backfill_enabled: true, backfill_finished_at: null }).eq("id", true));
+      }
+      return Response.json(await runReplaySync({ db, manual: true }), { headers });
+    }
     if (body.action === "scan" || body.action === "backfill") {
       if (body.league !== undefined && !leagues.includes(body.league)) throw new Error("Choose UAAP, PBA or PVL.");
       if (body.action === "backfill") {

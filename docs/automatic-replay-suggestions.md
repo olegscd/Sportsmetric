@@ -1,10 +1,33 @@
 # Automatic replay suggestions — setup and everyday use
 
 Sportsmetric can find official YouTube videos for finished UAAP, PVL and PBA
-games. Supabase starts the scan automatically. You review a suggestion in
-**Admin → Games → Replay suggestions**, then choose **Approve replay** to make
-it appear as the game's existing slim Replay link. Nothing is published by a
-scheduled or manual scan alone.
+games. Supabase starts the scan automatically. In **Admin → Games → Replay
+suggestions**, enable automatic approval to publish strong official matches
+(90% or higher). Other suggestions stay in the review queue. With automatic
+approval off, choose **Approve replay** to publish each link manually.
+
+## Automatic approval and all historical seasons
+
+Apply `supabase/migrations/20261020050000_replay_auto_approval.sql` after the
+original replay migration. It adds opt-in automatic approval and saved completion
+markers for historical scans. Enable **Automatic approval**, then choose **Fill
+all historical games**. The existing daily Supabase job resumes this work until
+each allowed channel's relevant upload history has been checked. **Continue all
+historical games** runs another pass immediately. Existing links and rejected
+videos remain protected; ambiguous or weaker matches stay in review.
+
+Historical runs scan up to 40 pages per channel per pass, with the same shared
+3,000-unit daily limit. Once the historical sweep finishes, daily scans return
+to recent games. This finds available matches; it does not guarantee an upload
+exists for every old game. The 72-hour publication rule still applies, and U16
+games require an explicit U16/junior-high identifier to avoid collegiate matches.
+
+For the initial large archive sweep, run
+`supabase/repairs/enable_replay_backfill.sql` after deployment. It turns on the
+requested automatic approval and creates a temporary two-minute worker. The
+worker respects the same lease and daily API budget, waits for the next quota
+day if necessary, and removes its own cron job after the sweep finishes. The
+regular daily discovery schedule remains enabled.
 
 The UAAP replay display and manual link editor remain the foundation. The new
 system fills a private review queue for all three leagues and uses the same
@@ -105,7 +128,8 @@ The recent button scans that league's recent games across seasons. The pending
 list is filtered to **Viewing Season**, so choose the correct season if a scan
 finds suggestions you cannot see. Run history reports the overall scan count.
 
-If a season is older, choose **Scan older games in this season**. This removes
+If a season is older, choose **Scan older games in this season**, or use **Fill
+all historical games** to process every season together. This removes
 the 21-day cutoff for that season, but still requires a finished game and a
 video published within 72 hours of its start. Upload histories can be long.
 Each pass checks up to six pages (300 uploads) per channel and keeps its place.
