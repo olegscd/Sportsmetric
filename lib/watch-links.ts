@@ -91,7 +91,11 @@ function host(url: string) {
  * Upcoming: tickets first, then where to watch, using season defaults.
  * Live: only this game's livestream. Final: only this game's replay.
  */
-export function gameActions(game: Pick<Game, "links"> & { status: GameStatus }, season: Pick<Season, "links"> | undefined): GameAction[] {
+export function gameActions(
+  game: Pick<Game, "links"> & { status: GameStatus; startTime?: string },
+  season: Pick<Season, "links"> | undefined,
+  now: number = Date.now(),
+): GameAction[] {
   const g = game.links; const s = season?.links;
   if (game.status === "FINAL") {
     return g?.replayUrl ? [{ kind: "replay", url: g.replayUrl, label: g.replayLabel ?? host(g.replayUrl),
@@ -109,7 +113,10 @@ export function gameActions(game: Pick<Game, "links"> & { status: GameStatus }, 
   const watch: GameAction | null = watchUrl
     ? { kind: "watch", url: watchUrl, label: watchLabel, detail: g?.watchUrl ? null : s?.watchNote ?? null } : null;
 
-  const tickets: GameAction | null = ticketsUrl
+  // Some leagues (PVL) stay UPCOMING until the official result arrives, so
+  // stop selling tickets once the scheduled start has passed.
+  const started = game.startTime ? Date.parse(game.startTime) <= now : false;
+  const tickets: GameAction | null = ticketsUrl && !started
     ? { kind: "tickets", url: ticketsUrl, label: g?.ticketsUrl ? host(g.ticketsUrl) : s?.ticketsLabel ?? host(ticketsUrl), detail: null } : null;
   return [tickets, watch].filter((a): a is GameAction => a !== null);
 }

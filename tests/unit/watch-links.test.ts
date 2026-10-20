@@ -23,6 +23,12 @@ test("upcoming uses season defaults; live and final require game-specific links"
   assert.deepEqual(gameActions({ status: "FINAL", links: { ...links, replayUrl: null } }, season), []);
 });
 
+test("tickets disappear once the scheduled start passes, even while still marked upcoming", () => {
+  const now = Date.parse("2026-10-20T10:00:00Z");
+  assert.deepEqual(gameActions({ status: "UPCOMING", startTime: "2026-10-20T11:00:00Z" }, season, now).map(a => a.kind), ["tickets", "watch"]);
+  assert.deepEqual(gameActions({ status: "UPCOMING", startTime: "2026-10-20T09:00:00Z" }, season, now).map(a => a.kind), ["watch"]);
+});
+
 test("game overrides replace season links without borrowing the season broadcaster name", () => {
   const [watch] = gameActions({ status: "LIVE", links: { ...none, watchUrl: "https://www.other.tv/game" } }, season);
   assert.equal(watch.url, "https://www.other.tv/game");

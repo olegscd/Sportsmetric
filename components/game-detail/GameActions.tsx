@@ -7,7 +7,7 @@ const VERBS = { tickets: "Tickets", watch: "Watch on", replay: "Replay on" } as 
 
 /** Official links follow the same status rules as the game card. */
 export function GameActions({ game, status, season }: { game: Game; status: GameStatus; season?: Season }) {
-  const actions = gameActions({ links: game.links, status }, season);
+  const actions = gameActions({ links: game.links, status, startTime: game.startTime }, season);
   if (!actions.length) return null;
   return <div className="flex flex-wrap gap-2">
     {actions.map(action => {

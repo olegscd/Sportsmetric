@@ -177,7 +177,7 @@ export const GameCard = memo(function GameCard({ game }: { game: Game }) {
   const awayRecord = awayStandings ? { wins: awayStandings.wins, losses: awayStandings.losses } : game.awayTeam.record;
 
   const season = seasons.find((s) => s.id === game.seasonId);
-  const actions = gameActions({ links: game.links, status: effectiveStatus }, season);
+  const actions = gameActions({ links: game.links, status: effectiveStatus, startTime: game.startTime }, season);
 
   const hasWinner =
     effectiveStatus === "FINAL" && game.homeScore !== game.awayScore;
