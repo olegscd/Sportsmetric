@@ -36,9 +36,9 @@ export async function runReplaySync({ db = getServiceSupabase(), manual = false,
       return allowed;
     } });
     const configured = requireReplayData(await db.from("replay_channels").select("*").eq("enabled", true)) as ReplayChannel[];
-    const channels = configured.filter(c => !league || c.league === league);
+    const channels = configured.filter(c => historical || !league || c.league === league);
     if (!channels.length) throw new Error("Add an official YouTube channel for this league in Replay suggestions before scanning.");
-    const games = requireReplayData(await db.rpc("replay_candidate_games", { target_season: historical ? "*" : seasonId ?? null, target_league: league ?? null })) as ReplayGame[];
+    const games = requireReplayData(await db.rpc("replay_candidate_games", { target_season: historical ? "*" : seasonId ?? null, target_league: historical ? null : league ?? null })) as ReplayGame[];
     summary.candidates = games.length;
     // Eligibility already excludes pending/approved games. Read all pair
     // exclusions for the remaining games, with pagination (no 1,000-row loss).

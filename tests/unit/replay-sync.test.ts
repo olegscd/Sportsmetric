@@ -73,7 +73,9 @@ test("historical backfill batches strong auto-approvals, retains weak matches an
           channelId: channel.channel_id, channelTitle: "Official", publishedAt: new Date(Date.parse(g.start_time) + 4 * 3600000).toISOString(), liveBroadcastContent: "none" },
         contentDetails: { duration: "PT10M" }, status: { privacyStatus: "public", embeddable: true, uploadStatus: "processed" } })) });
     };
-    const result = await runReplaySync({ db: replayTestClient(pg), manual: true, fetcher });
+    // A league button must not mark a shared all-league history cursor complete
+    // before the other leagues have been scanned.
+    const result = await runReplaySync({ db: replayTestClient(pg), manual: true, league: "PVL", fetcher });
     assert.ok("approved" in result); assert.equal(result.approved, 1); assert.equal(result.suggestions_created, 2);
     const rows = (await pg.query<{ game_id: string; status: string }>("SELECT game_id,status FROM replay_suggestions ORDER BY game_id")).rows;
     assert.deepEqual(rows, [{ game_id: "strong", status: "approved" }, { game_id: "weak", status: "pending" }]);
