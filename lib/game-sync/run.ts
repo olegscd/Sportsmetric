@@ -36,9 +36,9 @@ export async function runGameSync({ preview = false, db = getServiceSupabase(), 
   let status = "failed";
   try {
     const configured = requireData(await db.from("game_sync_sources").select("*").eq("enabled", true)) as SyncSource[];
-    const seasons = requireData(await db.from("seasons").select("id,league").eq("is_current", true)) as { id: string; league: string }[];
+    const seasons = requireData(await db.from("seasons").select("id,league").eq("is_active", true)) as { id: string; league: string }[];
     const sources = configured.filter(s => seasons.some(season => season.id === s.season_id && season.league === s.league));
-    if (!sources.length) throw new Error("No current competitions are configured for automatic updates.");
+    if (!sources.length) throw new Error("No in-progress competitions are configured for automatic updates.");
     const ids = sources.map(s => s.season_id);
     const [teams, games, links] = await Promise.all([
       readAll<SyncTeam>(db, "teams", "id,name,short_name,league,season_id", ids),

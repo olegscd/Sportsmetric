@@ -161,6 +161,11 @@ export interface Season {
   league?: League;
   /** Admin-controlled display order; lower sorts first. */
   sortOrder?: number;
+  /**
+   * Still being played. Several seasons per league may be in progress; the
+   * current season always is. See lib/season-status.ts.
+   */
+  isActive?: boolean;
   /** Where to watch / buy tickets. Absent when not loaded or not set. */
   links?: SeasonLinks;
 }

@@ -1,5 +1,6 @@
 "use client";
 
+import { isSeasonInProgress } from "@/lib/season-status";
 import { PAGE_FRAME } from "@/components/layout/page-shell";
 import { Button } from "@/components/ui/Button";
 import { EmptyState } from "@/components/ui/EmptyState";
@@ -56,7 +57,7 @@ export function PlayerDirectory() {
         if (!team) return false;
         const matchesLeague = league === "ALL" || team.league === league;
         const matchesSeason = league === "ALL"
-          ? seasons.some(season => season.id === player.seasonId && season.isCurrent)
+          ? seasons.some(season => season.id === player.seasonId && isSeasonInProgress(season))
           : isLifetimeSeason(seasonId) || player.seasonId === seasonId;
         return matchesLeague && matchesSeason;
       }),
@@ -141,7 +142,7 @@ export function PlayerDirectory() {
             </FilterChip>
           ))}
         </div>
-        {league === "ALL" ? <span className="text-xs text-muted">Current season in each league</span> : <SeasonPicker
+        {league === "ALL" ? <span className="text-xs text-muted">Seasons in progress in each league</span> : <SeasonPicker
           value={seasonId}
           onChange={setUserSelectedSeasonId}
           league={activeLeague}

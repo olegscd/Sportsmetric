@@ -19,6 +19,7 @@ export type AdminMutation =
   | { op: "season.batchUpsert"; seasons: Season[] }
   | { op: "season.delete"; id: string }
   | { op: "season.links"; id: string; links: SeasonLinks }
+  | { op: "season.active"; id: string; active: boolean }
   | { op: "game.links"; id: string; links: GameLinks }
   | { op: "intl.athlete.upsert"; athlete: IntlAthlete }
   | { op: "intl.athlete.delete"; id: string }

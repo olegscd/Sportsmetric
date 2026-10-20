@@ -1,5 +1,6 @@
 "use client";
 
+import { inProgressSeasons } from "@/lib/season-status";
 import { PAGE_FRAME } from "@/components/layout/page-shell";
 import { cardClasses } from "@/components/ui/Card";
 import { EmptyState } from "@/components/ui/EmptyState";
@@ -49,15 +50,28 @@ export function TeamDirectory() {
     league === "ALL" ? "league=ALL" : `league=${league}&season=${encodeURIComponent(seasonId)}`
   );
 
-  const standings = leagues.flatMap((l) => getStandings(l, league === "ALL" ? seasons.find(s => s.league === l && s.isCurrent)?.id : seasonId));
+  // "All Leagues" lists every in-progress season (e.g. UAAP Men's and U16).
+  const standings = league === "ALL"
+    ? leagues.flatMap((l) => inProgressSeasons(seasons, l).flatMap((s) => getStandings(l, s.id)))
+    : getStandings(activeLeague, seasonId);
 
-  // Rank within each team's own league. In "All Leagues" mode the rows are
+  // Rank within each team's own season. In "All Leagues" mode the rows are
   // concatenated, so a single findIndex would show a global position instead.
+  // When a league has more than one season in progress, say which one a row is.
+  const seasonTagById = new Map<string, string>();
+  if (league === "ALL") {
+    for (const l of leagues) {
+      const active = inProgressSeasons(seasons, l);
+      if (active.length > 1) for (const s of active) seasonTagById.set(s.id, s.label);
+    }
+  }
+
   const rankByTeamId = new Map<string, number>();
-  const leagueCounters: Record<League, number> = { UAAP: 0, PBA: 0, PVL: 0 };
+  const seasonCounters = new Map<string, number>();
   for (const row of standings) {
-    leagueCounters[row.team.league] += 1;
-    rankByTeamId.set(row.team.id, leagueCounters[row.team.league]);
+    const next = (seasonCounters.get(row.team.seasonId) ?? 0) + 1;
+    seasonCounters.set(row.team.seasonId, next);
+    rankByTeamId.set(row.team.id, next);
   }
 
   const normalizedQuery = query.trim().toLowerCase();
@@ -119,7 +133,7 @@ export function TeamDirectory() {
               <span className="min-w-0 flex-1">
                 <span className="block truncate text-sm font-bold text-foreground">{team.name}</span>
                 <span className="block truncate text-xs font-semibold text-muted">
-                  {team.league} &middot; {formatRecord(record)}
+                  {team.league}{seasonTagById.has(team.seasonId) ? ` · ${seasonTagById.get(team.seasonId)}` : ""} &middot; {formatRecord(record)}
                 </span>
               </span>
               <span className="shrink-0 font-mono text-xs font-bold tabular-nums text-foreground">
@@ -148,7 +162,7 @@ export function TeamDirectory() {
             </FilterChip>
           ))}
         </div>
-        {league === "ALL" ? <span className="text-xs text-muted">Current season in each league</span> : <SeasonPicker
+        {league === "ALL" ? <span className="text-xs text-muted">Seasons in progress in each league</span> : <SeasonPicker
           value={seasonId}
           onChange={setUserSelectedSeasonId}
           league={activeLeague}

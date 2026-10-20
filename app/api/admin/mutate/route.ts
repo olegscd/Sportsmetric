@@ -22,6 +22,7 @@ import {
   upsertPlayerInSupabase,
   upsertTeamInSupabase,
   updateGameLinksInSupabase,
+  updateSeasonActiveInSupabase,
   updateSeasonLinksInSupabase,
 } from "@/lib/supabase-data";
 import { normalizeGameLinks, normalizeSeasonLinks } from "@/lib/watch-links";
@@ -67,6 +68,10 @@ const HANDLERS: Record<string, OpHandler> = {
   "season.batchUpsert": (p) =>
     batchUpsertSeasonsInSupabase(normalizeBatch(p.seasons, "seasons", normalizeSeason)),
   "season.delete": (p) => deleteSeasonInSupabase(requireId(p.id, "id")),
+  "season.active": (p) => {
+    if (typeof p.active !== "boolean") throw new ValidationError("active must be true or false.");
+    return updateSeasonActiveInSupabase(requireId(p.id, "id"), p.active);
+  },
   "season.links": (p) => updateSeasonLinksInSupabase(requireId(p.id, "id"), normalizeSeasonLinks(p.links)),
   "game.links": (p) => updateGameLinksInSupabase(requireId(p.id, "id"), normalizeGameLinks(p.links)),
 

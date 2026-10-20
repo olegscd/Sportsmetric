@@ -1,5 +1,6 @@
 "use client";
 
+import { isSeasonInProgress } from "@/lib/season-status";
 import { PAGE_FRAME } from "@/components/layout/page-shell";
 import { LeagueBadge } from "@/components/match-center/LeagueBadge";
 import { StandingsTable } from "@/components/standings/StandingsTable";
@@ -49,7 +50,7 @@ export function TeamDetailView({ id }: { id: string }) {
   }
 
   const teamSeason = seasons.find((s) => s.id === team.seasonId);
-  const isOldSeason = teamSeason ? !teamSeason.isCurrent : team.seasonId !== currentSeasonId;
+  const isOldSeason = teamSeason ? !isSeasonInProgress(teamSeason) : team.seasonId !== currentSeasonId;
   const teamPlayers = players.filter((p) => p.teamId === team.id);
   const standings = getStandings(team.league, team.seasonId);
   const rankIndex = standings.findIndex((s) => s.team.id === team.id);

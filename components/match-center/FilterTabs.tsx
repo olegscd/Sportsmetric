@@ -1,5 +1,6 @@
 "use client";
 
+import { isSeasonInProgress } from "@/lib/season-status";
 import { PAGE_FRAME } from "@/components/layout/page-shell";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
@@ -89,16 +90,8 @@ export function FilterTabs() {
     return games.filter((g) => g.seasonId === seasonId && g.league === league);
   }, [games, seasonId, league]);
 
-  // A season is archived only once it has no live or upcoming games left. U16
-  // shares the UAAP league with the men's tournament, so it cannot hold the
-  // single isCurrent flag while it is still being played.
-  const hasUnfinishedGames = useMemo(
-    () => seasonGames.some((game) => getEffectiveGameStatus(game) !== "FINAL"),
-    [seasonGames]
-  );
-  const isOldSeason = selectedSeason
-    ? !selectedSeason.isCurrent && !hasUnfinishedGames
-    : seasonId !== currentSeasonId && !hasUnfinishedGames;
+  // Archived = not current and not marked in progress (lib/season-status).
+  const isOldSeason = selectedSeason ? !isSeasonInProgress(selectedSeason) : seasonId !== currentSeasonId;
 
   const activeStatus = isOldSeason ? "FINAL" : status;
 
@@ -169,7 +162,7 @@ export function FilterTabs() {
     setTeamId("ALL");
     setDate("");
     const targetSeason = seasons.find((s) => s.id === newSeasonId);
-    const isOld = targetSeason ? !targetSeason.isCurrent : false;
+    const isOld = targetSeason ? !isSeasonInProgress(targetSeason) : false;
     statusTouched.current = false;
     setStatus(getSmartStatusTab(games, newSeasonId, league, isOld));
   }
@@ -183,7 +176,7 @@ export function FilterTabs() {
     const effSeasons = seasons.filter((s) => inferLeague(s) === newLeague);
     const targetCurrent = effSeasons.find((s) => s.isCurrent)?.id ?? effSeasons[0]?.id ?? currentSeasonId;
     const targetSeason = seasons.find((s) => s.id === targetCurrent);
-    const isOld = targetSeason ? !targetSeason.isCurrent : false;
+    const isOld = targetSeason ? !isSeasonInProgress(targetSeason) : false;
     statusTouched.current = false;
     setStatus(getSmartStatusTab(games, targetCurrent, newLeague, isOld));
   }

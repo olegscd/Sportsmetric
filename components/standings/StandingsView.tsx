@@ -1,5 +1,6 @@
 "use client";
 
+import { isSeasonInProgress } from "@/lib/season-status";
 import { PAGE_FRAME } from "@/components/layout/page-shell";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { ErrorNotice } from "@/components/ui/ErrorNotice";
@@ -78,7 +79,7 @@ export function StandingsView() {
   const leaderConfigs = LEADER_CONFIGS[league];
 
   const selectedSeason = seasons.find((s) => s.id === seasonId);
-  const isOldSeason = selectedSeason ? !selectedSeason.isCurrent : seasonId !== currentSeasonId;
+  const isOldSeason = selectedSeason ? !isSeasonInProgress(selectedSeason) : seasonId !== currentSeasonId;
 
   const { playoffGames } =
     league === "UAAP" ? getUAAPGamePartition(games, seasonId) : { playoffGames: [] };

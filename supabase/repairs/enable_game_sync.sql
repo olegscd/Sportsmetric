@@ -18,7 +18,7 @@ SELECT cron.schedule('sportsmetric-pba-schedule-fetch','13,28,43,58 * * * *',$jo
   INSERT INTO public.game_sync_fetch_cache(source_id,request_id,requested_at)
   SELECT s.id,net.http_get(url:='https://www.pba.ph/schedule',
     headers:=jsonb_build_object('User-Agent','Sportsmetric/1.0 (sportsmetric.ph)'),timeout_milliseconds:=10000),now()
-  FROM public.game_sync_sources s JOIN public.seasons season ON season.id=s.season_id AND season.is_current
+  FROM public.game_sync_sources s JOIN public.seasons season ON season.id=s.season_id AND season.is_active
   CROSS JOIN public.game_sync_settings c
   WHERE c.id AND c.enabled AND s.enabled AND s.league='PBA'
   ON CONFLICT(source_id) DO UPDATE SET request_id=EXCLUDED.request_id,requested_at=EXCLUDED.requested_at;

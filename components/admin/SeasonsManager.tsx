@@ -9,6 +9,7 @@ import type { League, Season } from "@/types/sports";
 import { ArrowDown, ArrowUp } from "lucide-react";
 import { useState, type FormEvent } from "react";
 import { SeasonLinksCard } from "./LinksEditors";
+import { adminMutate } from "@/lib/admin-api";
 import { useConfirm } from "@/components/ui/ConfirmDialog";
 import {
   dangerButtonClass,
@@ -73,6 +74,7 @@ export function SeasonsManager({ onToast }: { onToast: ToastFn }) {
     deleteSeason,
     setSeasonAsCurrent,
     reorderSeasons,
+    refreshData,
   } = useSportsData();
 
   const [selectedLeague, setSelectedLeague] = useState<League | "ALL">("UAAP");
@@ -146,6 +148,17 @@ export function SeasonsManager({ onToast }: { onToast: ToastFn }) {
       onToast(`${season.label} is now the current season.`);
     } catch {
       onToast("Failed to update current season in database.", "error");
+    }
+  }
+
+  async function handleToggleInProgress(season: Season) {
+    const next = !season.isActive;
+    try {
+      await adminMutate({ op: "season.active", id: season.id, active: next });
+      await refreshData();
+      onToast(next ? `${season.label} is now in progress.` : `${season.label} is now archived.`);
+    } catch (err) {
+      onToast(err instanceof Error ? err.message : "Could not update the season.", "error");
     }
   }
 
@@ -325,6 +338,10 @@ export function SeasonsManager({ onToast }: { onToast: ToastFn }) {
                           <span className="shrink-0 rounded-full bg-primary/20 px-2 py-0.5 text-3xs font-bold text-primary">
                             CURRENT
                           </span>
+                        ) : season.isActive ? (
+                          <span className="shrink-0 rounded-full bg-positive/15 px-2 py-0.5 text-3xs font-bold text-positive">
+                            IN PROGRESS
+                          </span>
                         ) : null}
                       </div>
                       <p className="truncate text-2xs text-muted">
@@ -343,6 +360,16 @@ export function SeasonsManager({ onToast }: { onToast: ToastFn }) {
                     >
                       Edit
                     </button>
+                    {!season.isCurrent ? (
+                      <button
+                        type="button"
+                        onClick={() => void handleToggleInProgress(season)}
+                        className={ghostButtonClass}
+                        title={season.isActive ? "Archive: results only, no upcoming fixtures shown" : "Show live and upcoming fixtures for this season alongside the current one"}
+                      >
+                        {season.isActive ? "Mark finished" : "Mark in progress"}
+                      </button>
+                    ) : null}
                     {!season.isCurrent ? (
                       <button
                         type="button"

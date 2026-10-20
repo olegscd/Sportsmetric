@@ -2,6 +2,7 @@ import { ValidationError } from "@/lib/admin-validation";
 import { getEffectiveGameStatus } from "@/lib/derivations";
 import { inferLeague } from "@/lib/league-utils";
 import { supabase } from "@/lib/supabase";
+import { isSeasonInProgress } from "@/lib/season-status";
 import { gameLinksFromRow, gameLinksToRow, seasonLinksFromRow, seasonLinksToRow } from "@/lib/watch-links";
 import { getServiceSupabase } from "@/lib/supabase-admin";
 import type { Game, GameLinks, GameStatus, League, Player, Season, SeasonLinks, Team } from "@/types/sports";
@@ -106,6 +107,7 @@ export function mapSeasonRows(
     id: string;
     label: string;
     is_current: boolean;
+    is_active?: boolean | null;
     league?: League;
     sort_order?: number | null;
   }>
@@ -139,6 +141,8 @@ export function mapSeasonRows(
       id: s.id,
       label: s.label,
       isCurrent,
+      // Older databases have no is_active column: fall back to is_current.
+      isActive: Boolean(s.is_active) || Boolean(s.is_current),
       league,
       sortOrder: s.sort_order ?? undefined,
       links: seasonLinksFromRow(s as unknown as Record<string, unknown>),
@@ -150,7 +154,7 @@ export function mapSeasonRows(
   for (const l of leaguesInRows) {
     if (!mapped.some((s) => s.league === l && s.isCurrent)) {
       const firstSeason = mapped.find((s) => s.league === l);
-      if (firstSeason) firstSeason.isCurrent = true;
+      if (firstSeason) { firstSeason.isCurrent = true; firstSeason.isActive = true; }
     }
   }
 
@@ -303,6 +307,7 @@ type SeasonDbRow = {
   id: string;
   label: string;
   is_current: boolean;
+  is_active?: boolean | null;
   league?: League;
   sort_order?: number | null;
 };
@@ -450,7 +455,7 @@ export async function fetchSportsData(scope: SportsDataScope): Promise<SupabaseD
     if (seasonId !== "lifetime") seasonId = matching.find(s => s.isCurrent)?.id ?? matching[0]?.id;
   }
   const seasonIds = scope.admin ? undefined : matching
-    .filter(s => (currentPerLeague ? s.isCurrent : seasonId === "lifetime" || s.id === seasonId) && (!careerSeasons || careerSeasons.has(s.id))).map(s => s.id);
+    .filter(s => (currentPerLeague ? isSeasonInProgress(s) : seasonId === "lifetime" || s.id === seasonId) && (!careerSeasons || careerSeasons.has(s.id))).map(s => s.id);
   if (seasonIds?.length === 0) return { seasons, teams: [], players: [], games: [] };
   const gameColumns = scope.admin ? "*" :
     "id,league,season_id,home_team_id,away_team_id,home_score,away_score,status,start_time,venue,stage,is_playoff,quarter_or_set,time_remaining,box_score,watch_url,tickets_url,replay_url,replay_kind,replay_label";
@@ -482,6 +487,24 @@ export async function upsertGameInSupabase(game: Game): Promise<boolean> {
  * Links are written separately from the game/season records so imports,
  * schedule syncs and season reorders can never overwrite them.
  */
+export async function updateSeasonActiveInSupabase(id: string, active: boolean): Promise<boolean> {
+  const db = getWriteClient();
+  if (!db) return false;
+  try {
+    const { data, error } = await db.from("seasons").update({ is_active: active }).eq("id", id).select("id,is_active");
+    if (logSupabaseError("update season in-progress flag", error)) return false;
+    if (!data?.length) throw new ValidationError("That season no longer exists. Reload and try again.");
+    if (!active && (data[0] as { is_active: boolean }).is_active) {
+      throw new ValidationError("The current season is always in progress. Make another season current first.");
+    }
+    return true;
+  } catch (err) {
+    if (err instanceof ValidationError) throw err;
+    console.error("[Sportsmetric DB] Unexpected error during updateSeasonActive:", err);
+    return false;
+  }
+}
+
 export async function updateSeasonLinksInSupabase(id: string, links: SeasonLinks): Promise<boolean> {
   const db = getWriteClient();
   if (!db) return false;
