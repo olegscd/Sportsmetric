@@ -16,7 +16,7 @@ each allowed channel's relevant upload history has been checked. **Continue all
 historical games** runs another pass immediately. Existing links and rejected
 videos remain protected; ambiguous or weaker matches stay in review.
 
-Historical runs scan up to 40 pages per channel per pass, with the same shared
+Historical runs scan up to 75 pages per channel per pass, with the same shared
 3,000-unit daily limit. Once the historical sweep finishes, daily scans return
 to recent games. This finds available matches; it does not guarantee an upload
 exists for every old game. The 72-hour publication rule still applies, and U16

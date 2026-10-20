@@ -68,14 +68,20 @@ export async function runReplaySync({ db = getServiceSupabase(), manual = false,
       if (!playlist) { summary.errors.push(`Uploads playlist unavailable for ${channelId}.`); continue; }
       const mappings = channels.filter(c => c.channel_id === channelId);
       const relevant = games.filter(g => mappings.some(c => c.league === g.league));
-      const earliest = Math.min(...relevant.map(g => Date.parse(g.start_time)));
+      const starts = relevant.map(g => Date.parse(g.start_time));
+      const earliest = Math.min(...starts);
       let pageToken = cursors.find(c => c.channel_id === channelId)?.next_page_token ?? undefined;
       try {
-        const maxPages = historical ? 40 : 6;
+        const maxPages = historical ? 75 : 6;
         for (let pageNumber = 0; pageNumber < maxPages; pageNumber++) {
           const page = await youtube.uploads(playlist, pageToken);
           const items = page.items ?? [];
-          const videoIds = items.map(i => i.contentDetails?.videoId).filter((v): v is string => !!v && /^[A-Za-z0-9_-]{11}$/.test(v));
+          // Upload metadata already gives the publication date. Avoid fetching
+          // video details for unrelated years/days while walking large archives.
+          const videoIds = items.filter(i => {
+            const published = Date.parse(i.contentDetails?.videoPublishedAt ?? "");
+            return !Number.isFinite(published) || starts.some(start => published >= start && published <= start + 72 * 3600000);
+          }).map(i => i.contentDetails?.videoId).filter((v): v is string => !!v && /^[A-Za-z0-9_-]{11}$/.test(v));
           const videos = videoIds.length ? await youtube.videos(videoIds) : [];
           summary.videos_checked += videos.length;
           const winners = new Map<string, ReplayMatch[]>();

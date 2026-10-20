@@ -66,7 +66,8 @@ test("historical backfill batches strong auto-approvals, retains weak matches an
     const fetcher: typeof fetch = async input => {
       const url = new URL(String(input));
       if (url.pathname.endsWith("/channels")) return Response.json({ items: [{ id: channel.channel_id, contentDetails: { relatedPlaylists: { uploads: "uploads" } } }] });
-      if (url.pathname.endsWith("/playlistItems")) { uploads++; return Response.json({ items: ["abcdefghijk", "weakgame123"].map(id => ({ contentDetails: { videoId: id } })) }); }
+      if (url.pathname.endsWith("/playlistItems")) { uploads++; return Response.json({ items: [...["abcdefghijk", "weakgame123"].map(id => ({ contentDetails: { videoId: id } })), { contentDetails: { videoId: "outside1234", videoPublishedAt: new Date().toISOString() } }] }); }
+      assert.ok(!url.searchParams.get("id")?.includes("outside1234"), "unrelated upload dates must not spend video-details quota");
       return Response.json({ items: games.map(g => ({ id: g.id === "strong" ? "abcdefghijk" : "weakgame123",
         snippet: { title: g.id === "strong" ? "Alpha vs Beta PBA Highlights 100-90" : "PBA Match Highlights", description: "Alpha vs Beta",
           channelId: channel.channel_id, channelTitle: "Official", publishedAt: new Date(Date.parse(g.start_time) + 4 * 3600000).toISOString(), liveBroadcastContent: "none" },
