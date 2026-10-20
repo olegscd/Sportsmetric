@@ -25,6 +25,9 @@ const games = seasons.map(s => ({ id: `${s.id}-g1`, league: s.league, season_id:
 }));
 const tables: Record<string, Record<string, unknown>[]> = {
   seasons, teams, players, games, admin_sessions: [], uaap_overrides: [], uaap_division_overrides: [],
+  replay_sync_settings: [{ id: true, enabled: false, schedule_configured: true,
+    token: "local-replay-token-only-for-browser-tests-1234567890", last_started_at: null, last_dead_check_at: null }],
+  replay_channels: [], replay_suggestions: [], replay_sync_runs: [], replay_issues: [], replay_sync_quota: [],
 };
 const baseline = structuredClone(tables);
 
@@ -68,9 +71,29 @@ createServer(async (request, response) => {
     response.end(JSON.stringify(version));
     return;
   }
+  if (request.method === "POST" && url.pathname.endsWith("/rpc/review_replay_suggestion")) {
+    let body = "";
+    for await (const chunk of request) body += chunk;
+    const value = JSON.parse(body) as { suggestion_id: string; approve: boolean };
+    const suggestion = tables.replay_suggestions.find(r => r.id === value.suggestion_id);
+    const game = tables.games.find(g => g.id === suggestion?.game_id);
+    response.setHeader("Content-Type", "application/json");
+    if (!suggestion || !game || suggestion.status !== "pending" || value.approve && game.replay_url) {
+      response.writeHead(400); response.end(JSON.stringify({ message: "Suggestion already reviewed or replay already saved." })); return;
+    }
+    if (value.approve) {
+      const channel = tables.replay_channels.find(c => c.channel_id === suggestion.channel_id && c.league === game.league && c.enabled);
+      if (!channel) { response.writeHead(400); response.end(JSON.stringify({ message: "Channel disabled." })); return; }
+      Object.assign(game, { replay_url: suggestion.video_url, replay_kind: suggestion.kind, replay_label: channel.label });
+      for (const other of tables.replay_suggestions.filter(r => r.game_id === game.id && r.status === "pending")) other.status = other.id === suggestion.id ? "approved" : "superseded";
+    } else suggestion.status = "rejected";
+    suggestion.reviewed_at = new Date().toISOString();
+    response.end("null"); return;
+  }
   const table = url.pathname.split("/").at(-1)!;
   let rows = tables[table] ?? [];
   const matches = (row: Record<string, unknown>) => [...url.searchParams].every(([key, value]) => {
+    if (key === "games.season_id") return tables.games.some(g => g.id === row.game_id && `eq.${g.season_id}` === value);
     if (value.startsWith("eq.")) return String(row[key]) === value.slice(3);
     if (value.startsWith("gt.")) return String(row[key]) > value.slice(3);
     if (value.startsWith("in.(")) return value.slice(4, -1).split(",").map(v => v.replaceAll('"', "")).includes(String(row[key]));
@@ -103,7 +126,8 @@ createServer(async (request, response) => {
     }
     rows = rows.map(row => Object.fromEntries(Object.entries(row).filter(([key]) => !["venue", "stage", "is_playoff"].includes(key))));
   }
-  if (select && select !== "*") rows = rows.map(row => Object.fromEntries(select.split(",").map(key => [key, row[key]])));
+  if (table === "replay_suggestions" && select?.includes("games!inner")) rows = rows.map(row => ({ ...row, games: tables.games.find(g => g.id === row.game_id) }));
+  else if (select && select !== "*") rows = rows.map(row => Object.fromEntries(select.split(",").map(key => [key, row[key]])));
   const rangeFrom = Number(url.searchParams.get("offset") ?? 0);
   const rangeSize = Number(url.searchParams.get("limit") ?? 1000);
   rows = rows.slice(rangeFrom, rangeFrom + rangeSize);

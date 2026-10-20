@@ -19,6 +19,7 @@ export default defineConfig({
         NEXT_PUBLIC_SUPABASE_URL: "http://127.0.0.1:54329",
         NEXT_PUBLIC_SUPABASE_ANON_KEY: "smoke-anon-key",
         SUPABASE_SERVICE_ROLE_KEY: "smoke-service-key",
+        YOUTUBE_API_KEY: "",
         ADMIN_PASSWORD_HASH: `scrypt$smoke-salt$${scryptSync("smoke-test-password", "smoke-salt", 64).toString("hex")}`,
       },
     },

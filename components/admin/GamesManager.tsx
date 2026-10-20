@@ -11,6 +11,7 @@ import type { Game, GameStatus, PlayByPlayEvent, PlayByPlayEventType } from "@/t
 import { Loader2 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import { GameLinksCard } from "./LinksEditors";
+import { ReplaySuggestionsPanel } from "./ReplaySuggestionsPanel";
 import {
   dangerButtonClass,
   Field,
@@ -477,6 +478,8 @@ export function GamesManager({ onToast }: { onToast: ToastFn }) {
           ))}
         </select>
       </Field>
+
+      <ReplaySuggestionsPanel key={seasonFilter} seasonId={seasonFilter} onToast={onToast} />
 
       <SectionCard title="Quick Live Score Update">
         <div className="flex flex-col gap-3">
