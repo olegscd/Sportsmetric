@@ -76,7 +76,6 @@ export function FilterTabs() {
   );
 
   const selectedSeason = seasons.find((s) => s.id === seasonId);
-  const isOldSeason = selectedSeason ? !selectedSeason.isCurrent : seasonId !== currentSeasonId;
 
   const [status, setStatus] = useState<GameStatusTab>("FINAL");
   const [teamId, setTeamId] = useState<string>("ALL");
@@ -85,17 +84,28 @@ export function FilterTabs() {
   const [sort, setSort] = useState<"default" | "oldest" | "newest">("default");
   const statusTouched = useRef(false);
 
+  const seasonGames = useMemo(() => {
+    if (!seasonId || isLifetimeSeason(seasonId)) return games;
+    return games.filter((g) => g.seasonId === seasonId && g.league === league);
+  }, [games, seasonId, league]);
+
+  // A season is archived only once it has no live or upcoming games left. U16
+  // shares the UAAP league with the men's tournament, so it cannot hold the
+  // single isCurrent flag while it is still being played.
+  const hasUnfinishedGames = useMemo(
+    () => seasonGames.some((game) => getEffectiveGameStatus(game) !== "FINAL"),
+    [seasonGames]
+  );
+  const isOldSeason = selectedSeason
+    ? !selectedSeason.isCurrent && !hasUnfinishedGames
+    : seasonId !== currentSeasonId && !hasUnfinishedGames;
+
   const activeStatus = isOldSeason ? "FINAL" : status;
 
   useEffect(() => {
     if (statusTouched.current) return;
     setStatus(getSmartStatusTab(games, seasonId, league, isOldSeason));
   }, [games, seasonId, league, isOldSeason]);
-
-  const seasonGames = useMemo(() => {
-    if (!seasonId || isLifetimeSeason(seasonId)) return games;
-    return games.filter((g) => g.seasonId === seasonId && g.league === league);
-  }, [games, seasonId, league]);
 
   const counts = { LIVE: 0, UPCOMING: 0, FINAL: 0 };
   for (const game of seasonGames) counts[getEffectiveGameStatus(game)]++;
