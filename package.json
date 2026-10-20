@@ -12,6 +12,7 @@
     "archive:check": "tsx scripts/check-uaap-archive.ts",
     "seed:supabase": "tsx scripts/seed-supabase.ts",
     "seed:intl-photos": "tsx scripts/seed-intl-photos.ts",
+    "import:uaap-u16": "tsx scripts/import-uaap-u16.ts",
     "games:sync": "tsx scripts/sync-games.ts",
     "test": "tsx --test tests/unit/*.test.ts",
     "test:e2e": "playwright test",

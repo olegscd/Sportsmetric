@@ -61,6 +61,7 @@ const PBA_TOURNAMENTS = [
 
 const UAAP_TOURNAMENTS = [
   "uaap-season-89-men-s-basketball",
+  "uaap-season-89-u16-basketball",
   "uaap-season-88-men-s-basketball",
   "uaap-season-87-men-s-basketball",
   "uaap-season-86-men-s-basketball",
@@ -599,6 +600,16 @@ export async function extractGameFromUrl(
     );
   }
 
+  return parseBasketballGamePage(html, league, stage, status);
+}
+
+/** Parse an already-downloaded LiveStats match page into a game payload. */
+export function parseBasketballGamePage(
+  html: string,
+  league: League,
+  stage: TournamentStage = "ELIMINATION",
+  status: "FINAL" | "LIVE" | "UPCOMING" = "FINAL"
+): ExtractedGamePayload {
   const $ = cheerio.load(html);
   const details: Record<string, string> = {};
 
