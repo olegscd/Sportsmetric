@@ -5,6 +5,7 @@ type YoutubeItem = {
   snippet?: { title?: string; description?: string; channelId?: string; channelTitle?: string; publishedAt?: string; liveBroadcastContent?: string };
   contentDetails?: { duration?: string; relatedPlaylists?: { uploads?: string }; videoId?: string; videoPublishedAt?: string };
   status?: { privacyStatus?: string; embeddable?: boolean; uploadStatus?: string };
+  liveStreamingDetails?: { actualStartTime?: string; actualEndTime?: string };
 };
 type YoutubeResponse = { items?: YoutubeItem[]; nextPageToken?: string };
 
@@ -18,7 +19,8 @@ export function videoFromItem(item: YoutubeItem): ReplayVideo {
     channelId: item.snippet?.channelId ?? "", channelTitle: item.snippet?.channelTitle ?? "",
     publishedAt: item.snippet?.publishedAt ?? "", durationSeconds: durationSeconds(item.contentDetails?.duration ?? ""),
     public: item.status?.privacyStatus === "public" && item.status.uploadStatus === "processed",
-    embeddable: item.status?.embeddable === true, live: item.snippet?.liveBroadcastContent !== "none" };
+    embeddable: item.status?.embeddable === true, live: item.snippet?.liveBroadcastContent !== "none",
+    wasLivestream: Boolean(item.liveStreamingDetails?.actualStartTime) };
 }
 
 /** Only fixed YouTube endpoints; keys never appear in returned errors/logs. */
@@ -41,6 +43,6 @@ export function youtubeClient({ key, reserve, signal, fetcher = fetch }: {
   return {
     channels: (ids: string[]) => list("channels", { part: "contentDetails", id: ids.join(","), maxResults: "50" }),
     uploads: (playlistId: string, pageToken?: string) => list("playlistItems", { part: "contentDetails", playlistId, maxResults: "50", ...(pageToken ? { pageToken } : {}) }),
-    async videos(ids: string[]) { return (await list("videos", { part: "snippet,contentDetails,status", id: ids.join(","), maxResults: "50" })).items?.map(videoFromItem) ?? []; },
+    async videos(ids: string[]) { return (await list("videos", { part: "snippet,contentDetails,status,liveStreamingDetails", id: ids.join(","), maxResults: "50" })).items?.map(videoFromItem) ?? []; },
   };
 }

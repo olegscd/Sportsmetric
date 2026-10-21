@@ -17,6 +17,9 @@ export function replayTestClient(pg: PGlite): SupabaseClient {
     eq(column: string, value: unknown) { this.filters.push({ column, op: "=", value }); return this; }
     gt(column: string, value: unknown) { this.filters.push({ column, op: ">", value }); return this; }
     not(column: string) { this.filters.push({ column, op: "IS NOT NULL" }); return this; }
+    is(column: string, value: null) { void value; this.filters.push({ column, op: "IS NULL" }); return this; }
+    in(column: string, values: unknown[]) { this.filters.push({ column, op: "= ANY", value: values }); return this; }
+    delete() { this.operation = "delete"; return this; }
     order(column: string) { this.orders.push(ident(column)); return this; }
     range(from: number, to: number) { this.offset = from; this.count = to - from + 1; return this; }
     limit(count: number) { this.count = count; return this; }
@@ -27,9 +30,11 @@ export function replayTestClient(pg: PGlite): SupabaseClient {
       try {
         const params: unknown[] = [];
         const param = (value: unknown) => { params.push(value); return `$${params.length}`; };
-        const where = () => this.filters.length ? " WHERE " + this.filters.map(f => `${ident(f.column)} ${f.op}${f.op === "IS NOT NULL" ? "" : " " + param(f.value)}`).join(" AND ") : "";
+        const where = () => this.filters.length ? " WHERE " + this.filters.map(f => f.op === "IS NOT NULL" || f.op === "IS NULL" ? `${ident(f.column)} ${f.op}` : f.op === "= ANY" ? `${ident(f.column)} = ANY(${param(f.value)})` : `${ident(f.column)} ${f.op} ${param(f.value)}`).join(" AND ") : "";
         let sql: string;
-        if (this.operation === "update") {
+        if (this.operation === "delete") {
+          sql = `DELETE FROM ${ident(this.table)}${where()} RETURNING *`;
+        } else if (this.operation === "update") {
           sql = `UPDATE ${ident(this.table)} SET ${Object.entries(this.values).map(([k, v]) => `${ident(k)}=${param(v)}`).join(",")}${where()} RETURNING *`;
         } else if (this.operation === "upsert") {
           const entries = Object.entries(this.values);

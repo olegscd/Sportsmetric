@@ -10,6 +10,8 @@ export type ReplayChannel = { league: League; channel_id: string; label: string;
 export type ReplayVideo = {
   id: string; title: string; description: string; channelId: string; channelTitle: string;
   publishedAt: string; durationSeconds: number; public: boolean; embeddable: boolean; live: boolean;
+  /** The upload is a finished livestream (YouTube liveStreamingDetails). */
+  wasLivestream?: boolean;
 };
 export type ReplayMatch = { game: ReplayGame; video: ReplayVideo; channel: ReplayChannel; score: number; reasons: string[]; kind: ReplayKind; kindReason: string };
 
@@ -58,13 +60,45 @@ export function teamAliases(team: ReplayTeam, league: League): string[] {
   return [...new Set([...own, ...(group ?? []).map(normalize)])];
 }
 
+/**
+ * Videos that are about a game but are not the game: press conferences,
+ * interviews, studio shows and short social clips. Official PBA uploads title
+ * post-game press conferences like results ("Ginebra takes down TNT, 93-86"),
+ * so the title alone cannot prove a video shows the game.
+ */
+const NOT_GAME_TITLE = /\b(post[\s-]?game|pre[\s-]?game|press[\s-]?con(?:ference)?s?|pressers?|interviews?|on\s?the\s?spot|starting\s+lineup|full\s+episode|episode\s*\d+|podcast|reaction|preview|practice|training|teaser|promo|trailer|behind\s+the\s+scenes|mic'?d\s+up|media\s+day|awarding|ceremony|draft|presentation|kumustahan|chikahan|vlog)\b|#\s*os\s*on\s*the\s*spot/i;
+const MIN_GAME_VIDEO_SECONDS = 120;
+/** Pressers and shows are streamed live too, but run far shorter than a game. */
+const MIN_GAME_LIVESTREAM_SECONDS = 45 * 60;
+
+export type ReplayContent = { kind: ReplayKind | null; explicit: boolean; reason: string };
+
+/**
+ * Decide whether a video shows the game, and as what. `explicit` means the
+ * evidence is strong enough to publish without review; otherwise the match
+ * is kept for an admin to check.
+ */
+export function classifyReplayContent(video: Pick<ReplayVideo, "title" | "durationSeconds" | "wasLivestream">): ReplayContent {
+  const { title, durationSeconds: duration } = video;
+  if (NOT_GAME_TITLE.test(title)) return { kind: null, explicit: true, reason: "Title marks a press conference, interview, show or promo." };
+  if (duration < MIN_GAME_VIDEO_SECONDS) return { kind: null, explicit: true, reason: "Shorter than 2 minutes: a social clip, not a game video." };
+  if (video.wasLivestream && duration < MIN_GAME_LIVESTREAM_SECONDS) {
+    return { kind: null, explicit: true, reason: "A short past livestream: usually a post-game press conference or show." };
+  }
+  if (/\bcondensed\b/i.test(title)) return { kind: "condensed", explicit: true, reason: "Title identifies a condensed game." };
+  // "FULL GAME HIGHLIGHTS" is a highlights package, not the full game.
+  if (/\bhighlights?\b|\btop\s*\d+\s*plays\b/i.test(title)) return { kind: "highlights", explicit: true, reason: "Title identifies highlights." };
+  if (/\b(full\s*(game|match)|replay)\b|^\s*live\s*:/i.test(title)) return { kind: "full", explicit: true, reason: "Title identifies a full game or replay." };
+  if (video.wasLivestream) return { kind: "full", explicit: true, reason: "Full-length past livestream of the game." };
+  if (duration > 45 * 60) return { kind: "full", explicit: true, reason: "Runs longer than 45 minutes: the full game." };
+  return { kind: "highlights", explicit: false,
+    reason: "No highlights/full-game label: could be a recap, presser or clip. Check before approving." };
+}
+
+/** @deprecated kept for callers that only need the kind; prefer classifyReplayContent. */
 export function inferReplayKind(title: string, duration: number): { kind: ReplayKind; reason: string } {
-  if (/\bcondensed\b/i.test(title)) return { kind: "condensed", reason: "Title identifies a condensed game." };
-  if (/\b(full\s*(game|match)|replay)\b/i.test(title)) return { kind: "full", reason: "Title identifies a full game or replay." };
-  if (/\bhighlights?\b/i.test(title)) return { kind: "highlights", reason: "Title identifies highlights." };
-  if (duration > 45 * 60) return { kind: "full", reason: "Video runs longer than 45 minutes." };
-  if (duration < 15 * 60) return { kind: "highlights", reason: "Video runs less than 15 minutes." };
-  return { kind: "highlights", reason: "No explicit replay type; defaults to highlights for review." };
+  const content = classifyReplayContent({ title, durationSeconds: duration });
+  return { kind: content.kind ?? "highlights", reason: content.reason };
 }
 
 export function gameSnapshot(g: ReplayGame) {
@@ -76,8 +110,9 @@ export function scoreReplay(game: ReplayGame, video: ReplayVideo, channel: Repla
   if (!channel.enabled || channel.league !== game.league || video.channelId !== channel.channel_id ||
     !video.public || !video.embeddable || video.live || video.durationSeconds <= 0 || game.status !== "FINAL" ||
     game.home_score === game.away_score || game.home_score < 0 || game.away_score < 0) return null;
-  // Interviews, previews and promotional clips are not game replays.
-  if (/\b(preview|interview|reaction|practice|training|teaser|promo|press conference)\b/i.test(video.title)) return null;
+  // Press conferences, interviews, shows and clips are not game replays.
+  const content = classifyReplayContent(video);
+  if (!content.kind) return null;
   if (/\b(?:[1-5](?:st|nd|rd|th)?\s+(?:set|quarter)|(?:set|quarter)\s*[1-5]|q[1-4])\b.*\bhighlights?\b/i.test(video.title)) return null;
   const elapsed = Date.parse(video.publishedAt) - Date.parse(game.start_time);
   if (!Number.isFinite(elapsed) || elapsed < 0 || elapsed > 72 * 3600000) return null;
@@ -101,13 +136,16 @@ export function scoreReplay(game: ReplayGame, video: ReplayVideo, channel: Repla
   const scores = [...scoreText.matchAll(/\b(\d{1,3})\s*[-–:]\s*(\d{1,3})\b/g)];
   if (scores.some(m => !((+m[1] === game.home_score && +m[2] === game.away_score) ||
     (+m[2] === game.home_score && +m[1] === game.away_score)))) return null;
-  const inferred = inferReplayKind(video.title, video.durationSeconds);
-  const score = Math.round(((homeTitle && awayTitle ? 0.6 : 0.4) + 0.15 + 0.1 + (scores.length ? 0.15 : elapsed <= 36 * 3600000 ? 0.1 : 0.05)) * 100) / 100;
-  return { game, video, channel, score, kind: inferred.kind, kindReason: inferred.reason, reasons: [
+  const raw = Math.round(((homeTitle && awayTitle ? 0.6 : 0.4) + 0.15 + 0.1 + (scores.length ? 0.15 : elapsed <= 36 * 3600000 ? 0.1 : 0.05)) * 100) / 100;
+  // Automatic approval needs at least 0.9. Without explicit game-content
+  // evidence the match stays in the review queue, however well the title fits.
+  const score = content.explicit ? raw : Math.min(raw, 0.75);
+  return { game, video, channel, score, kind: content.kind, kindReason: content.reason, reasons: [
     `Both teams found${homeTitle && awayTitle ? " in the title" : " in the title or description"}.`,
     `Published ${Math.round(elapsed / 3600000)} hours after tip-off.`,
     leagueMention ? "League or season identified." : "Channel is configured as league-specific.",
     ...(scores.length ? ["Title score matches the final result."] : []), "Uploader is on the league's official allowlist.",
+    content.explicit ? `Content: ${content.reason}` : `Needs review: ${content.reason}`,
   ] };
 }
 

@@ -1,8 +1,43 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { getServiceSupabase } from "@/lib/supabase-admin";
 import type { League } from "@/types/sports";
-import { canSuggestVideo, chooseVideoMatch, gameSnapshot, scoreReplay, youtubeVideoId, type ReplayChannel, type ReplayGame, type ReplayMatch } from "./match";
+import { canSuggestVideo, chooseVideoMatch, classifyReplayContent, gameSnapshot, scoreReplay, youtubeVideoId, type ReplayChannel, type ReplayGame, type ReplayMatch } from "./match";
 import { youtubeClient } from "./youtube";
+
+type RecheckSummary = { rechecked: number; revoked: number; units_used: number; errors: string[] };
+type YoutubeClient = ReturnType<typeof youtubeClient>;
+
+/**
+ * Checks up to 500 approved, not-yet-checked suggestions per run (10 API units).
+ * Missing/private videos are left to the dead-link audit; only videos that are
+ * clearly not the game are revoked.
+ */
+export async function recheckApprovedReplays(db: SupabaseClient, youtube: YoutubeClient, deadline: AbortSignal, summary: RecheckSummary, limit = 500) {
+  const rows = requireReplayData(await db.from("replay_suggestions").select("id,video_id")
+    .eq("status", "approved").is("content_checked_at", null).order("created_at").limit(limit)) as { id: string; video_id: string }[] | null;
+  let revoked = 0;
+  for (let i = 0; i < (rows ?? []).length; i += 50) {
+    if (deadline.aborted || summary.units_used >= 150) break;
+    const batch = rows!.slice(i, i + 50);
+    const videos = await youtube.videos(batch.map(r => r.video_id));
+    const checked: string[] = [];
+    for (const row of batch) {
+      const video = videos.find(v => v.id === row.video_id);
+      if (video) {
+        const content = classifyReplayContent(video);
+        if (!content.kind) {
+          if (requireReplayData(await db.rpc("revoke_replay_suggestion", { suggestion_id: row.id, reason: content.reason })) === true) revoked++;
+          continue;
+        }
+      }
+      checked.push(row.id);
+    }
+    if (checked.length) requireReplayData(await db.from("replay_suggestions").update({ content_checked_at: new Date().toISOString() }).in("id", checked));
+    summary.rechecked += batch.length;
+  }
+  summary.revoked += revoked;
+  return { revoked, checked: (rows ?? []).length };
+}
 
 export function requireReplayData<T>(result: { data: T; error: { message: string } | null }): T {
   if (result.error) throw new Error(result.error.message);
@@ -17,7 +52,7 @@ export async function runReplaySync({ db = getServiceSupabase(), manual = false,
   const runId = requireReplayData(await db.rpc("begin_replay_sync", { manual, target_season: seasonId ?? null })) as string | null;
   if (!runId) return { skipped: true, reason: "Scheduled discovery is paused or another scan is running." };
   const summary = { candidates: 0, suggestions_created: 0, videos_checked: 0, links_checked: 0, units_used: 0,
-    approved: 0, historical: false, continuation: false, channels_checked: 0, errors: [] as string[] };
+    approved: 0, historical: false, continuation: false, channels_checked: 0, rechecked: 0, revoked: 0, errors: [] as string[] };
   const deadline = AbortSignal.timeout(45000);
   let status = "failed";
   const issue = async (id: string, code: string, message: string, gameId?: string, videoId?: string) => {
@@ -35,10 +70,27 @@ export async function runReplaySync({ db = getServiceSupabase(), manual = false,
       if (allowed) summary.units_used++;
       return allowed;
     } });
+    // Re-check approved links against full video details (livestream length),
+    // which the first matcher never read. Not-a-game videos are withdrawn and
+    // their games become eligible for a fresh scan.
+    const recheck = await recheckApprovedReplays(db, youtube, deadline, summary);
+    // Also restart when this is the first re-check after withdrawals made by
+    // the content-check migration (title-only clean-up, no API needed).
+    const earlierWithdrawals = recheck.checked > 0 && recheck.revoked === 0 &&
+      ((requireReplayData(await db.from("replay_suggestions").select("id").not("content_note", "is", null).limit(1)) ?? []) as unknown[]).length > 0;
+    const restart = recheck.revoked > 0 || earlierWithdrawals;
+    if (restart) {
+      requireReplayData(await db.from("replay_sync_settings").update({ backfill_enabled: true, backfill_finished_at: null }).eq("id", true));
+      // Restart every channel's history walk from its newest upload.
+      requireReplayData(await db.from("replay_scan_cursors").update({ next_page_token: null, completed_at: null }).eq("scope", "history:all"));
+    }
+    // A withdrawal restarts the historical sweep; begin it in this same run.
+    const historicalNow = historical || (restart && !seasonId);
+    summary.historical = historicalNow;
     const configured = requireReplayData(await db.from("replay_channels").select("*").eq("enabled", true)) as ReplayChannel[];
-    const channels = configured.filter(c => historical || !league || c.league === league);
+    const channels = configured.filter(c => historicalNow || !league || c.league === league);
     if (!channels.length) throw new Error("Add an official YouTube channel for this league in Replay suggestions before scanning.");
-    const games = requireReplayData(await db.rpc("replay_candidate_games", { target_season: historical ? "*" : seasonId ?? null, target_league: historical ? null : league ?? null })) as ReplayGame[];
+    const games = requireReplayData(await db.rpc("replay_candidate_games", { target_season: historicalNow ? "*" : seasonId ?? null, target_league: historicalNow ? null : league ?? null })) as ReplayGame[];
     summary.candidates = games.length;
     // Eligibility already excludes pending/approved games. Read all pair
     // exclusions for the remaining games, with pagination (no 1,000-row loss).
@@ -48,11 +100,11 @@ export async function runReplaySync({ db = getServiceSupabase(), manual = false,
       previous.push(...page);
       if (page.length < 500) break;
     }
-    const scope = historical ? "history:all" : `${seasonId ?? "recent"}:${league ?? "all"}`;
+    const scope = historicalNow ? "history:all" : `${seasonId ?? "recent"}:${league ?? "all"}`;
     const cursors = requireReplayData(await db.from("replay_scan_cursors").select("channel_id,next_page_token,updated_at,completed_at").eq("scope", scope)) ?? [];
     const ids = [...new Set(channels.filter(c => games.some(g => g.league === c.league)).map(c => c.channel_id))]
       .sort((a, b) => (cursors.find(c => c.channel_id === a)?.updated_at ?? "").localeCompare(cursors.find(c => c.channel_id === b)?.updated_at ?? ""));
-    const pendingIds = ids.filter(id => !historical || !cursors.find(c => c.channel_id === id)?.completed_at);
+    const pendingIds = ids.filter(id => !historicalNow || !cursors.find(c => c.channel_id === id)?.completed_at);
     const playlists = new Map<string, string>();
     for (let i = 0; i < pendingIds.length; i += 50) {
       for (const item of (await youtube.channels(pendingIds.slice(i, i + 50))).items ?? []) {
@@ -72,7 +124,7 @@ export async function runReplaySync({ db = getServiceSupabase(), manual = false,
       const earliest = Math.min(...starts);
       let pageToken = cursors.find(c => c.channel_id === channelId)?.next_page_token ?? undefined;
       try {
-        const maxPages = historical ? 75 : 6;
+        const maxPages = historicalNow ? 75 : 6;
         for (let pageNumber = 0; pageNumber < maxPages; pageNumber++) {
           const page = await youtube.uploads(playlist, pageToken);
           const items = page.items ?? [];
@@ -123,7 +175,7 @@ export async function runReplaySync({ db = getServiceSupabase(), manual = false,
           const reachedStart = dates.length > 0 && Math.min(...dates) < earliest;
           pageToken = !reachedStart ? page.nextPageToken : undefined;
           requireReplayData(await db.from("replay_scan_cursors").upsert({ channel_id: channelId, scope,
-            next_page_token: pageToken ?? null, updated_at: now.toISOString(), completed_at: !pageToken && historical ? now.toISOString() : null }));
+            next_page_token: pageToken ?? null, updated_at: now.toISOString(), completed_at: !pageToken && historicalNow ? now.toISOString() : null }));
           if (!pageToken) { completed.add(channelId); break; }
           if (pageNumber === maxPages - 1 || deadline.aborted || summary.units_used >= 150) { summary.continuation = true; break; }
         }
@@ -136,7 +188,7 @@ export async function runReplaySync({ db = getServiceSupabase(), manual = false,
       }
       requireReplayData(await db.from("replay_issues").update({ resolved: true }).eq("id", `channel:${channelId}`));
     }
-    if (historical && pendingIds.every(id => completed.has(id)) && !summary.errors.length) {
+    if (historicalNow && pendingIds.every(id => completed.has(id)) && !summary.errors.length) {
       requireReplayData(await db.from("replay_sync_settings").update({ backfill_enabled: false, backfill_finished_at: now.toISOString() }).eq("id", true));
     }
 
