@@ -1,10 +1,16 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { getServiceSupabase } from "@/lib/supabase-admin";
-import { philippineDay, planObservation } from "./plan";
-import { collectObservations } from "./sources";
-import type { StoredGame, SyncIssue, SyncLink, SyncSource, SyncTeam } from "./types";
+import { parseNativePvlPdf } from "@/lib/game-extractor";
+import { resolveSyncBox, type NewSyncPlayer, type SyncPlayer } from "./box";
+import { matchTeam, philippineDay, planObservation } from "./plan";
+import { collectObservations, fetchSourceBytes } from "./sources";
+import type { Observation, StoredGame, SyncIssue, SyncLink, SyncSource, SyncTeam } from "./types";
 
+/** Fields that make up a fixture's manual-edit snapshot. */
 export const GAME_FIELDS = "id,league,season_id,home_team_id,away_team_id,home_score,away_score,status,start_time,venue,stage,is_playoff";
+const RUN_FIELDS = GAME_FIELDS + ",quarter_or_set,time_remaining";
+
+interface BoxJob { source: SyncSource; item: Observation; game: StoredGame }
 const errorText = (error: unknown) => error instanceof Error ? error.message : String(error);
 
 function requireData<T>(result: { data: T; error: { message: string } | null }): T {
@@ -32,7 +38,7 @@ export async function runGameSync({ preview = false, db = getServiceSupabase(), 
     runId = requireData(await db.rpc("begin_game_sync")) as string | null;
     if (!runId) return { skipped: true, reason: "Updater is paused or another run is active." };
   }
-  const summary = { preview, error: null as string | null, checked: 0, updated: 0, unchanged: 0, held: 0, skipped: 0, sources: [] as { id: string; checked: number; error: string | null }[], issues: [] as SyncIssue[] };
+  const summary = { preview, error: null as string | null, checked: 0, updated: 0, unchanged: 0, held: 0, skipped: 0, boxScores: 0, newPlayers: [] as string[], sources: [] as { id: string; checked: number; error: string | null }[], issues: [] as SyncIssue[] };
   let status = "failed";
   try {
     const configured = requireData(await db.from("game_sync_sources").select("*").eq("enabled", true)) as SyncSource[];
@@ -40,11 +46,13 @@ export async function runGameSync({ preview = false, db = getServiceSupabase(), 
     const sources = configured.filter(s => seasons.some(season => season.id === s.season_id && season.league === s.league));
     if (!sources.length) throw new Error("No in-progress competitions are configured for automatic updates.");
     const ids = sources.map(s => s.season_id);
-    const [teams, games, links] = await Promise.all([
+    const [teams, games, links, players] = await Promise.all([
       readAll<SyncTeam>(db, "teams", "id,name,short_name,league,season_id", ids),
-      readAll<StoredGame>(db, "games", GAME_FIELDS, ids),
+      readAll<StoredGame>(db, "games", RUN_FIELDS, ids),
       readAll<SyncLink>(db, "game_sync_links", "*"),
+      readAll<SyncPlayer>(db, "players", "id,person_id,name,jersey_number,team_id,season_id", ids),
     ]);
+    const boxJobs: BoxJob[] = [];
     const recordIssue = async (issue: SyncIssue) => {
       summary.held++;
       summary.issues.push(issue);
@@ -91,6 +99,7 @@ export async function runGameSync({ preview = false, db = getServiceSupabase(), 
             if (saved.data === "paused") { summary.skipped++; continue; }
             if (saved.data === "updated") summary.updated++; else summary.unchanged++;
           }
+          if (decision.game.status !== "UPCOMING") boxJobs.push({ source, item, game: decision.game });
           // Later observations in this same batch must see earlier updates.
           const existing = games.findIndex(g => g.id === decision.game.id);
           if (existing >= 0) games[existing] = decision.game; else games.push(decision.game);
@@ -104,6 +113,7 @@ export async function runGameSync({ preview = false, db = getServiceSupabase(), 
       summary.sources.push({ id: source.id, checked, error: sourceError });
       if (!preview) requireData(await db.from("game_sync_sources").update({ last_checked_at: now.toISOString(), last_error: sourceError, ...(!sourceError ? { last_success_at: now.toISOString() } : {}) }).eq("id", source.id));
     }
+    await syncBoxScores(db, boxJobs, { runId, preview, teams, players, summary, recordIssue });
     // Flag overdue unfinished fixtures independently of scraper success.
     for (const game of games) {
       const source = sources.find(s => s.season_id === game.season_id && s.league === game.league);
@@ -126,4 +136,79 @@ export async function runGameSync({ preview = false, db = getServiceSupabase(), 
       if (finished.error) console.error("[Game sync] Could not close run:", finished.error.message);
     }
   }
+}
+
+interface BoxContext {
+  runId: string | null;
+  preview: boolean;
+  teams: SyncTeam[];
+  players: SyncPlayer[];
+  summary: { boxScores: number; newPlayers: string[] };
+  recordIssue: (issue: SyncIssue) => Promise<void>;
+}
+
+/**
+ * Box scores follow the official source: refreshed on every run while a game
+ * is live, once more when it goes final, and filled for recent finals that
+ * have none. A box score imported by hand for a final game is never replaced.
+ */
+async function syncBoxScores(db: SupabaseClient, jobs: BoxJob[], ctx: BoxContext) {
+  if (!jobs.length) return;
+  const unique = [...new Map(jobs.map(job => [job.game.id, job])).values()];
+  const current = requireData(await db.from("games").select("id,box_score").in("id", unique.map(j => j.game.id))) as { id: string; box_score: { home?: unknown[]; away?: unknown[]; syncedAt?: string } | null }[];
+  const deadline = AbortSignal.timeout(20000);
+  for (const { source, item, game } of unique) {
+    const stored = current.find(g => g.id === game.id)?.box_score;
+    const hasBox = (stored?.home?.length ?? 0) + (stored?.away?.length ?? 0) > 0;
+    const automatic = Boolean(stored?.syncedAt);
+    if (game.status === "FINAL" && hasBox && !automatic) continue;
+    // PVL publishes box scores only as final match reports; fetch each once.
+    if (source.league === "PVL" && (game.status !== "FINAL" || hasBox)) continue;
+    let box = item.box ?? null;
+    try {
+      if (source.league === "PVL" && item.reportUrl && !deadline.aborted) box = await pvlBox(item, game, ctx.teams, deadline);
+    } catch (error) { box = null; if (!(error instanceof Error && error.name === "AbortError")) console.error("[Game sync] PVL report:", errorText(error)); }
+    if (!box) {
+      if (game.status === "FINAL" && !hasBox && !deadline.aborted) {
+        await ctx.recordIssue({ source_id: source.id, source_key: "box:" + game.id, game_id: game.id, message: "The official box score could not be read or does not match the final score. Import it manually from the match report." });
+      }
+      continue;
+    }
+    // Orient the source's home/away onto the stored fixture.
+    const sourceHome = matchTeam(item.home, ctx.teams, source.league)?.id;
+    const [homeRows, awayRows] = sourceHome === game.home_team_id ? [box.home, box.away] : [box.away, box.home];
+    const home = resolveSyncBox(homeRows, game.home_team_id, source.league, ctx.players);
+    const away = resolveSyncBox(awayRows, game.away_team_id, source.league, ctx.players);
+    const created: NewSyncPlayer[] = [...home.created, ...away.created];
+    if (ctx.preview) { ctx.summary.boxScores++; continue; }
+    const saved = await db.rpc("apply_game_box_score", { run_id: ctx.runId, game: game.id, box: { home: home.items, away: away.items }, new_players: created });
+    if (saved.error) {
+      await ctx.recordIssue({ source_id: source.id, source_key: "box:" + game.id, game_id: game.id, message: "Box score update failed: " + saved.error.message });
+      continue;
+    }
+    if (saved.data === "updated") ctx.summary.boxScores++;
+    for (const p of created) {
+      if (!ctx.players.some(x => x.id === p.id)) {
+        ctx.players.push({ id: p.id, person_id: p.person_id, name: p.name, jersey_number: p.jersey_number, team_id: p.team_id, season_id: game.season_id });
+        ctx.summary.newPlayers.push(p.name + " (" + p.team_id + ")");
+      }
+    }
+    requireData(await db.from("game_sync_issues").update({ resolved: true }).eq("source_id", source.id).eq("source_key", "box:" + game.id));
+  }
+}
+
+/** Read a PVL match report and orient it by the official team codes. */
+async function pvlBox(item: Observation, game: StoredGame, teams: SyncTeam[], signal: AbortSignal) {
+  const bytes = await fetchSourceBytes(item.reportUrl!, { signal });
+  const parsed = await parseNativePvlPdf(bytes, "ELIMINATION", "FINAL", item.reportUrl!);
+  if (!parsed) return null;
+  const first = matchTeam(parsed.homeTeam.shortName, teams, "PVL")?.id;
+  const second = matchTeam(parsed.awayTeam.shortName, teams, "PVL")?.id;
+  const sourceHome = matchTeam(item.home, teams, "PVL")?.id;
+  const sourceAway = matchTeam(item.away, teams, "PVL")?.id;
+  if (!first || !second || first === second || ![sourceHome, sourceAway].includes(first) || ![sourceHome, sourceAway].includes(second)) return null;
+  if (![game.home_team_id, game.away_team_id].includes(first) || ![game.home_team_id, game.away_team_id].includes(second)) return null;
+  // A volleyball roster sheet lists at least six athletes per side.
+  if (parsed.boxScore.home.length < 6 || parsed.boxScore.away.length < 6) return null;
+  return first === sourceHome ? { home: parsed.boxScore.home, away: parsed.boxScore.away } : { home: parsed.boxScore.away, away: parsed.boxScore.home };
 }

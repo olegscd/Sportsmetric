@@ -1,3 +1,4 @@
+import type { ExtractedBoxRow } from "@/lib/game-extractor";
 import type { League, TournamentStage } from "@/types/sports";
 
 export interface SyncSource {
@@ -22,12 +23,19 @@ export interface Observation {
   away: string;
   day: string;
   startTime: string | null;
-  status: "UPCOMING" | "FINAL";
+  status: "UPCOMING" | "LIVE" | "FINAL";
   homeScore: number | null;
   awayScore: number | null;
   venue: string | null;
   stage: TournamentStage;
   url: string;
+  /** Live period (quarter, or overtime as 5+) and game clock, when published. */
+  period?: number | null;
+  clock?: string | null;
+  /** Official box score, oriented to `home`/`away` above. */
+  box?: { home: ExtractedBoxRow[]; away: ExtractedBoxRow[] } | null;
+  /** PVL: official match-report PDF that carries the box score. */
+  reportUrl?: string | null;
 }
 
 export interface StoredGame {
@@ -43,6 +51,8 @@ export interface StoredGame {
   venue: string | null;
   stage: string | null;
   is_playoff: boolean | null;
+  quarter_or_set?: number | null;
+  time_remaining?: string | null;
 }
 
 export interface SyncTeam {

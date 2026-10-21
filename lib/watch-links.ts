@@ -58,10 +58,25 @@ function optHttps(value: unknown, label: string): string | null {
   return url.toString();
 }
 
+/** A single YouTube video (watch?v=, youtu.be/, /live/<id>, /shorts/<id>). */
+export function isSingleVideoUrl(raw: string): boolean {
+  const url = new URL(raw);
+  const host = url.hostname.replace(/^(www|m)\./, "");
+  if (host === "youtu.be") return url.pathname.length > 1;
+  if (host !== "youtube.com") return false;
+  return url.pathname === "/watch" || /^\/(live|shorts|embed)\/[^/]+$/.test(url.pathname);
+}
+
 export function normalizeSeasonLinks(input: unknown): SeasonLinks {
   const raw = record(input, "links");
+  const watchUrl = optHttps(raw.watchUrl, "Watch link");
+  // Every game without its own link falls back to the season default, so a
+  // single video here would send every upcoming and live game to one old game.
+  if (watchUrl && isSingleVideoUrl(watchUrl)) {
+    throw new ValidationError("The season Watch link must be a channel or its live/streams page, not a single video. Add a specific game's livestream on that game instead.");
+  }
   return {
-    watchUrl: optHttps(raw.watchUrl, "Watch link"), watchLabel: optLabel(raw.watchLabel), watchNote: optLabel(raw.watchNote, 40),
+    watchUrl, watchLabel: optLabel(raw.watchLabel), watchNote: optLabel(raw.watchNote, 40),
     ticketsUrl: optHttps(raw.ticketsUrl, "Tickets link"), ticketsLabel: optLabel(raw.ticketsLabel),
   };
 }

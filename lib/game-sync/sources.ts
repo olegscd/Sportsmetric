@@ -1,5 +1,5 @@
 import * as cheerio from "cheerio";
-import { assertAllowedSourceUrl } from "@/lib/game-extractor";
+import { assertAllowedSourceUrl, parseBasketballGamePage, type ExtractedBoxRow } from "@/lib/game-extractor";
 import { stageFromText } from "./plan";
 import type { Observation, SyncLink, SyncSource } from "./types";
 
@@ -30,6 +30,10 @@ export function sourceTime(day: string, raw: string): string {
 }
 
 export async function fetchSource(url: string, init: RequestInit = {}): Promise<string> {
+  return Buffer.from(await fetchSourceBytes(url, init)).toString("utf8");
+}
+
+export async function fetchSourceBytes(url: string, init: RequestInit = {}): Promise<Uint8Array> {
   let target = assertAllowedSourceUrl(url);
   for (let hop = 0; hop < 4; hop++) {
     const response = await fetch(target, { ...init, cache: "no-store", redirect: "manual", signal: init.signal ? AbortSignal.any([init.signal, AbortSignal.timeout(10000)]) : AbortSignal.timeout(10000), headers: { "User-Agent": "Sportsmetric/1.0 (sportsmetric.ph)", ...init.headers } });
@@ -54,12 +58,26 @@ export async function fetchSource(url: string, init: RequestInit = {}): Promise<
         chunks.push(part.value);
       }
     } finally { await reader.cancel(); }
-    return Buffer.concat(chunks).toString("utf8");
+    return new Uint8Array(Buffer.concat(chunks));
   }
   throw new Error("Too many official-source redirects.");
 }
 
-export interface BasketballRef { key: string; url: string; home: string; away: string; final: boolean; homeScore: number | null; awayScore: number | null }
+export interface BasketballRef { key: string; url: string; home: string; away: string; final: boolean; live: boolean; period: number | null; clock: string | null; homeScore: number | null; awayScore: number | null }
+
+/**
+ * LiveStats prints the game state as e.g. "PERIOD 2 04:03 … Live", "OT 1 …"
+ * or "Halftime". Scheduled tip-off times ("05:00 PM") are never a clock.
+ */
+export function parseGameClock(text: string): { period: number | null; clock: string | null } {
+  const t = clean(text);
+  const ot = t.match(/\b(?:OT|overtime)\s*(\d)?\b/i);
+  const q = t.match(/\b(?:period|quarter|Q)\s*(\d{1,2})\b/i);
+  const period = q ? +q[1] : ot ? 4 + (ot[1] ? +ot[1] : 1) : null;
+  if (/\bhalf\s*-?time\b/i.test(t)) return { period: period ?? 2, clock: "Halftime" };
+  const clock = t.match(/\b(\d{1,2}:\d{2})(?!\s*[AP]\.?M)/i)?.[1] ?? null;
+  return { period, clock: period ? clock : null };
+}
 
 export function parseBasketballIndex(html: string, url: string): BasketballRef[] {
   const $ = cheerio.load(html);
@@ -77,7 +95,14 @@ export function parseBasketballIndex(html: string, url: string): BasketballRef[]
       const clone = $(side).clone(); clone.find(".team").remove();
       const text = clean(clone.text()); return /^\d+$/.test(text) ? +text : -1;
     }).get();
-    refs.push({ key: "match:" + id, url: link.toString(), home: names[0], away: names[1], final: /^final$/i.test(clean(card.find(".schedule-details").text())), homeScore: scores[0] >= 0 ? scores[0] : null, awayScore: scores[1] >= 0 ? scores[1] : null });
+    const details = clean(card.find(".schedule-details").text());
+    const final = /^final$/i.test(details);
+    // Everything on the card except the two team blocks carries the game state.
+    const state = card.clone(); state.find(".scheduled-team").remove();
+    const stateText = clean(state.text());
+    const { period, clock } = parseGameClock(stateText);
+    const live = !final && (/\blive\b/i.test(stateText) || period !== null);
+    refs.push({ key: "match:" + id, url: link.toString(), home: names[0], away: names[1], final, live, period, clock, homeScore: scores[0] >= 0 ? scores[0] : null, awayScore: scores[1] >= 0 ? scores[1] : null });
   });
   if (!refs.length) throw new Error("No official match cards found. The source may have changed.");
   if (new Set(refs.map(r => r.key)).size !== refs.length) throw new Error("Official source contains duplicate match IDs.");
@@ -103,11 +128,48 @@ export function parseBasketballGame(html: string, ref: BasketballRef, source: Sy
   const selectedHome = clean($("#scoreboard .team-0 .team_code").text());
   const selectedAway = clean($("#scoreboard .team-1 .team_code").text());
   const selectedScores = [clean($("#scoreboard .team-0 .team_score").text()), clean($("#scoreboard .team-1 .team_score").text())];
+  const scoreboardValid = selectedScores.every(s => /^\d+$/.test(s));
   if (selectedHome !== current.home || selectedAway !== current.away || (current.final &&
-    (selectedScores.some(s => !/^\d+$/.test(s)) || +selectedScores[0] !== current.homeScore || +selectedScores[1] !== current.awayScore))) {
+    (!scoreboardValid || +selectedScores[0] !== current.homeScore || +selectedScores[1] !== current.awayScore))) {
     throw new Error("Official page selected a different match or inconsistent scores.");
   }
-  return { key: ref.key, home: ref.home, away: ref.away, day, startTime: sourceTime(day, date[4]), status: current.final ? "FINAL" : "UPCOMING", homeScore: current.homeScore, awayScore: current.awayScore, venue: details.venue || null, stage: "ELIMINATION", url: ref.url };
+  if (current.live && !scoreboardValid) throw new Error("Official live scoreboard is missing scores.");
+  const status = current.final ? "FINAL" : current.live ? "LIVE" : "UPCOMING";
+  // The scoreboard refreshes with the game page; the index card can lag behind it.
+  const homeScore = current.live ? +selectedScores[0] : current.homeScore;
+  const awayScore = current.live ? +selectedScores[1] : current.awayScore;
+  const fromScoreboard = parseGameClock($("#scoreboard").clone().find(".team-0,.team-1").remove().end().text());
+  const period = current.period ?? fromScoreboard.period;
+  const clock = current.period ? current.clock : fromScoreboard.clock;
+  return {
+    key: ref.key, home: ref.home, away: ref.away, day, startTime: sourceTime(day, date[4]), status, homeScore, awayScore,
+    venue: details.venue || null, stage: "ELIMINATION", url: ref.url, period, clock,
+    box: status === "UPCOMING" ? null : basketballBox(html, source, ref.home, ref.away, status === "FINAL" ? [homeScore, awayScore] : null),
+  };
+}
+
+const teamKey = (s: string) => s.replace(/[^a-z0-9]/gi, "").toLowerCase();
+
+/**
+ * Box score oriented to the index card's home/away. Returns null rather than
+ * guessing when the tables cannot be tied to the two teams, or when a final
+ * box score does not add up to the official final score.
+ */
+export function basketballBox(html: string, source: SyncSource, home: string, away: string, finalScores: (number | null)[] | null): { home: ExtractedBoxRow[]; away: ExtractedBoxRow[] } | null {
+  let parsed;
+  try { parsed = parseBasketballGamePage(html, source.league); } catch { return null; }
+  const a = teamKey(parsed.homeTeam.shortName), b = teamKey(parsed.awayTeam.shortName);
+  const h = teamKey(home), w = teamKey(away);
+  let box: { home: ExtractedBoxRow[]; away: ExtractedBoxRow[] };
+  if (a === h && b === w) box = { home: parsed.boxScore.home, away: parsed.boxScore.away };
+  else if (a === w && b === h) box = { home: parsed.boxScore.away, away: parsed.boxScore.home };
+  else return null;
+  if (!box.home.length || !box.away.length) return null;
+  if (finalScores) {
+    const total = (rows: ExtractedBoxRow[]) => rows.reduce((sum, r) => sum + (r.pts || 0), 0);
+    if (total(box.home) !== finalScores[0] || total(box.away) !== finalScores[1]) return null;
+  }
+  return box;
 }
 
 export function parsePbaSchedule(html: string, source: SyncSource): Observation[] {
@@ -151,7 +213,7 @@ export function parsePvlCards(html: string, source: SyncSource, final: boolean):
     const pdf = card.find("a[href*='.pdf']").attr("href");
     if (final && !pdf) throw new Error("PVL result has no official match report.");
     const key = final ? "report:" + new URL(assertAllowedSourceUrl(pdf!)).pathname.split("/").pop()!.replace(/-P\d+\.pdf$/i, "") : "fixture:" + day + ":" + names.join(":") + ":" + stage;
-    items.push({ key, home: names[0], away: names[1], day, startTime: final ? null : sourceTime(day, clean(card.find(".match-card-time").first().text())), status: final ? "FINAL" : "UPCOMING", homeScore: final ? +scores[0] : null, awayScore: final ? +scores[1] : null, venue: clean(heading.split("|").slice(1).join("|")) || null, stage, url: final ? pdf! : "https://pvl.ph/schedule" });
+    items.push({ key, home: names[0], away: names[1], day, startTime: final ? null : sourceTime(day, clean(card.find(".match-card-time").first().text())), status: final ? "FINAL" : "UPCOMING", homeScore: final ? +scores[0] : null, awayScore: final ? +scores[1] : null, venue: clean(heading.split("|").slice(1).join("|")) || null, stage, url: final ? pdf! : "https://pvl.ph/schedule", reportUrl: final ? new URL(assertAllowedSourceUrl(pdf!)).toString() : null });
   });
   return items;
 }
@@ -175,16 +237,17 @@ export async function collectObservations(source: SyncSource, links: SyncLink[],
   const refs = parseBasketballIndex(html, source.tournament_url);
   // Only inspect the latest results; historical backfill remains an explicit
   // import. Existing links get rechecked for corrections for three days.
+  // Games in progress always come first so live scores are never crowded out.
   const eligible = refs.slice(0, 8).filter(ref => {
     const link = links.find(l => l.source_id === source.id && l.source_key === ref.key);
     return !link || !ref.final || Date.parse(link.snapshot?.start_time ?? "") > now.getTime() - 3 * 86400000;
   }).sort((a, b) => {
     const la = links.find(l => l.source_id === source.id && l.source_key === a.key);
     const lb = links.find(l => l.source_id === source.id && l.source_key === b.key);
-    return (la ? 1 : 0) - (lb ? 1 : 0) || Date.parse(la?.last_checked_at ?? "1970-01-01") - Date.parse(lb?.last_checked_at ?? "1970-01-01");
+    return (b.live ? 1 : 0) - (a.live ? 1 : 0) || (la ? 1 : 0) - (lb ? 1 : 0) || Date.parse(la?.last_checked_at ?? "1970-01-01") - Date.parse(lb?.last_checked_at ?? "1970-01-01");
   });
   const observations: Observation[] = [];
-  for (const ref of eligible.slice(0, 4)) {
+  for (const ref of eligible.slice(0, Math.max(4, eligible.filter(r => r.live).length + 2))) {
     try {
       const gameHtml = ref.url === source.tournament_url ? html : await read(ref.url);
       observations.push(parseBasketballGame(gameHtml, ref, source));

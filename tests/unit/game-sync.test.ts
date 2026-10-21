@@ -2,8 +2,9 @@ import assert from "node:assert/strict";
 import { readFile, readdir } from "node:fs/promises";
 import { test } from "node:test";
 import { PGlite } from "@electric-sql/pglite";
-import { planObservation } from "@/lib/game-sync/plan";
-import { collectObservations, parseBasketballGame, parseBasketballIndex, parsePbaSchedule, parsePvlCards, sourceDay, sourceTime } from "@/lib/game-sync/sources";
+import { livePeriod, planObservation } from "@/lib/game-sync/plan";
+import { collectObservations, parseBasketballGame, parseBasketballIndex, parseGameClock, parsePbaSchedule, parsePvlCards, sourceDay, sourceTime } from "@/lib/game-sync/sources";
+import { resolveSyncBox } from "@/lib/game-sync/box";
 import type { Observation, StoredGame, SyncLink, SyncSource, SyncTeam } from "@/lib/game-sync/types";
 
 const source: SyncSource = { id: "uaap-s89-men", league: "UAAP", season_id: "uaap-s89-men", label: "UAAP Season 89 Men's Basketball", tournament_url: "https://uaap.livestats.ph/tournaments/uaap-season-89-men-s-basketball", year: 2026, starts_on: "2026-09-01", ends_on: "2027-02-28", conference_id: null, enabled: true };
@@ -136,5 +137,93 @@ test("database sync: private state, leases, atomic manual-edit protection and re
     await db.exec("RESET ROLE");
     await db.query("SELECT finish_game_sync($1,'success','{}')", [run]);
     assert.ok((await db.query<{ id: string }>("SELECT begin_game_sync() id")).rows[0].id);
+  } finally { await db.close(); }
+});
+
+test("live games: clock parsing, live scores from the scoreboard, never backwards", () => {
+  assert.deepEqual(parseGameClock("PERIOD 2 04:03 Live"), { period: 2, clock: "04:03" });
+  assert.deepEqual(parseGameClock("OT 1 2:11"), { period: 5, clock: "2:11" });
+  assert.deepEqual(parseGameClock("Halftime"), { period: 2, clock: "Halftime" });
+  assert.deepEqual(parseGameClock("Oct 24 05:00 PM"), { period: null, clock: null });
+  const live = basketballHtml("Live").replace('<a class="schedule-box" href="?game_id=29">', '<a class="schedule-box" href="?game_id=29"><div class="period">PERIOD 3 07:15</div>')
+    .replace('<div class="team_score">60', '<div class="team_score">48').replace('<div class="team_score">63', '<div class="team_score">51');
+  const ref = parseBasketballIndex(live, source.tournament_url)[0];
+  assert.equal(ref.live, true); assert.equal(ref.final, false);
+  const game = parseBasketballGame(live, ref, source);
+  assert.equal(game.status, "LIVE"); assert.equal(game.homeScore, 48); assert.equal(game.awayScore, 51);
+  assert.equal(game.period, 3); assert.equal(game.clock, "07:15");
+  const liveItem: Observation = { ...item, status: "LIVE", homeScore: 48, awayScore: 51, period: 3, clock: "07:15" };
+  const saved = planObservation(source, liveItem, teams, [fixture], []);
+  assert.equal(saved.kind, "save");
+  if (saved.kind === "save") { assert.equal(saved.game.status, "LIVE"); assert.equal(saved.game.home_score, 48); assert.equal(saved.game.quarter_or_set, 3); assert.equal(saved.game.time_remaining, "07:15"); }
+  const inProgress = { ...fixture, status: "LIVE", home_score: 48, away_score: 51 };
+  assert.equal(planObservation(source, { ...item, status: "UPCOMING", homeScore: null, awayScore: null }, teams, [inProgress], []).kind, "skip");
+  assert.equal(planObservation(source, liveItem, teams, [{ ...fixture, status: "FINAL", home_score: 60, away_score: 63 }], []).kind, "skip");
+  assert.equal(planObservation(source, { ...liveItem, homeScore: null }, teams, [fixture], []).kind, "review");
+  assert.deepEqual(livePeriod({ ...source, league: "PVL" }, { ...item, homeScore: 3, awayScore: 1 }), { quarter_or_set: 4, time_remaining: null });
+});
+
+test("a stale source alias is not a manual edit; a real edit still is", () => {
+  const final = { ...fixture, status: "FINAL", home_score: 60, away_score: 63 };
+  const stale: SyncLink = { ...link, source_key: "fixture:2026-10-18:LA SALLE:ADU", snapshot: fixture };
+  const current: SyncLink = { ...link, snapshot: final };
+  assert.equal(planObservation(source, item, teams, [final], [stale, current]).kind, "save");
+  assert.equal(planObservation(source, item, teams, [{ ...final, venue: "Edited" }], [stale, current]).kind, "review");
+});
+
+test("automatic box scores reuse roster ids and the importer's id scheme for new athletes", () => {
+  const players = [{ id: "dlsu-s89-m-cortez", person_id: "m-cortez", name: "M. Cortez", jersey_number: 11, team_id: "home", season_id: source.season_id }];
+  const row = { playerName: "M. Cortez", jersey: 11, min: "30:00", pts: 12, reb: 4, ast: 4, stl: 0, blk: 0, fgM: 5, fgA: 16 };
+  const { items, created } = resolveSyncBox([row, { ...row, playerName: "J. Newcomer", jersey: 99 }], "home", "UAAP", players);
+  assert.equal(items[0].playerId, "dlsu-s89-m-cortez");
+  assert.equal(items[1].playerId, "home-j-newcomer"); assert.equal(created.length, 1);
+  assert.equal(resolveSyncBox([{ ...row, playerName: "J. Newcomer", jersey: 99 }], "home", "UAAP", [...players, { ...players[0], id: "home-j-newcomer", person_id: "j-newcomer", name: "J. Newcomer", jersey_number: 99 }]).created.length, 0);
+});
+
+test("database sync: live progression, alias refresh and box score protection", async () => {
+  const db = new PGlite();
+  try {
+    await db.exec("CREATE ROLE anon; CREATE ROLE authenticated; CREATE ROLE service_role BYPASSRLS; CREATE PUBLICATION supabase_realtime; CREATE SCHEMA auth; CREATE FUNCTION auth.role() RETURNS text LANGUAGE sql AS $$ SELECT current_user::text $$;");
+    for (const file of (await readdir("supabase/migrations")).sort()) {
+      if (file.endsWith(".sql")) await db.exec(await readFile("supabase/migrations/" + file, "utf8"));
+    }
+    await db.exec("ALTER TABLE games ALTER COLUMN start_time DROP DEFAULT; ALTER TABLE games ALTER COLUMN start_time TYPE text USING start_time::text;");
+    await db.exec("INSERT INTO seasons(id,label,league,is_current) VALUES ('uaap-s89-men','UAAP','UAAP',true); INSERT INTO teams(id,name,short_name,league,season_id) VALUES ('home','Home','H','UAAP','uaap-s89-men'),('away','Away','A','UAAP','uaap-s89-men');");
+    await db.query("INSERT INTO game_sync_sources(id,league,season_id,label,tournament_url,year,starts_on,ends_on) VALUES ($1,'UAAP',$1,'UAAP',$2,2026,'2026-09-01','2027-02-28')", [source.id, source.tournament_url]);
+    await db.query("INSERT INTO games(id,league,season_id,home_team_id,away_team_id,status,start_time,venue,stage,is_playoff) VALUES ('existing','UAAP','uaap-s89-men','home','away','UPCOMING',$1,'Old venue','ELIMINATION',false)", [fixture.start_time]);
+    await db.exec("UPDATE game_sync_settings SET enabled=true");
+    const run = (await db.query<{ id: string }>("SELECT begin_game_sync() id")).rows[0].id;
+    const apply = (key: string, proposed: StoredGame, expected: StoredGame | null) => db.query<{ result: string }>("SELECT apply_game_sync($1,$2,$3,$4,$5) result", [run, source.id, key, proposed, expected]);
+    const box = (game: string, payload: unknown, players: unknown[] = []) => db.query<{ result: string }>("SELECT apply_game_box_score($1,$2,$3,$4) result", [run, game, payload, players]);
+    const row = (playerId: string) => ({ playerId, pts: 2, reb: 0, ast: 0, stl: 0, blk: 0, fgM: 1, fgA: 1, min: "1:00" });
+    // The schedule alias links first; then the live entry takes over.
+    await apply("fixture:a", fixture, fixture);
+    const live = { ...fixture, status: "LIVE", home_score: 20, away_score: 18, quarter_or_set: 2, time_remaining: "04:03" };
+    assert.equal((await apply("match:29", live, fixture)).rows[0].result, "updated");
+    let stored = (await db.query<{ status: string; quarter_or_set: number; time_remaining: string }>("SELECT status,quarter_or_set,time_remaining FROM games WHERE id='existing'")).rows[0];
+    assert.equal(stored.status, "LIVE"); assert.equal(stored.quarter_or_set, 2); assert.equal(stored.time_remaining, "04:03");
+    const aliases = (await db.query<{ snapshot: { status: string } }>("SELECT snapshot FROM game_sync_links ORDER BY source_key")).rows;
+    assert.deepEqual(aliases.map(a => a.snapshot.status), ["LIVE", "LIVE"]);
+    // Clock-only changes still save; schedule listings never revert a live game.
+    assert.equal((await apply("match:29", { ...live, time_remaining: "02:10" }, live)).rows[0].result, "updated");
+    assert.equal((await apply("fixture:a", fixture, live)).rows[0].result, "unchanged");
+    assert.equal((await db.query<{ status: string }>("SELECT status FROM games WHERE id='existing'")).rows[0].status, "LIVE");
+    // Live box scores refresh, and unknown athletes are added to the roster once.
+    await assert.rejects(box("existing", { home: [], away: [] }), /Invalid box/);
+    assert.equal((await box("existing", { home: [row("home-new-guy")], away: [row("p2")] }, [{ id: "home-new-guy", person_id: "new-guy", name: "New Guy", jersey_number: 7, position: "SG", team_id: "home", season_averages: {} }, { id: "evil", person_id: "x", name: "X", jersey_number: 1, position: "SG", team_id: "home" }])).rows[0].result, "updated");
+    assert.deepEqual((await db.query<{ id: string }>("SELECT id FROM players ORDER BY id")).rows.map(r => r.id), ["home-new-guy"]);
+    // Final keeps the furthest period, clears the clock and keeps refreshing the automatic box score.
+    const final = { ...live, status: "FINAL", home_score: 70, away_score: 65, quarter_or_set: 4, time_remaining: null };
+    await db.exec("UPDATE games SET quarter_or_set=5 WHERE id='existing'");
+    assert.equal((await apply("match:29", final, { ...live, time_remaining: "02:10" })).rows[0].result, "updated");
+    stored = (await db.query<{ status: string; quarter_or_set: number; time_remaining: string }>("SELECT status,quarter_or_set,time_remaining FROM games WHERE id='existing'")).rows[0];
+    assert.equal(stored.status, "FINAL"); assert.equal(stored.quarter_or_set, 5); assert.equal(stored.time_remaining, null);
+    assert.equal((await box("existing", { home: [row("a")], away: [row("b")] })).rows[0].result, "updated");
+    // A hand-imported final box score is never replaced.
+    await db.exec(`UPDATE games SET box_score='{"home":[{"playerId":"manual"}],"away":[]}' WHERE id='existing'`);
+    assert.equal((await box("existing", { home: [row("a")], away: [row("b")] })).rows[0].result, "kept");
+    await db.exec("SET ROLE anon");
+    await assert.rejects(db.query("SELECT apply_game_box_score($1,'existing','{}','[]')", [run]), /permission denied/);
+    await db.exec("RESET ROLE");
   } finally { await db.close(); }
 });

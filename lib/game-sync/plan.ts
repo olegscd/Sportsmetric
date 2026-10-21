@@ -48,6 +48,16 @@ export function sameSnapshot(game: StoredGame, snapshot: Partial<StoredGame>): b
   });
 }
 
+/** Period/clock fields for the stored game. Finals keep the last period played. */
+export function livePeriod(source: SyncSource, item: Observation): Pick<StoredGame, "quarter_or_set" | "time_remaining"> {
+  if (item.status === "LIVE") return { quarter_or_set: item.period ?? null, time_remaining: item.period ? item.clock ?? null : null };
+  if (item.status === "FINAL") {
+    const period = source.league === "PVL" ? (item.homeScore ?? 0) + (item.awayScore ?? 0) : Math.max(4, item.period ?? 4);
+    return { quarter_or_set: period, time_remaining: null };
+  }
+  return {};
+}
+
 export function planObservation(source: SyncSource, item: Observation, teams: SyncTeam[], games: StoredGame[], links: SyncLink[], siblings: Observation[] = []): SyncDecision {
   if (item.day < source.starts_on || item.day > source.ends_on) return { kind: "review", reason: "Source date falls outside the configured competition." };
   if (item.startTime && (!Number.isFinite(Date.parse(item.startTime)) || philippineDay(item.startTime) !== item.day)) {
@@ -57,6 +67,11 @@ export function planObservation(source: SyncSource, item: Observation, teams: Sy
   const away = matchTeam(item.away, teams, source.league);
   if (!home || !away || home.id === away.id) return { kind: "review", reason: "Teams could not be matched uniquely. Check team names and aliases." };
   if (home.season_id !== source.season_id || away.season_id !== source.season_id) return { kind: "review", reason: "Team belongs to another season." };
+  if (item.status === "LIVE") {
+    const scores = [item.homeScore, item.awayScore];
+    if (!scores.every(n => Number.isInteger(n) && n !== null && n >= 0)) return { kind: "review", reason: "Live scores are missing or invalid." };
+    if (Math.max(...scores as number[]) > (source.league === "PVL" ? 3 : 250)) return { kind: "review", reason: "Live score needs review." };
+  }
   if (item.status === "FINAL") {
     const scores = [item.homeScore, item.awayScore];
     if (!scores.every(n => Number.isInteger(n) && n !== null && n >= 0) || item.homeScore === item.awayScore) {
@@ -100,23 +115,31 @@ export function planObservation(source: SyncSource, item: Observation, teams: Sy
   if (previous && (previous.home_team_id !== home.id && previous.away_team_id !== home.id || previous.home_team_id !== away.id && previous.away_team_id !== away.id)) {
     return { kind: "review", gameId: previous.id, reason: "The source changed the teams of a linked fixture." };
   }
-  if (previous && links.some(l => l.game_id === previous!.id && l.snapshot && !sameSnapshot(previous!, l.snapshot))) {
+  // A fixture usually has several source aliases (schedule entry, live/result
+  // entry). Only a snapshot that matches none of the current values signals a
+  // manual edit; an alias that simply has not been refreshed yet does not.
+  const snapshots = previous ? links.filter(l => l.game_id === previous!.id && l.snapshot) : [];
+  if (previous && snapshots.length && !snapshots.some(l => sameSnapshot(previous!, l.snapshot!))) {
     return { kind: "review", gameId: previous.id, reason: "This fixture was edited manually. Automatic changes are held for review." };
   }
+  // A schedule listing never takes a game that is already in progress back to upcoming.
+  if (previous?.status === "LIVE" && item.status === "UPCOMING") return { kind: "skip", reason: "Game is already live." };
   if (!previous && !item.startTime) return { kind: "review", reason: "Result has no confirmed start time and no matching scheduled fixture." };
   const reversed = previous?.home_team_id === away.id;
+  const scored = item.status !== "UPCOMING";
   const game: StoredGame = {
     id: previous?.id ?? "sync-" + createHash("sha256").update(source.id + ":" + item.key).digest("hex").slice(0, 24),
     league: source.league, season_id: source.season_id,
     home_team_id: previous?.home_team_id ?? home.id, away_team_id: previous?.away_team_id ?? away.id,
-    home_score: item.status === "FINAL" ? (reversed ? item.awayScore! : item.homeScore!) : previous?.home_score ?? 0,
-    away_score: item.status === "FINAL" ? (reversed ? item.homeScore! : item.awayScore!) : previous?.away_score ?? 0,
+    home_score: scored ? (reversed ? item.awayScore! : item.homeScore!) : previous?.home_score ?? 0,
+    away_score: scored ? (reversed ? item.homeScore! : item.awayScore!) : previous?.away_score ?? 0,
     status: item.status, start_time: item.startTime ?? previous!.start_time,
     venue: item.venue || previous?.venue || null,
     stage: previous?.stage ?? item.stage, is_playoff: previous?.is_playoff ?? item.stage !== "ELIMINATION",
+    ...livePeriod(source, item),
   };
   if (previous?.status === "FINAL") {
-    if (item.status !== "FINAL") return { kind: "skip", reason: "A final result cannot revert to upcoming." };
+    if (item.status !== "FINAL") return { kind: "skip", reason: "A final result cannot revert." };
     if (previous.home_score !== game.home_score || previous.away_score !== game.away_score) return { kind: "review", gameId: previous.id, reason: "Official scores differ from a published final. Review the correction." };
     // Link existing correct results without altering previously reviewed metadata.
     return { kind: "save", game: previous, previous };

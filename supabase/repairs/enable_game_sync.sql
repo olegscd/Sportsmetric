@@ -40,6 +40,24 @@ SELECT cron.schedule('sportsmetric-game-sync','*/15 * * * *',$job$
   ) WHERE EXISTS (SELECT 1 FROM public.game_sync_settings WHERE id AND enabled);
 $job$);
 
+-- Game-time cadence: every 2 minutes, but only while a game is live or due to
+-- tip off (10 minutes before to 4 hours after its start, within 8 hours for a
+-- game still marked live). The run lease prevents overlap with the 15-minute job.
+SELECT cron.schedule('sportsmetric-game-sync-live','*/2 * * * *',$job$
+  SELECT net.http_post(
+    url := (SELECT base_url FROM public.game_sync_settings WHERE id AND enabled) || '/api/cron/game-sync',
+    headers := jsonb_build_object('Content-Type','application/json','Authorization','Bearer ' || (SELECT token FROM public.game_sync_settings WHERE id AND enabled)),
+    body := '{}'::jsonb,
+    timeout_milliseconds := 60000
+  ) WHERE EXISTS (SELECT 1 FROM public.game_sync_settings WHERE id AND enabled)
+    AND EXISTS (
+      SELECT 1 FROM public.games g
+      JOIN public.game_sync_sources s ON s.season_id=g.season_id AND s.league=g.league AND s.enabled
+      JOIN public.seasons season ON season.id=g.season_id AND season.is_active
+      WHERE (g.status='LIVE' AND g.start_time::timestamptz > now()-interval '8 hours')
+         OR (g.status='UPCOMING' AND g.start_time::timestamptz BETWEEN now()-interval '4 hours' AND now()+interval '10 minutes'));
+$job$);
+
 -- Independent freshness check: HTTP dispatch can succeed while the app fails.
 -- This writes review items even if the deployed app never starts its job.
 SELECT cron.schedule('sportsmetric-game-sync-health','7,22,37,52 * * * *',$job$
@@ -53,4 +71,4 @@ SELECT cron.schedule('sportsmetric-game-sync-health','7,22,37,52 * * * *',$job$
   AND EXISTS (SELECT 1 FROM public.game_sync_settings WHERE id AND last_started_at>=now()-interval '45 minutes');
 $job$);
 
-SELECT jobname,schedule,active FROM cron.job WHERE jobname IN ('sportsmetric-game-sync','sportsmetric-game-sync-health','sportsmetric-pba-schedule-fetch','sportsmetric-pba-schedule-cache');
+SELECT jobname,schedule,active FROM cron.job WHERE jobname IN ('sportsmetric-game-sync','sportsmetric-game-sync-live','sportsmetric-game-sync-health','sportsmetric-pba-schedule-fetch','sportsmetric-pba-schedule-cache');

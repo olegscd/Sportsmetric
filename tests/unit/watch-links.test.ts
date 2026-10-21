@@ -69,3 +69,12 @@ test("link columns survive regular game and season saves", async () => {
     await db.close();
   }
 });
+
+test("season Watch links reject single videos so games never inherit another game's stream", () => {
+  for (const url of ["https://www.youtube.com/watch?v=tgrcmoLHyKY&list=PL1", "https://youtu.be/tgrcmoLHyKY", "https://www.youtube.com/live/abc123"]) {
+    assert.throws(() => normalizeSeasonLinks({ watchUrl: url }), /single video/);
+  }
+  for (const url of ["https://www.youtube.com/channel/UCXDG9ue-emCN8Ad3h7lERqQ/streams", "https://www.youtube.com/@OneSportsPHL/live", "https://www.pilipinaslive.com/"]) {
+    assert.equal(normalizeSeasonLinks({ watchUrl: url }).watchUrl, new URL(url).toString());
+  }
+});
