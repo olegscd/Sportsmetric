@@ -227,3 +227,20 @@ test("database sync: live progression, alias refresh and box score protection", 
     await db.exec("RESET ROLE");
   } finally { await db.close(); }
 });
+
+test("namesakes on one team never share a player id, and jersey-only matches must agree on surname", () => {
+  const roster = [
+    { id: "mag-2", person_id: "j-gomez-de-liano", name: "J. Gomez de Liano", jersey_number: 2, team_id: "mag", season_id: "s" },
+    { id: "mag-13", person_id: "r-other", name: "R. Other", jersey_number: 13, team_id: "mag", season_id: "s" },
+  ];
+  const row = { playerName: "J. Gomez de Liano", jersey: 13, min: "10:00", pts: 0, reb: 1, ast: 3, stl: 0, blk: 0, fgM: 0, fgA: 2 };
+  // Source order puts the unrostered #13 first; #2 must still get the roster id.
+  const { items, created } = resolveSyncBox([row, { ...row, jersey: 2, pts: 5 }], "mag", "PBA", roster);
+  assert.equal(items[1].playerId, "mag-2");
+  assert.notEqual(items[0].playerId, "mag-2"); assert.notEqual(items[0].playerId, "mag-13");
+  assert.equal(new Set(items.map(i => i.playerId)).size, 2);
+  assert.equal(created.length, 1); assert.equal(created[0].jersey_number, 13);
+  // Re-running with the new athlete on the roster reuses the same id.
+  const again = resolveSyncBox([row, { ...row, jersey: 2 }], "mag", "PBA", [...roster, { id: created[0].id, person_id: created[0].person_id, name: created[0].name, jersey_number: 13, team_id: "mag", season_id: "s" }]);
+  assert.equal(again.items[0].playerId, created[0].id); assert.equal(again.created.length, 0);
+});

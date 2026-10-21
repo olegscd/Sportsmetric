@@ -86,7 +86,7 @@ export function BoxScoreTable({
             </tr>
           </thead>
           <tbody>
-            {items.map((item) => {
+            {items.map((item, idx) => {
               const player =
                 players.find((p) => p.id === item.playerId) ||
                 players.find((p) => p.personId && item.playerId.endsWith(p.personId));
@@ -108,7 +108,7 @@ export function BoxScoreTable({
               const isLibero = player?.position === "L" || Boolean(item.is_libero);
 
               return (
-                <tr key={item.playerId} className="transition-colors hover:bg-elevated/50">
+                <tr key={`${item.playerId}-${idx}`} className="transition-colors hover:bg-elevated/50">
                   <Td sticky className="w-10 px-2 text-center text-xs font-medium text-muted">
                     {jerseyNum}
                   </Td>
@@ -153,7 +153,9 @@ export function BoxScoreTable({
         </thead>
         <tbody>
           {items.map((item, idx) => {
-            const itemKey = item.playerId || `box-${idx}`;
+            // Row position keeps keys unique even if two rows share a player id;
+            // duplicate keys make React append rows on every live refresh.
+            const itemKey = `${item.playerId || "box"}-${idx}`;
             const player =
               (item.playerId ? players.find((p) => p.id === item.playerId) : undefined) ||
               (item.playerId ? players.find((p) => p.personId && item.playerId.endsWith(p.personId)) : undefined);
