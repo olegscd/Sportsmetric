@@ -16,11 +16,12 @@ import { formatOrdinal, formatRecord } from "@/lib/utils";
 import { ChevronLeft, Shield } from "lucide-react";
 import Link from "next/link";
 import { TeamRoster } from "./TeamRoster";
+import { TeamSchedule } from "./TeamSchedule";
 import { TeamStatsTable } from "./TeamStatsTable";
 
 export function TeamDetailView({ id }: { id: string }) {
   useSportsScope(`team=${encodeURIComponent(id)}`);
-  const { teams, players, seasons, currentSeasonId, getStandings, loading, error, refreshData } = useSportsData();
+  const { teams, players, games, seasons, currentSeasonId, getStandings, loading, error, refreshData } = useSportsData();
   const team = teams.find((t) => t.id === id);
 
   if (!team) {
@@ -118,6 +119,11 @@ export function TeamDetailView({ id }: { id: string }) {
           className="mb-3"
         />
         <StandingsTable standings={standings} highlightTeamId={team.id} isOldSeason={isOldSeason} />
+      </section>
+
+      <section>
+        <SectionHeading level={2} title="Schedule & Results" className="mb-3" />
+        <TeamSchedule team={team} games={games} />
       </section>
 
       <section>

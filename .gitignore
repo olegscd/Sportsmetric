@@ -78,3 +78,7 @@ __pycache__/
 
 # Supabase CLI temp files
 supabase/.temp/
+
+# Local scratch work and raw PVL stat exports (also excluded from output tracing in next.config.ts)
+scratch/
+PVL stats/

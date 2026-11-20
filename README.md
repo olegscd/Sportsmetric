@@ -80,8 +80,10 @@ triggers, one current season per league, and versioned archive division rows.
 Existing admin cookies are invalidated; sign in again after migration. Archive
 writes and admin sessions require the service-role key, including locally.
 The old archive blob and local JSON remain read fallbacks; writes no longer
-fall back to disk. Expired session rows can be periodically deleted with
-`DELETE FROM public.admin_sessions WHERE expires_at <= now()`.
+fall back to disk. To delete expired session rows automatically, run the
+repeatable [`supabase/repairs/cleanup_expired_sessions.sql`](supabase/repairs/cleanup_expired_sessions.sql)
+in the SQL editor; it installs a daily `pg_cron` job
+(`sportsmetric-admin-session-cleanup`) and clears any existing backlog.
 
 Seed the demo dataset (requires the service-role key):
 

@@ -11,7 +11,7 @@ export default async function UpdaterPage() {
   return <main className="mx-auto w-full max-w-5xl space-y-6 px-4 py-8 md:px-8">
     <Link href="/admin" className="text-sm text-primary underline">Back to workspace</Link>
     <div><p className="text-xs uppercase tracking-widest text-muted">Sportsmetric / Workspace</p><h1 className="mt-2 text-3xl font-bold">Game updater</h1>
-      <p className="mt-3 max-w-2xl text-sm leading-6 text-muted">Official schedules and confirmed final scores, checked every 15 minutes. Player box scores stay with the existing report importer.</p></div>
+      <p className="mt-3 max-w-2xl text-sm leading-6 text-muted">Official schedules, live scores and confirmed final scores, checked every 15 minutes and every 2 minutes during games. Box scores sync automatically for live and final games; manually imported final reports are never replaced.</p></div>
     <GameSyncPanel />
   </main>;
 }
