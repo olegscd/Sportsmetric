@@ -8,9 +8,13 @@ test("game cards and details use a single game-specific replay or livestream", a
       id: "2025-26", watch_url: "https://season.example/watch", watch_label: "Season broadcaster",
       tickets_url: "https://season.example/tickets", tickets_label: "Season tickets",
     } });
+    // Tickets are hidden once the scheduled start passes, so the upcoming game
+    // must start in the future whenever this test runs.
+    const futureStart = new Date(Date.now() + 7 * 86400000).toISOString();
     for (const status of ["UPCOMING", "LIVE", "FINAL"] as const) {
       await request.post(`${fixtureServer}/rest/v1/games`, { data: {
-        id: "2025-26-g1", status, watch_url: "https://stream.example/current-game",
+        id: "2025-26-g1", status, start_time: status === "UPCOMING" ? futureStart : "2026-10-18T10:00:00Z",
+        watch_url: "https://stream.example/current-game",
         replay_url: "https://replay.example/this-game", replay_kind: "full", replay_label: "Official channel",
       } });
       await page.goto("/");

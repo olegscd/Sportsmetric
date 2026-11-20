@@ -1,6 +1,6 @@
 import type { League, TournamentStage } from "@/types/sports";
 import * as cheerio from "cheerio";
-import { extractText } from "unpdf";
+import { extractText, getDocumentProxy } from "unpdf";
 
 type CheerioSelection = ReturnType<cheerio.CheerioAPI>;
 
@@ -55,7 +55,6 @@ export interface ExtractedGamePayload {
 const PBA_TOURNAMENTS = [
   "pba-50th-season-governors-cup",
   "pba-50th-season-commissioner-s-cup",
-  "pba-50th-season-philippine-cup",
   "pba-49th-season-philippine-cup",
 ];
 
@@ -324,7 +323,7 @@ function formatPvlPlayerName(raw: string): string {
   for (const part of parts) {
     if (part === "L" || part === "Captain" || part === "C") continue;
     if (part === part.toUpperCase() && part.length > 1) {
-      lastParts.push(part.charAt(0) + part.slice(1).toLowerCase());
+      lastParts.push(part.toLowerCase().replace(/(^|[-'’])(\p{L})/gu, (_, sep: string, ch: string) => sep + ch.toUpperCase()));
     } else {
       firstParts.push(part);
     }
@@ -336,6 +335,166 @@ function formatPvlPlayerName(raw: string): string {
   return parts.join(" ");
 }
 
+/** One positioned text run from a PDF page (PDF units, y grows upward). */
+export interface PvlTextItem {
+  str: string;
+  x: number;
+  y: number;
+}
+
+export interface PvlLayoutPlayer {
+  jersey: number;
+  name: string;
+  isLibero: boolean;
+  pts: number;
+}
+
+export interface PvlLayoutTeam {
+  code: string;
+  name: string;
+  /** Sets won, when the set-score band could be read. */
+  sets: number | null;
+  players: PvlLayoutPlayer[];
+}
+
+const PVL_ROW_TOLERANCE = 2;
+const PVL_SPLIT_X = 300;
+const PVL_PTS_X = { left: [275, 298], right: [545, 570] } as const;
+const PVL_SET_BAND_Y = [705, 725] as const;
+const PVL_TEAM_HEADER = /^([A-Z0-9]{2,6})\s*•\s*(.+?)\s*$/;
+/** Name tokens: letters (incl. accented), with ".", ",", "-", "'" kept. */
+const PVL_NAME_TOKEN = /^[\p{L}][\p{L}.,'’-]*$/u;
+
+/** Groups text items into rows whose baselines are within ±2 units. Top row first. */
+export function groupPvlRows(items: readonly PvlTextItem[]): PvlTextItem[][] {
+  const sorted = items.filter(i => i.str.trim()).slice().sort((a, b) => b.y - a.y || a.x - b.x);
+  const rows: { y: number; items: PvlTextItem[] }[] = [];
+  for (const item of sorted) {
+    const row = rows.find(r => Math.abs(r.y - item.y) <= PVL_ROW_TOLERANCE);
+    if (row) row.items.push(item);
+    else rows.push({ y: item.y, items: [item] });
+  }
+  return rows.map(r => r.items.sort((a, b) => a.x - b.x));
+}
+
+/** Splits each item into whitespace tokens, spreading x across the run so columns stay comparable. */
+function pvlTokens(row: readonly PvlTextItem[]): PvlTextItem[] {
+  const tokens: PvlTextItem[] = [];
+  for (const item of row) {
+    const parts = item.str.trim().split(/\s+/).filter(Boolean);
+    // Only the first token keeps the run's x; later ones get a tiny offset to keep order.
+    parts.forEach((str, index) => tokens.push({ str, x: item.x + index * 0.01, y: item.y }));
+  }
+  return tokens;
+}
+
+function parsePvlSide(rows: PvlTextItem[][], side: "left" | "right"): Omit<PvlLayoutTeam, "sets"> | null {
+  const inSide = (i: PvlTextItem) => (side === "left" ? i.x < PVL_SPLIT_X : i.x >= PVL_SPLIT_X);
+  const [ptsMin, ptsMax] = PVL_PTS_X[side];
+  let header: { code: string; name: string } | null = null;
+  const players: PvlLayoutPlayer[] = [];
+  for (const fullRow of rows) {
+    const row = fullRow.filter(inSide);
+    if (!row.length) continue;
+    const text = row.map(i => i.str.trim()).join(" ").replace(/\s+/g, " ").trim();
+    if (!header) {
+      const match = text.match(PVL_TEAM_HEADER);
+      if (match && match[1] !== "VOLLEYBALL") {
+        // Header rows may also carry set column numbers ("HSH • PLDT HIGH SPEED HITTERS 1 2 3").
+        const name = match[2].replace(/(?:\s+\d+)+$/, "").trim();
+        header = { code: match[1], name: KNOWN_PVL_TEAMS[match[1]] || name };
+      }
+      continue;
+    }
+    if (/^(Coach|Assistant|Referees?|Team Manager)\b/i.test(text)) break;
+
+    // Points come only from the Pts column of this exact row; a blank cell is 0.
+    const ptsItem = row.find(i => i.x >= ptsMin && i.x <= ptsMax && /^\d{1,3}$/.test(i.str.trim()));
+    const tokens = pvlTokens(row.filter(i => i !== ptsItem && i.x < ptsMin));
+    if (tokens.length < 2 || !/^\d{1,2}$/.test(tokens[0].str)) continue;
+    const nameParts: string[] = [];
+    let isLibero = false;
+    for (const token of tokens.slice(1)) {
+      if (token.str === "L") { isLibero = true; continue; }
+      if (token.str === "C" || /^\(?C\)?$/.test(token.str)) continue;
+      if (!PVL_NAME_TOKEN.test(token.str)) break;
+      // A libero badge printed against a name part, e.g. "Shiela MaeL".
+      if (/\p{Ll}L$/u.test(token.str)) { isLibero = true; nameParts.push(token.str.slice(0, -1)); continue; }
+      nameParts.push(token.str);
+    }
+    if (!nameParts.length) continue;
+    players.push({ jersey: Number(tokens[0].str), name: nameParts.join(" "), isLibero, pts: ptsItem ? Number(ptsItem.str.trim()) : 0 });
+  }
+  return header ? { ...header, players } : null;
+}
+
+/** Reads sets won from the score band: each digit belongs to the nearest team code in its row. */
+function parsePvlSetScores(rows: PvlTextItem[][], codes: string[]): Record<string, number> {
+  const scores: Record<string, number> = {};
+  for (const row of rows) {
+    const y = row[0]?.y ?? 0;
+    if (y < PVL_SET_BAND_Y[0] || y > PVL_SET_BAND_Y[1]) continue;
+    const tokens = pvlTokens(row);
+    const codeTokens = tokens.filter(t => codes.includes(t.str));
+    if (!codeTokens.length) continue;
+    for (const digit of tokens.filter(t => /^[0-3]$/.test(t.str))) {
+      const nearest = codeTokens.reduce((best, t) => (Math.abs(t.x - digit.x) < Math.abs(best.x - digit.x) ? t : best));
+      if (scores[nearest.str] === undefined) scores[nearest.str] = Number(digit.str);
+    }
+  }
+  return scores;
+}
+
+/**
+ * Coordinate-based reading of a PVL match report page: left team (x < 300) and
+ * right team (x >= 300), each player's jersey, name, libero badge and the Pts
+ * cell of that exact row, plus the set score band. Returns null when the page
+ * does not have two team sections.
+ */
+export function parsePvlReportLayout(items: readonly PvlTextItem[]): { left: PvlLayoutTeam; right: PvlLayoutTeam } | null {
+  const rows = groupPvlRows(items);
+  const left = parsePvlSide(rows, "left");
+  const right = parsePvlSide(rows, "right");
+  if (!left || !right || left.code === right.code) return null;
+  const sets = parsePvlSetScores(rows, [left.code, right.code]);
+  return {
+    left: { ...left, sets: sets[left.code] ?? null },
+    right: { ...right, sets: sets[right.code] ?? null },
+  };
+}
+
+async function readPvlLayout(pdf: Awaited<ReturnType<typeof getDocumentProxy>>) {
+  for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber++) {
+    const page = await pdf.getPage(pageNumber);
+    const content = await page.getTextContent();
+    const items: PvlTextItem[] = [];
+    for (const item of content.items) {
+      if (!("str" in item) || !item.str.trim()) continue;
+      items.push({ str: item.str, x: item.transform[4], y: item.transform[5] });
+    }
+    const layout = parsePvlReportLayout(items);
+    if (layout && layout.left.players.length && layout.right.players.length) return layout;
+  }
+  return null;
+}
+
+function pvlLayoutRows(players: PvlLayoutPlayer[]): ExtractedBoxRow[] {
+  return players.map(p => ({
+    playerName: formatPvlPlayerName(p.name),
+    jersey: p.jersey,
+    min: "Sets",
+    pts: p.pts,
+    reb: 0,
+    ast: 0,
+    stl: 0,
+    blk: 0,
+    to: 0,
+    pf: 0,
+    fgM: p.pts,
+    fgA: p.pts,
+  }));
+}
+
 export async function parseNativePvlPdf(
   buffer: Uint8Array,
   stage: TournamentStage = "ELIMINATION",
@@ -343,7 +502,13 @@ export async function parseNativePvlPdf(
   rawUrl?: string
 ): Promise<ExtractedGamePayload | null> {
   try {
-    const { text } = await extractText(buffer);
+    const pdf = await getDocumentProxy(buffer);
+    const { text } = await extractText(pdf);
+    // Positioned text keeps each row's names and points together.
+    const layout = await readPvlLayout(pdf).catch(error => {
+      console.error("[PVL PDF layout]:", error);
+      return null;
+    });
     const rawText = Array.isArray(text) ? text.join("\n") : String(text || "");
     if (!rawText.trim()) return null;
 
@@ -518,8 +683,24 @@ export async function parseNativePvlPdf(
       return players;
     }
 
-    const homePlayers = extractRoster(codeA);
-    const awayPlayers = extractRoster(codeB);
+    let homePlayers: ExtractedBoxRow[];
+    let awayPlayers: ExtractedBoxRow[];
+    if (layout) {
+      codeA = layout.left.code;
+      nameA = layout.left.name;
+      codeB = layout.right.code;
+      nameB = layout.right.name;
+      if (layout.left.sets !== null && layout.right.sets !== null) {
+        scoreA = layout.left.sets;
+        scoreB = layout.right.sets;
+      }
+      homePlayers = pvlLayoutRows(layout.left.players);
+      awayPlayers = pvlLayoutRows(layout.right.players);
+    } else {
+      // Older or unusual sheets without positioned text use the flattened reader.
+      homePlayers = extractRoster(codeA);
+      awayPlayers = extractRoster(codeB);
+    }
 
     return {
       league: "PVL",

@@ -79,34 +79,55 @@ export function parseGameClock(text: string): { period: number | null; clock: st
   return { period, clock: period ? clock : null };
 }
 
+type CheerioRoot = ReturnType<typeof cheerio.load>;
+
+/** Reads one official match card. */
+function parseBasketballCard($: CheerioRoot, el: Parameters<CheerioRoot>[0], url: string): BasketballRef {
+  const card = $(el);
+  const link = new URL(card.attr("href")!, url);
+  if (link.origin !== new URL(url).origin || link.pathname !== new URL(url).pathname) throw new Error("Unexpected tournament link in the official schedule.");
+  const id = link.searchParams.get("game_id");
+  if (!id || !/^\d+$/.test(id)) throw new Error("Official match ID is missing.");
+  const sides = card.find(".scheduled-team");
+  if (sides.length !== 2) throw new Error("Official match teams are missing.");
+  const names = sides.map((_, side) => clean($(side).find(".team").text())).get();
+  const scores = sides.map((_, side) => {
+    const clone = $(side).clone(); clone.find(".team").remove();
+    const text = clean(clone.text()); return /^\d+$/.test(text) ? +text : -1;
+  }).get();
+  const details = clean(card.find(".schedule-details").text());
+  const final = /^final$/i.test(details);
+  // Everything on the card except the two team blocks carries the game state.
+  const state = card.clone(); state.find(".scheduled-team").remove();
+  const stateText = clean(state.text());
+  const { period, clock } = parseGameClock(stateText);
+  const live = !final && (/\blive\b/i.test(stateText) || period !== null);
+  return { key: "match:" + id, url: link.toString(), home: names[0], away: names[1], final, live, period, clock, homeScore: scores[0] >= 0 ? scores[0] : null, awayScore: scores[1] >= 0 ? scores[1] : null };
+}
+
 export function parseBasketballIndex(html: string, url: string): BasketballRef[] {
   const $ = cheerio.load(html);
   const refs: BasketballRef[] = [];
-  $("a.schedule-box[href]").each((_, el) => {
-    const card = $(el);
-    const link = new URL(card.attr("href")!, url);
-    if (link.origin !== new URL(url).origin || link.pathname !== new URL(url).pathname) throw new Error("Unexpected tournament link in the official schedule.");
-    const id = link.searchParams.get("game_id");
-    if (!id || !/^\d+$/.test(id)) throw new Error("Official match ID is missing.");
-    const sides = card.find(".scheduled-team");
-    if (sides.length !== 2) throw new Error("Official match teams are missing.");
-    const names = sides.map((_, side) => clean($(side).find(".team").text())).get();
-    const scores = sides.map((_, side) => {
-      const clone = $(side).clone(); clone.find(".team").remove();
-      const text = clean(clone.text()); return /^\d+$/.test(text) ? +text : -1;
-    }).get();
-    const details = clean(card.find(".schedule-details").text());
-    const final = /^final$/i.test(details);
-    // Everything on the card except the two team blocks carries the game state.
-    const state = card.clone(); state.find(".scheduled-team").remove();
-    const stateText = clean(state.text());
-    const { period, clock } = parseGameClock(stateText);
-    const live = !final && (/\blive\b/i.test(stateText) || period !== null);
-    refs.push({ key: "match:" + id, url: link.toString(), home: names[0], away: names[1], final, live, period, clock, homeScore: scores[0] >= 0 ? scores[0] : null, awayScore: scores[1] >= 0 ? scores[1] : null });
-  });
+  $("a.schedule-box[href]").each((_, el) => { refs.push(parseBasketballCard($, el, url)); });
   if (!refs.length) throw new Error("No official match cards found. The source may have changed.");
   if (new Set(refs.map(r => r.key)).size !== refs.length) throw new Error("Official source contains duplicate match IDs.");
   return refs;
+}
+
+/**
+ * Reads only the card for one match ID from an already-loaded page, instead of
+ * re-parsing every card on each fetched game page.
+ */
+function findBasketballCard($: CheerioRoot, url: string, key: string): BasketballRef | undefined {
+  const id = key.replace(/^match:/, "");
+  const matches: BasketballRef[] = [];
+  $("a.schedule-box[href]").each((_, el) => {
+    let gameId: string | null = null;
+    try { gameId = new URL($(el).attr("href")!, url).searchParams.get("game_id"); } catch { return; }
+    if (gameId === id) matches.push(parseBasketballCard($, el, url));
+  });
+  if (matches.length > 1) throw new Error("Official source contains duplicate match IDs.");
+  return matches[0];
 }
 
 export function parseBasketballGame(html: string, ref: BasketballRef, source: SyncSource): Observation {
@@ -123,7 +144,7 @@ export function parseBasketballGame(html: string, ref: BasketballRef, source: Sy
   if (new Date(day).toISOString().slice(0, 10) !== day) throw new Error("Invalid official match date.");
   // Confirm the fetched page still labels this exact ID final. The importer
   // accepts a caller-supplied status, so it cannot establish finality itself.
-  const current = parseBasketballIndex(html, source.tournament_url).find(r => r.key === ref.key);
+  const current = findBasketballCard($, source.tournament_url, ref.key);
   if (!current || current.home !== ref.home || current.away !== ref.away || current.final !== ref.final) throw new Error("Official match changed during this check; retry next run.");
   const selectedHome = clean($("#scoreboard .team-0 .team_code").text());
   const selectedAway = clean($("#scoreboard .team-1 .team_code").text());
@@ -218,6 +239,22 @@ export function parsePvlCards(html: string, source: SyncSource, final: boolean):
   return items;
 }
 
+const GAME_PAGE_CONCURRENCY = 4;
+
+/** Maps items with at most `limit` calls in flight, preserving input order. */
+export async function mapWithConcurrency<T, R>(items: readonly T[], limit: number, fn: (item: T, index: number) => Promise<R>): Promise<R[]> {
+  const results = new Array<R>(items.length);
+  let next = 0;
+  const worker = async () => {
+    while (next < items.length) {
+      const index = next++;
+      results[index] = await fn(items[index], index);
+    }
+  };
+  await Promise.all(Array.from({ length: Math.min(Math.max(1, limit), items.length) }, worker));
+  return results;
+}
+
 export async function collectObservations(source: SyncSource, links: SyncLink[], now: Date, signal?: AbortSignal, cachedPba?: () => Promise<string | null>): Promise<{ items: Observation[]; warnings: string[] }> {
   const read = (url: string, init: RequestInit = {}) => fetchSource(url, { ...init, signal });
   const warnings: string[] = [];
@@ -246,12 +283,18 @@ export async function collectObservations(source: SyncSource, links: SyncLink[],
     const lb = links.find(l => l.source_id === source.id && l.source_key === b.key);
     return (b.live ? 1 : 0) - (a.live ? 1 : 0) || (la ? 1 : 0) - (lb ? 1 : 0) || Date.parse(la?.last_checked_at ?? "1970-01-01") - Date.parse(lb?.last_checked_at ?? "1970-01-01");
   });
-  const observations: Observation[] = [];
-  for (const ref of eligible.slice(0, Math.max(4, eligible.filter(r => r.live).length + 2))) {
+  // Fetch game pages a few at a time; results keep the eligible order.
+  const selected = eligible.slice(0, Math.max(4, eligible.filter(r => r.live).length + 2));
+  const results = await mapWithConcurrency(selected, GAME_PAGE_CONCURRENCY, async ref => {
     try {
       const gameHtml = ref.url === source.tournament_url ? html : await read(ref.url);
-      observations.push(parseBasketballGame(gameHtml, ref, source));
-    } catch (error) { warnings.push(ref.key + ": " + (error instanceof Error ? error.message : String(error))); }
+      return { observation: parseBasketballGame(gameHtml, ref, source), warning: null };
+    } catch (error) { return { observation: null, warning: ref.key + ": " + (error instanceof Error ? error.message : String(error)) }; }
+  });
+  const observations: Observation[] = [];
+  for (const result of results) {
+    if (result.observation) observations.push(result.observation);
+    if (result.warning) warnings.push(result.warning);
   }
   if (source.league === "PBA") {
     try {

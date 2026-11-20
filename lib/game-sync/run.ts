@@ -18,12 +18,12 @@ function requireData<T>(result: { data: T; error: { message: string } | null }):
   return result.data;
 }
 
-async function readAll<T>(db: SupabaseClient, table: string, columns: string, seasonIds?: string[]): Promise<T[]> {
+async function readAll<T>(db: SupabaseClient, table: string, columns: string, filterIds?: string[], filterColumn = "season_id"): Promise<T[]> {
   const rows: T[] = [];
   for (let from = 0; ; from += 500) {
     let query = db.from(table).select(columns).order(table === "game_sync_links" ? "source_id" : "id");
     if (table === "game_sync_links") query = query.order("source_key");
-    if (seasonIds) query = query.in("season_id", seasonIds);
+    if (filterIds) query = query.in(filterColumn, filterIds);
     const page = requireData(await query.range(from, from + 499)) as T[];
     rows.push(...page);
     if (page.length < 500) return rows;
@@ -49,7 +49,9 @@ export async function runGameSync({ preview = false, db = getServiceSupabase(), 
     const [teams, games, links, players] = await Promise.all([
       readAll<SyncTeam>(db, "teams", "id,name,short_name,league,season_id", ids),
       readAll<StoredGame>(db, "games", RUN_FIELDS, ids),
-      readAll<SyncLink>(db, "game_sync_links", "*"),
+      // Only links for the sources being checked; the database functions still
+      // enforce paused links across every source when writing.
+      readAll<SyncLink>(db, "game_sync_links", "*", sources.map(s => s.id), "source_id"),
       readAll<SyncPlayer>(db, "players", "id,person_id,name,jersey_number,team_id,season_id", ids),
     ]);
     const boxJobs: BoxJob[] = [];

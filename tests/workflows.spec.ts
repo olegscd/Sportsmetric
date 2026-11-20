@@ -37,7 +37,7 @@ test("All Leagues shows the current season from every league in both directories
     for (const league of ["UAAP", "PBA", "PVL"]) {
       await expect(page.locator("main")).toContainText(`${league} Home`);
     }
-    await expect(page.getByText("Current season in each league", { exact: true })).toBeVisible();
+    await expect(page.getByText("Seasons in progress in each league", { exact: true })).toBeVisible();
   }
 });
 
