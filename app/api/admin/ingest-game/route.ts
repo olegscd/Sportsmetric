@@ -7,8 +7,8 @@ import { toPlayByPlayEvents } from "@/lib/play-by-play";
 import { supabase } from "@/lib/supabase";
 import { hasServiceRoleAccess } from "@/lib/supabase-admin";
 import {
+  batchUpsertPlayersInSupabase,
   upsertGameInSupabase,
-  upsertPlayerInSupabase,
 } from "@/lib/supabase-data";
 import type { BoxScoreItem, Game, League, Player, Team, TournamentStage } from "@/types/sports";
 import { NextRequest, NextResponse } from "next/server";
@@ -168,12 +168,13 @@ export async function POST(req: NextRequest) {
   const awayRoster = seasonPlayers.filter((p) => p.teamId === awayTeamMatch.id);
 
   const createdPlayers: Player[] = [];
+  // Jerseys already worn on each team this season; a newcomer whose printed
+  // number is taken is stored without one (the box row keeps it), so a single
+  // clash cannot fail the whole batch on the partial unique index.
+  const takenJerseys = new Set(seasonPlayers.filter((p) => p.jerseyNumber > 0).map((p) => `${p.teamId}|${p.jerseyNumber}`));
 
-
-  async function resolveBoxRows(rows: ExtractedBoxRow[], team: Team, roster: Player[]): Promise<BoxScoreItem[]> {
-    const result: BoxScoreItem[] = [];
-
-    for (const row of rows) {
+  function resolveBoxRows(rows: ExtractedBoxRow[], team: Team, roster: Player[]): BoxScoreItem[] {
+    return rows.map((row) => {
       const personSlug = row.playerName
         .toLowerCase()
         .replace(/[^a-z0-9]+/g, "-")
@@ -185,12 +186,13 @@ export async function POST(req: NextRequest) {
       if (!matchedPlayer && !previewOnly) {
         // A deterministic id makes re-running an import idempotent: the same
         // athlete upserts instead of creating a duplicate row every time.
-        const newPlayerId = `${team.id}-${personSlug}`.slice(0, 200);
+        const jersey = row.jersey ?? 0;
+        const jerseyKey = `${team.id}|${jersey}`;
         const newPlayer: Player = {
-          id: newPlayerId,
+          id: `${team.id}-${personSlug}`.slice(0, 200),
           personId: personSlug,
           name: row.playerName,
-          jerseyNumber: row.jersey ?? 0,
+          jerseyNumber: jersey > 0 && !takenJerseys.has(jerseyKey) ? jersey : 0,
           position: league === "PVL" ? "OH" : "SG",
           teamId: team.id,
           height: "",
@@ -210,16 +212,14 @@ export async function POST(req: NextRequest) {
           },
           rankBadges: [],
         };
-
-        const ok = await upsertPlayerInSupabase(newPlayer);
-        if (ok) {
-          createdPlayers.push(newPlayer);
-          roster.push(newPlayer);
-          matchedPlayer = newPlayer;
-        }
+        if (newPlayer.jerseyNumber > 0) takenJerseys.add(jerseyKey);
+        // Saved together below; later rows in this game already match it.
+        createdPlayers.push(newPlayer);
+        roster.push(newPlayer);
+        matchedPlayer = newPlayer;
       }
 
-      result.push({
+      return {
         playerId: matchedPlayer ? matchedPlayer.id : generateId(),
         jersey: row.jersey ?? (matchedPlayer?.jerseyNumber && matchedPlayer.jerseyNumber > 0 ? matchedPlayer.jerseyNumber : undefined),
         playerName: matchedPlayer?.name ?? row.playerName,
@@ -238,15 +238,26 @@ export async function POST(req: NextRequest) {
         ftA: row.ftA ?? 0,
         min: row.min,
         is_libero: "is_libero" in row ? Boolean(row.is_libero) : undefined,
-      });
-
-    }
-
-    return result;
+      };
+    });
   }
 
-  const mappedHomeBox = await resolveBoxRows(parsedPayload.boxScore.home, homeTeamMatch, homeRoster);
-  const mappedAwayBox = await resolveBoxRows(parsedPayload.boxScore.away, awayTeamMatch, awayRoster);
+  const mappedHomeBox = resolveBoxRows(parsedPayload.boxScore.home, homeTeamMatch, homeRoster);
+  const mappedAwayBox = resolveBoxRows(parsedPayload.boxScore.away, awayTeamMatch, awayRoster);
+
+  // One write for every athlete new to the roster, before the game that
+  // references them, so a failure never leaves box rows pointing nowhere.
+  if (createdPlayers.length > 0) {
+    let saved = false;
+    try {
+      saved = await batchUpsertPlayersInSupabase(createdPlayers);
+    } catch (err: unknown) {
+      return NextResponse.json({ error: `Failed to add new players: ${err instanceof Error ? err.message : String(err)}` }, { status: 409 });
+    }
+    if (!saved) {
+      return NextResponse.json({ error: "Failed to add new players to the roster." }, { status: 500 });
+    }
+  }
 
   // Re-use the existing fixture id when the same teams meet at the same time,
   // so re-importing updates it instead of creating a duplicate. Otherwise
