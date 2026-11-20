@@ -117,26 +117,40 @@ export function TeamDirectory() {
           const team = item.team;
           const record = { wins: item.wins, losses: item.losses };
           const pctStr = item.winPct.toFixed(3).replace(/^0/, "");
+          const rank = rankByTeamId.get(team.id);
           return (
             <Link
               key={team.id}
               href={`/teams/${team.id}`}
               className={cardClasses({
                 interactive: true,
-                className: "flex min-h-16 items-center gap-3 p-3",
+                className: "group relative flex min-h-16 items-center gap-3 overflow-hidden p-3.5",
               })}
             >
-              <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-control bg-surface-2 text-xs font-extrabold tabular-nums text-muted">
-                {rankByTeamId.get(team.id) ?? "–"}
+              <span
+                aria-hidden="true"
+                className="absolute inset-y-0 left-0 w-1 opacity-75 transition-opacity group-hover:opacity-100"
+                style={{ backgroundColor: team.accentColor }}
+              />
+              <span
+                className={
+                  rank === 1
+                    ? "ml-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-control border border-archive/40 bg-archive/15 text-xs font-extrabold tabular-nums text-archive"
+                    : rank && rank <= 4
+                      ? "ml-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-control border border-primary/30 bg-primary/10 text-xs font-extrabold tabular-nums text-foreground"
+                      : "ml-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-control bg-surface-2 text-xs font-extrabold tabular-nums text-muted"
+                }
+              >
+                {rank ?? "–"}
               </span>
               <TeamBadge team={team} size="md" />
               <span className="min-w-0 flex-1">
-                <span className="block truncate text-sm font-bold text-foreground">{team.name}</span>
+                <span className="block truncate text-sm font-bold text-foreground transition-colors group-hover:text-primary">{team.name}</span>
                 <span className="block truncate text-xs font-semibold text-muted">
                   {team.league}{seasonTagById.has(team.seasonId) ? ` · ${seasonTagById.get(team.seasonId)}` : ""} &middot; {formatRecord(record)}
                 </span>
               </span>
-              <span className="shrink-0 font-mono text-xs font-bold tabular-nums text-foreground">
+              <span className="font-display shrink-0 text-lg font-extrabold tabular-nums text-foreground">
                 {pctStr}
               </span>
             </Link>

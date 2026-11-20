@@ -31,11 +31,11 @@ export default async function NewsArticlePage({ params }: Props) {
       <JsonLd data={breadcrumbJsonLd([{ name: "News", path: "/news" }, { name: article.title, path: `/news/${article.slug}` }])} />
       <Link href="/news" className="inline-flex min-h-11 w-fit items-center gap-2 text-sm font-semibold text-muted hover:text-foreground"><ArrowLeft size={16} aria-hidden="true" />Back to news</Link>
       <article className="mx-auto w-full max-w-3xl space-y-7 pb-6">
-        <header className="space-y-5 border-b border-border pb-7">
+        <header className="scoreboard-hero space-y-5 rounded-panel border border-border/90 p-5 md:p-7">
           <div className="flex flex-wrap gap-2"><Badge tone="primary">{article.category}</Badge>{article.league && <Badge tone="outline">{article.league}</Badge>}</div>
-          <h1 className="text-3xl font-bold leading-tight tracking-tight text-foreground md:text-5xl">{article.title}</h1>
+          <h1 className="font-display text-3xl font-extrabold leading-[1.06] tracking-tight text-foreground md:text-5xl">{article.title}</h1>
           <p className="text-base leading-relaxed text-muted md:text-lg">{article.summary}</p>
-          <div className="flex flex-wrap gap-x-3 gap-y-1 text-xs text-muted"><span>By {article.author}</span><time dateTime={article.publishedAt}>{formatNewsDate(article.publishedAt)}</time></div>
+          <div className="flex flex-wrap gap-x-3 gap-y-1 border-t border-border/70 pt-3 text-xs font-medium text-muted"><span>By {article.author}</span><span aria-hidden="true">&middot;</span><time dateTime={article.publishedAt}>{formatNewsDate(article.publishedAt)}</time></div>
         </header>
         <div className="space-y-6 text-base leading-8 text-foreground/90">
           {article.paragraphs.map((paragraph, index) => <p key={index}>{paragraph}</p>)}

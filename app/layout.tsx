@@ -6,7 +6,7 @@ import { DesktopTopBar } from "@/components/layout/DesktopTopBar";
 import { SportsDataProvider } from "@/context/SportsDataContext";
 import { GameModalProvider } from "@/lib/game-modal-context";
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Barlow_Condensed, Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { headers } from "next/headers";
 import { fetchSportsData, type SupabaseDataResult } from "@/lib/supabase-data";
@@ -30,6 +30,13 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const barlowCondensed = Barlow_Condensed({
+  variable: "--font-barlow-condensed",
+  subsets: ["latin"],
+  weight: ["600", "700", "800"],
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   ...pageMetadata(SITE_TITLE, SITE_DESCRIPTION, "/"),
   metadataBase: new URL(SITE_URL),
@@ -48,9 +55,9 @@ export default async function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${barlowCondensed.variable} h-full antialiased`}
     >
-      <body className="flex min-h-full flex-col bg-bg">
+      <body className="flex min-h-full flex-col bg-bg text-foreground antialiased">
         <a href="#main-content" className="skip-link">Skip to content</a>
         {shell}
       </body>

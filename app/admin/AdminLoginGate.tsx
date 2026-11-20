@@ -24,7 +24,7 @@ export function AdminLoginGate() {
   return (
     <div className="flex min-h-dvh items-center justify-center bg-bg px-4 py-10">
       <div className="w-full max-w-sm">
-        <div className="rounded-panel border border-border bg-surface p-6 shadow-modal">
+        <div className="scoreboard-hero rounded-panel border border-border-strong/70 p-6 shadow-modal">
           <div className="mb-5 text-center">
             <div className="mx-auto mb-3 flex h-11 w-11 items-center justify-center rounded-full bg-primary/15 text-primary">
               <Lock size={18} aria-hidden="true" />

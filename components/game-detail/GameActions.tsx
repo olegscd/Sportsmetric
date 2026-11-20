@@ -13,7 +13,7 @@ export function GameActions({ game, status, season }: { game: Game; status: Game
     {actions.map(action => {
       const Icon = ICONS[action.kind];
       return <a key={action.kind} href={action.url} target="_blank" rel="nofollow noopener noreferrer"
-        className="inline-flex min-h-8 items-center gap-1.5 rounded-control px-2 text-xs font-semibold text-foreground transition-colors hover:bg-surface-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
+        className="inline-flex min-h-8 items-center gap-1.5 rounded-control border border-border/80 bg-surface/80 px-2.5 text-xs font-semibold text-foreground transition-colors hover:border-border-strong hover:bg-elevated focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
         <Icon size={14} aria-hidden="true" className="text-primary" />
         {status === "LIVE" ? "Livestream on" : VERBS[action.kind]}{action.label ? ` ${action.label}` : ""}
         {action.detail && <span className="font-normal text-muted">· {action.detail}</span>}

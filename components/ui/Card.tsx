@@ -9,9 +9,9 @@ export function cardClasses({
   className?: string;
 } = {}) {
   return cn(
-    "rounded-card border border-border/80 bg-surface shadow-card",
+    "rounded-card border border-border/90 bg-surface/95 shadow-card",
     interactive &&
-      "transition-colors duration-150 ease-standard hover:border-border-strong hover:bg-surface-2/40",
+      "transition-all duration-150 ease-standard hover:border-border-strong hover:bg-elevated/65 hover:shadow-raised",
     className
   );
 }

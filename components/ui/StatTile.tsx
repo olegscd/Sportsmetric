@@ -14,9 +14,9 @@ const toneClasses: Record<StatTileTone, string> = {
 };
 
 const sizeClasses = {
-  sm: "text-sm",
-  md: "text-xl",
-  lg: "text-2xl",
+  sm: "text-base",
+  md: "text-2xl",
+  lg: "text-3xl",
 } as const;
 
 export function StatTile({
@@ -39,7 +39,7 @@ export function StatTile({
   return (
     <div
       className={cn(
-        "flex min-w-0 flex-col gap-1 rounded-card border border-border/70 bg-elevated/60 p-3",
+        "flex min-w-0 flex-col gap-1 rounded-card border border-border/80 bg-surface-2/85 p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]",
         className
       )}
       {...props}
@@ -52,7 +52,7 @@ export function StatTile({
       </div>
       <span
         className={cn(
-          "font-extrabold tabular-nums tracking-tight",
+          "font-display font-extrabold tabular-nums tracking-tight leading-none",
           sizeClasses[size],
           toneClasses[tone]
         )}

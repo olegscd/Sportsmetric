@@ -34,11 +34,17 @@ const STATUS_TABS: { value: GameStatusTab; label: string }[] = [
   { value: "FINAL", label: "Final" },
 ];
 
-const LEAGUE_CHIPS: { value: League; label: string }[] = [
-  { value: "UAAP", label: "UAAP" },
-  { value: "PBA", label: "PBA" },
-  { value: "PVL", label: "PVL" },
+const LEAGUE_CHIPS: { value: League; label: string; dotColor: string }[] = [
+  { value: "UAAP", label: "UAAP", dotColor: "var(--color-league-uaap)" },
+  { value: "PBA", label: "PBA", dotColor: "var(--color-league-pba)" },
+  { value: "PVL", label: "PVL", dotColor: "var(--color-league-pvl)" },
 ];
+
+const HERO_ACCENT: Record<League, string> = {
+  UAAP: "radial-gradient(ellipse 70% 60% at 100% 0%, rgb(204 0 0 / 0.16), transparent 62%)",
+  PBA: "radial-gradient(ellipse 70% 60% at 100% 0%, rgb(247 148 29 / 0.16), transparent 62%)",
+  PVL: "radial-gradient(ellipse 70% 60% at 100% 0%, rgb(0 102 204 / 0.18), transparent 62%)",
+};
 
 function getSmartStatusTab(
   gamesList: Game[],
@@ -221,10 +227,10 @@ export function FilterTabs() {
       return (
         <div className="flex flex-col gap-6">
           {upcomingGrouped.map((group) => (
-            <div key={group.dateKey} className="flex flex-col gap-2.5">
-              <div className="flex items-center justify-between px-1">
-                <div className="flex items-center gap-2">
-                  <span className="h-2 w-2 rounded-full bg-primary" aria-hidden="true" />
+            <div key={group.dateKey} className="flex flex-col gap-3">
+              <div className="flex items-center justify-between border-b border-border/60 pb-2 px-1">
+                <div className="flex items-center gap-2.5">
+                  <span className="h-2 w-2 rounded-full bg-primary shadow-[0_0_8px_rgba(239,68,68,0.85)]" aria-hidden="true" />
                   <h3 className="text-xs font-bold uppercase tracking-wider text-foreground">
                     {group.dateLabel}
                   </h3>
@@ -233,7 +239,7 @@ export function FilterTabs() {
                   {group.games.length} {group.games.length === 1 ? "Match" : "Matches"}
                 </Badge>
               </div>
-              <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
+              <div className="grid grid-cols-1 gap-3.5 md:grid-cols-2 lg:grid-cols-3">
                 {group.games.map((game) => (
                   <GameCard key={game.id} game={game} />
                 ))}
@@ -244,7 +250,7 @@ export function FilterTabs() {
       );
     }
     return (
-      <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-3.5 md:grid-cols-2 lg:grid-cols-3">
         {visibleGames.map((game) => (
           <GameCard key={game.id} game={game} />
         ))}
@@ -255,17 +261,18 @@ export function FilterTabs() {
   return (
     <div className={PAGE_FRAME}>
       <section
-        className="scoreboard-hero overflow-hidden rounded-panel border border-border p-5 md:p-7"
+        className="scoreboard-hero relative overflow-hidden rounded-panel border border-border/90 p-5 md:p-7"
+        style={{ backgroundImage: `${HERO_ACCENT[league]}, linear-gradient(160deg, rgb(20 28 42 / 0.95), rgb(13 19 30 / 0.98))` }}
         aria-label="Season overview"
       >
         <div className="flex flex-wrap items-start justify-between gap-5">
           <div className="min-w-0">
-            <p className="eyebrow mb-3 flex items-center gap-2 text-muted">
-              <span className="h-1.5 w-1.5 rounded-full bg-primary" aria-hidden="true" />
+            <p className="eyebrow mb-3 flex items-center gap-2 text-primary">
+              <span className="h-1.5 w-1.5 rounded-full bg-primary shadow-[0_0_8px_rgba(239,68,68,0.8)]" aria-hidden="true" />
               Philippine sports, in focus
             </p>
-            <h1 className="page-heading">Philippine sports scores and stats.</h1>
-            <p className="mt-3 text-sm text-muted">
+            <h1 className="page-heading text-foreground">Philippine sports scores and stats.</h1>
+            <p className="mt-2.5 max-w-xl text-sm leading-relaxed text-muted">
               UAAP basketball, PBA and PVL results, schedules and player statistics.
             </p>
           </div>
@@ -276,7 +283,7 @@ export function FilterTabs() {
             includeLifetime={false}
           />
         </div>
-        <div className="mt-6 grid grid-cols-3 divide-x divide-border border-t border-border pt-5">
+        <div className="mt-6 grid grid-cols-3 gap-2.5 border-t border-border/75 pt-5 sm:gap-3.5">
           {([
             { value: "LIVE", label: "Live now", icon: Radio },
             { value: "UPCOMING", label: "Upcoming", icon: CalendarDays },
@@ -286,19 +293,25 @@ export function FilterTabs() {
             return (
               <div
                 key={value}
-                className="flex min-w-0 flex-col gap-1 px-2 first:pl-0 md:flex-row md:items-center md:gap-3 md:px-6"
+                className={
+                  isLive
+                    ? "flex min-w-0 flex-col gap-1 rounded-card border border-live/35 bg-live/10 px-3 py-2.5 shadow-[0_0_24px_-12px_rgba(251,113,133,0.6)] md:flex-row md:items-center md:gap-3 md:px-4 md:py-3"
+                    : "flex min-w-0 flex-col gap-1 rounded-card border border-border/75 bg-surface-2/75 px-3 py-2.5 md:flex-row md:items-center md:gap-3 md:px-4 md:py-3"
+                }
               >
-                <Icon
-                  size={17}
-                  aria-hidden="true"
-                  className={isLive ? "text-live" : "text-muted"}
-                />
-                <span
-                  className={`text-2xl font-extrabold tabular-nums ${isLive ? "text-live" : "text-foreground"}`}
-                >
-                  {countsPending ? "–" : counts[value]}
-                </span>
-                <span className="text-2xs text-muted md:text-xs">{label}</span>
+                <div className="flex items-center gap-2">
+                  <Icon
+                    size={16}
+                    aria-hidden="true"
+                    className={isLive ? "animate-live-pulse text-live" : "text-muted"}
+                  />
+                  <span
+                    className={`font-display text-2xl font-extrabold tabular-nums leading-none md:text-3xl ${isLive ? "text-live" : "text-foreground"}`}
+                  >
+                    {countsPending ? "–" : counts[value]}
+                  </span>
+                </div>
+                <span className="truncate text-2xs font-medium text-muted md:text-xs">{label}</span>
               </div>
             );
           })}
@@ -306,19 +319,24 @@ export function FilterTabs() {
       </section>
 
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <div className="h-scroll flex gap-2 overflow-x-auto">
+        <div className="h-scroll flex gap-2 overflow-x-auto py-0.5">
           {LEAGUE_CHIPS.map((chip) => (
             <FilterChip
               key={chip.value}
               selected={league === chip.value}
               onClick={() => handleLeagueChange(chip.value)}
             >
+              <span
+                aria-hidden="true"
+                className="h-2 w-2 rounded-full"
+                style={{ backgroundColor: chip.dotColor }}
+              />
               {chip.label}
             </FilterChip>
           ))}
         </div>
         <Button
-          variant="ghost"
+          variant="outline"
           size="sm"
           onClick={() => void refreshData()}
           disabled={loading}
@@ -332,7 +350,7 @@ export function FilterTabs() {
         </Button>
       </div>
 
-      <div className="grid gap-4 rounded-card border border-border bg-surface p-4 shadow-card">
+      <div className="grid gap-4 rounded-panel border border-border/90 bg-surface/95 p-4 shadow-card sm:p-5">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="w-full min-w-0 sm:w-auto sm:min-w-80">
             <SegmentedControl

@@ -18,11 +18,11 @@ export default function ErrorPage({
 
   return (
     <div className="flex min-h-[60vh] items-center justify-center px-4 py-12">
-      <div className="w-full max-w-md rounded-panel border border-border bg-surface p-6 text-center shadow-card">
-        <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-negative/15">
+      <div className="scoreboard-hero w-full max-w-md rounded-panel border border-border-strong/70 p-7 text-center shadow-modal">
+        <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full border border-negative/30 bg-negative/15">
           <AlertTriangle size={22} className="text-negative" aria-hidden="true" />
         </div>
-        <h1 className="mt-4 text-lg font-bold text-foreground">Something went wrong</h1>
+        <h1 className="font-display mt-4 text-2xl font-extrabold tracking-tight text-foreground">Something went wrong</h1>
         <p className="mt-1 text-sm leading-relaxed text-muted">
           This page hit an unexpected error. Trying again usually resolves it.
         </p>

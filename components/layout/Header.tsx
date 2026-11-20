@@ -1,5 +1,6 @@
 "use client";
 
+import { BrandMark } from "@/components/layout/BrandMark";
 import { cn } from "@/lib/utils";
 import { ChevronLeft, Settings2 } from "lucide-react";
 
@@ -45,7 +46,7 @@ export function Header() {
   return (
     <header
       className={cn(
-        "relative z-30 flex h-14 shrink-0 items-center gap-2 border-b border-border bg-surface px-3 shadow-sm md:hidden",
+        "relative z-30 flex h-14 shrink-0 items-center gap-2.5 border-b border-border/80 bg-surface/90 px-3 backdrop-blur-xl md:hidden",
         isAdmin && "hidden"
       )}
     >
@@ -58,20 +59,17 @@ export function Header() {
           <ChevronLeft size={22} aria-hidden="true" />
         </Link>
       ) : (
-        <Link href="/" className="flex shrink-0 items-center gap-1.5">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/sportsmetric-wordmark.png"
-            alt="Sportsmetric"
-            className="h-6 w-auto object-contain"
-          />
+        <Link href="/" aria-label="Sportsmetric Home" className="flex shrink-0 items-center">
+          <BrandMark compact />
         </Link>
       )}
 
       <span
         className={cn(
-          "min-w-0 flex-1 truncate text-base font-bold text-foreground",
-          !isNested && "text-sm font-semibold text-muted"
+          "min-w-0 flex-1 truncate",
+          isNested
+            ? "text-base font-bold text-foreground"
+            : "border-l border-border/80 pl-2.5 text-xs font-semibold uppercase tracking-wider text-muted"
         )}
       >
         {label}
@@ -79,7 +77,7 @@ export function Header() {
       <Link
         href="/admin"
         aria-label="Admin workspace"
-        className="flex h-11 w-11 shrink-0 items-center justify-center rounded-control border border-border text-muted transition-colors hover:border-border-strong hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-control border border-border/90 bg-surface/80 text-muted transition-colors hover:border-border-strong hover:bg-elevated hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
       >
         <Settings2 size={16} aria-hidden="true" />
       </Link>

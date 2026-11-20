@@ -30,7 +30,8 @@ export function AthleteSpotlightCard({
 
   return <li className="flex min-w-0 flex-col gap-1.5">
     <Link href={athletePath(athlete.id)}
-      className={cn("group relative flex min-w-0 flex-1 flex-col gap-3 overflow-hidden rounded-card border bg-surface p-4 shadow-card transition-colors hover:bg-surface-2/40 hover:border-border-strong",
+      className={cn("group relative flex min-w-0 flex-1 flex-col gap-3 overflow-hidden rounded-card border bg-surface/95 p-4 shadow-card transition-all duration-150 ease-standard hover:bg-elevated/55 hover:border-border-strong hover:shadow-raised",
+        rank === 1 && "bg-gradient-to-br from-archive/[0.08] via-surface to-surface",
         RANK_BORDER[rank - 1] ?? "border-border/80")}>
       <ChevronRight size={16} aria-hidden="true"
         className="absolute right-4 top-4 text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-primary" />

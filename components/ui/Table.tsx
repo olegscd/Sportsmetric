@@ -13,7 +13,7 @@ export function TableShell({
   return (
     <div
       className={cn(
-        "h-scroll relative w-full overflow-x-auto rounded-card border border-border/80 bg-surface shadow-card",
+        "h-scroll relative w-full overflow-x-auto rounded-card border border-border/90 bg-surface/95 shadow-card",
         className
       )}
       {...props}
@@ -37,7 +37,7 @@ export function Th({
     <th
       scope="col"
       className={cn(
-        "whitespace-nowrap border-b border-border bg-surface-2 px-3 py-2.5 text-2xs font-semibold uppercase tracking-wider text-muted",
+        "whitespace-nowrap border-b border-border bg-surface-2/95 px-3 py-2.5 text-2xs font-bold uppercase tracking-wider text-muted",
         numeric && "text-right",
         sticky && "sticky left-0 z-20",
         className
@@ -62,7 +62,7 @@ export function Td({
   return (
     <td
       className={cn(
-        "border-b border-border/40 px-3 py-2.5 text-sm text-foreground",
+        "border-b border-border/45 px-3 py-2.5 text-sm text-foreground",
         numeric && "text-right tabular-nums",
         sticky && "sticky left-0 z-10 bg-surface",
         className

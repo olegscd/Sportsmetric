@@ -92,7 +92,12 @@ export function FinalFourBracket({ standings, playoffGames }: FinalFourBracketPr
   }
 
   return (
-    <div className="h-scroll overflow-x-auto rounded-panel border border-archive/20 bg-surface/50 shadow-card">
+    <div
+      className="h-scroll overflow-x-auto rounded-panel border border-archive/30 bg-surface/90 shadow-raised"
+      style={{
+        backgroundImage: "radial-gradient(ellipse 75% 55% at 50% 0%, rgb(251 191 36 / 0.08), transparent 60%)",
+      }}
+    >
       <div className="flex min-w-[20rem] flex-col gap-4 p-4 sm:p-6">
         <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border pb-3">
           <div className="flex items-center gap-2">
@@ -306,7 +311,7 @@ export function FinalFourBracket({ standings, playoffGames }: FinalFourBracketPr
                 size="lg"
                 className="ring-4 ring-positive/25 transition-colors group-hover:ring-positive/40"
               />
-              <span className="text-base font-black text-foreground transition-colors group-hover:text-positive sm:text-lg">
+              <span className="font-display text-xl font-extrabold tracking-tight text-foreground transition-colors group-hover:text-positive sm:text-2xl">
                 {champion.name}
               </span>
             </Link>

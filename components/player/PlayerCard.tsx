@@ -168,12 +168,19 @@ export const PlayerCard = memo(function PlayerCard({
         href={`/players/${player.id}`}
         className={cardClasses({
           interactive: true,
-          className: "flex min-h-16 items-center gap-3 p-3",
+          className: "group relative flex min-h-16 items-center gap-3 overflow-hidden p-3.5",
         })}
       >
-        <PlayerAvatar player={player} accentColor={team.accentColor} size="md" />
+        <span
+          aria-hidden="true"
+          className="absolute inset-y-0 left-0 w-1 opacity-70 transition-opacity group-hover:opacity-100"
+          style={{ backgroundColor: team.accentColor }}
+        />
+        <div className="ml-1 shrink-0">
+          <PlayerAvatar player={player} accentColor={team.accentColor} size="md" />
+        </div>
         <span className="min-w-0 flex-1">
-          <span className="block truncate text-sm font-bold text-foreground">{player.name}</span>
+          <span className="block truncate text-sm font-bold text-foreground transition-colors group-hover:text-primary">{player.name}</span>
           <span className="mt-0.5 flex min-w-0 items-center gap-1.5 text-xs font-medium text-muted">
             <span className="truncate">
               #{player.jerseyNumber} &middot; {player.position}
@@ -186,11 +193,11 @@ export const PlayerCard = memo(function PlayerCard({
           </span>
         </span>
         <span className="flex shrink-0 items-center gap-3">
-          <span className="text-right">
-            <span className="block text-sm font-black tabular-nums text-foreground">
+          <span className="rounded-control border border-border/70 bg-surface-2/85 px-2.5 py-1 text-right">
+            <span className="font-display block text-lg font-extrabold tabular-nums leading-none text-foreground">
               {formatAvg(stats.ppg || stats.avgPerSet || 0)}
             </span>
-            <span className="block text-3xs font-bold uppercase tracking-wider text-muted">
+            <span className="mt-0.5 block text-3xs font-bold uppercase tracking-wider text-muted">
               {stats.ppg !== undefined ? "PPG" : "PTS/S"}
             </span>
           </span>
@@ -200,12 +207,22 @@ export const PlayerCard = memo(function PlayerCard({
   }
 
   return (
-    <div className={cardClasses({ className: "flex flex-col gap-4 p-5" })}>
+    <div
+      className={cardClasses({ className: "relative flex flex-col gap-4 overflow-hidden p-5 sm:p-6" })}
+      style={{
+        backgroundImage: `radial-gradient(ellipse 75% 65% at 100% 0%, ${team.accentColor}24, transparent 60%)`,
+      }}
+    >
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 h-0.5"
+        style={{ backgroundColor: team.accentColor }}
+      />
       <div className="flex items-center gap-4">
         <PlayerAvatar player={player} accentColor={team.accentColor} size="lg" className="text-lg" />
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2">
-            <h1 className="truncate text-lg font-extrabold tracking-tight text-foreground">{player.name}</h1>
+            <h1 className="font-display truncate text-2xl font-extrabold tracking-tight text-foreground sm:text-3xl">{player.name}</h1>
             {inactivePillTag ? (
               <Badge tone="archive" size="md">
                 {inactivePillTag}
@@ -217,12 +234,12 @@ export const PlayerCard = memo(function PlayerCard({
             ) : null}
           </div>
           <p className="mt-0.5 text-sm font-semibold text-muted">
-            #{player.jerseyNumber} &middot; {player.position} &middot; {player.height}
+            #{player.jerseyNumber} &middot; {player.position}{player.height ? ` · ${player.height}` : ""}
           </p>
-          <Link href={`/teams/${team.id}`} className="mt-1.5 flex items-center gap-1.5">
+          <Link href={`/teams/${team.id}`} className="mt-2 inline-flex items-center gap-1.5 rounded-control py-0.5 transition-colors hover:text-foreground">
             <TeamBadge team={team} size="sm" />
             <LeagueBadge league={team.league} />
-            <span className="truncate text-xs font-semibold text-muted">{team.name}</span>
+            <span className="truncate text-xs font-semibold text-muted hover:text-foreground">{team.name}</span>
           </Link>
         </div>
       </div>

@@ -7,15 +7,15 @@ export type ButtonSize = "sm" | "md" | "lg" | "icon" | "icon-lg";
 
 const variantClasses: Record<ButtonVariant, string> = {
   primary:
-    "border border-primary bg-primary text-primary-foreground shadow-sm hover:bg-primary/90 active:bg-primary/85",
+    "border border-primary/90 bg-primary text-primary-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_10px_22px_-10px_rgba(239,68,68,0.65)] hover:bg-primary/90 active:bg-primary/85",
   secondary:
-    "border border-border bg-elevated text-foreground hover:border-border-strong hover:bg-elevated/80",
+    "border border-border bg-elevated text-foreground shadow-sm hover:border-border-strong hover:bg-elevated/80",
   ghost:
-    "border border-transparent text-muted hover:bg-elevated hover:text-foreground",
+    "border border-transparent text-muted hover:bg-elevated/80 hover:text-foreground",
   outline:
-    "border border-border bg-transparent text-foreground hover:border-border-strong hover:bg-elevated",
+    "border border-border/90 bg-surface/60 text-foreground hover:border-border-strong hover:bg-elevated/80",
   danger:
-    "border border-negative/30 bg-negative/10 text-negative hover:border-negative/50 hover:bg-negative/15",
+    "border border-negative/35 bg-negative/10 text-negative hover:border-negative/55 hover:bg-negative/15",
 };
 
 const sizeClasses: Record<ButtonSize, string> = {
@@ -36,7 +36,7 @@ export function buttonClasses({
   className?: string;
 } = {}) {
   return cn(
-    "inline-flex shrink-0 items-center justify-center gap-2 rounded-control font-semibold transition-colors duration-150 ease-standard focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-60",
+    "inline-flex shrink-0 items-center justify-center gap-2 rounded-control font-semibold transition-all duration-150 ease-standard focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-60",
     variantClasses[variant],
     sizeClasses[size],
     className

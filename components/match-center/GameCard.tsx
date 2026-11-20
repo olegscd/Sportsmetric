@@ -9,7 +9,7 @@ import { getEffectiveGameStatus, isPlayoffGame } from "@/lib/derivations";
 import { cn, formatGameDate, formatRecord, formatStartTime } from "@/lib/utils";
 import type { Game, Team } from "@/types/sports";
 import { gameActions, type GameAction } from "@/lib/watch-links";
-import { ChevronRight, PlayCircle, Ticket, Tv } from "lucide-react";
+import { ChevronRight, MapPin, PlayCircle, Ticket, Tv } from "lucide-react";
 import Link from "next/link";
 import { memo, useMemo } from "react";
 import { LeagueBadge } from "./LeagueBadge";
@@ -44,7 +44,7 @@ function StatusPill({ game }: { game: Game }) {
         {dateStr ? (
           <span className="text-2xs font-medium text-muted">{dateStr}</span>
         ) : null}
-        <Badge tone="neutral" size="sm" className="border-border-strong text-foreground">
+        <Badge tone="neutral" size="sm" className="border-border-strong/90 text-foreground">
           Final
         </Badge>
       </span>
@@ -56,7 +56,7 @@ function StatusPill({ game }: { game: Game }) {
       {dateStr ? (
         <span className="text-2xs font-medium text-muted">{dateStr}</span>
       ) : null}
-      <Badge tone="outline" size="sm" className="text-foreground">
+      <Badge tone="outline" size="sm" className="border-border-strong/80 text-foreground">
         {formatStartTime(game.startTime)}
       </Badge>
     </span>
@@ -84,13 +84,13 @@ function CardActions({ actions, status }: { actions: GameAction[]; status: Game[
             className={cn(
               "pointer-events-auto relative z-10 flex min-w-0 items-center justify-center gap-1.5 rounded-control px-2.5 text-xs font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
               status !== "UPCOMING"
-                ? "min-h-7 text-muted hover:bg-surface-2 hover:text-foreground"
+                ? "h-7 min-h-7 text-muted hover:bg-surface-2 hover:text-foreground"
                 : action.kind === "tickets"
-                  ? "min-h-9 border border-primary/40 bg-primary/10 text-foreground hover:bg-primary/20"
-                  : "min-h-9 border border-border bg-surface-2 text-foreground hover:border-border-strong"
+                  ? "min-h-9 border border-primary/45 bg-primary/12 text-foreground hover:bg-primary/20"
+                  : "min-h-9 border border-border bg-surface-2/90 text-foreground hover:border-border-strong"
             )}
           >
-            <Icon size={14} aria-hidden="true" className="shrink-0 text-primary" />
+            <Icon size={13} aria-hidden="true" className="shrink-0 text-primary" />
             <span className="truncate">
               {label}
               {action.label ? <span className="font-normal text-muted"> · {action.label}</span> : null}
@@ -108,12 +108,14 @@ function TeamRow({
   record,
   score,
   showScore,
+  won,
   muted,
 }: {
   team: Team;
   record?: { wins: number; losses: number };
   score: number;
   showScore: boolean;
+  won?: boolean;
   muted?: boolean;
 }) {
   const displayRecord = record ?? team.record;
@@ -121,17 +123,23 @@ function TeamRow({
     <div className="flex items-center justify-between gap-3">
       <Link
         href={`/teams/${team.id}`}
-        className="pointer-events-auto relative z-10 -mx-1 flex min-h-11 min-w-0 items-center gap-2.5 rounded-control px-1 transition-colors hover:bg-elevated/50"
+        className="pointer-events-auto relative z-10 -mx-1.5 flex min-h-11 min-w-0 items-center gap-2.5 rounded-control px-1.5 transition-colors hover:bg-elevated/60"
       >
         <TeamBadge team={team} size="sm" />
         <span className="flex min-w-0 flex-col">
           <span
             className={cn(
-              "truncate text-sm font-bold transition-colors",
+              "flex items-center gap-1.5 truncate text-sm font-bold transition-colors",
               muted ? "text-muted" : "text-foreground"
             )}
           >
-            {team.shortName}
+            <span className="truncate">{team.shortName}</span>
+            {won ? (
+              <span
+                aria-hidden="true"
+                className="h-1.5 w-1.5 shrink-0 rounded-full bg-positive"
+              />
+            ) : null}
           </span>
           <span className="truncate text-2xs font-medium text-muted">
             {formatRecord(displayRecord)}
@@ -141,8 +149,8 @@ function TeamRow({
       {showScore ? (
         <span
           className={cn(
-            "text-xl font-black tabular-nums",
-            muted ? "text-muted" : "text-foreground"
+            "font-display text-2xl font-extrabold tabular-nums tracking-tight",
+            muted ? "text-muted/75" : "text-foreground"
           )}
         >
           {score}
@@ -181,16 +189,28 @@ export const GameCard = memo(function GameCard({ game }: { game: Game }) {
 
   const hasWinner =
     effectiveStatus === "FINAL" && game.homeScore !== game.awayScore;
+  const homeWon = hasWinner && game.homeScore > game.awayScore;
+  const awayWon = hasWinner && game.awayScore > game.homeScore;
   const homeLost = hasWinner && game.homeScore < game.awayScore;
   const awayLost = hasWinner && game.awayScore < game.homeScore;
 
   return (
     <article
       className={cardClasses({
-        className:
-          "group relative w-full overflow-hidden p-4 transition-colors duration-150 ease-standard hover:border-border-strong",
+        className: cn(
+          "group relative w-full overflow-hidden p-4 transition-all duration-150 ease-standard hover:border-border-strong hover:bg-elevated/35 hover:shadow-raised",
+          effectiveStatus === "LIVE" && "border-live/35 shadow-[inset_0_1px_0_rgba(251,113,133,0.18),0_16px_32px_-24px_rgba(0,0,0,0.92)]"
+        ),
       })}
     >
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 h-0.5 opacity-80 transition-opacity group-hover:opacity-100"
+        style={{
+          background: `linear-gradient(90deg, ${game.awayTeam.accentColor}, ${game.homeTeam.accentColor})`,
+        }}
+      />
+
       {/* One full-card control keeps the whole surface keyboard-operable while
           team links sit above it and stay independently focusable. */}
       <button
@@ -215,17 +235,18 @@ export const GameCard = memo(function GameCard({ game }: { game: Game }) {
             <ChevronRight
               size={15}
               aria-hidden="true"
-              className="shrink-0 text-muted transition-transform duration-150 ease-standard group-hover:translate-x-0.5"
+              className="shrink-0 text-muted transition-transform duration-150 ease-standard group-hover:translate-x-0.5 group-hover:text-foreground"
             />
           </div>
         </div>
 
-        <div className="flex flex-col gap-1 py-2">
+        <div className="flex flex-col gap-0.5 py-2">
           <TeamRow
             team={game.awayTeam}
             record={awayRecord}
             score={game.awayScore}
             showScore={showScore}
+            won={awayWon}
             muted={awayLost}
           />
           <TeamRow
@@ -233,13 +254,15 @@ export const GameCard = memo(function GameCard({ game }: { game: Game }) {
             record={homeRecord}
             score={game.homeScore}
             showScore={showScore}
+            won={homeWon}
             muted={homeLost}
           />
         </div>
 
         {game.venue ? (
-          <div className="border-t border-border/60 pt-2">
-            <span className="block truncate text-2xs font-medium text-muted">
+          <div className="flex items-center gap-1.5 border-t border-border/60 pt-2 text-muted">
+            <MapPin size={11} aria-hidden="true" className="shrink-0 text-muted/80" />
+            <span className="block truncate text-2xs font-medium">
               {game.venue}
             </span>
           </div>

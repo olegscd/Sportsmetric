@@ -20,13 +20,13 @@ export function SectionHeading({
 
   return (
     <div className={cn("flex flex-wrap items-end justify-between gap-3", className)}>
-      <div className="min-w-0">
-        {eyebrow ? <p className="eyebrow mb-2 text-primary">{eyebrow}</p> : null}
+      <div className="min-w-0 border-l-2 border-primary/70 pl-3">
+        {eyebrow ? <p className="eyebrow mb-1.5 text-primary">{eyebrow}</p> : null}
         <Heading className="text-base font-bold tracking-tight text-foreground md:text-lg">
           {title}
         </Heading>
         {description ? (
-          <p className="mt-1 max-w-2xl text-sm leading-relaxed text-muted">{description}</p>
+          <p className="mt-1 max-w-2xl text-xs leading-relaxed text-muted sm:text-sm">{description}</p>
         ) : null}
       </div>
       {action ? <div className="shrink-0">{action}</div> : null}

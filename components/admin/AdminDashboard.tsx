@@ -104,8 +104,8 @@ export function AdminDashboard() {
     <div className="flex min-h-dvh flex-col bg-bg">
       <Toast toast={toast} onDismiss={() => setToast(null)} />
 
-      <div className="sticky top-0 z-20 border-b border-border bg-bg/95 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-[1440px] items-center justify-between gap-3 px-4 py-4 md:px-7">
+      <div className="sticky top-0 z-20 border-b border-border/80 bg-bg/85 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-[1440px] items-center justify-between gap-3 px-4 py-3.5 md:px-7">
         <div className="min-w-0">
           <p className="truncate text-sm font-bold text-foreground">Admin Dashboard</p>
           <p className="flex items-center gap-1.5 truncate text-2xs text-muted">
@@ -212,11 +212,11 @@ export function AdminDashboard() {
           </div>
           <Link href="/admin/updater" className={buttonClasses({ variant: "outline", size: "sm" })}>Game updater</Link>
         </div>
-        <div className="mb-6 grid grid-cols-2 gap-2 sm:grid-cols-4">
+        <div className="mb-6 grid grid-cols-2 gap-2.5 sm:grid-cols-4">
           {([{ label: "Seasons", value: seasons.length, target: "seasons" }, { label: "Teams", value: teams.length, target: "teams" }, { label: "Players", value: players.length, target: "players" }, { label: "Matches", value: games.length, target: "games" }] as const).map(item => (
-            <button type="button" key={item.label} onClick={() => selectTab(item.target)} className="group flex min-h-14 items-center justify-between rounded-card border border-border bg-surface p-3 text-left shadow-card transition-colors hover:border-primary/40">
-              <span><span className="block text-xl font-extrabold tabular-nums">{loading ? "–" : item.value.toLocaleString()}</span><span className="text-2xs text-muted">{item.label}</span></span>
-              <ArrowRight size={14} className="shrink-0 text-muted transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+            <button type="button" key={item.label} onClick={() => selectTab(item.target)} className="group flex min-h-16 items-center justify-between rounded-card border border-border/90 bg-surface/95 p-3.5 text-left shadow-card transition-all hover:border-primary/45 hover:bg-elevated/55">
+              <span><span className="font-display block text-2xl font-extrabold tabular-nums leading-none text-foreground">{loading ? "–" : item.value.toLocaleString()}</span><span className="mt-1 block text-2xs font-medium text-muted">{item.label}</span></span>
+              <ArrowRight size={14} className="shrink-0 text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-primary" aria-hidden="true" />
             </button>
           ))}
         </div>

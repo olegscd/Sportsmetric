@@ -86,8 +86,8 @@ export function MatchHistory({ entries }: { entries: PlayerGameLogEntry[] }) {
             </span>
 
             <span className="ml-auto flex shrink-0 flex-col items-end gap-0.5">
-              <span className="text-sm font-bold tabular-nums text-foreground">
-                {stat.pts} <span className="text-3xs font-medium text-muted">PTS</span>
+              <span className="font-display text-lg font-extrabold tabular-nums leading-none text-foreground">
+                {stat.pts} <span className="font-sans text-3xs font-semibold uppercase text-muted">PTS</span>
               </span>
               {!isVolleyball && (
                 <span className="text-3xs tabular-nums text-muted">

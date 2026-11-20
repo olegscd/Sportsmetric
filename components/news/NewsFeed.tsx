@@ -33,19 +33,22 @@ export function NewsFeed({ articles }: { articles: NewsArticle[] }) {
       {visible.length ? (
         <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
           {visible.map((article, index) => (
-            <article key={article.slug} className={`group relative overflow-hidden rounded-card border border-border bg-surface p-5 shadow-card transition-colors hover:border-primary/40 md:p-7 ${index === 0 ? "lg:col-span-2" : ""}`}>
-              <div className="mb-5 flex flex-wrap items-center gap-2">
+            <article
+              key={article.slug}
+              className={`group relative overflow-hidden rounded-card border border-border/90 bg-surface/95 p-5 shadow-card transition-all duration-150 ease-standard hover:border-primary/45 hover:bg-elevated/35 hover:shadow-raised md:p-7 ${index === 0 ? "scoreboard-hero lg:col-span-2" : ""}`}
+            >
+              <div className="mb-4 flex flex-wrap items-center gap-2">
                 <Badge tone="primary">{article.category}</Badge>
                 {article.league && <Badge tone="outline">{article.league}</Badge>}
-                <time dateTime={article.publishedAt} className="text-xs text-muted">{formatNewsDate(article.publishedAt)}</time>
+                <time dateTime={article.publishedAt} className="text-xs font-medium text-muted">{formatNewsDate(article.publishedAt)}</time>
               </div>
-              <h2 className={`max-w-3xl font-bold leading-tight tracking-tight text-foreground ${index === 0 ? "text-2xl md:text-4xl" : "text-xl md:text-2xl"}`}>
+              <h2 className={`font-display max-w-3xl font-extrabold leading-[1.08] tracking-tight text-foreground transition-colors group-hover:text-primary ${index === 0 ? "text-3xl md:text-4xl" : "text-2xl md:text-3xl"}`}>
                 <Link href={`/news/${article.slug}`} className="rounded-sm after:absolute after:inset-0 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary">{article.title}</Link>
               </h2>
-              <p className="mt-4 max-w-2xl text-sm leading-relaxed text-muted">{article.summary}</p>
-              <div className="mt-7 flex items-center justify-between gap-4 border-t border-border pt-4 text-xs">
-                <span className="font-medium text-muted">{article.author}</span>
-                <span className="inline-flex items-center gap-1 font-semibold text-primary">Read story <ArrowUpRight size={15} aria-hidden="true" /></span>
+              <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted">{article.summary}</p>
+              <div className="mt-6 flex items-center justify-between gap-4 border-t border-border/70 pt-4 text-xs">
+                <span className="font-semibold text-muted">{article.author}</span>
+                <span className="inline-flex items-center gap-1 font-bold text-primary transition-transform group-hover:translate-x-0.5">Read story <ArrowUpRight size={15} aria-hidden="true" /></span>
               </div>
             </article>
           ))}

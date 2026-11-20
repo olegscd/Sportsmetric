@@ -128,12 +128,19 @@ export function GameDetailModal() {
       <div
         ref={dialogRef}
         tabIndex={-1}
-        className="relative flex max-h-[92dvh] w-full max-w-3xl flex-col overflow-hidden rounded-t-panel border border-border bg-bg shadow-modal focus:outline-none sm:max-h-[90vh] sm:rounded-panel"
+        className="relative flex max-h-[92dvh] w-full max-w-3xl flex-col overflow-hidden rounded-t-panel border border-border-strong/80 bg-bg shadow-modal focus:outline-none sm:max-h-[90vh] sm:rounded-panel"
         onClick={(e) => e.stopPropagation()}
       >
+        <div
+          aria-hidden="true"
+          className="h-0.5 w-full shrink-0"
+          style={{
+            background: `linear-gradient(90deg, ${game.awayTeam.accentColor}, ${game.homeTeam.accentColor})`,
+          }}
+        />
         <div aria-hidden="true" className="mx-auto mt-2 h-1 w-10 shrink-0 rounded-full bg-border sm:hidden" />
 
-        <div className="flex items-start justify-between gap-3 border-b border-border px-4 pb-3 pt-3 sm:px-6 sm:pt-5">
+        <div className="flex items-start justify-between gap-3 border-b border-border/80 px-4 pb-3 pt-3 sm:px-6 sm:pt-4">
           <div className="min-w-0">
             <span id="game-detail-title" className="block truncate text-2xs font-bold uppercase tracking-wider text-muted">
               {game.league} {dateStr ? `• ${dateStr}` : ""} &middot; {effectiveStatus}
@@ -155,22 +162,27 @@ export function GameDetailModal() {
           </Button>
         </div>
 
-        <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-2 bg-surface/40 px-3 py-4 sm:gap-4 sm:px-6">
+        <div
+          className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-2 border-b border-border/70 px-3 py-4 sm:gap-4 sm:px-6 sm:py-5"
+          style={{
+            background: `radial-gradient(circle at 12% 50%, ${game.awayTeam.accentColor}22, transparent 48%), radial-gradient(circle at 88% 50%, ${game.homeTeam.accentColor}22, transparent 48%), var(--color-surface-2)`,
+          }}
+        >
           <Link
             href={`/teams/${game.awayTeam.id}`}
             onClick={closeGame}
-            className="flex min-w-0 flex-col items-center gap-2 rounded-control p-1 transition-colors hover:bg-elevated/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+            className="flex min-w-0 flex-col items-center gap-2 rounded-control p-1.5 transition-colors hover:bg-elevated/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
           >
             <TeamBadge team={game.awayTeam} size="lg" />
-            <span className="max-w-full truncate text-sm font-semibold text-foreground">
+            <span className="max-w-full truncate text-sm font-bold text-foreground">
               {game.awayTeam.shortName}
             </span>
           </Link>
           <div className="flex flex-col items-center gap-1">
-            <span className="whitespace-nowrap text-xl font-bold tabular-nums text-foreground sm:text-2xl">
-              {game.awayScore} - {game.homeScore}
+            <span className="font-display whitespace-nowrap text-3xl font-extrabold tabular-nums tracking-tight text-foreground sm:text-4xl">
+              {game.awayScore} – {game.homeScore}
             </span>
-            <span className="text-2xs text-muted">
+            <span className="rounded-full border border-border/80 bg-surface/80 px-2.5 py-0.5 text-2xs font-semibold text-muted">
               {effectiveStatus === "LIVE"
                 ? game.timeRemaining
                   ? `Q${game.quarterOrSet} • ${game.timeRemaining}`
@@ -184,10 +196,10 @@ export function GameDetailModal() {
           <Link
             href={`/teams/${game.homeTeam.id}`}
             onClick={closeGame}
-            className="flex min-w-0 flex-col items-center gap-2 rounded-control p-1 transition-colors hover:bg-elevated/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+            className="flex min-w-0 flex-col items-center gap-2 rounded-control p-1.5 transition-colors hover:bg-elevated/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
           >
             <TeamBadge team={game.homeTeam} size="lg" />
-            <span className="max-w-full truncate text-sm font-semibold text-foreground">
+            <span className="max-w-full truncate text-sm font-bold text-foreground">
               {game.homeTeam.shortName}
             </span>
           </Link>

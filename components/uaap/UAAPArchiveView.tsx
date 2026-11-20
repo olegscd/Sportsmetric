@@ -341,7 +341,7 @@ export function UAAPArchiveView({ initialData }: { initialData: MergedUAAPData }
                   key={sport.slug}
                   href={hrefFor({ sport: sport.name })}
                   className={cn(
-                    "group flex aspect-square flex-col items-center justify-between rounded-card border border-border bg-surface p-4 text-center shadow-card transition-colors",
+                    "group flex aspect-square flex-col items-center justify-between rounded-card border border-border/90 bg-surface/95 p-4 text-center shadow-card transition-all duration-150 ease-standard hover:-translate-y-0.5 hover:shadow-raised",
                     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-archive/50",
                     sport.bgGlow
                   )}
@@ -934,8 +934,10 @@ function AwardCard({
   return (
     <div
       className={cn(
-        "flex items-start gap-4 rounded-card border bg-surface p-5 shadow-card",
-        tone === "archive" ? "border-archive/30" : "border-info/30"
+        "flex items-start gap-4 rounded-card border bg-surface/95 p-5 shadow-card",
+        tone === "archive"
+          ? "border-archive/35 bg-gradient-to-br from-archive/[0.08] via-surface to-surface"
+          : "border-info/35 bg-gradient-to-br from-info/[0.08] via-surface to-surface"
       )}
     >
       <div
@@ -956,7 +958,7 @@ function AwardCard({
         >
           {label}
         </span>
-        <h3 className="mt-0.5 text-lg font-black text-foreground">{player}</h3>
+        <h3 className="font-display mt-0.5 text-xl font-extrabold tracking-tight text-foreground">{player}</h3>
         {school && (
           <div className="mt-2 flex items-center gap-2">
             <span

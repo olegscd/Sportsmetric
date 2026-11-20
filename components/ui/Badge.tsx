@@ -12,14 +12,14 @@ export type BadgeTone =
   | "outline";
 
 const toneClasses: Record<BadgeTone, string> = {
-  neutral: "border-border bg-elevated text-muted",
-  primary: "border-primary/30 bg-primary/15 text-primary",
-  live: "border-live/40 bg-live/15 text-live",
-  success: "border-positive/30 bg-positive/15 text-positive",
-  negative: "border-negative/30 bg-negative/15 text-negative",
-  archive: "border-archive/30 bg-archive/15 text-archive",
-  info: "border-info/30 bg-info/15 text-info",
-  outline: "border-border bg-transparent text-muted",
+  neutral: "border-border bg-elevated/90 text-muted",
+  primary: "border-primary/35 bg-primary/15 text-primary",
+  live: "border-live/45 bg-live/15 text-live shadow-[0_0_12px_-4px_rgba(251,113,133,0.45)]",
+  success: "border-positive/35 bg-positive/12 text-positive",
+  negative: "border-negative/35 bg-negative/12 text-negative",
+  archive: "border-archive/35 bg-archive/12 text-archive",
+  info: "border-info/35 bg-info/12 text-info",
+  outline: "border-border/90 bg-surface-2/70 text-muted",
 };
 
 const sizeClasses = {

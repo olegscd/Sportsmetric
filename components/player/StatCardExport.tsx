@@ -161,8 +161,11 @@ export function StatCardExport({
         <div
           ref={captureRef}
           className="flex h-[1920px] w-[1080px] flex-col justify-between bg-bg p-20"
+          style={{
+            backgroundImage: `radial-gradient(ellipse 90% 45% at 50% 0%, ${team.accentColor}30, transparent 60%), radial-gradient(ellipse 70% 35% at 100% 100%, ${team.accentColor}18, transparent 55%)`,
+          }}
         >
-          <div className="flex items-center gap-8">
+          <div className="flex items-center gap-8 border-b border-border/70 pb-10">
             {photoDataUrl ? (
               // Rendered from a pre-fetched data: URI (see the effect above),
               // never the raw external URL -- keeps the export canvas untainted
@@ -171,23 +174,23 @@ export function StatCardExport({
               <img
                 src={photoDataUrl}
                 alt={player.name}
-                className="h-40 w-40 shrink-0 rounded-full border-8 object-cover"
+                className="h-40 w-40 shrink-0 rounded-full border-8 object-cover shadow-raised"
                 style={{ borderColor: team.accentColor }}
               />
             ) : (
               <div
-                className="flex h-40 w-40 shrink-0 items-center justify-center rounded-full border-8 text-5xl font-bold"
+                className="flex h-40 w-40 shrink-0 items-center justify-center rounded-full border-8 bg-surface text-5xl font-bold shadow-raised"
                 style={{ borderColor: team.accentColor, color: team.accentColor }}
               >
                 {team.shortName}
               </div>
             )}
-            <div className="flex flex-col gap-2">
-              <p className="text-4xl font-semibold text-foreground/70">{team.name}</p>
+            <div className="flex flex-col gap-3">
+              <p className="text-4xl font-bold text-foreground/85">{team.name}</p>
               <div className="flex flex-wrap items-center gap-4">
                 <LeagueBadge league={team.league} />
                 {contextLabel ? (
-                  <span className="text-2xl font-medium text-foreground/60">
+                  <span className="text-2xl font-semibold text-foreground/65">
                     {contextLabel}
                   </span>
                 ) : null}
@@ -197,10 +200,10 @@ export function StatCardExport({
 
           <div className="flex flex-col gap-12">
             <div className="flex flex-col gap-4">
-              <p className="text-3xl font-semibold uppercase tracking-[0.2em] text-foreground/50">
+              <p className="text-3xl font-bold uppercase tracking-[0.22em] text-foreground/55">
                 #{player.jerseyNumber} &middot; {player.position}
               </p>
-              <p className="text-8xl leading-tight font-black text-foreground">{player.name}</p>
+              <p className="font-display text-8xl leading-none font-black tracking-tight text-foreground">{player.name}</p>
             </div>
 
             {player.rankBadges.length > 0 ? (
@@ -208,7 +211,7 @@ export function StatCardExport({
                 {player.rankBadges.map((badge) => (
                   <span
                     key={badge.label}
-                    className="rounded-full border-2 border-primary bg-primary/10 px-6 py-3 text-2xl font-bold text-primary"
+                    className="rounded-full border-2 border-primary bg-primary/15 px-6 py-3 text-2xl font-bold text-primary"
                   >
                     {badge.label}
                   </span>
@@ -220,12 +223,12 @@ export function StatCardExport({
               {tiles.map((tile) => (
                 <div
                   key={tile.label}
-                  className="flex flex-col items-center gap-2 rounded-panel border border-border bg-surface py-8"
+                  className="flex flex-col items-center gap-3 rounded-panel border border-border-strong/70 bg-surface/90 py-10 shadow-card"
                 >
-                  <span className="text-6xl font-bold tabular-nums text-foreground">
+                  <span className="font-display text-7xl font-extrabold tabular-nums leading-none text-foreground">
                     {tile.value}
                   </span>
-                  <span className="text-xl font-medium tracking-wide text-foreground/50 uppercase">
+                  <span className="text-xl font-bold tracking-[0.15em] text-foreground/55 uppercase">
                     {tile.label}
                   </span>
                 </div>
@@ -233,9 +236,11 @@ export function StatCardExport({
             </div>
           </div>
 
-          <div className="flex items-center justify-between border-t border-border pt-10">
-            <p className="text-4xl font-bold text-foreground">Sportsmetric</p>
-            <p className="text-2xl text-foreground/50">sportsmetric.ph</p>
+          <div className="flex items-center justify-between border-t border-border/80 pt-10">
+            <p className="font-display text-4xl font-extrabold tracking-wider uppercase text-foreground">
+              SPORTS<span className="text-primary">METRIC</span>
+            </p>
+            <p className="text-2xl font-semibold text-foreground/50">sportsmetric.ph</p>
           </div>
         </div>
       </div>
