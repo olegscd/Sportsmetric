@@ -18,6 +18,8 @@ const nextConfig: NextConfig = {
     "/admin": ["./data/seasons/**/*.md"],
     "/uaap": ["./data/*.json"],
     "/api/uaap/data": ["./data/*.json", "./data/seasons/**/*.md"],
+    // Offline fallback for official PVL player stats (read from disk on the server).
+    "/players/*": ["./scripts/generated/pvl-official-player-stats.json"],
   },
   outputFileTracingExcludes: {
     "/**": [

@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/Badge";
 import { Card } from "@/components/ui/Card";
 import { StatTile, type StatTileTone } from "@/components/ui/StatTile";
 import { useSportsData } from "@/context/SportsDataContext";
-import { getOfficialPvlPlayerStats, type PvlOfficialPlayerStatItem } from "@/lib/pvl-official-stats-data";
+import type { PvlOfficialPlayerRecord, PvlOfficialPlayerStatItem } from "@/lib/pvl-player-stats";
 import { formatAvg, formatPct } from "@/lib/utils";
 import type { Player } from "@/types/sports";
 import { ChevronDown } from "lucide-react";
@@ -13,6 +13,8 @@ import { useMemo, useState } from "react";
 interface PlayerVolleyballStatsProps {
   player: Player;
   allPlayerSeasons: Player[];
+  /** Official PVL record, looked up on the server by the player page. */
+  officialRecord?: PvlOfficialPlayerRecord | null;
 }
 
 type VolleyTile = {
@@ -24,16 +26,9 @@ type VolleyTile = {
 export function PlayerVolleyballStats({
   player,
   allPlayerSeasons,
+  officialRecord = null,
 }: PlayerVolleyballStatsProps) {
   const { seasons } = useSportsData();
-
-  // Try matching official PVL statistics record from pvl_player_stats dataset
-  const officialRecord = useMemo(() => {
-    return (
-      getOfficialPvlPlayerStats(player.personId, player.name) ||
-      getOfficialPvlPlayerStats(player.id, player.name)
-    );
-  }, [player]);
 
   const [selectedOption, setSelectedOption] = useState<string>("career");
 

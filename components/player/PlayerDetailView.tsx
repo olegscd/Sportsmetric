@@ -13,6 +13,7 @@ import { formatAvg, formatPct } from "@/lib/utils";
 import type { Player, SeasonAverages, Team } from "@/types/sports";
 
 import type { PlayerGameLogEntry } from "@/lib/derivations";
+import type { PvlOfficialPlayerRecord } from "@/lib/pvl-player-stats";
 import { ChevronDown, ChevronLeft, UserX } from "lucide-react";
 import Link from "next/link";
 import { useCallback, useMemo, useState } from "react";
@@ -60,7 +61,7 @@ function CareerStatGrid({ averages }: { averages: SeasonAverages }) {
   );
 }
 
-export function PlayerDetailView({ id }: { id: string }) {
+export function PlayerDetailView({ id, officialPvlRecord = null }: { id: string; officialPvlRecord?: PvlOfficialPlayerRecord | null }) {
   useSportsScope(`player=${encodeURIComponent(id)}`);
   const { players, teams, loading, error, refreshData } = useSportsData();
 
@@ -93,10 +94,10 @@ export function PlayerDetailView({ id }: { id: string }) {
     );
   }
 
-  return <PlayerDetailContent player={player} team={team} />;
+  return <PlayerDetailContent player={player} team={team} officialPvlRecord={officialPvlRecord} />;
 }
 
-function PlayerDetailContent({ player, team }: { player: Player; team: Team }) {
+function PlayerDetailContent({ player, team, officialPvlRecord }: { player: Player; team: Team; officialPvlRecord: PvlOfficialPlayerRecord | null }) {
   const { players, seasons, getPlayerGameLog, getPlayerAverages } = useSportsData();
   const [selectedSeasonOption, setSelectedSeasonOption] = useState<string>("career");
 
@@ -303,6 +304,7 @@ function PlayerDetailContent({ player, team }: { player: Player; team: Team }) {
       {isVolleyball ? (
         <PlayerVolleyballStats
           player={player}
+          officialRecord={officialPvlRecord}
           allPlayerSeasons={seasonLines.length > 0 ? seasonLines : [player]}
         />
       ) : (

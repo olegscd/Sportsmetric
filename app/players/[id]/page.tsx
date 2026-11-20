@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { getPlayerPageData } from "@/lib/public-page-data";
 import { absoluteUrl, breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { getOfficialPvlPlayerRecord } from "@/lib/pvl-player-stats-server";
 
 type Props = { params: Promise<{ id: string }> };
 
@@ -28,11 +29,13 @@ export default async function PlayerDetailPage({
 }) {
   const { id } = await params;
   const { player, team } = await profile(id);
+  // Official PVL stats are looked up here so the dataset never ships to the browser.
+  const officialPvlRecord = team.league === "PVL" ? await getOfficialPvlPlayerRecord(player.personId, player.id, player.name) : null;
   const path = `/players/${encodeURIComponent(id)}`;
   return <>
     <JsonLd data={{ "@context": "https://schema.org", "@type": "Person", name: player.name, url: absoluteUrl(path),
       memberOf: { "@type": "SportsTeam", name: team.name, url: absoluteUrl(`/teams/${encodeURIComponent(team.id)}`) } }} />
     <JsonLd data={breadcrumbJsonLd([{ name: "Players", path: "/players" }, { name: player.name, path }])} />
-    <PlayerDetailView id={id} />
+    <PlayerDetailView id={id} officialPvlRecord={officialPvlRecord} />
   </>;
 }
