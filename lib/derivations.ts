@@ -367,6 +367,7 @@ export function derivePlayerAverages(
   }
 
   return {
+    ...player.seasonAverages,
     ppg: round1(pts / gp),
     rpg: round1(reb / gp),
     apg: round1(ast / gp),
@@ -377,19 +378,6 @@ export function derivePlayerAverages(
     ftPct: ftA > 0 ? round1((ftM / ftA) * 100) : 0,
     totalPts: player.seasonAverages.totalPts ?? pts,
     matchesPlayed: player.seasonAverages.matchesPlayed ?? gp,
-    attackPts: player.seasonAverages.attackPts,
-    attackPct: player.seasonAverages.attackPct,
-    attackAvg: player.seasonAverages.attackAvg,
-    blockPts: player.seasonAverages.blockPts,
-    blockPct: player.seasonAverages.blockPct,
-    blockAvg: player.seasonAverages.blockAvg,
-    servePts: player.seasonAverages.servePts,
-    servePct: player.seasonAverages.servePct,
-    serveAvg: player.seasonAverages.serveAvg,
-    killsPerSet: player.seasonAverages.killsPerSet,
-    digsPerSet: player.seasonAverages.digsPerSet,
-    blocksPerSet: player.seasonAverages.blocksPerSet,
-    acesPerSet: player.seasonAverages.acesPerSet,
   };
 }
 

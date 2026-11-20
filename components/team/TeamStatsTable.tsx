@@ -1,12 +1,18 @@
+"use client";
+
 import { TableShell, Td, Th } from "@/components/ui/Table";
+import { useSportsData } from "@/context/SportsDataContext";
 import { formatAvg, formatPct } from "@/lib/utils";
 import type { League, Player } from "@/types/sports";
+import Link from "next/link";
 
 function isVolleyballLeague(league: League): boolean {
   return league === "PVL";
 }
 
 export function TeamStatsTable({ players, league }: { players: Player[]; league: League }) {
+  const { getPlayerAverages } = useSportsData();
+
   if (players.length === 0) {
     return <p className="py-8 text-center text-sm text-muted">No stats yet.</p>;
   }
@@ -38,17 +44,22 @@ export function TeamStatsTable({ players, league }: { players: Player[]; league:
         </thead>
         <tbody>
           {roster.map((player) => {
-            const avg = player.seasonAverages;
+            const avg = getPlayerAverages(player);
             return (
               <tr key={player.id} className="transition-colors hover:bg-elevated/50">
                 <Td sticky className="max-w-40 truncate pl-3 font-semibold">
-                  #{player.jerseyNumber} {player.name}
+                  <Link
+                    href={`/players/${encodeURIComponent(player.id)}`}
+                    className="hover:text-primary hover:underline"
+                  >
+                    #{player.jerseyNumber} {player.name}
+                  </Link>
                 </Td>
                 {volleyball ? (
                   <>
-                    <Td numeric className="px-2">{formatAvg(avg.killsPerSet ?? 0)}</Td>
-                    <Td numeric className="px-2">{formatAvg(avg.digsPerSet ?? 0)}</Td>
-                    <Td numeric className="px-2 pr-3">{formatAvg(avg.blocksPerSet ?? 0)}</Td>
+                    <Td numeric className="px-2">{formatAvg(avg.killsPerSet ?? avg.avgAtk ?? 0)}</Td>
+                    <Td numeric className="px-2">{formatAvg(avg.digsPerSet ?? avg.avgDig ?? 0)}</Td>
+                    <Td numeric className="px-2 pr-3">{formatAvg(avg.blocksPerSet ?? avg.avgBlk ?? 0)}</Td>
                   </>
                 ) : (
                   <>

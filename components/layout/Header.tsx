@@ -13,12 +13,15 @@ const ROUTE_TITLES: Record<string, string> = {
   "/teams": "Teams",
   "/players": "Players",
   "/uaap": "UAAP Archive",
+  "/about": "About",
+  "/international": "International",
 };
 
 function parentPath(pathname: string): string {
   if (pathname.startsWith("/news/")) return "/news";
   if (pathname.startsWith("/players/")) return "/players";
   if (pathname.startsWith("/teams/")) return "/teams";
+  if (pathname.startsWith("/athletes/")) return "/international";
   return "/";
 }
 
@@ -26,6 +29,8 @@ function nestedTitle(pathname: string): string {
   if (pathname.startsWith("/news/")) return "News";
   if (pathname.startsWith("/players/")) return "Player";
   if (pathname.startsWith("/teams/")) return "Team";
+  if (pathname.startsWith("/athletes/")) return "Athlete";
+  if (pathname.startsWith("/leagues/")) return pathname.slice("/leagues/".length).toUpperCase();
   return "";
 }
 

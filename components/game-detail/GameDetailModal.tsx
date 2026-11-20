@@ -202,7 +202,12 @@ export function GameDetailModal() {
         </div>
 
         <div className="flex-1 overflow-y-auto px-4 pb-[calc(1rem+env(safe-area-inset-bottom))] pt-4 sm:px-6 sm:pb-4">
-          {tab === "overview" ? <MomentumBar game={game} /> : null}
+          {tab === "overview" ? (
+            <MomentumBar
+              game={game}
+              playByPlay={details?.id === game.id ? details.events : undefined}
+            />
+          ) : null}
 
           {tab === "boxscore" ? (
             <div className="flex flex-col gap-3">

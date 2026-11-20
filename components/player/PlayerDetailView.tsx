@@ -293,7 +293,12 @@ function PlayerDetailContent({ player, team }: { player: Player; team: Team }) {
         activeContextLabel={activeContextLabel}
         inactivePillTag={inactivePillTag}
       />
-      <StatCardExport player={player} team={team} />
+      <StatCardExport
+        player={player}
+        team={team}
+        averages={heroAverages}
+        contextLabel={activeContextLabel}
+      />
 
       {isVolleyball ? (
         <PlayerVolleyballStats

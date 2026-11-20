@@ -5,62 +5,11 @@ import { safeImageSource } from "@/lib/image-policy";
 import { LeagueBadge } from "@/components/match-center/LeagueBadge";
 import { Button } from "@/components/ui/Button";
 import { Notice } from "@/components/ui/Notice";
-import { formatAvg, formatPct } from "@/lib/utils";
-import type { Player, Team } from "@/types/sports";
+import { useSportsData } from "@/context/SportsDataContext";
+import { exportStatTiles } from "@/lib/stat-card";
+import type { Player, SeasonAverages, Team } from "@/types/sports";
 import { Share2 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-
-function isVolleyballPlayer(player: Player): boolean {
-  return (
-    player.seasonAverages.killsPerSet !== undefined ||
-    player.position === "OH" ||
-    player.position === "MB" ||
-    player.position === "S" ||
-    player.position === "L" ||
-    player.position === "OP"
-  );
-}
-
-function exportStatTiles(player: Player): { label: string; value: string }[] {
-  const { seasonAverages: avg } = player;
-  const pos = (player.position || "OH").toUpperCase();
-
-  if (isVolleyballPlayer(player)) {
-    if (pos.startsWith("L")) {
-      return [
-        { label: "Digs / Set", value: formatAvg(avg.avgDig ?? avg.digsPerSet ?? 0) },
-        { label: "Dig Success", value: formatPct(avg.successDig ?? 0) },
-        { label: "Rec Success", value: formatPct(avg.successRec ?? 0) },
-      ];
-    }
-    if (pos.startsWith("S")) {
-      return [
-        { label: "Sets / Set", value: formatAvg(avg.avgSet ?? 0) },
-        { label: "Setting %", value: formatPct(avg.successSet ?? 0) },
-        { label: "Digs / Set", value: formatAvg(avg.avgDig ?? 0) },
-      ];
-    }
-    if (pos.startsWith("MB")) {
-      return [
-        { label: "PTS / Set", value: formatAvg(avg.avgPerSet ?? avg.ppg ?? 0) },
-        { label: "Blocks / Set", value: formatAvg(avg.avgBlk ?? avg.blocksPerSet ?? 0) },
-        { label: "Atk Efficiency", value: formatPct(avg.efficiencyAtk ?? avg.attackPct ?? 0) },
-      ];
-    }
-    return [
-      { label: "PTS / Set", value: formatAvg(avg.avgPerSet ?? avg.ppg ?? 0) },
-      { label: "Kills / Set", value: formatAvg(avg.avgAtk ?? avg.killsPerSet ?? 0) },
-      { label: "Atk Efficiency", value: formatPct(avg.efficiencyAtk ?? avg.attackPct ?? 0) },
-    ];
-  }
-
-  return [
-    { label: "PPG", value: formatAvg(avg.ppg) },
-    { label: "RPG", value: formatAvg(avg.rpg) },
-    { label: "APG", value: formatAvg(avg.apg) },
-    { label: "3P%", value: formatPct(avg.threePtPct) },
-  ];
-}
 
 type ExportStatus = "idle" | "exporting" | "error";
 
@@ -74,7 +23,18 @@ const CARD_HEIGHT = 1920;
  * DOM-to-image capture is the riskiest piece of this app for browser quirks
  * -- if it needs iteration, it can't destabilize the rest of the profile page.
  */
-export function StatCardExport({ player, team }: { player: Player; team: Team }) {
+export function StatCardExport({
+  player,
+  team,
+  averages,
+  contextLabel,
+}: {
+  player: Player;
+  team: Team;
+  averages?: SeasonAverages;
+  contextLabel?: string;
+}) {
+  const { getPlayerAverages } = useSportsData();
   const captureRef = useRef<HTMLDivElement>(null);
   const [status, setStatus] = useState<ExportStatus>("idle");
   const [photoDataUrl, setPhotoDataUrl] = useState<string | null>(null);
@@ -163,7 +123,8 @@ export function StatCardExport({ player, team }: { player: Player; team: Team })
     }
   };
 
-  const tiles = exportStatTiles(player);
+  const resolvedAverages = averages ?? getPlayerAverages(player);
+  const tiles = exportStatTiles(player, resolvedAverages);
 
   return (
     <div className="flex flex-col gap-2">
@@ -223,7 +184,14 @@ export function StatCardExport({ player, team }: { player: Player; team: Team })
             )}
             <div className="flex flex-col gap-2">
               <p className="text-4xl font-semibold text-foreground/70">{team.name}</p>
-              <LeagueBadge league={team.league} />
+              <div className="flex flex-wrap items-center gap-4">
+                <LeagueBadge league={team.league} />
+                {contextLabel ? (
+                  <span className="text-2xl font-medium text-foreground/60">
+                    {contextLabel}
+                  </span>
+                ) : null}
+              </div>
             </div>
           </div>
 
