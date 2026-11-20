@@ -1,8 +1,17 @@
-"""Scrape PVL player statistics from pvl.ph/players.
+"""Scrape official PVL player statistics from pvl.ph.
+
+Players are discovered from the skill leader tables (pvl.ph/leaders) of each
+conference, so no player list or profile crawl is needed; each player's full
+line comes from the endpoint the profile page uses, a few requests at a time.
+The app itself refreshes Supabase with `npm run pvl:stats`; this script is
+for spreadsheet exports.
 
 Usage:
-    python -m pip install -r requirements.txt
-    python scrape_pvl_stats.py
+    python -m pip install requests beautifulsoup4 pandas openpyxl
+    python scrape_pvl_stats.py                    # conference in progress
+    python scrape_pvl_stats.py --conference 18    # one conference (repeatable;
+                                                  # ids not in the dropdown work too)
+    python scrape_pvl_stats.py --all              # every listed conference + career rows
 
 Output:
     pvl_player_stats_YYYYMMDD_HHMMSS.xlsx (new file each run)
@@ -10,457 +19,210 @@ Output:
 
 from __future__ import annotations
 
+import argparse
 import json
+import re
 import sys
-import time
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
 from pathlib import Path
-from urllib.parse import urlparse
 
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 
-PLAYERS_URL = "https://pvl.ph/players"
-PLAYER_URL = "https://pvl.ph/players/{slug}"
+LEADERS_URL = "https://pvl.ph/leaders"
 CONFERENCE_STATS_URL = "https://pvl.ph/players/filter_by_careerstats_conference"
+# Leader tables whose rows identify a conference's players.
+LEADER_CATEGORIES = ("scorer", "digger", "setter", "receiver", "blocker", "server")
 OUTPUT_PREFIX = "pvl_player_stats"
-REQUEST_DELAY_SEC = 2
-HEADERS = {"User-Agent": "Mozilla/5.0"}
-
+HEADERS = {"User-Agent": "Sportsmetric/1.0 (sportsmetric.ph)"}
 SCRIPT_DIR = Path(__file__).resolve().parent
 
-STAT_FIELDS = [
-    "sets_played",
-    "total_points",
-    "avg_per_set",
-    "pts_atk",
-    "pts_blk",
-    "pts_ace",
-    "exe_set",
-    "exe_dig",
-    "exe_rec",
-    "fault_atk",
-    "fault_blk",
-    "fault_srv",
-    "fault_set",
-    "fault_dig",
-    "fault_rec",
-    "total_atk",
-    "total_blk",
-    "total_ace",
-    "total_set",
-    "total_dig",
-    "total_rec",
-    "avg_atk",
-    "avg_blk",
-    "avg_ace",
-    "avg_set",
-    "avg_dig",
-    "avg_rec",
-    "success_atk",
-    "success_blk",
-    "success_ace",
-    "success_set",
-    "success_dig",
-    "success_rec",
-    "efficiency_atk",
-    "efficiency_blk",
-    "efficiency_ace",
-    "efficiency_set",
-    "efficiency_dig",
-    "efficiency_rec",
-]
-
-SECTION_LABEL_MAP = {
-    ("Pts", "Atk"): "pts_atk",
-    ("Pts", "Blk"): "pts_blk",
-    ("Pts", "Ace"): "pts_ace",
-    ("Exe", "Set"): "exe_set",
-    ("Exe", "Dig"): "exe_dig",
-    ("Exe", "Rec"): "exe_rec",
-    ("Fault", "Atk"): "fault_atk",
-    ("Fault", "Blk"): "fault_blk",
-    ("Fault", "Srv"): "fault_srv",
-    ("Fault", "Set"): "fault_set",
-    ("Fault", "Dig"): "fault_dig",
-    ("Fault", "Rec"): "fault_rec",
-    ("Total", "Atk"): "total_atk",
-    ("Total", "Blk"): "total_blk",
-    ("Total", "Ace"): "total_ace",
-    ("Total", "Set"): "total_set",
-    ("Total", "Dig"): "total_dig",
-    ("Total", "Rec"): "total_rec",
-    ("Ave/Set", "Atk"): "avg_atk",
-    ("Ave/Set", "Blk"): "avg_blk",
-    ("Ave/Set", "Ace"): "avg_ace",
-    ("Ave/Set", "Set"): "avg_set",
-    ("Ave/Set", "Dig"): "avg_dig",
-    ("Ave/Set", "Rec"): "avg_rec",
-    ("Success %", "Atk"): "success_atk",
-    ("Success %", "Blk"): "success_blk",
-    ("Success %", "Ace"): "success_ace",
-    ("Success %", "Set"): "success_set",
-    ("Success %", "Dig"): "success_dig",
-    ("Success %", "Rec"): "success_rec",
-    ("EFFICIENCY %", "Atk"): "efficiency_atk",
-    ("EFFICIENCY %", "Blk"): "efficiency_blk",
-    ("EFFICIENCY %", "Ace"): "efficiency_ace",
-    ("EFFICIENCY %", "Set"): "efficiency_set",
-    ("EFFICIENCY %", "Dig"): "efficiency_dig",
-    ("EFFICIENCY %", "Rec"): "efficiency_rec",
-}
+# (output column, points/excellent key, fault key, continue key)
+SKILLS = (
+    ("atk", "AtkPoint", "AtkFault", "AtkCont"),
+    ("blk", "BlkPoint", "BlkFault", "BlkCont"),
+    ("ace", "SrvPoint", "SrvFault", "SrvCont"),
+    ("set", "SetExcel", "SetFault", "SetCont"),
+    ("dig", "DigExcel", "DigFault", "DigCont"),
+    ("rec", "RecExcel", "RecFault", "RecCont"),
+)
+POINT_COLUMNS = {"atk": "pts_atk", "blk": "pts_blk", "ace": "pts_ace", "set": "exe_set", "dig": "exe_dig", "rec": "exe_rec"}
+FAULT_COLUMNS = {"atk": "fault_atk", "blk": "fault_blk", "ace": "fault_srv", "set": "fault_set", "dig": "fault_dig", "rec": "fault_rec"}
+COUNT_COLUMNS = ["sets_played", *POINT_COLUMNS.values(), *FAULT_COLUMNS.values(), *(f"total_{s}" for s, *_ in SKILLS)]
+PROFILE_COLUMNS = ["player_name", "team", "position", "jersey", "height", "school"]
 
 
 def output_excel_path() -> Path:
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    return SCRIPT_DIR / f"{OUTPUT_PREFIX}_{timestamp}.xlsx"
+    return SCRIPT_DIR / f"{OUTPUT_PREFIX}_{datetime.now():%Y%m%d_%H%M%S}.xlsx"
 
 
-def parse_number(value: str | None) -> float | int | None:
-    if value is None:
-        return None
-    cleaned = str(value).strip().replace(",", "").replace("%", "")
-    if not cleaned:
-        return None
+def count(value) -> int:
     try:
-        number = float(cleaned)
-    except ValueError:
-        return None
-    return int(number) if number.is_integer() else number
+        number = float(str(value).replace(",", ""))
+    except (TypeError, ValueError):
+        return 0
+    return int(round(number)) if number > 0 else 0
 
 
-def player_slug_from_href(href: str) -> str | None:
-    path = urlparse(href).path.strip("/")
-    if not path.startswith("players/"):
-        return None
-    slug = path.removeprefix("players/")
-    return slug or None
-
-
-def fetch_player_slugs() -> list[str]:
-    resp = requests.get(PLAYERS_URL, headers=HEADERS, timeout=30)
+def leader_conferences(session: requests.Session) -> list[dict]:
+    resp = session.get(LEADERS_URL, headers=HEADERS, timeout=30)
     resp.raise_for_status()
     soup = BeautifulSoup(resp.text, "html.parser")
+    options = [
+        {"id": int(o["value"]), "name": o.get_text(" ", strip=True), "selected": o.has_attr("selected")}
+        for o in soup.select("#selectedConferenceId option")
+        if (o.get("value") or "").isdigit()
+    ]
+    if not options:
+        raise ValueError("pvl.ph/leaders has no conference list; the page may have changed")
+    return options
 
+
+def leader_slugs(html: str) -> list[str]:
+    soup = BeautifulSoup(html, "html.parser")
     slugs: list[str] = []
-    seen: set[str] = set()
-    for link in soup.select("a[href*='/players/']"):
-        href = link.get("href", "")
-        slug = player_slug_from_href(href)
-        if slug and slug not in seen:
-            seen.add(slug)
-            slugs.append(slug)
-
-    if not slugs:
-        raise ValueError("no player links found on pvl.ph/players")
-
+    for row in soup.select("#stats tr"):
+        link = row.select_one("a[href*='/players/']")
+        match = re.search(r"/players/([a-z0-9-]+)/?$", link.get("href", "") if link else "", re.I)
+        if match and match.group(1).lower() not in slugs:
+            slugs.append(match.group(1).lower())
     return slugs
 
 
-def parse_player_name(soup: BeautifulSoup) -> str:
-    if soup.title:
-        name = soup.title.get_text(strip=True).split(" - ")[0].strip()
-        if name:
-            return name
-
-    heading = soup.select_one("h2, h3, h4")
-    return heading.get_text(" ", strip=True) if heading else ""
-
-
-def parse_profile_field(soup: BeautifulSoup, label: str) -> str:
-    for row in soup.select(".player-info .d-flex"):
-        label_el = row.select_one(".fw-bold")
-        value_el = label_el.find_next_sibling("div") if label_el else None
-        if label_el and value_el and label_el.get_text(strip=True).startswith(label):
-            return value_el.get_text(" ", strip=True)
-    return ""
-
-
-def parse_listing_card_info(soup: BeautifulSoup) -> dict[str, str]:
-    card = soup.select_one("a[href*='/players/'] .player-position")
-    jersey = ""
-    position = ""
-    if card:
-        spans = card.select("span")
-        if spans:
-            jersey = spans[0].get_text(strip=True).lstrip("#")
-        if len(spans) > 1:
-            position = spans[1].get_text(strip=True)
-
-    team_img = soup.select_one(".team-image img")
-    team = team_img.get("alt", "").strip() if team_img else ""
-    return {"jersey": jersey, "position": position, "team": team}
+def conference_players(session: requests.Session, conference: dict) -> list[str]:
+    """Union of every leader table. The conference in progress is served by the
+    leader pages; past conferences only by the filter endpoints."""
+    found: list[str] = []
+    for category in LEADER_CATEGORIES:
+        def filtered() -> str:
+            resp = session.post(f"https://pvl.ph/{category}-conference-filter", data={"competition_id": conference["id"]}, headers=HEADERS, timeout=30)
+            resp.raise_for_status()
+            return resp.text
+        if conference["selected"]:
+            resp = session.get(f"{LEADERS_URL}/{category}s", headers=HEADERS, timeout=30)
+            resp.raise_for_status()
+            slugs = leader_slugs(resp.text) or leader_slugs(filtered())
+        else:
+            slugs = leader_slugs(filtered())
+        found.extend(s for s in slugs if s not in found)
+    return found
 
 
-def parse_stat_blocks(container) -> dict[str, float | int | None]:
-    stats: dict[str, float | int | None] = {}
-
-    for row in container.select(".row.gx-0"):
-        titles = row.select(".table-title")
-        if not titles:
-            continue
-
-        section = titles[0].get_text(strip=True)
-        if section in {"Conference Stats", "Career Stats"}:
-            wrappers = row.select(".table-column-wrapper")
-            labels = ["sets_played", "total_points", "avg_per_set"]
-            for wrapper, key in zip(wrappers, labels):
-                spans = wrapper.select("span")
-                if len(spans) >= 2:
-                    stats[key] = parse_number(spans[0].get_text(" ", strip=True))
-            continue
-
-        for wrapper in row.select(".table-column-wrapper"):
-            spans = wrapper.select("span")
-            if len(spans) < 2:
-                continue
-            value = spans[0].get_text(" ", strip=True)
-            label = spans[1].get_text(strip=True)
-            key = SECTION_LABEL_MAP.get((section, label))
-            if key:
-                stats[key] = parse_number(value)
-
-    return stats
-
-
-def parse_career_stats(soup: BeautifulSoup) -> dict[str, float | int | None]:
-    career = soup.select_one("#career")
-    if career is None:
-        return {}
-    return parse_stat_blocks(career)
-
-
-def parse_conferences(soup: BeautifulSoup) -> list[tuple[str, str]]:
-    select = soup.select_one("#careerStatsFilter")
-    if select is None:
-        return []
-
-    conferences: list[tuple[str, str]] = []
-    for option in select.select("option"):
-        value = option.get("value")
-        if not value:
-            continue
-        conferences.append((value, option.get_text(strip=True)))
-    return conferences
-
-
-def conference_stats_from_api(slug: str, conference_id: str) -> dict | None:
-    resp = requests.post(
-        CONFERENCE_STATS_URL,
-        data={"conferenceId": conference_id, "playerslug": slug},
-        headers=HEADERS,
-        timeout=30,
-    )
+def player_line(slug: str, conference: dict) -> dict | None:
+    resp = requests.post(CONFERENCE_STATS_URL, data={"conferenceId": conference["id"], "playerslug": slug}, headers=HEADERS, timeout=30)
     resp.raise_for_status()
     text = resp.text.strip()
     if not text or text == "false":
         return None
-    return json.loads(text)
-
-
-def build_row_from_api(
-    slug: str,
-    stat_type: str,
-    conference_id: str,
-    conference_name: str,
-    data: dict,
-    profile: dict[str, str],
-) -> dict:
-    sets_played = parse_number(data.get("setsPlayed"))
-    atk_point = parse_number(data.get("AtkPoint")) or 0
-    blk_point = parse_number(data.get("BlkPoint")) or 0
-    srv_point = parse_number(data.get("SrvPoint")) or 0
-    total_points = atk_point + blk_point + srv_point
-    avg_per_set = None
-    if sets_played:
-        avg_per_set = round(total_points / sets_played, 2)
-
+    data = json.loads(text)
+    if data.get("slug") != slug or str(data.get("competitionId")) != str(conference["id"]):
+        raise ValueError("response is for a different player or conference")
     row = {
         "player_slug": slug,
-        "player_name": f"{data.get('firstName', '').strip()} {data.get('lastName', '').strip()}".strip()
-        or profile.get("player_name", ""),
-        "team": data.get("teamName") or profile.get("team", ""),
-        "position": data.get("position") or profile.get("position", ""),
-        "jersey": data.get("jersey_number") or profile.get("jersey", ""),
-        "height": data.get("height") or profile.get("height", ""),
-        "school": data.get("school") or profile.get("school", ""),
-        "stat_type": stat_type,
-        "conference_id": conference_id,
-        "conference_name": conference_name,
-        "sets_played": sets_played,
-        "total_points": total_points,
-        "avg_per_set": avg_per_set,
-        "pts_atk": parse_number(data.get("AtkPoint")),
-        "pts_blk": parse_number(data.get("BlkPoint")),
-        "pts_ace": parse_number(data.get("SrvPoint")),
-        "exe_set": parse_number(data.get("SetExcel")),
-        "exe_dig": parse_number(data.get("DigExcel")),
-        "exe_rec": parse_number(data.get("RecExcel")),
-        "fault_atk": parse_number(data.get("AtkFault")),
-        "fault_blk": parse_number(data.get("BlkFault")),
-        "fault_srv": parse_number(data.get("SrvFault")),
-        "fault_set": parse_number(data.get("SetFault")),
-        "fault_dig": parse_number(data.get("DigFault")),
-        "fault_rec": parse_number(data.get("RecFault")),
-        "total_atk": sum(
-            parse_number(data.get(key)) or 0 for key in ("AtkFault", "AtkCont", "AtkPoint")
-        ),
-        "total_blk": sum(
-            parse_number(data.get(key)) or 0 for key in ("BlkFault", "BlkCont", "BlkPoint")
-        ),
-        "total_ace": sum(
-            parse_number(data.get(key)) or 0 for key in ("SrvFault", "SrvCont", "SrvPoint")
-        ),
-        "total_set": sum(
-            parse_number(data.get(key)) or 0 for key in ("SetFault", "SetCont", "SetExcel")
-        ),
-        "total_dig": sum(
-            parse_number(data.get(key)) or 0 for key in ("DigFault", "DigCont", "DigExcel")
-        ),
-        "total_rec": sum(
-            parse_number(data.get(key)) or 0 for key in ("RecFault", "RecCont", "RecExcel")
-        ),
+        "player_name": f"{(data.get('firstName') or '').strip()} {(data.get('lastName') or '').strip()}".strip() or slug,
+        "team": data.get("teamName") or "",
+        "position": data.get("position") or "",
+        "jersey": data.get("jersey_number") or "",
+        "height": data.get("height") or "",
+        "school": data.get("school") or "",
+        "stat_type": "conference",
+        "conference_id": conference["id"],
+        "conference_name": conference["name"],
+        "sets_played": count(data.get("setsPlayed")),
     }
+    for skill, point, fault, cont in SKILLS:
+        row[POINT_COLUMNS[skill]] = count(data.get(point))
+        row[FAULT_COLUMNS[skill]] = count(data.get(fault))
+        row[f"total_{skill}"] = count(data.get(point)) + count(data.get(fault)) + count(data.get(cont))
+    return with_rates(row)
 
-    if sets_played:
-        row["avg_atk"] = round((parse_number(data.get("AtkPoint")) or 0) / sets_played, 2)
-        row["avg_blk"] = round((parse_number(data.get("BlkPoint")) or 0) / sets_played, 2)
-        row["avg_ace"] = round((parse_number(data.get("SrvPoint")) or 0) / sets_played, 2)
-        row["avg_set"] = round((parse_number(data.get("SetExcel")) or 0) / sets_played, 2)
-        row["avg_dig"] = round((parse_number(data.get("DigExcel")) or 0) / sets_played, 2)
-        row["avg_rec"] = round((parse_number(data.get("RecExcel")) or 0) / sets_played, 2)
 
-    for total_key, point_key in (
-        ("total_atk", "AtkPoint"),
-        ("total_blk", "BlkPoint"),
-        ("total_ace", "SrvPoint"),
-        ("total_set", "SetExcel"),
-        ("total_dig", "DigExcel"),
-        ("total_rec", "RecExcel"),
-    ):
-        total = row.get(total_key)
-        points = parse_number(data.get(point_key))
-        if total:
-            row[f"success_{total_key.removeprefix('total_')}"] = round((points or 0) / total * 100, 2)
-
+def with_rates(row: dict) -> dict:
+    """Points, per-set averages, success and efficiency, as the app derives them."""
+    sets = row["sets_played"]
+    row["total_points"] = row["pts_atk"] + row["pts_blk"] + row["pts_ace"]
+    row["avg_per_set"] = round(row["total_points"] / sets, 2) if sets else 0
+    for skill, *_ in SKILLS:
+        good, fault, total = row[POINT_COLUMNS[skill]], row[FAULT_COLUMNS[skill]], row[f"total_{skill}"]
+        row[f"avg_{skill}"] = round(good / sets, 2) if sets else 0
+        row[f"success_{skill}"] = round(good / total * 100, 2) if total else 0
+        row[f"efficiency_{skill}"] = round((good - fault) / total * 100, 2) if total else 0
     return row
 
 
-def build_row_from_career(
-    slug: str,
-    profile: dict[str, str],
-    stats: dict[str, float | int | None],
-) -> dict:
-    row = {
-        "player_slug": slug,
-        "player_name": profile.get("player_name", ""),
-        "team": profile.get("team", ""),
-        "position": profile.get("position", ""),
-        "jersey": profile.get("jersey", ""),
-        "height": profile.get("height", ""),
-        "school": profile.get("school", ""),
-        "stat_type": "career",
-        "conference_id": "",
-        "conference_name": "",
-    }
-    for field in STAT_FIELDS:
-        row[field] = stats.get(field)
-    return row
-
-
-def scrape_player(slug: str) -> list[dict]:
-    resp = requests.get(PLAYER_URL.format(slug=slug), headers=HEADERS, timeout=30)
-    resp.raise_for_status()
-    soup = BeautifulSoup(resp.text, "html.parser")
-
-    profile = {
-        "player_name": parse_player_name(soup),
-        "height": parse_profile_field(soup, "Height:"),
-        "position": parse_profile_field(soup, "Position:"),
-        "school": parse_profile_field(soup, "School:"),
-        "birthday": parse_profile_field(soup, "Birthday:"),
-        "birth_place": parse_profile_field(soup, "Birth Place:"),
-    }
-    profile.update(parse_listing_card_info(soup))
-    if not profile["position"]:
-        profile["position"] = parse_profile_field(soup, "Position:")
-
-    rows: list[dict] = []
-
-    career_stats = parse_career_stats(soup)
-    if career_stats:
-        rows.append(build_row_from_career(slug, profile, career_stats))
-
-    for conference_id, conference_name in parse_conferences(soup):
-        data = conference_stats_from_api(slug, conference_id)
-        if data is None:
-            continue
-        rows.append(
-            build_row_from_api(
-                slug,
-                "conference",
-                conference_id,
-                conference_name,
-                data,
-                profile,
-            )
-        )
-
-    if not rows:
-        raise ValueError("no statistics found")
-
-    return rows
+def career_rows(rows: list[dict]) -> list[dict]:
+    """Career line per player: the sum of every conference scraped."""
+    by_player: dict[str, list[dict]] = {}
+    for row in rows:
+        by_player.setdefault(row["player_slug"], []).append(row)
+    careers = []
+    for slug, lines in by_player.items():
+        latest = max(lines, key=lambda r: r["conference_id"])
+        career = {"player_slug": slug, **{k: latest[k] for k in PROFILE_COLUMNS}, "team": "", "stat_type": "career", "conference_id": "", "conference_name": ""}
+        for column in COUNT_COLUMNS:
+            career[column] = sum(line[column] for line in lines)
+        careers.append(with_rates(career))
+    return careers
 
 
 def main() -> None:
-    output_path = output_excel_path()
+    parser = argparse.ArgumentParser(description="Scrape official PVL player statistics into a spreadsheet.")
+    parser.add_argument("--conference", type=int, action="append", default=[], help="pvl.ph conference id (repeatable)")
+    parser.add_argument("--all", action="store_true", help="every conference listed on pvl.ph/leaders, plus career rows")
+    parser.add_argument("--workers", type=int, default=4, help="player requests in flight (default 4)")
+    args = parser.parse_args()
 
+    session = requests.Session()
     try:
-        slugs = fetch_player_slugs()
+        listed = leader_conferences(session)
     except (requests.RequestException, ValueError) as exc:
-        print(f"Error: failed to load player list: {exc}", file=sys.stderr)
+        print(f"Error: failed to load pvl.ph/leaders: {exc}", file=sys.stderr)
         sys.exit(1)
+    by_id = {c["id"]: c for c in listed}
+    if args.all:
+        conferences = listed
+    elif args.conference:
+        conferences = [by_id.get(i, {"id": i, "name": f"Conference {i}", "selected": False}) for i in args.conference]
+    else:
+        conferences = [next((c for c in listed if c["selected"]), listed[0])]
 
-    print(f"Found {len(slugs)} players on pvl.ph/players")
-
-    all_rows: list[dict] = []
-    fetched = 0
+    rows: list[dict] = []
     failed = 0
-
-    for index, slug in enumerate(slugs):
+    for conference in conferences:
         try:
-            rows = scrape_player(slug)
-            all_rows.extend(rows)
-            fetched += 1
-            print(f"Fetched {slug}: {len(rows)} stat rows")
-        except requests.HTTPError as exc:
-            failed += 1
-            status = exc.response.status_code if exc.response is not None else "unknown"
-            print(f"Warning: {slug} failed with HTTP {status}", file=sys.stderr)
-        except (requests.RequestException, ValueError, json.JSONDecodeError) as exc:
-            failed += 1
-            print(f"Warning: {slug} failed: {exc}", file=sys.stderr)
+            slugs = conference_players(session, conference)
+        except requests.RequestException as exc:
+            print(f"Warning: {conference['name']}: could not list players: {exc}", file=sys.stderr)
+            continue
+        print(f"{conference['name']} (#{conference['id']}): {len(slugs)} players")
 
-        if index < len(slugs) - 1:
-            time.sleep(REQUEST_DELAY_SEC)
+        def fetch(slug: str):
+            try:
+                return slug, player_line(slug, conference), None
+            except (requests.RequestException, ValueError) as exc:
+                return slug, None, exc
 
-    if not all_rows:
+        with ThreadPoolExecutor(max_workers=max(1, args.workers)) as pool:
+            for slug, row, error in pool.map(fetch, slugs):
+                if error:
+                    failed += 1
+                    print(f"Warning: {slug}: {error}", file=sys.stderr)
+                elif row:
+                    rows.append(row)
+
+    if not rows:
         print("Error: no player statistics collected.", file=sys.stderr)
         sys.exit(1)
+    if args.all:
+        rows.extend(career_rows([r for r in rows if r["stat_type"] == "conference"]))
 
-    df = pd.DataFrame(all_rows)
-    sort_cols = [col for col in ["player_name", "stat_type", "conference_name"] if col in df.columns]
-    if sort_cols:
-        df = df.sort_values(sort_cols)
-
+    output_path = output_excel_path()
+    df = pd.DataFrame(rows).sort_values(["player_name", "stat_type", "conference_name"])
     with pd.ExcelWriter(output_path, engine="openpyxl") as writer:
         df.to_excel(writer, index=False, sheet_name="Player Stats")
-
-    print(
-        f"Done. Players fetched: {fetched}, failed: {failed}, "
-        f"stat rows written: {len(df)} -> {output_path.name}"
-    )
+    print(f"Done. Stat rows written: {len(df)}, failed: {failed} -> {output_path.name}")
 
 
 if __name__ == "__main__":
