@@ -35,7 +35,7 @@ export function NewsFeed({ articles }: { articles: NewsArticle[] }) {
           {visible.map((article, index) => (
             <article
               key={article.slug}
-              className={`group relative overflow-hidden rounded-card border border-border/90 bg-surface/95 p-5 shadow-card transition-all duration-150 ease-standard hover:border-primary/45 hover:bg-elevated/35 hover:shadow-raised md:p-7 ${index === 0 ? "scoreboard-hero lg:col-span-2" : ""}`}
+              className={`group relative overflow-hidden rounded-card border border-white/[0.1] p-5 transition-all duration-150 ease-standard hover:border-primary/45 md:p-7 ${index === 0 ? "scoreboard-hero lg:col-span-2" : "translucent-card"}`}
             >
               <div className="mb-4 flex flex-wrap items-center gap-2">
                 <Badge tone="primary">{article.category}</Badge>
@@ -46,7 +46,7 @@ export function NewsFeed({ articles }: { articles: NewsArticle[] }) {
                 <Link href={`/news/${article.slug}`} className="rounded-sm after:absolute after:inset-0 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary">{article.title}</Link>
               </h2>
               <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted">{article.summary}</p>
-              <div className="mt-6 flex items-center justify-between gap-4 border-t border-border/70 pt-4 text-xs">
+              <div className="mt-6 flex items-center justify-between gap-4 border-t border-white/[0.07] pt-4 text-xs">
                 <span className="font-semibold text-muted">{article.author}</span>
                 <span className="inline-flex items-center gap-1 font-bold text-primary transition-transform group-hover:translate-x-0.5">Read story <ArrowUpRight size={15} aria-hidden="true" /></span>
               </div>

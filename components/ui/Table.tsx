@@ -6,14 +6,18 @@ import type {
 import { cn } from "@/lib/utils";
 
 export function TableShell({
+  translucent = false,
   className,
   children,
   ...props
-}: HTMLAttributes<HTMLDivElement>) {
+}: HTMLAttributes<HTMLDivElement> & { translucent?: boolean }) {
   return (
     <div
       className={cn(
-        "h-scroll relative w-full overflow-x-auto rounded-card border border-border/90 bg-surface/95 shadow-card",
+        "h-scroll relative w-full overflow-x-auto",
+        translucent
+          ? "rounded-card border border-white/[0.1] translucent-card"
+          : "rounded-card border border-border/90 bg-surface/95 shadow-card",
         className
       )}
       {...props}

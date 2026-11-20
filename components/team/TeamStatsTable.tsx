@@ -21,7 +21,7 @@ export function TeamStatsTable({ players, league }: { players: Player[]; league:
   const volleyball = isVolleyballLeague(league);
 
   return (
-    <TableShell>
+    <TableShell translucent>
       <table className="w-full min-w-[26rem] text-left text-xs">
         <thead>
           <tr>

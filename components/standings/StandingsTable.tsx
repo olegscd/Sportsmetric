@@ -83,7 +83,7 @@ export function StandingsTable({
   const showPlayoffCutoff = rows.length > 4 && !isOldSeason;
 
   return (
-    <TableShell>
+    <TableShell translucent>
       <table className="w-full min-w-[34rem] text-left text-sm">
         <thead>
           <tr>
@@ -149,7 +149,7 @@ export function StandingsTable({
                 </Td>
                 <Td numeric className="w-24 font-mono text-xs font-semibold text-muted">
                   <div className="flex items-center justify-end gap-2">
-                    <span className="hidden h-1.5 w-10 overflow-hidden rounded-full bg-surface-2 sm:inline-block">
+                    <span className="hidden h-1.5 w-10 overflow-hidden rounded-full bg-white/[0.06] sm:inline-block">
                       <span
                         className="block h-full rounded-full"
                         style={{

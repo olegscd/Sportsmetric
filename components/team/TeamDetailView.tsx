@@ -75,7 +75,7 @@ export function TeamDetailView({ id }: { id: string }) {
           All teams
         </Link>
 
-        <Card className="flex flex-col gap-4 p-5">
+        <Card translucent className="flex flex-col gap-4 p-5">
           <div className="flex items-center gap-4">
             <TeamBadge team={team} size="lg" />
             <div className="min-w-0 flex-1">

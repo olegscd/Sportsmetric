@@ -308,7 +308,7 @@ function PlayerDetailContent({ player, team, officialPvlRecord }: { player: Play
           allPlayerSeasons={seasonLines.length > 0 ? seasonLines : [player]}
         />
       ) : (
-        <Card className="flex flex-col gap-3 p-5">
+        <Card translucent className="flex flex-col gap-3 p-5">
           <SectionHeading
             level={2}
             title="Performance Overview"
@@ -339,13 +339,13 @@ function PlayerDetailContent({ player, team, officialPvlRecord }: { player: Play
                 />
               </div>
             }
-            className="border-b border-border pb-3"
+            className="border-b border-white/[0.07] pb-3"
           />
 
           <CareerStatGrid averages={displayAverages} />
 
           {seasonLines.length > 0 ? (
-            <ul className="flex flex-col gap-1.5 border-t border-border pt-3">
+            <ul className="flex flex-col gap-1.5 border-t border-white/[0.07] pt-3">
               {seasonLines.map((line: Player) => {
                 const lineAvg = getPlayerAverages(line);
                 return (

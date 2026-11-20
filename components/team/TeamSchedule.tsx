@@ -1,7 +1,7 @@
 "use client";
 
 import { Badge } from "@/components/ui/Badge";
-import { Card, cardClasses } from "@/components/ui/Card";
+import { Card } from "@/components/ui/Card";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { TeamBadge } from "@/components/ui/TeamBadge";
 import { isPlayoffGame } from "@/lib/derivations";
@@ -26,10 +26,7 @@ function ScheduleRow({ entry, onOpen }: { entry: TeamScheduleEntry; onOpen: (id:
         type="button"
         onClick={() => onOpen(game.id)}
         aria-label={`${isHome ? "vs" : "at"} ${opponent.name}${resultLabel ? `, ${resultLabel} ${teamScore}-${opponentScore}` : isLive ? ", live" : ""}`}
-        className={cardClasses({
-          interactive: true,
-          className: "flex w-full items-center gap-3 p-3 text-left",
-        })}
+        className="flex w-full items-center gap-3 rounded-control px-2 py-2.5 text-left transition-colors duration-150 ease-standard hover:bg-white/[0.04] focus-visible:bg-white/[0.04]"
       >
         <span
           aria-hidden="true"
@@ -100,7 +97,7 @@ function ScheduleGroup({
       <h3 className="text-2xs font-bold uppercase tracking-wide text-muted">
         {title} <span className="tabular-nums">({entries.length})</span>
       </h3>
-      <ul className="flex flex-col gap-2">
+      <ul className="flex flex-col divide-y divide-white/[0.06]">
         {entries.map((entry) => (
           <ScheduleRow key={entry.game.id} entry={entry} onOpen={onOpen} />
         ))}
@@ -124,7 +121,7 @@ export function TeamSchedule({ team, games }: { team: Team; games: Game[] }) {
   }
 
   return (
-    <Card className="flex flex-col gap-5 p-4">
+    <Card translucent className="flex flex-col gap-5 p-4">
       <ScheduleGroup title="Live & Upcoming" entries={upcoming} onOpen={openGame} />
       <ScheduleGroup title="Results" entries={completed} onOpen={openGame} />
     </Card>

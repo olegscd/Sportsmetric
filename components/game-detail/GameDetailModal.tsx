@@ -140,7 +140,7 @@ export function GameDetailModal() {
         />
         <div aria-hidden="true" className="mx-auto mt-2 h-1 w-10 shrink-0 rounded-full bg-border sm:hidden" />
 
-        <div className="flex items-start justify-between gap-3 border-b border-border/80 px-4 pb-3 pt-3 sm:px-6 sm:pt-4">
+        <div className="flex items-start justify-between gap-3 border-b border-white/[0.07] px-4 pb-3 pt-3 sm:px-6 sm:pt-4">
           <div className="min-w-0">
             <span id="game-detail-title" className="block truncate text-2xs font-bold uppercase tracking-wider text-muted">
               {game.league} {dateStr ? `• ${dateStr}` : ""} &middot; {effectiveStatus}
@@ -163,7 +163,7 @@ export function GameDetailModal() {
         </div>
 
         <div
-          className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-2 border-b border-border/70 px-3 py-4 sm:gap-4 sm:px-6 sm:py-5"
+          className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-2 border-b border-white/[0.07] px-3 py-4 sm:gap-4 sm:px-6 sm:py-5"
           style={{
             background: `radial-gradient(circle at 12% 50%, ${game.awayTeam.accentColor}22, transparent 48%), radial-gradient(circle at 88% 50%, ${game.homeTeam.accentColor}22, transparent 48%), var(--color-surface-2)`,
           }}
@@ -182,7 +182,7 @@ export function GameDetailModal() {
             <span className="font-display whitespace-nowrap text-3xl font-extrabold tabular-nums tracking-tight text-foreground sm:text-4xl">
               {game.awayScore} – {game.homeScore}
             </span>
-            <span className="rounded-full border border-border/80 bg-surface/80 px-2.5 py-0.5 text-2xs font-semibold text-muted">
+            <span className="rounded-full border border-white/[0.1] bg-white/[0.05] px-2.5 py-0.5 text-2xs font-semibold text-muted">
               {effectiveStatus === "LIVE"
                 ? game.timeRemaining
                   ? `Q${game.quarterOrSet} • ${game.timeRemaining}`

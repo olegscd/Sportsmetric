@@ -151,7 +151,7 @@ export function StandingsView() {
                     <Link
                       key={row.team.id}
                       href={`/teams/${row.team.id}`}
-                      className="group relative flex min-w-0 flex-col justify-between gap-2.5 overflow-hidden rounded-card border border-border/85 bg-surface/95 p-3.5 shadow-card transition-all hover:-translate-y-0.5 hover:border-border-strong hover:shadow-raised"
+                      className="group relative flex min-w-0 flex-col justify-between gap-2.5 overflow-hidden rounded-card border border-white/[0.1] p-3.5 translucent-card transition-all hover:-translate-y-0.5 hover:border-white/25"
                       style={{
                         backgroundImage: `radial-gradient(ellipse 85% 70% at 100% 0%, ${row.team.accentColor}26, transparent 62%)`,
                       }}
@@ -180,7 +180,7 @@ export function StandingsView() {
                           </p>
                         </div>
                       </div>
-                      <div className="h-1.5 w-full overflow-hidden rounded-full bg-surface-2">
+                      <div className="h-1.5 w-full overflow-hidden rounded-full bg-white/[0.06]">
                         <div
                           className="h-full rounded-full transition-all"
                           style={{

@@ -39,7 +39,8 @@ export function StatTile({
   return (
     <div
       className={cn(
-        "flex min-w-0 flex-col gap-1 rounded-card border border-border/80 bg-surface-2/85 p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]",
+        // A quiet inset on the translucent surfaces it sits in, not a second card.
+        "flex min-w-0 flex-col gap-1 rounded-card border border-white/[0.07] bg-white/[0.035] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]",
         className
       )}
       {...props}

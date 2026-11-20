@@ -341,7 +341,7 @@ export function UAAPArchiveView({ initialData }: { initialData: MergedUAAPData }
                   key={sport.slug}
                   href={hrefFor({ sport: sport.name })}
                   className={cn(
-                    "group flex aspect-square flex-col items-center justify-between rounded-card border border-border/90 bg-surface/95 p-4 text-center shadow-card transition-all duration-150 ease-standard hover:-translate-y-0.5 hover:shadow-raised",
+                    "group flex aspect-square flex-col items-center justify-between rounded-card border border-white/[0.1] translucent-card p-4 text-center transition-all duration-150 ease-standard hover:-translate-y-0.5 hover:shadow-raised",
                     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-archive/50",
                     sport.bgGlow
                   )}
@@ -411,7 +411,7 @@ export function UAAPArchiveView({ initialData }: { initialData: MergedUAAPData }
         </div>
 
         {availableSeasons.length === 0 ? (
-          <div className="rounded-card border border-border bg-surface p-12 text-center shadow-card">
+          <div className="rounded-card border border-white/[0.1] translucent-card p-12 text-center">
             <Calendar className="mx-auto mb-3 h-10 w-10 text-muted opacity-40" aria-hidden="true" />
             <h4 className="text-sm font-bold text-foreground">Nothing digitised yet</h4>
             <p className="mx-auto mt-1 max-w-sm text-xs text-muted">
@@ -446,7 +446,7 @@ export function UAAPArchiveView({ initialData }: { initialData: MergedUAAPData }
                 <Link
                   key={season}
                   href={seasonHref(season)}
-                  className="group flex flex-col justify-between rounded-card border border-border bg-surface p-5 text-left shadow-card transition-colors hover:border-archive/40 hover:bg-elevated/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-archive/50"
+                  className="group flex flex-col justify-between rounded-card border border-white/[0.1] translucent-card p-5 text-left transition-colors hover:border-archive/40 hover:bg-elevated/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-archive/50"
                 >
                   <div className="flex w-full items-start justify-between">
                     <div>
@@ -633,7 +633,7 @@ export function UAAPArchiveView({ initialData }: { initialData: MergedUAAPData }
             </Notice>
           )}
 
-          <TableShell>
+          <TableShell translucent>
             <table className="w-full min-w-[36rem] border-collapse text-left text-sm">
               <thead>
                 <tr>
@@ -735,7 +735,7 @@ export function UAAPArchiveView({ initialData }: { initialData: MergedUAAPData }
 
               {Array.isArray(divisionAwards.mythical_five) &&
                 divisionAwards.mythical_five.length > 0 && (
-                  <div className="rounded-card border border-border bg-surface p-5 shadow-card md:col-span-2 lg:col-span-1">
+                  <div className="rounded-card border border-white/[0.1] translucent-card p-5 md:col-span-2 lg:col-span-1">
                     <div className="mb-3 flex items-center gap-2">
                       <Medal className="h-5 w-5 text-archive" aria-hidden="true" />
                       <h4 className="text-sm font-bold uppercase tracking-wider text-foreground">
@@ -783,7 +783,7 @@ export function UAAPArchiveView({ initialData }: { initialData: MergedUAAPData }
           )}
 
           {chessMedalists && (
-            <div className="rounded-card border border-border bg-surface p-5 shadow-card">
+            <div className="rounded-card border border-white/[0.1] translucent-card p-5">
               <div className="mb-4 flex items-center gap-2">
                 <Crown className="h-5 w-5 text-archive" aria-hidden="true" />
                 <h4 className="text-base font-bold text-foreground">
@@ -795,7 +795,7 @@ export function UAAPArchiveView({ initialData }: { initialData: MergedUAAPData }
                 {Object.entries(chessMedalists).map(([board, medalists]) => (
                   <div
                     key={board}
-                    className="space-y-2.5 rounded-card border border-border bg-elevated/50 p-4"
+                    className="space-y-2.5 rounded-card border border-white/[0.07] bg-white/[0.035] p-4"
                   >
                     <h5 className="text-xs font-bold uppercase tracking-wider text-muted">
                       Board {board}
@@ -851,7 +851,7 @@ export function UAAPArchiveView({ initialData }: { initialData: MergedUAAPData }
           )}
 
           {!divisionAwards && !chessMedalists && (
-            <div className="rounded-card border border-border bg-surface p-12 text-center text-muted shadow-card">
+            <div className="rounded-card border border-white/[0.1] translucent-card p-12 text-center text-muted">
               No individual awards recorded for this division in {currentSeason}.
             </div>
           )}
@@ -865,7 +865,7 @@ export function UAAPArchiveView({ initialData }: { initialData: MergedUAAPData }
                 {Object.entries(leaderboards).map(([category, leaders]) => (
                   <div
                     key={category}
-                    className="rounded-card border border-border bg-surface p-4 shadow-card"
+                    className="rounded-card border border-white/[0.1] translucent-card p-4"
                   >
                     <h5 className="mb-2.5 text-xs font-bold uppercase capitalize tracking-wider text-foreground">
                       {leaders.label} ({leaders.unit})

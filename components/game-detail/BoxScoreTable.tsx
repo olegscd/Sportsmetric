@@ -76,7 +76,7 @@ export function BoxScoreTable({
 
   if (isVolleyball) {
     return (
-      <TableShell>
+      <TableShell translucent>
         <table className="w-full min-w-[300px] text-left text-xs">
           <thead>
             <tr>
@@ -135,7 +135,7 @@ export function BoxScoreTable({
   }
 
   return (
-    <TableShell>
+    <TableShell translucent>
       <table className="w-full min-w-[500px] text-left text-xs">
         <thead>
           <tr>

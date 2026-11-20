@@ -13,8 +13,8 @@ interface StatLeaderCardProps {
 
 export function StatLeaderCard({ title, entries, formatValue }: StatLeaderCardProps) {
   return (
-    <Card className="w-full p-4">
-      <div className="mb-2.5 flex items-center justify-between gap-2 border-b border-border/60 pb-2">
+    <Card translucent className="w-full p-4">
+      <div className="mb-2.5 flex items-center justify-between gap-2 border-b border-white/[0.07] pb-2">
         <p className="text-2xs font-bold uppercase tracking-wider text-muted">
           {title}
         </p>

@@ -21,7 +21,7 @@ export function MatchHistory({ entries }: { entries: PlayerGameLogEntry[] }) {
   }
 
   return (
-    <div className="flex flex-col gap-2.5">
+    <div className={cardClasses({ translucent: true, className: "flex flex-col divide-y divide-white/[0.06] px-2 py-1" })}>
       {entries.map(({ game, opponent, isHome, stat }) => {
         const teamScore = isHome ? game.homeScore : game.awayScore;
         const oppScore = isHome ? game.awayScore : game.homeScore;
@@ -42,10 +42,7 @@ export function MatchHistory({ entries }: { entries: PlayerGameLogEntry[] }) {
             key={game.id}
             type="button"
             onClick={() => openGame(game.id)}
-            className={cardClasses({
-              interactive: true,
-              className: "flex w-full flex-wrap items-center gap-3 p-3 text-left",
-            })}
+            className="flex w-full items-center gap-3 rounded-control px-2 py-2.5 text-left transition-colors duration-150 ease-standard hover:bg-white/[0.04] focus-visible:bg-white/[0.04] flex-wrap"
           >
             <span
               aria-hidden="true"

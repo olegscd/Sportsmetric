@@ -220,9 +220,9 @@ export function PlayerVolleyballStats({
   }
 
   return (
-    <Card className="flex flex-col gap-4 p-5">
+    <Card translucent className="flex flex-col gap-4 p-5">
       {/* Header & Season Selector */}
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border pb-3">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/[0.07] pb-3">
         <div className="min-w-0">
           <div className="flex items-center gap-1.5">
             <Badge tone="primary" size="sm">
@@ -276,7 +276,7 @@ export function PlayerVolleyballStats({
 
       {/* 2. Scoring bar / playmaking bar (hidden for libero) */}
       {!isLibero && totalActions > 0 && (
-        <div className="flex flex-col gap-2 rounded-card border border-border bg-elevated/60 p-3.5">
+        <div className="flex flex-col gap-2 rounded-card border border-white/[0.07] bg-white/[0.035] p-3.5">
           <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-semibold text-foreground">
             <span>{isSetter ? "Playmaking & Defense Breakdown" : "Scoring Breakdown"}</span>
             <span className="text-2xs font-medium text-muted">
@@ -285,7 +285,7 @@ export function PlayerVolleyballStats({
           </div>
 
           {/* Progress bar (only render a segment if its value is > 0) */}
-          <div className="flex h-3 w-full overflow-hidden rounded-full border border-border/40 bg-surface p-0.5">
+          <div className="flex h-3 w-full overflow-hidden rounded-full border border-white/[0.06] bg-white/[0.05] p-0.5">
             {isSetter ? (
               <>
                 {stat.exeSet > 0 && (

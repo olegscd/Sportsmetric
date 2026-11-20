@@ -41,7 +41,7 @@ export function MomentumBar({
 
   return (
     <div className="flex flex-col gap-3.5">
-      <div className="rounded-card border border-border/80 bg-surface-2/85 p-3.5">
+      <div className="translucent-card rounded-card border border-white/[0.1] p-3.5">
         <div className="mb-2 flex items-center justify-between gap-2">
           <p className="text-2xs font-bold uppercase tracking-wider text-muted">
             {heading}
@@ -51,7 +51,7 @@ export function MomentumBar({
         <div
           role="img"
           aria-label={ariaLabel}
-          className="flex h-2.5 overflow-hidden rounded-full bg-surface p-0.5 ring-1 ring-border/70"
+          className="flex h-2.5 overflow-hidden rounded-full bg-white/[0.05] p-0.5 ring-1 ring-white/[0.08]"
         >
           {scoringEvents.length > 0 ? (
             scoringEvents.map((event) => (
@@ -104,7 +104,7 @@ export function MomentumBar({
         {[game.awayTeam, game.homeTeam].map((team) => (
           <div
             key={team.id}
-            className="relative overflow-hidden rounded-card border border-border/80 bg-surface p-3"
+            className="translucent-card relative overflow-hidden rounded-card border border-white/[0.1] p-3"
           >
             <div
               aria-hidden="true"
@@ -120,8 +120,8 @@ export function MomentumBar({
       </div>
 
       {awayTotals && homeTotals ? (
-        <div className="rounded-card border border-border/85 bg-surface p-3.5 shadow-card">
-          <div className="mb-3 grid grid-cols-[1fr_auto_1fr] items-center gap-2 border-b border-border/70 pb-2 text-2xs font-bold uppercase tracking-wider text-muted">
+        <div className="translucent-card rounded-card border border-white/[0.1] p-3.5">
+          <div className="mb-3 grid grid-cols-[1fr_auto_1fr] items-center gap-2 border-b border-white/[0.07] pb-2 text-2xs font-bold uppercase tracking-wider text-muted">
             <span className="truncate">{game.awayTeam.shortName}</span>
             <span>Team Box Totals</span>
             <span className="truncate text-right">{game.homeTeam.shortName}</span>
@@ -166,7 +166,7 @@ export function MomentumBar({
                     <span className="text-right font-semibold text-foreground">{row.home}</span>
                   </div>
                   {total > 0 ? (
-                    <div className="flex h-1 overflow-hidden rounded-full bg-surface-2">
+                    <div className="flex h-1 overflow-hidden rounded-full bg-white/[0.06]">
                       <div
                         className="h-full"
                         style={{
