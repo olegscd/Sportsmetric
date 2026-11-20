@@ -1,6 +1,7 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { getServiceSupabase } from "@/lib/supabase-admin";
 import { parseNativePvlPdf } from "@/lib/game-extractor";
+import { swapPlays, toPlayByPlayEvents } from "@/lib/play-by-play";
 import { resolveSyncBox, type NewSyncPlayer, type SyncPlayer } from "./box";
 import { matchTeam, philippineDay, planObservation } from "./plan";
 import { collectObservations, fetchSourceBytes } from "./sources";
@@ -178,12 +179,15 @@ async function syncBoxScores(db: SupabaseClient, jobs: BoxJob[], ctx: BoxContext
     }
     // Orient the source's home/away onto the stored fixture.
     const sourceHome = matchTeam(item.home, ctx.teams, source.league)?.id;
-    const [homeRows, awayRows] = sourceHome === game.home_team_id ? [box.home, box.away] : [box.away, box.home];
+    const sameSides = sourceHome === game.home_team_id;
+    const [homeRows, awayRows] = sameSides ? [box.home, box.away] : [box.away, box.home];
+    // Only LiveStats pages publish plays; null leaves stored plays untouched.
+    const plays = box.playByPlay?.length ? toPlayByPlayEvents(sameSides ? box.playByPlay : swapPlays(box.playByPlay), game.home_team_id, game.away_team_id) : null;
     const home = resolveSyncBox(homeRows, game.home_team_id, source.league, ctx.players);
     const away = resolveSyncBox(awayRows, game.away_team_id, source.league, ctx.players);
     const created: NewSyncPlayer[] = [...home.created, ...away.created];
     if (ctx.preview) { ctx.summary.boxScores++; continue; }
-    const saved = await db.rpc("apply_game_box_score", { run_id: ctx.runId, game: game.id, box: { home: home.items, away: away.items }, new_players: created });
+    const saved = await db.rpc("apply_game_box_score", { run_id: ctx.runId, game: game.id, box: { home: home.items, away: away.items }, new_players: created, plays });
     if (saved.error) {
       await ctx.recordIssue({ source_id: source.id, source_key: "box:" + game.id, game_id: game.id, message: "Box score update failed: " + saved.error.message });
       continue;

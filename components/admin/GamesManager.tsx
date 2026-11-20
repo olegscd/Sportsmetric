@@ -29,6 +29,7 @@ const PBP_TYPES: PlayByPlayEventType[] = [
   "FG_MISSED",
   "3PT_MADE",
   "FT_MADE",
+  "FT_MISSED",
   "REBOUND",
   "ASSIST",
   "STEAL",

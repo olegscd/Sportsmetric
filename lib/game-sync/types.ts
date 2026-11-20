@@ -1,4 +1,5 @@
 import type { ExtractedBoxRow } from "@/lib/game-extractor";
+import type { ExtractedPlay } from "@/lib/play-by-play";
 import type { League, TournamentStage } from "@/types/sports";
 
 export interface SyncSource {
@@ -32,8 +33,8 @@ export interface Observation {
   /** Live period (quarter, or overtime as 5+) and game clock, when published. */
   period?: number | null;
   clock?: string | null;
-  /** Official box score, oriented to `home`/`away` above. */
-  box?: { home: ExtractedBoxRow[]; away: ExtractedBoxRow[] } | null;
+  /** Official box score and play-by-play, oriented to `home`/`away` above. */
+  box?: { home: ExtractedBoxRow[]; away: ExtractedBoxRow[]; playByPlay?: ExtractedPlay[] } | null;
   /** PVL: official match-report PDF that carries the box score. */
   reportUrl?: string | null;
 }

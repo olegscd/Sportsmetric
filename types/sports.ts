@@ -19,6 +19,7 @@ export type PlayByPlayEventType =
   | "FG_MISSED"
   | "3PT_MADE"
   | "FT_MADE"
+  | "FT_MISSED"
   | "REBOUND"
   | "ASSIST"
   | "STEAL"

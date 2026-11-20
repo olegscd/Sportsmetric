@@ -219,11 +219,19 @@ test("database sync: live progression, alias refresh and box score protection", 
     stored = (await db.query<{ status: string; quarter_or_set: number; time_remaining: string }>("SELECT status,quarter_or_set,time_remaining FROM games WHERE id='existing'")).rows[0];
     assert.equal(stored.status, "FINAL"); assert.equal(stored.quarter_or_set, 5); assert.equal(stored.time_remaining, null);
     assert.equal((await box("existing", { home: [row("a")], away: [row("b")] })).rows[0].result, "updated");
+    // Official plays save alongside the box score; omitting them keeps what is stored.
+    const plays = [{ id: "pbp-1", timestamp: "09:40", period: 1, description: "A 2PT Layup", scoringTeamId: "home", currentScore: { home: 2, away: 0 }, type: "FG_MADE" }];
+    const withPlays = (payload: unknown, list: unknown) => db.query<{ result: string }>("SELECT apply_game_box_score($1,'existing',$2,'[]',$3) result", [run, payload, list]);
+    assert.equal((await withPlays({ home: [row("a")], away: [row("b")] }, plays)).rows[0].result, "updated");
+    assert.equal((await withPlays({ home: [row("a")], away: [row("b")] }, plays)).rows[0].result, "unchanged");
+    assert.equal((await box("existing", { home: [row("a")], away: [row("b")] })).rows[0].result, "unchanged");
+    assert.deepEqual((await db.query<{ play_by_play: unknown }>("SELECT play_by_play FROM games WHERE id='existing'")).rows[0].play_by_play, plays);
+    await assert.rejects(withPlays({ home: [row("a")], away: [row("b")] }, { not: "a list" }), /Invalid play-by-play/);
     // A hand-imported final box score is never replaced.
     await db.exec(`UPDATE games SET box_score='{"home":[{"playerId":"manual"}],"away":[]}' WHERE id='existing'`);
     assert.equal((await box("existing", { home: [row("a")], away: [row("b")] })).rows[0].result, "kept");
     await db.exec("SET ROLE anon");
-    await assert.rejects(db.query("SELECT apply_game_box_score($1,'existing','{}','[]')", [run]), /permission denied/);
+    await assert.rejects(db.query("SELECT apply_game_box_score($1,'existing','{}','[]',NULL)", [run]), /permission denied/);
     await db.exec("RESET ROLE");
   } finally { await db.close(); }
 });

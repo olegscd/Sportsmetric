@@ -22,6 +22,7 @@ const EVENT_ICONS: Record<
   FG_MISSED: CircleX,
   "3PT_MADE": CircleCheck,
   FT_MADE: CircleCheck,
+  FT_MISSED: CircleX,
   REBOUND: RotateCcw,
   ASSIST: Users,
   STEAL: Hand,

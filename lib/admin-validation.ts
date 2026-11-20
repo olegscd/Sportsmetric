@@ -32,7 +32,7 @@ const GAME_STATUSES: GameStatus[] = ["LIVE", "UPCOMING", "FINAL"];
 const STAGES: TournamentStage[] = ["ELIMINATION", "PLAY_IN", "SEMIFINALS", "FINALS"];
 const POSITIONS: Position[] = ["PG", "SG", "SF", "PF", "C", "OH", "OP", "MB", "S", "L"];
 const PBP_TYPES: PlayByPlayEventType[] = [
-  "FG_MADE", "FG_MISSED", "3PT_MADE", "FT_MADE", "REBOUND", "ASSIST", "STEAL",
+  "FG_MADE", "FG_MISSED", "3PT_MADE", "FT_MADE", "FT_MISSED", "REBOUND", "ASSIST", "STEAL",
   "BLOCK", "TURNOVER", "FOUL", "SUB", "TIMEOUT", "PERIOD_END", "KILL",
   "SERVE_ACE", "BLOCK_POINT",
 ];

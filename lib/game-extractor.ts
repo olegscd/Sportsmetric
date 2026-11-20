@@ -1,6 +1,7 @@
 import type { League, TournamentStage } from "@/types/sports";
 import * as cheerio from "cheerio";
 import { extractText, getDocumentProxy } from "unpdf";
+import { parseLiveStatsPlays, swapPlays, type ExtractedPlay } from "@/lib/play-by-play";
 
 type CheerioSelection = ReturnType<cheerio.CheerioAPI>;
 
@@ -49,6 +50,8 @@ export interface ExtractedGamePayload {
     home: ExtractedBoxRow[];
     away: ExtractedBoxRow[];
   };
+  /** Official play-by-play, oriented to homeTeam/awayTeam (LiveStats only). */
+  playByPlay?: ExtractedPlay[];
   note?: string;
 }
 
@@ -932,6 +935,13 @@ export function parseBasketballGamePage(
   const homeBox = extractPlayers(homeMeta.wrapEl);
   const awayBox = extractPlayers(awayMeta.wrapEl);
 
+  // Plays name the first box score team "pbpt1"; confirm that against the
+  // totals so a reordered page never credits the wrong team.
+  let playByPlay = parseLiveStatsPlays($);
+  const lastScore = playByPlay.at(-1)?.score;
+  if (lastScore && homeMeta.score !== awayMeta.score &&
+    lastScore.home === awayMeta.score && lastScore.away === homeMeta.score) playByPlay = swapPlays(playByPlay);
+
   return {
     league,
     stage,
@@ -954,5 +964,6 @@ export function parseBasketballGamePage(
       home: homeBox,
       away: awayBox,
     },
+    playByPlay,
   };
 }

@@ -1,5 +1,6 @@
 import * as cheerio from "cheerio";
 import { assertAllowedSourceUrl, parseBasketballGamePage, type ExtractedBoxRow } from "@/lib/game-extractor";
+import { swapPlays } from "@/lib/play-by-play";
 import { stageFromText } from "./plan";
 import type { Observation, SyncLink, SyncSource } from "./types";
 
@@ -176,14 +177,15 @@ const teamKey = (s: string) => s.replace(/[^a-z0-9]/gi, "").toLowerCase();
  * guessing when the tables cannot be tied to the two teams, or when a final
  * box score does not add up to the official final score.
  */
-export function basketballBox(html: string, source: SyncSource, home: string, away: string, finalScores: (number | null)[] | null): { home: ExtractedBoxRow[]; away: ExtractedBoxRow[] } | null {
+export function basketballBox(html: string, source: SyncSource, home: string, away: string, finalScores: (number | null)[] | null): NonNullable<Observation["box"]> | null {
   let parsed;
   try { parsed = parseBasketballGamePage(html, source.league); } catch { return null; }
   const a = teamKey(parsed.homeTeam.shortName), b = teamKey(parsed.awayTeam.shortName);
   const h = teamKey(home), w = teamKey(away);
-  let box: { home: ExtractedBoxRow[]; away: ExtractedBoxRow[] };
-  if (a === h && b === w) box = { home: parsed.boxScore.home, away: parsed.boxScore.away };
-  else if (a === w && b === h) box = { home: parsed.boxScore.away, away: parsed.boxScore.home };
+  const plays = parsed.playByPlay ?? [];
+  let box: NonNullable<Observation["box"]>;
+  if (a === h && b === w) box = { home: parsed.boxScore.home, away: parsed.boxScore.away, playByPlay: plays };
+  else if (a === w && b === h) box = { home: parsed.boxScore.away, away: parsed.boxScore.home, playByPlay: swapPlays(plays) };
   else return null;
   if (!box.home.length || !box.away.length) return null;
   if (finalScores) {

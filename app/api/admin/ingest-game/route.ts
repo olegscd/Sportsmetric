@@ -3,6 +3,7 @@ import { generateId } from "@/lib/data";
 import { buildGameId } from "@/lib/game-id";
 import { extractGameFromUrl, type ExtractedBoxRow, type ExtractedGamePayload } from "@/lib/game-extractor";
 import { findBestPlayerMatch, findBestTeamMatch } from "@/lib/game-ingest-match";
+import { toPlayByPlayEvents } from "@/lib/play-by-play";
 import { supabase } from "@/lib/supabase";
 import { hasServiceRoleAccess } from "@/lib/supabase-admin";
 import {
@@ -286,7 +287,7 @@ export async function POST(req: NextRequest) {
       home: mappedHomeBox,
       away: mappedAwayBox,
     },
-    playByPlay: [],
+    playByPlay: toPlayByPlayEvents(parsedPayload.playByPlay, homeTeamMatch.id, awayTeamMatch.id),
   };
 
   if (previewOnly) {
