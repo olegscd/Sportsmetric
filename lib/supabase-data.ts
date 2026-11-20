@@ -1,11 +1,29 @@
 import { ValidationError } from "@/lib/admin-validation";
 import { getEffectiveGameStatus } from "@/lib/derivations";
 import { inferLeague } from "@/lib/league-utils";
+import { mockGames, mockPlayers, mockSeasons, mockTeams } from "@/lib/mock-data";
 import { supabase } from "@/lib/supabase";
 import { isSeasonInProgress } from "@/lib/season-status";
 import { gameLinksFromRow, gameLinksToRow, seasonLinksFromRow, seasonLinksToRow } from "@/lib/watch-links";
 import { getServiceSupabase } from "@/lib/supabase-admin";
 import type { Game, GameLinks, GameStatus, League, Player, Season, SeasonLinks, Team } from "@/types/sports";
+
+let networkDownUntil = 0;
+
+/** True while a recent DNS/connection failure cooldown is active. */
+export function isSupabaseNetworkDown(): boolean {
+  return Date.now() < networkDownUntil;
+}
+
+/** True only when the remote Supabase host cannot be reached at the network/DNS layer. */
+export function isNetworkUnreachable(err: unknown): boolean {
+  const msg = err instanceof Error ? err.message : String(err);
+  const unreachable = /fetch failed|ENOTFOUND|ECONNREFUSED|EAI_AGAIN/i.test(msg);
+  if (unreachable) {
+    networkDownUntil = Date.now() + 60_000;
+  }
+  return unreachable;
+}
 
 
 function logSupabaseError(context: string, error: { message: string } | null): boolean {
@@ -413,60 +431,162 @@ export interface SportsDataScope {
   metadata?: boolean;
 }
 
-/** Lightweight public index; never loads games, sessions or private admin data. */
-export async function fetchPublicProfileIndex() {
-  const [seasons, teams, players] = await Promise.all([
-    fetchPaginatedTable<{ id: string }>("seasons", undefined, true, undefined, "id"),
-    fetchPaginatedTable<{ id: string; name: string; season_id: string }>("teams", "id", true, undefined, "id,name,season_id"),
-    fetchPaginatedTable<{ id: string; name: string; team_id: string; season_id: string }>("players", "id", true, undefined, "id,name,team_id,season_id"),
-  ]);
-  const seasonIds = new Set(seasons.map(season => season.id));
-  const validTeams = teams.filter(team => team.name?.trim() && seasonIds.has(team.season_id));
-  const teamsById = new Map(validTeams.map(team => [team.id, team]));
-  return { teams: validTeams, players: players.filter(player => player.name?.trim() && teamsById.get(player.team_id)?.season_id === player.season_id) };
+function getFallbackPublicProfileIndex() {
+  const seasonIds = new Set(mockSeasons.map((s) => s.id));
+  const validTeams = mockTeams
+    .filter((team) => team.name?.trim() && seasonIds.has(team.seasonId))
+    .map((team) => ({ id: team.id, name: team.name, season_id: team.seasonId }));
+  const teamsById = new Map(validTeams.map((team) => [team.id, team]));
+  const players = mockPlayers
+    .filter((player) => player.name?.trim() && teamsById.get(player.teamId)?.season_id === player.seasonId)
+    .map((player) => ({
+      id: player.id,
+      name: player.name,
+      team_id: player.teamId,
+      season_id: player.seasonId,
+    }));
+  return { teams: validTeams, players };
 }
 
-export async function fetchSportsData(scope: SportsDataScope): Promise<SupabaseDataResult> {
-  const seasons = mapSeasonRows(await fetchPaginatedTable<SeasonDbRow>("seasons", "id"));
-  if (!supabase || scope.metadata) return { seasons, teams: [], players: [], games: [] };
+function getFallbackSportsData(scope: SportsDataScope): SupabaseDataResult {
+  const seasons = mapSeasonRows(
+    mockSeasons.map((s) => ({
+      id: s.id,
+      label: s.label,
+      is_current: s.isCurrent,
+      is_active: s.isActive,
+      league: s.league,
+      sort_order: s.sortOrder ?? null,
+    }))
+  );
+  if (scope.metadata) return { seasons, teams: [], players: [], games: [] };
   let league = scope.league ?? "UAAP";
   let seasonId = scope.seasonId;
   let careerSeasons: Set<string> | undefined;
   if (scope.playerId || scope.teamId) {
-    const { data, error } = await supabase.from(scope.playerId ? "players" : "teams")
-      .select(scope.playerId ? "season_id,person_id" : "season_id").eq("id", scope.playerId ?? scope.teamId!).maybeSingle();
-    if (error) throw new Error(error.message);
-    if (!data) return { seasons, teams: [], players: [], games: [] };
-    const identity = data as unknown as { season_id: string; person_id?: string };
-    seasonId = identity.season_id;
-    league = seasons.find(s => s.id === seasonId)?.league ?? inferLeague(seasonId!);
-    // A player profile shows career averages and logs across their seasons.
-    if (scope.playerId) {
-      const { data: career, error: careerError } = await supabase.from("players")
-        .select("season_id").eq("person_id", identity.person_id ?? scope.playerId);
-      if (careerError) throw new Error(careerError.message);
-      careerSeasons = new Set([seasonId!, ...(career ?? []).map(row => row.season_id)]);
+    const entity = scope.playerId
+      ? mockPlayers.find((p) => p.id === scope.playerId)
+      : mockTeams.find((t) => t.id === scope.teamId);
+    if (!entity) return { seasons, teams: [], players: [], games: [] };
+    seasonId = entity.seasonId;
+    league = seasons.find((s) => s.id === seasonId)?.league ?? inferLeague(seasonId);
+    if (scope.playerId && "personId" in entity) {
+      careerSeasons = new Set([
+        seasonId,
+        ...mockPlayers.filter((p) => p.personId === entity.personId).map((p) => p.seasonId),
+      ]);
       seasonId = "lifetime";
     }
   }
-  const matching = seasons.filter(s => league === "ALL" || s.league === league);
+  const matching = seasons.filter((s) => league === "ALL" || s.league === league);
   const currentPerLeague = league === "ALL" && !seasonId;
-  if (!seasonId || !seasons.some(s => s.id === seasonId)) {
-    if (seasonId !== "lifetime") seasonId = matching.find(s => s.isCurrent)?.id ?? matching[0]?.id;
+  if (!seasonId || !seasons.some((s) => s.id === seasonId)) {
+    if (seasonId !== "lifetime") seasonId = matching.find((s) => s.isCurrent)?.id ?? matching[0]?.id;
   }
-  const seasonIds = scope.admin ? undefined : matching
-    .filter(s => (currentPerLeague ? isSeasonInProgress(s) : seasonId === "lifetime" || s.id === seasonId) && (!careerSeasons || careerSeasons.has(s.id))).map(s => s.id);
-  if (seasonIds?.length === 0) return { seasons, teams: [], players: [], games: [] };
-  const gameColumns = scope.admin ? "*" :
-    "id,league,season_id,home_team_id,away_team_id,home_score,away_score,status,start_time,venue,stage,is_playoff,quarter_or_set,time_remaining,box_score,watch_url,tickets_url,replay_url,replay_kind,replay_label";
-  const [teamRows, playerRows, gameRows] = await Promise.all([
-    fetchPaginatedTable<TeamDbRow>("teams", undefined, false, seasonIds),
-    fetchPaginatedTable<PlayerDbRow>("players", undefined, false, seasonIds),
-    fetchPaginatedTable<GameDbRow>("games", "start_time", false, seasonIds, gameColumns),
-  ]);
-  const teams = mapTeamRows(teamRows);
-  return { seasons, teams, players: mapPlayerRows(playerRows),
-    games: mapGameRows(gameRows, new Map(teams.map(t => [t.id, t]))) };
+  const seasonIds = scope.admin
+    ? undefined
+    : new Set(
+        matching
+          .filter(
+            (s) =>
+              (currentPerLeague ? isSeasonInProgress(s) : seasonId === "lifetime" || s.id === seasonId) &&
+              (!careerSeasons || careerSeasons.has(s.id))
+          )
+          .map((s) => s.id)
+      );
+  if (seasonIds && seasonIds.size === 0) return { seasons, teams: [], players: [], games: [] };
+  const inScope = (sid: string) => !seasonIds || seasonIds.has(sid);
+  const teams = mockTeams.filter((t) => inScope(t.seasonId));
+  const teamsById = new Map(teams.map((t) => [t.id, t]));
+  const players = mockPlayers.filter((p) => inScope(p.seasonId));
+  const games = mockGames
+    .filter((g) => inScope(g.seasonId))
+    .map((g) => ({
+      ...g,
+      homeTeam: teamsById.get(g.homeTeam.id) ?? g.homeTeam,
+      awayTeam: teamsById.get(g.awayTeam.id) ?? g.awayTeam,
+      status: getEffectiveGameStatus({ status: g.status, startTime: g.startTime, league: g.league }),
+      playByPlay: scope.admin ? g.playByPlay : [],
+    }));
+  return { seasons, teams, players, games };
+}
+
+/** Lightweight public index; never loads games, sessions or private admin data. */
+export async function fetchPublicProfileIndex() {
+  if (isSupabaseNetworkDown()) {
+    return getFallbackPublicProfileIndex();
+  }
+  try {
+    const [seasons, teams, players] = await Promise.all([
+      fetchPaginatedTable<{ id: string }>("seasons", undefined, true, undefined, "id"),
+      fetchPaginatedTable<{ id: string; name: string; season_id: string }>("teams", "id", true, undefined, "id,name,season_id"),
+      fetchPaginatedTable<{ id: string; name: string; team_id: string; season_id: string }>("players", "id", true, undefined, "id,name,team_id,season_id"),
+    ]);
+    const seasonIds = new Set(seasons.map(season => season.id));
+    const validTeams = teams.filter(team => team.name?.trim() && seasonIds.has(team.season_id));
+    const teamsById = new Map(validTeams.map(team => [team.id, team]));
+    return { teams: validTeams, players: players.filter(player => player.name?.trim() && teamsById.get(player.team_id)?.season_id === player.season_id) };
+  } catch (err) {
+    if (isNetworkUnreachable(err)) {
+      console.warn("[Sportsmetric DB] Network unreachable during fetchPublicProfileIndex; using built-in snapshot.");
+      return getFallbackPublicProfileIndex();
+    }
+    throw err;
+  }
+}
+
+export async function fetchSportsData(scope: SportsDataScope): Promise<SupabaseDataResult> {
+  if (isSupabaseNetworkDown()) {
+    return getFallbackSportsData(scope);
+  }
+  try {
+    const seasons = mapSeasonRows(await fetchPaginatedTable<SeasonDbRow>("seasons", "id"));
+    if (!supabase || scope.metadata) return { seasons, teams: [], players: [], games: [] };
+    let league = scope.league ?? "UAAP";
+    let seasonId = scope.seasonId;
+    let careerSeasons: Set<string> | undefined;
+    if (scope.playerId || scope.teamId) {
+      const { data, error } = await supabase.from(scope.playerId ? "players" : "teams")
+        .select(scope.playerId ? "season_id,person_id" : "season_id").eq("id", scope.playerId ?? scope.teamId!).maybeSingle();
+      if (error) throw new Error(error.message);
+      if (!data) return { seasons, teams: [], players: [], games: [] };
+      const identity = data as unknown as { season_id: string; person_id?: string };
+      seasonId = identity.season_id;
+      league = seasons.find(s => s.id === seasonId)?.league ?? inferLeague(seasonId!);
+      // A player profile shows career averages and logs across their seasons.
+      if (scope.playerId) {
+        const { data: career, error: careerError } = await supabase.from("players")
+          .select("season_id").eq("person_id", identity.person_id ?? scope.playerId);
+        if (careerError) throw new Error(careerError.message);
+        careerSeasons = new Set([seasonId!, ...(career ?? []).map(row => row.season_id)]);
+        seasonId = "lifetime";
+      }
+    }
+    const matching = seasons.filter(s => league === "ALL" || s.league === league);
+    const currentPerLeague = league === "ALL" && !seasonId;
+    if (!seasonId || !seasons.some(s => s.id === seasonId)) {
+      if (seasonId !== "lifetime") seasonId = matching.find(s => s.isCurrent)?.id ?? matching[0]?.id;
+    }
+    const seasonIds = scope.admin ? undefined : matching
+      .filter(s => (currentPerLeague ? isSeasonInProgress(s) : seasonId === "lifetime" || s.id === seasonId) && (!careerSeasons || careerSeasons.has(s.id))).map(s => s.id);
+    if (seasonIds?.length === 0) return { seasons, teams: [], players: [], games: [] };
+    const gameColumns = scope.admin ? "*" :
+      "id,league,season_id,home_team_id,away_team_id,home_score,away_score,status,start_time,venue,stage,is_playoff,quarter_or_set,time_remaining,box_score,watch_url,tickets_url,replay_url,replay_kind,replay_label";
+    const [teamRows, playerRows, gameRows] = await Promise.all([
+      fetchPaginatedTable<TeamDbRow>("teams", undefined, false, seasonIds),
+      fetchPaginatedTable<PlayerDbRow>("players", undefined, false, seasonIds),
+      fetchPaginatedTable<GameDbRow>("games", "start_time", false, seasonIds, gameColumns),
+    ]);
+    const teams = mapTeamRows(teamRows);
+    return { seasons, teams, players: mapPlayerRows(playerRows),
+      games: mapGameRows(gameRows, new Map(teams.map(t => [t.id, t]))) };
+  } catch (err) {
+    if (isNetworkUnreachable(err)) {
+      console.warn("[Sportsmetric DB] Network unreachable during fetchSportsData; using built-in snapshot.");
+      return getFallbackSportsData(scope);
+    }
+    throw err;
+  }
 }
 
 export async function upsertGameInSupabase(game: Game): Promise<boolean> {

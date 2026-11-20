@@ -11,17 +11,24 @@ import { FilterChip, SegmentedControl } from "@/components/ui/FilterChip";
 import { SeasonPicker } from "@/components/ui/SeasonPicker";
 import { SearchInput } from "@/components/ui/SearchInput";
 import { SkeletonCardGrid } from "@/components/ui/Skeleton";
+import { TeamBadge } from "@/components/ui/TeamBadge";
 import { useSportsData, useSportsScope } from "@/context/SportsDataContext";
 import { getEffectiveGameStatus, isLifetimeSeason } from "@/lib/derivations";
+import { useGameModal } from "@/lib/game-modal-context";
+import { getTopGamePerformer } from "@/lib/game-overview";
 import { inferLeague } from "@/lib/league-utils";
-import { formatFullDayHeader, formatGameDate, isoToPhtInput } from "@/lib/utils";
+import { formatFullDayHeader, formatGameDate, formatRecord, formatStartTime, isoToPhtInput } from "@/lib/utils";
 import type { Game, League } from "@/types/sports";
 import {
+  ArrowUpRight,
   CalendarDays,
   CheckCheck,
+  MapPin,
   Radio,
   RefreshCw,
   SlidersHorizontal,
+  Sparkles,
+  Trophy,
 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { GameCard } from "./GameCard";
@@ -41,10 +48,24 @@ const LEAGUE_CHIPS: { value: League; label: string; dotColor: string }[] = [
 ];
 
 const HERO_ACCENT: Record<League, string> = {
-  UAAP: "radial-gradient(ellipse 70% 60% at 100% 0%, rgb(204 0 0 / 0.16), transparent 62%)",
-  PBA: "radial-gradient(ellipse 70% 60% at 100% 0%, rgb(247 148 29 / 0.16), transparent 62%)",
-  PVL: "radial-gradient(ellipse 70% 60% at 100% 0%, rgb(0 102 204 / 0.18), transparent 62%)",
+  UAAP: "radial-gradient(ellipse 70% 60% at 95% 0%, rgb(225 29 72 / 0.22), transparent 64%)",
+  PBA: "radial-gradient(ellipse 70% 60% at 95% 0%, rgb(245 158 11 / 0.20), transparent 64%)",
+  PVL: "radial-gradient(ellipse 70% 60% at 95% 0%, rgb(14 165 233 / 0.22), transparent 64%)",
 };
+
+function sortBySpotlightPriority(a: Game, b: Game): number {
+  const rank = (g: Game) => {
+    const s = getEffectiveGameStatus(g);
+    return s === "LIVE" ? 0 : s === "UPCOMING" ? 1 : 2;
+  };
+  const ra = rank(a);
+  const rb = rank(b);
+  if (ra !== rb) return ra - rb;
+  const ta = new Date(a.startTime).getTime();
+  const tb = new Date(b.startTime).getTime();
+  // Live/Upcoming: soonest first; Final: newest first
+  return ra === 2 ? tb - ta : ta - tb;
+}
 
 function getSmartStatusTab(
   gamesList: Game[],
@@ -68,7 +89,8 @@ function getSmartStatusTab(
 }
 
 export function FilterTabs() {
-  const { games, teams, seasons, currentSeasonId, loading, error, refreshData } = useSportsData();
+  const { games, teams, players, seasons, currentSeasonId, loading, error, refreshData } = useSportsData();
+  const { openGame } = useGameModal();
   const [league, setLeague] = useState<League>("UAAP");
   const [userSelectedSeasonId, setUserSelectedSeasonId] = useState<string | null>(null);
 
@@ -109,6 +131,27 @@ export function FilterTabs() {
   const counts = { LIVE: 0, UPCOMING: 0, FINAL: 0 };
   for (const game of seasonGames) counts[getEffectiveGameStatus(game)]++;
   const countsPending = isSeasonPending || loading;
+
+  const playerNamesById = useMemo(
+    () => new Map(players.map((p) => [p.id, p.name])),
+    [players]
+  );
+
+  const orderedSeasonGames = useMemo(
+    () => [...seasonGames].sort(sortBySpotlightPriority),
+    [seasonGames]
+  );
+  const tickerGames = useMemo(() => orderedSeasonGames.slice(0, 8), [orderedSeasonGames]);
+  const spotlightGame = orderedSeasonGames[0] ?? null;
+  const spotlightStatus = spotlightGame ? getEffectiveGameStatus(spotlightGame) : null;
+  const spotlightShowScore = spotlightStatus !== null && spotlightStatus !== "UPCOMING";
+  const spotlightTopScorer = useMemo(
+    () =>
+      spotlightGame && spotlightShowScore
+        ? getTopGamePerformer(spotlightGame, playerNamesById)
+        : null,
+    [spotlightGame, spotlightShowScore, playerNamesById]
+  );
 
   const availableTeams = useMemo(() => {
     const teamsInSeason = isLifetimeSeason(seasonId)
@@ -260,61 +303,265 @@ export function FilterTabs() {
 
   return (
     <div className={PAGE_FRAME}>
+      {!error && tickerGames.length > 0 ? (
+        <div
+          role="region"
+          aria-label="Scoreboard ticker"
+          className="broadcast-ticker flex w-full min-w-0 items-center gap-2.5 overflow-hidden rounded-panel border border-border/85 px-3 py-2"
+        >
+          <span className="flex shrink-0 items-center gap-1.5 rounded-control border border-primary/40 bg-primary/15 px-2 py-1 text-3xs font-extrabold uppercase tracking-[0.16em] text-foreground">
+            <span
+              aria-hidden="true"
+              className={
+                counts.LIVE > 0
+                  ? "animate-live-pulse h-1.5 w-1.5 rounded-full bg-live"
+                  : "h-1.5 w-1.5 rounded-full bg-primary"
+              }
+            />
+            {counts.LIVE > 0 ? "Live Wire" : "Scoreboard"}
+          </span>
+          <div className="h-scroll flex min-w-0 flex-1 items-center gap-2 overflow-x-auto py-0.5">
+            {tickerGames.map((g) => {
+              const gStatus = getEffectiveGameStatus(g);
+              const showTickerScore = gStatus !== "UPCOMING";
+              return (
+                <button
+                  key={g.id}
+                  type="button"
+                  onClick={() => openGame(g.id)}
+                  aria-label={`Ticker ${g.awayTeam.shortName} vs ${g.homeTeam.shortName}`}
+                  className="flex shrink-0 items-center gap-2 rounded-control border border-border/80 bg-surface-2/90 px-2.5 py-1.5 text-2xs transition-colors hover:border-border-strong hover:bg-elevated/80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                >
+                  <TeamBadge team={g.awayTeam} size="sm" className="h-5 w-5 text-[7px]" />
+                  <span className="font-bold text-foreground">{g.awayTeam.shortName}</span>
+                  {showTickerScore ? (
+                    <span className="font-mono font-extrabold tabular-nums text-foreground">
+                      {g.awayScore}-{g.homeScore}
+                    </span>
+                  ) : (
+                    <span className="text-3xs font-semibold uppercase text-muted">vs</span>
+                  )}
+                  <span className="font-bold text-foreground">{g.homeTeam.shortName}</span>
+                  <TeamBadge team={g.homeTeam} size="sm" className="h-5 w-5 text-[7px]" />
+                  <span
+                    className={
+                      gStatus === "LIVE"
+                        ? "rounded px-1 py-0.5 text-3xs font-extrabold uppercase text-live bg-live/15"
+                        : "text-3xs font-semibold text-muted"
+                    }
+                  >
+                    {gStatus === "LIVE"
+                      ? g.league === "PVL"
+                        ? `S${g.quarterOrSet}`
+                        : `Q${g.quarterOrSet}`
+                      : gStatus === "FINAL"
+                        ? "F"
+                        : formatStartTime(g.startTime)}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      ) : null}
+
       <section
-        className="scoreboard-hero relative overflow-hidden rounded-panel border border-border/90 p-5 md:p-7"
-        style={{ backgroundImage: `${HERO_ACCENT[league]}, linear-gradient(160deg, rgb(20 28 42 / 0.95), rgb(13 19 30 / 0.98))` }}
+        className="scoreboard-hero relative overflow-hidden rounded-panel border border-border-strong/70 p-5 md:p-7"
+        style={{
+          backgroundImage: `${HERO_ACCENT[league]}, url('/assets/arena-court-bg.svg'), linear-gradient(155deg, rgb(18 26 44 / 0.96), rgb(8 13 24 / 0.98))`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
         aria-label="Season overview"
       >
-        <div className="flex flex-wrap items-start justify-between gap-5">
-          <div className="min-w-0">
-            <p className="eyebrow mb-3 flex items-center gap-2 text-primary">
-              <span className="h-1.5 w-1.5 rounded-full bg-primary shadow-[0_0_8px_rgba(239,68,68,0.8)]" aria-hidden="true" />
-              Philippine sports, in focus
-            </p>
-            <h1 className="page-heading text-foreground">Philippine sports scores and stats.</h1>
-            <p className="mt-2.5 max-w-xl text-sm leading-relaxed text-muted">
-              UAAP basketball, PBA and PVL results, schedules and player statistics.
-            </p>
-          </div>
-          <SeasonPicker
-            value={seasonId}
-            onChange={handleSeasonChange}
-            league={league}
-            includeLifetime={false}
-          />
-        </div>
-        <div className="mt-6 grid grid-cols-3 gap-2.5 border-t border-border/75 pt-5 sm:gap-3.5">
-          {([
-            { value: "LIVE", label: "Live now", icon: Radio },
-            { value: "UPCOMING", label: "Upcoming", icon: CalendarDays },
-            { value: "FINAL", label: "Completed", icon: CheckCheck },
-          ] as const).map(({ value, label, icon: Icon }) => {
-            const isLive = value === "LIVE" && counts.LIVE > 0;
-            return (
-              <div
-                key={value}
-                className={
-                  isLive
-                    ? "flex min-w-0 flex-col gap-1 rounded-card border border-live/35 bg-live/10 px-3 py-2.5 shadow-[0_0_24px_-12px_rgba(251,113,133,0.6)] md:flex-row md:items-center md:gap-3 md:px-4 md:py-3"
-                    : "flex min-w-0 flex-col gap-1 rounded-card border border-border/75 bg-surface-2/75 px-3 py-2.5 md:flex-row md:items-center md:gap-3 md:px-4 md:py-3"
-                }
-              >
-                <div className="flex items-center gap-2">
-                  <Icon
-                    size={16}
-                    aria-hidden="true"
-                    className={isLive ? "animate-live-pulse text-live" : "text-muted"}
-                  />
-                  <span
-                    className={`font-display text-2xl font-extrabold tabular-nums leading-none md:text-3xl ${isLive ? "text-live" : "text-foreground"}`}
+        <div className="grid grid-cols-1 items-stretch gap-6 lg:grid-cols-[minmax(0,1.15fr)_minmax(19rem,0.85fr)]">
+          <div className="flex min-w-0 flex-col justify-between gap-5">
+            <div className="flex flex-wrap items-start justify-between gap-4">
+              <div className="min-w-0">
+                <p className="eyebrow mb-3 flex items-center gap-2 text-primary">
+                  <span className="h-1.5 w-1.5 rounded-full bg-primary shadow-[0_0_8px_rgba(239,68,68,0.85)]" aria-hidden="true" />
+                  Philippine sports, in focus
+                </p>
+                <h1 className="page-heading text-foreground">Philippine sports scores and stats.</h1>
+                <p className="mt-2.5 max-w-xl text-sm leading-relaxed text-muted">
+                  UAAP basketball, PBA and PVL results, schedules and player statistics.
+                </p>
+              </div>
+              <SeasonPicker
+                value={seasonId}
+                onChange={handleSeasonChange}
+                league={league}
+                includeLifetime={false}
+              />
+            </div>
+
+            <div className="grid grid-cols-3 gap-2.5 border-t border-border/75 pt-5 sm:gap-3.5">
+              {([
+                { value: "LIVE", label: "Live now", icon: Radio },
+                { value: "UPCOMING", label: "Upcoming", icon: CalendarDays },
+                { value: "FINAL", label: "Completed", icon: CheckCheck },
+              ] as const).map(({ value, label, icon: Icon }) => {
+                const isLive = value === "LIVE" && counts.LIVE > 0;
+                const isSelected = activeStatus === value;
+                return (
+                  <button
+                    key={value}
+                    type="button"
+                    disabled={isOldSeason && value !== "FINAL"}
+                    aria-label={`Jump to ${label} matches`}
+                    onClick={() => {
+                      statusTouched.current = true;
+                      setStatus(value);
+                    }}
+                    className={
+                      isLive
+                        ? "flex min-w-0 flex-col gap-1 rounded-card border border-live/45 bg-live/12 px-3 py-2.5 text-left shadow-[0_0_24px_-12px_rgba(251,113,133,0.65)] transition-colors hover:bg-live/18 md:flex-row md:items-center md:gap-3 md:px-4 md:py-3"
+                        : isSelected
+                          ? "flex min-w-0 flex-col gap-1 rounded-card border border-border-strong bg-elevated/85 px-3 py-2.5 text-left transition-colors md:flex-row md:items-center md:gap-3 md:px-4 md:py-3"
+                          : "flex min-w-0 flex-col gap-1 rounded-card border border-border/75 bg-surface-2/80 px-3 py-2.5 text-left transition-colors hover:border-border-strong hover:bg-surface/90 disabled:opacity-50 md:flex-row md:items-center md:gap-3 md:px-4 md:py-3"
+                    }
                   >
-                    {countsPending ? "–" : counts[value]}
+                    <div className="flex items-center gap-2">
+                      <Icon
+                        size={16}
+                        aria-hidden="true"
+                        className={isLive ? "animate-live-pulse text-live" : "text-muted"}
+                      />
+                      <span
+                        className={`font-display text-2xl font-extrabold tabular-nums leading-none md:text-3xl ${isLive ? "text-live" : "text-foreground"}`}
+                      >
+                        {countsPending ? "–" : counts[value]}
+                      </span>
+                    </div>
+                    <span className="truncate text-2xs font-medium text-muted md:text-xs">{label}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {spotlightGame ? (
+            <div
+              role="region"
+              aria-label="Spotlight matchup"
+              className="glass-card relative flex min-w-0 flex-col justify-between gap-4 overflow-hidden rounded-card border border-border-strong/80 p-4 shadow-raised sm:p-5"
+              style={{
+                backgroundImage: `linear-gradient(135deg, ${spotlightGame.awayTeam.accentColor}22 0%, transparent 48%, ${spotlightGame.homeTeam.accentColor}22 100%)`,
+              }}
+            >
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-x-0 top-0 h-[3px]"
+                style={{
+                  background: `linear-gradient(90deg, ${spotlightGame.awayTeam.accentColor}, ${spotlightGame.homeTeam.accentColor})`,
+                }}
+              />
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <span className="flex items-center gap-1.5 text-3xs font-extrabold uppercase tracking-[0.18em] text-primary">
+                  <Trophy size={12} aria-hidden="true" />
+                  {spotlightStatus === "LIVE"
+                    ? "Center Court Live"
+                    : spotlightStatus === "UPCOMING"
+                      ? "Next Marquee Match"
+                      : "Featured Result"}
+                </span>
+                <Badge tone={spotlightStatus === "LIVE" ? "live" : "neutral"} size="sm" dot={spotlightStatus === "LIVE"}>
+                  {spotlightStatus === "LIVE"
+                    ? spotlightGame.league === "PVL"
+                      ? `LIVE · Set ${spotlightGame.quarterOrSet}`
+                      : `LIVE · Q${spotlightGame.quarterOrSet}`
+                    : spotlightStatus === "FINAL"
+                      ? `Final · ${formatGameDate(spotlightGame.startTime, true)}`
+                      : `${formatGameDate(spotlightGame.startTime, true)} · ${formatStartTime(spotlightGame.startTime)}`}
+                </Badge>
+              </div>
+
+              <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-3 py-1 text-center">
+                <div className="flex min-w-0 flex-col items-center gap-1.5">
+                  <TeamBadge team={spotlightGame.awayTeam} size="lg" />
+                  <span className="font-display text-lg font-extrabold tracking-tight text-foreground">
+                    {spotlightGame.awayTeam.shortName}
+                  </span>
+                  <span className="max-w-full truncate text-3xs font-medium text-muted">
+                    {formatRecord(spotlightGame.awayTeam.record)}
                   </span>
                 </div>
-                <span className="truncate text-2xs font-medium text-muted md:text-xs">{label}</span>
+
+                <div className="flex flex-col items-center gap-1">
+                  {spotlightShowScore ? (
+                    <div className="led-score-box flex items-center gap-2 rounded-xl border border-border-strong/75 px-3 py-2">
+                      <span
+                        className={`font-display text-3xl font-black tabular-nums leading-none ${
+                          spotlightGame.awayScore >= spotlightGame.homeScore ? "text-foreground" : "text-muted"
+                        }`}
+                      >
+                        {spotlightGame.awayScore}
+                      </span>
+                      <span className="text-xs font-bold text-muted/60">:</span>
+                      <span
+                        className={`font-display text-3xl font-black tabular-nums leading-none ${
+                          spotlightGame.homeScore >= spotlightGame.awayScore ? "text-foreground" : "text-muted"
+                        }`}
+                      >
+                        {spotlightGame.homeScore}
+                      </span>
+                    </div>
+                  ) : (
+                    <span className="rounded-full border border-border-strong bg-surface-2 px-3 py-1 font-display text-sm font-extrabold uppercase tracking-widest text-muted">
+                      VS
+                    </span>
+                  )}
+                </div>
+
+                <div className="flex min-w-0 flex-col items-center gap-1.5">
+                  <TeamBadge team={spotlightGame.homeTeam} size="lg" />
+                  <span className="font-display text-lg font-extrabold tracking-tight text-foreground">
+                    {spotlightGame.homeTeam.shortName}
+                  </span>
+                  <span className="max-w-full truncate text-3xs font-medium text-muted">
+                    {formatRecord(spotlightGame.homeTeam.record)}
+                  </span>
+                </div>
               </div>
-            );
-          })}
+
+              <div className="flex flex-col gap-2 border-t border-border/70 pt-3">
+                {spotlightTopScorer ? (
+                  <div className="flex items-center justify-between gap-2 text-2xs">
+                    <span className="flex min-w-0 items-center gap-1.5 text-muted">
+                      <Sparkles size={11} aria-hidden="true" className="shrink-0 text-archive" />
+                      <span className="truncate font-semibold text-foreground">{spotlightTopScorer.playerName}</span>
+                    </span>
+                    <span className="font-mono shrink-0 font-bold text-archive">{spotlightTopScorer.pts} PTS</span>
+                  </div>
+                ) : null}
+                <div className="flex items-center justify-between gap-2">
+                  <span className="flex min-w-0 items-center gap-1 text-2xs text-muted">
+                    <MapPin size={11} aria-hidden="true" className="shrink-0" />
+                    <span className="truncate">{spotlightGame.venue || selectedSeason?.label || league}</span>
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => openGame(spotlightGame.id)}
+                    aria-label="Open spotlight match breakdown"
+                    className="inline-flex shrink-0 items-center gap-1 rounded-control border border-primary/50 bg-primary/15 px-2.5 py-1 text-2xs font-bold text-foreground transition-colors hover:bg-primary/25 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                  >
+                    Match Breakdown
+                    <ArrowUpRight size={12} aria-hidden="true" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="glass-card flex flex-col justify-center gap-2 rounded-card border border-border/75 p-5">
+              <p className="eyebrow text-primary">{league} Telemetry</p>
+              <p className="font-display text-2xl font-extrabold text-foreground">
+                {selectedSeason?.label ?? "Season Center"}
+              </p>
+              <p className="text-xs leading-relaxed text-muted">
+                Select another league or season to browse match reports, box scores, and player leaders.
+              </p>
+            </div>
+          )}
         </div>
       </section>
 

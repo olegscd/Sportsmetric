@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 
-/** Broadcast-inspired vector brand mark paired with crisp display typography. */
+/** Multi-layered vector arena crest + telemetry pulse brand mark. */
 export function BrandMark({
   compact = false,
   className,
@@ -13,28 +13,44 @@ export function BrandMark({
       <span
         aria-hidden="true"
         className={cn(
-          "relative flex shrink-0 items-center justify-center rounded-lg border border-primary/40 bg-gradient-to-br from-primary/25 via-primary/10 to-surface-2 shadow-[0_0_20px_-6px_rgba(239,68,68,0.55)]",
-          compact ? "h-7 w-7" : "h-8 w-8"
+          "relative flex shrink-0 items-center justify-center overflow-hidden rounded-xl border border-primary/50 bg-gradient-to-br from-primary/30 via-elevated to-surface-2 shadow-[0_0_24px_-6px_rgba(239,68,68,0.65)]",
+          compact ? "h-8 w-8" : "h-9 w-9"
         )}
       >
         <svg
-          viewBox="0 0 24 24"
-          className={compact ? "h-4 w-4" : "h-4.5 w-4.5"}
+          viewBox="0 0 28 28"
+          className={compact ? "h-5 w-5" : "h-5.5 w-5.5"}
           fill="none"
           aria-hidden="true"
         >
-          <rect x="3" y="13" width="4" height="8" rx="1" fill="currentColor" className="text-foreground/85" />
-          <rect x="10" y="7" width="4" height="14" rx="1" fill="currentColor" className="text-foreground" />
-          <rect x="17" y="3" width="4" height="18" rx="1" fill="currentColor" className="text-primary" />
+          {/* Arena crest frame */}
+          <path
+            d="M14 2.5 L24 7 V15 C24 20.4 19.6 24.3 14 25.8 C8.4 24.3 4 20.4 4 15 V7 Z"
+            stroke="rgba(255,255,255,0.22)"
+            strokeWidth="1.2"
+            fill="rgba(8,12,22,0.72)"
+          />
+          {/* Court telemetry bars */}
+          <rect x="7.5" y="15" width="3" height="6" rx="0.9" fill="#94a3b8" />
+          <rect x="12.5" y="10.5" width="3" height="10.5" rx="0.9" fill="#f8fafc" />
+          <rect x="17.5" y="6.8" width="3" height="14.2" rx="0.9" fill="#ef4444" />
+          <circle cx="19" cy="5" r="1.15" fill="#fb7185" />
         </svg>
       </span>
-      <span
-        className={cn(
-          "font-display font-extrabold uppercase tracking-[0.06em] text-foreground",
-          compact ? "text-lg leading-none" : "text-xl leading-none lg:text-[1.35rem]"
-        )}
-      >
-        SPORTS<span className="text-primary">METRIC</span>
+      <span className="flex flex-col">
+        <span
+          className={cn(
+            "font-display font-extrabold uppercase tracking-[0.06em] text-foreground",
+            compact ? "text-lg leading-none" : "text-xl leading-none lg:text-[1.35rem]"
+          )}
+        >
+          SPORTS<span className="text-primary">METRIC</span>
+        </span>
+        {!compact ? (
+          <span className="mt-0.5 hidden text-[9px] font-bold uppercase tracking-[0.22em] text-muted/85 lg:block">
+            PH Sports Telemetry
+          </span>
+        ) : null}
       </span>
     </span>
   );

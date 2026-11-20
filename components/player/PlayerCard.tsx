@@ -24,96 +24,60 @@ function isVolleyballPlayer(player: Player, avg: SeasonAverages): boolean {
   );
 }
 
-function StatGrid({ player, averages }: { player: Player; averages?: SeasonAverages }) {
-  const { getPlayerAverages, getPlayerStatRank } = useSportsData();
-  const avg = averages || getPlayerAverages(player);
+function getPlayerSummaryTiles(
+  player: Player,
+  avg: SeasonAverages,
+  mode: "compact" | "full" = "compact"
+) {
   const pos = (player.position || "OH").toUpperCase();
-
-  let tiles;
+  const c = mode === "compact";
 
   if (isVolleyballPlayer(player, avg)) {
     if (pos.startsWith("L")) {
-      tiles = [
-        {
-          label: "Digs / Set",
-          value: formatAvg(avg.avgDig ?? avg.digsPerSet ?? 0),
-          statKey: "avgDig" as const,
-        },
-        {
-          label: "Dig %",
-          value: formatPct(avg.successDig ?? 0),
-          statKey: "successDig" as const,
-        },
-        {
-          label: "Rec %",
-          value: formatPct(avg.successRec ?? 0),
-          statKey: "successRec" as const,
-        },
-      ];
-    } else if (pos.startsWith("S")) {
-      tiles = [
-        {
-          label: "Sets / Set",
-          value: formatAvg(avg.avgSet ?? 0),
-          statKey: "avgSet" as const,
-        },
-        {
-          label: "Setting %",
-          value: formatPct(avg.successSet ?? 0),
-          statKey: "successSet" as const,
-        },
-        {
-          label: "Digs / Set",
-          value: formatAvg(avg.avgDig ?? 0),
-          statKey: "avgDig" as const,
-        },
-      ];
-    } else if (pos.startsWith("MB")) {
-      tiles = [
-        {
-          label: "PTS / Set",
-          value: formatAvg(avg.avgPerSet ?? avg.ppg ?? 0),
-          statKey: "avgPerSet" as const,
-        },
-        {
-          label: "Blocks / Set",
-          value: formatAvg(avg.avgBlk ?? avg.blocksPerSet ?? 0),
-          statKey: "avgBlk" as const,
-        },
-        {
-          label: "Atk Eff",
-          value: formatPct(avg.efficiencyAtk ?? avg.attackPct ?? 0),
-          statKey: "efficiencyAtk" as const,
-        },
-      ];
-    } else {
-      // OH / OP: PTS / SET, ATK EFF, KILLS / SET
-      tiles = [
-        {
-          label: "PTS / Set",
-          value: formatAvg(avg.avgPerSet ?? avg.ppg ?? 0),
-          statKey: "avgPerSet" as const,
-        },
-        {
-          label: "Atk Eff",
-          value: formatPct(avg.efficiencyAtk ?? avg.attackPct ?? 0),
-          statKey: "efficiencyAtk" as const,
-        },
-        {
-          label: "Kills / Set",
-          value: formatAvg(avg.avgAtk ?? avg.killsPerSet ?? 0),
-          statKey: "avgAtk" as const,
-        },
+      return [
+        { label: c ? "DIG/S" : "Digs / Set", value: formatAvg(avg.avgDig ?? avg.digsPerSet ?? 0), statKey: "avgDig" as const },
+        { label: c ? "DIG%" : "Dig %", value: formatPct(avg.successDig ?? 0), statKey: "successDig" as const },
+        { label: c ? "REC%" : "Rec %", value: formatPct(avg.successRec ?? 0), statKey: "successRec" as const },
       ];
     }
-  } else {
-    // Basketball
-    tiles = [
-      { label: "PPG", value: formatAvg(avg.ppg), statKey: "ppg" as const },
-      { label: "FG%", value: formatPct(avg.fgPct), statKey: "fgPct" as const },
-      { label: "APG", value: formatAvg(avg.apg), statKey: "apg" as const },
+    if (pos.startsWith("S")) {
+      return [
+        { label: c ? "SET/S" : "Sets / Set", value: formatAvg(avg.avgSet ?? 0), statKey: "avgSet" as const },
+        { label: c ? "SET%" : "Setting %", value: formatPct(avg.successSet ?? 0), statKey: "successSet" as const },
+        { label: c ? "DIG/S" : "Digs / Set", value: formatAvg(avg.avgDig ?? 0), statKey: "avgDig" as const },
+      ];
+    }
+    if (pos.startsWith("MB")) {
+      return [
+        { label: c ? "PTS/S" : "PTS / Set", value: formatAvg(avg.avgPerSet ?? avg.ppg ?? 0), statKey: "avgPerSet" as const },
+        { label: c ? "BLK/S" : "Blocks / Set", value: formatAvg(avg.avgBlk ?? avg.blocksPerSet ?? 0), statKey: "avgBlk" as const },
+        { label: c ? "ATK%" : "Atk Eff", value: formatPct(avg.efficiencyAtk ?? avg.attackPct ?? 0), statKey: "efficiencyAtk" as const },
+      ];
+    }
+    return [
+      { label: c ? "PTS/S" : "PTS / Set", value: formatAvg(avg.avgPerSet ?? avg.ppg ?? 0), statKey: "avgPerSet" as const },
+      { label: c ? "ATK%" : "Atk Eff", value: formatPct(avg.efficiencyAtk ?? avg.attackPct ?? 0), statKey: "efficiencyAtk" as const },
+      { label: c ? "KIL/S" : "Kills / Set", value: formatAvg(avg.avgAtk ?? avg.killsPerSet ?? 0), statKey: "avgAtk" as const },
     ];
   }
+
+  return c
+    ? [
+        { label: "PPG", value: formatAvg(avg.ppg), statKey: "ppg" as const },
+        { label: "RPG", value: formatAvg(avg.rpg), statKey: "rpg" as const },
+        { label: "APG", value: formatAvg(avg.apg), statKey: "apg" as const },
+      ]
+    : [
+        { label: "PPG", value: formatAvg(avg.ppg), statKey: "ppg" as const },
+        { label: "FG%", value: formatPct(avg.fgPct), statKey: "fgPct" as const },
+        { label: "APG", value: formatAvg(avg.apg), statKey: "apg" as const },
+      ];
+}
+
+function StatGrid({ player, averages }: { player: Player; averages?: SeasonAverages }) {
+  const { getPlayerAverages, getPlayerStatRank } = useSportsData();
+  const avg = averages || getPlayerAverages(player);
+  const tiles = getPlayerSummaryTiles(player, avg, "full");
 
   return (
     <div className="grid grid-cols-3 gap-2">
@@ -163,45 +127,66 @@ export const PlayerCard = memo(function PlayerCard({
   const stats = getPlayerAverages(player);
 
   if (variant === "compact") {
+    const compactTiles = getPlayerSummaryTiles(player, stats);
     return (
       <Link
         href={`/players/${player.id}`}
         className={cardClasses({
           interactive: true,
-          className: "group relative flex min-h-16 items-center gap-3 overflow-hidden p-3.5",
+          className:
+            "group relative flex flex-col justify-between gap-3 overflow-hidden p-4",
         })}
+        style={{
+          backgroundImage: `radial-gradient(ellipse 80% 65% at 100% 0%, ${team.accentColor}22, transparent 62%)`,
+        }}
       >
         <span
           aria-hidden="true"
-          className="absolute inset-y-0 left-0 w-1 opacity-70 transition-opacity group-hover:opacity-100"
+          className="absolute inset-x-0 top-0 h-[3px] opacity-80 transition-opacity group-hover:opacity-100"
           style={{ backgroundColor: team.accentColor }}
         />
-        <div className="ml-1 shrink-0">
-          <PlayerAvatar player={player} accentColor={team.accentColor} size="md" />
+        <span
+          aria-hidden="true"
+          className="font-display pointer-events-none absolute right-3 top-1 select-none text-4xl font-black tabular-nums text-foreground opacity-[0.06]"
+        >
+          #{player.jerseyNumber}
+        </span>
+        <div className="relative z-10 flex items-center gap-3">
+          <div className="shrink-0">
+            <PlayerAvatar player={player} accentColor={team.accentColor} size="md" />
+          </div>
+          <span className="min-w-0 flex-1">
+            <span className="block truncate text-sm font-extrabold text-foreground transition-colors group-hover:text-primary">
+              {player.name}
+            </span>
+            <span className="mt-0.5 flex min-w-0 items-center gap-1.5 text-2xs font-medium text-muted">
+              <span className="rounded bg-surface-2 px-1.5 py-0.5 font-mono font-bold text-foreground/90">
+                #{player.jerseyNumber}
+              </span>
+              <span className="font-semibold uppercase tracking-wide">{player.position}</span>
+              <span aria-hidden="true">&middot;</span>
+              <span className="flex shrink-0 items-center gap-1">
+                <TeamBadge team={team} size="sm" className="h-4 w-4 text-[7px]" />
+                <span className="font-bold text-foreground/90">{team.shortName}</span>
+              </span>
+            </span>
+          </span>
         </div>
-        <span className="min-w-0 flex-1">
-          <span className="block truncate text-sm font-bold text-foreground transition-colors group-hover:text-primary">{player.name}</span>
-          <span className="mt-0.5 flex min-w-0 items-center gap-1.5 text-xs font-medium text-muted">
-            <span className="truncate">
-              #{player.jerseyNumber} &middot; {player.position}
-            </span>
-            <span aria-hidden="true">&middot;</span>
-            <span className="flex shrink-0 items-center gap-1.5">
-              <TeamBadge team={team} size="sm" className="h-4 w-4 text-[8px]" />
-              <span className="font-semibold text-foreground">{team.shortName}</span>
-            </span>
-          </span>
-        </span>
-        <span className="flex shrink-0 items-center gap-3">
-          <span className="rounded-control border border-border/70 bg-surface-2/85 px-2.5 py-1 text-right">
-            <span className="font-display block text-lg font-extrabold tabular-nums leading-none text-foreground">
-              {formatAvg(stats.ppg || stats.avgPerSet || 0)}
-            </span>
-            <span className="mt-0.5 block text-3xs font-bold uppercase tracking-wider text-muted">
-              {stats.ppg !== undefined ? "PPG" : "PTS/S"}
-            </span>
-          </span>
-        </span>
+        <div className="relative z-10 grid grid-cols-3 gap-1.5 border-t border-border/60 pt-2.5">
+          {compactTiles.map((tile) => (
+            <div
+              key={tile.label}
+              className="rounded-control border border-border/65 bg-surface-2/85 px-2 py-1.5 text-center"
+            >
+              <span className="font-display block text-base font-extrabold tabular-nums leading-none text-foreground">
+                {tile.value}
+              </span>
+              <span className="mt-0.5 block text-3xs font-bold uppercase tracking-wider text-muted">
+                {tile.label}
+              </span>
+            </div>
+          ))}
+        </div>
       </Link>
     );
   }

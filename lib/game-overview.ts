@@ -95,3 +95,33 @@ export function summarizeTeamBoxScore(items: BoxScoreItem[]): TeamBoxTotals {
     ftPct: pct(ftM, ftA),
   };
 }
+
+export interface TopPerformerSummary {
+  playerId: string;
+  playerName: string;
+  pts: number;
+  side: "home" | "away";
+}
+
+/** Picks the leading scorer from a game's home/away box scores. */
+export function getTopGamePerformer(
+  game: Pick<Game, "boxScore">,
+  playerNamesById?: Map<string, string>
+): TopPerformerSummary | null {
+  let best: TopPerformerSummary | null = null;
+  for (const side of ["away", "home"] as const) {
+    for (const row of game.boxScore?.[side] ?? []) {
+      const pts = row.pts ?? 0;
+      if (pts <= 0) continue;
+      if (!best || pts > best.pts) {
+        best = {
+          playerId: row.playerId,
+          playerName: row.playerName?.trim() || playerNamesById?.get(row.playerId) || "",
+          pts,
+          side,
+        };
+      }
+    }
+  }
+  return best && best.playerName ? best : null;
+}

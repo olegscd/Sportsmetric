@@ -12,10 +12,11 @@ import { SeasonPicker } from "@/components/ui/SeasonPicker";
 import { SkeletonCardGrid } from "@/components/ui/Skeleton";
 import { TeamBadge } from "@/components/ui/TeamBadge";
 import { useSportsData, useSportsScope } from "@/context/SportsDataContext";
+import { Badge } from "@/components/ui/Badge";
 import { inferLeague } from "@/lib/league-utils";
 import { formatRecord } from "@/lib/utils";
 import type { League } from "@/types/sports";
-import { Shield } from "lucide-react";
+import { ArrowUpRight, Shield } from "lucide-react";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 
@@ -117,42 +118,119 @@ export function TeamDirectory() {
           const team = item.team;
           const record = { wins: item.wins, losses: item.losses };
           const pctStr = item.winPct.toFixed(3).replace(/^0/, "");
+          const pctFill = Math.round(item.winPct * 100);
           const rank = rankByTeamId.get(team.id);
+          const hasPlayedScores = item.pointsFor + item.pointsAgainst > 0;
+          const diffStr =
+            item.pointDiff > 0 ? `+${item.pointDiff}` : `${item.pointDiff}`;
           return (
             <Link
               key={team.id}
               href={`/teams/${team.id}`}
               className={cardClasses({
                 interactive: true,
-                className: "group relative flex min-h-16 items-center gap-3 overflow-hidden p-3.5",
+                className:
+                  "group relative flex flex-col justify-between gap-3.5 overflow-hidden p-4",
               })}
+              style={{
+                backgroundImage: `radial-gradient(ellipse 85% 65% at 100% 0%, ${team.accentColor}24, transparent 62%)`,
+              }}
             >
               <span
                 aria-hidden="true"
-                className="absolute inset-y-0 left-0 w-1 opacity-75 transition-opacity group-hover:opacity-100"
+                className="pointer-events-none absolute inset-x-0 top-0 h-[3px] opacity-85 transition-opacity group-hover:opacity-100"
                 style={{ backgroundColor: team.accentColor }}
               />
               <span
-                className={
-                  rank === 1
-                    ? "ml-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-control border border-archive/40 bg-archive/15 text-xs font-extrabold tabular-nums text-archive"
-                    : rank && rank <= 4
-                      ? "ml-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-control border border-primary/30 bg-primary/10 text-xs font-extrabold tabular-nums text-foreground"
-                      : "ml-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-control bg-surface-2 text-xs font-extrabold tabular-nums text-muted"
-                }
+                aria-hidden="true"
+                className="font-display pointer-events-none absolute -bottom-2 right-3 select-none text-5xl font-black uppercase tracking-tighter text-foreground opacity-[0.055]"
               >
-                {rank ?? "–"}
+                {team.shortName}
               </span>
-              <TeamBadge team={team} size="md" />
-              <span className="min-w-0 flex-1">
-                <span className="block truncate text-sm font-bold text-foreground transition-colors group-hover:text-primary">{team.name}</span>
-                <span className="block truncate text-xs font-semibold text-muted">
-                  {team.league}{seasonTagById.has(team.seasonId) ? ` · ${seasonTagById.get(team.seasonId)}` : ""} &middot; {formatRecord(record)}
+
+              <div className="relative z-10 flex items-center justify-between gap-2">
+                <div className="flex min-w-0 items-center gap-2">
+                  <span
+                    className={
+                      rank === 1
+                        ? "flex h-6 min-w-6 items-center justify-center rounded-control border border-archive/45 bg-archive/15 px-1.5 text-2xs font-extrabold tabular-nums text-archive"
+                        : rank && rank <= 4
+                          ? "flex h-6 min-w-6 items-center justify-center rounded-control border border-primary/35 bg-primary/12 px-1.5 text-2xs font-extrabold tabular-nums text-foreground"
+                          : "flex h-6 min-w-6 items-center justify-center rounded-control bg-surface-2 px-1.5 text-2xs font-extrabold tabular-nums text-muted"
+                    }
+                  >
+                    #{rank ?? "–"}
+                  </span>
+                  <span className="truncate text-3xs font-bold uppercase tracking-wider text-muted">
+                    {team.league}
+                    {seasonTagById.has(team.seasonId)
+                      ? ` · ${seasonTagById.get(team.seasonId)}`
+                      : ""}
+                  </span>
+                </div>
+                <span className="inline-flex items-center gap-1 text-3xs font-bold uppercase tracking-wider text-muted transition-colors group-hover:text-primary">
+                  Team Hub
+                  <ArrowUpRight size={12} aria-hidden="true" />
                 </span>
-              </span>
-              <span className="font-display shrink-0 text-lg font-extrabold tabular-nums text-foreground">
-                {pctStr}
-              </span>
+              </div>
+
+              <div className="relative z-10 flex items-center gap-3.5">
+                <TeamBadge team={team} size="lg" className="h-14 w-14 text-xs" />
+                <div className="min-w-0 flex-1">
+                  <span className="font-display block truncate text-xl font-extrabold leading-tight tracking-tight text-foreground transition-colors group-hover:text-primary">
+                    {team.name}
+                  </span>
+                  <div className="mt-1 flex flex-wrap items-center gap-1.5">
+                    <span className="font-mono rounded bg-surface-2/90 px-2 py-0.5 text-xs font-bold tabular-nums text-foreground">
+                      {formatRecord(record)}
+                    </span>
+                    {item.streak && item.streak !== "-" ? (
+                      <Badge
+                        tone={item.streak.startsWith("W") ? "success" : "negative"}
+                        size="sm"
+                      >
+                        {item.streak}
+                      </Badge>
+                    ) : null}
+                  </div>
+                </div>
+              </div>
+
+              <div className="relative z-10 flex items-center gap-3 border-t border-border/60 pt-2.5">
+                <div className="min-w-0 flex-1">
+                  <div className="mb-1 flex items-center justify-between text-3xs font-bold uppercase tracking-wider text-muted">
+                    <span>Win Rate</span>
+                    <span className="font-mono text-foreground">{pctStr}</span>
+                  </div>
+                  <div className="h-1.5 w-full overflow-hidden rounded-full bg-surface-2">
+                    <div
+                      className="h-full rounded-full transition-all"
+                      style={{
+                        width: `${Math.max(4, pctFill)}%`,
+                        backgroundColor: team.accentColor,
+                      }}
+                    />
+                  </div>
+                </div>
+                {hasPlayedScores ? (
+                  <div className="shrink-0 rounded-control border border-border/75 bg-surface-2/85 px-2.5 py-1 text-right">
+                    <span className="block text-3xs font-bold uppercase tracking-wider text-muted">
+                      Diff
+                    </span>
+                    <span
+                      className={`font-mono text-xs font-bold tabular-nums ${
+                        item.pointDiff > 0
+                          ? "text-positive"
+                          : item.pointDiff < 0
+                            ? "text-negative"
+                            : "text-muted"
+                      }`}
+                    >
+                      {diffStr}
+                    </span>
+                  </div>
+                ) : null}
+              </div>
             </Link>
           );
         })}

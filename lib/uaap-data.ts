@@ -5,6 +5,7 @@ import { awardIntegrityIssues, chessIntegrityIssues, preparePublicUAAPData } fro
 import { recordSourceReview, type UAAPSourceReviewInput } from "@/lib/uaap-source-review";
 import { supabase } from "@/lib/supabase";
 import { getServiceSupabase } from "@/lib/supabase-admin";
+import { isNetworkUnreachable, isSupabaseNetworkDown } from "@/lib/supabase-data";
 import {
   DEFAULT_STAGE,
   MANUAL_SOURCE,
@@ -101,7 +102,7 @@ function coerceOverrides(raw: unknown): UAAPAdminOverrides {
 }
 
 async function readLegacyAdminOverrides(): Promise<UAAPAdminOverrides> {
-  if (supabase) {
+  if (supabase && !isSupabaseNetworkDown()) {
     try {
       const { data, error } = await supabase
         .from("uaap_overrides")
@@ -114,22 +115,26 @@ async function readLegacyAdminOverrides(): Promise<UAAPAdminOverrides> {
       }
       if (error) {
         console.warn("[UAAP Data] Override read failed:", error.message);
+        isNetworkUnreachable(error.message);
       }
     } catch (err) {
       console.warn("[UAAP Data] Override read threw:", err);
+      isNetworkUnreachable(err);
     }
 
-    // Fall back to the pre-migration sentinel row.
-    try {
-      const { data } = await supabase
-        .from("teams")
-        .select("record")
-        .eq("id", LEGACY_OVERRIDES_TEAM_ROW_ID)
-        .maybeSingle();
+    // Fall back to the pre-migration sentinel row if network is still healthy.
+    if (!isSupabaseNetworkDown()) {
+      try {
+        const { data } = await supabase
+          .from("teams")
+          .select("record")
+          .eq("id", LEGACY_OVERRIDES_TEAM_ROW_ID)
+          .maybeSingle();
 
-      if (data?.record) return coerceOverrides(data.record);
-    } catch {
-      // Ignore: the legacy row is optional.
+        if (data?.record) return coerceOverrides(data.record);
+      } catch {
+        // Ignore: the legacy row is optional.
+      }
     }
   }
 
@@ -143,33 +148,47 @@ async function readLegacyAdminOverrides(): Promise<UAAPAdminOverrides> {
 export async function readAdminOverrides(): Promise<UAAPAdminOverrides> {
   const overrides = await readLegacyAdminOverrides();
   overrides.divisionVersions = {};
-  if (!supabase) return overrides;
-  for (let from = 0; ; from += 1000) {
-    const { data, error } = await supabase.from("uaap_division_overrides")
-      .select("season,sport,division,payload,version")
-      .order("season").order("sport").order("division").range(from, from + 999);
-    if (error?.code === "42P01" || error?.code === "PGRST205") return overrides;
-    if (error) throw new Error(`Could not load division overrides: ${error.message}`);
-    for (const row of data ?? []) {
-      const key = makeDivisionKey(row.season, row.sport, row.division);
-      const extrasKey = makeExtrasKey(row.sport, row.season);
-      const payload = row.payload as { table?: UAAPTable; standings?: LegacyStandingRecord[];
-        deleted?: boolean; awards?: unknown; chess_medalists?: unknown };
-      overrides.divisionVersions[key] = row.version;
-      delete overrides.tables_overrides[key];
-      delete overrides.standings_overrides[key];
-      overrides.deleted_divisions = overrides.deleted_divisions.filter(k => k !== key);
-      if (payload.deleted) overrides.deleted_divisions.push(key);
-      else if (payload.table) overrides.tables_overrides[key] = payload.table;
-      else if (payload.standings) overrides.standings_overrides[key] = payload.standings;
-      for (const kind of ["awards", "chess_medalists"] as const) {
-        if (Object.hasOwn(payload, kind)) {
-          overrides.extras_overrides[kind][extrasKey] ||= {};
-          overrides.extras_overrides[kind][extrasKey][row.division] = payload[kind];
+  if (!supabase || isSupabaseNetworkDown()) return overrides;
+  try {
+    for (let from = 0; ; from += 1000) {
+      const { data, error } = await supabase.from("uaap_division_overrides")
+        .select("season,sport,division,payload,version")
+        .order("season").order("sport").order("division").range(from, from + 999);
+      if (error?.code === "42P01" || error?.code === "PGRST205") return overrides;
+      if (error) {
+        if (isNetworkUnreachable(error.message)) {
+          console.warn("[UAAP Data] Division overrides unreachable, using base archive:", error.message);
+          return overrides;
+        }
+        throw new Error(`Could not load division overrides: ${error.message}`);
+      }
+      for (const row of data ?? []) {
+        const key = makeDivisionKey(row.season, row.sport, row.division);
+        const extrasKey = makeExtrasKey(row.sport, row.season);
+        const payload = row.payload as { table?: UAAPTable; standings?: LegacyStandingRecord[];
+          deleted?: boolean; awards?: unknown; chess_medalists?: unknown };
+        overrides.divisionVersions[key] = row.version;
+        delete overrides.tables_overrides[key];
+        delete overrides.standings_overrides[key];
+        overrides.deleted_divisions = overrides.deleted_divisions.filter(k => k !== key);
+        if (payload.deleted) overrides.deleted_divisions.push(key);
+        else if (payload.table) overrides.tables_overrides[key] = payload.table;
+        else if (payload.standings) overrides.standings_overrides[key] = payload.standings;
+        for (const kind of ["awards", "chess_medalists"] as const) {
+          if (Object.hasOwn(payload, kind)) {
+            overrides.extras_overrides[kind][extrasKey] ||= {};
+            overrides.extras_overrides[kind][extrasKey][row.division] = payload[kind];
+          }
         }
       }
+      if (!data || data.length < 1000) break;
     }
-    if (!data || data.length < 1000) break;
+  } catch (err) {
+    if (isNetworkUnreachable(err)) {
+      console.warn("[UAAP Data] Division overrides fallback to base archive:", err instanceof Error ? err.message : String(err));
+      return overrides;
+    }
+    throw err;
   }
   return overrides;
 }

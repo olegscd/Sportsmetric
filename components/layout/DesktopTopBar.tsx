@@ -20,7 +20,11 @@ export function DesktopTopBar() {
   if (isAdmin) return null;
 
   return (
-    <header className="sticky top-0 z-40 hidden min-w-0 border-b border-border/80 bg-bg/85 backdrop-blur-xl md:block">
+    <header className="sticky top-0 z-40 hidden min-w-0 border-b border-border/85 bg-bg/85 backdrop-blur-xl md:block">
+      <div
+        aria-hidden="true"
+        className="h-0.5 w-full bg-gradient-to-r from-[var(--color-league-uaap)] via-[var(--color-league-pba)] to-[var(--color-league-pvl)] opacity-90"
+      />
       <div className={`${PAGE_SHELL} flex h-16 items-center gap-6`}>
         <Link
           href="/"

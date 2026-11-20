@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 420" fill="none" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="beamLeft" x1="0" y1="0" x2="460" y2="380" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ef4444" stop-opacity="0.22" />
+      <stop offset="60%" stop-color="#ef4444" stop-opacity="0.04" />
+      <stop offset="100%" stop-color="#ef4444" stop-opacity="0" />
+    </linearGradient>
+    <linearGradient id="beamRight" x1="1200" y1="0" x2="720" y2="380" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.2" />
+      <stop offset="60%" stop-color="#38bdf8" stop-opacity="0.04" />
+      <stop offset="100%" stop-color="#38bdf8" stop-opacity="0" />
+    </linearGradient>
+    <linearGradient id="courtFade" x1="0" y1="420" x2="0" y2="120" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.14" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.02" />
+    </linearGradient>
+    <pattern id="techGrid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M 32 0 L 0 0 0 32" stroke="#94a3b8" stroke-opacity="0.06" stroke-width="1" />
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="420" fill="url(#techGrid)" />
+
+  <!-- Stadium floodlight cones -->
+  <polygon points="0,0 320,0 560,420 0,420" fill="url(#beamLeft)" />
+  <polygon points="1200,0 880,0 640,420 1200,420" fill="url(#beamRight)" />
+
+  <!-- Center court telemetry ring -->
+  <circle cx="600" cy="215" r="142" stroke="url(#courtFade)" stroke-width="1.25" stroke-dasharray="6 6" />
+  <circle cx="600" cy="215" r="74" stroke="url(#courtFade)" stroke-width="1.25" />
+  <line x1="600" y1="28" x2="600" y2="392" stroke="#94a3b8" stroke-opacity="0.09" stroke-width="1" stroke-dasharray="4 4" />
+
+  <!-- Left basketball half-court blueprint (arc + key) -->
+  <g stroke="url(#courtFade)" stroke-width="1.25">
+    <path d="M 24 85 H 142 A 168 168 0 0 1 142 345 H 24" />
+    <rect x="24" y="156" width="154" height="118" rx="4" />
+    <circle cx="178" cy="215" r="46" stroke-dasharray="5 5" />
+    <path d="M 48 188 A 27 27 0 0 1 48 242" />
+    <circle cx="52" cy="215" r="7" stroke="#ef4444" stroke-opacity="0.4" />
+  </g>
+
+  <!-- Right volleyball half-court blueprint (net + attack zone) -->
+  <g stroke="url(#courtFade)" stroke-width="1.25">
+    <rect x="850" y="95" width="326" height="240" rx="4" />
+    <line x1="972" y1="95" x2="972" y2="335" stroke-dasharray="5 5" />
+    <line x1="1084" y1="80" x2="1084" y2="350" stroke="#38bdf8" stroke-opacity="0.28" stroke-width="2" />
+    <!-- Net mesh accent -->
+    <path d="M 1076 95 L 1092 105 M 1076 115 L 1092 125 M 1076 135 L 1092 145 M 1076 155 L 1092 165 M 1076 175 L 1092 185 M 1076 195 L 1092 205 M 1076 215 L 1092 225 M 1076 235 L 1092 245 M 1076 255 L 1092 265 M 1076 275 L 1092 285 M 1076 295 L 1092 305 M 1076 315 L 1092 325" stroke="#38bdf8" stroke-opacity="0.2" stroke-width="1" />
+  </g>
+
+  <!-- Corner telemetry brackets & calibration dots -->
+  <g stroke="#e2e8f0" stroke-opacity="0.16" stroke-width="1.2">
+    <path d="M 20 38 V 20 H 38" />
+    <path d="M 1180 38 V 20 H 1162" />
+    <path d="M 20 382 V 400 H 38" />
+    <path d="M 1180 382 V 400 H 1162" />
+  </g>
+  <circle cx="600" cy="215" r="3" fill="#ef4444" fill-opacity="0.55" />
+  <circle cx="1084" cy="215" r="3" fill="#38bdf8" fill-opacity="0.55" />
+</svg>

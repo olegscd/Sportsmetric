@@ -1,24 +1,24 @@
 @import "tailwindcss";
 
-/* Sportsmetric: Broadcast Telemetry / Arena Night design tokens. */
+/* Sportsmetric: Manila Arena Floodlight design tokens. */
 @theme {
-  --color-bg: #080c13;
-  --color-surface: #111824;
-  --color-elevated: #192334;
-  --color-border: #243044;
+  --color-bg: #050811;
+  --color-surface: #0e1524;
+  --color-elevated: #172236;
+  --color-border: #223049;
   --color-foreground: #f5f7fb;
-  --color-muted: #98a6bc;
+  --color-muted: #9aa9c2;
   --color-primary: #ef4444;
   --color-primary-foreground: #ffffff;
   --color-live: #fb7185;
   --color-success: #2ecc71;
-  --color-league-uaap: #cc0000;
-  --color-league-pba: #f7941d;
-  --color-league-pvl: #0066cc;
+  --color-league-uaap: #e11d48;
+  --color-league-pba: #f59e0b;
+  --color-league-pvl: #0ea5e9;
 
   /* Refined scoreboard surfaces and semantics */
-  --color-surface-2: #0c121c;
-  --color-border-strong: #374762;
+  --color-surface-2: #0a101b;
+  --color-border-strong: #374b6e;
   --color-positive: #34d399;
   --color-negative: #f87171;
   --color-archive: #fbbf24;
@@ -28,9 +28,9 @@
   --radius-card: 1rem;
   --radius-panel: 1.25rem;
 
-  --shadow-card: inset 0 1px 0 rgb(255 255 255 / 0.045), 0 16px 32px -24px rgb(0 0 0 / 0.92);
-  --shadow-raised: inset 0 1px 0 rgb(255 255 255 / 0.06), 0 22px 46px -22px rgb(0 0 0 / 0.9);
-  --shadow-modal: inset 0 1px 0 rgb(255 255 255 / 0.08), 0 42px 100px -20px rgb(0 0 0 / 0.95);
+  --shadow-card: inset 0 1px 0 rgb(255 255 255 / 0.055), 0 18px 36px -22px rgb(0 0 0 / 0.94);
+  --shadow-raised: inset 0 1px 0 rgb(255 255 255 / 0.075), 0 24px 52px -20px rgb(0 0 0 / 0.94);
+  --shadow-modal: inset 0 1px 0 rgb(255 255 255 / 0.09), 0 42px 100px -20px rgb(0 0 0 / 0.96);
 
   --text-2xs: 0.6875rem;
   --text-2xs--line-height: 1rem;
@@ -96,10 +96,33 @@ button:not(:disabled), select {
 
 .scoreboard-hero {
   background:
-    radial-gradient(ellipse 75% 65% at 100% 0%, rgb(239 68 68 / 0.12), transparent 60%),
-    radial-gradient(ellipse 60% 50% at 0% 100%, rgb(56 189 248 / 0.06), transparent 55%),
-    linear-gradient(160deg, rgb(20 28 42 / 0.95), rgb(13 19 30 / 0.98));
+    radial-gradient(ellipse 75% 65% at 100% 0%, rgb(239 68 68 / 0.16), transparent 60%),
+    radial-gradient(ellipse 60% 55% at 0% 100%, rgb(56 189 248 / 0.12), transparent 58%),
+    linear-gradient(155deg, rgb(18 26 44 / 0.96), rgb(8 13 24 / 0.98));
   box-shadow: var(--shadow-raised);
+}
+
+.arena-grid-bg {
+  background-image:
+    radial-gradient(rgb(148 163 184 / 0.12) 1px, transparent 1px),
+    linear-gradient(to right, rgb(55 75 110 / 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(55 75 110 / 0.08) 1px, transparent 1px);
+  background-size: 24px 24px, 72px 72px, 72px 72px;
+}
+
+.led-score-box {
+  background: linear-gradient(180deg, rgb(8 13 24 / 0.95), rgb(14 21 36 / 0.9));
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.06), inset 0 -2px 6px rgb(0 0 0 / 0.6);
+}
+
+.broadcast-ticker {
+  background: linear-gradient(90deg, rgb(14 21 36 / 0.92), rgb(18 27 46 / 0.88), rgb(14 21 36 / 0.92));
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.05), 0 12px 28px -18px rgb(0 0 0 / 0.9);
+}
+
+.glass-card {
+  background: linear-gradient(160deg, rgb(20 30 48 / 0.78), rgb(10 16 28 / 0.92));
+  backdrop-filter: blur(14px);
 }
 
 .h-scroll {
@@ -154,9 +177,12 @@ button:not(:disabled), select {
 
 body {
   background:
-    radial-gradient(ellipse 85% 42% at 50% -8%, rgb(239 68 68 / 0.075), transparent 65%),
-    radial-gradient(ellipse 65% 35% at 88% 4%, rgb(56 189 248 / 0.045), transparent 60%),
+    radial-gradient(ellipse 90% 44% at 50% -10%, rgb(225 29 72 / 0.13), transparent 62%),
+    radial-gradient(ellipse 65% 38% at 92% 4%, rgb(14 165 233 / 0.1), transparent 58%),
+    radial-gradient(ellipse 55% 35% at 6% 14%, rgb(245 158 11 / 0.07), transparent 56%),
+    radial-gradient(rgb(148 163 184 / 0.07) 1px, transparent 1px),
     var(--color-bg);
+  background-size: auto, auto, auto, 28px 28px, auto;
   color: var(--color-foreground);
 }
 

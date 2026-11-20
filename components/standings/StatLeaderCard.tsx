@@ -1,8 +1,8 @@
 import { Badge } from "@/components/ui/Badge";
 import { Card } from "@/components/ui/Card";
+import { PlayerAvatar } from "@/components/ui/PlayerAvatar";
 import { TeamBadge } from "@/components/ui/TeamBadge";
 import type { StatLeaderEntry } from "@/lib/derivations";
-import { cn } from "@/lib/utils";
 import Link from "next/link";
 
 interface StatLeaderCardProps {
@@ -19,28 +19,52 @@ export function StatLeaderCard({ title, entries, formatValue }: StatLeaderCardPr
           {title}
         </p>
       </div>
-      <div className="flex flex-col gap-1.5">
+      <div className="flex flex-col gap-2">
         {entries.length === 0 ? (
           <p className="py-4 text-center text-xs font-medium text-muted">No data yet.</p>
         ) : (
           entries.map((entry, index) => {
             const isLeader = index === 0;
+            if (isLeader) {
+              return (
+                <Link
+                  key={entry.player.id}
+                  href={`/players/${entry.player.id}`}
+                  className="group relative flex items-center gap-3 overflow-hidden rounded-card border border-archive/35 p-2.5 transition-all hover:border-archive/60"
+                  style={{
+                    backgroundImage: `linear-gradient(125deg, ${entry.team.accentColor}2e 0%, rgba(10,16,28,0.92) 70%)`,
+                  }}
+                >
+                  <Badge tone="archive" size="sm" className="w-6 shrink-0 justify-center tabular-nums">
+                    1
+                  </Badge>
+                  <PlayerAvatar
+                    player={entry.player}
+                    accentColor={entry.team.accentColor}
+                    size="md"
+                  />
+                  <span className="flex min-w-0 flex-1 flex-col">
+                    <span className="truncate text-xs font-extrabold text-foreground transition-colors group-hover:text-archive">
+                      {entry.player.name}
+                    </span>
+                    <span className="mt-0.5 flex items-center gap-1.5 text-3xs font-semibold uppercase tracking-wide text-muted">
+                      <TeamBadge team={entry.team} size="sm" className="h-4 w-4 text-[7px]" />
+                      <span className="truncate">{entry.team.shortName}</span>
+                    </span>
+                  </span>
+                  <span className="font-display shrink-0 text-2xl font-black tabular-nums leading-none text-archive">
+                    {formatValue(entry.value)}
+                  </span>
+                </Link>
+              );
+            }
             return (
               <Link
                 key={entry.player.id}
                 href={`/players/${entry.player.id}`}
-                className={cn(
-                  "flex min-h-11 items-center gap-2.5 rounded-control px-2 py-1.5 transition-colors",
-                  isLeader
-                    ? "border border-archive/25 bg-archive/[0.06] hover:bg-archive/[0.11]"
-                    : "hover:bg-elevated/60"
-                )}
+                className="flex min-h-10 items-center gap-2.5 rounded-control px-2 py-1 transition-colors hover:bg-elevated/60"
               >
-                <Badge
-                  tone={isLeader ? "archive" : "neutral"}
-                  size="sm"
-                  className="w-6 justify-center tabular-nums"
-                >
+                <Badge tone="neutral" size="sm" className="w-6 justify-center tabular-nums">
                   {index + 1}
                 </Badge>
                 <TeamBadge team={entry.team} size="sm" />
@@ -52,12 +76,7 @@ export function StatLeaderCard({ title, entries, formatValue }: StatLeaderCardPr
                     {entry.team.shortName}
                   </span>
                 </span>
-                <span
-                  className={cn(
-                    "font-display shrink-0 text-lg font-extrabold tabular-nums leading-none",
-                    isLeader ? "text-archive" : "text-foreground"
-                  )}
-                >
+                <span className="font-display shrink-0 text-lg font-extrabold tabular-nums leading-none text-foreground">
                   {formatValue(entry.value)}
                 </span>
               </Link>

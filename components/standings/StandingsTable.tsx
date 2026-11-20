@@ -56,6 +56,7 @@ export function StandingsTable({
       wins: s.wins,
       losses: s.losses,
       pct: s.winPct.toFixed(3).replace(/^0/, ""),
+      winPctNum: s.winPct,
       pf: s.pointsFor,
       pa: s.pointsAgainst,
       diff: s.pointDiff > 0 ? `+${s.pointDiff}` : `${s.pointDiff}`,
@@ -70,6 +71,7 @@ export function StandingsTable({
         wins: team.record.wins,
         losses: team.record.losses,
         pct: pctVal.toFixed(3).replace(/^0/, ""),
+        winPctNum: pctVal,
         pf: undefined,
         pa: undefined,
         diff: undefined,
@@ -145,8 +147,19 @@ export function StandingsTable({
                 <Td numeric className="w-12 font-bold text-muted">
                   {row.losses}
                 </Td>
-                <Td numeric className="w-16 font-mono text-xs font-semibold text-muted">
-                  {row.pct}
+                <Td numeric className="w-24 font-mono text-xs font-semibold text-muted">
+                  <div className="flex items-center justify-end gap-2">
+                    <span className="hidden h-1.5 w-10 overflow-hidden rounded-full bg-surface-2 sm:inline-block">
+                      <span
+                        className="block h-full rounded-full"
+                        style={{
+                          width: `${Math.round(row.winPctNum * 100)}%`,
+                          backgroundColor: row.team.accentColor,
+                        }}
+                      />
+                    </span>
+                    <span className="tabular-nums text-foreground/90">{row.pct}</span>
+                  </div>
                 </Td>
                 {showDiffAndStreak && (
                   <>
