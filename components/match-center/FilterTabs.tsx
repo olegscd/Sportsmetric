@@ -1,245 +1,228 @@
 "use client";
 
-import { isSeasonInProgress } from "@/lib/season-status";
 import { PAGE_FRAME } from "@/components/layout/page-shell";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { ErrorNotice } from "@/components/ui/ErrorNotice";
 import { Field, Input, Select } from "@/components/ui/Field";
-import { FilterChip, SegmentedControl } from "@/components/ui/FilterChip";
-import { SeasonPicker } from "@/components/ui/SeasonPicker";
 import { SearchInput } from "@/components/ui/SearchInput";
+import { SeasonPicker } from "@/components/ui/SeasonPicker";
 import { SkeletonCardGrid } from "@/components/ui/Skeleton";
-import { TeamBadge } from "@/components/ui/TeamBadge";
 import { useSportsData, useSportsScope } from "@/context/SportsDataContext";
-import { getEffectiveGameStatus, isLifetimeSeason } from "@/lib/derivations";
-import { useGameModal } from "@/lib/game-modal-context";
-import { getTopGamePerformer } from "@/lib/game-overview";
+import { getEffectiveGameStatus } from "@/lib/derivations";
 import { inferLeague } from "@/lib/league-utils";
-import { formatFullDayHeader, formatGameDate, formatRecord, formatStartTime, isoToPhtInput } from "@/lib/utils";
+import { isSeasonInProgress } from "@/lib/season-status";
+import { formatFullDayHeader, formatGameDate, isoToPhtInput } from "@/lib/utils";
 import type { Game, League } from "@/types/sports";
-import {
-  ArrowUpRight,
-  CalendarDays,
-  CheckCheck,
-  MapPin,
-  Radio,
-  RefreshCw,
-  SlidersHorizontal,
-  Sparkles,
-  Trophy,
-} from "lucide-react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { ArrowRight, CalendarDays, ChevronDown, Radio, RefreshCw, SlidersHorizontal } from "lucide-react";
+import Image from "next/image";
+import { useEffect, useMemo, useState } from "react";
 import { GameCard } from "./GameCard";
+import { LeagueBadge } from "./LeagueBadge";
 
-type GameStatusTab = "LIVE" | "UPCOMING" | "FINAL";
+type LeagueScope = "ALL" | League;
 
-const STATUS_TABS: { value: GameStatusTab; label: string }[] = [
-  { value: "LIVE", label: "Live" },
-  { value: "UPCOMING", label: "Upcoming" },
-  { value: "FINAL", label: "Final" },
-];
-
-const LEAGUE_CHIPS: { value: League; label: string; dotColor: string }[] = [
+const LEAGUE_TABS: { value: LeagueScope; label: string; dotColor?: string }[] = [
+  { value: "ALL", label: "All" },
   { value: "UAAP", label: "UAAP", dotColor: "var(--color-league-uaap)" },
   { value: "PBA", label: "PBA", dotColor: "var(--color-league-pba)" },
   { value: "PVL", label: "PVL", dotColor: "var(--color-league-pvl)" },
 ];
 
-const HERO_ACCENT: Record<League, string> = {
-  UAAP: "radial-gradient(ellipse 70% 60% at 95% 0%, rgb(225 29 72 / 0.22), transparent 64%)",
-  PBA: "radial-gradient(ellipse 70% 60% at 95% 0%, rgb(245 158 11 / 0.20), transparent 64%)",
-  PVL: "radial-gradient(ellipse 70% 60% at 95% 0%, rgb(14 165 233 / 0.22), transparent 64%)",
+const HERO_ACCENT: Record<LeagueScope, string> = {
+  ALL: "radial-gradient(ellipse 75% 65% at 75% 0%, rgb(239 68 68 / 0.2), transparent 65%), radial-gradient(ellipse 55% 55% at 15% 10%, rgb(59 130 246 / 0.14), transparent 60%)",
+  UAAP: "radial-gradient(ellipse 75% 65% at 80% 0%, rgb(225 29 72 / 0.26), transparent 66%)",
+  PBA: "radial-gradient(ellipse 75% 65% at 80% 0%, rgb(245 158 11 / 0.24), transparent 66%)",
+  PVL: "radial-gradient(ellipse 75% 65% at 80% 0%, rgb(14 165 233 / 0.26), transparent 66%)",
 };
 
-function sortBySpotlightPriority(a: Game, b: Game): number {
-  const rank = (g: Game) => {
-    const s = getEffectiveGameStatus(g);
-    return s === "LIVE" ? 0 : s === "UPCOMING" ? 1 : 2;
-  };
-  const ra = rank(a);
-  const rb = rank(b);
-  if (ra !== rb) return ra - rb;
-  const ta = new Date(a.startTime).getTime();
-  const tb = new Date(b.startTime).getTime();
-  // Live/Upcoming: soonest first; Final: newest first
-  return ra === 2 ? tb - ta : ta - tb;
-}
-
-function getSmartStatusTab(
-  gamesList: Game[],
-  targetSeasonId: string,
-  targetLeague: League,
-  isOld: boolean
-): GameStatusTab {
-  if (isOld) return "FINAL";
-
-  const relevant = gamesList.filter(
-    (g) => g.seasonId === targetSeasonId && g.league === targetLeague
-  );
-
-  const hasLive = relevant.some((g) => getEffectiveGameStatus(g) === "LIVE");
-  if (hasLive) return "LIVE";
-
-  const hasUpcoming = relevant.some((g) => getEffectiveGameStatus(g) === "UPCOMING");
-  if (hasUpcoming) return "UPCOMING";
-
-  return "FINAL";
-}
+const ARENA_SLIDES = [
+  { src: "/arenas/ust-qpav.jpg", label: "UST Quadricentennial Pavilion" },
+  { src: "/arenas/blue-eagle-gym.jpg", label: "Ateneo Blue Eagle Gym" },
+  { src: "/assets/arena-court-bg.svg", label: "Arena Telemetry Court" },
+] as const;
 
 export function FilterTabs() {
-  const { games, teams, players, seasons, currentSeasonId, loading, error, refreshData } = useSportsData();
-  const { openGame } = useGameModal();
-  const [league, setLeague] = useState<League>("UAAP");
+  const { games, teams, seasons, currentSeasonId, loading, error, refreshData } = useSportsData();
+  const [league, setLeague] = useState<LeagueScope>("ALL");
   const [userSelectedSeasonId, setUserSelectedSeasonId] = useState<string | null>(null);
+  const [showFilters, setShowFilters] = useState(false);
 
-  const targetSeasons = seasons.filter((s) => inferLeague(s) === league);
-  const activeCurrent = targetSeasons.find((s) => s.isCurrent)?.id ?? targetSeasons[0]?.id ?? currentSeasonId;
-  const seasonId = userSelectedSeasonId && targetSeasons.some((s) => s.id === userSelectedSeasonId)
-    ? userSelectedSeasonId
-    : activeCurrent;
+  const activeLeague: League = league === "ALL" ? "UAAP" : league;
+  const targetSeasons = seasons.filter((s) => inferLeague(s) === activeLeague);
+  const activeCurrent =
+    targetSeasons.find((s) => s.isCurrent)?.id ?? targetSeasons[0]?.id ?? currentSeasonId;
+  const seasonId =
+    league !== "ALL" && userSelectedSeasonId && targetSeasons.some((s) => s.id === userSelectedSeasonId)
+      ? userSelectedSeasonId
+      : activeCurrent;
 
   const { isPending: isSeasonPending } = useSportsScope(
-    `league=${league}&season=${encodeURIComponent(seasonId)}`
+    league === "ALL"
+      ? "league=ALL"
+      : `league=${league}&season=${encodeURIComponent(seasonId)}`
   );
 
   const selectedSeason = seasons.find((s) => s.id === seasonId);
 
-  const [status, setStatus] = useState<GameStatusTab>("FINAL");
   const [teamId, setTeamId] = useState<string>("ALL");
   const [query, setQuery] = useState("");
   const [date, setDate] = useState("");
   const [sort, setSort] = useState<"default" | "oldest" | "newest">("default");
-  const statusTouched = useRef(false);
 
-  const seasonGames = useMemo(() => {
-    if (!seasonId || isLifetimeSeason(seasonId)) return games;
-    return games.filter((g) => g.seasonId === seasonId && g.league === league);
-  }, [games, seasonId, league]);
-
-  // Archived = not current and not marked in progress (lib/season-status).
-  const isOldSeason = selectedSeason ? !isSeasonInProgress(selectedSeason) : seasonId !== currentSeasonId;
-
-  const activeStatus = isOldSeason ? "FINAL" : status;
-
+  const [arenaIndex, setArenaIndex] = useState(0);
   useEffect(() => {
-    if (statusTouched.current) return;
-    setStatus(getSmartStatusTab(games, seasonId, league, isOldSeason));
-  }, [games, seasonId, league, isOldSeason]);
+    const timer = setInterval(() => {
+      setArenaIndex((prev) => (prev + 1) % ARENA_SLIDES.length);
+    }, 8000);
+    return () => clearInterval(timer);
+  }, []);
 
-  const counts = { LIVE: 0, UPCOMING: 0, FINAL: 0 };
-  for (const game of seasonGames) counts[getEffectiveGameStatus(game)]++;
-  const countsPending = isSeasonPending || loading;
-
-  const playerNamesById = useMemo(
-    () => new Map(players.map((p) => [p.id, p.name])),
-    [players]
-  );
-
-  const orderedSeasonGames = useMemo(
-    () => [...seasonGames].sort(sortBySpotlightPriority),
-    [seasonGames]
-  );
-  const tickerGames = useMemo(() => orderedSeasonGames.slice(0, 8), [orderedSeasonGames]);
-  const spotlightGame = orderedSeasonGames[0] ?? null;
-  const spotlightStatus = spotlightGame ? getEffectiveGameStatus(spotlightGame) : null;
-  const spotlightShowScore = spotlightStatus !== null && spotlightStatus !== "UPCOMING";
-  const spotlightTopScorer = useMemo(
-    () =>
-      spotlightGame && spotlightShowScore
-        ? getTopGamePerformer(spotlightGame, playerNamesById)
-        : null,
-    [spotlightGame, spotlightShowScore, playerNamesById]
-  );
+  const scopedGames = useMemo(() => {
+    if (league === "ALL") {
+      const activeIds = new Set(seasons.filter((s) => isSeasonInProgress(s)).map((s) => s.id));
+      return activeIds.size > 0 ? games.filter((g) => activeIds.has(g.seasonId)) : games;
+    }
+    if (!seasonId) return games.filter((g) => g.league === league);
+    return games.filter((g) => g.seasonId === seasonId && g.league === league);
+  }, [games, seasons, league, seasonId]);
 
   const availableTeams = useMemo(() => {
-    const teamsInSeason = isLifetimeSeason(seasonId)
-      ? teams
-      : teams.filter((t) => t.seasonId === seasonId);
-    return teamsInSeason.filter((t) => t.league === league);
-  }, [teams, seasonId, league]);
+    if (league === "ALL") {
+      const activeIds = new Set(seasons.filter((s) => isSeasonInProgress(s)).map((s) => s.id));
+      return activeIds.size > 0 ? teams.filter((t) => activeIds.has(t.seasonId)) : teams;
+    }
+    return teams.filter((t) => t.seasonId === seasonId && t.league === league);
+  }, [teams, seasons, seasonId, league]);
 
   const filteredGames = useMemo(
     () =>
-      seasonGames.filter((game) => {
-        const effectiveStatus = getEffectiveGameStatus(game);
-        const searchText = `${game.homeTeam.name} ${game.homeTeam.shortName} ${game.awayTeam.name} ${game.awayTeam.shortName} ${game.venue ?? ""}`.toLowerCase();
+      scopedGames.filter((game) => {
+        const searchText =
+          `${game.homeTeam.name} ${game.homeTeam.shortName} ${game.awayTeam.name} ${game.awayTeam.shortName} ${game.venue ?? ""}`.toLowerCase();
         return (
-          effectiveStatus === activeStatus &&
-          game.league === league &&
+          (league === "ALL" || game.league === league) &&
           (teamId === "ALL" || game.homeTeam.id === teamId || game.awayTeam.id === teamId) &&
           (!date || isoToPhtInput(game.startTime).slice(0, 10) === date) &&
           (!query.trim() || searchText.includes(query.trim().toLowerCase()))
         );
-      }).sort((a, b) => {
-        const direction = sort === "oldest" || (sort === "default" && activeStatus === "UPCOMING") ? 1 : -1;
-        return direction * (new Date(a.startTime).getTime() - new Date(b.startTime).getTime()) || a.id.localeCompare(b.id);
       }),
-    [seasonGames, activeStatus, league, teamId, query, date, sort]
+    [scopedGames, league, teamId, date, query]
   );
 
-  const pageKey = `${league}|${seasonId}|${activeStatus}|${teamId}|${query}|${date}|${sort}`;
+  const pageKey = `${league}|${seasonId}|${teamId}|${query}|${date}|${sort}`;
   const [page, setPage] = useState({ key: pageKey, limit: 36 });
   const limit = page.key === pageKey ? page.limit : 36;
-  const visibleGames = useMemo(() => filteredGames.slice(0, limit), [filteredGames, limit]);
 
-  const upcomingGrouped = useMemo(() => {
-    if (activeStatus !== "UPCOMING") return null;
+  const feedSections = useMemo(() => {
+    if (sort !== "default") {
+      const dir = sort === "oldest" ? 1 : -1;
+      const flat = [...filteredGames].sort(
+        (a, b) =>
+          dir * (new Date(a.startTime).getTime() - new Date(b.startTime).getTime()) ||
+          a.id.localeCompare(b.id)
+      );
+      return { mode: "flat" as const, games: flat.slice(0, limit), total: flat.length };
+    }
 
-    const groups: { dateKey: string; dateLabel: string; games: Game[] }[] = [];
+    const live: Game[] = [];
+    const upcoming: Game[] = [];
+    const final: Game[] = [];
+
+    for (const game of filteredGames) {
+      const st = getEffectiveGameStatus(game);
+      if (st === "LIVE") live.push(game);
+      else if (st === "UPCOMING") upcoming.push(game);
+      else final.push(game);
+    }
+
+    live.sort(
+      (a, b) =>
+        new Date(a.startTime).getTime() - new Date(b.startTime).getTime() ||
+        a.id.localeCompare(b.id)
+    );
+    upcoming.sort(
+      (a, b) =>
+        new Date(a.startTime).getTime() - new Date(b.startTime).getTime() ||
+        a.id.localeCompare(b.id)
+    );
+    final.sort(
+      (a, b) =>
+        new Date(b.startTime).getTime() - new Date(a.startTime).getTime() ||
+        a.id.localeCompare(b.id)
+    );
+
+    const remainingAfterLive = Math.max(0, limit - live.length);
+    const visibleUpcoming = upcoming.slice(0, remainingAfterLive);
+    const remainingForFinal = Math.max(0, remainingAfterLive - visibleUpcoming.length);
+    const visibleFinal = final.slice(0, remainingForFinal);
+    const finalByLeague: Record<League, Game[]> = {
+      UAAP: final.filter((g) => g.league === "UAAP").slice(0, 3),
+      PBA: final.filter((g) => g.league === "PBA").slice(0, 3),
+      PVL: final.filter((g) => g.league === "PVL").slice(0, 3),
+    };
+
+    const upcomingGroups: { dateKey: string; dateLabel: string; games: Game[] }[] = [];
     const groupMap = new Map<string, { dateKey: string; dateLabel: string; games: Game[] }>();
-
-    for (const game of visibleGames) {
+    for (const game of visibleUpcoming) {
       const dateKey = formatGameDate(game.startTime, true);
       const dateLabel = formatFullDayHeader(game.startTime) || dateKey;
-
       let group = groupMap.get(dateKey);
       if (!group) {
         group = { dateKey, dateLabel, games: [] };
         groupMap.set(dateKey, group);
-        groups.push(group);
+        upcomingGroups.push(group);
       }
       group.games.push(game);
     }
 
-    return groups;
-  }, [visibleGames, activeStatus]);
+    return {
+      mode: "sections" as const,
+      live,
+      upcomingGroups,
+      final: visibleFinal,
+      finalByLeague,
+      total: filteredGames.length,
+    };
+  }, [filteredGames, sort, limit]);
 
-  function handleSeasonChange(newSeasonId: string) {
-    setUserSelectedSeasonId(newSeasonId);
-    setTeamId("ALL");
-    setDate("");
-    const targetSeason = seasons.find((s) => s.id === newSeasonId);
-    const isOld = targetSeason ? !isSeasonInProgress(targetSeason) : false;
-    statusTouched.current = false;
-    setStatus(getSmartStatusTab(games, newSeasonId, league, isOld));
-  }
-
-  function handleLeagueChange(newLeague: League) {
+  function handleLeagueChange(newLeague: LeagueScope) {
     setLeague(newLeague);
     setTeamId("ALL");
     setDate("");
     setUserSelectedSeasonId(null);
-
-    const effSeasons = seasons.filter((s) => inferLeague(s) === newLeague);
-    const targetCurrent = effSeasons.find((s) => s.isCurrent)?.id ?? effSeasons[0]?.id ?? currentSeasonId;
-    const targetSeason = seasons.find((s) => s.id === targetCurrent);
-    const isOld = targetSeason ? !isSeasonInProgress(targetSeason) : false;
-    statusTouched.current = false;
-    setStatus(getSmartStatusTab(games, targetCurrent, newLeague, isOld));
   }
 
-  const showPvlLivePlaceholder =
-    league === "PVL" && activeStatus === "LIVE" && filteredGames.length === 0;
+  function handleAnySeasonPick(pickedSeasonId: string) {
+    if (!pickedSeasonId) {
+      setLeague("ALL");
+      setUserSelectedSeasonId(null);
+      setTeamId("ALL");
+      return;
+    }
+    const found = seasons.find((s) => s.id === pickedSeasonId);
+    if (found) {
+      setLeague(inferLeague(found));
+      setUserSelectedSeasonId(found.id);
+      setTeamId("ALL");
+      setDate("");
+    }
+  }
 
-  const hasFilters = teamId !== "ALL" || !!query || !!date || sort !== "default";
+  const hasFilters =
+    teamId !== "ALL" || !!query || !!date || sort !== "default" || !!userSelectedSeasonId;
+  const countsPending = isSeasonPending || loading;
+
   function resetFilters() {
     setTeamId("ALL");
     setQuery("");
     setDate("");
     setSort("default");
+    setUserSelectedSeasonId(null);
   }
+
+  const showAllLeaguesShowcase = league === "ALL" && !hasFilters;
 
   function renderBody() {
     if (error && games.length === 0) {
@@ -248,448 +231,386 @@ export function FilterTabs() {
     if (isSeasonPending || (loading && games.length === 0)) {
       return <SkeletonCardGrid count={6} />;
     }
-    if (showPvlLivePlaceholder) {
-      return (
-        <EmptyState
-          icon={<Radio size={22} aria-hidden="true" />}
-          title="PVL live scoring coming soon"
-          description="Official Premier Volleyball League box scores are published after the match. Check Upcoming for fixtures or Final for completed reports."
-        />
-      );
-    }
     if (filteredGames.length === 0) {
       return (
         <EmptyState
           icon={<Radio size={22} aria-hidden="true" />}
           title="No games match these filters"
-          description="Try another status, league, team, or season."
+          description={
+            hasFilters
+              ? "Try clearing your search, team, or date filter."
+              : "Matches and box scores appear here once scheduled or published."
+          }
         />
       );
     }
-    if (activeStatus === "UPCOMING" && upcomingGrouped) {
+    if (feedSections.mode === "flat") {
       return (
-        <div className="flex flex-col gap-6">
-          {upcomingGrouped.map((group) => (
-            <div key={group.dateKey} className="flex flex-col gap-3">
-              <div className="flex items-center justify-between border-b border-border/60 pb-2 px-1">
-                <div className="flex items-center gap-2.5">
-                  <span className="h-2 w-2 rounded-full bg-primary shadow-[0_0_8px_rgba(239,68,68,0.85)]" aria-hidden="true" />
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-foreground">
-                    {group.dateLabel}
-                  </h3>
-                </div>
-                <Badge tone="neutral" size="sm">
-                  {group.games.length} {group.games.length === 1 ? "Match" : "Matches"}
-                </Badge>
-              </div>
-              <div className="grid grid-cols-1 gap-3.5 md:grid-cols-2 lg:grid-cols-3">
-                {group.games.map((game) => (
-                  <GameCard key={game.id} game={game} />
-                ))}
-              </div>
-            </div>
+        <div className="grid grid-cols-1 gap-3.5 md:grid-cols-2 lg:grid-cols-3">
+          {feedSections.games.map((game) => (
+            <GameCard key={game.id} game={game} />
           ))}
         </div>
       );
     }
+
+    const liveGridClass =
+      feedSections.live.length === 1
+        ? "grid grid-cols-1 gap-3.5"
+        : feedSections.live.length === 2
+          ? "grid grid-cols-1 gap-3.5 md:grid-cols-2"
+          : "grid grid-cols-1 gap-3.5 md:grid-cols-2 lg:grid-cols-3";
+
+    const leagueShowcase = (["UAAP", "PBA", "PVL"] as const)
+      .map((l) => ({ league: l, games: feedSections.finalByLeague[l] }))
+      .filter((entry) => entry.games.length > 0);
+
     return (
-      <div className="grid grid-cols-1 gap-3.5 md:grid-cols-2 lg:grid-cols-3">
-        {visibleGames.map((game) => (
-          <GameCard key={game.id} game={game} />
-        ))}
+      <div className="flex flex-col gap-7">
+        {feedSections.live.length > 0 ? (
+          <section aria-label="Live games" className="flex flex-col gap-3">
+            <div className="flex items-center gap-2 px-0.5">
+              <span className="animate-live-pulse h-2 w-2 rounded-full bg-live" aria-hidden="true" />
+              <h2 className="text-xs font-extrabold uppercase tracking-wider text-live">
+                Live Now
+              </h2>
+              <span className="text-2xs font-medium text-muted">({feedSections.live.length})</span>
+            </div>
+            <div className={liveGridClass}>
+              {feedSections.live.map((game) => (
+                <GameCard
+                  key={game.id}
+                  game={game}
+                  featured={feedSections.live.length === 1}
+                />
+              ))}
+            </div>
+          </section>
+        ) : null}
+
+        {feedSections.upcomingGroups.length > 0 ? (
+          <section aria-label="Upcoming schedule" className="flex flex-col gap-4">
+            {feedSections.upcomingGroups.map((group) => (
+              <div key={group.dateKey} className="flex flex-col gap-3">
+                <div className="flex items-center justify-between border-b border-white/[0.08] pb-2 px-0.5">
+                  <div className="flex items-center gap-2">
+                    <CalendarDays size={13} aria-hidden="true" className="text-primary" />
+                    <h2 className="text-xs font-bold uppercase tracking-wider text-foreground">
+                      Upcoming · {group.dateLabel}
+                    </h2>
+                  </div>
+                  <Badge tone="neutral" size="sm">
+                    {group.games.length} {group.games.length === 1 ? "Match" : "Matches"}
+                  </Badge>
+                </div>
+                <div className="grid grid-cols-1 gap-3.5 md:grid-cols-2 lg:grid-cols-3">
+                  {group.games.map((game) => (
+                    <GameCard key={game.id} game={game} />
+                  ))}
+                </div>
+              </div>
+            ))}
+          </section>
+        ) : null}
+
+        {showAllLeaguesShowcase ? (
+          leagueShowcase.length > 0 ? (
+            <section aria-label="Recent results" className="flex flex-col gap-6">
+              {leagueShowcase.map(({ league: l, games: leagueGames }) => (
+                <div key={l} className="flex flex-col gap-3">
+                  <div className="flex items-center justify-between border-b border-white/[0.08] pb-2 px-0.5">
+                    <div className="flex items-center gap-2.5">
+                      <LeagueBadge league={l} />
+                      <h2 className="text-xs font-extrabold uppercase tracking-wider text-foreground">
+                        Recent {l} Results
+                      </h2>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => handleLeagueChange(l)}
+                      className="inline-flex items-center gap-1 text-xs font-semibold text-primary transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                    >
+                      All {l} scores
+                      <ArrowRight size={13} aria-hidden="true" />
+                    </button>
+                  </div>
+                  <div className="grid grid-cols-1 gap-3.5 md:grid-cols-2 lg:grid-cols-3">
+                    {leagueGames.map((game) => (
+                      <GameCard key={game.id} game={game} />
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </section>
+          ) : null
+        ) : feedSections.final.length > 0 ? (
+          <section aria-label="Recent results" className="flex flex-col gap-3">
+            {(feedSections.live.length > 0 || feedSections.upcomingGroups.length > 0) ? (
+              <div className="flex items-center justify-between border-b border-white/[0.08] pb-2 px-0.5">
+                <h2 className="text-xs font-bold uppercase tracking-wider text-muted">
+                  Recent Results
+                </h2>
+              </div>
+            ) : null}
+            <div className="grid grid-cols-1 gap-3.5 md:grid-cols-2 lg:grid-cols-3">
+              {feedSections.final.map((game) => (
+                <GameCard key={game.id} game={game} />
+              ))}
+            </div>
+          </section>
+        ) : null}
       </div>
     );
   }
 
-  return (
-    <div className={PAGE_FRAME}>
-      {!error && tickerGames.length > 0 ? (
-        <div
-          role="region"
-          aria-label="Scoreboard ticker"
-          className="broadcast-ticker flex w-full min-w-0 items-center gap-2.5 overflow-hidden rounded-panel border border-border/85 px-3 py-2"
-        >
-          <span className="flex shrink-0 items-center gap-1.5 rounded-control border border-primary/40 bg-primary/15 px-2 py-1 text-3xs font-extrabold uppercase tracking-[0.16em] text-foreground">
-            <span
-              aria-hidden="true"
-              className={
-                counts.LIVE > 0
-                  ? "animate-live-pulse h-1.5 w-1.5 rounded-full bg-live"
-                  : "h-1.5 w-1.5 rounded-full bg-primary"
-              }
-            />
-            {counts.LIVE > 0 ? "Live Wire" : "Scoreboard"}
-          </span>
-          <div className="h-scroll flex min-w-0 flex-1 items-center gap-2 overflow-x-auto py-0.5">
-            {tickerGames.map((g) => {
-              const gStatus = getEffectiveGameStatus(g);
-              const showTickerScore = gStatus !== "UPCOMING";
-              return (
-                <button
-                  key={g.id}
-                  type="button"
-                  onClick={() => openGame(g.id)}
-                  aria-label={`Ticker ${g.awayTeam.shortName} vs ${g.homeTeam.shortName}`}
-                  className="flex shrink-0 items-center gap-2 rounded-control border border-border/80 bg-surface-2/90 px-2.5 py-1.5 text-2xs transition-colors hover:border-border-strong hover:bg-elevated/80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-                >
-                  <TeamBadge team={g.awayTeam} size="sm" className="h-5 w-5 text-[7px]" />
-                  <span className="font-bold text-foreground">{g.awayTeam.shortName}</span>
-                  {showTickerScore ? (
-                    <span className="font-mono font-extrabold tabular-nums text-foreground">
-                      {g.awayScore}-{g.homeScore}
-                    </span>
-                  ) : (
-                    <span className="text-3xs font-semibold uppercase text-muted">vs</span>
-                  )}
-                  <span className="font-bold text-foreground">{g.homeTeam.shortName}</span>
-                  <TeamBadge team={g.homeTeam} size="sm" className="h-5 w-5 text-[7px]" />
-                  <span
-                    className={
-                      gStatus === "LIVE"
-                        ? "rounded px-1 py-0.5 text-3xs font-extrabold uppercase text-live bg-live/15"
-                        : "text-3xs font-semibold text-muted"
-                    }
-                  >
-                    {gStatus === "LIVE"
-                      ? g.league === "PVL"
-                        ? `S${g.quarterOrSet}`
-                        : `Q${g.quarterOrSet}`
-                      : gStatus === "FINAL"
-                        ? "F"
-                        : formatStartTime(g.startTime)}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      ) : null}
+  const contextSummary =
+    league === "ALL"
+      ? "All leagues · Seasons in progress"
+      : `${league} · ${selectedSeason?.label ?? "Season"}`;
 
-      <section
-        className="scoreboard-hero relative overflow-hidden rounded-panel border border-border-strong/70 p-5 md:p-7"
-        style={{
-          backgroundImage: `${HERO_ACCENT[league]}, url('/assets/arena-court-bg.svg'), linear-gradient(155deg, rgb(18 26 44 / 0.96), rgb(8 13 24 / 0.98))`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-        aria-label="Season overview"
+  return (
+    <div className="relative overflow-x-clip">
+      {/* Full-bleed edge-less moving arena backdrop fading smoothly into #050811 */}
+      <div
+        aria-hidden="true"
+        className="arena-edge-fade pointer-events-none absolute inset-x-0 top-0 h-[360px] overflow-hidden sm:h-[400px]"
       >
-        <div className="grid grid-cols-1 items-stretch gap-6 lg:grid-cols-[minmax(0,1.15fr)_minmax(19rem,0.85fr)]">
-          <div className="flex min-w-0 flex-col justify-between gap-5">
-            <div className="flex flex-wrap items-start justify-between gap-4">
-              <div className="min-w-0">
-                <p className="eyebrow mb-3 flex items-center gap-2 text-primary">
-                  <span className="h-1.5 w-1.5 rounded-full bg-primary shadow-[0_0_8px_rgba(239,68,68,0.85)]" aria-hidden="true" />
-                  Philippine sports, in focus
-                </p>
-                <h1 className="page-heading text-foreground">Philippine sports scores and stats.</h1>
-                <p className="mt-2.5 max-w-xl text-sm leading-relaxed text-muted">
-                  UAAP basketball, PBA and PVL results, schedules and player statistics.
-                </p>
+        {ARENA_SLIDES.map((slide, idx) => (
+          <Image
+            key={slide.src}
+            src={slide.src}
+            alt=""
+            fill
+            sizes="100vw"
+            priority={idx === 0}
+            unoptimized={slide.src.endsWith(".svg")}
+            className={`animate-arena-pan object-cover object-center transition-opacity duration-1000 ${
+              idx === arenaIndex ? "opacity-40" : "opacity-0"
+            }`}
+          />
+        ))}
+        <div
+          className="absolute inset-0 transition-all duration-500"
+          style={{
+            backgroundImage: `${HERO_ACCENT[league]}, linear-gradient(180deg, rgba(5,8,17,0.34) 0%, rgba(5,8,17,0.72) 62%, #050811 100%)`,
+          }}
+        />
+      </div>
+
+      <div className={`${PAGE_FRAME} relative z-10`}>
+        {/* Open borderless top stage directly above the scores */}
+        <header className="flex flex-col gap-3.5 pb-1">
+          <div className="flex flex-wrap items-end justify-between gap-2">
+            <div className="min-w-0">
+              <h1 className="font-display text-2xl font-extrabold tracking-tight text-white drop-shadow-[0_2px_16px_rgba(0,0,0,0.85)] sm:text-3xl">
+                Philippine sports scores and stats.
+              </h1>
+              <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-slate-300/85">
+                <span aria-live="polite">
+                  {countsPending
+                    ? "Loading matches…"
+                    : `${filteredGames.length} ${filteredGames.length === 1 ? "match" : "matches"}`}{" "}
+                  <span className="text-white/35">·</span> {contextSummary}
+                </span>
+                {hasFilters ? (
+                  <button
+                    type="button"
+                    onClick={resetFilters}
+                    className="font-semibold text-primary hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                  >
+                    Reset filters
+                  </button>
+                ) : null}
               </div>
-              <SeasonPicker
-                value={seasonId}
-                onChange={handleSeasonChange}
-                league={league}
-                includeLifetime={false}
-              />
             </div>
 
-            <div className="grid grid-cols-3 gap-2.5 border-t border-border/75 pt-5 sm:gap-3.5">
-              {([
-                { value: "LIVE", label: "Live now", icon: Radio },
-                { value: "UPCOMING", label: "Upcoming", icon: CalendarDays },
-                { value: "FINAL", label: "Completed", icon: CheckCheck },
-              ] as const).map(({ value, label, icon: Icon }) => {
-                const isLive = value === "LIVE" && counts.LIVE > 0;
-                const isSelected = activeStatus === value;
+            <span className="hidden items-center gap-2 rounded-full border border-white/[0.1] bg-black/45 px-2.5 py-1 text-3xs font-medium text-slate-300/90 backdrop-blur-md sm:inline-flex">
+              <span>{ARENA_SLIDES[arenaIndex].label}</span>
+              <span className="inline-flex items-center gap-1">
+                {ARENA_SLIDES.map((slide, idx) => (
+                  <button
+                    key={slide.src}
+                    type="button"
+                    onClick={() => setArenaIndex(idx)}
+                    aria-label={`Show ${slide.label} backdrop`}
+                    className={`h-1.5 rounded-full transition-all ${
+                      idx === arenaIndex ? "w-3 bg-primary" : "w-1.5 bg-white/35 hover:bg-white/70"
+                    }`}
+                  />
+                ))}
+              </span>
+            </span>
+          </div>
+
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <nav
+              aria-label="Leagues"
+              className="h-scroll inline-flex max-w-full items-center gap-1 overflow-x-auto rounded-xl border border-white/[0.12] bg-black/50 p-1 backdrop-blur-md shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_10px_24px_-12px_rgba(0,0,0,0.9)]"
+            >
+              {LEAGUE_TABS.map((tab) => {
+                const selected = league === tab.value;
                 return (
                   <button
-                    key={value}
+                    key={tab.value}
                     type="button"
-                    disabled={isOldSeason && value !== "FINAL"}
-                    aria-label={`Jump to ${label} matches`}
-                    onClick={() => {
-                      statusTouched.current = true;
-                      setStatus(value);
-                    }}
-                    className={
-                      isLive
-                        ? "flex min-w-0 flex-col gap-1 rounded-card border border-live/45 bg-live/12 px-3 py-2.5 text-left shadow-[0_0_24px_-12px_rgba(251,113,133,0.65)] transition-colors hover:bg-live/18 md:flex-row md:items-center md:gap-3 md:px-4 md:py-3"
-                        : isSelected
-                          ? "flex min-w-0 flex-col gap-1 rounded-card border border-border-strong bg-elevated/85 px-3 py-2.5 text-left transition-colors md:flex-row md:items-center md:gap-3 md:px-4 md:py-3"
-                          : "flex min-w-0 flex-col gap-1 rounded-card border border-border/75 bg-surface-2/80 px-3 py-2.5 text-left transition-colors hover:border-border-strong hover:bg-surface/90 disabled:opacity-50 md:flex-row md:items-center md:gap-3 md:px-4 md:py-3"
-                    }
+                    aria-pressed={selected}
+                    onClick={() => handleLeagueChange(tab.value)}
+                    className={`relative inline-flex shrink-0 items-center gap-1.5 rounded-lg px-3.5 py-1.5 text-sm font-semibold transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ${
+                      selected
+                        ? "bg-white/[0.16] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.22),0_2px_10px_rgba(0,0,0,0.45)]"
+                        : "text-slate-300/80 hover:bg-white/[0.06] hover:text-white"
+                    }`}
                   >
-                    <div className="flex items-center gap-2">
-                      <Icon
-                        size={16}
-                        aria-hidden="true"
-                        className={isLive ? "animate-live-pulse text-live" : "text-muted"}
-                      />
+                    {tab.dotColor ? (
                       <span
-                        className={`font-display text-2xl font-extrabold tabular-nums leading-none md:text-3xl ${isLive ? "text-live" : "text-foreground"}`}
-                      >
-                        {countsPending ? "–" : counts[value]}
-                      </span>
-                    </div>
-                    <span className="truncate text-2xs font-medium text-muted md:text-xs">{label}</span>
+                        aria-hidden="true"
+                        className="h-1.5 w-1.5 rounded-full"
+                        style={{
+                          backgroundColor: tab.dotColor,
+                          boxShadow: selected ? `0 0 8px ${tab.dotColor}` : undefined,
+                        }}
+                      />
+                    ) : null}
+                    {tab.label}
                   </button>
                 );
               })}
+            </nav>
+
+            <div className="flex shrink-0 items-center gap-1.5">
+              <button
+                type="button"
+                aria-expanded={showFilters}
+                onClick={() => setShowFilters((v) => !v)}
+                className={`inline-flex items-center gap-1.5 rounded-xl border px-3 py-2 text-xs font-semibold backdrop-blur-md transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ${
+                  showFilters || hasFilters
+                    ? "border-primary/45 bg-primary/20 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.16)]"
+                    : "border-white/[0.12] bg-black/45 text-slate-200 hover:border-white/25 hover:bg-white/[0.1]"
+                }`}
+              >
+                <SlidersHorizontal size={13} aria-hidden="true" />
+                <span>Filters / Past Seasons</span>
+                <ChevronDown
+                  size={13}
+                  aria-hidden="true"
+                  className={`transition-transform duration-150 ${showFilters ? "rotate-180" : ""}`}
+                />
+              </button>
+              <button
+                type="button"
+                onClick={() => void refreshData()}
+                disabled={loading}
+                aria-label={loading ? "Updating scores" : "Refresh scores"}
+                title={loading ? "Updating…" : "Refresh scores"}
+                className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/[0.12] bg-black/45 text-slate-300 backdrop-blur-md transition-all hover:border-white/25 hover:bg-white/[0.1] hover:text-white disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+              >
+                <RefreshCw
+                  size={13}
+                  aria-hidden="true"
+                  className={loading ? "animate-spin" : ""}
+                />
+              </button>
             </div>
           </div>
+        </header>
 
-          {spotlightGame ? (
-            <div
-              role="region"
-              aria-label="Spotlight matchup"
-              className="glass-card relative flex min-w-0 flex-col justify-between gap-4 overflow-hidden rounded-card border border-border-strong/80 p-4 shadow-raised sm:p-5"
-              style={{
-                backgroundImage: `linear-gradient(135deg, ${spotlightGame.awayTeam.accentColor}22 0%, transparent 48%, ${spotlightGame.homeTeam.accentColor}22 100%)`,
-              }}
-            >
-              <div
-                aria-hidden="true"
-                className="pointer-events-none absolute inset-x-0 top-0 h-[3px]"
-                style={{
-                  background: `linear-gradient(90deg, ${spotlightGame.awayTeam.accentColor}, ${spotlightGame.homeTeam.accentColor})`,
-                }}
-              />
-              <div className="flex flex-wrap items-center justify-between gap-2">
-                <span className="flex items-center gap-1.5 text-3xs font-extrabold uppercase tracking-[0.18em] text-primary">
-                  <Trophy size={12} aria-hidden="true" />
-                  {spotlightStatus === "LIVE"
-                    ? "Center Court Live"
-                    : spotlightStatus === "UPCOMING"
-                      ? "Next Marquee Match"
-                      : "Featured Result"}
-                </span>
-                <Badge tone={spotlightStatus === "LIVE" ? "live" : "neutral"} size="sm" dot={spotlightStatus === "LIVE"}>
-                  {spotlightStatus === "LIVE"
-                    ? spotlightGame.league === "PVL"
-                      ? `LIVE · Set ${spotlightGame.quarterOrSet}`
-                      : `LIVE · Q${spotlightGame.quarterOrSet}`
-                    : spotlightStatus === "FINAL"
-                      ? `Final · ${formatGameDate(spotlightGame.startTime, true)}`
-                      : `${formatGameDate(spotlightGame.startTime, true)} · ${formatStartTime(spotlightGame.startTime)}`}
-                </Badge>
-              </div>
-
-              <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-3 py-1 text-center">
-                <div className="flex min-w-0 flex-col items-center gap-1.5">
-                  <TeamBadge team={spotlightGame.awayTeam} size="lg" />
-                  <span className="font-display text-lg font-extrabold tracking-tight text-foreground">
-                    {spotlightGame.awayTeam.shortName}
-                  </span>
-                  <span className="max-w-full truncate text-3xs font-medium text-muted">
-                    {formatRecord(spotlightGame.awayTeam.record)}
-                  </span>
-                </div>
-
-                <div className="flex flex-col items-center gap-1">
-                  {spotlightShowScore ? (
-                    <div className="led-score-box flex items-center gap-2 rounded-xl border border-border-strong/75 px-3 py-2">
-                      <span
-                        className={`font-display text-3xl font-black tabular-nums leading-none ${
-                          spotlightGame.awayScore >= spotlightGame.homeScore ? "text-foreground" : "text-muted"
-                        }`}
-                      >
-                        {spotlightGame.awayScore}
-                      </span>
-                      <span className="text-xs font-bold text-muted/60">:</span>
-                      <span
-                        className={`font-display text-3xl font-black tabular-nums leading-none ${
-                          spotlightGame.homeScore >= spotlightGame.awayScore ? "text-foreground" : "text-muted"
-                        }`}
-                      >
-                        {spotlightGame.homeScore}
-                      </span>
-                    </div>
-                  ) : (
-                    <span className="rounded-full border border-border-strong bg-surface-2 px-3 py-1 font-display text-sm font-extrabold uppercase tracking-widest text-muted">
-                      VS
-                    </span>
-                  )}
-                </div>
-
-                <div className="flex min-w-0 flex-col items-center gap-1.5">
-                  <TeamBadge team={spotlightGame.homeTeam} size="lg" />
-                  <span className="font-display text-lg font-extrabold tracking-tight text-foreground">
-                    {spotlightGame.homeTeam.shortName}
-                  </span>
-                  <span className="max-w-full truncate text-3xs font-medium text-muted">
-                    {formatRecord(spotlightGame.homeTeam.record)}
-                  </span>
-                </div>
-              </div>
-
-              <div className="flex flex-col gap-2 border-t border-border/70 pt-3">
-                {spotlightTopScorer ? (
-                  <div className="flex items-center justify-between gap-2 text-2xs">
-                    <span className="flex min-w-0 items-center gap-1.5 text-muted">
-                      <Sparkles size={11} aria-hidden="true" className="shrink-0 text-archive" />
-                      <span className="truncate font-semibold text-foreground">{spotlightTopScorer.playerName}</span>
-                    </span>
-                    <span className="font-mono shrink-0 font-bold text-archive">{spotlightTopScorer.pts} PTS</span>
-                  </div>
-                ) : null}
-                <div className="flex items-center justify-between gap-2">
-                  <span className="flex min-w-0 items-center gap-1 text-2xs text-muted">
-                    <MapPin size={11} aria-hidden="true" className="shrink-0" />
-                    <span className="truncate">{spotlightGame.venue || selectedSeason?.label || league}</span>
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => openGame(spotlightGame.id)}
-                    aria-label="Open spotlight match breakdown"
-                    className="inline-flex shrink-0 items-center gap-1 rounded-control border border-primary/50 bg-primary/15 px-2.5 py-1 text-2xs font-bold text-foreground transition-colors hover:bg-primary/25 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-                  >
-                    Match Breakdown
-                    <ArrowUpRight size={12} aria-hidden="true" />
-                  </button>
-                </div>
-              </div>
-            </div>
-          ) : (
-            <div className="glass-card flex flex-col justify-center gap-2 rounded-card border border-border/75 p-5">
-              <p className="eyebrow text-primary">{league} Telemetry</p>
-              <p className="font-display text-2xl font-extrabold text-foreground">
-                {selectedSeason?.label ?? "Season Center"}
-              </p>
-              <p className="text-xs leading-relaxed text-muted">
-                Select another league or season to browse match reports, box scores, and player leaders.
-              </p>
-            </div>
-          )}
-        </div>
-      </section>
-
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div className="h-scroll flex gap-2 overflow-x-auto py-0.5">
-          {LEAGUE_CHIPS.map((chip) => (
-            <FilterChip
-              key={chip.value}
-              selected={league === chip.value}
-              onClick={() => handleLeagueChange(chip.value)}
-            >
-              <span
-                aria-hidden="true"
-                className="h-2 w-2 rounded-full"
-                style={{ backgroundColor: chip.dotColor }}
-              />
-              {chip.label}
-            </FilterChip>
-          ))}
-        </div>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => void refreshData()}
-          disabled={loading}
+      {showFilters ? (
+        <div
+          role="region"
+          aria-label="Filters and past seasons"
+          className="translucent-card grid gap-3 rounded-panel border border-white/[0.08] p-4 shadow-card sm:p-5"
         >
-          <RefreshCw
-            size={13}
-            aria-hidden="true"
-            className={loading ? "animate-spin" : ""}
-          />
-          {loading ? "Updating…" : "Refresh scores"}
-        </Button>
-      </div>
-
-      <div className="grid gap-4 rounded-panel border border-border/90 bg-surface/95 p-4 shadow-card sm:p-5">
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="w-full min-w-0 sm:w-auto sm:min-w-80">
-            <SegmentedControl
-              options={
-                isOldSeason
-                  ? [{ value: "FINAL", label: `Final · ${countsPending ? "–" : counts.FINAL}` }]
-                  : STATUS_TABS.map((option) => ({
-                      ...option,
-                      label: `${option.label} · ${countsPending ? "–" : counts[option.value]}`,
-                    }))
-              }
-              value={activeStatus}
-              onChange={(value) => {
-                statusTouched.current = true;
-                setStatus(value);
-              }}
-            />
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            {league === "ALL" ? (
+              <label className="relative flex min-w-0 items-center gap-2 text-xs text-muted">
+                <span className="text-2xs font-semibold uppercase tracking-wide">Season</span>
+                <select
+                  aria-label="Season"
+                  value=""
+                  onChange={(event) => handleAnySeasonPick(event.target.value)}
+                  className="min-h-10 appearance-none rounded-control border border-border/90 bg-surface-2/95 py-2 pl-3 pr-8 text-xs font-semibold text-foreground hover:border-border-strong focus:border-primary/70 focus:outline-none"
+                >
+                  <option value="">Seasons in progress (All leagues)</option>
+                  {(["UAAP", "PBA", "PVL"] as const).map((l) => {
+                    const list = seasons.filter((s) => inferLeague(s) === l);
+                    if (!list.length) return null;
+                    return (
+                      <optgroup key={l} label={l}>
+                        {list.map((s) => (
+                          <option key={s.id} value={s.id}>
+                            {s.label}
+                          </option>
+                        ))}
+                      </optgroup>
+                    );
+                  })}
+                </select>
+              </label>
+            ) : (
+              <SeasonPicker
+                value={seasonId}
+                onChange={(newSeasonId) => {
+                  setUserSelectedSeasonId(newSeasonId);
+                  setTeamId("ALL");
+                  setDate("");
+                }}
+                league={league}
+                includeLifetime={false}
+              />
+            )}
+            <span className="text-2xs text-muted">All times Philippine time (UTC+8)</span>
           </div>
-          <span className="flex items-center gap-1.5 text-2xs text-muted">
-            <SlidersHorizontal size={13} aria-hidden="true" />
-            All times Philippine time (UTC+8)
-          </span>
-        </div>
-        <div className="grid grid-cols-1 items-end gap-3 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1fr]">
-          <SearchInput
-            value={query}
-            onChange={setQuery}
-            label="Search matches"
-            placeholder="Search teams or venues"
-            className="sm:col-span-2 lg:col-span-1"
-          />
-          <Field label="Team">
-            <Select
-              id="team-filter"
-              value={teamId}
-              onChange={(event) => setTeamId(event.target.value)}
-            >
-              <option value="ALL">All Teams</option>
-              {availableTeams.map((team) => (
-                <option key={team.id} value={team.id}>
-                  {team.name} ({team.shortName})
-                </option>
-              ))}
-            </Select>
-          </Field>
-          <Field label="Match date (PHT)">
-            <Input
-              type="date"
-              value={date}
-              onChange={(event) => setDate(event.target.value)}
+
+          <div className="grid grid-cols-1 items-end gap-3 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1fr]">
+            <SearchInput
+              value={query}
+              onChange={setQuery}
+              label="Search matches"
+              placeholder="Search teams or venues"
+              className="sm:col-span-2 lg:col-span-1"
             />
-          </Field>
-          <Field label="Sort by">
-            <Select
-              value={sort}
-              onChange={(event) => setSort(event.target.value as typeof sort)}
-            >
-              <option value="default">
-                {activeStatus === "UPCOMING" ? "Next match first" : "Latest first"}
-              </option>
-              <option value="newest">Newest first</option>
-              <option value="oldest">Oldest first</option>
-            </Select>
-          </Field>
+            <Field label="Team">
+              <Select
+                id="team-filter"
+                value={teamId}
+                onChange={(event) => setTeamId(event.target.value)}
+              >
+                <option value="ALL">All Teams</option>
+                {availableTeams.map((team) => (
+                  <option key={team.id} value={team.id}>
+                    {team.name} ({team.shortName})
+                  </option>
+                ))}
+              </Select>
+            </Field>
+            <Field label="Match date (PHT)">
+              <Input
+                type="date"
+                value={date}
+                onChange={(event) => setDate(event.target.value)}
+              />
+            </Field>
+            <Field label="Sort by">
+              <Select
+                value={sort}
+                onChange={(event) => setSort(event.target.value as typeof sort)}
+              >
+                <option value="default">Live &amp; upcoming first</option>
+                <option value="newest">Newest first</option>
+                <option value="oldest">Oldest first</option>
+              </Select>
+            </Field>
+          </div>
         </div>
-      </div>
+      ) : null}
 
       {error && games.length > 0 ? (
         <ErrorNotice message={error} onRetry={() => void refreshData()} />
       ) : null}
 
-      <div className="flex min-h-7 flex-wrap items-center justify-between gap-3">
-        <h2 className="text-xs font-semibold text-muted" aria-live="polite">
-          {countsPending
-            ? "Loading matches…"
-            : `${filteredGames.length} ${filteredGames.length === 1 ? "match" : "matches"}`}{" "}
-          <span className="text-muted/60">/</span> {league} ·{" "}
-          {selectedSeason?.label ?? "Season"}
-        </h2>
-        {hasFilters ? (
-          <button
-            type="button"
-            onClick={resetFilters}
-            className="min-h-10 text-xs font-semibold text-primary hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-          >
-            Reset filters
-          </button>
-        ) : null}
-      </div>
-
       {renderBody()}
-      {filteredGames.length > limit ? (
+
+      {(feedSections.mode === "flat" || !showAllLeaguesShowcase) && filteredGames.length > limit ? (
         <Button
           variant="outline"
           size="md"
@@ -699,6 +620,7 @@ export function FilterTabs() {
           Show more games
         </Button>
       ) : null}
+      </div>
     </div>
   );
 }

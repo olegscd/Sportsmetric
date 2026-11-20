@@ -124,26 +124,32 @@ function TeamRow({
     <div className="flex items-center justify-between gap-2.5">
       <Link
         href={`/teams/${team.id}`}
-        className="pointer-events-auto relative z-10 -mx-1.5 flex min-h-11 min-w-0 flex-1 items-center gap-2.5 rounded-control px-1.5 py-0.5 transition-colors hover:bg-elevated/70"
+        className="pointer-events-auto relative z-10 -mx-1.5 inline-flex min-h-11 min-w-0 max-w-[calc(100%-3.75rem)] items-center gap-2.5 rounded-control px-1.5 py-0.5 transition-colors hover:bg-white/[0.06]"
       >
         <span
           aria-hidden="true"
-          className="h-6 w-0.5 shrink-0 rounded-full opacity-80"
-          style={{ backgroundColor: team.accentColor }}
+          className={cn(
+            "shrink-0 rounded-full transition-all",
+            won ? "h-6 w-[3px] opacity-100" : "h-5 w-0.5 opacity-70"
+          )}
+          style={{
+            backgroundColor: team.accentColor,
+            boxShadow: won ? `0 0 10px ${team.accentColor}88` : undefined,
+          }}
         />
         <TeamBadge team={team} size="sm" />
-        <span className="flex min-w-0 flex-1 flex-col">
+        <span className="flex min-w-0 flex-col">
           <span
             className={cn(
               "flex items-center gap-1.5 truncate text-sm font-bold tracking-tight transition-colors",
-              muted ? "text-muted" : "text-foreground"
+              muted ? "text-muted/85" : "text-foreground"
             )}
           >
             <span className="truncate">{team.shortName}</span>
             {won ? (
               <span
                 aria-hidden="true"
-                className="h-1.5 w-1.5 shrink-0 rounded-full bg-positive shadow-[0_0_6px_rgba(52,211,153,0.85)]"
+                className="h-1.5 w-1.5 shrink-0 rounded-full bg-positive shadow-[0_0_8px_rgba(52,211,153,0.9)]"
               />
             ) : null}
           </span>
@@ -156,12 +162,12 @@ function TeamRow({
       {showScore ? (
         <span
           className={cn(
-            "led-score-box font-display flex h-9 min-w-12 shrink-0 items-center justify-center rounded-lg border px-2 text-2xl font-extrabold tabular-nums tracking-tight",
+            "font-display shrink-0 text-2xl font-extrabold tabular-nums tracking-tight",
             won
-              ? "border-positive/40 text-foreground"
+              ? "text-white drop-shadow-[0_1px_10px_rgba(255,255,255,0.2)]"
               : muted
-                ? "border-border/70 text-muted/75"
-                : "border-border-strong/70 text-foreground"
+                ? "text-muted/55"
+                : "text-foreground"
           )}
         >
           {score}
@@ -171,7 +177,47 @@ function TeamRow({
   );
 }
 
-export const GameCard = memo(function GameCard({ game }: { game: Game }) {
+function FeaturedTeamSide({
+  team,
+  record,
+  align,
+}: {
+  team: Team;
+  record?: { wins: number; losses: number };
+  align: "left" | "right";
+}) {
+  const displayRecord = record ?? team.record;
+  const isRight = align === "right";
+  return (
+    <div className={cn("flex min-w-0 items-center", isRight && "md:justify-end")}>
+      <Link
+        href={`/teams/${team.id}`}
+        className={cn(
+          "pointer-events-auto relative z-10 -mx-1.5 inline-flex min-h-11 min-w-0 max-w-full items-center gap-3 rounded-control px-2 py-1 transition-colors hover:bg-white/[0.06]",
+          isRight && "md:flex-row-reverse md:text-right"
+        )}
+      >
+        <TeamBadge team={team} size="md" />
+        <span className="flex min-w-0 flex-col">
+          <span className="truncate font-display text-base font-extrabold tracking-tight text-white sm:text-lg">
+            {team.name}
+          </span>
+          <span className="truncate text-xs font-semibold text-muted tabular-nums">
+            {team.shortName} · {formatRecord(displayRecord)}
+          </span>
+        </span>
+      </Link>
+    </div>
+  );
+}
+
+export const GameCard = memo(function GameCard({
+  game,
+  featured = false,
+}: {
+  game: Game;
+  featured?: boolean;
+}) {
   const { openGame } = useGameModal();
   const { getStandings, seasons, players } = useSportsData();
   const effectiveStatus = getEffectiveGameStatus(game);
@@ -213,22 +259,31 @@ export const GameCard = memo(function GameCard({ game }: { game: Game }) {
   const awayWon = hasWinner && game.awayScore > game.homeScore;
   const homeLost = hasWinner && game.homeScore < game.awayScore;
   const awayLost = hasWinner && game.awayScore < game.homeScore;
+  const isLive = effectiveStatus === "LIVE";
 
   return (
     <article
       className={cardClasses({
         className: cn(
-          "group relative w-full overflow-hidden p-4 transition-all duration-150 ease-standard hover:-translate-y-0.5 hover:border-border-strong hover:bg-elevated/40 hover:shadow-raised",
-          effectiveStatus === "LIVE" && "border-live/45 shadow-[inset_0_1px_0_rgba(251,113,133,0.22),0_18px_36px_-22px_rgba(0,0,0,0.92)]"
+          "translucent-card group relative w-full overflow-hidden border-white/[0.1] p-4 transition-all duration-150 ease-standard hover:-translate-y-0.5 hover:border-white/25 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.16),0_22px_40px_-20px_rgba(0,0,0,0.96)]",
+          isLive &&
+            "border-live/50 shadow-[inset_0_1px_0_rgba(251,113,133,0.28),0_20px_42px_-20px_rgba(244,63,94,0.22),0_18px_36px_-22px_rgba(0,0,0,0.95)]",
+          featured && "p-5 sm:px-6"
         ),
       })}
-      style={{
-        backgroundImage: `linear-gradient(135deg, ${game.awayTeam.accentColor}16 0%, transparent 45%, ${game.homeTeam.accentColor}16 100%)`,
-      }}
     >
+      {/* Ambient split floodlight aura without overriding card elevation gradient */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 h-[3px] opacity-90 transition-opacity group-hover:opacity-100"
+        className="pointer-events-none absolute inset-0 opacity-75 transition-opacity duration-200 group-hover:opacity-100"
+        style={{
+          backgroundImage: `radial-gradient(circle at 8% 15%, ${game.awayTeam.accentColor}${awayWon || isLive ? "2a" : "18"}, transparent 46%), radial-gradient(circle at 92% 85%, ${game.homeTeam.accentColor}${homeWon || isLive ? "2a" : "18"}, transparent 46%)`,
+        }}
+      />
+
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 h-[3px] opacity-95 transition-opacity group-hover:opacity-100"
         style={{
           background: `linear-gradient(90deg, ${game.awayTeam.accentColor}, ${game.homeTeam.accentColor})`,
         }}
@@ -244,7 +299,7 @@ export const GameCard = memo(function GameCard({ game }: { game: Game }) {
       />
 
       <div className="pointer-events-none relative z-10 flex flex-col">
-        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border/60 pb-2.5">
+        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/[0.08] pb-2.5">
           <div className="flex min-w-0 flex-wrap items-center gap-1.5">
             <LeagueBadge league={game.league} />
             {isPlayoffGame(game) ? (
@@ -263,43 +318,82 @@ export const GameCard = memo(function GameCard({ game }: { game: Game }) {
           </div>
         </div>
 
-        <div className="flex flex-col gap-1 py-2.5">
-          <TeamRow
-            team={game.awayTeam}
-            record={awayRecord}
-            score={game.awayScore}
-            showScore={showScore}
-            won={awayWon}
-            muted={awayLost}
-          />
-          <TeamRow
-            team={game.homeTeam}
-            record={homeRecord}
-            score={game.homeScore}
-            showScore={showScore}
-            won={homeWon}
-            muted={homeLost}
-          />
-        </div>
+        {featured ? (
+          <div className="grid grid-cols-1 gap-4 py-4 md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] md:items-center md:gap-6">
+            <FeaturedTeamSide team={game.awayTeam} record={awayRecord} align="left" />
 
-        {topPerformer ? (
-          <div className="mb-2 flex items-center justify-between gap-2 rounded-control border border-border/65 bg-surface-2/85 px-2.5 py-1.5 text-2xs">
-            <span className="flex min-w-0 items-center gap-1.5 text-muted">
-              <Sparkles size={11} aria-hidden="true" className="shrink-0 text-archive" />
-              <span className="truncate font-semibold text-foreground/95">{topPerformer.playerName}</span>
-            </span>
-            <span className="font-mono shrink-0 font-bold text-archive">
-              {topPerformer.pts} PTS
-            </span>
+            <div className="flex items-center justify-center gap-4 border-y border-white/[0.06] py-2 md:border-y-0 md:py-0">
+              {showScore ? (
+                <>
+                  <span
+                    className={cn(
+                      "font-display text-3xl font-extrabold tabular-nums tracking-tight sm:text-4xl",
+                      awayLost ? "text-muted/55" : "text-white drop-shadow-[0_2px_12px_rgba(255,255,255,0.2)]"
+                    )}
+                  >
+                    {game.awayScore}
+                  </span>
+                  <span className="text-xs font-bold uppercase tracking-[0.18em] text-muted/70">
+                    vs
+                  </span>
+                  <span
+                    className={cn(
+                      "font-display text-3xl font-extrabold tabular-nums tracking-tight sm:text-4xl",
+                      homeLost ? "text-muted/55" : "text-white drop-shadow-[0_2px_12px_rgba(255,255,255,0.2)]"
+                    )}
+                  >
+                    {game.homeScore}
+                  </span>
+                </>
+              ) : (
+                <span className="text-xs font-bold uppercase tracking-[0.2em] text-muted">
+                  vs
+                </span>
+              )}
+            </div>
+
+            <FeaturedTeamSide team={game.homeTeam} record={homeRecord} align="right" />
           </div>
-        ) : null}
+        ) : (
+          <div className="flex flex-col gap-1 py-2.5">
+            <TeamRow
+              team={game.awayTeam}
+              record={awayRecord}
+              score={game.awayScore}
+              showScore={showScore}
+              won={awayWon}
+              muted={awayLost}
+            />
+            <TeamRow
+              team={game.homeTeam}
+              record={homeRecord}
+              score={game.homeScore}
+              showScore={showScore}
+              won={homeWon}
+              muted={homeLost}
+            />
+          </div>
+        )}
 
-        {game.venue ? (
-          <div className="flex items-center gap-1.5 border-t border-border/60 pt-2 text-muted">
-            <MapPin size={11} aria-hidden="true" className="shrink-0 text-muted/80" />
-            <span className="block truncate text-2xs font-medium">
-              {game.venue}
-            </span>
+        {topPerformer || game.venue ? (
+          <div className="flex items-center justify-between gap-2 border-t border-white/[0.08] pt-2 text-2xs text-muted">
+            {topPerformer ? (
+              <span className="flex min-w-0 items-center gap-1">
+                <Sparkles size={11} aria-hidden="true" className="shrink-0 text-archive" />
+                <span className="truncate font-semibold text-foreground/95">
+                  {topPerformer.playerName}
+                </span>
+                <span className="font-mono shrink-0 font-bold text-archive">
+                  · {topPerformer.pts} PTS
+                </span>
+              </span>
+            ) : null}
+            {game.venue ? (
+              <span className="flex min-w-0 items-center gap-1">
+                <MapPin size={11} aria-hidden="true" className="shrink-0 text-muted/80" />
+                <span className="truncate font-medium">{game.venue}</span>
+              </span>
+            ) : null}
           </div>
         ) : null}
 

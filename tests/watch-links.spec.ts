@@ -18,6 +18,7 @@ test("game cards and details use a single game-specific replay or livestream", a
         replay_url: "https://replay.example/this-game", replay_kind: "full", replay_label: "Official channel",
       } });
       await page.goto("/");
+      await page.getByRole("button", { name: "UAAP", exact: true }).click();
       const card = page.locator("article").filter({ has: page.getByRole("button", { name: "View details for AWY at HOM" }) });
       const externalLinks = card.locator('a[target="_blank"]');
       await expect(externalLinks).toHaveCount(status === "UPCOMING" ? 2 : 1);
@@ -45,6 +46,7 @@ test("game cards and details use a single game-specific replay or livestream", a
         id: "2025-26-g1", status, watch_url: null, replay_url: null, replay_kind: null,
       } });
       await page.goto("/");
+      await page.getByRole("button", { name: "UAAP", exact: true }).click();
       const card = page.locator("article").filter({ has: page.getByRole("button", { name: "View details for AWY at HOM" }) });
       await expect(card).toBeVisible();
       await expect(card.locator('a[target="_blank"]')).toHaveCount(0);

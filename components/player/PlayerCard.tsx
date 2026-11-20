@@ -134,15 +134,19 @@ export const PlayerCard = memo(function PlayerCard({
         className={cardClasses({
           interactive: true,
           className:
-            "group relative flex flex-col justify-between gap-3 overflow-hidden p-4",
+            "translucent-card group relative flex flex-col justify-between gap-3 overflow-hidden border-white/[0.1] p-4 hover:border-white/25 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.16),0_22px_40px_-20px_rgba(0,0,0,0.96)]",
         })}
-        style={{
-          backgroundImage: `radial-gradient(ellipse 80% 65% at 100% 0%, ${team.accentColor}22, transparent 62%)`,
-        }}
       >
         <span
           aria-hidden="true"
-          className="absolute inset-x-0 top-0 h-[3px] opacity-80 transition-opacity group-hover:opacity-100"
+          className="pointer-events-none absolute inset-0 opacity-85 transition-opacity group-hover:opacity-100"
+          style={{
+            backgroundImage: `radial-gradient(ellipse 80% 65% at 100% 0%, ${team.accentColor}26, transparent 62%)`,
+          }}
+        />
+        <span
+          aria-hidden="true"
+          className="absolute inset-x-0 top-0 h-[3px] opacity-85 transition-opacity group-hover:opacity-100"
           style={{ backgroundColor: team.accentColor }}
         />
         <span
@@ -160,25 +164,22 @@ export const PlayerCard = memo(function PlayerCard({
               {player.name}
             </span>
             <span className="mt-0.5 flex min-w-0 items-center gap-1.5 text-2xs font-medium text-muted">
-              <span className="rounded bg-surface-2 px-1.5 py-0.5 font-mono font-bold text-foreground/90">
+              <span className="font-mono font-bold text-foreground/90">
                 #{player.jerseyNumber}
               </span>
               <span className="font-semibold uppercase tracking-wide">{player.position}</span>
               <span aria-hidden="true">&middot;</span>
               <span className="flex shrink-0 items-center gap-1">
-                <TeamBadge team={team} size="sm" className="h-4 w-4 text-[7px]" />
+                <TeamBadge team={team} size="sm" className="h-4.5 w-4.5 rounded text-[7px]" />
                 <span className="font-bold text-foreground/90">{team.shortName}</span>
               </span>
             </span>
           </span>
         </div>
-        <div className="relative z-10 grid grid-cols-3 gap-1.5 border-t border-border/60 pt-2.5">
+        <div className="relative z-10 grid grid-cols-3 divide-x divide-white/[0.07] border-t border-white/[0.07] pt-2.5">
           {compactTiles.map((tile) => (
-            <div
-              key={tile.label}
-              className="rounded-control border border-border/65 bg-surface-2/85 px-2 py-1.5 text-center"
-            >
-              <span className="font-display block text-base font-extrabold tabular-nums leading-none text-foreground">
+            <div key={tile.label} className="px-2 text-center">
+              <span className="font-display block text-lg font-extrabold tabular-nums leading-none text-foreground">
                 {tile.value}
               </span>
               <span className="mt-0.5 block text-3xs font-bold uppercase tracking-wider text-muted">

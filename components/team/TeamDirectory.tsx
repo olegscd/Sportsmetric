@@ -130,15 +130,19 @@ export function TeamDirectory() {
               className={cardClasses({
                 interactive: true,
                 className:
-                  "group relative flex flex-col justify-between gap-3.5 overflow-hidden p-4",
+                  "translucent-card group relative flex flex-col justify-between gap-3.5 overflow-hidden border-white/[0.1] p-4 hover:border-white/25 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.16),0_22px_40px_-20px_rgba(0,0,0,0.96)]",
               })}
-              style={{
-                backgroundImage: `radial-gradient(ellipse 85% 65% at 100% 0%, ${team.accentColor}24, transparent 62%)`,
-              }}
             >
               <span
                 aria-hidden="true"
-                className="pointer-events-none absolute inset-x-0 top-0 h-[3px] opacity-85 transition-opacity group-hover:opacity-100"
+                className="pointer-events-none absolute inset-0 opacity-85 transition-opacity group-hover:opacity-100"
+                style={{
+                  backgroundImage: `radial-gradient(ellipse 85% 65% at 100% 0%, ${team.accentColor}28, transparent 62%)`,
+                }}
+              />
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-x-0 top-0 h-[3px] opacity-90 transition-opacity group-hover:opacity-100"
                 style={{ backgroundColor: team.accentColor }}
               />
               <span
@@ -156,7 +160,7 @@ export function TeamDirectory() {
                         ? "flex h-6 min-w-6 items-center justify-center rounded-control border border-archive/45 bg-archive/15 px-1.5 text-2xs font-extrabold tabular-nums text-archive"
                         : rank && rank <= 4
                           ? "flex h-6 min-w-6 items-center justify-center rounded-control border border-primary/35 bg-primary/12 px-1.5 text-2xs font-extrabold tabular-nums text-foreground"
-                          : "flex h-6 min-w-6 items-center justify-center rounded-control bg-surface-2 px-1.5 text-2xs font-extrabold tabular-nums text-muted"
+                          : "flex h-6 min-w-6 items-center justify-center rounded-control bg-white/[0.05] px-1.5 text-2xs font-extrabold tabular-nums text-muted"
                     }
                   >
                     #{rank ?? "–"}
@@ -180,8 +184,8 @@ export function TeamDirectory() {
                   <span className="font-display block truncate text-xl font-extrabold leading-tight tracking-tight text-foreground transition-colors group-hover:text-primary">
                     {team.name}
                   </span>
-                  <div className="mt-1 flex flex-wrap items-center gap-1.5">
-                    <span className="font-mono rounded bg-surface-2/90 px-2 py-0.5 text-xs font-bold tabular-nums text-foreground">
+                  <div className="mt-1 flex flex-wrap items-center gap-2 text-xs">
+                    <span className="font-mono font-bold tabular-nums text-foreground/95">
                       {formatRecord(record)}
                     </span>
                     {item.streak && item.streak !== "-" ? (
@@ -196,13 +200,13 @@ export function TeamDirectory() {
                 </div>
               </div>
 
-              <div className="relative z-10 flex items-center gap-3 border-t border-border/60 pt-2.5">
+              <div className="relative z-10 flex items-center gap-4 border-t border-white/[0.07] pt-2.5">
                 <div className="min-w-0 flex-1">
                   <div className="mb-1 flex items-center justify-between text-3xs font-bold uppercase tracking-wider text-muted">
                     <span>Win Rate</span>
                     <span className="font-mono text-foreground">{pctStr}</span>
                   </div>
-                  <div className="h-1.5 w-full overflow-hidden rounded-full bg-surface-2">
+                  <div className="h-1.5 w-full overflow-hidden rounded-full bg-white/[0.06]">
                     <div
                       className="h-full rounded-full transition-all"
                       style={{
@@ -213,8 +217,8 @@ export function TeamDirectory() {
                   </div>
                 </div>
                 {hasPlayedScores ? (
-                  <div className="shrink-0 rounded-control border border-border/75 bg-surface-2/85 px-2.5 py-1 text-right">
-                    <span className="block text-3xs font-bold uppercase tracking-wider text-muted">
+                  <div className="flex shrink-0 items-baseline gap-1.5 text-right">
+                    <span className="text-3xs font-bold uppercase tracking-wider text-muted">
                       Diff
                     </span>
                     <span

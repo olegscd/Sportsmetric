@@ -16,6 +16,8 @@ test("match search, Philippine dates, and reset work on a narrow phone", async (
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/");
   await expect(page.getByRole("heading", { level: 1 })).toContainText("Philippine sports scores and stats");
+  await page.getByRole("button", { name: "UAAP", exact: true }).click();
+  await page.getByRole("button", { name: "Filters / Past Seasons" }).click();
   await page.getByRole("searchbox", { name: "Search matches" }).fill("test arena");
   await expect(page.getByRole("button", { name: "View details for AWY at HOM" })).toBeVisible();
   await page.getByLabel("Match date (PHT)").fill("2026-10-17");
@@ -95,10 +97,14 @@ test("schedule drafts survive reloads and scope changes, validate duplicates, an
   const data = await (await request.get("/api/sports?league=UAAP&season=2025-26")).json();
   expect(data.games.filter((game: { venue: string }) => game.venue === "Draft Arena")).toHaveLength(2);
   await page.getByRole("link", { name: "View site", exact: true }).click();
-  await page.getByRole("button", { name: /^Upcoming ·/ }).click();
+  await page.getByRole("button", { name: "UAAP", exact: true }).click();
+  await expect(
+    page.getByRole("region", { name: "Upcoming schedule" }).getByRole("button", { name: "View details for AWY at HOM" })
+  ).toHaveCount(2);
+  await page.getByRole("button", { name: "Filters / Past Seasons" }).click();
   await page.getByRole("combobox", { name: "Sort by", exact: true }).selectOption("oldest");
-  await expect(page.getByRole("button", { name: "View details for AWY at HOM" })).toHaveCount(2);
   await page.getByLabel("Match date (PHT)").fill("2099-04-19");
+  await expect(page.getByRole("button", { name: "View details for AWY at HOM" })).toHaveCount(2);
   await expect(page.locator("main")).toContainText("2 matches");
 });
 

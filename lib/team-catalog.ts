@@ -40,24 +40,24 @@ function buildSeasonTeams(seasonId: string, league: League, seeds: TeamSeed[]): 
 /** UAAP men's basketball — 8 member schools each season. */
 const UAAP_SEEDS: TeamSeed[] = [
   { slug: "adamson", name: "Adamson Soaring Falcons", shortName: "ADU", accentColor: "#0033A0" },
-  { slug: "ateneo", name: "Ateneo Blue Eagles", shortName: "ADMU", accentColor: "#0038A8", logo: "/logos/admu.jpg" },
-  { slug: "dlsu", name: "DLSU Green Archers", shortName: "DLSU", accentColor: "#00693E", logo: "/logos/DLSU.png" },
+  { slug: "ateneo", name: "Ateneo Blue Eagles", shortName: "ADMU", accentColor: "#0038A8" },
+  { slug: "dlsu", name: "DLSU Green Archers", shortName: "DLSU", accentColor: "#00693E" },
   { slug: "feu", name: "FEU Tamaraws", shortName: "FEU", accentColor: "#006633" },
   { slug: "nu", name: "NU Bulldogs", shortName: "NU", accentColor: "#FFD700" },
   { slug: "ue", name: "UE Red Warriors", shortName: "UE", accentColor: "#DC143C" },
-  { slug: "up", name: "UP Fighting Maroons", shortName: "UP", accentColor: "#7A1F2B", logo: "/logos/UP.jpg" },
+  { slug: "up", name: "UP Fighting Maroons", shortName: "UP", accentColor: "#7A1F2B" },
   { slug: "ust", name: "UST Growling Tigers", shortName: "UST", accentColor: "#FFC72C" },
 ];
 
 /** UAAP Junior High School (U16) basketball — 8 member schools. */
 export const UAAP_U16_SEEDS: TeamSeed[] = [
   { slug: "adamson", name: "Adamson Baby Falcons", shortName: "ADU", accentColor: "#0033A0" },
-  { slug: "ateneo", name: "Ateneo Blue Eaglets", shortName: "ADMU", accentColor: "#0038A8", logo: "/logos/admu.jpg" },
-  { slug: "dlsu", name: "DLSZ Junior Archers", shortName: "DLSU", accentColor: "#00693E", logo: "/logos/DLSU.png" },
+  { slug: "ateneo", name: "Ateneo Blue Eaglets", shortName: "ADMU", accentColor: "#0038A8" },
+  { slug: "dlsu", name: "DLSZ Junior Archers", shortName: "DLSU", accentColor: "#00693E" },
   { slug: "feu", name: "FEU-D Baby Tamaraws", shortName: "FEU", accentColor: "#006633" },
   { slug: "nu", name: "NUNS Bullpups", shortName: "NU", accentColor: "#FFD700" },
   { slug: "ue", name: "UE Junior Warriors", shortName: "UE", accentColor: "#DC143C" },
-  { slug: "up", name: "UPIS Junior Fighting Maroons", shortName: "UP", accentColor: "#7A1F2B", logo: "/logos/UP.jpg" },
+  { slug: "up", name: "UPIS Junior Fighting Maroons", shortName: "UP", accentColor: "#7A1F2B" },
   { slug: "ust", name: "UST Tiger Cubs", shortName: "UST", accentColor: "#FFC72C" },
 ];
 

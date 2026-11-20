@@ -449,15 +449,29 @@ function getFallbackPublicProfileIndex() {
 }
 
 function getFallbackSportsData(scope: SportsDataScope): SupabaseDataResult {
+  // In the offline snapshot, some placeholder "current" seasons (like PBA Gov Cup 50
+  // or PVL 2026 On Tour) have 0 mock games while populated seasons sit right beside them.
+  // Pick the latest season with actual games per league so localhost shows real scores across All/UAAP/PBA/PVL.
+  const populatedByLeague = new Map<League, string>();
+  for (const s of mockSeasons) {
+    const l = inferLeague(s);
+    if (!populatedByLeague.has(l) && mockGames.some((g) => g.seasonId === s.id)) {
+      populatedByLeague.set(l, s.id);
+    }
+  }
   const seasons = mapSeasonRows(
-    mockSeasons.map((s) => ({
-      id: s.id,
-      label: s.label,
-      is_current: s.isCurrent,
-      is_active: s.isActive,
-      league: s.league,
-      sort_order: s.sortOrder ?? null,
-    }))
+    mockSeasons.map((s) => {
+      const l = inferLeague(s);
+      const preferred = populatedByLeague.get(l);
+      return {
+        id: s.id,
+        label: s.label,
+        is_current: preferred ? s.id === preferred : s.isCurrent,
+        is_active: s.isActive,
+        league: s.league,
+        sort_order: s.sortOrder ?? null,
+      };
+    })
   );
   if (scope.metadata) return { seasons, teams: [], players: [], games: [] };
   let league = scope.league ?? "UAAP";

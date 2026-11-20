@@ -10,6 +10,7 @@ test("match center is rendered on the server and loads play-by-play on demand", 
   let detailsRequests = 0;
   page.on("request", req => { if (req.url().includes("/api/games/")) detailsRequests++; });
   await page.goto("/");
+  await page.getByRole("button", { name: "UAAP", exact: true }).click();
   await page.getByRole("button", { name: "View details for AWY at HOM" }).click();
   const dialog = page.getByRole("dialog");
   await expect(dialog).toBeVisible();
@@ -86,5 +87,5 @@ test("database outages keep navigation and a working retry instead of crashing t
     await request.post("http://127.0.0.1:54329/_test/database?fail=0");
   }
   await page.getByRole("button", { name: "Try again", exact: true }).click();
-  await expect(page.getByRole("button", { name: "View details for AWY at HOM" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "View details for AWY at HOM" }).first()).toBeVisible();
 });

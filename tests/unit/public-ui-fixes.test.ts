@@ -338,7 +338,11 @@ test("resolveShellScope scopes metadata, admin, detail, league, and default rout
     query: "league=PBA",
   });
 
-  for (const path of ["/", "/standings", "/teams", "/players"]) {
+  const homeResolved = resolveShellScope("/", false);
+  assert.deepEqual(homeResolved.scope, { league: "ALL" });
+  assert.equal(homeResolved.query, "league=ALL");
+
+  for (const path of ["/standings", "/teams", "/players"]) {
     const resolved = resolveShellScope(path, false);
     assert.deepEqual(resolved.scope, { league: "UAAP" });
     assert.equal(resolved.query, "league=UAAP");

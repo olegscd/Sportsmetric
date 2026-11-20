@@ -75,5 +75,9 @@ export function resolveShellScope(
     return { kind: "default", scope: { metadata: true }, query: "metadata=1" };
   }
 
+  if (pathname === "/") {
+    return { kind: "default", scope: { league: "ALL" }, query: "league=ALL" };
+  }
+
   return { kind: "default", scope: { league: "UAAP" }, query: "league=UAAP" };
 }
